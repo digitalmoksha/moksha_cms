@@ -1,0 +1,55 @@
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended to check this file into your version control system.
+
+ActiveRecord::Schema.define(:version => 20121023212624) do
+
+  create_table "globalize_countries", :force => true do |t|
+    t.string "code",                   :limit => 2
+    t.string "english_name"
+    t.string "date_format"
+    t.string "currency_format"
+    t.string "currency_code",          :limit => 3
+    t.string "thousands_sep",          :limit => 2
+    t.string "decimal_sep",            :limit => 2
+    t.string "currency_decimal_sep",   :limit => 2
+    t.string "number_grouping_scheme"
+    t.string "continent"
+    t.string "locale"
+  end
+
+  add_index "globalize_countries", ["code"], :name => "index_globalize_countries_on_code"
+  add_index "globalize_countries", ["locale"], :name => "index_globalize_countries_on_locale"
+
+  create_table "globalize_languages", :force => true do |t|
+    t.string  "iso_639_1",             :limit => 2
+    t.string  "iso_639_2",             :limit => 3
+    t.string  "iso_639_3",             :limit => 3
+    t.string  "rfc_3066"
+    t.string  "english_name"
+    t.string  "english_name_locale"
+    t.string  "english_name_modifier"
+    t.string  "native_name"
+    t.string  "native_name_locale"
+    t.string  "native_name_modifier"
+    t.boolean "macro_language"
+    t.string  "direction"
+    t.string  "pluralization"
+    t.string  "scope",                 :limit => 1
+  end
+
+  add_index "globalize_languages", ["iso_639_1"], :name => "index_globalize_languages_on_iso_639_1"
+  add_index "globalize_languages", ["iso_639_2"], :name => "index_globalize_languages_on_iso_639_2"
+  add_index "globalize_languages", ["iso_639_3"], :name => "index_globalize_languages_on_iso_639_3"
+  add_index "globalize_languages", ["rfc_3066"], :name => "index_globalize_languages_on_rfc_3066"
+
+end
