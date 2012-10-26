@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = DmCore::VERSION
   s.authors     = ["Brett Walker"]
   s.email       = ["brett@digitalmoksha.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of DmCore."
-  s.description = "TODO: Description of DmCore."
+  s.homepage    = ""
+  s.summary     = "Core functionality, including interationalization"
+  s.description = "Core functionality, including interationalization"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "mysql2", ">= 0.3.11"
   s.add_dependency "globalize3"
   s.add_dependency "easy_globalize3_accessors"
+  s.add_dependency 'country_select'
   
   #s.add_development_dependency "sqlite3"
 end
