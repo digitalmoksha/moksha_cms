@@ -18,7 +18,7 @@ module DmCore
     #------------------------------------------------------------------------------
     def ut_country_select_collection(include_blank = true)
       collection = (include_blank ? [[" ", ""]] : [])
-      collection += StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.find(:all, :order => 'english_name').collect {|p| [ p.english_name, p.id ] }    
+      collection += ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.find(:all, :order => 'english_name').collect {|p| [ p.english_name, p.id ] }    
     end
 
     # Wrapper to pull a list of countries from our table
@@ -27,7 +27,7 @@ module DmCore
     # for that country.
     #------------------------------------------------------------------------------
     def ut_country_select_with_states(object, method, method_state, options = {:include_blank => true}, html_options = {})    
-      collection = StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.find(:all, :order => 'english_name').collect {|p| [ p.english_name, p.id ] }
+      collection = ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.find(:all, :order => 'english_name').collect {|p| [ p.english_name, p.id ] }
       state_object_method = "#{object.to_s}[#{method_state.to_s}]"
       html_options[:id] ||= 'country_select'
       html_options.merge!({:data => {:progressid => "indicator_country", :objectname => state_object_method}})
@@ -45,7 +45,7 @@ module DmCore
       if country_id == 0 or country_id.nil?
         select_tag(object_method, "<option value=''>Please select a country".html_safe)
       else
-        selected_country = StateCountryConstants::COUNTRIES_WITH_STATES.find {|x| x[:id] == country_id}
+        selected_country = ::StateCountryConstants::COUNTRIES_WITH_STATES.find {|x| x[:id] == country_id}
         if selected_country 
           select_tag(object_method, state_options_for_select(selected_state, selected_country[:code]), {:include_blank => true}).html_safe
         else

@@ -1,5 +1,6 @@
 require "dm_core/engine"
 require "dm_core/nls"
+require "dm_core/state_select"
 
 include Nls
 

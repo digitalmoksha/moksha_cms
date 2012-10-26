@@ -1,3 +1,7 @@
+require 'globalize3'
+require 'easy_globalize3_accessors'
+require 'country_select'
+
 module DmCore
   class Engine < ::Rails::Engine
     isolate_namespace DmCore
