@@ -1,7 +1,10 @@
 require 'devise'
+require 'rolify'
 require 'globalize3'
 require 'easy_globalize3_accessors'
 require 'country_select'
+require 'simple_form'
+require 'will_paginate'
 
 module DmCore
   class Engine < ::Rails::Engine
