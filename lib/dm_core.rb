@@ -1,6 +1,7 @@
 require "dm_core/engine"
 require "dm_core/nls"
 require "dm_core/state_select"
+require 'dm_core/concerns/models/user'
 
 include Nls
 

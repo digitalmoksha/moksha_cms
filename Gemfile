@@ -14,8 +14,3 @@ gem "jquery-rails"
 # your gem to rubygems.org.
 
 gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'
-
-group :development, :test do
-  gem 'capistrano'
-  gem 'debugger'
-end
