@@ -8,6 +8,8 @@ module DmCore
         # conext where it is included (post.rb), rather than be 
         # executed in the module's context (blorgh/concerns/models/post).
         included do
+          rolify
+
           # Include default devise modules. Others available are:
           # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
           devise :database_authenticatable, :registerable, :confirmable,
