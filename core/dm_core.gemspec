@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.8"
   s.add_dependency "mysql2", ">= 0.3.11"
+  s.add_dependency 'devise', '~> 2.1'
+  
   s.add_dependency "globalize3"
   s.add_dependency "easy_globalize3_accessors"
   s.add_dependency 'country_select'
