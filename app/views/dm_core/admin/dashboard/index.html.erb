@@ -1,0 +1,25 @@
+<div class="fluid">
+
+  <% toolbar = link_to(User.count, dm_core.admin_users_path, :class => 'dataNumRed') %>
+    <%= content_frame :title => 'Recent New Users', :class => 'grid6', :toolbar => toolbar do %>
+      <table cellpadding="0" cellspacing="0" width="100%" class="tAlt">
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Registered On</td>
+            <td>Last Login</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% User.order('created_at DESC').limit(5).each do |user| %>
+            <tr>
+              <td><%= user.display_name %></td>
+              <td align="center"><%= "#{time_ago_in_words(user.created_at)} ago" %></td>
+              <td align="center"><%= user.current_sign_in_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.current_sign_in_at)} ago" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>            
+  <% end %>
+  
+</div>

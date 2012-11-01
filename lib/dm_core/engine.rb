@@ -8,7 +8,7 @@ require 'will_paginate'
 
 module DmCore
   class Engine < ::Rails::Engine
-    #isolate_namespace DmCore
+    isolate_namespace DmCore
     
     initializer 'engine.helper' do |app|
       ActionView::Base.send :include, RenderHelper

@@ -1,0 +1,33 @@
+<div class="mainNav">
+  <div class="user">
+    <a title="" class="leftUserDrop"><img src="/admin/images/user_anon.png" alt="" /></a>
+    <ul class="leftUser">
+      <li><%= link_to("Logout", destroy_user_session_path, {:method => :delete, :class => 'sLogout'}) %></li>
+    </ul>
+  </div>
+    
+  <!-- Responsive nav -->
+  <div class="altNav">
+    <div class="userSearch">
+      <form action="">
+        <input type="text" placeholder="search..." name="userSearch" />
+        <input type="submit" value="" />
+      </form>
+    </div>
+      
+    <!-- User nav -->
+    <ul class="userNav">
+      <li><a href="#" title="" class="profile"></a></li>
+      <li><a href="#" title="" class="messages"></a></li>
+      <li><a href="#" title="" class="settings"></a></li>
+      <li><a href="#" title="" class="logout"></a></li>
+    </ul>
+  </div>
+    
+  <!-- Main nav -->
+  <ul class="nav">
+    <li><%= link_to "#{iconb(:dashboard, :size => 24)}<span>Dashboard</span>".html_safe, admin_dashboard_path %></li>
+    <li><%= link_to "#{iconb(:lexicon, :size => 24)}<span>Categories</span>".html_safe, admin_categories_path %></li>
+    <li><%= link_to "#{iconb(:users, :size => 24)}<span>Users</span>".html_safe, admin_users_path %></li>
+  </ul>
+</div>

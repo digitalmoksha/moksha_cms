@@ -1,0 +1,21 @@
+<%= flash_admin %>
+<%= content_frame :title => 'Users' do %>
+  <div id="dyn" class="shownpars" style="overflow:auto;">
+    <a class="tOptions" title="Options"><%= image_tag '/admin/images/icons/options' %></a>
+    <table id="user_table" cellpadding="0" cellspacing="0" width="100%" data-source="<%= dm_core.admin_users_url %>">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Country</th>
+          <th>Last Sign In</th>
+          <th>Role</th>
+          <th width="75">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+<% end %>
