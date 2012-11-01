@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title><%= main_title %></title>
+    <%= csrf_meta_tag %>
+
+    <link href="/admin/css/styles.css" rel="stylesheet" type="text/css" />
+    <%= stylesheet_link_tag 'admin' %>
+    <!--[if IE]> <link href="/admin/css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
+
+    <%= javascript_include_tag 'admin' %>
+    <!--<script type="text/javascript" src="/admin/js/plugins/forms/ui.spinner.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.mousewheel.js"></script> -->
+
+    <script type="text/javascript" src="/admin/js/plugins/charts/excanvas.min.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/charts/jquery.flot.js"></script>
+    <!-- <script type="text/javascript" src="/admin/js/plugins/charts/jquery.flot.orderBars.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/charts/jquery.flot.pie.js"></script> -->
+    <script type="text/javascript" src="/admin/js/plugins/charts/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/charts/jquery.sparkline.min.js"></script>
+
+    <script type="text/javascript" src="/admin/js/plugins/tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/tables/jquery.sortable.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/tables/jquery.resizable.js"></script>
+
+    <script type="text/javascript" src="/admin/js/plugins/forms/autogrowtextarea.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.uniform.js"></script>
+    <!-- <script type="text/javascript" src="/admin/js/plugins/forms/jquery.inputlimiter.min.js"></script> -->
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.tagsinput.min.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.maskedinput.min.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.autotab.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.chosen.min.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.dualListBox.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.cleditor.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.ibutton.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.validationEngine-en.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/forms/jquery.validationEngine.js"></script>
+
+    <!-- <script type="text/javascript" src="/admin/js/plugins/uploader/plupload.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/uploader/plupload.html4.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/uploader/plupload.html5.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/uploader/jquery.plupload.queue.js"></script> -->
+
+    <script type="text/javascript" src="/admin/js/plugins/wizards/jquery.form.wizard.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/wizards/jquery.validate.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/wizards/jquery.form.js"></script>
+
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.collapsible.min.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.breadcrumbs.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.tipsy.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.progress.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.timeentry.min.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.colorpicker.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.jgrowl.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.fileTree.js"></script>
+    <!-- <script type="text/javascript" src="/admin/js/plugins/ui/jquery.sourcerer.js"></script> -->
+
+    <!-- <script type="text/javascript" src="/admin/js/plugins/others/jquery.fullcalendar.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/others/jquery.elfinder.js"></script> -->
+
+    <script type="text/javascript" src="/admin/js/plugins/ui/jquery.easytabs.min.js"></script>
+    <script type="text/javascript" src="/admin/js/files/bootstrap.js"></script>
+    <script type="text/javascript" src="/admin/js/files/functions.js"></script>
+
+    <!-- <script type="text/javascript" src="/admin/js/charts/chart_side.js"></script>
+    <script type="text/javascript" src="/admin/js/charts/hBar_side.js"></script> -->
+
+		<%= yield :head %>
+	</head>

@@ -1,0 +1,16 @@
+<%= simple_form_for(@user, :url => dm_core.admin_user_path) do |f| %>
+  <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
+
+	<%= content_frame :title => @title do %>
+    
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :email %>
+    <%= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
+                :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
+                :label => "Country" %>
+    
+    <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
+
+	<% end %>
+<% end %>

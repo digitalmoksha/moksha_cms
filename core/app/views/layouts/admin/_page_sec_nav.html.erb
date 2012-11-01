@@ -1,0 +1,25 @@
+<!-- Secondary nav -->
+<div class="secNav">
+  <div class="secWrapper">
+    <div class="secTop">
+      <div class="balance">
+          <div class="balInfo">Balance:<span>since launch</span></div>
+          <div class="balAmount"><span class="balBars">n/a</span></div>
+      </div>
+      <a href="#" class="triangle-red"></a>
+    </div>
+    
+    <!-- Sidebar/Tabs container -->
+    <% if content_for(:sidebar).blank? %>
+      <div>
+        <ul class="iconsLine ic1 etabs" style="margin-bottom: 10px;">
+          <li></li>
+        </ul>
+      </div>
+    <% else %>
+      <%= content_for :sidebar %>
+    <% end %>
+    
+ </div> 
+ <div class="clear"></div>
+</div>

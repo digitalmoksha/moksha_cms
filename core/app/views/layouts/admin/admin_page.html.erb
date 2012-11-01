@@ -1,0 +1,72 @@
+<%= render :partial => "layouts/admin/page_header" %>
+
+<%= render :partial => "layouts/admin/page_top_line" %>
+
+<!-- Sidebar begins -->
+<div id="sidebar">
+  <%= render :partial => "layouts/admin/page_main_nav" %>
+  <%= render :partial => "layouts/admin/page_sec_nav" %>
+</div>
+<!-- Sidebar ends -->
+
+
+<!-- Content begins -->
+<div id="content">
+  <div class="contentTop">
+    <span class="pageTitle"><%= content_for :content_title %></span>
+    <ul class="quickStats">
+      <li>
+        <%= link_to image_tag("/admin/images/icons/quickstats/plus.png"), "", :class => 'blueImg' %>
+        <div class="floatR"><strong class="blue">n/a</strong><span>subscribers</span></div>
+      </li>
+      <li>
+        <%= link_to image_tag("/admin/images/icons/quickstats/money.png"), "", :class => 'greenImg' %>
+        <div class="floatR"><strong class="blue">n/a</strong><span>contributions</span></div>
+      </li>
+      <li>
+        <%= link_to image_tag("/admin/images/icons/quickstats/user.png"), dm_core.admin_users_path, :class => 'redImg' %>
+        <div class="floatR"><strong class="blue"><%= User.count %></strong><span>users</span></div>
+      </li>
+    </ul>
+    <div class="clear"></div>
+    <div class="clear"></div>
+  </div>
+    
+  <!-- Breadcrumbs line -->
+  <div class="breadLine">      
+    <div class="breadLinks">
+      <ul>
+        <li><a href="#" title=""><i class="icos-list"></i><span>Orders</span> <strong>(+58)</strong></a></li>
+        <li><a href="#" title=""><i class="icos-check"></i><span>Tasks</span> <strong>(+12)</strong></a></li>
+        <li class="has">
+          <a title="">
+            <i class="icos-money3"></i>
+            <span>Invoices</span>
+            <span><img src="/admin/images/elements/control/hasddArrow.png" alt="" /></span>
+          </a>
+          <ul>
+            <li><a href="#" title=""><span class="icos-add"></span>New invoice</a></li>
+            <li><a href="#" title=""><span class="icos-archive"></span>History</a></li>
+            <li><a href="#" title=""><span class="icos-printer"></span>Print invoices</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+  </div>
+    
+  <!-- Main content -->
+  <div class="wrapper">
+    
+    <%= yield %>
+
+  </div>
+  <!-- Main content ends -->
+    
+</div>
+<!-- Content ends --> 
+      
+<span id="audio_span"></span> <!-- used to play audio inline -->
+        
+</body>
+</html>
