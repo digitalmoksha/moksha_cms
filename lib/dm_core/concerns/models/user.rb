@@ -30,6 +30,11 @@ module DmCore
           def display_name
             self.first_name.to_s + " " + self.last_name.to_s
           end
+          
+          #------------------------------------------------------------------------------
+          def update_last_access
+            update_attribute(:last_access_at, Time.now.utc) if self.last_access_at.nil? || (self.last_access_at <= 30.minutes.ago)
+          end
         end
  
         module ClassMethods

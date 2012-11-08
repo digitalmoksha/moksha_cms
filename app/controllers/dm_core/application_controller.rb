@@ -3,7 +3,8 @@ module DmCore
 
     before_filter   :set_locale
     before_filter   :set_mailer_url_options
-
+    before_filter   :update_user
+    
   protected
   
     #------------------------------------------------------------------------------
@@ -22,6 +23,12 @@ module DmCore
     #------------------------------------------------------------------------------
     def set_locale
       DmCore::Language.locale = params[:locale]
+    end
+    
+    # Update the user's last_access if signed_in
+    #------------------------------------------------------------------------------
+    def update_user
+      current_user.update_last_access if current_user && signed_in?
     end
 
     # FORCE to implement content_for in controller.  This is so we can use it in
