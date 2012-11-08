@@ -29,7 +29,7 @@ private
         h(user.last_name),
         h(user.email),
         user.country.nil? ? 'n/a' : user.country.english_name,
-        user.current_sign_in_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.current_sign_in_at)} ago",
+        user.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.last_access_at)} ago",
         user.is_admin? ? '<span class="label label-success">Admin</span>'.html_safe : 'User',
         "<span class='tableActs'>#{user_actions(user)}</span>"
       ]
@@ -70,7 +70,7 @@ private
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = %w[first_name last_name email globalize_countries.english_name current_sign_in_at]
+    columns = %w[first_name last_name email globalize_countries.english_name last_access_at]
     columns[params[:iSortCol_0].to_i]
   end
 
