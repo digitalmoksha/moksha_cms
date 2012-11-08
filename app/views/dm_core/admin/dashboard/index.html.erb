@@ -7,7 +7,7 @@
           <tr>
             <td>Name</td>
             <td>Registered On</td>
-            <td>Last Login</td>
+            <td>Last Access</td>
           </tr>
         </thead>
         <tbody>
@@ -15,7 +15,7 @@
             <tr>
               <td><%= user.display_name %></td>
               <td align="center"><%= "#{time_ago_in_words(user.created_at)} ago" %></td>
-              <td align="center"><%= user.current_sign_in_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.current_sign_in_at)} ago" %></td>
+              <td align="center"><%= user.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.last_access_at)} ago" %></td>
             </tr>
           <% end %>
         </tbody>
