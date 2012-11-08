@@ -1,0 +1,10 @@
+<%= render :partial => 'index_sidebar' %>
+
+<%= flash_admin %>
+<%= content_box :title => 'Site Pages' do %>
+  <div id="page_tree">
+    <ul class='root'>
+      <%= nested_tree(@tree) %>
+    </ul>
+  </div>
+<% end %>

@@ -1,0 +1,4 @@
+<li class="tree_item"><%= link_to item.slug, :action => :show, :id => item %> : <%= link_to "New", new_page_admin_cms_page_path(item) %>
+  : <%= link_to "Up", move_up_admin_cms_page_path(item) %>
+  : <%= link_to "Dn", move_down_admin_cms_page_path(item) %>
+</li>

@@ -1,0 +1,8 @@
+<ul class="titleToolbar">
+  <li><%= link_to 'Edit', edit_admin_cms_contentitem_path(contentitem) %></li>
+  <li><%= link_to 'Remove', admin_cms_contentitem_path(contentitem), :method => :delete, :confirm => 'Are you sure you wish to delete with item?' %></li>
+</ul> 
+<ul class="headIconSet">
+  <li><%= link_to "", move_up_admin_cms_contentitem_path(contentitem), :class => "icon-arrow-up-3 tipS", :title => "Move content up" %></li>
+  <li><%= link_to "", move_down_admin_cms_contentitem_path(contentitem), :class => "icon-arrow-down-3 tipS", :title => "Move content down" %></li>
+</ul>

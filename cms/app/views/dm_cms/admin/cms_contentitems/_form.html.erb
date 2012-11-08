@@ -1,0 +1,69 @@
+<% new_record = @cms_contentitem.new_record? %>
+<% submit_url = (new_record ? create_content_admin_cms_contentitem_path(@current_page) : admin_cms_contentitem_path(@cms_contentitem)) %>
+<% title = (new_record ? "New Content for: #{@current_page.slug}" : "Editing Content for: #{@current_page.slug}") %>
+<% content_for :content_title, title.html_safe %>
+
+<%= simple_form_for @cms_contentitem, :url => submit_url do |f| %>
+  <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
+  <%= content_frame :title => title do %>
+    <div class="formRow">
+      Content
+      <div class='grid12'>
+        <%= f.text_area :content, :class => 'monospaced' %>
+      </div>
+      <div class='clear'></div>
+    </div>
+    <%= f.input :itemtype, :label => 'Item Type', :collection => CmsContentitem::CONTENT_TYPES %>
+    <%= f.input :container, :label => 'Content Name', :hint => 'This is normally "body" or "sidebar" or something' %>
+    <%= f.input :purpose, :label => 'Purpose', :hint => 'Short comment on type of content this is (optional)' %>
+    <%= f.input :enable_cache, :as => :toggle, :label => 'Cache Content' %>
+      
+    <%= submit_or_cancel :cancel_url => admin_cms_page_url(@current_page) %>
+  <% end %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <div style="margin-bottom:37px;">
+    <ul class="iconsLine ic1 etabs" style="margin-bottom: 10px;">
+      <li></li>
+    </ul>
+  </div>
+
+  <!-- Sidebar toggles -->
+  <div class="widget togglesGroup">
+    <div class="whead opened" id="toggleOpened"><h6>Tags &mdash; Images</h6><div class="clear"></div></div>
+    <div>
+      <table cellpadding="0" cellspacing="0" width="100%" class="tDefault sideTable monospaced">
+        <tbody>
+          <tr><td>{% photo img : 'image.jpg', url : http_url, caption : "caption text" %}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="whead closed"><h6>Tags &mdash; Lexicon</h6><div class="clear"></div></div>
+    <div>
+      <table cellpadding="0" cellspacing="0" width="100%" class="tDefault sideTable monospaced">
+        <tbody>
+          <tr><td>{% lex te:'sage', audio:no, class:tu %}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="whead closed"><h6>Tags &mdash; Boxes/Buttons</h6><div class="clear"></div></div>
+    <div>
+      <table cellpadding="0" cellspacing="0" width="100%" class="tDefault sideTable monospaced">
+        <tbody>
+          <tr><td>
+{% pullout width : 340, side : right %}<br>
+  stuff<br>
+{% endpullout %}<br>
+          </td></tr>
+          <tr><td>
+            {% continue_bar continue_text : 'Start', continue_url : 'alphabet-vowel-quiz', review_url : 'alphabet-introduction' %}
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<% end %>
