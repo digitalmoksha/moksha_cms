@@ -18,3 +18,4 @@ gem "jquery-rails"
 
 gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'
 gem 'dm_core', :git => 'git://github.com/digitalmoksha/dm_core.git'
+gem 'easy_globalize3_accessors', :git => 'git://github.com/digitalmoksha/easy_globalize3_accessors.git'

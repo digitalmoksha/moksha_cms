@@ -4,17 +4,27 @@
 
 <%= simple_form_for @cms_page, :url => submit_url do |f| %>
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
-  <%= content_frame :title => "#{title} #{@current_page.slug}" do %>
+  <%= content_frame :title => "#{title} #{@current_page.slug}", :toolbar => :languages do %>
   
-    <%= f.input :slug, :label => 'Page Slug', :hint => 'Name page will be known by' %>
-    <%= f.input :pagetype, :label => 'Page Type', :collection => CmsPage::PAGETYPE %>
-    <%= f.input :title, :label => 'Page Title' %>
-    <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
-    <%= f.input :template, :label => 'Template to Use' %>
-    <%= f.input :link %>
-    <%= f.input :menutitle, :label => 'Menu Title' %>
-    <%= f.input :menuimage, :label => 'Menu Image' %>
-    <%= f.input :requires_login, :as => :toggle, :label => 'Requires Login' %>
+    <div class="tab_container">
+      <div id="tab_general" class="tab_content">
+        <%= f.input :slug, :label => 'Page Slug', :hint => 'Name page will be known by' %>
+        <%= f.input :pagetype, :label => 'Page Type', :collection => CmsPage::PAGETYPE %>
+        <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
+        <%= f.input :template, :label => 'Template to Use' %>
+        <%= f.input :link %>
+        <%= f.input :menuimage, :label => 'Menu Image' %>
+        <%= f.input :requires_login, :as => :toggle, :label => 'Requires Login' %>
+      </div>
+      <% DmCore::Language.language_array.each do |locale| %>        
+        <div id="tab_<%= locale %>" class="tab_content">
+          <%= f.input "title_#{locale}", :label => 'Page Title' %>
+          <%= f.input "menutitle_#{locale}", :label => 'Menu Title' %>
+        </div>
+      <% end %>
+    </div>	
     <%= submit_or_cancel :cancel_url => {:action => :show, :id => @current_page} %>
+
   <% end %>
+
 <% end %>

@@ -1,4 +1,4 @@
-<% content_for :content_title, "#{@current_page.slug} &mdash; #{@current_page.title}".html_safe %>
+<% content_for :secondary_title, "#{@current_page.slug} &mdash; #{@current_page.title}".html_safe %>
 <ul class="middleNavA">
     <li><%= link_to "#{iconb(:pages)}<span>Add More Content</span>".html_safe, new_content_admin_cms_contentitem_path(@current_page), :title => 'Add Content' %></li>
     <li><%= link_to "#{iconb(:view)}<span>View Page</span>".html_safe, url_for("/#{DmCore.config.default_locale}/#{@current_page.slug}"), :title => 'View Page', :target => '_blank' %></li>

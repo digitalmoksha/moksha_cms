@@ -5,19 +5,25 @@
 
 <%= simple_form_for @cms_contentitem, :url => submit_url do |f| %>
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
-  <%= content_frame :title => title do %>
-    <div class="formRow">
-      Content
-      <div class='grid12'>
-        <%= f.text_area :content, :class => 'monospaced' %>
+  <%= content_frame :title => title, :toolbar => :languages do %>
+    <div class="tab_container">
+      <div id="tab_general" class="tab_content">
+        <%= f.input :itemtype, :label => 'Item Type', :collection => CmsContentitem::CONTENT_TYPES %>
+        <%= f.input :container, :label => 'Content Name', :hint => 'This is normally "body" or "sidebar" or something' %>
+        <%= f.input :purpose, :label => 'Purpose', :hint => 'Short comment on type of content this is (optional)' %>
+        <%= f.input :enable_cache, :as => :toggle, :label => 'Cache Content' %>
       </div>
-      <div class='clear'></div>
-    </div>
-    <%= f.input :itemtype, :label => 'Item Type', :collection => CmsContentitem::CONTENT_TYPES %>
-    <%= f.input :container, :label => 'Content Name', :hint => 'This is normally "body" or "sidebar" or something' %>
-    <%= f.input :purpose, :label => 'Purpose', :hint => 'Short comment on type of content this is (optional)' %>
-    <%= f.input :enable_cache, :as => :toggle, :label => 'Cache Content' %>
-      
+      <% DmCore::Language.language_array.each do |locale| %>        
+        <div id="tab_<%= locale %>" class="tab_content">
+          <div class="formRow">
+            Content
+            <div class='grid12'>
+              <%= f.text_area "content_#{locale}", :class => 'monospaced' %>
+            </div>
+            <div class='clear'></div>
+          </div>
+        </div>
+      <% end %>
     <%= submit_or_cancel :cancel_url => admin_cms_page_url(@current_page) %>
   <% end %>
 <% end %>

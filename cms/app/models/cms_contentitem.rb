@@ -15,7 +15,7 @@ class CmsContentitem < ActiveRecord::Base
   # --- globalize
   translates            :content, :fallbacks_for_empty_translations => true
   globalize_accessors   :locales => DmCore::Language.language_array
-    
+  
   # --- validations 
   validates_length_of   :itemtype,    :maximum => 30
   validates_length_of   :purpose,     :maximum => 255,  :allow_nil => true
@@ -33,7 +33,6 @@ class CmsContentitem < ActiveRecord::Base
     new_cms_contentitem.cms_page_id      = new_cms_page_id
 
     DmCore::Language.language_array.each do |locale|
-      eval("new_cms_contentitem.title_#{locale[:lang]}       = title_#{locale[:lang]} unless title_#{locale[:lang]}.nil?")
       eval("new_cms_contentitem.content_#{locale[:lang]}     = content_#{locale[:lang]} unless content_#{locale[:lang]}.nil?")
     end
     new_cms_contentitem.save
