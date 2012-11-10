@@ -48,6 +48,11 @@ module Admin::ThemeAquincumHelper
     options[:id]      ||= ''
     options[:class]   ||= ''
     options[:toolbar] ||= ''
+
+    if options[:toolbar] == :languages
+      options[:toolbar] = language_toolbar_tabs
+      options[:class] += ' rightTabs'
+    end
     
     content = with_output_buffer(&block)
     content_tag :div, :id => options[:id], :class => "widget fluid #{options[:class]}" do
@@ -98,6 +103,17 @@ module Admin::ThemeAquincumHelper
     #out << "#{image_tag_plugin('indicator_small.gif', :id => options[:indicator], :style => 'padding-left:10px;display:none;border:none;')}"
     out << "<div class='clear'></div></div><div class='clear'></div></div>"
     return out.html_safe
+  end
+  
+  #------------------------------------------------------------------------------
+  def language_toolbar_tabs(include_general = true)
+    out    = "<ul class='tabs toolbar'>"
+    out   +=   "<li>#{link_to 'General', '#tab_general'}" if include_general
+    DmCore::Language.language_array.each do |locale|
+      out +=  "<li>#{link_to nls_flag_image(locale), '#tab_' + locale.to_s, :class => 'headIcon'}</li>"
+    end
+    out   += "</ul>"
+    out.html_safe
   end
   
   # Format flash messages for admin theme
