@@ -13,7 +13,7 @@ module Nls
   #  nls_flag_image(:en)
   #------------------------------------------------------------------------------
   def nls_flag_image(lang = nil)
-    image_tag(SupportedLanguages.flag_image(lang))
+    image_tag(DmCore::Language.flag_image(lang))
   end
 
 end

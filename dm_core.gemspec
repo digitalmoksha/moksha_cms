@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "will_paginate", "~> 3.0"
   s.add_dependency "globalize3"
   s.add_dependency 'country_select'
+  #--- must include this in the app's gemfile: gem 'easy_globalize3_accessors', :git => 'git://github.com/digitalmoksha/easy_globalize3_accessors.git'
   
   #s.add_development_dependency "sqlite3"
 end
