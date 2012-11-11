@@ -5,6 +5,7 @@ require 'easy_globalize3_accessors'
 require 'country_select'
 require 'simple_form'
 require 'will_paginate'
+require 'paper_trail'
 
 module DmCore
   class Engine < ::Rails::Engine
