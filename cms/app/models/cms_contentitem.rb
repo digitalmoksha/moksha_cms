@@ -1,6 +1,7 @@
 class CmsContentitem < ActiveRecord::Base
   class Translation < ::Globalize::ActiveRecord::Translation
     attr_accessible     :locale, :content
+    has_paper_trail
   end
 
   attr_accessible       :itemtype, :container, :purpose, :content, :cms_page_id, :enable_cache
@@ -15,6 +16,9 @@ class CmsContentitem < ActiveRecord::Base
   # --- globalize
   translates            :content, :fallbacks_for_empty_translations => true
   globalize_accessors   :locales => DmCore::Language.language_array
+
+  # --- versioning - skip anything translated
+  has_paper_trail       :skip => :content
   
   # --- validations 
   validates_length_of   :itemtype,    :maximum => 30

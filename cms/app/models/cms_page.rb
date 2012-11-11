@@ -2,20 +2,25 @@
 class CmsPage < ActiveRecord::Base
   class Translation < ::Globalize::ActiveRecord::Translation
     attr_accessible :locale, :title, :menutitle
+    has_paper_trail
   end
 
   attr_accessible         :slug, :pagetype, :published, :template, :link, :menuimage, :requires_login, :title, :title_en, :menutitle
 
+  has_paper_trail
+  
   # --- globalize
-  translates              :title, :menutitle, :fallbacks_for_empty_translations => true
+  translates              :title, :menutitle, :fallbacks_for_empty_translations => true, :versioning => true
   globalize_accessors     :locals => DmCore::Language.language_array
     
+  # --- versioning - skip anything translated
+  has_paper_trail         :skip => [:title, :menutitle]
+  
   # --- associations
   has_many                :cms_contentitems, :order => :position, :dependent => :destroy
   has_ancestry            :cache_depth => true
   acts_as_list            :scope => 'ancestry = \'#{ancestry}\''
   default_scope           :order => "ancestry_depth, position ASC"
-  
   
   # --- validations
   validates_length_of     :slug, :maximum => 50
