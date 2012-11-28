@@ -7,12 +7,6 @@ module DmCore
       raw([:notice, :error, :alert].collect {|type| content_tag('div', flash[type], :id => type, :class => "alert #{flash_class[type]}") if flash[type] }.join)
     end
   
-    # Usually don't care if a form submits a PUT or POST.  Was something submitted?
-    #------------------------------------------------------------------------------
-    def put_or_post?
-      request.put? || request.post?
-    end
-  
     #------------------------------------------------------------------------------
     def is_admin?
       user_signed_in? && current_user.is_admin?
