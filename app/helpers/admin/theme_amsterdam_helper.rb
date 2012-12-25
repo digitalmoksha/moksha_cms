@@ -36,7 +36,7 @@ module Admin::ThemeAmsterdamHelper
   #------------------------------------------------------------------------------
   def content_box(options = {}, &block)
     options[:title]   ||= ''
-    options[:id]      ||= 'top_block' # default to indicate the first block
+    options[:id]      ||= ''
     options[:class]   ||= ''
     options[:toolbar] ||= ''
     
@@ -56,7 +56,7 @@ module Admin::ThemeAmsterdamHelper
   #------------------------------------------------------------------------------
   def content_frame(options = {}, &block)
     options[:title]   ||= ''
-    options[:id]      ||= 'top_block'  # default to indicate the first block
+    options[:id]      ||= ''
     options[:class]   ||= ''
     options[:toolbar] ||= ''
 
