@@ -72,7 +72,7 @@ private
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
   def template_setup
-    content_for :content_title, '<span class="icon-copy"></span>'.html_safe
+    content_for :content_title, icon_label('font-paste', 'Pages')
   end
 
 end

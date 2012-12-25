@@ -1,9 +1,8 @@
 <%= render :partial => 'index_sidebar' %>
 
-<%= flash_admin %>
 <%= content_box :title => 'Site Pages' do %>
   <div id="page_tree">
-    <ul class='root'>
+    <ul class='arrow-list'>
       <%= nested_tree(@tree) %>
     </ul>
   </div>

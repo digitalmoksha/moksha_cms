@@ -6,8 +6,8 @@
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
   <%= content_frame :title => "#{title} #{@current_page.slug}", :toolbar => :languages do %>
   
-    <div class="tab_container">
-      <div id="tab_general" class="tab_content">
+    <div class="tab-content">
+      <div id="tab_general" class="tab-pane active fade in">
         <%= f.input :slug, :label => 'Page Slug', :hint => 'Name page will be known by' %>
         <%= f.input :pagetype, :label => 'Page Type', :collection => CmsPage::PAGETYPE %>
         <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
@@ -15,9 +15,17 @@
         <%= f.input :link %>
         <%= f.input :menuimage, :label => 'Menu Image' %>
         <%= f.input :requires_login, :as => :toggle, :label => 'Requires Login' %>
+        <div class="control-group">
+                             <label class="control-label">On/Off checkbox: </label>
+                             <div class="controls yes_no">
+                                 <div class="checkbox inline"><input type="checkbox" checked="checked" name="chbox" /><label class="toggle-label">Checked</label></div>
+                                 <div class="checkbox inline"><input type="checkbox" name="toggle1" /><label class="toggle-label">Unchecked</label></div>
+                                 <div class="checkbox inline"><input type="checkbox" name="toggle2" checked="checked" disabled="disabled" /><label class="toggle-label muted">Disabled</label></div>
+                             </div>
+                         </div>
       </div>
       <% DmCore::Language.language_array.each do |locale| %>        
-        <div id="tab_<%= locale %>" class="tab_content">
+        <div id="tab_<%= locale %>" class="tab-pane fade">
           <%= f.input "title_#{locale}", :label => 'Page Title' %>
           <%= f.input "menutitle_#{locale}", :label => 'Menu Title' %>
         </div>

@@ -1,15 +1,5 @@
 <% content_for :sidebar do %>
-	<div>
-	  <ul class="iconsLine ic1 etabs" style="margin-bottom: 10px;">
-	    <li></li>
-	  </ul>
-	</div>
 
-  <div class="divider"><span></span></div>
+	<%= link_to "Clear Entire Page Cache", admin_expire_cache_path, :class => "action-button blue" %>
 
-  <!-- Sidebar big buttons -->
-  <div class="sidePad">
-		<%= link_to "Clear Entire Page Cache", admin_expire_cache_path, :class => "sideB bLightBlue" %>
-  </div>
-  
 <% end %>
