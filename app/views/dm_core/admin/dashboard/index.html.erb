@@ -1,25 +1,25 @@
-<div class="fluid">
+<%= render :partial => 'dm_core/admin/dashboard/index_sidebar' %>
 
-  <% toolbar = link_to(User.count, dm_core.admin_users_path, :class => 'dataNumRed') %>
-    <%= content_frame :title => 'Recent New Users', :class => 'grid6', :toolbar => toolbar do %>
-      <table cellpadding="0" cellspacing="0" width="100%" class="tAlt">
-        <thead>
+<% toolbar = toolbar_button(User.count, dm_core.admin_users_path, :title => 'Number of registered users', :class => 'badge badge-info pull-right') %>
+<%= content_frame :title => 'Recent New Users', :toolbar => toolbar do %>
+  <div class="table-overflow">
+    <table class="table table-bordered table-block">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Registered On</th>
+          <th>Last Access</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% User.order('created_at DESC').limit(5).each do |user| %>
           <tr>
-            <td>Name</td>
-            <td>Registered On</td>
-            <td>Last Access</td>
+            <td><%= user.display_name %></td>
+            <td><%= "#{time_ago_in_words(user.created_at)} ago" %></td>
+            <td><%= user.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.last_access_at)} ago" %></td>
           </tr>
-        </thead>
-        <tbody>
-          <% User.order('created_at DESC').limit(5).each do |user| %>
-            <tr>
-              <td><%= user.display_name %></td>
-              <td align="center"><%= "#{time_ago_in_words(user.created_at)} ago" %></td>
-              <td align="center"><%= user.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.last_access_at)} ago" %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>            
-  <% end %>
-  
-</div>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

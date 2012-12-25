@@ -10,11 +10,19 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
     @results = `svn up #{Rails.root}/public/site_assets`
   end
   
+  # use whatever is passed in, but strip out anything dangerous.  Value will get
+  # used as a css selector
+  #------------------------------------------------------------------------------
+  def change_theme
+    cookies[:theme] = {:value => params[:id].replace_non_alphanumeric, :expires => Time.now + 1825.days}
+    redirect_to :back
+  end
+
 private
   
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
   def template_setup
-    content_for :content_title, '<span class="icon-screen"></span>Dashboard'.html_safe
+    content_for :content_title, "#{icons('font-dashboard')} Dashboard".html_safe
   end
 end

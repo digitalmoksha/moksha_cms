@@ -18,8 +18,8 @@ SimpleForm.setup do |config|
   # Check the Bootstrap docs (http://twitter.github.com/bootstrap)
   # to learn about the different styles for forms and inputs,
   # buttons and other elements.
-  config.default_wrapper = :aquincum
-  config.error_notification_class = 'nNote nFailure'
-  config.label_text = lambda { |label, required| "<span class='req'>#{required}</span> #{label}" }
+  config.default_wrapper = :bootstrap
+  #config.error_notification_class = 'nNote nFailure'
+  #config.label_text = lambda { |label, required| "<span class='req'>#{required}</span> #{label}" }
   
 end

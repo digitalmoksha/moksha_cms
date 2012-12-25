@@ -1,5 +1,5 @@
 class UserDatatable
-  include Admin::ThemeAquincumHelper
+  include Admin::ThemeAmsterdamHelper
   
   delegate :params, :h, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
   delegate :url_helpers, to: 'DmCore::Engine.routes'
@@ -29,9 +29,9 @@ private
         h(user.last_name),
         h(user.email),
         user.country.nil? ? 'n/a' : user.country.english_name,
-        user.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.last_access_at)} ago",
-        user.is_admin? ? '<span class="label label-success">Admin</span>'.html_safe : 'User',
-        "<span class='tableActs'>#{user_actions(user)}</span>"
+        user.last_access_at.nil? ? colored_label('n/a', :warning) : "#{time_ago_in_words(user.last_access_at)} ago",
+        user.is_admin? ? colored_label('Admin', :success) : 'User',
+        "<ul class='table-controls'>#{user_actions(user)}</ul>"
       ]
     end
   end
@@ -54,8 +54,8 @@ private
   #------------------------------------------------------------------------------
   def user_actions(user)
     actions = ''
-    actions << link_to(iconb(:edit), url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => 'Edit', :class => 'tablectrl_small bDefault tipS')
-    actions << link_to(iconb(:delete), url_helpers.admin_user_path(user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => 'tablectrl_small bDefault tipS')
+    actions << '<li>' + link_to(icons("font-edit"), url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => 'Edit', :class => 'btn hovertip') + '</li>'
+    actions << '<li>' + link_to(icons("font-remove"), url_helpers.admin_user_path(user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => 'btn hovertip') + '</li>'
   end
   
   #------------------------------------------------------------------------------

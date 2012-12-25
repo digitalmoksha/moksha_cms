@@ -59,7 +59,7 @@ private
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
   def template_setup
-    content_for :content_title, "<span class='icon-book'></span>Users".html_safe
+    content_for :content_title, "#{icons('font-user')} User Management".html_safe
   end
 
 end
