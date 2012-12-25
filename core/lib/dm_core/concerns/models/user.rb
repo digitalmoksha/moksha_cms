@@ -35,6 +35,23 @@ module DmCore
           def update_last_access
             update_attribute(:last_access_at, Time.now.utc) if self.last_access_at.nil? || (self.last_access_at <= 30.minutes.ago)
           end
+          
+          #------------------------------------------------------------------------------
+          def self.new_last_30_days
+            items = 27.step(0, -3).map do |date| 
+              self.where('created_at <= ? AND created_at > ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime).count
+            end
+            return { :total => items.inject(:+), :list => items.join(',') }
+          end
+
+          #------------------------------------------------------------------------------
+          def self.access_last_30_days
+            items = 27.step(0, -3).map do |date| 
+              self.where('last_access_at <= ? AND last_access_at > ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime).count
+            end
+            return { :total => items.inject(:+), :list => items.join(',') }
+          end
+          
         end
  
         module ClassMethods

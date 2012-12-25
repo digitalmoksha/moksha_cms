@@ -1,8 +1,6 @@
-<%= flash_admin %>
 <%= content_frame :title => 'Users' do %>
-  <div id="dyn" class="shownpars" style="overflow:auto;">
-    <a class="tOptions" title="Options"><%= image_tag '/admin/images/icons/options' %></a>
-    <table id="user_table" cellpadding="0" cellspacing="0" width="100%" data-source="<%= dm_core.admin_users_url %>">
+  <div class="table-overflow">
+    <table id="user_table" class="table table-striped table-bordered table-block" data-source="<%= dm_core.admin_users_url %>">
       <thead>
         <tr>
           <th>First Name</th>
@@ -18,4 +16,23 @@
       </tbody>
     </table>
   </div>
+<% end %>
+
+<% content_for :sidebar do %>
+
+  <!-- Sidebar stats -->
+  <ul class="topstats block">
+    <li>
+      <% accessed_users = User.access_last_30_days %>
+      <div class="left">Active Users:<h1><%= accessed_users[:total] %></h1></div>
+      <div class="topchart" id="access_user_sparkline"><%= accessed_users[:list] %></div>
+    </li>
+    <li>
+      <% new_users = User.new_last_30_days %>
+      <div class="left">New Users:<h1><%= new_users[:total] %></h1></div>
+      <div class="topchart" id="new_user_sparkline"><%= new_users[:list] %></div>
+    </li>
+  </ul>
+  <!-- /sidebar stats -->
+  
 <% end %>

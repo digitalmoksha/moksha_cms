@@ -5,7 +5,7 @@ class DmCore::Admin::AdminController < ApplicationController
 
   layout 'admin/admin_page'
   
-  include Admin::ThemeAquincumHelper
+  include Admin::ThemeAmsterdamHelper
   
   #------------------------------------------------------------------------------
   def authenticate_admin_user!
