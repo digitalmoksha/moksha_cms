@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   
   s.add_dependency "simple_form", "~> 2.0"
   s.add_dependency "will_paginate", "~> 3.0"
-  s.add_dependency "globalize3"
+  s.add_dependency "globalize3", ">= 0.3.0"
   s.add_dependency 'country_select'
   s.add_dependency 'paper_trail', '~> 2'
   
