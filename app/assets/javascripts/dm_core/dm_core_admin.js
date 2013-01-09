@@ -16,6 +16,26 @@ function toggle_reveal(item, options) {
 $(document).ready(function() {
   
   //----------------------------------------------------------------
+  $('#drag_sort').sortable({
+    axis: 'y',
+    dropOnEmpty: false,
+    cursor: 'crosshair',
+    items: '.item',
+    opacity: 0.4,
+    scroll: true,
+    update: function(e, ui) {
+      var item_id = ui.item.data('item_id');
+      var position = ui.item.index();
+      $.ajax({
+        type: 'POST',
+        url: $(this).data('update_url'),
+        dataType: 'json',
+        data: { id: item_id, item: { row_order_position: position } }
+      })
+    }
+  });
+  
+  //----------------------------------------------------------------
 	$(".notice").click(function() {
 		$(this).fadeTo(200, 0.00, function(){ //fade
 			$(this).slideUp(200, function() { //slide up

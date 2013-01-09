@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency "rails", "~> 3.2.8"
+  s.add_dependency 'jquery-rails'
+  s.add_dependency 'jquery-ui-rails'
   s.add_dependency "mysql2", ">= 0.3.11"
   s.add_dependency 'devise', '~> 2.1'
   s.add_dependency "rolify", ">= 3.2.0"
