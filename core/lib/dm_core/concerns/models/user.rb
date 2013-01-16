@@ -21,11 +21,23 @@ module DmCore
 
           belongs_to              :country, :class_name => 'DmCore::Country'
 
-          validates_presence_of   :first_name
-          validates_presence_of   :last_name
-          validates_presence_of   :country_id
+          validates_presence_of   :first_name, :if => :require_name?
+          validates_presence_of   :last_name, :if => :require_name?
+          validates_presence_of   :country_id, :if => :require_country?
           validates_presence_of   :email
 
+          # Override this method if you don't want to require the first/last name
+          #------------------------------------------------------------------------------
+          def require_name?
+            true
+          end
+          
+          # Override this method if you don't want to require country
+          #------------------------------------------------------------------------------
+          def require_country?
+            true
+          end
+          
           #------------------------------------------------------------------------------
           def display_name
             self.first_name.to_s + " " + self.last_name.to_s
