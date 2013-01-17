@@ -19,8 +19,9 @@ $(document).ready(function() {
   $('#drag_sort').sortable({
     axis: 'y',
     dropOnEmpty: false,
-    cursor: 'crosshair',
+    cursor: 'row-resize',
     items: '.item',
+    handle: '.sort_handle',
     opacity: 0.4,
     scroll: true,
     update: function(e, ui) {
