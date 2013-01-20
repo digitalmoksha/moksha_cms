@@ -29,8 +29,12 @@ module Admin::ThemeAmsterdamHelper
   # A colored text label.
   # style => :success, :important, :info, :warning, inverse
   #------------------------------------------------------------------------------
-  def colored_label(text, style = :info)
-    "<span class='label label-#{style.to_s}'>#{text}</span>".html_safe
+  def colored_label(text, style = :plain)
+    if style == :plain
+      "<span class='label'>#{text}</span>".html_safe
+    else
+      "<span class='label label-#{style.to_s}'>#{text}</span>".html_safe
+    end
   end
 
   #------------------------------------------------------------------------------
@@ -40,6 +44,11 @@ module Admin::ThemeAmsterdamHelper
     options[:class]   ||= ''
     options[:toolbar] ||= ''
     
+    if options[:toolbar] == :languages
+      options[:toolbar] = language_toolbar_tabs(options[:include_general])
+      options[:class] += ' navbar-tabs'
+    end
+
     content = with_output_buffer(&block)
     #content_tag :div, :id => options[:id], :class => "widget fluid #{options[:class]}" do
     #  "<div class='whead'><h6>#{options[:title]}</h6>#{options[:toolbar]}<div class='clear'></div></div>".html_safe +
@@ -61,7 +70,7 @@ module Admin::ThemeAmsterdamHelper
     options[:toolbar] ||= ''
 
     if options[:toolbar] == :languages
-      options[:toolbar] = language_toolbar_tabs
+      options[:toolbar] = language_toolbar_tabs(options[:include_general])
       options[:class] += ' navbar-tabs'
     end
     
@@ -134,7 +143,8 @@ module Admin::ThemeAmsterdamHelper
     out    = "<ul class='nav nav-tabs pull-right'>"
     out   +=   "<li class='active'>#{link_to 'General', '#tab_general', :data => {:toggle => 'tab'} }" if include_general
     DmCore::Language.language_array.each do |locale|
-      out +=  "<li>#{link_to nls_flag_image(locale), '#tab_' + locale.to_s, :data => {:toggle => 'tab'} }</li>"
+      active = "class='active'" if !include_general && DmCore.config.default_locale == locale
+      out +=  "<li #{active}>#{link_to nls_flag_image(locale), '#tab_' + locale.to_s, :data => {:toggle => 'tab'} }</li>"
     end
     out   += "</ul>"
     out.html_safe
