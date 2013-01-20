@@ -1,5 +1,15 @@
 module DmCore
   module ApplicationHelper
+
+    # Used for accessing a models presenter object - can also accept a block
+    #------------------------------------------------------------------------------
+    def present(object, klass = nil)
+      klass ||= "#{object.class}Presenter".constantize
+      presenter = klass.new(object, self)
+      yield presenter if block_given?
+      presenter
+    end
+
     #------------------------------------------------------------------------------
     def flash_notices
       #--- use Bootstrap class values

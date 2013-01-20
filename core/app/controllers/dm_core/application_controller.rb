@@ -31,6 +31,13 @@ module DmCore
       current_user.update_last_access if current_user && signed_in?
     end
 
+    # Used for accessing a presenter inside a controller
+    #------------------------------------------------------------------------------
+    def present(object, klass = nil)
+      klass ||= "#{object.class}Presenter".constantize
+      klass.new(object, view_context)
+    end
+    
     # FORCE to implement content_for in controller.  This is so we can use it in
     # the pages_controller to set the page title
     #------------------------------------------------------------------------------
