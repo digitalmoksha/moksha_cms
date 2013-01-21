@@ -144,6 +144,16 @@ module Admin::ThemeAmsterdamHelper
     out.html_safe
   end
   
+  #------------------------------------------------------------------------------
+  def nav_bar_items(item_array)
+    out    = "<ul class='nav pull-right'>"
+    item_array.each do |item|
+      out += "<li>#{item}</li>"
+    end
+    out   += "</ul>"
+    out.html_safe
+  end
+  
   # Format flash messages for admin theme
   #------------------------------------------------------------------------------
   def flash_admin
