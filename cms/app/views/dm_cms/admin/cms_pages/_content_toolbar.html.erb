@@ -1,6 +1,6 @@
 <ul class="nav pull-right">
   <li><%= link_to icons('font-arrow-up'), move_up_admin_cms_contentitem_path(contentitem), :title => "Move content up" %></li>
   <li><%= link_to icons('font-arrow-down'), move_down_admin_cms_contentitem_path(contentitem), :title => "Move content down" %></li>
-  <li><%= link_to 'Edit', edit_admin_cms_contentitem_path(contentitem) %></li>
-  <li><%= link_to 'Remove', admin_cms_contentitem_path(contentitem), :method => :delete, :confirm => 'Are you sure you wish to delete with item?' %></li>
+  <li><%= link_to icon_label('icon-edit', 'Edit'), edit_admin_cms_contentitem_path(contentitem) %></li>
+  <li><%= link_to icon_label('icon-trash', 'Delete'), admin_cms_contentitem_path(contentitem), :method => :delete, :confirm => 'Are you sure you wish to delete with item?' %></li>
 </ul> 
