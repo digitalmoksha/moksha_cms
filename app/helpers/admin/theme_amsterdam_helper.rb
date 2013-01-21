@@ -39,10 +39,11 @@ module Admin::ThemeAmsterdamHelper
 
   #------------------------------------------------------------------------------
   def content_box(options = {}, &block)
-    options[:title]   ||= ''
-    options[:id]      ||= ''
-    options[:class]   ||= ''
-    options[:toolbar] ||= ''
+    options[:title]         ||= ''
+    options[:id]            ||= ''
+    options[:class]         ||= ''
+    options[:toolbar]       ||= ''
+    options[:include_general] = options[:include_general].nil? ? true : options[:include_general]
     
     if options[:toolbar] == :languages
       options[:toolbar] = language_toolbar_tabs(options[:include_general])
@@ -50,10 +51,6 @@ module Admin::ThemeAmsterdamHelper
     end
 
     content = with_output_buffer(&block)
-    #content_tag :div, :id => options[:id], :class => "widget fluid #{options[:class]}" do
-    #  "<div class='whead'><h6>#{options[:title]}</h6>#{options[:toolbar]}<div class='clear'></div></div>".html_safe +
-    #  content_tag(:div, content, :class => 'body')
-    #end
     content_tag :div, :id => options[:id], :class => "block well #{options[:class]}" do
       "<div class='navbar'><div class='navbar-inner'><h5>#{options[:title]}</h5>#{options[:toolbar]}</div></div>".html_safe +
       content_tag(:div, content, :class => 'body')
@@ -64,21 +61,18 @@ module Admin::ThemeAmsterdamHelper
   # margins/padding.  Useful for forms and tables
   #------------------------------------------------------------------------------
   def content_frame(options = {}, &block)
-    options[:title]   ||= ''
-    options[:id]      ||= ''
-    options[:class]   ||= ''
-    options[:toolbar] ||= ''
-
+    options[:title]         ||= ''
+    options[:id]            ||= ''
+    options[:class]         ||= ''
+    options[:toolbar]       ||= ''
+    options[:include_general] = options[:include_general].nil? ? true : options[:include_general]
+    
     if options[:toolbar] == :languages
       options[:toolbar] = language_toolbar_tabs(options[:include_general])
       options[:class] += ' navbar-tabs'
     end
     
     content = with_output_buffer(&block)
-    # content_tag :div, :id => options[:id], :class => "widget fluid #{options[:class]}" do
-    #   "<div class='whead'><h6>#{options[:title]}</h6>#{options[:toolbar]}<div class='clear'></div></div>".html_safe +
-    #   content
-    # end
     content_tag :div, :id => options[:id], :class => "block well #{options[:class]}" do
       "<div class='navbar'><div class='navbar-inner'><h5>#{options[:title]}</h5>#{options[:toolbar]}</div></div>".html_safe +
       content
