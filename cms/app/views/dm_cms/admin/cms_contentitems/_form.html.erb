@@ -1,7 +1,6 @@
 <% new_record = @cms_contentitem.new_record? %>
 <% submit_url = (new_record ? create_content_admin_cms_contentitem_path(@current_page) : admin_cms_contentitem_path(@cms_contentitem)) %>
-<% title = (new_record ? "New Content for: #{@current_page.slug}" : "Editing Content for: #{@current_page.slug}") %>
-<% content_for :content_title, title.html_safe %>
+<% title = (new_record ? "New Content" : "Editing Content for: #{@cms_contentitem.container}") %>
 
 <%= simple_form_for @cms_contentitem, :url => submit_url do |f| %>
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>

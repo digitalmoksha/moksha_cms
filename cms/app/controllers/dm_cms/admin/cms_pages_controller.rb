@@ -1,7 +1,8 @@
 class DmCms::Admin::CmsPagesController < DmCore::Admin::AdminController
   helper "dm_cms/cms_pages"
   
-  before_filter :current_page, :except => [:file_tree, :expire_cache_total]
+  before_filter   :current_page, :except => [:file_tree, :expire_cache_total]
+  before_filter   :set_title
 
   #------------------------------------------------------------------------------
   def index
@@ -105,8 +106,9 @@ private
 
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
-  def template_setup
-    content_for :content_title, icon_label('font-paste', 'Pages')
+  def set_title
+    text = @current_page.nil? ? 'Pages' : @current_page.title
+    content_for :content_title, icon_label('font-paste', text)
   end
 
 =begin

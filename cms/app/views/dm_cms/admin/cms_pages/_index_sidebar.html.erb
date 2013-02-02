@@ -1,5 +1,14 @@
 <% content_for :sidebar do %>
 
-	<%= link_to "Clear Entire Page Cache", admin_expire_cache_path, :class => "action-button blue" %>
-
+  <div class="block">
+	  <%= link_to "Clear Entire Page Cache", admin_expire_cache_path, :class => "action-button blue" %>
+  </div>
+  
+  <% if false %>
+    <div class="block outer" style="padding: 5px;">
+      <ul class="link_list">
+        <%= nested_tree_sidebar(@tree) %>
+      </ul>
+    </div>
+  <% end %>
 <% end %>

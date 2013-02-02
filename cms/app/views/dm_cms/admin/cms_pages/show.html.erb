@@ -7,8 +7,7 @@
 
 <% @current_page.cms_contentitems.each do |item| %>
   <% toolbar = render :partial => 'content_toolbar', :locals => { :contentitem => item } %>
-  <% purpose = "<span class='content_purpose'>#{item.purpose}</span>" if item.purpose %>
-  <%= content_frame :title => "#{item.container} #{purpose}", :toolbar => toolbar do %>
+  <%= content_frame :title => "#{item.container}", :toolbar => toolbar do %>
     <div class="table-overflow">
       <table class="table table-bordered table-block table-gradient table-stats">
         <tbody>

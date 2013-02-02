@@ -1,0 +1,8 @@
+<li class="tree_item">
+  <% if item.divider? %>
+    <%= link_to "&mdash; #{item.menutitle} &mdash;".html_safe, :action => :show, :id => item %>
+  <% else %>
+    <%= link_to (item.title.blank? ? item.slug : item.title), :action => :show, :id => item %>
+  <% end %>
+  <%= (sub_items.blank? ? '' : content_tag(:ul, nested_tree_sidebar(sub_items), :class => 'arrow-list')) %>
+</li>

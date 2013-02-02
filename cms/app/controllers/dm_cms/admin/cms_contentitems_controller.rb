@@ -1,17 +1,17 @@
 class DmCms::Admin::CmsContentitemsController < DmCore::Admin::AdminController
 
-  before_filter :current_content, :except => [:new_content, :create_content]
+  before_filter   :current_page,    :only =>    [:new_content, :create_content]
+  before_filter   :current_content, :except =>  [:new_content, :create_content]
+  before_filter   :set_title
 
   #------------------------------------------------------------------------------
   def new_content
     @cms_contentitem        = CmsContentitem.new
-    @current_page           = CmsPage.find(params[:id])
     @cms_contentitem.container  = 'body'
   end
 
   #------------------------------------------------------------------------------
   def create_content
-    @current_page           = CmsPage.find(params[:id])
     @current_page.cms_contentitems.create(params[:cms_contentitem])
     redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @current_page)
   end
@@ -59,8 +59,13 @@ class DmCms::Admin::CmsContentitemsController < DmCore::Admin::AdminController
     redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @current_content.cms_page_id)
   end
 
-  protected
+protected
   
+  #------------------------------------------------------------------------------
+  def current_page
+    @current_page  = CmsPage.find(params[:id])
+  end
+
   #------------------------------------------------------------------------------
   def current_content
     @current_content  = CmsContentitem.find(params[:id]) unless params[:id].to_i == 0
@@ -71,8 +76,9 @@ private
 
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
-  def template_setup
-    content_for :content_title, icon_label('font-paste', 'Pages')
+  def set_title
+    text = @current_page.nil? ? 'Pages' : @current_page.title
+    content_for :content_title, icon_label('font-paste', text)
   end
 
 end
