@@ -1,10 +1,14 @@
 module DmCore
   class ApplicationController < ActionController::Base
 
+    around_filter   :scope_current_account
+
     before_filter   :set_locale
     before_filter   :set_mailer_url_options
     before_filter   :update_user
     
+    include DmCore::AccountHelper
+
   protected
   
     #------------------------------------------------------------------------------
@@ -59,5 +63,26 @@ module DmCore
     def content_for?(name)
       @_content_for[name].present?
     end
+
+    # determine what filters are set for this controller - useful for debugging
+    #------------------------------------------------------------------------------
+    def self.filters(kind = nil)
+      all_filters = _process_action_callbacks
+      all_filters = all_filters.select{|f| f.kind == kind} if kind
+      all_filters.map(&:filter)
+    end
+
+    def self.before_filters
+      filters(:before)
+    end
+
+    def self.after_filters
+      filters(:after)
+    end
+
+    def self.around_filters
+      filters(:around)
+    end
+
   end
 end

@@ -26,6 +26,13 @@ module DmCore
           validates_presence_of   :country_id, :if => :require_country?
           validates_presence_of   :email
 
+          after_create            :add_account
+          
+          #------------------------------------------------------------------------------
+          def add_account
+            self.update_attribute(:account_id, Account.current.id)
+          end
+          
           # Override this method if you don't want to require the first/last name
           #------------------------------------------------------------------------------
           def require_name?
