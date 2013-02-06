@@ -1,6 +1,5 @@
 class CmsContentitem < ActiveRecord::Base
   class Translation < ::Globalize::ActiveRecord::Translation
-    attr_accessible     :locale, :content
     has_paper_trail
   end
 
@@ -10,9 +9,9 @@ class CmsContentitem < ActiveRecord::Base
   belongs_to            :cms_page
   
   # --- acts_as_tree  
-  acts_as_list          :scope => :cms_page #'cms_page_id = #{cms_page_id}'
-  default_scope         :order => "position ASC"
-
+  acts_as_list          :scope => :cms_page
+  default_scope         { where(account_id: Account.current.id).order("position ASC") }
+  
   # --- globalize
   translates            :content, :fallbacks_for_empty_translations => true
   globalize_accessors   :locales => DmCore::Language.language_array
