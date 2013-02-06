@@ -3,4 +3,7 @@ class Role < ActiveRecord::Base
   belongs_to :resource, :polymorphic => true
   
   scopify
+
+  #--- [todo] don't know if this would interfere with the scopify above...
+  #default_scope           { where(account_id: Account.current.id) }
 end

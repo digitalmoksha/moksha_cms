@@ -1,10 +1,13 @@
 class DmCore::Admin::AdminController < ApplicationController
 
+  #around_filter :scope_current_account
+  
   before_filter :authenticate_admin_user!
   before_filter :template_setup
 
   layout 'admin/admin_page'
   
+  include DmCore::AccountHelper
   include Admin::ThemeAmsterdamHelper
   
   #------------------------------------------------------------------------------
