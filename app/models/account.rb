@@ -3,7 +3,22 @@ class Account < ActiveRecord::Base
 
   self.table_name   = 'core_accounts'
   attr_accessible   :company_name, :contact_email, :default_site_id, :domain, :account_prefix
+  attr_accessible   :preferred_site_enabled, :preferred_site_default_locale,
+                    :preferred_site_ssl_enabled, :preferred_webmaster_email,
+                    :preferred_support_email, :preferred_google_analytics_tracker_id,
+                    :preferred_mailchimp_api_key
+  
+  preference        :site_ssl_enabled,                :boolean, :default => false
+  preference        :site_default_locale,             :string,  :default => 'en'
+  preference        :site_enabled,                    :boolean, :default => false
+  preference        :google_analytics_tracker_id,     :string
+  preference        :webmaster_email,                 :string
+  preference        :support_email,                   :string
+  preference        :mailchimp_api_key,               :string
 
+  #--- eager load all preferences when an object is found
+  after_find        :preferences
+  
   # Find the account using the specified host (usually from the request url).
   # Check for certain special subdomains before lookup:
   #   dev, www, backoffice, staging, stg-
@@ -30,8 +45,8 @@ class Account < ActiveRecord::Base
   end
   
   #------------------------------------------------------------------------------
-  # def site_disabled?
-  #   preferred_site_disabled?
-  # end
+  def site_enabled?
+    preferred_site_enabled?
+  end
 
 end

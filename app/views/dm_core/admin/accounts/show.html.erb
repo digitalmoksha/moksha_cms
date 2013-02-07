@@ -1,0 +1,34 @@
+<div class="block">
+  <% toolbar = nav_bar_items([ 
+    @account.preferred_site_enabled? ? colored_label('Site Published', :success) : colored_label('Site Disabled'),
+    link_to(icon_label('icon-edit', 'Edit'), dm_core.edit_admin_account_path, :class => "nav-btn-primary") ]) %>
+  <%= content_box :title => "Account", :toolbar => toolbar do %>
+    <dl class="dl-horizontal">
+      <dt>Company Name</dt>
+      <dd><%= @account.company_name %></dd>
+      <dt>Contact Email</dt>
+      <dd><%= @account.contact_email %></dd>
+      <dt>Domain</dt>
+      <dd><%= @account.domain %></dd>
+      <dt>Account Prefix</dt>
+      <dd><%= @account.account_prefix %></dd>
+    </dl>
+
+    <hr>
+
+    <dl class="dl-horizontal">
+      <dt>Default Locale</dt>
+      <dd><%= @account.preferred_site_default_locale %></dd>
+      <dt>Webmaster Email</dt>
+      <dd><%= @account.preferred_webmaster_email.to_s_default %></dd>
+      <dt>Support Email</dt>
+      <dd><%= @account.preferred_support_email.to_s_default %></dd>
+      <dt>Google Analytics Tracker ID</dt>
+      <dd><%= @account.preferred_google_analytics_tracker_id.to_s_default %></dd>
+      <dt>MailChimp API Key</dt>
+      <dd><%= @account.preferred_mailchimp_api_key.to_s_default %></dd>
+      <dt>SSL Enabled?</dt>
+      <dd><div class="checkbox on_off inline"><input type="checkbox" <%= 'checked="1"' if @account.preferred_site_ssl_enabled %> disabled="disabled" /></div></dd>
+    </dl>
+  <% end %>
+</div>
