@@ -18,7 +18,7 @@ class DmCms::PagesController < DmCms::ApplicationController
   def show
     @current_page = CmsPage.find_by_slug(params[:slug])
     if @current_page.nil? || (!@current_page.is_published? && !is_admin?)
-      render :action => :show, :layout => "template-404", :status => 404
+      render :action => :show, :layout => "cms_templates/404", :status => 404
       return
     end
 
