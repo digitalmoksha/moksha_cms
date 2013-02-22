@@ -7,10 +7,18 @@ module DmCore
     before_filter   :set_mailer_url_options
     before_filter   :update_user
     
+    before_filter   :theme_resolver
+    
     include DmCore::AccountHelper
 
   protected
   
+    # Choose the theme based on the account prefix in the Account
+    #------------------------------------------------------------------------------
+    def theme_resolver
+      theme(current_account.account_prefix + '.default') if DmCore.config.enable_themes
+    end
+
     #------------------------------------------------------------------------------
     def set_mailer_url_options
       ActionMailer::Base.default_url_options[:host] = request.host_with_port
