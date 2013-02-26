@@ -75,9 +75,9 @@ class CmsPage < ActiveRecord::Base
   # Create a default site
   #------------------------------------------------------------------------------
   def self.create_default_site
-    site        = CmsPage.create( :slug => 'index', :pagetype => 'content', :template => 'site_frontpage', 
-                                  :published => true, :title => 'Front Page')
-    missing     = site.children.create(:slug => 'missing', :pagetype => 'content', :published => true, :title => 'Page Missing')
+    site = CmsPage.create( :slug => 'index', :pagetype => 'content', :template => 'front', 
+                           :published => true, :title => 'Front Page')
+    site.children.create(:slug => 'missing', :pagetype => 'content', :published => true, :title => 'Page Missing')
   end
 
 =begin
