@@ -15,7 +15,7 @@ class DmCore::Admin::AdminController < ApplicationController
     authenticate_user! 
     unless current_user.is_admin?
       flash[:alert] = "Unauthorized Access!"
-      redirect_to root_path 
+      redirect_to current_account.index_path 
     end
   end  
   

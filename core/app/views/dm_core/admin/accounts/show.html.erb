@@ -5,13 +5,13 @@
   <%= content_box :title => "Account", :toolbar => toolbar do %>
     <dl class="dl-horizontal">
       <dt>Company Name</dt>
-      <dd><%= @account.company_name %></dd>
+      <dd><%= @account.company_name.to_s_default %></dd>
       <dt>Contact Email</dt>
-      <dd><%= @account.contact_email %></dd>
+      <dd><%= @account.contact_email.to_s_default %></dd>
       <dt>Domain</dt>
-      <dd><%= @account.domain %></dd>
+      <dd><%= @account.domain.to_s_default %></dd>
       <dt>Account Prefix</dt>
-      <dd><%= @account.account_prefix %></dd>
+      <dd><%= @account.account_prefix.to_s_default %></dd>
     </dl>
 
     <hr>
