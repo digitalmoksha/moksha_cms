@@ -28,9 +28,16 @@ module DmCore
 
           after_create            :add_account
           
+          # When a user is created, attach it to the current account
           #------------------------------------------------------------------------------
           def add_account
             self.update_attribute(:account_id, Account.current.id)
+          end
+          
+          # Determin if this user has the Admin role
+          #------------------------------------------------------------------------------
+          def is_admin?
+            has_role?(:admin)
           end
           
           # Override this method if you don't want to require the first/last name

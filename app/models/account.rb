@@ -7,7 +7,12 @@ class Account < ActiveRecord::Base
                     :preferred_site_ssl_enabled, :preferred_webmaster_email,
                     :preferred_support_email, :preferred_google_analytics_tracker_id,
                     :preferred_mailchimp_api_key
-  
+
+  validates_presence_of   :domain
+  validates_presence_of   :account_prefix
+
+  after_create      :create_default_roles
+
   preference        :site_ssl_enabled,                :boolean, :default => false
   preference        :site_default_locale,             :string,  :default => 'en'
   preference        :site_enabled,                    :boolean, :default => false
@@ -45,8 +50,25 @@ class Account < ActiveRecord::Base
   end
   
   #------------------------------------------------------------------------------
+  def create_default_roles
+    Role.create!(name: 'admin',   account_id: self.id)
+    Role.create!(name: 'beta',    account_id: self.id)
+    Role.create!(name: 'author',  account_id: self.id)
+  end
+  
+  #------------------------------------------------------------------------------
   def site_enabled?
     preferred_site_enabled?
   end
+  
+  #------------------------------------------------------------------------------
+  def ssl_enabled?
+    preferred_site_ssl_enabled?
+  end
 
+  # take the root path and use the default locale
+  #------------------------------------------------------------------------------
+  def index_path
+    "/#{preferred_site_default_locale}/index"
+  end
 end

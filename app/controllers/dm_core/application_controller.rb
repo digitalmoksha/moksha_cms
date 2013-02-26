@@ -6,13 +6,26 @@ module DmCore
     before_filter   :set_locale
     before_filter   :set_mailer_url_options
     before_filter   :update_user
-    
     before_filter   :theme_resolver
+    before_filter   :site_enabled?, :unless => :devise_controller?
     
     include DmCore::AccountHelper
 
   protected
-  
+
+    # if site is not enabled, only allow a logged in Admin user to access pages
+    #------------------------------------------------------------------------------
+    def site_enabled?
+      unless current_account.site_enabled?
+        # authenticate_user! 
+        unless (user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta)))
+          # flash[:alert] = "Our apologies - at this time you need a valid account to access this site"
+          # redirect_to dm_cms.showpage_url(:slug => 'coming_soon')
+          render :layout => 'coming_soon'
+        end
+     end
+    end  
+
     # Choose the theme based on the account prefix in the Account
     #------------------------------------------------------------------------------
     def theme_resolver
