@@ -20,7 +20,8 @@ module DmCore
       unless current_account.site_enabled?
         # authenticate_user! 
         unless (user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta)))
-          render :layout => 'coming_soon'
+          render 'dm_cms/pages/coming_soon', :layout => 'coming_soon'
+          return false
         end
      end
     end  
