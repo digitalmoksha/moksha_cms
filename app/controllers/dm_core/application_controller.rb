@@ -8,6 +8,7 @@ module DmCore
     before_filter   :update_user
     before_filter   :theme_resolver
     before_filter   :site_enabled?, :unless => :devise_controller?
+    before_filter   :ssl_redirect
     
     include DmCore::AccountHelper
 
@@ -19,13 +20,28 @@ module DmCore
       unless current_account.site_enabled?
         # authenticate_user! 
         unless (user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta)))
-          # flash[:alert] = "Our apologies - at this time you need a valid account to access this site"
-          # redirect_to dm_cms.showpage_url(:slug => 'coming_soon')
           render :layout => 'coming_soon'
         end
      end
     end  
 
+    #------------------------------------------------------------------------------
+    def ssl_redirect
+      if Rails.env.production? && current_account.ssl_enabled?
+        if request.ssl? && !use_ssl? || !request.ssl? && use_ssl?
+          protocol = request.ssl? ? "http" : "https"
+          flash.keep
+          redirect_to protocol: "#{protocol}://"
+        end
+      end
+    end
+
+    # override in other controllers
+    #------------------------------------------------------------------------------
+    def use_ssl?
+      true # user_signed_in? (but would need to ensure Devise runs under ssl)
+    end
+    
     # Choose the theme based on the account prefix in the Account
     #------------------------------------------------------------------------------
     def theme_resolver
