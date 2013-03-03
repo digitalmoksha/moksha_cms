@@ -82,6 +82,6 @@ module DmCore
         @attributes[key] = ((value.delete "\"").delete "\'")
       end
       super    
-    end    
+    end
   end
 end
