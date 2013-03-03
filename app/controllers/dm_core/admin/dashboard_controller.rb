@@ -7,7 +7,12 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update_site_assets
-    @results = `svn up #{Rails.root}/public/site_assets`
+    @results = "Updating 'site_assets'...\r\n"
+    @results += `svn up #{Rails.root}/public/site_assets`
+    if File.exists?("#{Rails.root}/protected_assets")
+      @results += "\nUpdating 'protected_assets'...\r\n"
+      @results += `svn up #{Rails.root}/protected_assets`
+    end
   end
   
   # use whatever is passed in, but strip out anything dangerous.  Value will get
