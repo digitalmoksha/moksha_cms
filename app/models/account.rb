@@ -52,9 +52,9 @@ class Account < ActiveRecord::Base
   
   #------------------------------------------------------------------------------
   def create_default_roles
-    Role.create!(name: 'admin',   account_id: self.id)
-    Role.create!(name: 'beta',    account_id: self.id)
-    Role.create!(name: 'author',  account_id: self.id)
+    Role.unscoped.create!(name: 'admin',   account_id: self.id)
+    Role.unscoped.create!(name: 'beta',    account_id: self.id)
+    Role.unscoped.create!(name: 'author',  account_id: self.id)
   end
   
   #------------------------------------------------------------------------------
