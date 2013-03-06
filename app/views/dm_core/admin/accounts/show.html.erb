@@ -17,6 +17,8 @@
     <hr>
 
     <dl class="dl-horizontal">
+      <dt>Site Title</dt>
+      <dd><%= @account.preferred_site_title.to_s_default %></dd>
       <dt>Default Locale</dt>
       <dd><%= @account.preferred_site_default_locale %></dd>
       <dt>Webmaster Email</dt>

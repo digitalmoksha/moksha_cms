@@ -8,6 +8,7 @@
     <%= f.input :domain %>
     <%= f.input :account_prefix %>
     
+    <%= f.input :preferred_site_title, :label => 'Site Title' %>
     <%= f.input :preferred_site_enabled, :as => :toggle, :label => 'Publish Site?' %>
     <%= f.input :preferred_site_default_locale, :required => true, :label => 'Default Locale'%>  
     <%= f.input :preferred_site_ssl_enabled, :as => :toggle, :label => 'Enable SSL?' %>

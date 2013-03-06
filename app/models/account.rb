@@ -6,13 +6,14 @@ class Account < ActiveRecord::Base
   attr_accessible   :preferred_site_enabled, :preferred_site_default_locale,
                     :preferred_site_ssl_enabled, :preferred_webmaster_email,
                     :preferred_support_email, :preferred_google_analytics_tracker_id,
-                    :preferred_mailchimp_api_key
+                    :preferred_mailchimp_api_key, :preferred_site_title
 
   validates_presence_of   :domain
   validates_presence_of   :account_prefix
 
   after_create      :create_default_roles
 
+  preference        :site_title,                      :string
   preference        :site_ssl_enabled,                :boolean, :default => false
   preference        :site_default_locale,             :string,  :default => 'en'
   preference        :site_enabled,                    :boolean, :default => false
