@@ -1,6 +1,9 @@
 #------------------------------------------------------------------------------
 class Account < ActiveRecord::Base
 
+  class DomainNotFound < StandardError
+  end
+  
   self.table_name   = 'core_accounts'
   attr_accessible   :company_name, :contact_email, :default_site_id, :domain, :account_prefix
   attr_accessible   :preferred_site_enabled, :preferred_site_default_locale,
@@ -33,7 +36,7 @@ class Account < ActiveRecord::Base
     host      ||= ""
     separated   = host.downcase.split('.')
     separated   = separated.delete_if { |x| x == "dev" || x == 'www' || x == 'backoffice' || x =~ /stg-/ || x == 'staging' }
-    return self.find_by_domain!(separated.join('.'))
+    self.find_by_domain(separated.join('.')) or raise Account::DomainNotFound.new('Invalid domain')
   end
 
   # Since we need the current account for the default scope in models, we need 
