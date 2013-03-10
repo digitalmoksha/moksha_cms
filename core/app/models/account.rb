@@ -53,6 +53,13 @@ class Account < ActiveRecord::Base
     Thread.current[:account]
   end
   
+  # Set the current account by looking up the account prefix.  To be used when
+  # operating outside a request, such as from the console
+  #------------------------------------------------------------------------------
+  def self.current_by_prefix(account_prefix)
+    Account.current = Account.find_by_account_prefix(account_prefix)
+  end
+  
   #------------------------------------------------------------------------------
   def create_default_roles
     Role.unscoped.create!(name: 'admin',   account_id: self.id)

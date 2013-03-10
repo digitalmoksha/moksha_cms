@@ -15,12 +15,13 @@ module DmCore
   protected
 
     # if site is not enabled, only allow a logged in Admin user to access pages
+    # otherwise, redirect to the 'coming_soon' page
     #------------------------------------------------------------------------------
     def site_enabled?
-      unless current_account.site_enabled?
+      unless current_account.site_enabled? || request.params['slug'] == 'coming_soon'
         # authenticate_user! 
         unless (user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta)))
-          render 'dm_cms/pages/coming_soon', :layout => 'coming_soon'
+          redirect_to "/#{I18n.locale}/coming_soon"
           return false
         end
      end
