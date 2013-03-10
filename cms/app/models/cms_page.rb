@@ -72,12 +72,25 @@ class CmsPage < ActiveRecord::Base
     return ((cookie_hash.empty? || cookie_hash[slug] == "1") ? true : false)
   end
   
-  # Create a default site
+  # Create a default site.  Check if pages exists first, so we can add missing
+  # pages to already created sites.
   #------------------------------------------------------------------------------
   def self.create_default_site
-    site = CmsPage.create( :slug => 'index', :pagetype => 'content', :template => 'front', 
-                           :published => true, :title => 'Front Page')
-    site.children.create(:slug => 'missing', :pagetype => 'content', :published => true, :title => 'Page Missing')
+    #--- index page
+    unless (site = CmsPage.find_by_slug('index'))
+      site = CmsPage.create(:slug => 'index', :pagetype => 'content', :template => 'index', 
+                            :published => true, :title => 'Front Page')
+    end
+
+    unless CmsPage.find_by_slug('missing')
+      site.children.create( :slug => 'missing', :pagetype => 'content', :template => '404',
+                            :published => true, :title => 'Page Missing')
+    end
+    
+    unless CmsPage.find_by_slug('coming_soon')
+      site.children.create( :slug => 'coming_soon', :pagetype => 'content', :template => 'coming_soon',
+                            :published => true, :title => 'Coming Soon')
+    end
   end
 
 =begin

@@ -24,6 +24,7 @@ DmCms::Engine.routes.draw do
         end
       end
 
+    match '/coming_soon',                                   :controller => 'pages', :action => :show, :slug => 'coming_soon', :as  => :coming_soon
     match '/:slug(/:xaction(/:xid))',                       :controller => 'pages', :action => :show, :as  => :showpage 
 
   end
