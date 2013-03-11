@@ -1,5 +1,3 @@
-require 'liquid'
-
 # Allow Liquid tags to be namespaced, based on the account_prefix.  This allows
 # multiple sites to have tags named the same, but the correct one will get used
 # during rendering 

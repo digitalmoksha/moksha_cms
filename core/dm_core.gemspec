@@ -29,6 +29,9 @@ Gem::Specification.new do |s|
   s.add_dependency "globalize3", ">= 0.3.0"   # translations in database
   s.add_dependency 'country_select'           
   s.add_dependency 'paper_trail', '~> 2'      # table versioning
+  s.add_dependency "RedCloth", "~> 4.2"
+  s.add_dependency "bluecloth", "~> 2.2"
+  s.add_dependency "liquid", "~> 2.3"
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'easy_globalize3_accessors', :git => 'git://github.com/digitalmoksha/easy_globalize3_accessors.git'

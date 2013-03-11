@@ -6,6 +6,9 @@ require 'country_select'
 require 'simple_form'
 require 'will_paginate'
 require 'paper_trail'
+require 'RedCloth'
+require 'bluecloth'
+require 'liquid'
 
 module DmCore
   class Engine < ::Rails::Engine
