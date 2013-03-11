@@ -1,6 +1,3 @@
-require "RedCloth"
-require "bluecloth"
-require "liquid"
 require 'ancestry'
 require 'acts_as_list'
 require 'dm_core'

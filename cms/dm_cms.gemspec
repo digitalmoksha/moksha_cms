@@ -19,9 +19,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.2.11"
 
   #--- dont' forget to add 'require' statement in engine.rb
-  s.add_dependency "RedCloth", "~> 4.2"
-  s.add_dependency "bluecloth", "~> 2.2"
-  s.add_dependency "liquid", "~> 2.3"
   s.add_dependency 'ancestry'
   s.add_dependency 'acts_as_list'
 
