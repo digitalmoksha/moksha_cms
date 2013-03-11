@@ -14,7 +14,10 @@
       </div>
       <% DmCore::Language.language_array.each do |locale| %>        
         <div id="tab_<%= locale %>" class="tab-pane fade">
-          <%= f.input "content_#{locale}", :as => :text, :input_html => { :rows => 12, :class => 'input-block-level monospaced' } %>
+          <div class="control-group">
+            <%= f.label "content_#{locale}", 'Content', :class => "text control-label" %>
+            <%= f.text_area "content_#{locale}", :class => "text input-block-level monospaced", :rows => 24 %>
+          </div>
         </div>
       <% end %>
     </div>
