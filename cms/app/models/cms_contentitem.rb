@@ -3,7 +3,7 @@ class CmsContentitem < ActiveRecord::Base
     has_paper_trail
   end
 
-  attr_accessible       :itemtype, :container, :purpose, :content, :cms_page_id, :enable_cache
+  attr_accessible       :itemtype, :container, :content, :cms_page_id, :enable_cache
 
   # --- associations
   belongs_to            :cms_page
@@ -21,7 +21,6 @@ class CmsContentitem < ActiveRecord::Base
   
   # --- validations 
   validates_length_of   :itemtype,    :maximum => 30
-  validates_length_of   :purpose,     :maximum => 255,  :allow_nil => true
   validates_length_of   :container,   :maximum => 30
 
   # --- content types supported

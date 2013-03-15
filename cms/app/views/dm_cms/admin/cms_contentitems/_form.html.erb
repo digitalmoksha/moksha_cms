@@ -9,7 +9,6 @@
       <div id="tab_general" class="tab-pane active fade in">
         <%= f.input :itemtype, :label => 'Item Type', :collection => CmsContentitem::CONTENT_TYPES %>
         <%= f.input :container, :label => 'Content Name', :hint => 'This is normally "body" or "sidebar" or something' %>
-        <%= f.input :purpose, :label => 'Purpose', :hint => 'Short comment on type of content this is (optional)' %>
         <%= f.input :enable_cache, :as => :toggle, :label => 'Cache Content' %>
       </div>
       <% DmCore::Language.language_array.each do |locale| %>        
