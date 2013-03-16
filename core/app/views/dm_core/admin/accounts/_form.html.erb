@@ -10,8 +10,9 @@
     
     <%= f.input :preferred_site_title, :label => 'Site Title' %>
     <%= f.input :preferred_site_enabled, :as => :toggle, :label => 'Publish Site?' %>
-    <%= f.input :preferred_site_default_locale, :required => true, :label => 'Default Locale'%>  
-    <%= f.input :preferred_site_ssl_enabled, :as => :toggle, :label => 'Enable SSL?' %>
+    <%= f.input :preferred_default_locale, :required => true, :label => 'Default Locale'%>  
+    <%= f.input :preferred_locales, :required => true, :label => 'Supported Locales', :hint => "Comma seperated. Ex: 'en, de'" %>  
+    <%= f.input :preferred_ssl_enabled, :as => :toggle, :label => 'Enable SSL?' %>
     <%= f.input :preferred_webmaster_email, :label => 'Webmaster Email' %>
     <%= f.input :preferred_support_email, :label => 'Support Email' %>
     <%= f.input :preferred_google_analytics_tracker_id, :label => 'Google Analytics Tracker ID' %>
