@@ -29,12 +29,14 @@ module DmCms::PagesHelper
         when 'textile'
           xcontent = render :inline => content_item.content
           #content = textilize(xcontent)
-          content = liquidize(xcontent, {})
+          content = liquidize_textile(xcontent, {})
         when 'markdown'
           xcontent = render :inline => content_item.content
-          content = markdown(xcontent, :safe => false)
-        when 'erb'
-          content = render :inline => content_item.content
+          #content = markdown(xcontent, :safe => false)
+          content = liquidize_markdown(xcontent, {})
+        when 'html'
+          xcontent = render :inline => content_item.content
+          content = liquidize_html(xcontent, {})
         else
           content = ""
       end

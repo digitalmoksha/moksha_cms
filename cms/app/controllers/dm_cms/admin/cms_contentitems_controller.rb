@@ -12,34 +12,36 @@ class DmCms::Admin::CmsContentitemsController < DmCore::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def create_content
-    @current_page.cms_contentitems.create(params[:cms_contentitem])
-    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @current_page)
+    @cms_contentitem = @current_page.cms_contentitems.new(params[:cms_contentitem])
+    if @cms_contentitem.save
+      redirect_to admin_cms_page_url(@current_page), notice: 'Content successfully created.'
+    else
+      render action: "new_content", notice: 'Content successfully created.'
+    end
   end
 
   #------------------------------------------------------------------------------
   def edit
-    @cms_contentitem = @current_content
   end
 
   #------------------------------------------------------------------------------
   def update
-    if @current_content.update_attributes(params[:cms_contentitem])
-      redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @current_content.cms_page_id)
+    if @cms_contentitem.update_attributes(params[:cms_contentitem])
+      redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
      else
-      @cms_page = @current_content
       render :action => :edit
      end
   end
 
   #------------------------------------------------------------------------------
   def destroy
-    @current_content.destroy
-    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @current_content.cms_page_id)
+    @cms_contentitem.destroy
+    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
   end
 
   #------------------------------------------------------------------------------
   def update_fragment
-    if @current_content.update_attributes(params[:cms_contentitem])
+    if @cms_contentitem.update_attributes(params[:cms_contentitem])
       #@cms_page.merge!(@item.cms_page.get_page_render_values)
       #respond_to do |format| 
       #  format.js { render :action => :update_fragment } 
@@ -49,14 +51,14 @@ class DmCms::Admin::CmsContentitemsController < DmCore::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def move_up
-    @current_content.move_higher
-    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @current_content.cms_page_id)
+    @cms_contentitem.move_higher
+    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
   end
 
   #------------------------------------------------------------------------------
   def move_down
-    @current_content.move_lower
-    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @current_content.cms_page_id)
+    @cms_contentitem.move_lower
+    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
   end
 
 protected
@@ -68,8 +70,8 @@ protected
 
   #------------------------------------------------------------------------------
   def current_content
-    @current_content  = CmsContentitem.find(params[:id]) unless params[:id].to_i == 0
-    @current_page     = @current_content.cms_page
+    @cms_contentitem  = CmsContentitem.find(params[:id]) unless params[:id].to_i == 0
+    @current_page     = @cms_contentitem.cms_page
   end
 
 private

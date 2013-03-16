@@ -20,15 +20,25 @@ class CmsContentitem < ActiveRecord::Base
   has_paper_trail       :skip => :content
   
   # --- validations 
+  validates_presence_of :itemtype, :container
   validates_length_of   :itemtype,    :maximum => 30
   validates_length_of   :container,   :maximum => 30
+  #validate              :validate_default_content_present
 
   # --- content types supported
-  CONTENT_TYPES = [ 'Textile', 'Markdown', 'Erb' ]
+  CONTENT_TYPES = [ 'Textile', 'Markdown', 'HTML' ]
 
   after_update          :clear_cache
   before_destroy        :clear_cache
 
+  # [todo] does not check proper attribute
+  #------------------------------------------------------------------------------
+  def validate_default_content_present
+    if attributes["content_#{Account.current.preferred_default_locale}"].blank?
+      errors.add("content_#{Account.current.preferred_default_locale}", "should not be blank")
+    end
+  end
+  
   #------------------------------------------------------------------------------
   def deep_clone(new_cms_page_id)
     new_cms_contentitem                  = self.clone

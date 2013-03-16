@@ -3,7 +3,7 @@ module DmCms::LiquidHelper
 
   # Pass :view in a register so this view (with helpers) can be used inside of a tag
   #------------------------------------------------------------------------------
-  def liquidize(content, arguments)
+  def liquidize_textile(content, arguments)
     doc = RedCloth.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
                         :registers => {:controller => controller, :view => self, :account_site_assets => '/site_assets', :current_user => current_user}))
     #doc.hard_breaks = false
@@ -14,8 +14,15 @@ module DmCms::LiquidHelper
   #------------------------------------------------------------------------------
   def liquidize_markdown(content, arguments)
     doc = BlueCloth.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
-                        :registers => {:controller => controller, :current_users => current_users}))
+                          :registers => {:controller => controller, :view => self, :account_site_assets => '/site_assets', :current_user => current_user}))
     return doc.to_html.html_safe
+  end
+
+  #------------------------------------------------------------------------------
+  def liquidize_html(content, arguments)
+    doc = Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
+                              :registers => {:controller => controller, :view => self, :account_site_assets => '/site_assets', :current_user => current_user})
+    return doc.html_safe
   end
 
   #------------------------------------------------------------------------------

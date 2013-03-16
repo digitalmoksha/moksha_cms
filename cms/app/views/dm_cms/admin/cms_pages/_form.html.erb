@@ -16,7 +16,7 @@
         <%= f.input :menuimage, :label => 'Menu Image' %>
         <%= f.input :requires_login, :as => :toggle, :label => 'Requires Login' %>
       </div>
-      <% DmCore::Language.language_array.each do |locale| %>        
+      <% current_account.site_locales.each do |locale| %>        
         <div id="tab_<%= locale %>" class="tab-pane fade">
           <%= f.input "title_#{locale}", :label => 'Page Title' %>
           <%= f.input "menutitle_#{locale}", :label => 'Menu Title' %>

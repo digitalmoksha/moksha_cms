@@ -2,8 +2,9 @@
 <% submit_url = (new_record ? create_content_admin_cms_contentitem_path(@current_page) : admin_cms_contentitem_path(@cms_contentitem)) %>
 <% title = (new_record ? "New Content" : "Editing Content for: #{@cms_contentitem.container}") %>
 
+
 <%= simple_form_for @cms_contentitem, :url => submit_url do |f| %>
-  <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
+  <%= f.error_notification :message => "Please review the problems below"%>
   <%= content_frame :title => title, :toolbar => :languages do %>
     <div class="tab-content">
       <div id="tab_general" class="tab-pane active fade in">
@@ -11,12 +12,9 @@
         <%= f.input :container, :label => 'Content Name', :hint => 'This is normally "body" or "sidebar" or something' %>
         <%= f.input :enable_cache, :as => :toggle, :label => 'Cache Content' %>
       </div>
-      <% DmCore::Language.language_array.each do |locale| %>        
+      <% current_account.site_locales.each do |locale| %>        
         <div id="tab_<%= locale %>" class="tab-pane fade">
-          <div class="control-group">
-            <%= f.label "content_#{locale}", 'Content', :class => "text control-label" %>
-            <%= f.text_area "content_#{locale}", :class => "text input-block-level monospaced", :rows => 24 %>
-          </div>
+          <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 24 %>
         </div>
       <% end %>
     </div>
