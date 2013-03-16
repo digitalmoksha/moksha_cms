@@ -6,19 +6,22 @@ class Account < ActiveRecord::Base
   
   self.table_name   = 'core_accounts'
   attr_accessible   :company_name, :contact_email, :default_site_id, :domain, :account_prefix
-  attr_accessible   :preferred_site_enabled, :preferred_site_default_locale,
-                    :preferred_site_ssl_enabled, :preferred_webmaster_email,
+  attr_accessible   :preferred_site_enabled, :preferred_default_locale, :preferred_locales,
+                    :preferred_ssl_enabled, :preferred_webmaster_email,
                     :preferred_support_email, :preferred_google_analytics_tracker_id,
                     :preferred_mailchimp_api_key, :preferred_site_title
 
   validates_presence_of   :domain
   validates_presence_of   :account_prefix
+  validates_presence_of   :preferred_default_locale
+  validates_presence_of   :preferred_locales
 
   after_create      :create_default_roles
 
   preference        :site_title,                      :string
-  preference        :site_ssl_enabled,                :boolean, :default => false
-  preference        :site_default_locale,             :string,  :default => 'en'
+  preference        :ssl_enabled,                     :boolean, :default => false
+  preference        :default_locale,                  :string,  :default => 'en'
+  preference        :locales,                         :string,  :default => 'en, de'
   preference        :site_enabled,                    :boolean, :default => false
   preference        :google_analytics_tracker_id,     :string
   preference        :webmaster_email,                 :string
@@ -74,12 +77,18 @@ class Account < ActiveRecord::Base
   
   #------------------------------------------------------------------------------
   def ssl_enabled?
-    preferred_site_ssl_enabled?
+    preferred_ssl_enabled?
   end
 
+  # Reutrn an array of locales used for the site.  Split on commas and whitespace
+  #------------------------------------------------------------------------------
+  def site_locales
+    preferred_locales.split(/,\s*/)
+  end
+  
   # take the root path and use the default locale
   #------------------------------------------------------------------------------
   def index_path
-    "/#{preferred_site_default_locale}/index"
+    "/#{preferred_default_locale}/index"
   end
 end
