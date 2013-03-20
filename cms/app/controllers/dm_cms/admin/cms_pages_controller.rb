@@ -102,6 +102,11 @@ protected
     end
   end
 
+  #------------------------------------------------------------------------------
+  def theme_templates
+    #HashWithIndifferentAccess.new(YAML.load(File.read(File.expand_path('../theme.yml', __FILE__))))
+  end
+  
 private
 
   # Set some values for the template based on the controller

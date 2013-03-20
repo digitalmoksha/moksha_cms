@@ -44,48 +44,65 @@ module DmCms::PagesHelper
     return content
   end
 
-=begin
   #------------------------------------------------------------------------------
-  def menu_list_from_page(page, level)
-    menu ||= []
-    while level > 0
-      children = 
+  def main_menu(options = {})
+    return '' if (root = CmsPage.roots[0]).nil?
+
+    menu_str                 = ''
+    options[:ul]             = ''
+    options[:ul]            += "class='#{options[:class]}' "  unless options[:class].blank?
+    options[:ul]            += "id='#{options[:id]}' "        unless options[:id].blank?
+    options[:include_root]   = root                  if options[:include_home]
+    options[:active_class] ||= 'current'
+    children    = root.subtree.arrange.to_a[0][1]
+    menu_str    = menu_from_pages(children, options)
+    return menu_str.html_safe
+  end
+
+  #------------------------------------------------------------------------------
+  def menu_from_pages(pages, options = {})
+    options[:ul]  ||= ''
+    menu_str        = ''
+    if (root = options[:include_root])
+      active = (current_page?(root) ? options[:active_class] : '')
+      menu_str += "<li class='#{active}'>#{link_to root.menutitle, dm_cms.showpage_url(root.slug)}</li>"
     end
+    pages.each do |page, children|
+      if (page.is_published? || current_user.is_admin?) && page_authorized?(page) && !page.menutitle.blank?
+        submenu = (children.empty? ? '' : menu_from_pages(children))
+        active = (current_page?(page) ? options[:active_class] : '')
+        menu_str += "<li>#{link_to page.menutitle, dm_cms.showpage_url(page.slug)}#{submenu}</li>"
+      end
+    end
+    menu_str = ("<ul #{options[:ul]}>" + menu_str + "</ul>")
   end
   
   private
-    #------------------------------------------------------------------------------
-    def menu_from_pages(pages, options = {})
-      options[:use_cookies] ||= {}
-      menu_str    = ul_options = ''
-      ul_options += "class=\"#{options[:class]}\" " unless options[:class].blank?
-      ul_options += "id=\"#{options[:id]}\" " unless options[:id].blank?
 
-      if options[:include_home]
-        home = current_account_site.cms_pages.find_by_level(0)
-        menu_str += "<li>" + link_to(home.menutitle, showpage_url(:locale => @cms_page[:lang], :accessname => home.accessname)) + "</li>"
-      end
-
-      unless pages.nil?
-        pages.each do |p|
-          if p.is_published? && page_authorized?(p) && p.accessname != "missing" && p.visited?(options[:use_cookies])
-            unless p.menutitle.blank?
-              if page_in_section?(p)
-                menu_str += '<li class="active">' + link_to(p.menutitle, showpage_url(:locale => @cms_page[:lang], :accessname => p.accessname)) + "</li>"
-              else
-                menu_str += "<li>" + link_to(p.menutitle, showpage_url(:locale => @cms_page[:lang], :accessname => p.accessname)) + "</li>"
-              end
-            end
-          end
-        end
-        if options[:include_hanuman]
-          menu_str += "<li>" + link_to('Hanuman', showpage_url(:locale => @cms_page[:lang], :accessname => 'hanuman')) + "</li>"
-        end
-        menu_str = ("<ul #{ul_options}>" + menu_str + "</ul>") unless options[:only_lineitem]
-      end
-      return menu_str.html_safe
+  # Currently check is page requires a login and if user is logged in.  
+  # {todo} add additional authorization checks
+  #------------------------------------------------------------------------------
+  def page_authorized?(page)
+    if page.requires_login? 
+      return user_signed_in?
+    else
+      true
     end
-=end
+  end
+
+  # Determine if this page is currently being  displayed
+  #------------------------------------------------------------------------------
+  def current_page?(page)
+    (@current_page == page) ? true : false
+  end
+
+  # Determine if the page is in this section
+  # {todo} should be able to go to any depth
+  #------------------------------------------------------------------------------
+  def page_in_section?(page)
+    (@current_page == page or @current_page.parent_id == page.id) ? true : false
+  end
+
 
 =begin  
   # Given the name of a container, queries for all content items for that 
@@ -94,98 +111,6 @@ module DmCms::PagesHelper
   def snippet_by_name( name )
     @items = current_account.cms_snippets.find_all_by_container(name)
     render :partial => (@items.nil? ? 'not_found' : 'snippet_fragment'), :collection => @items
-  end
-
-  # -- Deprecated - [todo] Used for kaleshwar.eu and university site.
-  # Rewrite and remove at some point
-  # Generic menu builder.  By specifying a symbol such as :main or :second, will build
-  # the corresponding menu by walking the pages.
-  #------------------------------------------------------------------------------
-  def build_menubar(levelSym = :main)
-    menuStr = ""
-    bShowActive = true
-    case levelSym
-      when :home
-        pages = current_account_site.cms_pages.find_all_by_level(0)
-        bShowActive = false
-      when :main, :main_second
-        pages = current_account_site.cms_pages.find_all_by_level(1, :order => :position)
-      when :second
-        if @cms_page[:page_id].nil?
-          pages = nil
-        else
-          if @cms_page[:level] == 1
-            # --- at a level one, grab the children
-            queryID = @cms_page[:page_id]
-          else
-            # --- we're at second level (or greater {todo}), use the parent_id to get siblings
-            tempPage = current_account_site.cms_pages.find(@cms_page[:page_id])
-            queryID =  tempPage.parent_at_level(1)
-          end
-          pages = current_account_site.cms_pages.find_all_by_parent_id(queryID, :order => :position)
-        end
-        
-      when :children
-        pages = current_account_site.cms_pages.find_all_by_parent_id(@cms_page[:page_id], :order => :position)
-    end
-
-    unless pages.nil?
-      pages.each do |p|
-        if p.is_published? && page_authorized?(p)
-          unless p.menutitle.blank?
-            html_options = (bShowActive and page_in_section?(p) ? {:id => "active"} : {})
-            link_title = (p.menuimage.blank? ? p.menutitle : 
-               image_tag("/images/"  + @cms_page[:lang] + "/#{html_options ? 'active_' : ''}" + p.menuimage, :alt => p.menutitle, :title => p.menutitle))
-            menuStr += link_to(link_title, showpage_url(:locale => @cms_page[:lang], :accessname => p.accessname))
-            menuStr += build_menubar_from_page(p) if levelSym == :main_second
-          end
-        end
-      end
-    end
-    return menuStr.html_safe
-  end
-  
-  # -- Deprecated - [todo] Used only by build_menubar()
-  # Rewrite and remove at some point
-  #------------------------------------------------------------------------------
-  def build_menubar_from_page(page)
-    menuStr = ""
-    pages = current_account_site.cms_pages.find_all_by_parent_id(page.id, :order => :position)
-    unless pages.nil?
-      menuStr += "<ul class=\"menu_level_#{(page.level + 1).to_s}\">"
-      pages.each do |p|
-        if p.is_published? && page_authorized?(p)        
-          unless p.menutitle.blank?
-            html_options = (page_in_section?(p) ? {:id => "active"} : nil)
-            menuStr += "<li>" + link_to(p.menutitle, showpage_url(:locale => @cms_page[:lang], :accessname => p.accessname), html_options) + "</li>"
-          end
-        end
-      end
-      menuStr += "</ul>"
-    end
-    return menuStr
-  end
-  
-  # -- Deprecated - use only by old kaleshwwar.org theme (2009)
-  # Build a list based menu for a certain level
-  # {todo} re-examine: not  sure this is doing what I expect it
-  #------------------------------------------------------------------------------
-  def build_menubar_level(level, options = {})
-    menuStr = ""
-    pages = current_account_site.cms_pages.find_all_by_level(level, :order => :position)
-    unless pages.nil?
-      menuStr += (options[:id].nil? ? '<ul>' : "<ul id=\"#{options[:id]}\">")
-      pages.each do |p|
-        if p.is_published? && page_authorized?(p)        
-          unless p.menutitle.blank?
-            html_options = (page_in_section?(p) ? {:id => "active"} : nil)
-            menuStr += "<li>" + link_to(h(p.menutitle), showpage_url(:locale => @cms_page[:lang], :accessname => p.accessname), html_options) + "</li>"
-          end
-        end
-      end
-      menuStr += "</ul>"
-    end
-    return menuStr.html_safe
   end
 
   # -- Preferred method
@@ -224,23 +149,7 @@ module DmCms::PagesHelper
     menu_from_pages(pages, options)
   end
   
-  # Determine if the page is in this section
-  # {todo} should be able to go to any depth
-  #------------------------------------------------------------------------------
-  def page_in_section?(page)
-    (@cms_page[:page_id] == page.id or @cms_page[:parent_id] == page.id) ? true : false
-  end
 
-  # Determine if this page is currently being  displayed
-  #------------------------------------------------------------------------------
-  def current_page?(page)
-    (@cms_page[:page_id] == page.id) ? true : false
-  end
-
-  #------------------------------------------------------------------------------
-  def page_authorized?(page)
-    true
-  end
 
 =end
 end
