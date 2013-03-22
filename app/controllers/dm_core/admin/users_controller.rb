@@ -30,9 +30,9 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
   # PUT /admin/users/1 or PUT /admin/users/1.json
   #------------------------------------------------------------------------------
   def update
-    @user = User.find(params[:id])
+    @user             = User.find(params[:id])
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(params[:user], :as => :admin)
         format.html { redirect_to dm_core.admin_users_url, notice: "'#{@user.display_name}' was successfully updated." }
         format.json { head :no_content }
       else

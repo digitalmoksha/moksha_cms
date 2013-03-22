@@ -10,7 +10,18 @@
                 :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
                 :label => "Country" %>
     
+    <%#= select_tag("user[role_ids][]", options_for_select(Role.all.collect { |role| [role.name, role.id] }, @user.roles.collect { |role| role.id}), {:multiple=>true, :size=>5}) %>
+    <%#= f.association :roles, :collection => Role.all(:order => 'name'), :label_method => :name, :value_method => :id, :input_html => { :size =>'5' } %> 
+    <%= f.collection_check_boxes :role_ids, Role.all(:order => 'name'), :id, :name, :label_name => 'Roles' %>
+    
     <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
 
 	<% end %>
 <% end %>
+
+
+  <select id="user_role_ids" multiple name="user[role_ids][]" size=15>
+    <option value="1" selected="selected">admin</option>
+    <option value="3">author</option>
+    <option value="2">beta</option>
+  </select>

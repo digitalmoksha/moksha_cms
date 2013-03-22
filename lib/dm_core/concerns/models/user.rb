@@ -16,8 +16,11 @@ module DmCore
                  :recoverable, :rememberable, :trackable, :validatable
 
           # Setup accessible (or protected) attributes for your model
-          attr_accessible :email, :password, :password_confirmation, :remember_me,
-                          :first_name, :last_name, :country_id
+          attr_accessible         :email, :password, :password_confirmation, :remember_me,
+                                    :first_name, :last_name, :country_id
+          attr_accessible         :role_ids, :email, :password, :password_confirmation, :remember_me,
+                                    :first_name, :last_name, :country_id,  
+                                    :as => :admin
 
           belongs_to              :country, :class_name => 'DmCore::Country'
 
