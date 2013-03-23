@@ -9,6 +9,7 @@ require 'paper_trail'
 require 'RedCloth'
 require 'bluecloth'
 require 'liquid'
+require 'acts_as_commentable'
 
 module DmCore
   class Engine < ::Rails::Engine

@@ -23,8 +23,12 @@ private
   end
 
   #------------------------------------------------------------------------------
-  def markdown(text)
-    Redcarpet.new(text, :hard_wrap, :filter_html, :autolink).to_html.html_safe
+  def markdown(content, options = {:safe => true})
+    if options[:safe]
+      BlueCloth.new(content, :remove_links => true, :remove_images => true, :escape_html => true).to_html.html_safe
+    else
+      BlueCloth.new(content).to_html.html_safe
+    end
   end
   
   #------------------------------------------------------------------------------

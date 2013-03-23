@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency "RedCloth", "~> 4.2"
   s.add_dependency "bluecloth", "~> 2.2"
   s.add_dependency "liquid", "~> 2.3"
+  s.add_dependency 'acts_as_commentable', "~> 4.0"
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'easy_globalize3_accessors', :git => 'git://github.com/digitalmoksha/easy_globalize3_accessors.git'
