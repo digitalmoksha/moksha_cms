@@ -1,9 +1,18 @@
 <%= render :partial => 'index_sidebar' %>
 
-<%= content_box :title => 'Site Pages' do %>
-  <div id="page_tree">
-    <ul class='arrow-list'>
-      <%= nested_tree(@tree) %>
-    </ul>
+<div class="block well">
+  <div class="table-overflow">
+    <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%#= dm_lms.admin_course_sort_path %>">
+  		<thead>
+  		  <tr>
+  		    <th>Title</th>
+  		    <th width="50">Status</th>
+  		    <th width="100">Actions</th>
+  		  </tr>
+  		</thead>
+  		<tbody>
+        <%= nested_tree(@tree) %>
+  		</tbody>
+  	</table>
   </div>
-<% end %>
+</div>

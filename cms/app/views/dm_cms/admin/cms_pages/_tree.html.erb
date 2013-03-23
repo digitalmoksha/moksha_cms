@@ -1,11 +1,18 @@
-<li class="tree_item">
-  <% if item.divider? %>
-    <%= link_to "&mdash; #{item.menutitle} &mdash;".html_safe, :action => :show, :id => item %>
-  <% else %>
-    <%= link_to (item.title.blank? ? item.slug : item.title), :action => :show, :id => item %>
-  <% end %>
-  : <%= link_to "New", new_page_admin_cms_page_path(item) %>
-   : <%= link_to icons('font-arrow-up'), move_up_admin_cms_page_path(item) %>
-   : <%= link_to icons('font-arrow-down'), move_down_admin_cms_page_path(item) %>
-     <%= (sub_items.blank? ? '' : content_tag(:ul, nested_tree(sub_items), :class => 'arrow-list')) %>
-</li>
+<tr class="item" data-item_id="<%= item.id %>">
+  <td>
+    <span style="margin-left: <%= item.depth * 20 %>px;">
+      <% if item.divider? %>
+        <%= link_to "&mdash; #{item.menutitle} &mdash;".html_safe, :action => :show, :id => item %>
+      <% else %>
+        <%= link_to (item.title.blank? ? item.slug : item.title), :action => :show, :id => item %>
+      <% end %>
+    </span>
+  </td>
+  <td><%= present(item).label_published %></td>
+  <td>
+    <%= link_to "New Child", new_page_admin_cms_page_path(item) %>
+     : <%= link_to icons('font-arrow-up'), move_up_admin_cms_page_path(item) %>
+     : <%= link_to icons('font-arrow-down'), move_down_admin_cms_page_path(item) %>
+  </td>
+</tr>
+<%= (sub_items.blank? ? '' : nested_tree(sub_items)) %>
