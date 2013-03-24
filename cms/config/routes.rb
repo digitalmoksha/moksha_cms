@@ -3,6 +3,7 @@ DmCms::Engine.routes.draw do
 
       namespace :admin do
         match '/cms_pages/expire_cache_total',                   :controller => 'cms_pages', :action => :expire_cache_total, :as => :expire_cache
+        match '/cms_pages/ajax_sort',                             :controller => 'cms_pages', :action => :ajax_sort, :as => :cms_page_sort
         resources :cms_pages do
           member do
             get  :new_page

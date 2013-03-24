@@ -40,6 +40,17 @@ class DmCms::Admin::CmsPagesController < DmCore::Admin::AdminController
   def show
   end
   
+  # Given a new parent_id and position, place item in proper place
+  # Note that position comes in as 0-based, increment to make 1-based
+  #------------------------------------------------------------------------------
+  def ajax_sort
+    new_position = params[:item][:position].to_i + 1
+    @current_page.update_attributes(:position => new_position, :parent_id => params[:item][:parent_id])
+
+    #--- this action will be called via ajax
+    render nothing: true
+  end
+  
   #------------------------------------------------------------------------------
   def move_up
     @current_page.move_higher

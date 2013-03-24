@@ -4,7 +4,8 @@ class CmsPage < ActiveRecord::Base
     has_paper_trail
   end
 
-  attr_accessible         :slug, :pagetype, :published, :template, :link, :menuimage, :requires_login, :title, :title_en, :menutitle
+  attr_accessible         :slug, :pagetype, :published, :template, :link, :menuimage, :requires_login,
+                          :title, :title_en, :menutitle, :parent_id
 
   # --- globalize
   translates              :title, :menutitle, :fallbacks_for_empty_translations => true, :versioning => true
@@ -16,6 +17,7 @@ class CmsPage < ActiveRecord::Base
   # --- associations
   has_many                :cms_contentitems, :order => :position, :dependent => :destroy
   has_ancestry            :cache_depth => true
+  before_save             :cache_depth  # fixes bug where depth not recalculated when subtree moved
   acts_as_list            :scope => 'ancestry = \'#{ancestry}\''
 
   default_scope           { where(account_id: Account.current.id).order("ancestry_depth, position ASC") }
