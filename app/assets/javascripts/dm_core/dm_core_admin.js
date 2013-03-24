@@ -36,6 +36,72 @@ $(document).ready(function() {
     }
   });
   
+  // http://boagworld.com/dev/creating-a-draggable-sitemap-with-jquery/
+  //----------------------------------------------------------------------
+  $('#tree_sort li').prepend('<div class="dropzone"></div>');
+
+  $('#tree_sort li').draggable({
+      handle: ' > dl',
+      opacity: .8,
+      addClasses: false,
+      helper: 'clone',
+      zIndex: 100
+  });
+  
+  $('#tree_sort dl, #tree_sort .dropzone').droppable({
+    accept: '#tree_sort li',
+    tolerance: 'pointer',
+    drop: function(e, ui) {
+      var li        = $(this).parent();
+      var add_child = !$(this).hasClass('dropzone');
+      //--- If this is our first child, we'll need a ul to drop into.
+      if (add_child && li.children('ul').length == 0) {
+        li.append('<ul/>');
+      }
+      //--- ui.draggable is our reference to the item that's been dragged.
+      if (add_child) {
+        li.children('ul').append(ui.draggable);
+      }
+      else {
+        li.before(ui.draggable);
+      }
+      
+      //--- send update to the server
+      var item_id   = ui.draggable.data('item_id');
+      var position  = ui.draggable.index();
+      if (add_child) {
+        var parent_id = li.data('item_id');
+      }
+      else {
+        var parent_id = li.parents('li').first().data('item_id');        
+      }
+      $.ajax({
+        type: 'POST',
+        url: $('#tree_sort').data('update_url'),
+        dataType: 'json',
+        data: { id: item_id, item: { position: position, parent_id: parent_id } }
+      })
+      
+      //--- reset our background colours.
+      li.find('dl,.dropzone').css({ backgroundColor: '', borderColor: '' });
+    },
+    over: function() {
+      $(this).filter('dl').css({ backgroundColor: '#ccc' });
+      $(this).filter('.dropzone').css({ borderColor: '#aaa' });
+    },
+    out: function() {
+      $(this).filter('dl').css({ backgroundColor: '' });
+      $(this).filter('.dropzone').css({ borderColor: '' });
+    }
+  });
+  
+  $('.tree_expand').on('click', function() {
+		$(this).parent().parent().parent().toggleClass('tree_open').toggleClass('tree_closed');
+		li = $(this).parent().parent().parent()
+		toggle_reveal(li.children('ul'));
+		return false;
+	});
+
   //----------------------------------------------------------------
 	$(".notice").click(function() {
 		$(this).fadeTo(200, 0.00, function(){ //fade
