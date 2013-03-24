@@ -7,7 +7,7 @@
   width: 16px;
   display: block;
   margin: 2px auto 0 auto !important;
-  background-image: url(expand.png);
+  background-image: url(/assets/dm_core/expand.png);
   background-repeat: no-repeat;
   position: absolute;
   left: -8px;
