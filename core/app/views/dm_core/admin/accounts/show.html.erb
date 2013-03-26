@@ -2,37 +2,59 @@
   <% toolbar = nav_bar_items([ 
     @account.preferred_site_enabled? ? colored_label('Site Published', :success) : colored_label('Site Disabled'),
     link_to(icon_label('icon-edit', 'Edit'), dm_core.edit_admin_account_path, :class => "nav-btn-primary") ]) %>
-  <%= content_box :title => "Account", :toolbar => toolbar do %>
+  <%= content_box :title => "Account Settings", :toolbar => toolbar do %>
     <dl class="dl-horizontal">
-      <dt>Company Name</dt>
-      <dd><%= @account.company_name.to_s_default %></dd>
-      <dt>Contact Email</dt>
-      <dd><%= @account.contact_email.to_s_default %></dd>
       <dt>Domain</dt>
       <dd><%= @account.domain.to_s_default %></dd>
       <dt>Account Prefix</dt>
       <dd><%= @account.account_prefix.to_s_default %></dd>
-    </dl>
-
-    <hr>
-
-    <dl class="dl-horizontal">
       <dt>Site Title</dt>
       <dd><%= @account.preferred_site_title.to_s_default %></dd>
+      <dt>Company Name</dt>
+      <dd><%= @account.company_name.to_s_default %></dd>
+      <dt>Contact Email</dt>
+      <dd><%= @account.contact_email.to_s_default %></dd>
       <dt>Default Locale</dt>
       <dd><%= @account.preferred_default_locale %></dd>
       <dt>Supported Locales</dt>
       <dd><%= @account.preferred_locales %></dd>
-      <dt>Webmaster Email</dt>
-      <dd><%= @account.preferred_webmaster_email.to_s_default %></dd>
-      <dt>Support Email</dt>
-      <dd><%= @account.preferred_support_email.to_s_default %></dd>
-      <dt>Google Analytics Tracker ID</dt>
-      <dd><%= @account.preferred_google_analytics_tracker_id.to_s_default %></dd>
-      <dt>MailChimp API Key</dt>
-      <dd><%= @account.preferred_mailchimp_api_key.to_s_default %></dd>
       <dt>SSL Enabled?</dt>
       <dd><div class="checkbox on_off inline"><input type="checkbox" <%= 'checked="1"' if @account.preferred_ssl_enabled %> disabled="disabled" /></div></dd>
     </dl>
+
+    <%= content_box :title => "Email / SMTP Settings" do %>
+      <dl class="dl-horizontal">
+        <dt>Webmaster Email</dt>
+        <dd><%= @account.preferred_webmaster_email.to_s_default %></dd>
+        <dt>Support Email</dt>
+        <dd><%= @account.preferred_support_email.to_s_default %></dd>
+        <dt>SMTP Address</dt>
+        <dd><%= @account.preferred_smtp_address.to_s_default %></dd>
+        <dt>SMTP Port</dt>
+        <dd><%= @account.preferred_smtp_port.to_s_default %></dd>
+        <dt>SMTP User name</dt>
+        <dd><%= @account.preferred_smtp_user_name.to_s_default %></dd>
+        <dt>SMTP Password</dt>
+        <dd><%= "&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;".html_safe if @account.preferred_smtp_password %></dd>
+        <dt>SMTP Domain</dt>
+        <dd><%= @account.preferred_smtp_domain.to_s_default %></dd>
+        <dt>SMTP From Address</dt>
+        <dd><%= @account.preferred_smtp_from_email.to_s_default %></dd>
+        <dt>MailChimp API Key</dt>
+        <dd><%= @account.preferred_mailchimp_api_key.to_s_default %></dd>
+      </dl>
+    <% end %>
+
+    <%= content_box :title => "Analytics / PayPal Settings" do %>
+      <dl class="dl-horizontal">
+        <dt>Google Analytics Tracker ID</dt>
+        <dd><%= @account.preferred_google_analytics_tracker_id.to_s_default %></dd>
+        <dt>PayPal Merchant ID</dt>
+        <dd><%= @account.preferred_paypal_merchant_id.to_s_default %></dd>
+        <dt>PayPal Cart ID</dt>
+        <dd><%= @account.preferred_paypal_cert_id.to_s_default %></dd>
+      </dl>
+    <% end %>
+
   <% end %>
 </div>

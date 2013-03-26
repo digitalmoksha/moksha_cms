@@ -10,11 +10,20 @@ class Account < ActiveRecord::Base
                     :preferred_ssl_enabled, :preferred_webmaster_email,
                     :preferred_support_email, :preferred_google_analytics_tracker_id,
                     :preferred_mailchimp_api_key, :preferred_site_title
+  attr_accessible   :preferred_smtp_address, :preferred_smtp_port, :preferred_smtp_domain,
+                    :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email
+  attr_accessible   :preferred_paypal_merchant_id, :preferred_paypal_cert_id
 
   validates_presence_of   :domain
   validates_presence_of   :account_prefix
   validates_presence_of   :preferred_default_locale
   validates_presence_of   :preferred_locales
+  validates_presence_of   :preferred_smtp_address
+  validates_presence_of   :preferred_smtp_port
+  validates_presence_of   :preferred_smtp_user_name
+  validates_presence_of   :preferred_smtp_password
+  validates_presence_of   :preferred_smtp_from_email
+  validates_presence_of   :preferred_webmaster_email
 
   after_create      :create_default_roles
 
@@ -24,9 +33,21 @@ class Account < ActiveRecord::Base
   preference        :locales,                         :string,  :default => 'en, de'
   preference        :site_enabled,                    :boolean, :default => false
   preference        :google_analytics_tracker_id,     :string
+  
+  #--- Email / SMTP settings
   preference        :webmaster_email,                 :string
   preference        :support_email,                   :string
   preference        :mailchimp_api_key,               :string
+  preference        :smtp_address,                    :string
+  preference        :smtp_port,                       :string,  :default => '587'
+  preference        :smtp_domain,                     :string
+  preference        :smtp_user_name,                  :string
+  preference        :smtp_password,                   :string
+  preference        :smtp_from_email,                 :string
+  
+  #--- PayPal
+  preference        :paypal_merchant_id,              :string
+  preference        :paypal_cert_id,                  :string
 
   #--- eager load all preferences when an object is found
   after_find        :preferences
@@ -90,5 +111,16 @@ class Account < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def index_path
     "/#{preferred_default_locale}/index"
+  end
+  
+  #------------------------------------------------------------------------------
+  def smtp_settings
+    {
+      :address              => preferred_smtp_address,
+      :port                 => preferred_smtp_port,
+      :domain               => preferred_smtp_domain,
+      :user_name            => preferred_smtp_user_name,
+      :password             => preferred_smtp_password
+    }
   end
 end
