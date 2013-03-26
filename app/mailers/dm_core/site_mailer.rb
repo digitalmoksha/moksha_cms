@@ -8,7 +8,6 @@ class DmCore::SiteMailer < ActionMailer::Base
   class DynamicSettingsInterceptor
      def self.delivering_email(message)
        message.delivery_method.settings.merge!(Account.current.smtp_settings)
-debugger
      end
    end
    register_interceptor DynamicSettingsInterceptor
