@@ -1,23 +1,38 @@
 <%= simple_form_for(@account, :url => dm_core.admin_account_path) do |f| %>
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
 
-	<%= content_frame :title => @title do %>
+	<%= content_box :title => @title do %>
+
+	  <%= content_frame :title => 'General' do %>
+      <%= f.input :domain %>
+      <%= f.input :account_prefix %>
+      <%= f.input :preferred_site_title, :label => 'Site Title' %>
+      <%= f.input :company_name %>
+      <%= f.input :contact_email %>
+      <%= f.input :preferred_default_locale, :required => true, :label => 'Default Locale'%>  
+      <%= f.input :preferred_locales, :required => true, :label => 'Supported Locales', :hint => "Comma seperated. Ex: 'en, de'" %>  
+      <%= f.input :preferred_ssl_enabled, :as => :toggle, :label => 'Enable SSL?' %>
+      <%= f.input :preferred_site_enabled, :as => :toggle, :label => 'Publish Site?' %>
+    <% end %>
     
-    <%= f.input :company_name %>
-    <%= f.input :contact_email %>
-    <%= f.input :domain %>
-    <%= f.input :account_prefix %>
-    
-    <%= f.input :preferred_site_title, :label => 'Site Title' %>
-    <%= f.input :preferred_site_enabled, :as => :toggle, :label => 'Publish Site?' %>
-    <%= f.input :preferred_default_locale, :required => true, :label => 'Default Locale'%>  
-    <%= f.input :preferred_locales, :required => true, :label => 'Supported Locales', :hint => "Comma seperated. Ex: 'en, de'" %>  
-    <%= f.input :preferred_ssl_enabled, :as => :toggle, :label => 'Enable SSL?' %>
-    <%= f.input :preferred_webmaster_email, :label => 'Webmaster Email' %>
-    <%= f.input :preferred_support_email, :label => 'Support Email' %>
-    <%= f.input :preferred_google_analytics_tracker_id, :label => 'Google Analytics Tracker ID' %>
-    <%= f.input :preferred_mailchimp_api_key, :label => 'MailChimp API Key' %>
-    
+	  <%= content_frame :title => 'Email and SMTP Settings' do %>
+      <%= f.input :preferred_webmaster_email, :label => 'Webmaster Email', :required => true %>
+      <%= f.input :preferred_support_email, :label => 'Support Email' %>
+      <%= f.input :preferred_smtp_address, :label => 'SMTP Address', :required => true %>
+      <%= f.input :preferred_smtp_port, :label => 'SMTP Port', :required => true %>
+      <%= f.input :preferred_smtp_user_name, :label => 'SMTP Username', :required => true %>
+      <%= f.input :preferred_smtp_password, :label => 'SMTP Password', :required => true %>
+      <%= f.input :preferred_smtp_domain, :label => 'SMTP Domain' %>
+      <%= f.input :preferred_smtp_from_email, :label => 'SMTP From Email', :required => true, :hint => 'from address set on emails' %>
+      <%= f.input :preferred_mailchimp_api_key, :label => 'MailChimp API Key' %>
+    <% end %>
+
+	  <%= content_frame :title => 'Analytics and PayPal' do %>
+      <%= f.input :preferred_google_analytics_tracker_id, :label => 'Google Analytics Tracker ID' %>
+      <%= f.input :preferred_paypal_merchant_id, :label => 'PayPal Merchant ID' %>
+      <%= f.input :preferred_paypal_cert_id, :label => 'PayPal Cert ID' %>
+    <% end %>
+
     <%= submit_or_cancel :cancel_url => dm_core.admin_account_url %>
 
 	<% end %>
