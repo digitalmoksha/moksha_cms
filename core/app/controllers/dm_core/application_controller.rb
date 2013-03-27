@@ -47,7 +47,7 @@ module DmCore
     # Choose the theme based on the account prefix in the Account
     #------------------------------------------------------------------------------
     def theme_resolver
-      theme(current_account.account_prefix + '.default') if DmCore.config.enable_themes
+      theme(current_account.account_prefix) if DmCore.config.enable_themes
     end
 
     #------------------------------------------------------------------------------
