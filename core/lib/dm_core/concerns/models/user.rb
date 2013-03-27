@@ -34,6 +34,7 @@ module DmCore
           # When a user is created, attach it to the current account
           #------------------------------------------------------------------------------
           def add_account
+            self.skip_reconfirmation!  # make sure a second confirmation email is not sent
             self.update_attribute(:account_id, Account.current.id)
           end
           
