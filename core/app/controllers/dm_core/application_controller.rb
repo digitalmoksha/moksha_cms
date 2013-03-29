@@ -12,6 +12,11 @@ module DmCore
     
     include DmCore::AccountHelper
 
+    #------------------------------------------------------------------------------
+    def index
+      redirect_to "/#{current_account.preferred_default_locale}/index", :status => :moved_permanently
+    end
+
   protected
 
     # if site is not enabled, only allow a logged in Admin user to access pages
@@ -21,7 +26,7 @@ module DmCore
       unless current_account.site_enabled? || request.params['slug'] == 'coming_soon'
         # authenticate_user! 
         unless (user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta)))
-          redirect_to "/#{I18n.locale}/coming_soon"
+          redirect_to "/#{current_account.preferred_default_locale}/coming_soon"
           return false
         end
      end
