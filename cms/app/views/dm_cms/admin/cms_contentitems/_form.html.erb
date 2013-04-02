@@ -5,6 +5,7 @@
 
 <%= simple_form_for @cms_contentitem, :url => submit_url do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
+  <%= f.hidden_field :original_updated_on %>
   <%= content_frame :title => title, :toolbar => :languages do %>
     <div class="tab-content">
       <div id="tab_general" class="tab-pane active fade in">

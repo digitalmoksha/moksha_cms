@@ -3,12 +3,9 @@ class CmsContentitem < ActiveRecord::Base
     has_paper_trail
   end
 
-  attr_accessible       :itemtype, :container, :content, :cms_page_id, :enable_cache
+  attr_accessible       :itemtype, :container, :content, :cms_page_id, :enable_cache, :original_updated_on
 
-  # --- associations
   belongs_to            :cms_page
-  
-  # --- acts_as_tree  
   acts_as_list          :scope => :cms_page
   default_scope         { where(account_id: Account.current.id).order("position ASC") }
   
@@ -23,6 +20,7 @@ class CmsContentitem < ActiveRecord::Base
   validates_presence_of :itemtype, :container
   validates_length_of   :itemtype,    :maximum => 30
   validates_length_of   :container,   :maximum => 30
+  validate              :validate_conflict, only: :update
   #validate              :validate_default_content_present
 
   # --- content types supported
@@ -30,6 +28,24 @@ class CmsContentitem < ActiveRecord::Base
 
   after_update          :clear_cache
   before_destroy        :clear_cache
+
+  #------------------------------------------------------------------------------
+  def original_updated_on
+    @original_updated_on || self.updated_on.to_f
+  end
+  attr_writer :original_updated_on
+  
+  #------------------------------------------------------------------------------
+  def validate_conflict
+    if @conflict || self.updated_on.to_f > @original_updated_on.to_f
+      @conflict             = true
+      @original_updated_on  = nil
+      errors.add :base, "This record was changed while you were editing."
+      changes.each do |attribute, values|
+        errors.add attribute, "was #{values.first}"
+      end
+    end
+  end
 
   # [todo] does not check proper attribute
   #------------------------------------------------------------------------------
