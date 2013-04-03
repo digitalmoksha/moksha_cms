@@ -8,7 +8,7 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
   #------------------------------------------------------------------------------
   def update_site_assets
     @results = "Updating 'site_assets'...\r\n"
-    @results += `svn up #{Rails.root}/public/site_assets`
+    @results += `svn up #{Rails.root}/public/#{account_site_assets(false)}`
     if File.exists?("#{Rails.root}/protected_assets")
       @results += "\nUpdating 'protected_assets'...\r\n"
       @results += `svn up #{Rails.root}/protected_assets`
