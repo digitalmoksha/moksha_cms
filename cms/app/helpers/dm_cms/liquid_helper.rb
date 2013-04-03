@@ -5,7 +5,7 @@ module DmCms::LiquidHelper
   #------------------------------------------------------------------------------
   def liquidize_textile(content, arguments)
     doc = RedCloth.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
-                        :registers => {:controller => controller, :view => self, :account_site_assets => '/site_assets', :current_user => current_user}))
+                        :registers => {:controller => controller, :view => self, :account_site_assets => account_site_assets, :current_user => current_user}))
     #doc.hard_breaks = false
 
     return doc.to_html.html_safe
@@ -14,14 +14,14 @@ module DmCms::LiquidHelper
   #------------------------------------------------------------------------------
   def liquidize_markdown(content, arguments)
     doc = BlueCloth.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
-                          :registers => {:controller => controller, :view => self, :account_site_assets => '/site_assets', :current_user => current_user}))
+                          :registers => {:controller => controller, :view => self, :account_site_assets => account_site_assets, :current_user => current_user}))
     return doc.to_html.html_safe
   end
 
   #------------------------------------------------------------------------------
   def liquidize_html(content, arguments)
     doc = Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
-                              :registers => {:controller => controller, :view => self, :account_site_assets => '/site_assets', :current_user => current_user})
+                              :registers => {:controller => controller, :view => self, :account_site_assets => account_site_assets, :current_user => current_user})
     return doc.html_safe
   end
 
