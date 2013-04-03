@@ -13,5 +13,15 @@ module DmCore
       request.put? || request.post?
     end
   
+    # if a relative url path is given, then expand it by prepending the supplied 
+    # path.
+    #------------------------------------------------------------------------------
+    def expand_url(url, path)
+      if url.blank? || url.start_with?('http', '/')
+        return url
+      else
+        return path + url
+      end
+    end
   end
 end
