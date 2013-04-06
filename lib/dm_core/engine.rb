@@ -10,6 +10,7 @@ require 'RedCloth'
 require 'bluecloth'
 require 'liquid'
 require 'acts_as_commentable'
+require 'amoeba'
 
 module DmCore
   class Engine < ::Rails::Engine

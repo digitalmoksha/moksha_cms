@@ -26,6 +26,9 @@ Gem::Specification.new do |s|
   
   s.add_dependency "simple_form", "~> 2.0"    # Form handling
   s.add_dependency "will_paginate", "~> 3.0"  # pagintation
+
+  #--- really, we need a patched level of globalize for best performance.  include main one here, and override in app's gem file
+  # gem 'globalize3', :git => 'git://github.com/svenfuchs/globalize3.git', :ref => 'dfad4bfeb331d39222c49e321515927b378bfd28'
   s.add_dependency "globalize3", ">= 0.3.0"   # translations in database
   s.add_dependency 'country_select'           
   s.add_dependency 'paper_trail', '~> 2'      # table versioning
@@ -33,6 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency "bluecloth", "~> 2.2"
   s.add_dependency "liquid", "~> 2.3"
   s.add_dependency 'acts_as_commentable', "~> 4.0"
+  s.add_dependency 'amoeba', '~> 2.0'         # for hanlding model duplicating
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'easy_globalize3_accessors', :git => 'git://github.com/digitalmoksha/easy_globalize3_accessors.git'
