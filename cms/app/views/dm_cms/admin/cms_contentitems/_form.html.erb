@@ -9,7 +9,7 @@
   <%= content_frame :title => title, :toolbar => :languages do %>
     <div class="tab-content">
       <div id="tab_general" class="tab-pane active fade in">
-        <%= f.input :itemtype, :label => 'Item Type', :collection => CmsContentitem::CONTENT_TYPES %>
+        <%= f.input :itemtype, :label => 'Item Type', :collection => CmsContentitem::CONTENT_TYPES, :include_blank => false %>
         <%= f.input :container, :label => 'Content Name', :hint => 'This is normally "body" or "sidebar" or something' %>
         <%= f.input :enable_cache, :as => :toggle, :label => 'Cache Content' %>
       </div>

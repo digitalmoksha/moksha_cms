@@ -1,7 +1,8 @@
 <% content_for :secondary_title, "#{@current_page.slug} &mdash; #{@current_page.title}".html_safe %>
 <ul class="midnav midnav-font">
-  <li><%= link_to "#{icons('font-plus')}<span>Add Content</span>".html_safe, new_content_admin_cms_contentitem_path(@current_page), :title => 'Add Content' %></li>
+  <li><%= link_to "#{icons('font-plus')}<span>Add Content Block</span>".html_safe, new_content_admin_cms_contentitem_path(@current_page), :title => 'Add Content Block' %></li>
   <li><%= link_to "#{icons('font-search')}<span>View Page</span>".html_safe, url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), :title => 'View Page', :target => '_blank' %></li>
+  <% if false %><li><%= link_to "#{icons('font-copy')}<span>Duplicate Page</span>".html_safe, duplicate_page_admin_cms_page_path(@current_page), :method => :put, :title => 'Duplicate Page', :confirm => "Are you sure you wish to duplicate this page?" %></li> <% end %>
   <li><%= link_to "#{icons('font-trash')}<span>Delete Page</span>".html_safe, admin_cms_page_path(@current_page), :method => :delete, :title => 'Delete Page', :confirm => "Are you sure you wish to delete this page?" %></li>
 </ul>
 
@@ -12,7 +13,7 @@
       <table class="table table-bordered table-block table-gradient table-stats">
         <tbody>
           <tr>
-            <td><em><%= item.itemtype %></em></td>
+            <td width="75"><em><%= item.itemtype %></em></td>
             <td class="monospaced"><pre><%= truncate(item.send("content_#{current_account.preferred_default_locale}"), :length => 500) %></pre></td>
           </tr>
         </tbody>

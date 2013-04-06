@@ -14,4 +14,14 @@ module DmCms::CmsPagesHelper
     end.join.html_safe  
   end
   
+  #------------------------------------------------------------------------------
+  def template_menu_list
+    theme = current_account.theme_data
+    if theme
+      [['Inherit from parent', '']] + theme['templates'].collect {|key, value| [value['name'], key] }
+    else
+      nil
+    end
+  end
+  
 end

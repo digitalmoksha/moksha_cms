@@ -4,6 +4,8 @@ class CmsPage < ActiveRecord::Base
     has_paper_trail
   end
 
+  #--- NOTE: if you add any new fields, then update the duplicate_with_associations method
+  
   attr_accessible         :slug, :pagetype, :published, :template, :link, :menuimage, :requires_login,
                           :title, :title_en, :menutitle, :parent_id
 
@@ -22,9 +24,14 @@ class CmsPage < ActiveRecord::Base
 
   default_scope           { where(account_id: Account.current.id).order("ancestry_depth, position ASC") }
   
+  amoeba do
+    enable
+  end
+  
   # --- validations
   validates_length_of     :slug, :maximum => 50
   validates_presence_of   :slug
+  validates_uniqueness_of :slug
   validates_length_of     :pagetype, :maximum => 20
   validates_presence_of   :pagetype
   validates_length_of     :template, :maximum => 50
@@ -95,6 +102,48 @@ class CmsPage < ActiveRecord::Base
     end
   end
 
+  # {todo} currently, this mostly works from the console.  However, when run
+  # from the browser it hangs in some type of infinite loop, inside amoeba_dup.
+  # Was unable to track it down, so this function is currently on called anywhere.
+  #------------------------------------------------------------------------------
+  def duplicate_with_associations
+    new_page = nil
+    new_slug = "duplicate-#{self.slug}"
+    if CmsPage.find_by_slug(new_slug)
+      #--- already a duplicate page, return nil
+      return nil
+    else
+      CmsPage.paper_trail_off
+      CmsContentitem.paper_trail_off
+      CmsPage::Translation.paper_trail_off
+      CmsContentitem::Translation.paper_trail_off
+      new_page = self.amoeba_dup
+      new_page.slug = new_slug
+      # new_page.without_versioning do
+        new_page.save
+      # end
+      CmsPage.paper_trail_on
+      CmsContentitem.paper_trail_on
+      CmsPage::Translation.paper_trail_on
+      CmsContentitem::Translation.paper_trail_on
+#       new_page      = self.initialize_dup(self)
+#       new_page.slug = new_slug
+#       
+#       DmCore::Language.language_array.each do |locale|
+#         new_page.send("title_#{locale}=",     self.send("title_#{locale}"))     unless self.send("title_#{locale}").nil?
+#         new_page.send("menutitle_#{locale}=", self.send("menutitle_#{locale}")) unless self.send("menutitle_#{locale}").nil?
+#         new_page.save
+#        end
+# #      new_page.save
+#       new_page.reload
+#       
+#       # cms_contentitems.each do |content|
+#       #   content.deep_clone(new_page.id)
+#       # end
+    end
+    return new_page
+  end
+
 =begin
   # Get the page id of the parent at item a specific level
   #------------------------------------------------------------------------------
@@ -114,25 +163,5 @@ class CmsPage < ActiveRecord::Base
     return tempPage.id
   end
   
-  #------------------------------------------------------------------------------
-  def deep_clone(new_site, new_parent_id)
-    new_page                  = self.clone
-    new_page.account_site_id  = new_site.id
-    new_page.parent_id        = new_parent_id
-
-    DmCore::Language.language_array.each do |locale|
-      eval("new_page.title_#{locale[:lang]}       = title_#{locale[:lang]} unless title_#{locale[:lang]}.nil?")
-      eval("new_page.menutitle_#{locale[:lang]}   = menutitle_#{locale[:lang]} unless menutitle_#{locale[:lang]}.nil?")
-    end
-    new_page.save
-
-    cms_contentitems.each do |content|
-      content.deep_clone(new_page.id)
-    end
-    
-    children.each do |child|
-      child.deep_clone(new_site, new_page.id)
-    end
-  end
 =end
 end

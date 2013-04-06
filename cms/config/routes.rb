@@ -8,8 +8,7 @@ DmCms::Engine.routes.draw do
           member do
             get  :new_page
             post :create_page
-            get  :move_up
-            get  :move_down
+            put  :duplicate_page
             post :file_tree
             get :file_tree
           end

@@ -16,6 +16,9 @@ class CmsContentitem < ActiveRecord::Base
   # --- versioning - skip anything translated
   has_paper_trail       :skip => :content
   
+  amoeba do
+    enable
+  end
   # --- validations 
   validates_presence_of :itemtype, :container
   validates_length_of   :itemtype,    :maximum => 30
@@ -35,9 +38,12 @@ class CmsContentitem < ActiveRecord::Base
   end
   attr_writer :original_updated_on
   
+  # Try to see if the record has been changed by someone while being edited by someone
+  # else.  If original_updated_on is not set, then don't check - allows acts_as_list
+  # methods to update without causing a problem.
   #------------------------------------------------------------------------------
   def validate_conflict
-    if @conflict || self.updated_on.to_f > @original_updated_on.to_f
+    if @conflict || (!@original_updated_on.nil? && self.updated_on.to_f > @original_updated_on.to_f)
       @conflict             = true
       @original_updated_on  = nil
       errors.add :base, "This record was changed while you were editing."

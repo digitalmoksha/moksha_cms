@@ -17,8 +17,16 @@ class DmCms::Admin::CmsPagesController < DmCore::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def create_page
-    @current_page.children.create(params[:cms_page])
-    redirect_to(:action => :index)
+    @cms_page = @current_page.children.new(params[:cms_page])
+    respond_to do |format|
+      if @cms_page.save
+        format.html { redirect_to admin_cms_page_url(@cms_page), notice: 'Page was successfully created.' }
+        format.json { render json: @cms_page, status: :created, location: @cms_page }
+      else
+        format.html { render action: "new_page" }
+        format.json { render json: @cms_page.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   #------------------------------------------------------------------------------
@@ -40,6 +48,16 @@ class DmCms::Admin::CmsPagesController < DmCore::Admin::AdminController
   def show
   end
   
+  #------------------------------------------------------------------------------
+  def duplicate_page
+    new_page = @current_page.duplicate_with_associations
+    if new_page.nil?
+      redirect_to admin_cms_page_url(@current_page), :flash => { :error => 'A duplicate page already exists' }
+    else
+      redirect_to edit_admin_cms_page_url(new_page), :flash => { :notice => 'Duplicate page created.  Please customize it.' }
+    end
+  end
+  
   # Given a new parent_id and position, place item in proper place
   # Note that position comes in as 0-based, increment to make 1-based
   #------------------------------------------------------------------------------
@@ -52,23 +70,12 @@ class DmCms::Admin::CmsPagesController < DmCore::Admin::AdminController
   end
   
   #------------------------------------------------------------------------------
-  def move_up
-    @current_page.move_higher
-    redirect_to :action => :index
-  end
-
-  #------------------------------------------------------------------------------
-  def move_down
-    @current_page.move_lower
-    redirect_to :action => :index
-  end
-
-  #------------------------------------------------------------------------------
   def destroy
     @current_page.destroy
     redirect_to :action => :index
   end
 
+=begin
   # Based on jQuery File Tree Ruby Connector by Erik Lax
   # http://datahack.se, 13 July 2008
   #------------------------------------------------------------------------------
@@ -90,7 +97,8 @@ class DmCms::Admin::CmsPagesController < DmCore::Admin::AdminController
       render :inline => tree
     end
   end
-  
+=end
+
   # Removes all cache files. This can be used when we're not sure if the
   # cache file for a changed page has been deleted or not
   #------------------------------------------------------------------------------
@@ -113,11 +121,6 @@ protected
     end
   end
 
-  #------------------------------------------------------------------------------
-  def theme_templates
-    #HashWithIndifferentAccess.new(YAML.load(File.read(File.expand_path('../theme.yml', __FILE__))))
-  end
-  
 private
 
   # Set some values for the template based on the controller
@@ -127,16 +130,4 @@ private
     content_for :content_title, icon_label('font-paste', text)
   end
 
-=begin
-  #------------------------------------------------------------------------------
-  def update_translation_front
-    @page = current_account_site.cms_pages.find(params[:id])
-    if @page.update_attributes(params[:cms_page])
-      respond_to do |format| 
-        format.html { flash[:notice] = 'Page was successfully updated.'; redirect_to :action => :edit, :id => @page; } 
-        format.js { render :action => :update_translation_front } 
-      end
-    end
-  end
-=end
 end
