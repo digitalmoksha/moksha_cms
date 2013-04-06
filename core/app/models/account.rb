@@ -5,14 +5,14 @@ class Account < ActiveRecord::Base
   end
   
   self.table_name   = 'core_accounts'
-  attr_accessible   :company_name, :contact_email, :default_site_id, :domain, :account_prefix
-  attr_accessible   :preferred_site_enabled, :preferred_default_locale, :preferred_locales,
-                    :preferred_ssl_enabled, :preferred_webmaster_email,
-                    :preferred_support_email, :preferred_google_analytics_tracker_id,
-                    :preferred_mailchimp_api_key, :preferred_site_title
-  attr_accessible   :preferred_smtp_address, :preferred_smtp_port, :preferred_smtp_domain,
-                    :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email
-  attr_accessible   :preferred_paypal_merchant_id, :preferred_paypal_cert_id
+  attr_accessible         :company_name, :contact_email, :default_site_id, :domain, :account_prefix
+  attr_accessible         :preferred_site_enabled, :preferred_default_locale, :preferred_locales,
+                          :preferred_ssl_enabled, :preferred_webmaster_email,
+                          :preferred_support_email, :preferred_google_analytics_tracker_id,
+                          :preferred_mailchimp_api_key, :preferred_site_title
+  attr_accessible         :preferred_smtp_address, :preferred_smtp_port, :preferred_smtp_domain,
+                          :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email
+  attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
 
   validates_presence_of   :domain
   validates_presence_of   :account_prefix
@@ -25,32 +25,32 @@ class Account < ActiveRecord::Base
   validates_presence_of   :preferred_smtp_from_email
   validates_presence_of   :preferred_webmaster_email
 
-  after_create      :create_default_roles
-
-  preference        :site_title,                      :string
-  preference        :ssl_enabled,                     :boolean, :default => false
-  preference        :default_locale,                  :string,  :default => 'en'
-  preference        :locales,                         :string,  :default => 'en, de'
-  preference        :site_enabled,                    :boolean, :default => false
-  preference        :google_analytics_tracker_id,     :string
+  after_create            :create_default_roles
+                        
+  preference              :site_title,                      :string
+  preference              :ssl_enabled,                     :boolean, :default => false
+  preference              :default_locale,                  :string,  :default => 'en'
+  preference              :locales,                         :string,  :default => 'en, de'
+  preference              :site_enabled,                    :boolean, :default => false
+  preference              :google_analytics_tracker_id,     :string
   
   #--- Email / SMTP settings
-  preference        :webmaster_email,                 :string
-  preference        :support_email,                   :string
-  preference        :mailchimp_api_key,               :string
-  preference        :smtp_address,                    :string
-  preference        :smtp_port,                       :string,  :default => '587'
-  preference        :smtp_domain,                     :string
-  preference        :smtp_user_name,                  :string
-  preference        :smtp_password,                   :string
-  preference        :smtp_from_email,                 :string
-  
-  #--- PayPal
-  preference        :paypal_merchant_id,              :string
-  preference        :paypal_cert_id,                  :string
+  preference              :webmaster_email,                 :string
+  preference              :support_email,                   :string
+  preference              :mailchimp_api_key,               :string
+  preference              :smtp_address,                    :string
+  preference              :smtp_port,                       :string,  :default => '587'
+  preference              :smtp_domain,                     :string
+  preference              :smtp_user_name,                  :string
+  preference              :smtp_password,                   :string
+  preference              :smtp_from_email,                 :string
+                        
+  #--- PayPal           
+  preference              :paypal_merchant_id,              :string
+  preference              :paypal_cert_id,                  :string
 
   #--- eager load all preferences when an object is found
-  after_find        :preferences
+  after_find              :preferences
   
   # Find the account using the specified host (usually from the request url).
   # Check for certain special subdomains before lookup:
@@ -122,5 +122,17 @@ class Account < ActiveRecord::Base
       :user_name            => preferred_smtp_user_name,
       :password             => preferred_smtp_password
     }
+  end
+  
+  # Read the _theme.yml file located in the /site_assets/_account_prefix_/theme folder
+  # Returns just the theme data - not the top level account_prefix
+  #------------------------------------------------------------------------------
+  def theme_data
+    theme_file = Rails.root.join('site_assets', account_prefix, 'theme', '_theme.yml')
+    if File.exists?(theme_file)
+      (YAML::load_file(theme_file))[account_prefix]
+    else
+      nil
+    end
   end
 end
