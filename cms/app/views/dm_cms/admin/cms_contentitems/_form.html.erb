@@ -24,21 +24,31 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <ul class="side_list block">
-    <li><span class="contact-name"><strong>Tags &mdash; Images</strong>
-      <i class="monospaced">{% photo img : 'image.jpg', url : http_url, caption : "caption text" %}</i></span>
-    </li>
-    <li><span class="contact-name"><strong>Tags &mdash; Lexicon</strong>
-      <i class="monospaced">{% lex te:'sage', audio:no, class:tu %}</i></span>
-    </li>
-    <li><span class="contact-name"><strong>Tags &mdash; Boxes/Buttons</strong>
-      <i class="monospaced">{% pullout width : 340, side : right %}<br /><br />
-        stuff<br /><br />
-      {% endpullout %}</i></span>
-    </li>
-    <li>
-      <span class="contact-name"><i class="monospaced">{% continue_bar continue_text : 'Start', continue_url : 'alphabet-vowel-quiz', review_url : 'alphabet-introduction' %}</i></span>
-    </li>
-  </ul>
+  <div class="tagsinput">
+    <p>List of available tags<br><small><em>click for details</em></small></p>
+    <% Liquid::Template.tags.sort.each do |tag, tag_class| %>
+      <% unless tag_class.details[:summary].blank? %>
+        <a href="#" title="<%= tag_class.details[:summary] %>" data-toggle="modal" data-target="<%= "#tag_example_#{tag}" %>" ><span class="tag"><%= tag %></span></a>
+      <% end %>
+    <% end %>
+  </div>
   
+<% end %>
+
+<% Liquid::Template.tags.each do |tag, tag_class| %>
+  <% unless tag_class.details[:description].blank? %>
+    <div id="<%= "tag_example_#{tag}" %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h5 id="myModalLabel"><%= tag %></h5>
+      </div>
+      <div class="modal-body">
+        <p><%= tag_class.details[:description] %></p>
+        <pre><%= tag_class.details[:example] %></pre>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  <% end %>
 <% end %>

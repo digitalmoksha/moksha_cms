@@ -68,7 +68,7 @@ module DmCms::PagesHelper
       menu_str += "<li class='#{active}'>#{link_to root.menutitle, dm_cms.showpage_url(root.slug)}</li>"
     end
     pages.each do |page, children|
-      if (page.is_published? || current_user.is_admin?) && page_authorized?(page) && !page.menutitle.blank?
+      if allow_page_in_menu?(page)
         submenu = (children.empty? ? '' : menu_from_pages(children))
         active = (current_page?(page) ? options[:active_class] : '')
         menu_str += "<li>#{link_to page.menutitle, dm_cms.showpage_url(page.slug)}#{submenu}</li>"
@@ -76,6 +76,34 @@ module DmCms::PagesHelper
     end
     menu_str = ("<ul #{options[:ul]}>" + menu_str + "</ul>")
   end
+  
+  # return true if the page should be allowed to be dislpayed in a menu
+  #------------------------------------------------------------------------------
+  def allow_page_in_menu?(page)
+    (page.is_published? || current_user.is_admin?) && page_authorized?(page) && !page.menutitle.blank?    
+  end
+  
+  #------------------------------------------------------------------------------
+  def main_menu_select(options = {})
+    return '' if (root = CmsPage.roots[0]).nil?
+    options[:id]            ||= ''
+    options[:class]         ||= ''
+    options[:include_root]    = root if options[:include_home]
+    pages                     = root.subtree.arrange.to_a[0][1]
+    menu_str                  = "<select id='#{options[:id]}' class='#{options[:class]}'>"
+    menu_str                 += "<option value='' selected='selected'>#{nls(:main_menu_select_prompt)}</option>"
+    if options[:include_home]
+      menu_str += "<option value='#{dm_cms.showpage_url(root.slug)}'>#{root.menutitle}</option>"
+    end
+    pages.each do |page, children|
+      if allow_page_in_menu?(page)
+        menu_str += "<option value='#{dm_cms.showpage_url(page.slug)}'>#{page.menutitle}</option>"
+      end
+    end
+    menu_str += "</select>"
+    return menu_str.html_safe
+  end
+  
   
   private
 
