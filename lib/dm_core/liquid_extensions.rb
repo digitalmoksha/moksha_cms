@@ -63,6 +63,16 @@ module DmCore
       end
       super
     end
+
+    class << self
+      #------------------------------------------------------------------------------
+      def tag_name
+        self.name.split('::').last.underscore
+      end
+      def details
+        { name: self.tag_name, summary: '', description: '', example: '', category: '' }
+      end
+    end
   end
 end
 
@@ -80,6 +90,16 @@ module DmCore
         @attributes[key] = ((value.delete "\"").delete "\'")
       end
       super    
+    end
+    
+    class << self
+      #------------------------------------------------------------------------------
+      def tag_name
+        self.name.split('::').last.underscore
+      end
+      def details
+        { name: self.tag_name, summary: '', description: '', example: '', category: '' }
+      end
     end
   end
 end
