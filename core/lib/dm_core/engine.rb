@@ -1,5 +1,6 @@
 require 'devise'
 require 'rolify'
+require 'cancan'
 require 'globalize3'
 require 'easy_globalize3_accessors'
 require 'country_select'
@@ -11,6 +12,7 @@ require 'bluecloth'
 require 'liquid'
 require 'acts_as_commentable'
 require 'amoeba'
+require 'friendly_id'
 
 module DmCore
   class Engine < ::Rails::Engine

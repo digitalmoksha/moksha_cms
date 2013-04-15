@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
 
-  include DmCore::Concerns::Models::User
+  include DmCore::Concerns::User
   
 end
