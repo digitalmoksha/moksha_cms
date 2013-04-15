@@ -1,5 +1,12 @@
 module DmCore
   module RenderHelper
+    
+    # Used in pagination - get the current page number being displayed
+    #------------------------------------------------------------------------------
+    def page_number
+      @page_number ||= [1, params[:page].to_i].max
+    end
+    
     # Wrapper to pull the list of countries from our table
     #------------------------------------------------------------------------------
     def ut_country_select(object, method, options = {:include_blank => true}, html_options = {})    

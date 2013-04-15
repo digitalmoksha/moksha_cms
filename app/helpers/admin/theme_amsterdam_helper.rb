@@ -121,7 +121,8 @@ module Admin::ThemeAmsterdamHelper
     
     #--- add the indicator
     #out << "#{image_tag_plugin('indicator_small.gif', :id => options[:indicator], :style => 'padding-left:10px;display:none;border:none;')}"
-    out << "<div class='clear'></div></div><div class='clear'></div></div>"
+    out << "<div class='clear'></div>"
+    out << "</div>"
     return out.html_safe
   end
   

@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency "mysql2", ">= 0.3.11"
   s.add_dependency 'devise', '~> 2.1'         # Authenication
   s.add_dependency "rolify", ">= 3.2.0"       # User Roles
+  s.add_dependency "cancan", "~> 1.6"         # Authorization
   
   s.add_dependency "simple_form", "~> 2.0"    # Form handling
   s.add_dependency "will_paginate", "~> 3.0"  # pagintation
@@ -37,6 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency "liquid", "~> 2.3"
   s.add_dependency 'acts_as_commentable', "~> 4.0"
   s.add_dependency 'amoeba', '~> 2.0'         # for hanlding model duplicating
+  s.add_dependency 'friendly_id', "~> 4.0.9"
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'easy_globalize3_accessors', :git => 'git://github.com/digitalmoksha/easy_globalize3_accessors.git'
