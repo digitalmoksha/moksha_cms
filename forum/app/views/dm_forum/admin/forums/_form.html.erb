@@ -1,0 +1,12 @@
+<% submit_url = (@forum.new_record? ? admin_forums_path : admin_forum_path) %>
+<%= simple_form_for(@forum, :url => submit_url) do |f| %>
+  <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
+	<%= content_box :title => @title do %>
+    <%= f.input :name, :required => true, :autofocus => true %>  
+    <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
+    <%= f.input :description, :as => :text, :label => 'Description', :input_html => { :rows => 4, :class => 'input-block-level' } %>
+
+    <%= submit_or_cancel :cancel_url => admin_forums_path %>
+
+	<% end %>
+<% end %>

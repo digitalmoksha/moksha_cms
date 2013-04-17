@@ -1,0 +1,64 @@
+<% content_for :sidebar do %>
+
+  <% unless @forum.description.blank? %>
+    <div class="sidebar_forum_description>">
+      <%= @forum.description %>
+    </div>
+  <% end %>
+
+  <% if false %>
+    <h5 style="margin-bottom:1.0em;"><%= I18n.t 'txt.moderator', :count => @forum.moderators.size, :default => 'Moderator' %></h5>
+
+    <% unless @forum.moderators.empty? %>
+      <ul class="flat" style="margin-top:1em;">
+        <% @forum.moderators.each do |user| %>
+          <li><%= link_to user.display_name || user.login, user %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p><%= I18n.t 'txt.views_forums.unmoderated_html', :default => 'This forum is currently unmoderated.<br />Please always be courteous.'.html_safe %></p>
+    <% end %>
+  <% end %>
+  
+<% end %>
+
+<% content_for :page_title, @forum.name %>
+
+<% content_for :crumbs, forum_crumbs %>
+
+<ul class="forum_list">
+  <li>
+    <header>
+      <h1><%= @forum.name %></h1>
+      <p class="forum_info">
+        <%= I18n.t 'fms.count_topics', :count => @forum.forum_topics.size, :num => number_with_delimiter(@forum.forum_topics.size) %>
+        &nbsp;&nbsp;/&nbsp;&nbsp;
+        <%= I18n.t 'fms.count_comments', :count => @forum.comments_count, :num => number_with_delimiter(@forum.comments_count) %>
+        <span class="forum_read"><%= link_to I18n.t('txt.new_topic', :default => 'New topic'), new_forum_forum_topic_path(@forum) %></span>
+      </p>
+    </header>
+  </li>
+</ul>
+
+<div id="topics_list">
+<%= if @monitored
+     render(:partial => 'topics_list', :object => @monitored_topics, :as => :forum_topics)
+   else
+     render(:partial => 'topics_list', :object => @forum_topics, :as => :forum_topics)
+   end
+%>
+</div>
+
+<% if user_signed_in? %>
+  <p><%#= link_to I18n.t('txt.new_topic', :default => 'New topic'), new_forum_topic_path(@forum), :class => "utility" %></p>
+<% end%>
+
+<% if false %>
+<script type='text/javascript'><!--//--><![CDATA[//><!--
+if (history  && history.replaceState && $$('.pagination')) {
+  Event.observe(window, 'popstate', function(event){
+    new Ajax.Request("<%= @forum.slug %>", {method: 'get', parameters: event.state})
+  });
+};
+//--><!]]></script>
+<% end %>

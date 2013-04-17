@@ -1,0 +1,13 @@
+<div class="block">
+  <% toolbar = nav_bar_items([ 
+    @forum_site.enabled? ? colored_label('Forums Enabled', :success) : colored_label('Forums Disabled'),
+    link_to(icon_label('icon-edit', 'Edit'), dm_forum.edit_admin_forum_site_path, :class => "nav-btn-primary") ]) %>
+  <%= content_box :title => "Forum Settings", :toolbar => toolbar do %>
+    <dl class="dl-horizontal">
+      <dt>Tagline</dt>
+      <dd><%= @forum_site.tagline.to_s_default %></dd>
+      <dt>Description</dt>
+      <dd><%= @forum_site.description.to_s_default %></dd>
+    </dl>
+  <% end %>
+</div>

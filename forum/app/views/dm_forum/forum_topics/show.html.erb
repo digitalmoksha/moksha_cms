@@ -1,0 +1,95 @@
+<% content_for :page_title, @forum_topic.title %>
+
+<% @monitoring = user_signed_in? && Monitorship.where(:user_id => current_user.id, :forum_topic_id => @forum_topic.id, :active => true).present? %>
+
+<% content_for :sidebar do %>
+  <div class="forum_sidebar_voices">
+    <h5><%= I18n.t 'txt.voices', :default => 'Voices' %></h5>
+    <ul>
+      <% @forum_topic.voices.each do |user| %>
+        <li><%= user.display_name %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="forums">
+
+  <% if false #user_signed_in? %>
+
+    <%= form_tag monitorship_path(@forum, @forum_topic.id), :style => 'margin-top:0em; float:right;' do %>
+      <div>
+        <input id="monitor_checkbox" type="checkbox" <%= "checked='checked'".html_safe if @monitoring %> 
+          onclick="if (this.checked) {
+            <%= remote_function :url => monitorship_path(@forum, @topic.id) %>;
+            $('monitor_label').update('<%= I18n.t('txt.monitoring_topic', :default => 'Monitoring topic')%>');
+          } else {
+            <%= remote_function :url => monitorship_path(@forum, @topic.id), :method => :delete %>;
+            $('monitor_label').update('<%= I18n.t('txt.monitor_topic', :default => 'Monitor topic')%>')
+          }" />
+        <label id="monitor_label" for="monitor_checkbox"><%= @monitoring ? I18n.t('txt.monitoring_topic', :default => 'Monitoring topic') : I18n.t('txt.monitor_topic', :default => 'Monitor topic') %></label>
+        <%= hidden_field_tag '_method', 'delete' if @monitoring %>
+        <%= submit_tag :Set, :id => 'monitor_submit' %>
+      </div>
+    <% end %>
+
+  <% end %>
+
+  <% content_for :crumbs, forum_crumbs(@forum_topic.forum) %>
+
+  <h1 id="topic_title">
+    <%= @forum_topic.title %>
+    <% if @forum_topic.locked? %>
+      <span>(<%= I18n.t 'txt.topic', :default => 'Topic' %> <%= I18n.t 'txt.locked', :default => 'locked' %>)</span>
+    <% end %>
+    <% if user_signed_in? %>
+      <% if can? :edit, @forum_topic %>
+        <span id="topic_mod">
+          <%= link_to(I18n.t('txt.edit', :default => 'edit'), edit_forum_forum_topic_path(@forum, @forum_topic), :class => "utility") %> |
+          <%= link_to(I18n.t('txt.delete', :default => 'delete'), forum_forum_topic_path(@forum, @forum_topic), :class => "utility", :method => :delete, :confirm => I18n.t('txt.views_topics.delete_sure', :default => 'Delete this topic forever?')) %>
+        </span>
+      <% end %>
+    <% end %>
+  </h1>
+
+  <p class="subtitle">
+    <%= I18n.t 'fms.count_comments', :count => @forum_topic.forum_comments.size, 
+              :num => number_with_delimiter(@forum_topic.forum_comments.size) %>,
+    <%= I18n.t 'fms.count_voices', :count => @forum_topic.voices.size, 
+              :num => number_with_delimiter(@forum_topic.voices.size) %>
+  </p>
+
+  <div id="comment_list">
+    <% unless @forum_comments.empty? %>
+      <%= render(:partial => 'comments_list') %>
+    <% end %>
+  </div>
+
+  <% if user_signed_in? %>
+    <% if @forum_topic.locked? %>
+      <p class="topic_locked"><%= I18n.t 'txt.views_topics.locked_topic', :default => 'This topic is locked.' %></p>
+    <% else %>
+      <p><%= link_to I18n.t('txt.reply_to_topic', :default => 'Reply to topic'), "#reply", :class => "utility", :id => 'reply-link' %></p>
+
+      <div id="reply" class="editbox">
+        <div class="container">
+          <%= content_tag :p, flash[:bad_reply], :class => 'notice' if flash[:bad_reply] %>
+          <div id="comment_reply_form">
+            <%= form_for [@forum, @forum_topic, @forum_topic.forum_comments.new] do |f| %>
+              <p><%= f.text_area :body, :rows => 5, :class => 'comment-textarea' %></p>
+            	<%= submit_tag I18n.t('txt.views_topics.save_reply', :default => 'Save reply') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<script type='text/javascript'><!--//--><![CDATA[//><!--
+if (history  && history.replaceState && $$('.pagination')) {
+  Event.observe(window, 'popstate', function(event){
+    if(event.state) new Ajax.Request("<%= @forum_topic.slug %>", {method: 'get', parameters: event.state})
+  });
+};
+//--><!]]></script>

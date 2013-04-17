@@ -1,0 +1,40 @@
+de:
+  fms:
+    count_forums:
+      zero: "kein Forum"
+      one: "1 Forum"
+      other: "%{num} Foren"
+    count_users:
+      zero: "kein Benutzer"
+      one: "1 Benutzer"
+      other: "%{num} Benutzer"
+    count_users_active:
+      zero: "kein aktiver Benutzer"
+      one: "1 aktiver Benutzer"
+      other: "%{num} aktive Benutzer"
+    count_users_lurking:
+      zero: "kein nur-lesender Benutzer"
+      one: "1 nur-lesender Benutzer"
+      other: "%{num} nur-lesende Benutzer"
+    count_voices:
+      zero: "kein Teilnehmer"
+      one: "1 Teilnehmer"
+      other: "%{num} Teilnehmer"
+    count_topics:
+      zero: "kein Thema"
+      one: "1 Thema"
+      other: "%{num} Themen"
+    count_comments:
+      zero: "kein Kommentar"
+      one: "1 Kommentar"
+      other: "%{num} Kommentare"
+    count_comments_found:
+      zero: "kein Kommentar gefunden"
+      one: "1 Kommentar gefunden"
+      other: "%{count} Kommentare gefunden"
+    comment_age: "vor %{when}"
+
+    user_is_administrator: Administrator
+    user_is_moderator: Moderator
+    suspended_user_comment: Dieser Kommentar wurde entfernt
+    
