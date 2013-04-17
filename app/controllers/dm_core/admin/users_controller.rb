@@ -54,6 +54,19 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
     end
   end
   
+  # Change to a different user, so we can check their permissions, etc
+  #------------------------------------------------------------------------------
+  def masquerade
+    @user = User.find(params[:id])
+    if @user
+      switch_user(@user)
+      redirect_to root_url
+    else
+      redirect_to :action => :list
+    end
+  end
+
+  
 private
 
   # Set some values for the template based on the controller

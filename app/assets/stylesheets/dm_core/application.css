@@ -9,6 +9,12 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
+ *= require dm_core/font-awesome
  */
 
+/*--- might be deinfed elsewhere, but make sure.  Does not support IE7 */
+.clearfix:after {
+  content: " ";
+  display: table;
+  clear: both;
+}

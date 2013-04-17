@@ -1,2 +1,6 @@
+<% content_for :sidebar do %>
+  <%= link_to "Become This User", dm_core.masquerade_admin_user_path(@user.id), :class => "action-button blue" %>
+<% end %>
+
 <% @title = "#{@user.display_name} (#{@user.email})" %>
 <%= render 'form' %>
