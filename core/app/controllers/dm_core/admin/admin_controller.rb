@@ -10,6 +10,7 @@ class DmCore::Admin::AdminController < ApplicationController
   
   include DmCore::AccountHelper
   include Admin::ThemeAmsterdamHelper
+  include Admin::ApplicationHelper
   
   #------------------------------------------------------------------------------
   def authenticate_admin_user!
