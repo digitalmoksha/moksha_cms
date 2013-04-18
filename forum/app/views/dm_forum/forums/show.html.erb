@@ -26,27 +26,14 @@
 
 <% content_for :crumbs, forum_crumbs %>
 
-<ul class="forum_list">
-  <li>
-    <header>
-      <h1><%= @forum.name %></h1>
-      <p class="forum_info">
-        <%= I18n.t 'fms.count_topics', :count => @forum.forum_topics.size, :num => number_with_delimiter(@forum.forum_topics.size) %>
-        &nbsp;&nbsp;/&nbsp;&nbsp;
-        <%= I18n.t 'fms.count_comments', :count => @forum.comments_count, :num => number_with_delimiter(@forum.comments_count) %>
-        <span class="forum_read"><%= link_to I18n.t('txt.new_topic', :default => 'New topic'), new_forum_forum_topic_path(@forum) %></span>
-      </p>
-    </header>
-  </li>
-</ul>
-
 <div id="topics_list">
-<%= if @monitored
-     render(:partial => 'topics_list', :object => @monitored_topics, :as => :forum_topics)
-   else
-     render(:partial => 'topics_list', :object => @forum_topics, :as => :forum_topics)
-   end
-%>
+  <%= render(:partial => 'forum_header', :object => @forum, :as => :forum) %>
+  <%= if @monitored
+       render(:partial => 'topics_list', :object => @monitored_topics, :as => :forum_topics)
+     else
+       render(:partial => 'topics_list', :object => @forum_topics, :as => :forum_topics)
+     end
+  %>
 </div>
 
 <% if user_signed_in? %>

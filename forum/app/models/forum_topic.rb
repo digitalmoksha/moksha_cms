@@ -34,7 +34,7 @@ class ForumTopic < ActiveRecord::Base
   has_one                 :recent_comment, :as => :commentable, :order => "created_at DESC", :class_name => "ForumComment"
   has_many                :voices, :through => :forum_comments, :source => :user, :uniq => true
   has_many                :monitorships, :dependent => :delete_all
-  has_many                :monitoring_users, :through => :monitorships, :source => :user, :conditions => {"active" => true}
+  has_many                :monitoring_users, :through => :monitorships, :source => :user, :conditions => ['fms_monitorships.active = ?', true]
   
   validates_presence_of   :user_id, :forum_site_id, :forum_id, :title
   validates_presence_of   :body, :on => :create
@@ -80,7 +80,8 @@ class ForumTopic < ActiveRecord::Base
   def update_cached_comment_fields(forum_comment)
     #--- these fields are not accessible to mass assignment
     if remaining_comment = forum_comment.frozen? ? recent_comment : forum_comment
-      self.class.where(:id => id).update_all(:last_updated_at => remaining_comment.created_at, :last_user_id => remaining_comment.user_id, :last_comment_id => remaining_comment.id, :comments_count => forum_comments.count)
+      self.class.where(:id => id).update_all(:last_updated_at => remaining_comment.created_at, 
+            :last_user_id => remaining_comment.user_id, :last_forum_comment_id => remaining_comment.id)
     else
       destroy
     end

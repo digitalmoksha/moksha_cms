@@ -11,6 +11,10 @@ class Monitorship < ActiveRecord::Base
 
   attr_accessible   :user_id, :forum_topic_id, :active
 
+  default_scope     { where(account_id: Account.current.id) }
+
+  scope             :monitored_by, lambda { |user| { :conditions => { :user_id => user.id, :active => true } } }
+
 protected
 
   #------------------------------------------------------------------------------

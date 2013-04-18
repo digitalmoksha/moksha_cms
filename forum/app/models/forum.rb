@@ -33,7 +33,7 @@ class Forum < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def monitored_topics(user)
     #self.forum_topics.joins(:monitorships).where(:monitorships => {:user_id => user, :active => true})
-    self.forum_topics.joins(:monitorships).where(:monitorships => {:user_id => user})
+    self.forum_topics.joins(:monitorships).where(:fms_monitorships => {:user_id => user})
   end
 
   #------------------------------------------------------------------------------

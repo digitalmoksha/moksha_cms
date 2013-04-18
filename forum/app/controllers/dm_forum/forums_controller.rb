@@ -11,7 +11,7 @@ class DmForum::ForumsController < DmForum::ApplicationController
 
   layout    'forum_templates/forum_list', :only => [:list, :show]
   
-  # GET /forum/list
+  # GET /forum
   #------------------------------------------------------------------------------
   def list
     if current_user.is_admin?

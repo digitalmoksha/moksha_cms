@@ -4,19 +4,22 @@
 
 <% if user_signed_in? %>
   <% if @monitored %>
-( <%= (link_to((I18n.t 'txt.a', :default => 'all'), forum_path(@forum), :class => "filter", :id => 'filter_link') + ' | ' + (I18n.t 'txt.monitored', :default => 'monitored')).html_safe%> )   
+( <%= (link_to((I18n.t 'txt.a', :default => 'all'), forum_show_path(@forum), :class => "filter", :id => 'filter_link') + ' | ' + (I18n.t 'txt.monitored', :default => 'monitored')).html_safe%> )   
   <% else %>
-( <%= ((I18n.t 'txt.all', :default => 'all') +' | ' + link_to((I18n.t 'txt.monitored', :default => 'monitored'), forum_path(@forum)+"?monitored=true", :class => "filter", :id => 'filter_link')).html_safe%> ) 
+( <%= ((I18n.t 'txt.all', :default => 'all') +' | ' + link_to((I18n.t 'txt.monitored', :default => 'monitored'), forum_show_path(@forum)+"?monitored=true", :class => "filter", :id => 'filter_link')).html_safe%> ) 
   <% end %>
 <% end %>
 
 <ul class="topic_list">
   <% for forum_topic in forum_topics %>
-    <li><span class="topic">
-      <%= forum_topic_icon(forum_topic) %>
-      <%= I18n.t('txt.sticky', :default => ('[sticky]' + '<strong>')).html_safe if forum_topic.sticky? %>
-      <%= topic_title_link forum_topic, :class => "entry-title", :rel => "bookmark" %>
-      <%= '</strong>'.html_safe if forum_topic.sticky? %>
+    <li class="<%= 'sticky' if forum_topic.sticky %>">
+      <span class="topic">
+        <%= forum_topic_icon(forum_topic) %>
+        <%= topic_title_link forum_topic, :rel => "bookmark" %>
+      </span>
+      <% if forum_topic.sticky? %>
+        <span class="sticker" title="This topic is pinned"><i class="icon-pushpin"></i></span>
+      <% end %>
       <% if forum_topic.paged? %>
         <small>
           <%= link_to I18n.t('txt.goto_last_page', :default => 'last'), 
@@ -24,25 +27,32 @@
         </small>
       <% end %>
       <div class="topic_info">
-        <span class="started_by"><%= I18n.t 'txt.started', :default => 'Started by' %>:  <%= forum_topic.user.display_name %></span>
-        <span class="num_comments"><%= number_with_delimiter(forum_topic.forum_comments.size) %> <%= I18n.t 'txt.comments', :default => 'comments' %></span>
-        <span class="num_views">Views: <%= number_with_delimiter(forum_topic.hits) %></span>
-        <span>
+        <span class="started_by"><%= I18n.t 'txt.started', :default => 'Started by' %>:  
+          <span class="author"><%= forum_topic.user.display_name %></span>
+        </span>
+        <span class="num_comments" title="Number of comments">
+          <i class="icon-comments-alt"></i> : <%= number_with_delimiter(forum_topic.comments_count) %>
+        </span>
+        <span class="num_views" title="Number of views">
+          <i class="icon-eye-open"></i> : <%= number_with_delimiter(forum_topic.hits) %>
+        </span>
+        <span class="when">
           <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => dom_id(forum_topic.recent_comment))) do %>
+            <i class="icon-comment-alt"></i>
             <%= I18n.t 'txt.comment_age', :when => time_ago_in_words(forum_topic.recent_comment.created_at), 
-                :default => "commented %{when} ago" %>
+                :default => "%{when} ago" %>
             <% if forum_topic.last_user %>
               <%= I18n.t('txt.by_user_html', 
                 :user => "<span class=\"author\"><strong class=\"fn\">#{h(forum_topic.recent_comment.user.display_name)}</strong></span>",
                 :default => "by %{user}").html_safe %>
             <% end %>
-            <i class="icon-external-link"></i>
           <% end %>
         </span>
       </div>
     </span></li>
   <% end %>
 </ul>
+
 
 <%= will_paginate forum_topics %>
 

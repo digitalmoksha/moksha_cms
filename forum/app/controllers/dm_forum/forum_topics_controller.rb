@@ -28,6 +28,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
     @forum_topic.hit! unless user_signed_in? && @forum_topic.user_id == current_user.id
     @forum_comments = @forum_topic.forum_comments.paginate :page => page_number
     @forum_comment  = ForumComment.new
+    @monitoring     = user_signed_in? && @forum_topic.monitoring_users.where(:id => current_user).present?
   end
   
   #------------------------------------------------------------------------------

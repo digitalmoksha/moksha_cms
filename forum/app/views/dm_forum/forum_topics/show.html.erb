@@ -1,8 +1,14 @@
 <% content_for :page_title, @forum_topic.title %>
 
-<% @monitoring = user_signed_in? && Monitorship.where(:user_id => current_user.id, :forum_topic_id => @forum_topic.id, :active => true).present? %>
-
 <% content_for :sidebar do %>
+  <% if @monitoring %>
+    <%= button_to 'Stop monitoring this topic', forum_forum_topic_monitorship_path(@forum, @forum_topic.id), 
+                  :id => 'monitor_button', :remote => true, :method => :delete %>
+  <% else %>  
+    <%= button_to 'Monitor this topic', forum_forum_topic_monitorship_path(@forum, @forum_topic.id), 
+                  :id => 'monitor_button', :remote => true %>
+  <% end %>
+
   <div class="forum_sidebar_voices">
     <h5><%= I18n.t 'txt.voices', :default => 'Voices' %></h5>
     <ul>
@@ -13,29 +19,11 @@
   </div>
 <% end %>
 
-<div class="forums">
+<% content_for :crumbs, forum_crumbs(@forum_topic.forum) %>
 
-  <% if false #user_signed_in? %>
+<div class="comment_list">
 
-    <%= form_tag monitorship_path(@forum, @forum_topic.id), :style => 'margin-top:0em; float:right;' do %>
-      <div>
-        <input id="monitor_checkbox" type="checkbox" <%= "checked='checked'".html_safe if @monitoring %> 
-          onclick="if (this.checked) {
-            <%= remote_function :url => monitorship_path(@forum, @topic.id) %>;
-            $('monitor_label').update('<%= I18n.t('txt.monitoring_topic', :default => 'Monitoring topic')%>');
-          } else {
-            <%= remote_function :url => monitorship_path(@forum, @topic.id), :method => :delete %>;
-            $('monitor_label').update('<%= I18n.t('txt.monitor_topic', :default => 'Monitor topic')%>')
-          }" />
-        <label id="monitor_label" for="monitor_checkbox"><%= @monitoring ? I18n.t('txt.monitoring_topic', :default => 'Monitoring topic') : I18n.t('txt.monitor_topic', :default => 'Monitor topic') %></label>
-        <%= hidden_field_tag '_method', 'delete' if @monitoring %>
-        <%= submit_tag :Set, :id => 'monitor_submit' %>
-      </div>
-    <% end %>
-
-  <% end %>
-
-  <% content_for :crumbs, forum_crumbs(@forum_topic.forum) %>
+  <%= render(:partial => 'dm_forum/forums/forum_header', :object => @forum_topic.forum, :as => :forum) %>
 
   <h1 id="topic_title">
     <%= @forum_topic.title %>
@@ -71,16 +59,13 @@
     <% else %>
       <p><%= link_to I18n.t('txt.reply_to_topic', :default => 'Reply to topic'), "#reply", :class => "utility", :id => 'reply-link' %></p>
 
-      <div id="reply" class="editbox">
-        <div class="container">
-          <%= content_tag :p, flash[:bad_reply], :class => 'notice' if flash[:bad_reply] %>
-          <div id="comment_reply_form">
-            <%= form_for [@forum, @forum_topic, @forum_topic.forum_comments.new] do |f| %>
-              <p><%= f.text_area :body, :rows => 5, :class => 'comment-textarea' %></p>
-            	<%= submit_tag I18n.t('txt.views_topics.save_reply', :default => 'Save reply') %>
-            <% end %>
-          </div>
-        </div>
+      <div id="comment_reply_form" class="comment_reply_form">
+        <%= simple_form_for [@forum, @forum_topic, @forum_topic.forum_comments.new] do |f| %>
+          <%= f.input :body, :as => :text, :label => I18n.t('txt.views_topics.body', :default => 'Body'), 
+                          :input_html => {:rows => 10} %>
+          <%= submit_or_cancel :save => I18n.t('txt.views_topics.save_reply', :default => 'Save reply'),
+                :cancel_url => [@forum] %>
+        <% end %>
       </div>
     <% end %>
   <% end %>

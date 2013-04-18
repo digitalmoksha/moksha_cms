@@ -4,10 +4,13 @@
 
 <% content_for :crumbs, forum_crumbs(@forum_topic.forum) %>
 
+<%= render(:partial => 'dm_forum/forums/forum_header', :object => @forum, :as => :forum) %>
+
 <h1 id="new_topic"><%= I18n.t 'txt.new_topic', :default => 'New topic' %></h1>
 <p class="subtitle"><%= I18n.t 'txt.by_user', :default => 'by %{user}', :user => current_user.display_name %></p>
 
 <%= simple_form_for [@forum, @forum_topic] do |f| %>
   <%= render :partial => "form", :object => f %>
-  <%= submit_or_cancel :save => I18n.t('txt.post_topic', :default => 'Post topic') %>
+  <%= submit_or_cancel :save => I18n.t('txt.post_topic', :default => 'Post topic'),
+        :cancel_url => [@forum] %>
 <% end %>
