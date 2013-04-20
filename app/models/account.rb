@@ -124,15 +124,22 @@ class Account < ActiveRecord::Base
     }
   end
   
-  # Read the _theme.yml file located in the /site_assets/_account_prefix_/theme folder
-  # Returns just the theme data - not the top level account_prefix
   #------------------------------------------------------------------------------
   def theme_data
-    theme_file = Rails.root.join('site_assets', account_prefix, 'theme', '_theme.yml')
+    Account.theme_data(account_prefix)
+  end
+  
+  # Read the _theme.yml file located in the /site_assets/_account_prefix_/theme folder
+  # Returns just the theme data - not the top level account_prefix
+  # {todo} make the location a config variable
+  #------------------------------------------------------------------------------
+  def self.theme_data(theme_name)
+    theme_file = Rails.root.join('themes', theme_name, '_theme.yml')
     if File.exists?(theme_file)
-      (YAML::load_file(theme_file))[account_prefix]
+      (YAML::load_file(theme_file))[theme_name]
     else
       nil
     end
   end
+  
 end
