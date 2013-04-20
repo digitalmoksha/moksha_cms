@@ -1,5 +1,3 @@
-!function( $ ) {
-  $(function () {
-
-}( window.jQuery );
-
+$(document).ready(function() {
+  
+});
