@@ -15,10 +15,12 @@
       <%= link_to I18n.t('txt.admin.edit_post', :default => 'Edit post'), edit_forum_forum_topic_forum_comment_path(@forum, @forum_topic, comment_item), :class => 'utility' %>
     <% end %>
   </p>
- 
+  <div class="clearfix"></div>
+  <div class="comment_text">
     <% if comment_item.user.active? %>
       <%= present(comment_item).formatted_comment %>
     <% else %>
       <p>(<% I18n.t 'fms.suspended_user_post', :default => 'This post has been removed' %>)</p>
     <% end %>
+  </div>
 </li>

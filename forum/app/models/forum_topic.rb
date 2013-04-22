@@ -41,6 +41,12 @@ class ForumTopic < ActiveRecord::Base
 
   default_scope           { where(account_id: Account.current.id) }
 
+  # The first comment on a topic is the topic text.  So the number of *replies*
+  # is the number of comments - 1
+  #------------------------------------------------------------------------------
+  def num_replies
+    comments_count - 1
+  end
   #------------------------------------------------------------------------------
   def to_s
     title

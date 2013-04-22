@@ -17,9 +17,9 @@
         <%= forum_topic_icon(forum_topic) %>
         <%= topic_title_link forum_topic, :rel => "bookmark" %>
       </span>
-      <span class="num_comments" title="Number of comments">
+      <span class="num_comments" title="Number of replies">
           <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => dom_id(forum_topic.recent_comment))) do %>
-          <%= number_with_delimiter(forum_topic.comments_count) %>
+          <%= number_with_delimiter(forum_topic.num_replies) %>
           <span>replies</span>
         <% end %>
       </span>
@@ -46,7 +46,7 @@
                 :default => "%{when} ago" %>
             <% if forum_topic.last_user %>
               <%= I18n.t('txt.by_user_html', 
-                :user => "<span class=\"author\"><strong class=\"fn\">#{h(forum_topic.recent_comment.user.display_name)}</strong></span>",
+                :user => "<span class='author'>#{h(forum_topic.recent_comment.user.display_name)}</span>",
                 :default => "by %{user}").html_safe %>
             <% end %>
           <% end %>

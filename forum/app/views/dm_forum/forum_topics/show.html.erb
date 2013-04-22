@@ -53,7 +53,7 @@
     <% if @forum_topic.locked? %>
       <p class="topic_locked"><%= I18n.t 'txt.views_topics.locked_topic', :default => 'This topic is locked.' %></p>
     <% else %>
-      <p><%= link_to I18n.t('txt.reply_to_topic', :default => 'Reply to topic'), "#reply", :class => "utility", :id => 'reply-link' %></p>
+      <h3 id="reply">REPLY TO TOPIC</h3>
 
       <div id="comment_reply_form" class="comment_reply_form">
         <%= simple_form_for [@forum, @forum_topic, @forum_topic.forum_comments.new] do |f| %>

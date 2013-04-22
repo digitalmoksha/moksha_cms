@@ -10,11 +10,15 @@
 </div>
 
 <h3>COMMENTS</h3>
-  
+
+<% if user_signed_in? and !@forum_topic.locked? %>
+  <p><%= link_to I18n.t('txt.reply_to_topic', :default => 'Reply to topic'), "#reply" %></p>
+<% end %>
+
 <div class="comments clearfix">
   <ul class="comment_list">
     <% for forum_comment in @forum_comments do %>
-      <%= render(:partial => 'comment_item', object: forum_comment) %>
+      <%= render(:partial => 'comment_item', object: forum_comment) unless forum_comment == @forum_comments.first %>
     <% end %>
   </ul>
 </div>
