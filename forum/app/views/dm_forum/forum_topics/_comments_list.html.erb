@@ -2,19 +2,22 @@
 
 <%= will_paginate @forum_comments %>
 
-<section class="comments">
-  <ul class="first_comment">
-    <%= render(:partial => 'comment_item', object: @forum_comments.first) %>
+<div class="comments clearfix">
+  <ul class="comment_list first_comment">
+    <% forum_comment = @forum_comments.first %>
+      <%= render(:partial => 'comment_item', object: @forum_comments.first) %>
   </ul>
+</div>
 
-  <h3>COMMENTS</h3>
+<h3>COMMENTS</h3>
   
+<div class="comments clearfix">
   <ul class="comment_list">
     <% for forum_comment in @forum_comments do %>
-      <%= render(:partial => 'comment_item', object: forum_comment) unless forum_comment == @forum_comments.first %>
+      <%= render(:partial => 'comment_item', object: forum_comment) %>
     <% end %>
   </ul>
-</section>
+</div>
 
 
 <%= will_paginate @forum_comments %>

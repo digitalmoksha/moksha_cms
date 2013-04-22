@@ -21,7 +21,7 @@
 
 <% content_for :crumbs, forum_crumbs(@forum_topic.forum) %>
 
-<div class="comment_list">
+<div class="comment_section">
 
   <%= render(:partial => 'dm_forum/forums/forum_header', :object => @forum_topic.forum, :as => :forum) %>
 
@@ -47,11 +47,7 @@
               :num => number_with_delimiter(@forum_topic.voices.size) %>
   </p>
 
-  <div id="comment_list">
-    <% unless @forum_comments.empty? %>
-      <%= render(:partial => 'comments_list') %>
-    <% end %>
-  </div>
+  <%= render(:partial => 'comments_list') unless @forum_comments.empty?%>
 
   <% if user_signed_in? %>
     <% if @forum_topic.locked? %>

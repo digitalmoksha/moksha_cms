@@ -1,29 +1,24 @@
-<li>
-  <div class="user"><%= avatar_for comment_item.user %></div>
-  <p claass="author"><%= truncate(comment_item.user.display_name, :length => 15) %></p>
-  <% if can?(:moderate, comment_item.forum_topic.forum) || !comment_item.user.active? %>
-    <span class="admin"><%= forum_comment_user_state(comment_item) %></span>
-  <% end %>
+<li class="clearfix">
+  <div class="user"><%= avatar_for comment_item.user, 48 %></div>
+  <p class="comment_author"><%= truncate(comment_item.user.display_name, :length => 15) %>
+    <% if can?(:moderate, comment_item.forum_topic.forum) || !comment_item.user.active? %>
+      <span class="admin">(<%= forum_comment_user_state(comment_item) %>)</span>
+    <% end %>
+  </p>
   <p class="info">
     <%= I18n.t 'fms.post_age', :when => time_ago_in_words(comment_item.created_at), :default => "posted %{when} ago" %>
     | <%= edited = edited_on_tag(comment_item) %>
     <%= ' | ' if edited %>
     <%= link_to 'Reply', '#reply' %>
+    <% if user_signed_in? && can?(:edit, comment_item) %>
+    | 
+      <%= link_to I18n.t('txt.admin.edit_post', :default => 'Edit post'), edit_forum_forum_topic_forum_comment_path(@forum, @forum_topic, comment_item), :class => 'utility' %>
+    <% end %>
   </p>
  
-  <% if user_signed_in? && can?(:edit, comment_item) %>
-    <p>
-      <span class="edit">
-        <%#= ajax_spinner_for "edit-post-#{comment_item.id}", "spinner_bounce.gif" %>
-        <%= link_to I18n.t('txt.admin.edit_post', :default => 'Edit post'), edit_forum_forum_topic_forum_comment_path(@forum, @forum_topic, comment_item), :class => 'utility' %>
-      </span>
-    </p>
-  <% end %>
-  <div class='post_content'>
     <% if comment_item.user.active? %>
       <%= present(comment_item).formatted_comment %>
     <% else %>
       <p>(<% I18n.t 'fms.suspended_user_post', :default => 'This post has been removed' %>)</p>
     <% end %>
-  </div>
 </li>
