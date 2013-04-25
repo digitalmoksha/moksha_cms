@@ -5,7 +5,9 @@ module DmCore
   module Concerns
     module Ability
       def dm_core_abilities(user)
-        can :manage, :all if user.has_role? :admin
+        if user
+          can :manage, :all if user.has_role? :admin
+        end
       end
     end
   end

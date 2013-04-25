@@ -21,7 +21,6 @@ class Account < ActiveRecord::Base
   validates_presence_of   :preferred_smtp_address
   validates_presence_of   :preferred_smtp_port
   validates_presence_of   :preferred_smtp_user_name
-  validates_presence_of   :preferred_smtp_password
   validates_presence_of   :preferred_smtp_from_email
   validates_presence_of   :preferred_webmaster_email
 
@@ -59,7 +58,7 @@ class Account < ActiveRecord::Base
   def self.find_account(host)
     host      ||= ""
     separated   = host.downcase.split('.')
-    separated   = separated.delete_if { |x| x == "dev" || x == 'www' || x == 'backoffice' || x =~ /stg-/ || x == 'staging' }
+    separated   = separated.delete_if { |x| x == 'dev' || x == 'www' || x == 'backoffice' || x =~ /stg-/ || x == 'staging' }
     self.find_by_domain(separated.join('.')) or raise Account::DomainNotFound.new('Invalid domain')
   end
 

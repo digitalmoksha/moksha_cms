@@ -149,5 +149,10 @@ module DmCore
       filters(:around)
     end
 
+    # Redirect to the index page if we get an access denied
+    #------------------------------------------------------------------------------
+    rescue_from CanCan::AccessDenied do |exception|
+      redirect_to main_app.root_url, :alert => exception.message
+    end
   end
 end
