@@ -1,6 +1,6 @@
 <a name="<%= dom_id @forum_comments.first %>" id="<%= dom_id @forum_comments.first %>">&#xA0;</a>
 
-<%= will_paginate @forum_comments %>
+<%= will_paginate @forum_comments, :previous_label => "« Previous", :next_label => "Next »" %>
 
 <div class="comments clearfix">
   <ul class="comment_list first_comment">

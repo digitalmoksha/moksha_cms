@@ -5,7 +5,7 @@ class ForumSite < ActiveRecord::Base
 
   attr_accessible           :enabled, :description, :tagline
 
-  has_many :forums,         :conditions => {:state => 'public'}
+  has_many :forums,         :conditions => {:is_public => true}
   has_many :all_forums,     :class_name => 'Forum'
   has_many :forum_topics,   :through => :forums
   has_many :forum_comments, :through => :forums

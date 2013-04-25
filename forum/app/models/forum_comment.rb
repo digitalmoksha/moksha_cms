@@ -16,6 +16,8 @@ class ForumComment < Comment
   after_update            :update_cached_fields
   after_destroy           :update_cached_fields
 
+  self.per_page = 10
+
   # For a forum topic, we have one root comment, which is the body of the topic.
   # All other comments are either children or siblings
   #------------------------------------------------------------------------------

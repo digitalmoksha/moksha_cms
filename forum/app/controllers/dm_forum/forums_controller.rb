@@ -14,11 +14,7 @@ class DmForum::ForumsController < DmForum::ApplicationController
   # GET /forum
   #------------------------------------------------------------------------------
   def list
-    if current_user.is_admin?
-      @forums = Forum.all
-    else
-      @forums = Forum.where(published: true)
-    end
+    @forums = Forum.available_forums(current_user)
   end
 
   # GET /forum/:slug
@@ -38,7 +34,7 @@ protected
   #------------------------------------------------------------------------------
   def forum_lookup
     @forum = Forum.find_by_slug!(params[:id])
-    raise ActiveRecord::RecordNotFound unless @forum.published? or current_user.is_admin?
+    authorize! :read, @forum
   end
 
 end

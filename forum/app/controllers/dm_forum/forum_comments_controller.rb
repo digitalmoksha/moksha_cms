@@ -68,7 +68,7 @@ protected
     elsif params[:forum_id]
       @parent = @forum        = Forum.find_by_slug!(params[:forum_id])
       @parent = @forum_topic  = @forum.forum_topics.find_by_slug(params[:forum_topic_id]) if params[:forum_topic_id]
-      raise ActiveRecord::RecordNotFound unless @forum.published? or current_user.is_admin?
+      authorize! :read, @forum
     end
   end
 

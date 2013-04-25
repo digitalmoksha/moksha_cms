@@ -3,6 +3,11 @@
 #------------------------------------------------------------------------------
 class ForumPresenter < ForumCommonPresenter
   presents :forum
+  
+  def type_of_forum
+    forum.is_private? ? 'private' : (forum.is_protected? ? 'protected' : 'public')
+  end
+  
   # #delegate :something, to: :course
   # 
   # #------------------------------------------------------------------------------

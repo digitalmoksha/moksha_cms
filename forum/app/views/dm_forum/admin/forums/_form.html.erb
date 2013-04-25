@@ -3,8 +3,10 @@
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
 	<%= content_box :title => @title do %>
     <%= f.input :name, :required => true, :autofocus => true %>  
-    <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
     <%= f.input :description, :as => :text, :label => 'Description', :input_html => { :rows => 4, :class => 'input-block-level' } %>
+    <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
+    <%= f.input :is_public, :as => :toggle, :label => 'Make Forum Public?', :hint => 'This will allow anyone to see the forum.  Use option below to restrict to registered users' %>
+    <%= f.input :requires_login, :as => :toggle, :label => 'Public Requires Login?', :hint => 'If this is a public forum, user must be logged in to see it.  (All private forums automatically require login)' %>
 
     <%= submit_or_cancel :cancel_url => admin_forums_path %>
 

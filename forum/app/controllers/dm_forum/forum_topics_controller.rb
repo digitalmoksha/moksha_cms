@@ -76,7 +76,7 @@ protected
   #------------------------------------------------------------------------------
   def find_forum
     @forum = Forum.find_by_slug!(params[:forum_id])
-    raise ActiveRecord::RecordNotFound unless @forum.published? or current_user.is_admin?
+    authorize! :read, @forum
   end
   
   #------------------------------------------------------------------------------

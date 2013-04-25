@@ -13,7 +13,18 @@ module DmForum
   module Concerns
     module Ability
       def dm_forum_abilities(user)
-        can :moderate, Forum, :id => Forum.with_role(:moderator, user).map(&:id)
+        if user
+          #--- Forum
+          can(:read, Forum)   { |forum| forum.can_be_read_by?(user) }
+          can(:reply, Forum)  { |forum| forum.can_be_replied_by?(user) }
+          can :moderate, Forum, :id => Forum.published.with_role(:moderator, user).map(&:id)
+          
+          #--- Comment
+          can :edit, ForumComment, :user_id => user.id
+        else
+          #--- can only read/see public forums when not logged in
+          can(:read, Forum)   { |forum| forum.can_be_read_by?(user) }
+        end
       end
     end
   end
