@@ -80,7 +80,7 @@ module DmCms::PagesHelper
   # return true if the page should be allowed to be dislpayed in a menu
   #------------------------------------------------------------------------------
   def allow_page_in_menu?(page)
-    (page.is_published? || current_user.is_admin?) && page_authorized?(page) && !page.menutitle.blank?    
+    (page.is_published? || is_admin?) && page_authorized?(page) && !page.menutitle.blank?    
   end
   
   #------------------------------------------------------------------------------
