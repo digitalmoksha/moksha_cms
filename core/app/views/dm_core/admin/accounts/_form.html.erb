@@ -1,5 +1,5 @@
 <%= simple_form_for(@account, :url => dm_core.admin_account_path) do |f| %>
-  <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
+  <%= f.error_notification :message => "Please review the problems below"%>
 
 	<%= content_box :title => @title do %>
 
@@ -21,7 +21,7 @@
       <%= f.input :preferred_smtp_address, :label => 'SMTP Address', :required => true %>
       <%= f.input :preferred_smtp_port, :label => 'SMTP Port', :required => true %>
       <%= f.input :preferred_smtp_user_name, :label => 'SMTP Username', :required => true %>
-      <%= f.input :preferred_smtp_password, :label => 'SMTP Password', :required => true %>
+      <%= f.input :preferred_smtp_password, :as => :password, :label => 'SMTP Password' %>
       <%= f.input :preferred_smtp_domain, :label => 'SMTP Domain' %>
       <%= f.input :preferred_smtp_from_email, :label => 'SMTP From Email', :required => true, :hint => 'from address set on emails' %>
       <%= f.input :preferred_mailchimp_api_key, :label => 'MailChimp API Key' %>

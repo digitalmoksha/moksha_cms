@@ -35,7 +35,7 @@
         <dt>SMTP User name</dt>
         <dd><%= @account.preferred_smtp_user_name.to_s_default %></dd>
         <dt>SMTP Password</dt>
-        <dd><%= "&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;".html_safe if @account.preferred_smtp_password %></dd>
+        <dd><%= @account.preferred_smtp_password.blank? ? 'n/a' : ('&bull;' * @account.preferred_smtp_password.length).html_safe if @account.preferred_smtp_password %></dd>
         <dt>SMTP Domain</dt>
         <dd><%= @account.preferred_smtp_domain.to_s_default %></dd>
         <dt>SMTP From Address</dt>

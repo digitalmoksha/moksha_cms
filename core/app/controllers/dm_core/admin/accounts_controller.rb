@@ -19,6 +19,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   # PUT /admin/account or PUT /admin/account/.json
   #------------------------------------------------------------------------------
   def update
+    params[:account].delete(:preferred_smtp_password) if params[:account][:preferred_smtp_password].blank?
     respond_to do |format|
       if @account.update_attributes(params[:account])
         format.html { redirect_to dm_core.admin_account_url, notice: "Account was successfully updated." }
