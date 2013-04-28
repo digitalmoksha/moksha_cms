@@ -1,14 +1,14 @@
-<li class="clearfix">
+<li class="clearfix" id="<%= dom_id(comment_item) %>">
   <div class="user"><%= avatar_for comment_item.user, 48 %></div>
   <p class="comment_author"><%= truncate(comment_item.user.display_name, :length => 30) %>
-    <% if can?(:moderate, comment_item.forum_topic.forum) || !comment_item.user.active? %>
+    <% if false #can?(:moderate, comment_item.forum_topic.forum) || !comment_item.user.active? %>
       <span class="admin">(<%= forum_comment_user_state(comment_item) %>)</span>
     <% end %>
   </p>
   <p class="info">
     <%= I18n.t 'fms.post_age', :when => time_ago_in_words(comment_item.created_at), :default => "posted %{when} ago" %>
-    <%= edited = edited_on_tag(comment_item) %>
-    <%= ' | ' if edited %>
+    <% edited = edited_on_tag(comment_item) %>
+    <%= " | #{edited}".html_safe if edited %>
     <%= ' | '.html_safe + link_to('Reply', '#reply') unless @forum_topic.locked? || !user_signed_in? %>
     <% if user_signed_in? && can?(:edit, comment_item) %>
     | 

@@ -37,4 +37,5 @@ de:
     user_is_administrator: Administrator
     user_is_moderator: Moderator
     suspended_user_comment: Dieser Kommentar wurde entfernt
-    
+    next_page: Weiter
+    prev_page: "Früher"

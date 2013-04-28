@@ -112,6 +112,15 @@ module DmForum
         forum_comment.user.state
       end
     end
+
+    #------------------------------------------------------------------------------
+    def pagination(collection)
+      if collection.total_entries > 1
+        "<div class='pagination'>".html_safe  + 
+        will_paginate(collection, :inner_window => 8, :next_label => I18n.t('fms.next_page').html_safe, :previous_label => I18n.t('fms.prev_page').html_safe) +
+        "</div>".html_safe
+      end
+    end
     
 =begin
     def flash_messages
@@ -120,13 +129,6 @@ module DmForum
       end.join.html_safe if flash.present?
     end
 
-    def pagination(collection)
-      if collection.total_entries > 1
-        "<p class='pages'>" + I18n.t('txt.pages', :default => 'Pages') + ": <strong>" + 
-        will_paginate(collection, :inner_window => 10, :next_label => I18n.t('txt.page_next', :default => 'next'), :prev_label => I18n.t('txt.page_prev', :default => 'previous')) +
-        "</strong></p>"
-      end
-    end
 
     def next_page(collection)
       unless collection.page_number == collection.total_entries or collection.total_entries == 0

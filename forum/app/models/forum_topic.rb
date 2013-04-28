@@ -29,9 +29,7 @@ class ForumTopic < ActiveRecord::Base
   belongs_to              :forum_site, :counter_cache => true
 
   has_many                :forum_comments, {:as => :commentable, :dependent => :delete_all}
-  
-  #has_many                :forum_posts, :order => "created_at", :dependent => :delete_all
-  has_one                 :recent_comment, :as => :commentable, :order => "created_at DESC", :class_name => "ForumComment"
+  has_one                 :recent_comment, :as => :commentable, :class_name => "ForumComment", :conditions => 'ancestry_depth = 1', :order => "created_at DESC"
   has_many                :voices, :through => :forum_comments, :source => :user, :uniq => true
   has_many                :monitorships, :dependent => :delete_all
   has_many                :monitoring_users, :through => :monitorships, :source => :user, :conditions => ['fms_monitorships.active = ?', true]

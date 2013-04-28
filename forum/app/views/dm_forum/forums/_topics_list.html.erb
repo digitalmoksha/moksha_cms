@@ -29,12 +29,6 @@
           <span>views</span>
         <% end %>
       </span>
-      <% if forum_topic.paged? %>
-        <small>
-          <%= link_to I18n.t('txt.goto_last_page', :default => 'last'), 
-                forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page) %>
-        </small>
-      <% end %>
       <div class="topic_info">
         <span class="started_by"><%= I18n.t 'txt.started', :default => 'Started by' %>:  
           <span class="author"><%= forum_topic.user.display_name %></span>

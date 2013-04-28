@@ -33,7 +33,8 @@ en:
       one: "1 comment found"
       other: "%{count} comments found"
     comment_age: "commented %{when} ago"
-
     user_is_administrator: Administrator
     user_is_moderator: Moderator
     suspended_user_comment: This comment has been removed
+    next_page: "Next <i class='icon-angle-right'></i>"
+    prev_page: "<i class='icon-angle-left'></i> Previous"

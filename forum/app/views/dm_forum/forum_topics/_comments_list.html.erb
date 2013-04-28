@@ -1,13 +1,14 @@
 <a name="<%= dom_id @forum_comments.first %>" id="<%= dom_id @forum_comments.first %>">&#xA0;</a>
 
-<%= will_paginate @forum_comments, :previous_label => "« Previous", :next_label => "Next »" %>
+<%= pagination(@forum_comments) %>
 
-<div class="comments clearfix">
-  <ul class="comment_list first_comment">
-    <% forum_comment = @forum_comments.first %>
+<% if @forum_comments.first.is_root? %>
+  <div class="comments clearfix">
+    <ul class="comment_list first_comment">
       <%= render(:partial => 'comment_item', object: @forum_comments.first) %>
-  </ul>
-</div>
+    </ul>
+  </div>
+<% end %>
 
 <h3>COMMENTS</h3>
 
@@ -18,13 +19,13 @@
 <div class="comments clearfix">
   <ul class="comment_list">
     <% for forum_comment in @forum_comments do %>
-      <%= render(:partial => 'comment_item', object: forum_comment) unless forum_comment == @forum_comments.first %>
+      <%= render(:partial => 'comment_item', object: forum_comment) unless forum_comment.is_root? %>
     <% end %>
   </ul>
 </div>
 
+<%= pagination(@forum_comments) %>
 
-<%= will_paginate @forum_comments %>
 <script type='text/javascript'><!--//--><![CDATA[//><!--
 if (history && history.replaceState && $$('.pagination')) {
   $$('.pagination a').invoke('observe', 'click', function(){
