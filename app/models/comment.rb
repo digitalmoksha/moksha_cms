@@ -9,7 +9,8 @@ class Comment < ActiveRecord::Base
   belongs_to        :commentable, :polymorphic => true, :counter_cache => true
   has_ancestry      :cache_depth => true
 
-  default_scope     { where(account_id: Account.current.id).order("ancestry_depth, created_at ASC") }
+  #--- don't add ordering to default scope, as it messes with calculating recent_comment
+  default_scope     { where(account_id: Account.current.id) }
 
   #--- NOTE: install the acts_as_votable plugin to vote on the quality of comments
   #acts_as_voteable
