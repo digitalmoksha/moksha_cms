@@ -91,7 +91,7 @@ module DmCore
     # Set the locale of this request.
     #------------------------------------------------------------------------------
     def set_locale
-      DmCore::Language.locale = params[:locale]
+      DmCore::Language.locale = (!params[:locale].blank? ? params[:locale] : current_account.preferred_default_locale)
     end
     
     # Update the user's last_access if signed_in
