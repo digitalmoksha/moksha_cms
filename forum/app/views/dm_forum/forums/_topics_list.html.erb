@@ -3,53 +3,76 @@
 <% end %>
 
 <% if user_signed_in? %>
+  <span class="monitor_filter">
   <% if @monitored %>
-    ( <%= (link_to((I18n.t 'txt.a', :default => 'all'), forum_show_path(@forum), :class => "filter", :id => 'filter_link') + ' | ' + (I18n.t 'txt.monitored', :default => 'monitored')).html_safe%> )   
+    <span class='filter'>
+      <i class="icon-th"></i>
+      <%= link_to((I18n.t 'txt.all', :default => 'all topics'), forum_show_path(@forum), :id => 'filter_link') %>
+    </span>
+    &nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-th-large"></i>
+    <%= I18n.t 'txt.monitored', :default => 'only watched topics' %>
   <% else %>
-    ( <%= ((I18n.t 'txt.all', :default => 'all') +' | ' + link_to((I18n.t 'txt.monitored', :default => 'monitored'), forum_show_path(@forum)+"?monitored=true", :class => "filter", :id => 'filter_link')).html_safe%> ) 
+    <i class="icon-th"></i>
+    <%= I18n.t 'txt.all', :default => 'all topics' %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span class='filter'>
+      <i class="icon-th-large"></i>
+      <%= link_to((I18n.t 'txt.monitored', :default => 'only watched topics'), forum_show_path(@forum)+"?monitored=true", :id => 'filter_link') %> 
+    </span>
   <% end %>
+  </span>
 <% end %>
 
-<ul class="topic_list">
-  <% for forum_topic in forum_topics %>
-    <li class="clearfix <%= 'sticky' if forum_topic.sticky %>">
-      <span class="topic">
-        <%= forum_topic_icon(forum_topic) %>
-        <%= topic_title_link forum_topic, :rel => "bookmark" %>
-      </span>
-      <span class="num_comments" title="Number of replies">
-          <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => dom_id(forum_topic.recent_comment))) do %>
-          <%= number_with_delimiter(forum_topic.num_replies) %>
-          <span>replies</span>
-        <% end %>
-      </span>
-      <span class="num_views" title="Number of views">
-        <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => dom_id(forum_topic.recent_comment))) do %>
-          <%= number_with_delimiter(forum_topic.hits) %>
-          <span>views</span>
-        <% end %>
-      </span>
-      <div class="topic_info">
-        <span class="started_by"><%= I18n.t 'txt.started', :default => 'Started by' %>:  
-          <span class="author"><%= forum_topic.user.display_name %></span>
+<% unless forum_topics.empty? %>
+  <ul class="topic_list">
+    <% for forum_topic in forum_topics %>
+    <% recent_comment_dom_id = (forum_topic.recent_comment ? dom_id(forum_topic.recent_comment) : '') %>
+      <li class="clearfix <%= 'sticky' if forum_topic.sticky %>">
+        <span class="topic">
+          <%= forum_topic_icon(forum_topic) %>
+          <%= topic_title_link forum_topic, :rel => "bookmark" %>
         </span>
-        <span class="when">
-          <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => dom_id(forum_topic.recent_comment))) do %>
-            <i class="icon-comment-alt"></i>
-            <%= I18n.t 'txt.comment_age', :when => time_ago_in_words(forum_topic.recent_comment.created_at), 
-                :default => "%{when} ago" %>
-            <% if forum_topic.last_user %>
-              <%= I18n.t('txt.by_user_html', 
-                :user => "<span class='author'>#{h(forum_topic.recent_comment.user.display_name)}</span>",
-                :default => "by %{user}").html_safe %>
-            <% end %>
+        <span class="num_comments" title="Number of replies">
+            <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
+            <%= number_with_delimiter(forum_topic.num_replies) %>
+            <span>replies</span>
           <% end %>
         </span>
-      </div>
-    </span></li>
+        <span class="num_views" title="Number of views">
+          <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
+            <%= number_with_delimiter(forum_topic.hits) %>
+            <span>views</span>
+          <% end %>
+        </span>
+        <div class="topic_info">
+          <span class="started_by"><%= I18n.t 'txt.started', :default => 'Started by' %>:  
+            <span class="author"><%= forum_topic.user.display_name %></span>
+          </span>
+          <% if forum_topic.recent_comment %>
+            <span class="when">
+              <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
+                <i class="icon-comment-alt"></i>
+                <%= I18n.t 'txt.comment_age', :when => time_ago_in_words(forum_topic.recent_comment.created_at), 
+                    :default => "%{when} ago" %>
+                <% if forum_topic.last_user %>
+                  <%= I18n.t('txt.by_user_html', 
+                    :user => "<span class='author'>#{h(forum_topic.recent_comment.user.display_name)}</span>",
+                    :default => "by %{user}").html_safe %>
+                <% end %>
+              <% end %>
+            </span>
+            <% end %>
+        </div>
+      </span></li>
+    <% end %>
+  </ul>
+<% else %>
+  <% if @monitored %>
+    <div class="no_items">There are currently no topics being monitored</div>
+  <% else %>
+    <div class="no_items">Be the first to create a topic</div>
   <% end %>
-</ul>
-
+<% end %>
 
 <%= will_paginate forum_topics %>
 

@@ -1,13 +1,14 @@
 class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
 
-  before_filter   :forum_lookup, :except =>  [:index, :new, :create]
+  before_filter   :category_lookup, :only =>    [:index, :new, :create]
+  before_filter   :forum_lookup,    :except =>  [:index, :new, :create]
   #before_filter   :set_title
   
   # GET /admin/fms/forums
   #------------------------------------------------------------------------------
   def index
     if ForumSite.first
-      @forums = Forum.all
+      @forums = @forum_category.forums.ordered
     else
       redirect_to admin_forum_site_path, notice: "Please configure the Forum system first"
     end
@@ -16,7 +17,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
   # GET /admin/fms/forums/new
   #------------------------------------------------------------------------------
   def new
-    @forum = Forum.new
+    @forum = @forum_category.forums.build
   end
 
   # GET /admin/fms/forums/1/edit
@@ -27,10 +28,11 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
   # POST /admin/fms/forums
   #------------------------------------------------------------------------------
   def create
-    @forum = ForumSite.site.forums.new(params[:forum])
-
+    @forum = @forum_category.forums.new(params[:forum])
+    @forum.forum_site = ForumSite.site
+    
     if @forum.save
-      redirect_to admin_forums_url, notice: 'Forum was successfully created.'
+      redirect_to admin_forum_category_url(@forum_category), notice: 'Forum was successfully created.'
     else
       render action: :new
     end
@@ -40,7 +42,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
   #------------------------------------------------------------------------------
   def update
     if @forum.update_attributes(params[:forum])
-      redirect_to admin_forums_url, notice: 'Forum was successfully updated.'
+      redirect_to admin_forum_category_url(@forum.forum_category), notice: 'Forum was successfully updated.'
     else
       render action: :edit
     end
@@ -51,7 +53,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
   def destroy
     @forum.destroy
 
-    redirect_to admin_forums_url
+    redirect_to admin_forum_category_url(@forum.forum_category)
   end
   
   #------------------------------------------------------------------------------
@@ -65,8 +67,14 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
 private
 
   #------------------------------------------------------------------------------
+  def category_lookup
+    @forum_category = ForumCategory.find(params[:forum_category_id])
+  end
+
+  #------------------------------------------------------------------------------
   def forum_lookup
     @forum = Forum.find(params[:id])
+    @forum_category = @forum.forum_category
   end
 
 end

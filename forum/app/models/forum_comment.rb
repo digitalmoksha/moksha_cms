@@ -68,7 +68,7 @@ protected
 
   #------------------------------------------------------------------------------
   def update_cached_fields
-    forum_topic.update_cached_comment_fields(self)
+    forum_topic.update_cached_comment_fields(self) unless forum_topic.nil?
   end
 
   #------------------------------------------------------------------------------
@@ -82,11 +82,11 @@ private
   # counter cache by hand
   #------------------------------------------------------------------------------
   def increment_forum_counter_cache
-      Forum.increment_counter( 'comments_count', self.forum_topic.forum.id )
+    Forum.increment_counter( 'comments_count', self.forum_topic.forum.id )
   end
 
   def decrement_forum_counter_cache
-      Forum.decrement_counter( 'comments_count', self.forum_topic.forum.id )
+    Forum.decrement_counter( 'comments_count', self.forum_topic.forum.id ) unless self.forum_topic.nil?
   end
 
 end

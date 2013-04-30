@@ -1,0 +1,21 @@
+<% content_for :sidebar do %>
+
+  <div class="block outer" style="padding: 5px;">
+    <ul class="link_list">
+      <% ForumCategory.ordered.each do |forum_category| %>
+        <li>
+          <%= link_to forum_category.name.to_s_default, admin_forum_category_path(forum_category) %>
+          <% unless forum_category.forums.empty? %>
+            <ul class="arrow-list">
+              <% forum_category.forums.each do |forum| %>
+                <li>
+                  <%= link_to forum.name, admin_forum_category_path(forum_category) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

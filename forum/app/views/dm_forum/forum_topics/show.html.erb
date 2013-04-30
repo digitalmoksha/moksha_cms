@@ -1,14 +1,11 @@
 <% content_for :page_title, @forum_topic.title %>
 
 <% content_for :sidebar do %>
-  <% if @monitoring %>
-    <%= button_to 'Stop monitoring this topic', forum_forum_topic_monitorship_path(@forum, @forum_topic.id), 
-                  :id => 'monitor_button', :remote => true, :method => :delete %>
-  <% else %>  
-    <%= button_to 'Monitor this topic', forum_forum_topic_monitorship_path(@forum, @forum_topic.id), 
-                  :id => 'monitor_button', :remote => true %>
-  <% end %>
 
+  <div id="monitor_button">
+    <%= render(:partial => 'dm_forum/monitorships/monitor_topic_button', :object => @monitoring, :as => :monitoring) %>
+  </div>
+  
   <div class="forum_sidebar_voices">
     <h5><%= I18n.t 'txt.voices', :default => 'Voices' %></h5>
     <ul>
@@ -33,8 +30,10 @@
     <% if user_signed_in? %>
       <% if can? :edit, @forum_topic %>
         <span id="topic_mod">
-          <%= link_to(I18n.t('txt.edit', :default => 'edit'), edit_forum_forum_topic_path(@forum, @forum_topic), :class => "utility") %> |
-          <%= link_to(I18n.t('txt.delete', :default => 'delete'), forum_forum_topic_path(@forum, @forum_topic), :class => "utility", :method => :delete, :confirm => I18n.t('txt.views_topics.delete_sure', :default => 'Delete this topic forever?')) %>
+          <%= link_to(I18n.t('txt.edit', :default => 'edit'), edit_forum_forum_topic_path(@forum, @forum_topic), :class => "utility") %>
+          <% if is_admin? %>
+            | <%= link_to(I18n.t('txt.delete', :default => 'delete'), forum_forum_topic_path(@forum, @forum_topic), :class => "utility", :method => :delete, :confirm => I18n.t('txt.views_topics.delete_sure', :default => 'Delete this topic forever?')) %>
+          <% end %>
         </span>
       <% end %>
     <% end %>
@@ -68,9 +67,9 @@
 </div>
 
 <script type='text/javascript'><!--//--><![CDATA[//><!--
-if (history  && history.replaceState && $$('.pagination')) {
-  Event.observe(window, 'popstate', function(event){
-    if(event.state) new Ajax.Request("<%= @forum_topic.slug %>", {method: 'get', parameters: event.state})
-  });
-};
+//if (history  && history.replaceState && $$('.pagination')) {
+//  Event.observe(window, 'popstate', function(event){
+//    if(event.state) new Ajax.Request("<%= @forum_topic.slug %>", {method: 'get', parameters: event.state})
+//  });
+//};
 //--><!]]></script>

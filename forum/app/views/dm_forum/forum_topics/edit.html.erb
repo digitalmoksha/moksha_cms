@@ -1,0 +1,32 @@
+<% content_for :sidebar do %>
+  <%= render :partial => "dm_forum/forum_comments/formatting" %>
+<% end %>
+
+<% content_for :crumbs, forum_crumbs(@forum_topic.forum) %>
+
+<%= render(:partial => 'dm_forum/forums/forum_header', :object => @forum, :as => :forum) %>
+
+<h1 id="new_topic"><%= I18n.t 'txt.new_topic', :default => 'Edit topic' %></h1>
+<p class="subtitle"></p>
+
+<%= simple_form_for [@forum, @forum_topic] do |f| %>
+
+  <%= f.error_notification :message => "Please review the problems below"%>
+  <%= f.input :title, :label => I18n.t('txt.views_topics.topic', :default => 'Name') %>
+
+  <% if is_admin? && (forums = ForumSite.site.ordered_forums).length > 1 %>
+    <%= f.input :forum_id, collection: forums, label_method: :name, value_method: :id %>
+  <% end %>
+
+  <% if can? :moderate, @forum %>
+    <div class="clearfix">
+      <%= f.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('txt.sticky', :default => 'Sticky')}" %>
+    </div>
+    <div class="clearfix">
+      <%= f.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('txt.locked', :default => 'Locked')}" %>
+    </div>
+  <% end %>
+
+  <%= submit_or_cancel :save => I18n.t('txt.post_topic', :default => 'Post topic'),
+        :cancel_url => [@forum] %>
+<% end %>

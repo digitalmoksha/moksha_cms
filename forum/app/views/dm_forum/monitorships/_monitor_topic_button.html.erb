@@ -1,0 +1,7 @@
+<% if monitoring %>
+  <%= button_to 'Stop monitoring this topic', forum_forum_topic_monitorship_path(@forum, @forum_topic.id), 
+                :remote => true, :method => :delete %>
+<% else %>  
+  <%= button_to 'Monitor this topic', forum_forum_topic_monitorship_path(@forum, @forum_topic.id), 
+                :remote => true %>
+<% end %>

@@ -27,12 +27,12 @@
 <%= pagination(@forum_comments) %>
 
 <script type='text/javascript'><!--//--><![CDATA[//><!--
-if (history && history.replaceState && $$('.pagination')) {
-  $$('.pagination a').invoke('observe', 'click', function(){
-      <%= p = {'page' => params[:page].to_i} if params[:page]
+// if (history && history.replaceState && $$('.pagination')) {
+//   $$('.pagination a').invoke('observe', 'click', function(){
+      <%#= p = {'page' => params[:page].to_i} if params[:page]
        modify_history('pushState', @forum_topic.title, "#{@forum_topic.slug}.html", p) %>
-  });
-  $$('.pagination a').invoke('writeAttribute','data-remote');
-  $$('.edit a.utility').invoke('writeAttribute','data-remote');
-};
+//   });
+//   $$('.pagination a').invoke('writeAttribute','data-remote');
+//   $$('.edit a.utility').invoke('writeAttribute','data-remote');
+// };
 //--><!]]></script>

@@ -7,6 +7,10 @@ DmForum::Engine.routes.draw do
     namespace :admin do
       scope 'fms' do
         resource  :forum_site
+        match '/forum_categories/sort',      :controller => 'forum_categories', :action => :sort, :as => :forum_category_sort
+        resources :forum_categories do
+          resources :forums
+        end
         match '/forums/sort',      :controller => 'forums', :action => :sort, :as => :forum_sort
         resources :forums
         
@@ -30,7 +34,7 @@ DmForum::Engine.routes.draw do
     end
     
     scope 'forum' do
-      match '/',                                    :controller => 'forums', :action => :list, :as => :forum_root
+      match '/',                                    :controller => 'forums', :action => :categories, :as => :forum_root
       match '/:id',                                 :controller => 'forums', :action => :show, :as => :forum_show
       resources :forums do
         resources :forum_topics do

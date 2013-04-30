@@ -28,7 +28,7 @@ class ForumTopic < ActiveRecord::Base
   #--- forum's site, set by callback
   belongs_to              :forum_site, :counter_cache => true
 
-  has_many                :forum_comments, {:as => :commentable, :dependent => :delete_all}
+  has_many                :forum_comments, {:as => :commentable, :dependent => :destroy}
   has_one                 :recent_comment, :as => :commentable, :class_name => "ForumComment", :conditions => 'ancestry_depth = 1', :order => "created_at DESC"
   has_many                :voices, :through => :forum_comments, :source => :user, :uniq => true
   has_many                :monitorships, :dependent => :delete_all
@@ -116,7 +116,6 @@ protected
   #------------------------------------------------------------------------------
   def set_comment_forum_id
     return unless @old_forum_id
-    comments.update_all(:forum_id => forum_id)
     Forum.where(:id => @old_forum_id).update_all("comments_count = comments_count - #{comments_count}")
     Forum.where(:id => forum_id).update_all("comments_count = comments_count + #{comments_count}")
     Forum.where(:id => @old_forum_id).update_all("forum_topics_count = forum_topics_count - 1")
@@ -131,9 +130,8 @@ protected
   #------------------------------------------------------------------------------
   def update_cached_forum_and_user_counts
     Forum.where(:id => forum_id).update_all("comments_count = comments_count - #{comments_count}")
-    Site.where(:id => site_id).update_all("comments_count = comments_count - #{comments_count}")
-    @user_comments.each do |user_id, comments|
-      User.where(:id => user_id).update_all("comments_count = comments_count - #{forum_comments.size}")
-    end
+    # @user_comments.each do |user_id, comments|
+    #   User.where(:id => user_id).update_all("comments_count = comments_count - #{forum_comments.size}")
+    # end
   end
 end

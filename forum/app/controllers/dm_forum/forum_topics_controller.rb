@@ -19,10 +19,6 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   end
   
   #------------------------------------------------------------------------------
-  def edit
-  end
-  
-  #------------------------------------------------------------------------------
   def show
     (session[:forum_topics] ||= {})[@forum_topic.id] = Time.now.utc if user_signed_in?
     @forum_topic.hit! unless user_signed_in? && @forum_topic.user_id == current_user.id
@@ -48,28 +44,30 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
     end
   end
   
-  # def update
-  #   current_user.revise @topic, params[:topic]
-  #   respond_to do |format|
-  #     if @topic.errors.empty?
-  #       flash[:notice] = 'Topic was successfully updated.'
-  #       format.html { redirect_to(forum_topic_path(Forum.find(@topic.forum_id), @topic)) }
-  #       format.xml  { head :ok }
-  #     else
-  #       format.html { render :action => "edit" }
-  #       format.xml  { render :xml  => @topic.errors, :status => :unprocessable_entity }
-  #     end
-  #   end
-  # end
-  # 
-  # def destroy
-  #   @topic.destroy
-  # 
-  #   respond_to do |format|
-  #     format.html { redirect_to(@forum) }
-  #     format.xml  { head :ok }
-  #   end
-  # end
+  #------------------------------------------------------------------------------
+  def edit
+  end
+  
+  #------------------------------------------------------------------------------
+  def update
+    #current_user.revise @topic, params[:topic]
+    attributes = params[:forum_topic]
+    @forum_topic.title = attributes[:title] if attributes.key?(:title)
+    @forum_topic.sticky, @forum_topic.locked, @forum_topic.forum_id = attributes[:sticky], attributes[:locked], attributes[:forum_id] if can?(:moderate, @forum_topic.forum)
+    @forum_topic.save
+    if @forum_topic.errors.empty?
+      flash[:notice] = 'Topic was successfully updated.'
+      redirect_to(forum_forum_topic_path(Forum.find(@forum_topic.forum_id), @forum_topic))
+    else
+      render :action => "edit"
+    end
+  end
+  
+  #------------------------------------------------------------------------------
+  def destroy
+    @forum_topic.destroy if is_admin?
+    redirect_to @forum
+  end
   
 protected
   
@@ -83,6 +81,4 @@ protected
   def find_topic
     @forum_topic = @forum.forum_topics.find_by_slug!(params[:id])
   end
-
-
 end

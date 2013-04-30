@@ -7,9 +7,14 @@ class DmForum::ForumsController < DmForum::ApplicationController
   helper DmCms::PagesHelper
   include DmCore::RenderHelper
   
-  before_filter   :forum_lookup, :except =>  [:list]
+  before_filter   :forum_lookup, :except =>  [:list, :categories]
 
-  layout    'forum_templates/forum_list', :only => [:list, :show]
+  layout    'forum_templates/forum_list', :only => [:list, :show, :categories]
+  
+  #------------------------------------------------------------------------------
+  def categories
+    @forum_categories = ForumCategory.ordered
+  end
   
   # GET /forum
   #------------------------------------------------------------------------------

@@ -23,7 +23,7 @@ class ForumSite < ActiveRecord::Base
   
   #------------------------------------------------------------------------------
   def ordered_forums
-    forums.ordered
+    forums
   end
 
 end

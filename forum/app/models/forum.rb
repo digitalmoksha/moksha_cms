@@ -1,17 +1,18 @@
 class Forum < ActiveRecord::Base
 
-  self.table_name         = 'fms_forums'
-  attr_accessible         :name, :description, :published, :is_public, :requires_login
+  self.table_name             = 'fms_forums'
+  attr_accessible             :name, :description, :published, :is_public, :requires_login
 
   extend FriendlyId
-  friendly_id             :name, use: :slugged
+  friendly_id                 :name, use: :slugged
   resourcify
 
   include RankedModel
-  ranks                       :row_order
+  ranks                       :row_order, :with_same => :forum_category_id
   
   belongs_to                  :forum_site
-  has_many                    :forum_topics, :order => "sticky desc, last_updated_at desc", :dependent => :delete_all
+  belongs_to                  :forum_category, :class_name => 'ForumCategory'
+  has_many                    :forum_topics, :order => "sticky desc, last_updated_at desc", :dependent => :destroy
 
   # this is used to see if a forum is "fresh"... we can't use topics because it puts
   # stickies first even if they are not the most recently modified
@@ -27,7 +28,7 @@ class Forum < ActiveRecord::Base
   scope :protected_forums,    where(:is_public => true, :requires_login => true)
   scope :private_forums,      where(:is_public => false)
 
-  validates_presence_of   :name
+  validates_presence_of       :name
 
   # Get list of available forums for user
   #------------------------------------------------------------------------------
@@ -47,8 +48,7 @@ class Forum < ActiveRecord::Base
 
   #------------------------------------------------------------------------------
   def monitored_topics(user)
-    #self.forum_topics.joins(:monitorships).where(:monitorships => {:user_id => user, :active => true})
-    self.forum_topics.joins(:monitorships).where(:fms_monitorships => {:user_id => user})
+    self.forum_topics.joins(:monitorships).where(:fms_monitorships => {:user_id => user, :active => true})
   end
 
   #------------------------------------------------------------------------------
