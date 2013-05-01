@@ -2,16 +2,20 @@
 
 <ul class="forum_category_list">
   <% @forum_categories.each do |forum_category| %>
-    <li>
-      <span class="name"><%= forum_category.name %></span>
-      <ul class="forum_list clearfix">
-        <% forum_category.forums.each do |forum| %>
-          <li>
-            <%= render(:partial => 'forum_header', :object => forum, :as => :forum) %>
-            <p class="forum_description"><%= forum.description %></p>
-          </li>
-        <% end %>
-      </ul>
-    </li>
+    <% if forum_category.any_readable_forums?(current_user) %>
+      <li>
+        <span class="name"><%= forum_category.name %></span>
+        <ul class="forum_list clearfix">
+          <% forum_category.forums.each do |forum| %>
+            <% if can?(:read, forum) %>
+              <li>
+                <%= render(:partial => 'forum_header', :object => forum, :as => :forum) %>
+                <p class="forum_description"><%= forum.description %></p>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
   <% end %>
 </ul>

@@ -84,7 +84,7 @@ class Forum < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def can_be_read_by?(attempting_user)
     if attempting_user
-      self.published? && (self.is_public? || self.is_protected? || (self.member?(attempting_user)))
+      self.published? && (self.is_public? || self.is_protected? || (self.member?(attempting_user) || attempting_user.is_admin?))
     else
       self.published? && self.is_public?
     end
