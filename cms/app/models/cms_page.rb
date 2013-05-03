@@ -31,7 +31,7 @@ class CmsPage < ActiveRecord::Base
   # --- validations
   validates_length_of     :slug, :maximum => 50
   validates_presence_of   :slug
-  validates_uniqueness_of :slug
+  validates_uniqueness_of :slug, :scope => :account_id
   validates_length_of     :pagetype, :maximum => 20
   validates_presence_of   :pagetype
   validates_length_of     :template, :maximum => 50

@@ -19,6 +19,12 @@ module DmCms::PagesHelper
     end
   end
 
+  # Given the name of a container, check if any content is available
+  #------------------------------------------------------------------------------
+  def content_by_name?(name)
+    (@current_page.nil? || @current_page.cms_contentitems.count(conditions: [ "container = ?", name ]) == 0) ? false : true
+  end
+
   #------------------------------------------------------------------------------
   def render_content_item(content_item)
     if content_item.content.nil?
