@@ -1,0 +1,18 @@
+cs:
+  date:
+    formats:
+      ddyy: "%d, %Y"
+      mmdd: "%b %d"
+      mmddyy: "%b %d, %Y"
+      wwmmdd: "%a, %b %d"
+      wwmmddyy: "%a, %b %d, %Y"
+      yymm: "%Y-%m"
+
+  time:
+    formats:
+      ddyy: "%d, %Y"
+      mmdd: "%b %d"
+      mmddyy: "%b %d, %Y"
+      wwmmdd: "%a, %b %d"
+      wwmmddyy: "%a, %b %d, %Y"
+      hhmmpp: "%I:%M %p"

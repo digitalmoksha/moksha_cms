@@ -79,6 +79,25 @@ module Admin::ThemeAmsterdamHelper
     end
   end
 
+  # A tabbed frame with locales as the tabs
+  #------------------------------------------------------------------------------
+  def locale_frame(options = {}, &block)
+    options[:title]         ||= ''
+    options[:id]            ||= ''
+    options[:class]         ||= ''
+    options[:toolbar]         = language_toolbar_tabs(false)
+    options[:class]          += ' navbar-tabs'
+
+    # content = with_output_buffer(&block)
+    # render :partial => 'dm_core/admin/shared/locale_frame', :locals => { :options => options, :content => content }
+    
+    content = {}
+    current_account.site_locales.each do |locale|
+      content[locale] = capture(locale, &block)
+    end
+    render :partial => 'dm_core/admin/shared/locale_frame', :locals => { :options => options, :content => content }
+  end
+
   # Form row
   #------------------------------------------------------------------------------
   def form_row(options = {}, &block)

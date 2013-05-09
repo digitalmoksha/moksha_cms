@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'paper_trail', '~> 2'      # table versioning
   s.add_dependency "RedCloth", "~> 4.2"
   s.add_dependency "bluecloth", "~> 2.2"
+  s.add_dependency 'kramdown'
   s.add_dependency "liquid", "~> 2.3"
   s.add_dependency 'acts_as_commentable', "~> 4.0"
   s.add_dependency 'amoeba', '~> 2.0'         # for hanlding model duplicating
