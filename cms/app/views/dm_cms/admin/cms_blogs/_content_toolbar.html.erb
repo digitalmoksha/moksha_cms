@@ -1,0 +1,6 @@
+<%= nav_bar_items([
+      present(item).label_published,
+      link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, item], :class => "nav-btn-primary"),
+      link_to(icon_label('icon-trash', 'Delete'), [:admin, item], :method => :delete, :class => "nav-btn-danger", :confirm => 'Are you sure you wish to delete this item?')
+    ])
+%>

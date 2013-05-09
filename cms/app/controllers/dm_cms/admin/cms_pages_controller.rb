@@ -1,4 +1,4 @@
-class DmCms::Admin::CmsPagesController < DmCore::Admin::AdminController
+class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   helper "dm_cms/cms_pages"
   
   before_filter   :current_page, :except => [:file_tree, :expire_cache_total]

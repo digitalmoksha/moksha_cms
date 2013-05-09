@@ -5,7 +5,6 @@
 <%= simple_form_for @cms_page, :url => submit_url do |f| %>
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
   <%= content_frame :title => "#{title} #{@current_page.slug}", :toolbar => :languages do %>
-  
     <div class="tab-content">
       <div id="tab_general" class="tab-pane active fade in">
         <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>

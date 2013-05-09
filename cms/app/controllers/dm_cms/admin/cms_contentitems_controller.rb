@@ -1,4 +1,4 @@
-class DmCms::Admin::CmsContentitemsController < DmCore::Admin::AdminController
+class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   before_filter   :current_page,    :only =>    [:new_content, :create_content]
   before_filter   :current_content, :except =>  [:new_content, :create_content]

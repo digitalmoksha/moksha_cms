@@ -1,2 +1,2 @@
-class DmCms::Admin::AdminController  < ApplicationController
+class DmCms::Admin::AdminController  < DmCore::Admin::AdminController
 end

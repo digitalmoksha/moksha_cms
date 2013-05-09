@@ -1,7 +1,7 @@
 class DmCms::PagesController < DmCms::ApplicationController
   include ApplicationHelper  
   helper DmCms::RenderHelper
-  helper DmCms::LiquidHelper
+  helper DmCore::LiquidHelper
   
   #helper 'hanuman/page_bar'
 

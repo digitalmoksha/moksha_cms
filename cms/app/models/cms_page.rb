@@ -104,7 +104,7 @@ class CmsPage < ActiveRecord::Base
 
   # {todo} currently, this mostly works from the console.  However, when run
   # from the browser it hangs in some type of infinite loop, inside amoeba_dup.
-  # Was unable to track it down, so this function is currently on called anywhere.
+  # Was unable to track it down, so this function is currently not called anywhere.
   #------------------------------------------------------------------------------
   def duplicate_with_associations
     new_page = nil

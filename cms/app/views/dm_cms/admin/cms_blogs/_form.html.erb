@@ -1,0 +1,15 @@
+<% submit_url = (@blog.new_record? ? admin_cms_blogs_path : admin_cms_blog_path) %>
+<%= simple_form_for(@blog, :url => submit_url) do |f| %>
+  <%= f.error_notification :message => "Please review the problems below<ul><li>one</li></ul>" %>
+  <%= content_box :title => @title do %>
+    <%= locale_frame :title => '' do |locale| %>
+      <%= f.input "title_#{locale}", :label => 'Blog Title', :id => 'name_error', :required => true %>
+    <% end %>
+    <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
+    <%= f.input :is_public, :as => :toggle, :label => 'Make Blog Public?', :hint => 'This will allow anyone to see the blog.  Use option below to restrict to registered users' %>
+    <%= f.input :requires_login, :as => :toggle, :label => 'Public Requires Login?', :hint => 'If this is a public blog, user must be logged in to see it.  (All private blogs automatically require login)' %>
+
+    <%= submit_or_cancel :cancel_url => admin_cms_blogs_path %>
+
+  <% end %>
+<% end %>
