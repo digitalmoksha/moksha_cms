@@ -32,8 +32,7 @@ module DmForum
     #------------------------------------------------------------------------------
     def edited_on_tag(post)
       if (post.updated_at - post.created_at > 5.minutes)
-        %{<span class='date'>#{I18n.t 'txt.post_edited',
-            :when => time_ago_in_words(post.updated_at), :default => 'edited %{when} ago'}</span>}.html_safe
+        %{<span class='date'>#{I18n.t 'fms.post_edited', :when => time_ago_in_words(post.updated_at)}</span>}.html_safe
       end
     end
 
@@ -72,13 +71,13 @@ module DmForum
     def forum_crumbs(forum = nil)
       seperator  = "<span class='arrow'><i class='icon-angle-right'></i></span>".html_safe
       out        = "".html_safe
-      out       += link_to(I18n.t('txt.forums', :default => 'Forums'), forum_root_path) + seperator
+      out       += link_to(I18n.t('fms.forums'), forum_root_path) + seperator
       if forum
         out     += link_to(forum.name, forum_path(forum))
         page     = session[:forum_page] ? session[:forum_page][forum.id] : nil
         if page and page != 1
           out   += "<small style='color:#ccc'>(".html_safe
-          out   += link_to(I18n.t('txt.page_nr', :default => 'page %{nr}'), forum_path(:id => forum, :page => page))
+          out   += link_to(I18n.t('fms.page_nr'), forum_path(:id => forum, :page => page))
           out   += ")</small>".html_safe
         end
         out     += seperator
@@ -90,13 +89,13 @@ module DmForum
     def forum_topic_icon(forum_topic)
       if recent_topic_activity(forum_topic)
         style       = "style='color:green'"
-        recent_txt  = I18n.t('txt.views_forums.recent_activity', :default => "Recent activity")
+        recent_txt  = I18n.t('fms.views_forums.recent_activity')
       else
         stlye       = ''
-        recent_txt  = I18n.t('txt.views_forums.no_recent_activity', :default => "No recent activity")
+        recent_txt  = I18n.t('fms.views_forums.no_recent_activity')
       end
       if forum_topic.locked?
-        "<i class='icon-lock icon-large' #{style} title='#{I18n.t('txt.views_forums.comma_locked_topic', :default => 'This topic is locked.')}'></i>".html_safe
+        "<i class='icon-lock icon-large' #{style} title='#{I18n.t('fms.views_forums.comma_locked_topic')}'></i>".html_safe
       else
         "<i class='icon-comments icon-large' #{style} title='#{recent_txt}'></i>".html_safe
       end
@@ -132,14 +131,14 @@ module DmForum
 
     def next_page(collection)
       unless collection.page_number == collection.total_entries or collection.total_entries == 0
-        "<p style='float:right;'>" + link_to(I18n.t('txt.next_page', :default => 'next page'), { :page => collection.page_number.next }.merge(params.reject{|k,v| k=="page"})) + "</p>"
+        "<p style='float:right;'>" + link_to(I18n.t('fms.next_page'), { :page => collection.page_number.next }.merge(params.reject{|k,v| k=="page"})) + "</p>"
       end
     end
 
     def search_posts_title
-      (@q.blank? ? I18n.t('txt.recent_posts', :default => 'Recent Posts') : I18n.t('txt.searching_for', :default => 'Searching for') + " '#{@q}'").tap do |title|
-        title << " " + I18n.t('txt.by_user', :default => 'by %{user}', :user => @user.display_name) if @user
-        title << " " + I18n.t('txt.in_forum', :default => 'in %{forum}', :forum => @forum.name) if @forum
+      (@q.blank? ? I18n.t('fms.recent_posts') : I18n.t('fms.searching_for') + " '#{@q}'").tap do |title|
+        title << " " + I18n.t('fms.by_user', :user => @user.display_name) if @user
+        title << " " + I18n.t('fms.in_forum', :forum => @forum.name) if @forum
       end
     end
 

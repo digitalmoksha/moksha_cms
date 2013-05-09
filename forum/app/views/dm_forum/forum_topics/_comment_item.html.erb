@@ -6,13 +6,13 @@
     <% end %>
   </p>
   <p class="info">
-    <%= I18n.t 'fms.post_age', :when => time_ago_in_words(comment_item.created_at), :default => "posted %{when} ago" %>
+    <%= format_datetime comment_item.created_at %>
     <% edited = edited_on_tag(comment_item) %>
     <%= " | #{edited}".html_safe if edited %>
-    <%= ' | '.html_safe + link_to('Reply', '#reply') unless @forum_topic.locked? || !user_signed_in? %>
+    <%= ' | '.html_safe + link_to(I18n.t 'fms.reply', '#reply') unless @forum_topic.locked? || !user_signed_in? %>
     <% if user_signed_in? && can?(:edit, comment_item) %>
     | 
-      <%= link_to I18n.t('txt.admin.edit_post', :default => 'Edit post'), edit_forum_forum_topic_forum_comment_path(@forum, @forum_topic, comment_item), :class => 'utility' %>
+      <%= link_to I18n.t('fms.admin.edit_post'), edit_forum_forum_topic_forum_comment_path(@forum, @forum_topic, comment_item), :class => 'utility' %>
     <% end %>
   </p>
   <div class="clearfix"></div>
@@ -20,7 +20,7 @@
     <% if comment_item.user.active? %>
       <%= present(comment_item).formatted_comment %>
     <% else %>
-      <p>(<% I18n.t 'fms.suspended_user_post', :default => 'This post has been removed' %>)</p>
+      <p>(<% I18n.t 'fms.suspended_user_post' %>)</p>
     <% end %>
   </div>
 </li>

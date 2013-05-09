@@ -10,10 +10,10 @@
   </div>
 <% end %>
 
-<h3>COMMENTS</h3>
+<h3 style="text-transform: uppercase"><%= I18n.t 'fms.comments_header' %></h3>
 
 <% if user_signed_in? and !@forum_topic.locked? %>
-  <p><%= link_to I18n.t('txt.reply_to_topic', :default => 'Reply to topic'), "#reply" %></p>
+  <p><%= link_to I18n.t('fms.reply_to_topic'), "#reply" %></p>
 <% end %>
 
 <div class="comments clearfix">

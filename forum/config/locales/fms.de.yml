@@ -33,9 +33,65 @@ de:
       one: "1 Kommentar gefunden"
       other: "%{count} Kommentare gefunden"
     comment_age: "vor %{when}"
-
     user_is_administrator: Administrator
     user_is_moderator: Moderator
     suspended_user_comment: Dieser Kommentar wurde entfernt
     next_page: Weiter
     prev_page: "Früher"
+    post_edited: 'edited %{when} ago'
+    forums: Forums
+    page_nr: 'page %{nr}'
+    views_forums:
+      recent_activity: Recent activity
+      no_recent_activity: No recent activity
+      comma_locked_topic: "This topic is locked."
+      unmoderated_html: 'This forum is currently unmoderated.<br />Please always be courteous.'
+    next_page: next page
+    recent_posts: Recent Posts
+    searching_for: Searching for
+    by_user: 'by %{user}'
+    in_forum: 'in %{forum}'
+    views_posts:
+      formatting_help: Formatieren Hilfe
+      formatting_desc: wird zum Formatieren von Text verwendet.
+      formatting_bold: '**bold**'
+      formatting_italics: '*italics*, _italics_'
+      formatting_blockquote: '&gt; <span>(quotes)</span>'
+      formatting_icode: '`code`'
+      formatting_horizontal_rule: '*** <span>(horizontal rule)</span>'
+      formatting_list: '* <span>or</span> 1. <span>(lists)</span>'
+      save: 'Save post'
+    topic: Topic
+    locked: Locked
+    or: or
+    cancel: cancel
+    reply: Antworten
+    admin:
+      edit_post: Beitrag editieren
+    suspended_user_post: This post has been removed
+    reply_to_topic: Dein Kommentar
+    views_topics:
+      topic: Titel
+      body: Inhalt
+      delete_sure: 'Delete this topic forever?'
+      locked_topic: 'This topic is locked.'
+      save_reply: Antworten
+      cancel: Abbrechen
+      lock_topic: Thema schließen
+    sticky: Sticky
+    edit_topic: Edit topic
+    post_topic: Thema veröffentlichen
+    new_topic: Neues Thema
+    voices: Voices
+    edit: edit
+    delete: delete
+    all: Alle Themen
+    monitored: Bereits besuchte Themen
+    started: Begonnen von
+    comment_age: "%{when} ago"
+    by_user_html: "by %{user}"
+    moderator: Moderator
+    replies: Beiträge
+    views: Aufrufe
+    last_post_on: "Letzter Eintrag von %{user} :: %{date}"
+    comments_header: Kommentare

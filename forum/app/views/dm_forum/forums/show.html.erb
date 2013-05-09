@@ -7,7 +7,7 @@
   <% end %>
 
   <% if false %>
-    <h5 style="margin-bottom:1.0em;"><%= I18n.t 'txt.moderator', :count => @forum.moderators.size, :default => 'Moderator' %></h5>
+    <h5 style="margin-bottom:1.0em;"><%= I18n.t 'fms.moderator', :count => @forum.moderators.size %></h5>
 
     <% unless @forum.moderators.empty? %>
       <ul class="flat" style="margin-top:1em;">
@@ -16,7 +16,7 @@
         <% end %>
       </ul>
     <% else %>
-      <p><%= I18n.t 'txt.views_forums.unmoderated_html', :default => 'This forum is currently unmoderated.<br />Please always be courteous.'.html_safe %></p>
+      <p><%= I18n.t 'fms.views_forums.unmoderated_html'.html_safe %></p>
     <% end %>
   <% end %>
   
@@ -39,7 +39,7 @@
 </div>
 
 <% if user_signed_in? %>
-  <p><%#= link_to I18n.t('txt.new_topic', :default => 'New topic'), new_forum_topic_path(@forum), :class => "utility" %></p>
+  <p><%#= link_to I18n.t('fms.new_topic'), new_forum_topic_path(@forum), :class => "utility" %></p>
 <% end%>
 
 <% if false %>

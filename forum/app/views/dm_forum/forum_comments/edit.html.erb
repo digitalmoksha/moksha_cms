@@ -3,14 +3,14 @@
 <h1 id="topic_title">
   <%= @forum_topic.title %>
   <% if @forum_topic.locked? %>
-    <span>(<%= I18n.t 'txt.topic', :default => 'Topic' %> <%= I18n.t 'txt.locked', :default => 'locked' %>)</span>
+    <span>(<%= I18n.t 'fms.topic' %> <%= I18n.t 'fms.locked' %>)</span>
   <% end %>
 </h1>
 
 <%= simple_form_for [@forum, @forum_topic, @forum_comment] do |f| %>
   <%#= f.error_messages %>
   <p id="post_body"><%= f.input :body, :as => :text %></p>
-  <p><%= submit_tag I18n.t('txt.views_posts.save', :default => 'Save post', :class => 'button') %>
-  <%= I18n.t 'txt.or', :default => 'or' %> 
-  <%= link_to I18n.t('txt.cancel', :default => 'cancel'), forum_forum_topic_path(@forum_comment.forum_topic.forum, @forum_comment.forum_topic, :page => page_number) %></p>
+  <p><%= submit_tag I18n.t('fms.views_posts.save', :class => 'button') %>
+  <%= I18n.t 'fms.or' %> 
+  <%= link_to I18n.t('fms.cancel'), forum_forum_topic_path(@forum_comment.forum_topic.forum, @forum_comment.forum_topic, :page => page_number) %></p>
 <% end %>

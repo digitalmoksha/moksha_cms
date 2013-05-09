@@ -7,17 +7,17 @@
   <% if @monitored %>
     <span class='filter'>
       <i class="icon-th"></i>
-      <%= link_to((I18n.t 'txt.all', :default => 'all topics'), forum_show_path(@forum), :id => 'filter_link') %>
+      <%= link_to((I18n.t 'fms.all'), forum_show_path(@forum), :id => 'filter_link') %>
     </span>
     &nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-th-large"></i>
-    <%= I18n.t 'txt.monitored', :default => 'only watched topics' %>
+    <%= I18n.t 'fms.monitored' %>
   <% else %>
     <i class="icon-th"></i>
-    <%= I18n.t 'txt.all', :default => 'all topics' %>
+    <%= I18n.t 'fms.all' %>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <span class='filter'>
       <i class="icon-th-large"></i>
-      <%= link_to((I18n.t 'txt.monitored', :default => 'only watched topics'), forum_show_path(@forum)+"?monitored=true", :id => 'filter_link') %> 
+      <%= link_to((I18n.t 'fms.monitored'), forum_show_path(@forum)+"?monitored=true", :id => 'filter_link') %> 
     </span>
   <% end %>
   </span>
@@ -35,30 +35,24 @@
         <span class="num_comments" title="Number of replies">
             <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
             <%= number_with_delimiter(forum_topic.num_replies) %>
-            <span>replies</span>
+            <span><%= I18n.t 'fms.replies' %></span>
           <% end %>
         </span>
         <span class="num_views" title="Number of views">
           <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
             <%= number_with_delimiter(forum_topic.hits) %>
-            <span>views</span>
+            <span><%= I18n.t 'fms.views' %></span>
           <% end %>
         </span>
         <div class="topic_info">
-          <span class="started_by"><%= I18n.t 'txt.started', :default => 'Started by' %>:  
+          <span class="started_by"><%= I18n.t 'fms.started' %>:  
             <span class="author"><%= forum_topic.user.display_name %></span>
           </span>
           <% if forum_topic.recent_comment %>
             <span class="when">
               <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
                 <i class="icon-comment-alt"></i>
-                <%= I18n.t 'txt.comment_age', :when => time_ago_in_words(forum_topic.recent_comment.created_at), 
-                    :default => "%{when} ago" %>
-                <% if forum_topic.last_user %>
-                  <%= I18n.t('txt.by_user_html', 
-                    :user => "<span class='author'>#{h(forum_topic.recent_comment.user.display_name)}</span>",
-                    :default => "by %{user}").html_safe %>
-                <% end %>
+                <%= I18n.t 'fms.last_post_on', :user => h(forum_topic.recent_comment.user.display_name), :date => format_date(forum_topic.recent_comment.created_at) %>
               <% end %>
             </span>
             <% end %>

@@ -7,7 +7,7 @@
   </div>
   
   <div class="forum_sidebar_voices">
-    <h5><%= I18n.t 'txt.voices', :default => 'Voices' %></h5>
+    <h5><%= I18n.t 'fms.voices' %></h5>
     <ul>
       <% @forum_topic.voices.each do |user| %>
         <li><%= user.display_name %></li>
@@ -25,14 +25,14 @@
   <h1 id="topic_title">
     <%= @forum_topic.title %>
     <% if @forum_topic.locked? %>
-      <span>(<%= I18n.t 'txt.topic', :default => 'Topic' %> <%= I18n.t 'txt.locked', :default => 'locked' %>)</span>
+      <span>(<%= I18n.t 'fms.topic' %> <%= I18n.t 'fms.locked' %>)</span>
     <% end %>
     <% if user_signed_in? %>
       <% if can? :edit, @forum_topic %>
         <span id="topic_mod">
-          <%= link_to(I18n.t('txt.edit', :default => 'edit'), edit_forum_forum_topic_path(@forum, @forum_topic), :class => "utility") %>
+          <%= link_to(I18n.t('fms.edit'), edit_forum_forum_topic_path(@forum, @forum_topic), :class => "utility") %>
           <% if is_admin? %>
-            | <%= link_to(I18n.t('txt.delete', :default => 'delete'), forum_forum_topic_path(@forum, @forum_topic), :class => "utility", :method => :delete, :confirm => I18n.t('txt.views_topics.delete_sure', :default => 'Delete this topic forever?')) %>
+            | <%= link_to(I18n.t('fms.delete'), forum_forum_topic_path(@forum, @forum_topic), :class => "utility", :method => :delete, :confirm => I18n.t('fms.views_topics.delete_sure')) %>
           <% end %>
         </span>
       <% end %>
@@ -50,15 +50,15 @@
 
   <% if user_signed_in? %>
     <% if @forum_topic.locked? %>
-      <p class="topic_locked"><%= I18n.t 'txt.views_topics.locked_topic', :default => 'This topic is locked.' %></p>
+      <p class="topic_locked"><%= I18n.t 'fms.views_topics.locked_topic' %></p>
     <% else %>
-      <h3 id="reply">REPLY TO TOPIC</h3>
+      <h3 id="reply" style="text-transform: uppercase"><%= I18n.t 'fms.reply_to_topic' %></h3>
 
       <div id="comment_reply_form" class="comment_reply_form">
         <%= simple_form_for [@forum, @forum_topic, @forum_topic.forum_comments.new] do |f| %>
-          <%= f.input :body, :as => :text, :label => I18n.t('txt.views_topics.body', :default => 'Body'), 
+          <%= f.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), 
                           :input_html => {:rows => 10} %>
-          <%= submit_or_cancel :save => I18n.t('txt.views_topics.save_reply', :default => 'Save reply'),
+          <%= submit_or_cancel :save => I18n.t('fms.views_topics.save_reply'), :cancel => I18n.t('fms.views_topics.cancel'),
                 :cancel_url => [@forum] %>
         <% end %>
       </div>

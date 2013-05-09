@@ -1,17 +1,17 @@
 <%= form.error_notification :message => "Please review the problems below"%>
-<%= form.input :title, :label => I18n.t('txt.views_topics.topic', :default => 'Name') %>
+<%= form.input :title, :label => I18n.t('fms.views_topics.topic') %>
 
 <% if @forum_topic.new_record? %>
-  <%= form.input :body, :as => :text, :label => I18n.t('txt.views_topics.body', :default => 'Body'), :input_html => {:rows => 10} %>
+  <%= form.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), :input_html => {:rows => 10} %>
 <% elsif is_admin? && (forums = ForumSite.site.ordered_forums).length > 1 %>
   <%= form.input :forum_id, collection: forums, label_method: :name, value_method: :id %>
 <% end %>
 
 <% if can? :moderate, @forum %>
   <div class="clearfix">
-    <%= form.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('txt.sticky', :default => 'Sticky')}" %>
+    <%= form.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('fms.sticky')}" %>
   </div>
   <div class="clearfix">
-    <%= form.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('txt.locked', :default => 'Locked')}" %>
+    <%= form.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('fms.views_topics.lock_topic')}" %>
   </div>
 <% end %>

@@ -38,3 +38,60 @@ en:
     suspended_user_comment: This comment has been removed
     next_page: "Next <i class='icon-angle-right'></i>"
     prev_page: "<i class='icon-angle-left'></i> Previous"
+    post_edited: 'edited %{when} ago'
+    forums: Forums
+    page_nr: 'page %{nr}'
+    views_forums:
+      recent_activity: Recent activity
+      no_recent_activity: No recent activity
+      comma_locked_topic: "This topic is locked."
+      unmoderated_html: 'This forum is currently unmoderated.<br />Please always be courteous.'
+    next_page: next page
+    recent_posts: Recent Posts
+    searching_for: Searching for
+    by_user: 'by %{user}'
+    in_forum: 'in %{forum}'
+    views_posts:
+      formatting_help: Formatting Help
+      formatting_desc: is used for formatting text.
+      formatting_bold: '**bold**'
+      formatting_italics: '*italics*, _italics_'
+      formatting_blockquote: '&gt; <span>(quotes)</span>'
+      formatting_icode: '`code`'
+      formatting_horizontal_rule: '*** <span>(horizontal rule)</span>'
+      formatting_list: '* <span>or</span> 1. <span>(lists)</span>'
+      save: 'Save post'
+    topic: Topic
+    locked: Locked
+    or: or
+    cancel: cancel
+    reply: Reply
+    admin:
+      edit_post: Edit post
+    suspended_user_post: This post has been removed
+    reply_to_topic: Reply to topic
+    views_topics:
+      topic: Name
+      body: Body
+      delete_sure: 'Delete this topic forever?'
+      locked_topic: 'This topic is locked.'
+      save_reply: Save reply
+      cancel: Cancel
+      lock_topic: Locked
+    sticky: Sticky
+    edit_topic: Edit topic
+    post_topic: Post topic
+    new_topic: New topic
+    voices: Voices
+    edit: edit
+    delete: delete
+    all: all topics
+    monitored: only watched topics
+    started: Started by
+    comment_age: "%{when} ago"
+    by_user_html: "by %{user}"
+    moderator: Moderator
+    replies: replies
+    views: views
+    last_post_on: "Last post by %{user} :: %{date}"
+    comments_header: Comments
