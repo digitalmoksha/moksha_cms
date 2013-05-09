@@ -3,17 +3,10 @@
 <% submit_url = (@forum_category.new_record? ? admin_forum_categories_path : admin_forum_category_path) %>
 <%= simple_form_for(@forum_category, :url => submit_url) do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
-	<%= content_box :title => @title do %>
-  	<%= content_frame :title => '', :toolbar => :languages, :include_general => false do %>
-      <div class="tab-content">
-        <% current_account.site_locales.each do |locale| %>        
-          <% active = "active" if current_account.preferred_default_locale == locale %>
-          <div id="tab_<%= locale %>" class="tab-pane fade in <%= active %>">
-            <%= f.input "name_#{locale}", :label => 'Category Name', :id => 'name_error', :required => true %>
-            <%#= f.input "description_#{locale}", :as => :text, :label => 'Description', :input_html => { :rows => 6, :class => 'input-block-level monospaced' } %>
-          </div>
-        <% end %>
-      </div>
+  <%= content_box :title => @title do %>
+    <%= locale_frame :title => '' do |locale| %>
+      <%= f.input "name_#{locale}", :label => 'Category Name', :id => 'name_error', :required => true %>
+      <%#= f.input "description_#{locale}", :as => :text, :label => 'Description', :input_html => { :rows => 6, :class => 'input-block-level monospaced' } %>
     <% end %>
 
     <%= submit_or_cancel :cancel_url => [:admin, @forum_category] %>

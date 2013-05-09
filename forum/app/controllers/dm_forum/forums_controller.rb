@@ -3,7 +3,7 @@ class DmForum::ForumsController < DmForum::ApplicationController
 
   #--- these are needed to support rendering layouts built for the CMS
   helper DmCms::RenderHelper
-  helper DmCms::LiquidHelper
+  helper DmCore::LiquidHelper
   helper DmCms::PagesHelper
   include DmCore::RenderHelper
   
