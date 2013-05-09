@@ -1,0 +1,18 @@
+de:
+  date:
+    formats:
+      ddyy: "%d. %Y"
+      mmdd: "%d. %b"
+      mmddyy: "%d. %b, %Y"
+      wwmmdd: "%A, %d. %b"
+      wwmmddyy: "%A, %d. %b, %Y"
+      yymm: "%Y-%m"
+
+  time:
+    formats:
+      ddyy: "%d. %Y"
+      mmdd: "%d. %b"
+      mmddyy: "%d. %b, %Y"
+      wwmmdd: "%A, %d. %b"
+      wwmmddyy: "%A, %d. %b, %Y"
+      hhmmpp: "%H:%M"

@@ -1,0 +1,16 @@
+<div id="<%= options[:id] %>" class="block well <%= options[:class] %>">
+  <div class='navbar'>
+    <div class='navbar-inner'>
+      <h5><%= options[:title] %></h5>
+      <%= options[:toolbar] %>
+    </div>
+  </div>
+  <div class="tab-content">
+    <% current_account.site_locales.each do |locale| %>        
+      <% active = "active" if current_account.preferred_default_locale == locale %>
+      <div id="tab_<%= locale %>" class="tab-pane fade in <%= active %>">
+        <%= content[locale] %>
+      </div>
+    <% end %>
+  </div>
+</div>

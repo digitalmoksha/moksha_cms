@@ -1,0 +1,11 @@
+# UK translations for Ruby on Rails 
+
+en-IN:
+  number:
+    currency:
+      format:
+        unit: 'Rs'
+        format: '%n%u'
+        separator: '.'
+        delimiter: ','
+        precision: 2
