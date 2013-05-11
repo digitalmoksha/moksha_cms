@@ -14,8 +14,9 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
   
   #before_filter :cache_permissions
 
-  before_filter   :workshop_lookup, :except =>  [:index, :new, :create]
-
+  before_filter   :workshop_lookup, :except => [:index, :new, :create]
+  before_filter   :set_title
+  
   #------------------------------------------------------------------------------
   def index
     @workshops = Workshop.where('archived_on IS NULL').order('starting_on DESC')
@@ -32,8 +33,8 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
 
   #------------------------------------------------------------------------------
   def create
+    prepare_date_time_attribute
     @workshop = Workshop.new(params[:workshop])
-
     if @workshop.save
       redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully created.'
     else
@@ -43,8 +44,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
 
   #------------------------------------------------------------------------------
   def update
-    params[:workshop][:starting_on] = DateTime.parse(params[:workshop].delete(:starting_on_date) + " " + params[:workshop].delete(:starting_on_time))
-    params[:workshop][:ending_on]   = DateTime.parse(params[:workshop].delete(:ending_on_date) + " " + params[:workshop].delete(:ending_on_time))
+    prepare_date_time_attribute
     if @workshop.update_attributes(params[:workshop])
       redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully updated.'
     else
@@ -52,11 +52,34 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     end
   end
 
+  #------------------------------------------------------------------------------
+  def show
+    @registrations  = @workshop.registrations
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: RegistrationDatatable.new(view_context) }
+    end
+    
+  end
 private
 
   #------------------------------------------------------------------------------
   def workshop_lookup
     @workshop = Workshop.find(params[:id])
+  end
+
+  #------------------------------------------------------------------------------
+  def prepare_date_time_attribute
+    start_date = params[:workshop].delete(:starting_on_date) + " " + params[:workshop].delete(:starting_on_time)
+    params[:workshop][:starting_on] = DateTime.parse(start_date) unless start_date.blank?
+
+    end_date = params[:workshop].delete(:ending_on_date) + " " + params[:workshop].delete(:ending_on_time)
+    params[:workshop][:ending_on] = DateTime.parse(end_date) unless end_date.blank?
+  end
+  
+  #------------------------------------------------------------------------------
+  def set_title
+    content_for :content_title, (@workshop ? @workshop.title : 'Event Workshops')
   end
 
 =begin

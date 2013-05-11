@@ -6,22 +6,10 @@ DmEvent::Engine.routes.draw do
         resources :workshops
       end
     end
-    
-    # scope 'forum' do
-    #   match '/',                                    :controller => 'forums', :action => :categories, :as => :forum_root
-    #   match '/:id',                                 :controller => 'forums', :action => :show, :as => :forum_show
-    #   resources :forums do
-    #     resources :forum_topics do
-    #       resources :forum_comments
-    #       resource :monitorship
-    #     end
-    #     resources :posts
-    #   end
-    # 
-    #   resources :forum_comments do
-    #     get :search, :on => :collection
-    #   end
-    # end
+
+    match '/event/register/:id/new',                  :controller => 'registrations', :action => :new, :as => :register_new
+    match '/event/register/:id/create',               :controller => 'registrations', :action => :create, :as => :register_create, :via => :post
+    match '/event/register/success/(:receipt_code)',    :controller => 'registrations', :action => :success, :as => :register_success
   end
 
 end

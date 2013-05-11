@@ -2,8 +2,9 @@
 <%= simple_form_for(@workshop, :url => submit_url) do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
   <%= content_box :title => @title do %>
-    <%= locale_frame :title => '' do %>
-      <%= f.input "title_#{locale}", :label => 'Workshop Title', :id => 'name_error', :required => true %>
+    <%= locale_frame :title => '' do |locale| %>
+      <%= f.input "title_#{locale}", :label => 'Workshop Title', :id => 'title_error', :required => true %>
+      <%= f.input "description_#{locale}", :label => 'Description', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 4 %>
     <% end %>
 
     <%= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
@@ -50,10 +51,8 @@
     <%= f.input :contact_email, :label => 'Contact Email' %>
     <%= f.input :contact_phone, :label => 'Contact Phone' %>
     <%#= f.input :info_url, :label => 'Information URL' %>  
-    <%= f.input :heardabout_list, :label => 'How you heard about event', :hint => 'Comma separated list' %>
-    <%= f.input :heardabout_required, :as => :toggle, :label => 'Heard About Required?' %>
 
-    <%= submit_or_cancel :cancel_url => admin_workshops_path %>
+    <%= submit_or_cancel :cancel_url => (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
 
   <% end %>
 <% end %>

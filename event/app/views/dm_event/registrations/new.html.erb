@@ -1,0 +1,11 @@
+<div id="workshop_description">
+  <%= render_workshop_description(@workshop) %>
+</div>
+
+<%= simple_form_for(@registration, :url => register_create_url(@workshop)) do |f| %>
+  <%= f.error_notification :message => "Please review the problems below"%>
+    <%#= f.input :info_url, :label => 'Information URL' %>  
+
+    <%= submit_or_cancel :save => I18n.t('ems.register_btn'), :cancel => I18n.t('ems.cancel_btn'), :cancel_url => admin_workshops_path %>
+
+<% end %>

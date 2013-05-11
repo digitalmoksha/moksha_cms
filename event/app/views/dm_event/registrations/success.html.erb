@@ -1,0 +1,11 @@
+<h1><%= I18n.t('ems.registration_receipt_title') %></h1>
+<div class="receipt_section">
+  <div class="ticket">
+    <table>
+      <tr><td><strong><%= I18n.t('ems.ticket_receipt_event') %>:</strong></td><td><%=h @registration.workshop.title %></td></tr>
+      <tr><td><strong><%= I18n.t('ems.ticket_receipt_attendee') %>:</strong></td><td><%=h @registration.user.display_name %></td></tr>
+      <tr><td><strong><%= I18n.t('ems.ticket_receipt_ticket_number') %>:</strong></td><td><%=h @registration.receipt_code %></td></tr>
+    </table>
+  </div>
+  <%#= markdown(@content, :safe => false) %>
+</div>

@@ -15,8 +15,8 @@ class WorkshopPresenter < EventCommonPresenter
   end
 
   #------------------------------------------------------------------------------
-  def start_date
-    # model.published? ? h.colored_label('Published', :success) : h.colored_label('Draft')
+  def start_end_date
+    format_date_range(model.starting_on, model.ending_on)
   end
   
   # 

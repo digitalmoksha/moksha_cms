@@ -3,20 +3,32 @@ class Workshop < ActiveRecord::Base
   self.table_name         = 'ems_workshops'
 
   belongs_to              :country, :class_name => 'DmCore::Country'
+  has_many                :registrations, :dependent => :destroy
 
   attr_accessible         :title, :description, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
-                          :heardabout_list, :heardabout_required, :contact_email, :contact_phone
+                          :contact_email, :contact_phone
 
   # --- globalize
   translates              :title, :description, :fallbacks_for_empty_translations => true
   globalize_accessors     :locals => DmCore::Language.language_array
 
+  extend FriendlyId
+  friendly_id             :title_slug, use: :slugged
+  resourcify
+
   default_scope           { where(account_id: Account.current.id) }
+
+  validates_presence_of   :starting_on
+  validates_presence_of   :ending_on
+  validates_presence_of   :deadline_on
+
+  #------------------------------------------------------------------------------
+  def title_slug
+    send("title_#{Account.current.preferred_default_locale}")
+  end
 
 =begin
   
-  belongs_to  :event
-  has_many    :event_registration, :dependent => :destroy
   has_many    :event_registrations_attending, :class_name => 'EventRegistration', :conditions => "(process_state = 'accepted' OR process_state = 'paid') AND archived_on IS NULL", :order => "arrival_at ASC"
   has_many    :event_payment, :order => :position, :dependent => :destroy
   has_one     :event_venue
@@ -27,8 +39,6 @@ class Workshop < ActiveRecord::Base
   # [todo] need to use lambda to make the date work correctly.
   scope       :upcoming,   :conditions => ["enddate > ? AND archived_on IS NULL", (Date.today - 1).to_s], :order => 'startdate DESC'
 
-  acts_as_authorizable
-
   # --- {todo} add more validations
   validates_length_of     :heardabout_list,       :maximum => 255, :allow_nil => true
   validates_length_of     :invitation_code,       :maximum => 255, :allow_nil => true
@@ -37,9 +47,6 @@ class Workshop < ActiveRecord::Base
 
   validates_presence_of   :title
   validates_presence_of   :country_id
-  validates_presence_of   :startdate
-  validates_presence_of   :enddate
-  validates_presence_of   :regdeadline
   validates_presence_of   :contact_email
   
   after_save              :after_save_remove_associated_privileges

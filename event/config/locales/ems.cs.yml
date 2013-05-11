@@ -1,0 +1,15 @@
+cs:
+  ems:
+    registration_subtitle: Registration
+    register_btn: Register
+    cancel_btn: Cancel
+    ticket_receipt_arrival: Příjezd
+    ticket_receipt_attendee: Účastník
+    ticket_receipt_departure: Odjezd
+    ticket_receipt_event: Událost
+    ticket_receipt_questions: Pokud máte ohledně události nějaké otázky, pošlete nám, prosím, e-mail %{value}
+    ticket_receipt_questions_telephone: nebo zatelefonujte %{value}
+    ticket_receipt_thank_you: Děkujeme
+    ticket_receipt_ticket_number: Číslo lístku
+    registration_receipt_title: Potvrzení o rezervaci
+    

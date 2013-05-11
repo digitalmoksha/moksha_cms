@@ -1,2 +1,15 @@
 de:
   ems:
+    registration_subtitle: Anmeldung
+    register_btn: Registrieren
+    cancel_btn: Stornieren
+    ticket_receipt_arrival: Ankunft
+    ticket_receipt_attendee: Teilnehmer
+    ticket_receipt_departure: Abfahrt
+    ticket_receipt_event: Veranstaltung
+    ticket_receipt_questions: "Bei weiteren Fragen zum Seminar bitte via E-Mail %{value}"
+    ticket_receipt_questions_telephone: "oder Telefon %{value}"
+    ticket_receipt_thank_you: "Vielen Dank"
+    ticket_receipt_ticket_number: Ticketnummer
+    registration_receipt_title: Anmeldebestätigung
+    
