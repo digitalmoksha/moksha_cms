@@ -25,8 +25,7 @@ private
   def data
     users.map do |user|
       [
-        h(user.first_name),
-        h(user.last_name),
+        h(user.full_name),
         h(user.email),
         user.country.nil? ? 'n/a' : user.country.english_name,
         user.last_access_at.nil? ? colored_label('n/a', :warning) : "#{time_ago_in_words(user.last_access_at)} ago",
@@ -38,11 +37,11 @@ private
 
   #------------------------------------------------------------------------------
   def users
-    @users ||= fetch_products
+    @users ||= fetch_users
   end
 
   #------------------------------------------------------------------------------
-  def fetch_products
+  def fetch_users
     users = User.includes(:country).order("#{sort_column} #{sort_direction}")
     users = users.page(page).per_page(per_page)
     if params[:sSearch].present?
@@ -65,12 +64,12 @@ private
 
   #------------------------------------------------------------------------------
   def per_page
-    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
+    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 50
   end
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = %w[first_name last_name email globalize_countries.english_name last_access_at]
+    columns = ["LOWER(first_name) #{sort_direction}, LOWER(last_name)", 'email', 'globalize_countries.english_name', 'last_access_at']
     columns[params[:iSortCol_0].to_i]
   end
 

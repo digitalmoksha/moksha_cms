@@ -96,27 +96,27 @@ $(document).ready(function() {
   });
   
   $('.tree_expand').on('click', function() {
-		$(this).parent().parent().parent().toggleClass('tree_open').toggleClass('tree_closed');
-		li = $(this).parent().parent().parent()
-		toggle_reveal(li.children('ul'));
-		return false;
-	});
+    $(this).parent().parent().parent().toggleClass('tree_open').toggleClass('tree_closed');
+    li = $(this).parent().parent().parent()
+    toggle_reveal(li.children('ul'));
+    return false;
+  });
 
   //----------------------------------------------------------------
-	$(".notice").click(function() {
-		$(this).fadeTo(200, 0.00, function(){ //fade
-			$(this).slideUp(200, function() { //slide up
-				$(this).remove(); //then remove from the DOM
-			});
-		});
-	});	
+  $(".notice").click(function() {
+    $(this).fadeTo(200, 0.00, function(){ //fade
+      $(this).slideUp(200, function() { //slide up
+        $(this).remove(); //then remove from the DOM
+      });
+    });
+  }); 
   
-	$('#new_user_sparkline').sparkline(
-		'html', {type: 'bar', barColor: '#a6c659', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
-	);
-	$('#access_user_sparkline').sparkline(
-		'html', {type: 'bar', barColor: '#a6c659', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
-	);
+  $('#new_user_sparkline').sparkline(
+    'html', {type: 'bar', barColor: '#a6c659', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
+  );
+  $('#access_user_sparkline').sparkline(
+    'html', {type: 'bar', barColor: '#a6c659', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
+  );
 
   // Toggle the visibility of a specific element
   //----------------------------------------------------------------
@@ -129,29 +129,31 @@ $(document).ready(function() {
   $('#user_table').dataTable( {
      bJQueryUI: false,
      bAutoWidth: false,
+     iDisplayLength: 50,
      sPaginationType: 'full_numbers',
      bProcessing: false,
      bServerSide: true,
-     aaSorting: [[2, 'asc']],
+     bStateSave: true,
+     aaSorting: [[3, 'desc']],
      sDom: '<"datatable-header"fl>t<"datatable-footer"ip>',
      aoColumnDefs: [
-       { bSortable: false, aTargets: [ 5 ] },
-       { bSortable: false, aTargets: [ 6 ] }
+       { bSortable: false, aTargets: [ 4 ] },
+       { bSortable: false, aTargets: [ 5 ] }
      ],
- 		 oLanguage: {
- 		   sLengthMenu: "<span>Show entries:</span> _MENU_"
- 		 },
+     oLanguage: {
+       sLengthMenu: "<span>Show entries:</span> _MENU_"
+     },
      sAjaxSource: $('#user_table').data('source')
   });
 
-	$( ".datepicker" ).datepicker({
-				defaultDate: +7,
-		showOtherMonths:true,
-		autoSize: true,
-		appendText: '(yyyy-mm-dd)',
-		dateFormat: 'yy-mm-dd'
-		});
-		
+  $( ".datepicker" ).datepicker({
+        defaultDate: +7,
+    showOtherMonths:true,
+    autoSize: true,
+    appendText: '(yyyy-mm-dd)',
+    dateFormat: 'yy-mm-dd'
+    });
+    
   //----------------------------------------------------------------
   $.fn.toolbarTabs = function(){ 
   
