@@ -1,3 +1,5 @@
+require 'csv'
+
 require 'devise'
 require 'rolify'
 require 'cancan'
@@ -14,6 +16,7 @@ require 'liquid'
 require 'acts_as_commentable'
 require 'amoeba'
 require 'friendly_id'
+require 'aasm'
 
 module DmCore
   class Engine < ::Rails::Engine

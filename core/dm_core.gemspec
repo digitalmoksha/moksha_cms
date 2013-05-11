@@ -40,6 +40,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'acts_as_commentable', "~> 4.0"
   s.add_dependency 'amoeba', '~> 2.0'         # for hanlding model duplicating
   s.add_dependency 'friendly_id', "~> 4.0.9"
+  s.add_dependency 'aasm'
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'easy_globalize3_accessors', :git => 'git://github.com/digitalmoksha/easy_globalize3_accessors.git'

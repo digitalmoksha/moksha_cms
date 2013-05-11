@@ -25,17 +25,17 @@ module DmUtilities::DateHelper
     options[:separator] ||= " &mdash; "
     
     if start_date.month == end_date.month && start_date.day == end_date.day && start_date.year == end_date.year
-    	event_date     = start_date.localize(:count => start_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy))
-    	fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmddyy)
+      event_date     = start_date.localize(:count => start_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy))
+      fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmddyy)
     elsif start_date.month == end_date.month && start_date.year == end_date.year
-    	event_date     = start_date.localize(:count => start_date.day, :format => :mmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => (options[:ignore_year] ? "%d" : "%d, %Y"))
-    	fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format =>:wwmmddyy)
+      event_date     = start_date.localize(:count => start_date.day, :format => :mmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => (options[:ignore_year] ? "%d" : "%d, %Y"))
+      fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format =>:wwmmddyy)
     elsif start_date.year == end_date.year
-    	event_date     = start_date.localize(:count => start_date.day, :format => :mmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy))
-    	fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => :wwmmddyy)
+      event_date     = start_date.localize(:count => start_date.day, :format => :mmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy))
+      fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => :wwmmddyy)
     else
-    	event_date     = start_date.localize(:count => start_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy)) + options[:separator] + end_date.localize(:count => end_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy))
-    	fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmddyy) + options[:separator] + end_date.localize(:count => end_date.day, :format => :wwmmddyy)
+      event_date     = start_date.localize(:count => start_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy)) + options[:separator] + end_date.localize(:count => end_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy))
+      fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmddyy) + options[:separator] + end_date.localize(:count => end_date.day, :format => :wwmmddyy)
     end
 
     full_date ? fullevent_date.html_safe : event_date.html_safe
