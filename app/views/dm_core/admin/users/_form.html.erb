@@ -10,8 +10,14 @@
                 :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
                 :label => "Country" %>
     
-    <%= f.collection_check_boxes :role_ids, Role.all(:order => 'name'), :id, :name, :label_name => 'Roles' %>
-    
+    <%= f.input :role_ids, :collection => Role.where(:resource_type => nil).order('name asc'), 
+             :label_method => :name, 
+             :value_method => :id,
+             :as => :check_boxes, 
+             :label => "Roles",
+             :item_wrapper_class => 'checkbox inline', :input_html => {:class => 'style'},
+             :hint => 'Still experimental. Note that <Strong>admin</strong> will give access to entire system' %>
+
     <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
 
 	<% end %>
