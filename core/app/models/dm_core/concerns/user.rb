@@ -113,6 +113,12 @@ module DmCore
           return { :total => items.inject(:+), :list => items.join(',') }
         end
         
+        # Query for users that don't have a specific role.  Useful for getting users
+        # are not :admin
+        #------------------------------------------------------------------------------
+        def without_role(role)
+          self.where("id NOT IN (?)", self.with_role(role))
+        end
       end
     end
   end
