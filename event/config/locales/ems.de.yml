@@ -11,5 +11,6 @@ de:
     ticket_receipt_questions_telephone: "oder Telefon %{value}"
     ticket_receipt_thank_you: "Vielen Dank"
     ticket_receipt_ticket_number: Ticketnummer
+    ticket_receipt_price: Preis
     registration_receipt_title: Anmeldebestätigung
     

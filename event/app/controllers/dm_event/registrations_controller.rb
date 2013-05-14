@@ -1,6 +1,7 @@
 class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
   helper    DmEvent::WorkshopsHelper
+  helper    DmEvent::RegistrationsHelper
   layout    'layouts/event_templates/register'
 
   #------------------------------------------------------------------------------

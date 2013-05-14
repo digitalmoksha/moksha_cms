@@ -3,19 +3,23 @@
 #------------------------------------------------------------------------------
 class Registration < ActiveRecord::Base
   include DmEvent::Concerns::RegistrationStateMachine
+  include DmEvent::Concerns::RegistrationStateEmail
   
   self.table_name         = 'ems_registrations'
 
+  attr_accessible         :workshop_price_id
+  
   belongs_to              :workshop, :counter_cache => true
+  belongs_to              :workshop_price
   belongs_to              :user
-
+  belongs_to              :account
+  
   default_scope           { where(account_id: Account.current.id) }
 
   after_create            :set_receipt_code
-
-
-
-
+  
+  validates_presence_of   :workshop_price_id,      :message => "Please select a payment option", :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
+  
   # Receipt code: (workshop.id)-(registration.id).  eg.  003-101
   #------------------------------------------------------------------------------
   def set_receipt_code
@@ -29,6 +33,23 @@ class Registration < ActiveRecord::Base
     return receipt_code.split('-')[1].to_i
   end
 
+  #------------------------------------------------------------------------------
+  def price
+    workshop_price ? workshop_price.price : 'n/a'
+  end
+  
+  #------------------------------------------------------------------------------
+  def full_name
+    user.full_name
+  end
+
+  #------------------------------------------------------------------------------
+  def email_address
+    user.email
+  end
+  
+  
+  
 =begin
   acts_as_reportable
   acts_as_commentable
@@ -49,7 +70,6 @@ class Registration < ActiveRecord::Base
   
   #=== validation rules
   validates_uniqueness_of :token
-  validates_presence_of   :event_payment_id,      :message => "Please choose a payment method", :if => Proc.new { |reg| reg.event_workshop.event_payment.size > 0}
   validates_length_of     :heardabout,            :maximum => 50,   :allow_nil => true
   validates_presence_of   :heardabout,                              :if => Proc.new { |reg| reg.event_workshop.heardabout_required}
   validates_length_of     :roomate_pref,          :maximum => 255,  :allow_nil => true
@@ -159,18 +179,6 @@ class Registration < ActiveRecord::Base
   end
   
   #------------------------------------------------------------------------------
-  def full_name
-    #student ? student.full_name(:nickname_post => true) : "#{firstname.capitalize} #{lastname.capitalize}"
-    student ? student.full_name(:nickname_post => true) : nls(:full_name, :first => firstname, :last => lastname)
-  end
-
-  # return either the student email address or the one stored in the registration
-  #------------------------------------------------------------------------------
-  def email_address
-    student ? student.email : email
-  end
-  
-  #------------------------------------------------------------------------------
   def mark_paid(plus_amount = 0)
     update_attribute(:amount, (self.amount + plus_amount))
     send('paid!')
@@ -256,29 +264,6 @@ class Registration < ActiveRecord::Base
     end
   end
 
-  # Send an email receipt
-  #------------------------------------------------------------------------------
-  def email_receipt(state = current_state)
-    receipt_content = compile_receipt(state)
-
-    return RegistrationNotifyMailer.registration_notify(self, receipt_content[:content], receipt_content[:substitutions]).deliver
-  end
-
-  # Compile the email values
-  #------------------------------------------------------------------------------
-  def compile_receipt(state = current_state)
-    substitutions = {
-      'state'   => state.to_s,
-      'event'   => self.to_liquid
-    }
-    substitutions['payment_instructions'] = Liquid::Template.parse(event_payment.instructions).render(substitutions) unless (event_payment.nil? || event_payment.instructions.blank?)
-    substitutions['subject']              = Liquid::Template.parse(event_workshop.send("#{state.to_s}_subject")).render(substitutions)
-
-    template  = Liquid::Template.parse(self.event_workshop.send("#{state.to_s}_email"))
-    content   = template.render(substitutions)
-    return {:content => content, :substitutions => substitutions}
-  end
-
   # Compile the email values
   #------------------------------------------------------------------------------
   def compile_comment(comment)
@@ -291,27 +276,6 @@ class Registration < ActiveRecord::Base
     template  = Liquid::Template.parse(comment.comment)
     content   = template.render(substitutions)
     return {:content => content, :substitutions => substitutions}
-  end
-
-  #------------------------------------------------------------------------------
-  def to_liquid
-    result = {
-      'amount'        => (self.event_payment.nil? ? '' : (self.event_payment.country.currency_format || '$%n').sub('%n', self.event_payment.amount.to_s)),
-      'receiptcode'   => receiptcode.to_s,
-      'payment_desc'  => "#{self.event_payment.payment_desc unless self.event_payment.nil?}",
-      'title'         => event_workshop.title,
-      'fullname'      => full_name,
-      'balance'       => balance_owed(true)
-    }
-    result['arrival_date'] = format_date(arrival_at, true) if event_workshop.show_arrival_departure
-    result['departure_date'] = format_date(departure_at, true) if event_workshop.show_arrival_departure
-    
-    # TODO This is a security hole.  Any customer field data needs to be sanitized
-    custom_fields.each do | x |
-      result[x.column_name] = x.data
-    end
-    
-    return result
   end
 
   # Is it ok to display this to the user?  If it's a rejected or canceled

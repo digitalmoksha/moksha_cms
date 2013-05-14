@@ -1,0 +1,16 @@
+<div class="price_details">
+  <dl>
+    <dt>
+      <span class="price"><%= humanized_money_with_symbol workshop_price.price %></span>
+      <% unless workshop_price.price_desc.blank? %>
+        &nbsp;&nbsp;&mdash;&nbsp;&nbsp;<span class='price_description'><%= workshop_price.price_desc %></span>
+      <% end %>
+    </dt>
+    <% unless workshop_price.sub_description.blank? %>
+      <dd class="sub_description"><%= workshop_price.sub_description %></dd>
+    <% end %>
+    <% unless workshop_price.valid_until.nil? %>
+      <dd class='expires'>Expires: <span><%= format_date(workshop_price.valid_until) %></span></dd>
+    <% end %>
+  </dl>
+</div>

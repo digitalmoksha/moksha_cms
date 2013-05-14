@@ -1,3 +1,6 @@
+/* @override 
+	http://dev.kaleshwar.de:3000/assets/dm_event/application.css?body=1 */
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -10,3 +13,51 @@
  *
  *= require_self
  */
+
+.workshop_price_list {
+  margin-left: 20px;
+  margin-bottom: 30px;
+}
+
+.workshop_price_list li { margin-bottom: 15px; }
+.workshop_price_list input { float: left; }
+.workshop_price_list .price_details { margin-left: 30px; }
+
+.price_details .price { font-weight: bold; }
+.price_details .sub_description {
+  margin-left: 20px;
+  font-style: italic;
+}
+.price_details .expires { margin-left: 20px; }
+
+.receipt_section h2 {
+  margin-bottom: 20px;
+}
+
+.receipt_section .ticket {
+background-image: -webkit-gradient(linear, left bottom, left top, from(#f6f6f6), to(#ffffff));
+background-image: -moz-linear-gradient(90deg, #f6f6f6 0%, #ffffff 100%);
+border: 1px solid #ddd;
+padding: 10px;
+margin-bottom: 20px;
+width: auto;
+}
+
+.receipt_section .ticket h3 {
+  text-align: center;
+}
+.receipt_section .ticket li {
+  display: block;
+}
+.receipt_section .ticket li span {
+  font-weight: bold;
+  margin-right: 20px;
+  width: 150px;
+  display: inline-block;
+  text-align: left;
+}
+
+.receipt_section .ticket { width: 100%; overflow: hidden; }
+.receipt_section .ticket ul { list-style: none; position: relative; float: left; display: block; left: 50%; }
+.receipt_section .ticket ul li { position: relative;
+  display: block; right: 50%; }

@@ -3,7 +3,21 @@ DmEvent::Engine.routes.draw do
   scope ":locale" do
     namespace :admin do
       scope 'ems' do
-        resources :workshops
+        resources :workshops do
+          member do
+            get  'edit_system_email/:email_type', :action => 'edit_system_email', :as => 'edit_system_email'
+            post 'edit_system_email/:email_type', :action => 'edit_system_email', :as => 'edit_system_email'
+            put  'edit_system_email/:email_type', :action => 'edit_system_email', :as => 'edit_system_email'
+          end
+          resources :workshop_prices
+        end
+        resources :registrations do
+          member do
+            put  'action_state/:state_event', :action => 'action_state', :as => 'action_state'
+          end
+        end
+        resources :workshop_prices
+        match '/workshop_prices/sort',      :controller => :workshop_prices, :action => :sort, :as => :workshop_price_sort
       end
     end
 

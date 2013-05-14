@@ -1,3 +1,7 @@
+<% content_for :sidebar do %>
+  <%= render :partial => 'configuration_sidebar' %>
+<% end %>
+
 <% submit_url = (@workshop.new_record? ? admin_workshops_path : admin_workshop_path) %>
 <%= simple_form_for(@workshop, :url => submit_url) do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
@@ -5,6 +9,7 @@
     <%= locale_frame :title => '' do |locale| %>
       <%= f.input "title_#{locale}", :label => 'Workshop Title', :id => 'title_error', :required => true %>
       <%= f.input "description_#{locale}", :label => 'Description', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 4 %>
+      <%= f.input "payment_instructions_#{locale}", :label => 'Payment Instructions', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 4 %>
     <% end %>
 
     <%= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
@@ -50,7 +55,7 @@
 
     <%= f.input :contact_email, :label => 'Contact Email' %>
     <%= f.input :contact_phone, :label => 'Contact Phone' %>
-    <%#= f.input :info_url, :label => 'Information URL' %>  
+    <%= f.input :require_review, :as => :toggle, :label => 'Review Registrations', :hint => 'All new registrations become "Pending", waiting for approval' %>
 
     <%= submit_or_cancel :cancel_url => (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
 

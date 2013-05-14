@@ -1,5 +1,7 @@
 class RegistrationDatatable
   include Admin::ThemeAmsterdamHelper
+  include DmEvent::RegistrationsHelper
+  include DmUtilities::DateHelper
   
   delegate :params, :h, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
   delegate :url_helpers, to: 'DmEvent::Engine.routes'
@@ -25,9 +27,10 @@ private
   def data
     registrations.map do |registration|
       [
+        registration_actions(registration),
         h(registration.receipt_code),
         h(registration.user.full_name),
-        h(registration.user.email),
+        h(format_date(registration.created_at))
       ]
     end
   end
@@ -51,8 +54,29 @@ private
   #------------------------------------------------------------------------------
   def registration_actions(registration)
     actions = ''
-    # actions << '<li>' + link_to(icons("font-edit"), url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => 'Edit', :class => 'btn hovertip') + '</li>'
-    # actions << '<li>' + link_to(icons("font-remove"), url_helpers.admin_user_path(user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => 'btn hovertip') + '</li>'
+    actions += '<div class="btn-group">'
+      actions += "<button class='btn btn-mini dropdown-toggle btn-#{registration.current_state}' data-toggle='dropdown' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'><span class='caret'></span></button>"
+      actions += '<ul class="dropdown-menu">'
+        actions += action_list(registration)
+      actions += '</ul>'
+    actions += '</div>'
+  end
+  
+  #------------------------------------------------------------------------------
+  def action_list(registration)
+    actions = registration.aasm.permissible_events
+    actions.sort! {|x,y| x.to_s <=> y.to_s}
+
+    # actions.insert(actions.size, 'Verify Payment') if event_registration.paid?
+    # event_registration.confirmed? ? actions.insert(actions.size, 'UnConfirm') : actions.insert(actions.size, 'Confirm') 
+    # event_registration.archived? ? actions.insert(actions.size, 'UnArchive') : actions.insert(actions.size, 'Archive') 
+    output = ''
+    actions.each { |action| output << '<li>' +
+      link_to(action.to_s.titlecase, 
+              url_helpers.action_state_admin_registration_path(I18n.locale, registration, :state_event => action),
+              {:remote => true, :method => :put}) +
+       '</li>' }
+    return output.html_safe
   end
   
   #------------------------------------------------------------------------------
@@ -67,7 +91,7 @@ private
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = ['receipt_code', "LOWER(users.first_name) #{sort_direction}, LOWER(users.last_name)", 'users.email']
+    columns = ["aasm_state #{sort_direction}, process_changed_on", 'receipt_code', "LOWER(users.first_name) #{sort_direction}, LOWER(users.last_name)", 'created_at']
     columns[params[:iSortCol_0].to_i]
   end
 

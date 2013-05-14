@@ -1,9 +1,34 @@
 class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationController
 
+  helper    DmEvent::RegistrationsHelper
 
   #------------------------------------------------------------------------------
-  def index
+  def action_state
+    @registration = Registration.find(params[:id])
+    @state_event  = params[:state_event].downcase
+    case @state_event
+    when 'delete'
+      @registration.destroy
+    when 'verify payment'
+      @registration.verify_payment
+    when 'archive', 'unarchive'
+      @registration.toggle_archive
+    when 'confirm', 'unconfirm'
+      @registration.toggle_confirm
+    when 'take action'
+      flash[:error] = "Please select an action to take"
+    else
+      @registration.send("#{@state_event}!")
+    end
+  
+    respond_to do |format|
+      format.html { redirect_to admin_workshop(@registration.workshop) }
+      format.js   { render :action => :action_state }
+    end
+  
+  rescue ActiveRecord::StaleObjectError
   end
+
 
 
 
@@ -241,33 +266,6 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
   rescue ActiveRecord::StaleObjectError
     flash[:error] = 'Changes not saved - registration was modified by someone else'
     redirect_back_or_default(:action => 'list', :id => event_registration.event_workshop_id)
-  end
-
-  #------------------------------------------------------------------------------
-  def action_state
-    @event_registration = EventRegistration.find(params[:id])
-    @action = params[:state_change].downcase
-    case @action
-    when 'delete'
-      @event_registration.destroy
-    when 'verify payment'
-      @event_registration.verify_payment
-    when 'archive', 'unarchive'
-      @event_registration.toggle_archive
-    when 'confirm', 'unconfirm'
-      @event_registration.toggle_confirm
-    when 'take action'
-      flash[:error] = "Please select an action to take"
-    else
-      @event_registration.send("#{@action}!")
-    end
-
-    respond_to do |format|
-      format.html { redirect_back_or_default(:action => 'list', :id => @event_registration.event_workshop_id) }
-      format.js   { render :action => :action_state }
-    end
-
-  rescue ActiveRecord::StaleObjectError
   end
 
 

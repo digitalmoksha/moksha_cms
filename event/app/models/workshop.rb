@@ -4,12 +4,23 @@ class Workshop < ActiveRecord::Base
 
   belongs_to              :country, :class_name => 'DmCore::Country'
   has_many                :registrations, :dependent => :destroy
+  has_many                :workshop_prices, :dependent => :destroy
+  has_many                :system_emails,     {:as => :emailable, :dependent => :destroy}
+  has_one                 :pending_email,     :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'pending'"
+  has_one                 :accepted_email,    :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'accepted'"
+  has_one                 :rejected_email,    :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'rejected'"
+  has_one                 :paid_email,        :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'paid'"
+  has_one                 :waitlisted_email,  :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'waitlisted'"
+  has_one                 :reviewing_email,   :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'reviewing'"
+  has_one                 :canceled_email,    :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'canceled'"
+  has_one                 :refunded_email,    :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'refunded'"
+  has_one                 :noshow_email,      :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'noshow'"
 
   attr_accessible         :title, :description, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
-                          :contact_email, :contact_phone
+                          :contact_email, :contact_phone, :require_review, :payment_instructions
 
   # --- globalize
-  translates              :title, :description, :fallbacks_for_empty_translations => true
+  translates              :title, :description, :payment_instructions, :fallbacks_for_empty_translations => true
   globalize_accessors     :locals => DmCore::Language.language_array
 
   extend FriendlyId
@@ -27,6 +38,38 @@ class Workshop < ActiveRecord::Base
     send("title_#{Account.current.preferred_default_locale}")
   end
 
+  # If the total_available is nil, then there are unlimited tickets to be sold.  
+  # Otherwise, check if we have sold out
+  #------------------------------------------------------------------------------
+  def price_sold_out?(workshop_price)
+    # p.sold_out?(@workshop.event_registration.number_of(:registrations_by_paymenttype, :payment_id => p.id)
+    false # TODO
+  end
+  
+  # Is this workshop in the past?  
+  #------------------------------------------------------------------------------
+  def past?
+    ending_on < Time.now
+  end
+  
+  # Is the registration closed
+  #------------------------------------------------------------------------------
+  def registration_closed?
+    deadline_on < Time.now.to_date
+  end
+
+  # toggle the archive state of the workshop
+  #------------------------------------------------------------------------------
+  def toggle_archive
+    archived_on ? update_attribute(:archived_on, nil) : update_attribute(:archived_on, Time.now)
+  end
+  
+  #------------------------------------------------------------------------------
+  def archived?
+    self.archived_on ? true : false
+  end
+
+  
 =begin
   
   has_many    :event_registrations_attending, :class_name => 'EventRegistration', :conditions => "(process_state = 'accepted' OR process_state = 'paid') AND archived_on IS NULL", :order => "arrival_at ASC"
@@ -103,18 +146,6 @@ class Workshop < ActiveRecord::Base
     (e = event_registration.find_by_student_id(student_obj.id)) ? e.registered? : false
   end
   
-  # Return the common resource name - the workshop name
-  #------------------------------------------------------------------------------
-  def resource_name
-    self.title
-  end
-  
-  # Return the common resource category
-  #------------------------------------------------------------------------------
-  def resource_category
-    'Event Workshops'
-  end
-  
   # Choose the primary currency to be the currency of the first payment currency,
   # or the workshop's country
   #------------------------------------------------------------------------------
@@ -126,35 +157,6 @@ class Workshop < ActiveRecord::Base
     end
   end
   
-  # Title to use in some of the views
-  #------------------------------------------------------------------------------
-  def view_title
-    new_record? ? "New Workshop for '#{h(event.title)}'" : title
-  end
-  
-  # Is this workshop in the past?  
-  #------------------------------------------------------------------------------
-  def past?
-    enddate < Time.now
-  end
-  
-  # Is the registration closed
-  #------------------------------------------------------------------------------
-  def registration_closed?
-    regdeadline < Time.now.to_date
-  end
-
-  # toggle the archive state of the workshop
-  #------------------------------------------------------------------------------
-  def toggle_archive
-    archived_on ? update_attribute(:archived_on, nil) : update_attribute(:archived_on, Time.now)
-  end
-  
-  #------------------------------------------------------------------------------
-  def archived?
-    self.archived_on ? true : false
-  end
-
   #------------------------------------------------------------------------------
   def heardabout_collection
     self.heardabout_list.blank? ? nil : self.heardabout_list.split(",")

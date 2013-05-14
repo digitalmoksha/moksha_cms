@@ -139,11 +139,16 @@ module DmEvent
 
         end
         
+        #------------------------------------------------------------------------------
+        def current_state
+          aasm.current_state
+        end
+        
         # send the email if it's defined
         #------------------------------------------------------------------------------
         def state_pending
           update_state_date
-          # email_receipt(:pending) unless event_workshop.pending_email.blank?
+          email_state_notification(:pending)
         end
 
         #------------------------------------------------------------------------------
@@ -155,28 +160,28 @@ module DmEvent
         #------------------------------------------------------------------------------
         def state_acceptance
           update_state_date
-          # email_receipt(:accepted) unless event_workshop.accepted_email.blank?
+          email_state_notification(:accepted)
         end
 
         # send the email if it's defined
         #------------------------------------------------------------------------------
         def state_rejection
           update_state_date
-          # email_receipt(:rejected) unless event_workshop.rejected_email.blank?
+          email_state_notification(:rejected)
         end
 
         # send the email if it's defined
         #------------------------------------------------------------------------------
         def state_paid
           update_state_date
-          # email_receipt(:paid) unless event_workshop.paid_email.blank?
+          email_state_notification(:paid)
         end
 
         # send the email if it's defined
         #------------------------------------------------------------------------------
         def state_waitlisted
           update_state_date
-          # email_receipt(:waitlisted) unless event_workshop.waitlisted_email.blank?
+          email_state_notification(:waitlisted)
         end
 
         # Don't remove the room_id - this way it will appear in the rooming list as 

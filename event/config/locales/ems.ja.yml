@@ -11,4 +11,5 @@ en:
     ticket_receipt_questions_telephone: "またはお電話 %{value} でお問い合わせ下さい。"
     ticket_receipt_thank_you: 宜しくお願い致します。
     ticket_receipt_ticket_number: チケットナンバー
+    ticket_receipt_price: Price
     registration_receipt_title: 予約申し込み受領書

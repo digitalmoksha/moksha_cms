@@ -61,6 +61,24 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     end
     
   end
+  
+  # Edit/create of the registration state emails.  :email_type is passed in
+  # to determine which one we're editing
+  #------------------------------------------------------------------------------
+  def edit_system_email
+    redirect_to(admin_workshop_url(@workshop), error: 'Invalid system email type') if params[:email_type].blank?
+    # [todo] verify that the email_type is one of the Registration.aasm.states
+    
+    @system_email = @workshop.send("#{params[:email_type]}_email") || @workshop.send("build_#{params[:email_type]}_email")
+    @system_email.email_type = params[:email_type]
+    if put_or_post?
+      @system_email.attributes = params[:system_email]
+      if @system_email.save
+        redirect_to admin_workshop_url(@workshop), notice: 'Email was successfully updated.'
+      end
+    end    
+  end
+  
 private
 
   #------------------------------------------------------------------------------
@@ -176,31 +194,6 @@ private
   
   #------------------------------------------------------------------------------
   def edit_shoppingcart
-    save_form
-  end
-  
-  #------------------------------------------------------------------------------
-  def edit_pending
-    save_form
-  end
-  
-  #------------------------------------------------------------------------------
-  def edit_accepted
-    save_form
-  end
-  
-  #------------------------------------------------------------------------------
-  def edit_rejected
-    save_form
-  end
-  
-  #------------------------------------------------------------------------------
-  def edit_paid
-    save_form
-  end
-  
-  #------------------------------------------------------------------------------
-  def edit_waitlisted
     save_form
   end
   

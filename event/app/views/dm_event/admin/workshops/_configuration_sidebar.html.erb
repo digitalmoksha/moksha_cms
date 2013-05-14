@@ -1,6 +1,12 @@
-<ul class="block sidebar-links">
-    <li class="active"><a href="#" title=""><i class="icon-cog icon-white"></i>Lorem ipsum dolor sit amet</a></li>
-    <li><a href="#" title=""><i class="icon-wrench icon-white"></i>Vestibulum eget posuere</a></li>
-    <li><a href="#" title=""><i class="icon-camera icon-white"></i>Nulla aliquet posuere diam</a></li>
-    <li><a href="#" title=""><i class="icon-comment icon-white"></i>Nulla vel pellentesque</a></li>
-</ul>
+<% unless @workshop.new_record? %>
+  <ul class="block sidebar-links">
+    <li><%= link_to "<i class='icon-cog'></i> Configure Prices".html_safe, admin_workshop_workshop_prices_path(@workshop) %></li>
+    <% if @workshop.require_review? %>
+      <li><%= link_to "<i class='icon-cog'></i> Pending Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'pending') %></li>
+    <% end %>
+    <li><%= link_to "<i class='icon-cog'></i> Accepted Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'accepted') %></li>
+    <li><%= link_to "<i class='icon-cog'></i> Paid Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'paid') %></li>
+    <li><%= link_to "<i class='icon-cog'></i> Waitlisted Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'waitlisted') %></li>
+    <li><%= link_to "<i class='icon-cog'></i> Rejected Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'rejected') %></li>
+  </ul>
+<% end %>

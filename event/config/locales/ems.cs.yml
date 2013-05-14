@@ -11,5 +11,6 @@ cs:
     ticket_receipt_questions_telephone: nebo zatelefonujte %{value}
     ticket_receipt_thank_you: Děkujeme
     ticket_receipt_ticket_number: Číslo lístku
+    ticket_receipt_price: Price
     registration_receipt_title: Potvrzení o rezervaci
     

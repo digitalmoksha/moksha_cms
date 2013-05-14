@@ -4,7 +4,9 @@
 
 <%= simple_form_for(@registration, :url => register_create_url(@workshop)) do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
-    <%#= f.input :info_url, :label => 'Information URL' %>  
+    <%#= f.input :info_url, :label => 'Information URL' %>
+
+    <%= render :partial => 'section_prices' %>
 
     <%= submit_or_cancel :save => I18n.t('ems.register_btn'), :cancel => I18n.t('ems.cancel_btn'), :cancel_url => admin_workshops_path %>
 

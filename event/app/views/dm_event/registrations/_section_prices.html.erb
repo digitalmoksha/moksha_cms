@@ -1,0 +1,17 @@
+<div class="registration_section_prices">
+  <% unless @workshop.workshop_prices.empty? %>
+    <ul class="workshop_price_list">
+      <% if @registration.workshop_price.nil? %>            
+        <% @workshop.workshop_prices.each do |p| %>
+          <% if p.visible? and !@workshop.price_sold_out?(p) %>
+            <li>
+              <label><%= radio_button 'registration', 'workshop_price_id', p.id %><%= price_details(p) %></label>
+            </li>
+          <% end %>
+        <% end %>
+      <% else %>
+        <li><label><%= price_details(p) %></label></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

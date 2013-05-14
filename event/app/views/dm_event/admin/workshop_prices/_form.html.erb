@@ -1,0 +1,20 @@
+<% submit_url = (@workshop_price.new_record? ? admin_workshop_workshop_prices_path(@workshop) : admin_workshop_workshop_price_path(@workshop)) %>
+<%= simple_form_for(@workshop_price, :url => submit_url) do |f| %>
+  <%= f.error_notification :message => "Please review the problems below"%>
+  <%= content_box :title => @title do %>
+
+    <%= f.input :price_desc %>
+    <%= f.input :sub_description %>
+    <%= f.input :price %>
+    <%= f.input :price_currency, :collection => WorkshopPrice::CURRENCY_TYPES %>
+    <%= f.input :valid_until, :as => :string, :input_html => {:class => 'datepicker'} %>
+
+    <%= f.input :alt1_price %>
+    <%= f.input :alt1_price_currency, :collection => WorkshopPrice::CURRENCY_TYPES %>
+    <%= f.input :alt2_price %>
+    <%= f.input :alt2_price_currency, :collection => WorkshopPrice::CURRENCY_TYPES %>
+
+    <%= submit_or_cancel :cancel_url => admin_workshop_path(@workshop) %>
+
+  <% end %>
+<% end %>

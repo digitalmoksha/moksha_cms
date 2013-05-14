@@ -1,0 +1,7 @@
+<% if false #@state_event == 'delete' || @state_event == 'archive' || @state_event == 'unarchive' %>
+  $("#row_<%= @registration.id %>").remove();
+<% elsif false #else %>
+  $("#row_<%= @registration.id %>").html("<%= escape_javascript(render :partial => "row", :locals => {:registration => @registration}) %>");
+  $("#row_<%= @registration.id %>").effect("highlight", {}, 3000);
+<% end %>
+$('#registration_table').dataTable().fnDraw();
