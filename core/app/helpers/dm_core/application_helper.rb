@@ -34,5 +34,9 @@ module DmCore
       action.include?(params[:action])
     end
 
+    #------------------------------------------------------------------------------
+    def put_or_post? 
+      request.put? || request.post?
+    end
   end
 end
