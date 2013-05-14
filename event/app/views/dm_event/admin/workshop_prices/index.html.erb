@@ -15,7 +15,7 @@
           <tr class="item" data-item_id="<%= workshop_price.id %>">
             <td class="sort_handle"></td>
             <td>
-              <%= link_to workshop_price.price_desc, [:edit, :admin, workshop_price] %>
+              <%= link_to workshop_price.price_description, [:edit, :admin, workshop_price] %>
             </td>
             <td><%= humanized_money_with_symbol workshop_price.price %></td>
           </tr>

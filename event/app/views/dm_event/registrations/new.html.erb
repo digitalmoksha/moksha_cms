@@ -1,13 +1,19 @@
-<div id="workshop_description">
-  <%= render_workshop_description(@workshop) %>
+<div id="workshop_registration">
+  <div id="workshop_description">
+    <%= render_workshop_description(@workshop) %>
+  </div>
+
+  <h3><%= I18n.t "ems.ticket_information" %></h3>
+  <div class="ticket_information">
+    <%= simple_form_for(@registration, :url => register_create_url(@workshop)) do |f| %>
+      <%= f.error_notification :message => "Please review the problems below"%>
+        <%#= f.input :info_url, :label => 'Information URL' %>
+
+        <%= render :partial => 'section_prices' %>
+
+        <%= submit_or_cancel :save => I18n.t('ems.register_btn'), :cancel => I18n.t('ems.cancel_btn'), :cancel_url => admin_workshops_path %>
+
+    <% end %>
+  </div>
+
 </div>
-
-<%= simple_form_for(@registration, :url => register_create_url(@workshop)) do |f| %>
-  <%= f.error_notification :message => "Please review the problems below"%>
-    <%#= f.input :info_url, :label => 'Information URL' %>
-
-    <%= render :partial => 'section_prices' %>
-
-    <%= submit_or_cancel :save => I18n.t('ems.register_btn'), :cancel => I18n.t('ems.cancel_btn'), :cancel_url => admin_workshops_path %>
-
-<% end %>

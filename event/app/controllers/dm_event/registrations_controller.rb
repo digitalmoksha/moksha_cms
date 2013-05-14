@@ -29,6 +29,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   def success
     @registration = Registration.find_by_receipt_code(params[:receipt_code])
     @workshop     = @registration.workshop if @registration
+    @receipt_content = @registration.email_state_notification(@registration.current_state, false)
     redirect_to main_app.root_url and return if @registration.nil? || @registration.user != current_user
   end
 

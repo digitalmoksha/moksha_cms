@@ -14,9 +14,9 @@ module DmEvent
         #------------------------------------------------------------------------------
         def to_liquid
           result = {
-            # 'price'         => (self.workshop_price.nil? ? '' : (self.event_payment.country.currency_format || '$%n').sub('%n', self.event_payment.amount.to_s)),
+            'price'         => (workshop_price.nil? ? '' : workshop_price.price_formatted),
             'receipt_code'   => receipt_code.to_s,
-            'price_desc'     => "#{workshop_price.price_desc unless workshop_price.nil?}",
+            'price_description'     => "#{workshop_price.price_description unless workshop_price.nil?}",
             'title'          => workshop.title,
             'fullname'       => user.full_name
             # 'balance'        => balance_owed(true)
@@ -32,14 +32,18 @@ module DmEvent
           return result
         end
 
-        # Send an email for state notification
+        # Send an email for state notification.  if send_email is false, just return 
+        # the content of the email
         #------------------------------------------------------------------------------
-        def email_state_notification(state = aasm.current_state.to_s)
+        def email_state_notification(state = aasm.current_state.to_s, send_email = true)
           system_email = workshop.send("#{state}_email")
           if system_email
             receipt_content = compile_email(state, system_email)
-
-            return RegistrationNotifyMailer.registration_notify(self, receipt_content[:content], receipt_content[:substitutions]).deliver
+            if send_email
+              return RegistrationNotifyMailer.registration_notify(self, receipt_content[:content], receipt_content[:substitutions]).deliver
+            else 
+              return receipt_content[:content]
+            end
           end
         end
 
@@ -50,8 +54,8 @@ module DmEvent
             'state'   => state.to_s,
             'event'   => self.to_liquid
           }
-          substitutions['payment_instructions'] = Liquid::Template.parse(workshop.payment_instructions).render(substitutions) unless workshop.payment_instructions.blank?
-          substitutions['subject']              = Liquid::Template.parse(system_email.subject).render(substitutions)
+          substitutions['payment_details'] = Liquid::Template.parse(workshop_price.payment_details).render(substitutions) unless workshop_price.payment_details.blank?
+          substitutions['subject']         = Liquid::Template.parse(system_email.subject).render(substitutions)
 
           template  = Liquid::Template.parse(system_email.body)
           content   = template.render(substitutions)

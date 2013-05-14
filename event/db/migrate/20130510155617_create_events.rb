@@ -5,7 +5,6 @@ class CreateEvents < ActiveRecord::Migration
       t.string      :locale
       t.string      :title
       t.text        :description
-      t.text        :payment_instructions
       t.datetime    :created_at
       t.datetime    :updated_at
     end
@@ -22,13 +21,13 @@ class CreateEvents < ActiveRecord::Migration
       t.string      :info_url,                                       :default => ""
       t.boolean     :require_review,                                 :default => false
       t.boolean     :waitlisting,                                    :default => false
+      t.text        :closed_text
+      t.boolean     :is_closed
       t.datetime    :archived_on
       t.datetime    :created_at
       t.datetime    :updated_at
       t.integer     :account_id
       # t.string      :template,                        :limit => 50
-      # t.text        :closed_text
-      # t.boolean     :is_closed
       # t.string      :heardabout_list
       # t.boolean     :heardabout_required,                            :default => false
       # t.boolean     :show_personal,                                  :default => false
@@ -38,24 +37,13 @@ class CreateEvents < ActiveRecord::Migration
       # t.boolean     :require_account,                                :default => true
       # t.boolean     :show_photo,                                     :default => false
       # t.boolean     :show_programdate,                               :default => true
-      # t.text     "pending_email"
-      # t.text     "accepted_email"
-      # t.text     "rejected_email"
-      # t.text     "paid_email"
-      # t.string   "pending_subject"
-      # t.string   "accepted_subject"
-      # t.string   "rejected_subject"
-      # t.string   "paid_subject"
-      # t.text     "waitlisted_email"
-      # t.string   "waitlisted_subject"
-      # t.boolean  "require_address",                                :default => true
-      # t.boolean  "shoppingcart_immediate_checkout"
-      # t.string   "invitation_code"
-      # t.text     "information_text"
-      # t.boolean  "track_payments",                                 :default => true
-      # t.text     "event_information_text"
-      # t.boolean  "ashram_program",                                 :default => false
-      # t.text     "note"
+      # t.boolean     "require_address",                                :default => true
+      # t.boolean     "shoppingcart_immediate_checkout"
+      # t.string      "invitation_code"
+      # t.text        "information_text"
+      # t.boolean     "track_payments",                                 :default => true
+      # t.text        "event_information_text"
+      # t.text        "note"
     end
     
     add_index :ems_workshops, ["slug"], :name => "workshopname_key"
@@ -64,7 +52,13 @@ class CreateEvents < ActiveRecord::Migration
       t.integer     :workshop_id
       t.integer     :user_id
       t.string      :receipt_code,         :limit => 20
+      t.boolean     :receipt_requested
       t.integer     :workshop_price_id
+      t.integer     :amount,                             :default => 0
+      t.integer     :discount_value
+      t.boolean     :discount_use_percent
+      t.string      :payment_comment
+      t.datetime    :checkin_at
       t.string      :aasm_state,           :limit => 20
       t.datetime    :process_changed_on
       t.datetime    :user_updated_at
@@ -98,16 +92,10 @@ class CreateEvents < ActiveRecord::Migration
       # t.string   :special_requirements
       # t.string   :psych_care
       # t.string   :item_code
-      # t.integer  :amount,                             :default => 0
       # t.string   :heardabout,           :limit => 50
-      # t.datetime :checkin_at
       # t.datetime :payment_verified_at
       # t.string   :token,                :limit => 40
       # t.integer  :room_id
-      # t.boolean  :receipt_requested
-      # t.integer  :discount_value
-      # t.boolean  :discount_use_percent
-      # t.string   :payment_comment
       # t.integer  :arrival_vehicle_id
       # t.integer  :departure_vehicle_id
       # t.datetime :arrival_at
@@ -116,25 +104,35 @@ class CreateEvents < ActiveRecord::Migration
     
     add_index :ems_registrations, ["receipt_code"], :name => "receipt_code_key"
     
+    create_table :ems_workshop_price_translations, :force => true do |t|
+      t.integer     :ems_workshop_price_id
+      t.string      :locale
+      t.string      :price_description
+      t.text        :sub_description
+      t.text        :payment_details
+      t.datetime    :created_at
+      t.datetime    :updated_at
+    end
+
     create_table :ems_workshop_prices, :force => true do |t|
       t.integer     :workshop_id
-      t.string      :price_desc,                          :default => "",    :null => false
-      t.string      :sub_description
       t.integer     :price_cents
       t.string      :price_currency,          :limit => 10
       t.integer     :alt1_price_cents
       t.string      :alt1_price_currency,     :limit => 10
       t.integer     :alt2_price_cents
       t.string      :alt2_price_currency,     :limit => 10
-      t.boolean     :disable,                               :default => false, :null => false
+      t.boolean     :disabled,                               :default => false, :null => false
       t.date        :valid_until
       t.date        :valid_starting_on
       t.integer     :total_available
+      t.integer     :recurring_amount
+      t.integer     :recurring_period
+      t.integer     :recurring_number
       t.integer     :row_order
       t.integer     :account_id
-      # t.integer     :recurring_amount
-      # t.integer     :recurring_period
-      # t.integer     :recurring_number
+      t.datetime    :created_at
+      t.datetime    :updated_at
       # t.string      "shoppingcart_code"
       # t.string      "payment_type",      :limit => 20
     end
@@ -146,5 +144,6 @@ class CreateEvents < ActiveRecord::Migration
     drop_table    :ems_workshop_translations
     drop_table    :ems_registrations
     drop_table    :ems_workshop_prices
+    drop_table    :ems_workshop_price_translations
   end
 end

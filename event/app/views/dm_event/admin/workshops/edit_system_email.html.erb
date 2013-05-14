@@ -1,28 +1,24 @@
 <% content_for :sidebar do %>
   <%= render :partial => 'configuration_sidebar' %>
-  <% if false # {todo} %>
-    <p class="explanation">For each state, you can specify whether an email is sent when a registration is moved into that state.
-      If the email field for a state is left blank, no email will be sent.</p>
-    <p class="explanation">Emails are written using a special formatting style called 
-      <a href="http://daringfireball.net/projects/markdown/basics">Markdown</a>, which provides good looking
-      HTML and text email messages.</p>  
+
+  <div class="block outer" style="padding: 10px;">
     <p class="explanation">You can place special variables in the email, such as the registrants name or the payment instructions.  The
       variables you can use are listed below. </p>
     <ul class="mono_spaced">
-      <li>{{event.amount}}</li>
+      <li>{{event.price}}</li>
       <li>{{event.fullname}}</li>
       <li>{{event.title}}</li>
-      <li>{{event.receiptcode}}</li>
-      <li>{{event.payment_desc}}</li>
+      <li>{{event.receipt_code}}</li>
+      <li>{{event.price_description}}</li>
       <li>{{event."customfieldname"}}</li>
-      <li>{{payment_instructions}}</li>
+      <li>{{payment_details}}</li>
     </ul>
     <p class="explanation"><br />Available in special cases</p>
     <ul class="mono_spaced">
       <li>{{event.arrival_date}}</li>
       <li>{{event.departure_date}}</li>
     </ul>
-  <% end %>
+  </div>
 <% end %>
 
 <% case @system_email.email_type %>

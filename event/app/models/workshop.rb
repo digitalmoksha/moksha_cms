@@ -17,10 +17,10 @@ class Workshop < ActiveRecord::Base
   has_one                 :noshow_email,      :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'noshow'"
 
   attr_accessible         :title, :description, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
-                          :contact_email, :contact_phone, :require_review, :payment_instructions
+                          :contact_email, :contact_phone, :require_review
 
   # --- globalize
-  translates              :title, :description, :payment_instructions, :fallbacks_for_empty_translations => true
+  translates              :title, :description, :fallbacks_for_empty_translations => true
   globalize_accessors     :locals => DmCore::Language.language_array
 
   extend FriendlyId

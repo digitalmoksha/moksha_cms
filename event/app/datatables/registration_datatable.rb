@@ -71,11 +71,13 @@ private
     # event_registration.confirmed? ? actions.insert(actions.size, 'UnConfirm') : actions.insert(actions.size, 'Confirm') 
     # event_registration.archived? ? actions.insert(actions.size, 'UnArchive') : actions.insert(actions.size, 'Archive') 
     output = ''
-    actions.each { |action| output << '<li>' +
-      link_to(action.to_s.titlecase, 
+    actions.each do |action|
+      output << '<li>' +
+      link_to('<i class="icon-chevron-right"></i>'.html_safe + action.to_s.titlecase, 
               url_helpers.action_state_admin_registration_path(I18n.locale, registration, :state_event => action),
               {:remote => true, :method => :put}) +
-       '</li>' }
+       '</li>'
+     end
     return output.html_safe
   end
   

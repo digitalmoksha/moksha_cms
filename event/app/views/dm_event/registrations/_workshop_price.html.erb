@@ -2,8 +2,8 @@
   <dl>
     <dt>
       <span class="price"><%= humanized_money_with_symbol workshop_price.price %></span>
-      <% unless workshop_price.price_desc.blank? %>
-        &nbsp;&nbsp;&mdash;&nbsp;&nbsp;<span class='price_description'><%= workshop_price.price_desc %></span>
+      <% unless workshop_price.price_description.blank? %>
+        &nbsp;&nbsp;&mdash;&nbsp;&nbsp;<span class='price_description'><%= workshop_price.price_description %></span>
       <% end %>
     </dt>
     <% unless workshop_price.sub_description.blank? %>
