@@ -12,51 +12,53 @@
       <%= f.input "description_#{locale}", :label => 'Description', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 4 %>
     <% end %>
 
-    <%= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
-                :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
-                :label => "Country" %>
-    <div class="form-horizontal control-group string required workshop_starting_on">
-      <label class="string required control-label" for="workshop_starting_on">
-        <abbr title="required">*</abbr> Starting on
-      </label>
-      <div class="controls">
-        <ul class="dates-range no-append">
-            <li><input name="workshop[starting_on_date]" type="text" value="<%= @workshop.starting_on.to_date unless @workshop.starting_on.nil? %>" placeholder="Select date..." id="date1" class="datepicker time" ></li>
-            <li class="sep">-</li>
-            <li><input name="workshop[starting_on_time]" id="starting_time" type="text" class="time" value="<%= @workshop.starting_on.strftime("%I:%M%p") unless @workshop.starting_on.nil? %>" placeholder="Select time..." /></li>
-        </ul>
+    <%= well_frame do %>
+      <%= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
+                  :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
+                  :label => "Country" %>
+      <div class="form-horizontal control-group string required workshop_starting_on">
+        <label class="string required control-label" for="workshop_starting_on">
+          <abbr title="required">*</abbr> Starting on
+        </label>
+        <div class="controls">
+          <ul class="dates-range no-append">
+              <li><input name="workshop[starting_on_date]" type="text" value="<%= @workshop.starting_on.to_date unless @workshop.starting_on.nil? %>" placeholder="Select date..." id="date1" class="datepicker time" ></li>
+              <li class="sep">-</li>
+              <li><input name="workshop[starting_on_time]" id="starting_time" type="text" class="time" value="<%= @workshop.starting_on.strftime("%I:%M%p") unless @workshop.starting_on.nil? %>" placeholder="Select time..." /></li>
+          </ul>
+        </div>
+        <div class="clearfix"></div>
       </div>
-      <div class="clearfix"></div>
-    </div>
-    <div class="form-horizontal control-group string required workshop_ending_on">
-      <label class="string required control-label" for="workshop_ending_on">
-        <abbr title="required">*</abbr> Ending on
-      </label>
-      <div class="controls">
-        <ul class="dates-range no-append">
-            <li><input name="workshop[ending_on_date]" type="text" value="<%= @workshop.ending_on.to_date unless @workshop.ending_on.nil? %>" placeholder="Select date..." id="date2" class="datepicker time" ></li>
-            <li class="sep">-</li>
-            <li><input name="workshop[ending_on_time]" id="ending_time" type="text" class="time" value="<%= @workshop.ending_on.strftime("%I:%M%p") unless @workshop.ending_on.nil? %>" placeholder="Select time..." /></li>
-        </ul>
+      <div class="form-horizontal control-group string required workshop_ending_on">
+        <label class="string required control-label" for="workshop_ending_on">
+          <abbr title="required">*</abbr> Ending on
+        </label>
+        <div class="controls">
+          <ul class="dates-range no-append">
+              <li><input name="workshop[ending_on_date]" type="text" value="<%= @workshop.ending_on.to_date unless @workshop.ending_on.nil? %>" placeholder="Select date..." id="date2" class="datepicker time" ></li>
+              <li class="sep">-</li>
+              <li><input name="workshop[ending_on_time]" id="ending_time" type="text" class="time" value="<%= @workshop.ending_on.strftime("%I:%M%p") unless @workshop.ending_on.nil? %>" placeholder="Select time..." /></li>
+          </ul>
+        </div>
+        <div class="clearfix"></div>
       </div>
-      <div class="clearfix"></div>
-    </div>
-    <div class="form-horizontal control-group string required workshop_ending_on">
-      <label class="string required control-label" for="workshop_ending_on">
-        <abbr title="required">*</abbr> Registration Deadline
-      </label>
-      <div class="controls">
-        <ul class="dates-range no-append">
-            <li><input name="workshop[deadline_on]" type="text" value="<%= @workshop.deadline_on.to_date unless @workshop.deadline_on.nil? %>" placeholder="Select date..." class="datepicker" ></li>
-        </ul>
+      <div class="form-horizontal control-group string required workshop_ending_on">
+        <label class="string required control-label" for="workshop_ending_on">
+          <abbr title="required">*</abbr> Registration Deadline
+        </label>
+        <div class="controls">
+          <ul class="dates-range no-append">
+              <li><input name="workshop[deadline_on]" type="text" value="<%= @workshop.deadline_on.to_date unless @workshop.deadline_on.nil? %>" placeholder="Select date..." class="datepicker" ></li>
+          </ul>
+        </div>
+        <div class="clearfix"></div>
       </div>
-      <div class="clearfix"></div>
-    </div>
 
-    <%= f.input :contact_email, :label => 'Contact Email' %>
-    <%= f.input :contact_phone, :label => 'Contact Phone' %>
-    <%= f.input :require_review, :as => :toggle, :label => 'Review Registrations', :hint => 'All new registrations become "Pending", waiting for approval' %>
-
+      <%= f.input :contact_email, :label => 'Contact Email' %>
+      <%= f.input :contact_phone, :label => 'Contact Phone' %>
+      <%= f.input :require_review, :as => :toggle, :label => 'Review Registrations', :hint => 'All new registrations become "Pending", waiting for approval' %>
+    <% end %>
+    
     <%= submit_or_cancel :cancel_url => (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
 
   <% end %>

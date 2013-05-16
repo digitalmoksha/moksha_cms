@@ -1,18 +1,4 @@
 class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationController
-  # include CsvExporter
-  # include DmUtilities::VcardExporter
-  # include DmEvent::EventRegistrationsHelper
-  # include DmUtilities::RenderingHelper
-  # include DmUtilities::SortHelper
-  # include DmAuthorization
-  
-  # helper ReportHelper
-  # helper RegistrationHelper
-  
-  # permit "#{SystemRoles::Admin} on Event or #{SystemRoles::System}", :only => ['destroy']
-  # permit "#{SystemRoles::Access} on Event or #{SystemRoles::Admin} on Event or #{SystemRoles::Attendant} or #{SystemRoles::System}"
-  
-  #before_filter :cache_permissions
 
   before_filter   :workshop_lookup, :except => [:index, :new, :create]
   before_filter   :set_title
@@ -101,6 +87,22 @@ private
   end
 
 =begin
+
+  # include CsvExporter
+  # include DmUtilities::VcardExporter
+  # include DmEvent::EventRegistrationsHelper
+  # include DmUtilities::RenderingHelper
+  # include DmUtilities::SortHelper
+  # include DmAuthorization
+  
+  # helper ReportHelper
+  # helper RegistrationHelper
+  
+  # permit "#{SystemRoles::Admin} on Event or #{SystemRoles::System}", :only => ['destroy']
+  # permit "#{SystemRoles::Access} on Event or #{SystemRoles::Admin} on Event or #{SystemRoles::Attendant} or #{SystemRoles::System}"
+  
+  #before_filter :cache_permissions
+
   #------------------------------------------------------------------------------
   def list
     unless params[:id] == nil
@@ -175,34 +177,6 @@ private
   end
 
   #------------------------------------------------------------------------------
-  def edit
-    @event_workshop = params[:id] ? EventWorkshop.find(params[:id]) : EventWorkshop.new(params[:event_workshop])
-    @event_workshop.event_id = params[:event_id] unless params[:event_id].nil?
-    
-    permit "#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @event_workshop.event do
-      if put_or_post?
-        @event_workshop.attributes = params[:event_workshop]
-        flash[:notice] = 'Saved successfully' if @event_workshop.save
-      end
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  def edit_customization
-    save_form
-  end
-  
-  #------------------------------------------------------------------------------
-  def edit_shoppingcart
-    save_form
-  end
-  
-  #------------------------------------------------------------------------------
-  def edit_advanced
-    save_form
-  end
-  
-  #------------------------------------------------------------------------------
   def archive
     workshop = EventWorkshop.find(params[:id])
     workshop.toggle_archive
@@ -243,18 +217,6 @@ private
     @payments = []
     @event_workshop.event_registration.each {|x| @payments.concat(x.payment_histories)}
     permit "#{SystemRoles::Finances} on :event_workshop or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @event_workshop.event
-  end
-
-private
-  #------------------------------------------------------------------------------
-  def save_form
-    @event_workshop = EventWorkshop.find(params[:id])
-    permit "#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @event_workshop.event do
-      if put_or_post?
-        @event_workshop.attributes = params[:event_workshop]
-        flash.now[:notice] = 'Saved successfully' if @event_workshop.save
-      end
-    end
   end
 
 public
