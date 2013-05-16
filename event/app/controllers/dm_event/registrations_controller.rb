@@ -12,9 +12,10 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
   #------------------------------------------------------------------------------
   def create
-    @workshop             = Workshop.find_by_slug(params[:id])
-    @registration         = @workshop.registrations.new(params[:registration])
-    @registration.user_id = current_user.id
+    @workshop                       = Workshop.find_by_slug(params[:id])
+    @registration                   = @workshop.registrations.new(params[:registration])
+    @registration.user_id           = current_user.id
+    @registration.registered_locale = I18n.locale
     if @registration.save
       redirect_to register_success_url(@registration.receipt_code)
     else

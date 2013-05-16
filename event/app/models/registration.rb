@@ -7,7 +7,7 @@ class Registration < ActiveRecord::Base
   
   self.table_name         = 'ems_registrations'
 
-  attr_accessible         :workshop_price_id
+  attr_accessible         :workshop_price_id, :registered_locale
   
   belongs_to              :workshop, :counter_cache => true
   belongs_to              :workshop_price

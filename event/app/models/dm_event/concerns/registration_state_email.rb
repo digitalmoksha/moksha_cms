@@ -36,13 +36,15 @@ module DmEvent
         # the content of the email
         #------------------------------------------------------------------------------
         def email_state_notification(state = aasm.current_state.to_s, send_email = true)
-          system_email = workshop.send("#{state}_email")
-          if system_email
-            receipt_content = compile_email(state, system_email)
-            if send_email
-              return RegistrationNotifyMailer.registration_notify(self, receipt_content[:content], receipt_content[:substitutions]).deliver
-            else 
-              return receipt_content[:content]
+          I18n.with_locale(registered_locale) do
+            system_email = workshop.send("#{state}_email")
+            if system_email
+              receipt_content = compile_email(state, system_email)
+              if send_email
+                return RegistrationNotifyMailer.registration_notify(self, receipt_content[:content], receipt_content[:substitutions]).deliver
+              else 
+                return receipt_content[:content]
+              end
             end
           end
         end
