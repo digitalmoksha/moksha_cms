@@ -62,9 +62,9 @@
   </ul>
 <% else %>
   <% if @monitored %>
-    <div class="no_items">There are currently no topics being monitored</div>
+    <div class="no_items"><%= I18n.t "fms.no_monitored_topics" %></div>
   <% else %>
-    <div class="no_items">Be the first to create a topic</div>
+    <div class="no_items"><%= I18n.t "fms.no_topics" %></div>
   <% end %>
 <% end %>
 

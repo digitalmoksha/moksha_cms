@@ -95,3 +95,6 @@ de:
     views: Aufrufe
     last_post_on: "Letzter Eintrag von %{user} :: %{date}"
     comments_header: Kommentare
+    no_topics: 'Seien Sie der Erste, der ein Thema erstellen'
+    no_monitored_topics: 'Es liegen noch keine Themen zu überwachenden'
+    no_forums: Das Forum Abschnitt wird in Kürze verfügbar

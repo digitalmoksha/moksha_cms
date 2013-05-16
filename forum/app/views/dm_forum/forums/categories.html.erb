@@ -1,8 +1,10 @@
 <%= render :partial => 'category_side_list' %>
 
+<% forum_displayed = false %>
 <ul class="forum_category_list">
   <% @forum_categories.each do |forum_category| %>
     <% if forum_category.any_readable_forums?(current_user) %>
+      <% forum_displayed = true %>
       <li>
         <span class="name"><%= forum_category.name %></span>
         <ul class="forum_list clearfix">
@@ -19,3 +21,9 @@
     <% end %>
   <% end %>
 </ul>
+
+<% if forum_displayed == false %>
+  <div id="topics_list">
+    <div class="no_items"><%= I18n.t "fms.no_forums" %></div>
+  </div>
+<% end %>
