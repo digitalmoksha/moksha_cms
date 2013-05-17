@@ -18,7 +18,7 @@ module DmEvent
             'receipt_code'   => receipt_code.to_s,
             'price_description'     => "#{workshop_price.price_description unless workshop_price.nil?}",
             'title'          => workshop.title,
-            'fullname'       => user.full_name
+            'fullname'       => user_profile.full_name
             # 'balance'        => balance_owed(true)
           }
           # result['arrival_date'] = format_date(arrival_at, true) if event_workshop.show_arrival_departure

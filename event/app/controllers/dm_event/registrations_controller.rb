@@ -14,7 +14,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   def create
     @workshop                       = Workshop.find_by_slug(params[:id])
     @registration                   = @workshop.registrations.new(params[:registration])
-    @registration.user_id           = current_user.id
+    @registration.user_profile_id   = current_user.user_profile.id
     @registration.registered_locale = I18n.locale
     if @registration.save
       redirect_to register_success_url(@registration.receipt_code)
@@ -31,7 +31,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @registration = Registration.find_by_receipt_code(params[:receipt_code])
     @workshop     = @registration.workshop if @registration
     @receipt_content = @registration.email_state_notification(@registration.current_state, false)
-    redirect_to main_app.root_url and return if @registration.nil? || @registration.user != current_user
+    redirect_to main_app.root_url and return if @registration.nil? || @registration.user_profile.user != current_user
   end
 
 =begin

@@ -3,7 +3,7 @@
   <div class="ticket">
     <h3><%= @registration.workshop.title %></h3>
     <ul>
-      <li><span class="header"><%= I18n.t('ems.ticket_receipt_attendee') %></span><%=h @registration.user.display_name %></li>
+      <li><span class="header"><%= I18n.t('ems.ticket_receipt_attendee') %></span><%=h @registration.full_name %></li>
       <li><span class="header"><%= I18n.t('ems.ticket_receipt_ticket_number') %></span><%=h @registration.receipt_code %></li>
       <% if @registration.workshop_price %>
         <li><span class="header"><%= I18n.t('ems.ticket_receipt_price') %></span><%= humanized_money_with_symbol @registration.price %></li>

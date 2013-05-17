@@ -29,7 +29,7 @@ private
       [
         registration_actions(registration),
         h(registration.receipt_code),
-        h(registration.user.full_name),
+        h(registration.user_profile.full_name),
         h(format_date(registration.created_at))
       ]
     end
@@ -43,10 +43,10 @@ private
   #------------------------------------------------------------------------------
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
-    registrations = @workshop.registrations.includes(:user).order("#{sort_column} #{sort_direction}")
+    registrations = @workshop.registrations.includes(:user_profile => [:country]).order("#{sort_column} #{sort_direction}")
     registrations = registrations.page(page).per_page(per_page)
     if params[:sSearch].present?
-      registrations = registrations.where("users.first_name like :search OR users.last_name like :search OR users.email like :search OR receipt_code like :search", search: "%#{params[:sSearch]}%")
+      registrations = registrations.where("user_profiles.first_name like :search OR user_profiles.last_name like :search OR users.email like :search OR receipt_code like :search", search: "%#{params[:sSearch]}%")
     end
     registrations
   end
@@ -93,7 +93,7 @@ private
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = ["aasm_state #{sort_direction}, process_changed_on", 'receipt_code', "LOWER(users.first_name) #{sort_direction}, LOWER(users.last_name)", 'created_at']
+    columns = ["aasm_state #{sort_direction}, process_changed_on", 'receipt_code', "LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", 'created_at']
     columns[params[:iSortCol_0].to_i]
   end
 

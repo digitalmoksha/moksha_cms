@@ -1,5 +1,7 @@
-# require 'digest/sha1'
-
+# Important: one reason to link off of the user_profile instead of the user
+# is so that we can support registrations without requiring an account.
+# We can create a "userless" profile, that has all the necessary information.
+# This is instead of duplicating all those fields in the registration table.
 #------------------------------------------------------------------------------
 class Registration < ActiveRecord::Base
   include DmEvent::Concerns::RegistrationStateMachine
@@ -11,7 +13,7 @@ class Registration < ActiveRecord::Base
   
   belongs_to              :workshop, :counter_cache => true
   belongs_to              :workshop_price
-  belongs_to              :user
+  belongs_to              :user_profile
   belongs_to              :account
   
   default_scope           { where(account_id: Account.current.id) }
@@ -40,12 +42,12 @@ class Registration < ActiveRecord::Base
   
   #------------------------------------------------------------------------------
   def full_name
-    user.full_name
+    user_profile.full_name
   end
 
   #------------------------------------------------------------------------------
   def email_address
-    user.email
+    user_profile.user.email
   end
   
   
