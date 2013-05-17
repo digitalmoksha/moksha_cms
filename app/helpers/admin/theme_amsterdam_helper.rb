@@ -79,6 +79,25 @@ module Admin::ThemeAmsterdamHelper
     end
   end
 
+  # Displays a "well" with content, flush to the edges.  Optional title and explanation
+  # text
+  #------------------------------------------------------------------------------
+  def well_frame(options = {}, &block)
+    options[:title]         ||= ''
+    options[:id]            ||= ''
+    options[:class]         ||= ''
+    options[:explanation]   ||= ''
+    heading                   = ''
+    
+    heading += "<h6 class='subtitle'>#{options[:title]}</h6>" unless options[:title].blank?
+    heading += "<p class='explanation'>#{options[:explanation]}</p>" unless options[:explanation].blank?
+    
+    content = with_output_buffer(&block)
+    content_tag :div, :id => options[:id], :class => "semi-block #{options[:class]}" do
+      heading.html_safe + content_tag(:div, content, :class => 'well')
+    end
+  end
+
   # A tabbed frame with locales as the tabs
   #------------------------------------------------------------------------------
   def locale_frame(options = {}, &block)
@@ -98,19 +117,6 @@ module Admin::ThemeAmsterdamHelper
     render :partial => 'dm_core/admin/shared/locale_frame', :locals => { :options => options, :content => content }
   end
 
-  # Form row
-  #------------------------------------------------------------------------------
-  def form_row(options = {}, &block)
-    options[:label]      ||= ''
-    options[:for]        ||= ''
-    options[:hint]       ||= ''
-    options[:submit]     ||= false
-    
-    content              = with_output_buffer(&block)
-    
-    render :partial => 'dm_core/admin/shared/form_row', :locals => { :options => options, :content => content }
-  end
-  
   # :save => save text
   # :cancel => cancel text (if it == false, then only show the save button)
   # :cancel_url => url (or hash) to be linked to

@@ -35,10 +35,10 @@
         </tr>
       </thead>
       <tbody>
-        <% User.without_role(:admin).order('last_access_at DESC').limit(5).each do |user| %>
+        <% UserProfile.order('last_access_at DESC').limit(5).each do |profile| %>
           <tr>
-            <td><%= user.full_name %></td>
-            <td align="center"><%= user.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.current_sign_in_at)} ago" %></td>
+            <td><%= profile.full_name %></td>
+            <td align="center"><%= profile.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(profile.last_access_at)} ago" %></td>
           </tr>
         <% end %>
       </tbody>

@@ -16,21 +16,33 @@ module DmCore
 
         # Setup accessible (or protected) attributes for your model
         attr_accessible         :email, :password, :password_confirmation, :remember_me,
-                                  :first_name, :last_name, :country_id
+                                  :user_profile_attributes
         attr_accessible         :role_ids, :email, :password, :password_confirmation, :remember_me,
-                                  :first_name, :last_name, :country_id,  
+                                  :user_profile, :user_profile_attributes,
                                   :as => :admin
 
         belongs_to              :country, :class_name => 'DmCore::Country'
-
-        validates_presence_of   :first_name, :if => :require_name?
-        validates_presence_of   :last_name, :if => :require_name?
-        validates_presence_of   :country_id, :if => :require_country?
+        has_one                 :user_profile, :dependent => :destroy
+        accepts_nested_attributes_for :user_profile
+        
         validates_presence_of   :email
 
         after_create            :add_account
+        # after_initialize        :initialize_profile
+        
+        delegate                :first_name, :last_name, :full_name, :display_name, :country, :last_access_at,
+                                :to => :user_profile
         
         scope                   :online, lambda { where('last_access_at >= ?', 10.minutes.ago.utc) }
+        
+
+        # make sure a new profile is built for a new record
+        #------------------------------------------------------------------------------
+        def initialize_profile
+          if new_record?
+            self.build_user_profile
+          end
+        end
         
         # When a user is created, attach it to the current account
         #------------------------------------------------------------------------------
@@ -39,38 +51,15 @@ module DmCore
           self.update_attribute(:account_id, Account.current.id)
         end
         
-        # Determin if this user has the Admin role
+        # Determine if this user has the Admin role
         #------------------------------------------------------------------------------
         def is_admin?
           has_role?(:admin)
         end
         
-        # Override this method if you don't want to require the first/last name
-        #------------------------------------------------------------------------------
-        def require_name?
-          true
-        end
-        
-        # Override this method if you don't want to require country
-        #------------------------------------------------------------------------------
-        def require_country?
-          true
-        end
-        
-        #------------------------------------------------------------------------------
-        def full_name
-          self.first_name.to_s + " " + self.last_name.to_s
-        end
-
-        # for displaying their displayable profile name
-        #------------------------------------------------------------------------------
-        def display_name
-          self.first_name.to_s + " " + self.last_name.to_s
-        end
-        
         #------------------------------------------------------------------------------
         def update_last_access
-          update_attribute(:last_access_at, Time.now.utc) if self.last_access_at.nil? || (self.last_access_at <= 10.minutes.ago)
+          user_profile.update_attribute(:last_access_at, Time.now.utc) if user_profile.last_access_at.nil? || (user_profile.last_access_at <= 10.minutes.ago)
         end
         
         # check if a user is active
@@ -105,14 +94,6 @@ module DmCore
           return { :total => items.inject(:+), :list => items.join(',') }
         end
 
-        #------------------------------------------------------------------------------
-        def access_last_30_days
-          items = 27.step(0, -3).map do |date| 
-            self.where('last_access_at <= ? AND last_access_at > ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime).count
-          end
-          return { :total => items.inject(:+), :list => items.join(',') }
-        end
-        
         # Query for users that don't have a specific role.  Useful for getting users
         # are not :admin
         #------------------------------------------------------------------------------

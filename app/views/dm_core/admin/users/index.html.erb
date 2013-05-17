@@ -22,7 +22,7 @@
   <!-- Sidebar stats -->
   <ul class="topstats block">
     <li>
-      <% accessed_users = User.access_last_30_days %>
+      <% accessed_users = UserProfile.access_last_30_days %>
       <div class="left">Active Users:<h1><%= accessed_users[:total] %></h1></div>
       <div class="topchart" id="access_user_sparkline"><%= accessed_users[:list] %></div>
     </li>

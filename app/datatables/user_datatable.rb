@@ -42,7 +42,7 @@ private
 
   #------------------------------------------------------------------------------
   def fetch_users
-    users = User.includes(:country).order("#{sort_column} #{sort_direction}")
+    users = User.includes(:user_profile => [ :country ] ).order("#{sort_column} #{sort_direction}")
     users = users.page(page).per_page(per_page)
     if params[:sSearch].present?
       users = users.where("first_name like :search OR last_name like :search OR email like :search", search: "%#{params[:sSearch]}%")
@@ -69,7 +69,7 @@ private
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = ["LOWER(first_name) #{sort_direction}, LOWER(last_name)", 'email', 'globalize_countries.english_name', 'last_access_at']
+    columns = ["LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", 'email', 'globalize_countries.english_name', 'user_profiles.last_access_at']
     columns[params[:iSortCol_0].to_i]
   end
 
