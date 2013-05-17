@@ -3,10 +3,10 @@
 
 	<%= content_frame :title => @title do %>
     
-    <%= f.input :first_name %>
-    <%= f.input :last_name %>
+    <%#= f.input :first_name %>
+    <%#= f.input :last_name %>
     <%= f.input :email %>
-    <%= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
+    <%#= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
                 :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
                 :label => "Country" %>
     
