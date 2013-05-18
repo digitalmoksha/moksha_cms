@@ -28,7 +28,7 @@ module DmCore
         validates_presence_of   :email
 
         after_create            :add_account
-        # after_initialize        :initialize_profile
+        after_update            :udpate_profile_email
         
         delegate                :first_name, :last_name, :full_name, :display_name, :country, :last_access_at,
                                 :to => :user_profile
@@ -36,12 +36,10 @@ module DmCore
         scope                   :online, lambda { where('last_access_at >= ?', 10.minutes.ago.utc) }
         
 
-        # make sure a new profile is built for a new record
+        # Keep the profile email in sync with the user's email
         #------------------------------------------------------------------------------
-        def initialize_profile
-          if new_record?
-            self.build_user_profile
-          end
+        def udpate_profile_email
+          user_profile.update_attribute(:email, email) if self.email_changed?
         end
         
         # When a user is created, attach it to the current account
