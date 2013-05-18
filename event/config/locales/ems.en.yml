@@ -12,5 +12,17 @@ en:
     ticket_receipt_thank_you: Thank you
     ticket_receipt_ticket_number: Ticket Number
     ticket_receipt_price: Price
-    registration_receipt_title: Reservation Receipt
     ticket_informaton: Ticket Information
+    ticket_contact: Contact Information
+    registration_receipt_title: Reservation Receipt
+    registration_payment_required: Please select a payment method
+    registration_email: Email
+    registration_first_name: First Name
+    registration_last_name: Last Name
+    registration_address: Address
+    registration_address2: Address
+    registration_city: City
+    registration_state: State
+    registration_country: Country
+    registration_zipcode: Zipcode
+    registration_account_required: 'In order to register for this event, you must be logged into your user account.'

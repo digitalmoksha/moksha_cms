@@ -1,7 +1,8 @@
 <div class="registration_section_prices">
   <% unless @workshop.workshop_prices.empty? %>
+    <%= f.error :workshop_price_id, id: 'workshop_price_error', class: 'error' %>
     <ul class="workshop_price_list">
-      <% if @registration.workshop_price.nil? %>            
+      <% if @registration.new_record? %>            
         <% @workshop.workshop_prices.each do |p| %>
           <% if p.visible? and !@workshop.price_sold_out?(p) %>
             <li>
@@ -10,7 +11,7 @@
           <% end %>
         <% end %>
       <% else %>
-        <li><label><%= price_details(p) %></label></li>
+        <li><label><%= price_details(@registration.workshop_price) %></label></li>
       <% end %>
     </ul>
   <% end %>

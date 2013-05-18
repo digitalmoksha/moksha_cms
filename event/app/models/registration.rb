@@ -9,18 +9,20 @@ class Registration < ActiveRecord::Base
   
   self.table_name         = 'ems_registrations'
 
-  attr_accessible         :workshop_price_id, :registered_locale
+  attr_accessible         :workshop_price_id, :registered_locale, :user_profile_attributes
   
   belongs_to              :workshop, :counter_cache => true
   belongs_to              :workshop_price
   belongs_to              :user_profile
   belongs_to              :account
   
+  accepts_nested_attributes_for :user_profile
+  
   default_scope           { where(account_id: Account.current.id) }
 
   after_create            :set_receipt_code
   
-  validates_presence_of   :workshop_price_id,      :message => "Please select a payment option", :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
+  validates_presence_of   :workshop_price_id,      :message => I18n.t('ems.registration_payment_required'), :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
   
   # Receipt code: (workshop.id)-(registration.id).  eg.  003-101
   #------------------------------------------------------------------------------
@@ -47,7 +49,7 @@ class Registration < ActiveRecord::Base
 
   #------------------------------------------------------------------------------
   def email_address
-    user_profile.user.email
+    user_profile.email
   end
   
   
@@ -88,24 +90,6 @@ class Registration < ActiveRecord::Base
   validates_presence_of   :arrival_at,                              :if => Proc.new { |reg| reg.event_workshop.show_arrival_departure}
   validates_presence_of   :departure_at,                            :if => Proc.new { |reg| reg.event_workshop.show_arrival_departure}
 
-  #--- validates used for a registration that is not associated with a student account
-  validates_presence_of        :country,           :message => "is a required field",  :if => Proc.new { |reg| !reg.student_id }
-  validates_presence_of        :email,             :message => "is a required field",  :if => Proc.new { |reg| !reg.student_id }
-  validates_presence_of        :firstname,         :message => "is a required field",  :if => Proc.new { |reg| !reg.student_id }
-  validates_presence_of        :lastname,          :message => "is a required field",  :if => Proc.new { |reg| !reg.student_id }
-  validates_presence_of        :address,           :message => "is a required field",  :if => Proc.new { |reg| !reg.student_id and reg.event_workshop.require_address }
-  validates_presence_of        :city,              :message => "is a required field",  :if => Proc.new { |reg| !reg.student_id and reg.event_workshop.require_address }
-  validates_presence_of        :zipcode,           :message => "is a required field",  :if => Proc.new { |reg| !reg.student_id and reg.event_workshop.require_address }
-  validates_presence_of        :phone,             :message => "is a required field",  :if => Proc.new { |reg| !reg.student_id and reg.event_workshop.require_address }
-  validates_length_of          :email,             :maximum => 60,                        :if => Proc.new { |reg| !reg.student_id }
-  validates_length_of          :address,           :maximum => 70,                        :if => Proc.new { |reg| !reg.student_id }
-  validates_length_of          :address2,          :maximum => 70,  :allow_nil => true,   :if => Proc.new { |reg| !reg.student_id }
-  validates_length_of          :city,              :maximum => 20,                        :if => Proc.new { |reg| !reg.student_id }
-  validates_length_of          :state,             :maximum => 30,                        :if => Proc.new { |reg| !reg.student_id }
-  validates_length_of          :zipcode,           :maximum => 10,  :allow_nil => true,   :if => Proc.new { |reg| !reg.student_id }
-  validates_length_of          :phone,             :maximum => 20,  :allow_nil => true,   :if => Proc.new { |reg| !reg.student_id }
-  validates_length_of          :fax,               :maximum => 20,  :allow_nil => true,   :if => Proc.new { |reg| !reg.student_id }
-  validates_length_of          :cell,              :maximum => 20,  :allow_nil => true,   :if => Proc.new { |reg| !reg.student_id }
   validates_email_veracity_of  :email,                                                    :if => Proc.new { |reg| !reg.student_id }
 
   validates_with               EventRegistrationValidator
@@ -163,15 +147,6 @@ class Registration < ActiveRecord::Base
   end
   
 
-  # before_create hook
-  #------------------------------------------------------------------------------
-  def set_name
-    if self.student
-      self[:firstname] = student.firstname
-      self[:lastname]  = student.lastname
-    end
-  end
-  
   # The token is used to access the registration by a user without logging in
   # so that they can update any relevant details.
   # before_create hook

@@ -12,4 +12,17 @@ ja:
     ticket_receipt_thank_you: 宜しくお願い致します。
     ticket_receipt_ticket_number: チケットナンバー
     ticket_receipt_price: Price
+    ticket_informaton: Ticket Information
+    ticket_contact: Contact Information
     registration_receipt_title: 予約申し込み受領書
+    registration_payment_required: Please select a payment method
+    registration_email: Eメールアドレス
+    registration_first_name: 名（ローマ字）
+    registration_last_name: 姓（ローマ字）
+    registration_address: 住所
+    registration_address2: 住所
+    registration_city: 市
+    registration_state: 都／府／県
+    registration_country: 国名
+    registration_zipcode: 郵便番号
+    registration_account_required: 'In order to register for this event, you must be logged into your user account.'

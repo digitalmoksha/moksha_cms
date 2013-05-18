@@ -34,10 +34,8 @@ class CreateEvents < ActiveRecord::Migration
       # t.boolean     :show_medical,                                   :default => false
       # t.boolean     :show_spiritual,                                 :default => false
       # t.boolean     :show_arrival_departure,                         :default => false
-      # t.boolean     :require_account,                                :default => true
       # t.boolean     :show_photo,                                     :default => false
       # t.boolean     :show_programdate,                               :default => true
-      # t.boolean     "require_address",                                :default => true
       # t.boolean     "shoppingcart_immediate_checkout"
       # t.string      "invitation_code"
       # t.text        "information_text"

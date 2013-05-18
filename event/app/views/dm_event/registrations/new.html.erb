@@ -3,17 +3,27 @@
     <%= render_workshop_description(@workshop) %>
   </div>
 
-  <h3><%= I18n.t "ems.ticket_information" %></h3>
-  <div class="ticket_information">
+  <% unless @workshop.require_account && current_user.nil? %>
     <%= simple_form_for(@registration, :url => register_create_url(@workshop)) do |f| %>
-      <%= f.error_notification :message => "Please review the problems below"%>
-        <%#= f.input :info_url, :label => 'Information URL' %>
+      <h3><%= I18n.t "ems.ticket_information" %></h3>
+      <div class="ticket_information">
+        <%= render :partial => 'section_prices', :locals => {:f => f} %>
+      </div>
 
-        <%= render :partial => 'section_prices' %>
-
-        <%= submit_or_cancel :save => I18n.t('ems.register_btn'), :cancel => I18n.t('ems.cancel_btn'), :cancel_url => admin_workshops_path %>
-
+      <% if @registration.user_profile.address_required %>
+        <%= render :partial => 'section_address', :locals => {:f => f} %>
+      <% end %>
+      <%= submit_or_cancel :save => I18n.t('ems.register_btn'), :cancel => I18n.t('ems.cancel_btn'), :cancel_url => admin_workshops_path %>
     <% end %>
-  </div>
-
+  <% else %>
+    <div class='ticket_information account_required'>
+      <p><%= I18n.t 'ems.registration_account_required' %></p>
+      <ul>
+        <li><%= link_to nls(:signin_link), main_app.new_user_session_path %></li>
+        <li><%= link_to nls(:signin_register_link), main_app.new_user_registration_path %></li>
+        <li><%= link_to nls(:signin_forgot_password_link), main_app.new_user_password_path %></li>
+        <li><%= link_to nls(:signin_confirmation_instructions_link), main_app.new_user_confirmation_path %></li>
+      </ul>
+    </div>
+  <% end %>
 </div>

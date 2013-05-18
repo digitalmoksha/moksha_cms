@@ -1,21 +1,33 @@
 class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
-  helper    DmEvent::WorkshopsHelper
-  helper    DmEvent::RegistrationsHelper
-  layout    'layouts/event_templates/register'
+  helper          DmEvent::WorkshopsHelper
+  helper          DmEvent::RegistrationsHelper
+  layout          'layouts/event_templates/register'
 
+  before_filter   :workshop_lookup, except: [:success]
+  
   #------------------------------------------------------------------------------
   def new
-    @workshop     = Workshop.find_by_slug(params[:id])
-    @registration = @workshop.registrations.build
+    @registration               = @workshop.registrations.build
+    @registration.user_profile  = current_user ? current_user.user_profile : UserProfile.new
+    if (@workshop.require_address || !@workshop.require_account) && !@registration.user_profile.address_valid?
+      #--- address is required and there are missing fields in the profile
+      @registration.user_profile.address_required = true
+    end
   end
 
   #------------------------------------------------------------------------------
   def create
-    @workshop                       = Workshop.find_by_slug(params[:id])
+    redirect_to(action: :new) and return if @workshop.require_account && current_user.nil?
+
+    profile_params                  = params[:registration].delete("user_profile_attributes") if params[:registration]
+    profile_params.delete(:id)      if profile_params
+
     @registration                   = @workshop.registrations.new(params[:registration])
-    @registration.user_profile_id   = current_user.user_profile.id
     @registration.registered_locale = I18n.locale
+    @registration.user_profile      = current_user ? current_user.user_profile : UserProfile.new
+    @registration.user_profile.assign_attributes(profile_params)
+
     if @registration.save
       redirect_to register_success_url(@registration.receipt_code)
     else
@@ -34,6 +46,13 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     redirect_to main_app.root_url and return if @registration.nil? || @registration.user_profile.user != current_user
   end
 
+private
+
+  #------------------------------------------------------------------------------
+  def workshop_lookup
+    @workshop = Workshop.find_by_slug(params[:id])
+  end
+  
 =begin
   helper          'dm_event/event_registrations'
   helper          'dm_event/custom_fields'

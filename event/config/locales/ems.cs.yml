@@ -12,5 +12,17 @@ cs:
     ticket_receipt_thank_you: Děkujeme
     ticket_receipt_ticket_number: Číslo lístku
     ticket_receipt_price: Price
+    ticket_informaton: Ticket Information
+    ticket_contact: Contact Information
     registration_receipt_title: Potvrzení o rezervaci
-    
+    registration_payment_required: Please select a payment method
+    registration_email: E-mail
+    registration_first_name: Křestní jméno
+    registration_last_name: Příjmení
+    registration_address: Adresa
+    registration_address2: Adresa
+    registration_city: Město
+    registration_state: Stát/provincie/region
+    registration_country: Země
+    registration_zipcode: Poštovní směrovací číslo
+    registration_account_required: 'In order to register for this event, you must be logged into your user account.'

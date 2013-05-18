@@ -12,5 +12,17 @@ de:
     ticket_receipt_thank_you: "Vielen Dank"
     ticket_receipt_ticket_number: Ticketnummer
     ticket_receipt_price: Preis
-    registration_receipt_title: Anmeldebestätigung
     ticket_information: Ticket-Informationen
+    ticket_contact: Kontakt-Informationen
+    registration_receipt_title: Anmeldebestätigung
+    registration_payment_required: Bitte wählen Sie eine Zahlungsmethode
+    registration_email: E-Mail
+    registration_first_name: Vorname
+    registration_last_name: Nachname
+    registration_address: Adresse
+    registration_address2: Adresse
+    registration_city: Ort
+    registration_state: Bundesland
+    registration_country: Land
+    registration_zipcode: Postleitzahl
+    registration_account_required: 'Um für diese Veranstaltung zu registrieren, müssen Sie in Ihrem Benutzerkonto angemeldet sein.'
