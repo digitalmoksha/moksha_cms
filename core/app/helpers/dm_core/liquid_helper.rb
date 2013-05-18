@@ -35,7 +35,7 @@ module DmCore::LiquidHelper
     if options[:safe]
       BlueCloth.new(content, :remove_links => true, :remove_images => true, :escape_html => true).to_html.html_safe
     else
-      BlueCloth.new(content).to_html.html_safe
+      ::Kramdown::Document.new(content).to_html.html_safe
     end
   end
 
