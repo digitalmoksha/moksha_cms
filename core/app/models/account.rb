@@ -59,7 +59,7 @@ class Account < ActiveRecord::Base
     host      ||= ""
     separated   = host.downcase.split('.')
     separated   = separated.delete_if { |x| x == 'dev' || x == 'www' || x == 'backoffice' || x =~ /stg-/ || x == 'staging' }
-    self.find_by_domain(separated.join('.')) or raise Account::DomainNotFound.new('Invalid domain')
+    self.find_by_domain(separated.join('.')) or raise Account::DomainNotFound.new("Invalid domain: #{host}")
   end
 
   # Since we need the current account for the default scope in models, we need 
