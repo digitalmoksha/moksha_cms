@@ -164,7 +164,6 @@ module DmCore
       redirect_to main_app.root_url, :alert => exception.message
     end
     rescue_from Account::DomainNotFound do |exception|
-      debugger
       #--- log the invalid domain and render nothing.
       logger.error "=====> #{exception.message}  URL: #{request.url}  REMOTE_ADDR: #{request.remote_addr}"
       render :nothing => true
