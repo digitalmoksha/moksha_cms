@@ -3,6 +3,7 @@ module DmCore
 
     around_filter   :scope_current_account
 
+    before_filter   :log_additional_data
     before_filter   :record_activity
     before_filter   :set_locale
     before_filter   :set_mailer_url_options
@@ -150,10 +151,23 @@ module DmCore
       filters(:around)
     end
 
-    # Redirect to the index page if we get an access denied
+    # Store any additional data to be used by the ExceptionNotification gem
+    #------------------------------------------------------------------------------
+    def log_additional_data
+      request.env["exception_notifier.exception_data"] = { :user => current_user, :account => current_account }
+    end
+
+    # Note: rescue_from should be listed form generic exception to most specific
     #------------------------------------------------------------------------------
     rescue_from CanCan::AccessDenied do |exception|
+      #--- Redirect to the index page if we get an access denied
       redirect_to main_app.root_url, :alert => exception.message
+    end
+    rescue_from Account::DomainNotFound do |exception|
+      debugger
+      #--- log the invalid domain and render nothing.
+      logger.error "=====> #{exception.message}  URL: #{request.url}  REMOTE_ADDR: #{request.remote_addr}"
+      render :nothing => true
     end
   end
 end
