@@ -22,7 +22,7 @@ class Registration < ActiveRecord::Base
 
   after_create            :set_receipt_code
   
-  validates_presence_of   :workshop_price_id,      :message => I18n.t('ems.registration_payment_required'), :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
+  validates_presence_of   :workshop_price_id, :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
   
   # Receipt code: (workshop.id)-(registration.id).  eg.  003-101
   #------------------------------------------------------------------------------

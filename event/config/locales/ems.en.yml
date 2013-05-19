@@ -15,7 +15,6 @@ en:
     ticket_informaton: Ticket Information
     ticket_contact: Contact Information
     registration_receipt_title: Reservation Receipt
-    registration_payment_required: Please select a payment method
     registration_email: Email
     registration_first_name: First Name
     registration_last_name: Last Name
@@ -26,3 +25,10 @@ en:
     registration_country: Country
     registration_zipcode: Zipcode
     registration_account_required: 'In order to register for this event, you must be logged into your user account.'
+  activerecord:
+    errors:
+      models:
+        registration:
+          attributes:
+            workshop_price_id:
+              blank: Please select a payment method

@@ -15,7 +15,6 @@ ja:
     ticket_informaton: Ticket Information
     ticket_contact: Contact Information
     registration_receipt_title: 予約申し込み受領書
-    registration_payment_required: Please select a payment method
     registration_email: Eメールアドレス
     registration_first_name: 名（ローマ字）
     registration_last_name: 姓（ローマ字）
@@ -26,3 +25,10 @@ ja:
     registration_country: 国名
     registration_zipcode: 郵便番号
     registration_account_required: 'In order to register for this event, you must be logged into your user account.'
+  activerecord:
+    errors:
+      models:
+        registration:
+          attributes:
+            workshop_price_id:
+              blank: Please select a payment method

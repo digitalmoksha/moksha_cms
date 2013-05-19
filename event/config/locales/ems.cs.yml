@@ -15,7 +15,6 @@ cs:
     ticket_informaton: Ticket Information
     ticket_contact: Contact Information
     registration_receipt_title: Potvrzení o rezervaci
-    registration_payment_required: Please select a payment method
     registration_email: E-mail
     registration_first_name: Křestní jméno
     registration_last_name: Příjmení
@@ -26,3 +25,10 @@ cs:
     registration_country: Země
     registration_zipcode: Poštovní směrovací číslo
     registration_account_required: 'In order to register for this event, you must be logged into your user account.'
+  activerecord:
+    errors:
+      models:
+        registration:
+          attributes:
+            workshop_price_id:
+              blank: Please select a payment method
