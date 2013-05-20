@@ -19,7 +19,8 @@ module DmCore::LiquidHelper
     # doc = BlueCloth.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
     #                       :registers => {:controller => controller, :view => self, :account_site_assets => account_site_assets, :current_user => current_user}))
     doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
-                          :registers => {:controller => controller, :view => self, :account_site_assets => account_site_assets, :current_user => current_user}))
+                                        :registers => {:controller => controller, :view => self, :account_site_assets => account_site_assets, :current_user => current_user}),
+                                   :parse_block_html => true)
     return doc.to_html.html_safe
   end
 
