@@ -24,6 +24,6 @@
 
 <% if forum_displayed == false %>
   <div id="topics_list">
-    <div class="no_items"><%= I18n.t "fms.no_forums" %></div>
+    <%= render :partial => 'dm_forum/forums/no_forums' %>
   </div>
 <% end %>
