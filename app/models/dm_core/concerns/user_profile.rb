@@ -21,7 +21,7 @@ module DmCore
         #--- don't validate public_name if we're only updating the address
         #    (like with userless registration)
         validates_presence_of   :public_name,        :if => Proc.new { |p| !p.address_required }
-        validates_uniqueness_of :public_name
+        validates_uniqueness_of :public_name,        :if => Proc.new { |p| !p.address_required }
         
         #--- validates used for a registration that is not associated with a student account
         validates_presence_of   :first_name,        :if => :require_name?
@@ -43,6 +43,11 @@ module DmCore
 
         after_create            :add_account
 
+        #------------------------------------------------------------------------------
+        def address_required=(value)
+          @address_required = (value == "true" || value == "1" || value == true) ? true : false
+        end
+        
         # When a profile is created, attach it to the current account
         #------------------------------------------------------------------------------
         def add_account
