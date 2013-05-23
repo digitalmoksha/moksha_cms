@@ -51,9 +51,40 @@ class Registration < ActiveRecord::Base
   def email_address
     user_profile.email
   end
-  
-  
-  
+
+  # Return the number of items specified, in particular the number of items in 
+  # a particular state
+  #------------------------------------------------------------------------------
+  def self.number_of(state, options = {})
+    include_confirmed = (options[:only_confirmed] ? 'AND confirmed_on IS NOT NULL' : '')
+    case state
+    when :attending
+      number_of(:paid) + number_of(:accepted)
+    when :unpaid
+      #--- the number of unpaid is the same as the number of accepted
+      number_of(:accepted)
+    when :checkedin
+      where("checkin_at <> 0 AND archived_on IS NULL #{include_confirmed}").count
+    when :archived
+      where("archived_on IS NOT NULL #{include_confirmed}").count
+    when :registrations
+      #--- don't count any canceled
+      where("aasm_state <> 'canceled' AND aasm_state <> 'refunded' AND archived_on IS NULL #{include_confirmed}").count
+    when :registrations_by_paymenttype
+      #--- number of registrations paid with a particular payment type
+      where("(aasm_state = 'paid' OR aasm_state = 'accepted') AND workshop_price_id = #{options[:price_id]} AND archived_on IS NULL #{include_confirmed}").count
+    when :user_updated
+      #--- how many users updated their record
+      where("user_updated_at IS NOT NULL AND (aasm_state = 'paid' OR aasm_state = 'accepted') AND archived_on IS NULL #{include_confirmed}").count
+    when :confirmed
+      #--- how many users confirmed their attendance
+      where("confirmed_on IS NOT NULL AND (aasm_state = 'paid' OR aasm_state = 'accepted') AND archived_on IS NULL").count
+    else
+      #--- must be wanting to count the process states
+      where("archived_on IS NULL #{include_confirmed}").count_in_state(state)
+    end
+  end
+
 =begin
   acts_as_reportable
   acts_as_commentable
@@ -338,39 +369,6 @@ class Registration < ActiveRecord::Base
     departure_at.nil? ? DateTime.new(0) : departure_at
   end
   
-  # Return the number of items specified, in particular the number of items in 
-  # a particular state
-  #------------------------------------------------------------------------------
-  def self.number_of(state, options = {})
-    include_confirmed = (options[:only_confirmed] ? 'AND confirmed_on IS NOT NULL' : '')
-    case state
-    when :attending
-      number_of(:paid) + number_of(:accepted)
-    when :unpaid
-      #--- the number of unpaid is the same as the number of accepted
-      number_of(:accepted)
-    when :checkedin
-      count(:conditions => "checkin_at <> 0 AND archived_on IS NULL #{include_confirmed}")
-    when :archived
-      count(:conditions => "archived_on IS NOT NULL #{include_confirmed}")
-    when :registrations
-      #--- don't count any canceled
-      count(:conditions => "process_state <> 'canceled' AND process_state <> 'refunded' AND archived_on IS NULL #{include_confirmed}")
-    when :registrations_by_paymenttype
-      #--- number of registrations paid with a particular payment type
-      count(:conditions => "(process_state = 'paid' OR process_state = 'accepted') AND event_payment_id = #{options[:payment_id]} AND archived_on IS NULL #{include_confirmed}")
-    when :user_updated
-      #--- how many users updated their record
-      count(:conditions => "user_updated_at IS NOT NULL AND (process_state = 'paid' OR process_state = 'accepted') AND archived_on IS NULL #{include_confirmed}")
-    when :confirmed
-      #--- how many users confirmed their attendance
-      count(:conditions => "confirmed_on IS NOT NULL AND (process_state = 'paid' OR process_state = 'accepted') AND archived_on IS NULL")
-    else
-      #--- must be wanting to count the process states
-      count(:conditions => "process_state = '#{state.to_s}' AND archived_on IS NULL #{include_confirmed}")
-    end
-  end
-
   # Generate a list of students, returning a small set of the total information
   #------------------------------------------------------------------------------
   def self.report_students_per_country

@@ -8,6 +8,8 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   
   #------------------------------------------------------------------------------
   def new
+    redirect_to main_app.root_url and return if @workshop.nil?
+    
     @registration               = @workshop.registrations.build
     @registration.user_profile  = current_user ? current_user.user_profile : UserProfile.new
     if (@workshop.require_address || !@workshop.require_account) && !@registration.user_profile.address_valid?

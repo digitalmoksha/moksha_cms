@@ -16,7 +16,73 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <%= link_to 'Edit Workshop', edit_admin_workshop_url(@workshop), :class => "action-button blue" %>
-  <%= link_to 'New Registration', register_new_url(@workshop), :class => "action-button blue", :targe => '_blank' %>
+  <ul class="navigation-light block">
+    <li><%= link_to 'Edit Workshop', edit_admin_workshop_url(@workshop) %></li>
+    <li><%= link_to 'New Registration', register_new_url(@workshop), :targe => '_blank' %></li>
+  </ul>
+
+  <% num_registrations = @workshop.registrations.count %>
+  <ul class="block progress-statistics">
+    <% num = @workshop.registrations.number_of(:attending) %>
+    <li>
+      <strong>Attending</strong><strong class="pull-right"><%= "#{num} / #{(num*100/num_registrations).to_s}%" %></strong>
+      <div class="progress progress-success slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+    </li>
+  </ul>
+  <ul class="block progress-statistics">
+    <% num = @workshop.registrations.number_of(:pending) %>
+    <li>
+      <strong>Pending</strong><strong class="pull-right"><%= num %></strong>
+      <div class="progress progress-pending slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+    </li>
+    <% num = @workshop.registrations.number_of(:accepted) %>
+    <li>
+      <strong>Accepted</strong><strong class="pull-right"><%= num %></strong>
+      <div class="progress progress-accepted slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+    </li>
+    <% num = @workshop.registrations.number_of(:paid) %>
+    <li>
+      <strong>Paid</strong><strong class="pull-right"><%= num %></strong>
+      <div class="progress progress-paid slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+    </li>
+    <% if (num = @workshop.registrations.number_of(:waitlisted)) > 0 %>
+      <li>
+        <strong>Waitlisted</strong><strong class="pull-right"><%= num %></strong>
+        <div class="progress progress-waitlisted slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+      </li>
+    <% end %>
+    <% if (num = @workshop.registrations.number_of(:reviewing)) > 0 %>
+      <li>
+        <strong>Reviewing</strong><strong class="pull-right"><%= num %></strong>
+        <div class="progress progress-reviewing slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+      </li>
+    <% end %>
+    <% if (num = @workshop.registrations.number_of(:rejected)) > 0 %>
+      <li>
+        <strong>Rejected</strong><strong class="pull-right"><%= num %></strong>
+        <div class="progress progress-rejected slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+      </li>
+    <% end %>
+    <% if (num = @workshop.registrations.number_of(:canceled)) > 0 %>
+      <li>
+        <strong>Canceled</strong><strong class="pull-right"><%= num %></strong>
+        <div class="progress progress-canceled slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+      </li>
+    <% end %>
+    <% if (num = @workshop.registrations.number_of(:refunded)) > 0 %>
+      <li>
+        <strong>Refunded</strong><strong class="pull-right"><%= num %></strong>
+        <div class="progress progress-refunded slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+      </li>
+    <% end %>
+    <% if (num = @workshop.registrations.number_of(:noshow)) > 0 %>
+      <li>
+        <strong>No Show</strong><strong class="pull-right"><%= num %></strong>
+        <div class="progress progress-noshow slim"><div class="bar" data-percentage="<%= (num*100/num_registrations).to_s %>"></div></div>
+      </li>
+    <% end %>
+  </ul>
+  <!-- /stats progress -->
+  
 <% end %>
 
