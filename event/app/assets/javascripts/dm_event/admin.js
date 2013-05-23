@@ -12,8 +12,7 @@ $(document).ready(function() {
      aaSorting: [[2, 'asc']],
      sDom: '<"datatable-header"fl>t<"datatable-footer"ip>',
      aoColumnDefs: [
-//       { bSortable: false, aTargets: [ 5 ] },
-//       { bSortable: false, aTargets: [ 6 ] }
+      { bSortable: false, aTargets: [ 3 ] }
      ],
      oLanguage: {
        sLengthMenu: "<span>Show entries:</span> _MENU_"
@@ -21,4 +20,8 @@ $(document).ready(function() {
      sAjaxSource: $('#registration_table').data('source')
   });
 
+  $('#registration_table').tooltip( {
+    selector: '.hovertip',
+    delay: {show: 200, hide: 0 }
+  });
 });

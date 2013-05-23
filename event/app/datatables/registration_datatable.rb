@@ -30,6 +30,7 @@ private
         registration_actions(registration),
         h(registration.receipt_code),
         h(registration.user_profile.full_name),
+        workshop_price(registration),
         h(format_date(registration.created_at))
       ]
     end
@@ -55,7 +56,7 @@ private
   def registration_actions(registration)
     actions = ''
     actions += '<div class="btn-group">'
-      actions += "<button class='btn btn-mini dropdown-toggle btn-#{registration.current_state}' data-toggle='dropdown' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'><span class='caret'></span></button>"
+      actions += "<button class='btn btn-mini dropdown-toggle btn-#{registration.current_state} hovertip' data-placement='right' data-toggle='dropdown' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'><span class='caret'></span></button>"
       actions += '<ul class="dropdown-menu">'
         actions += action_list(registration)
       actions += '</ul>'
@@ -82,6 +83,16 @@ private
   end
   
   #------------------------------------------------------------------------------
+  def workshop_price(registration)
+    if registration.workshop_price
+      "<span data-placement='left' class='hovertip' title='#{registration.workshop_price.price_description}'>#{registration.workshop_price.price_formatted}</span>".html_safe
+    else
+      '-'
+    end
+
+  end
+  
+  #------------------------------------------------------------------------------
   def page
     params[:iDisplayStart].to_i/per_page + 1
   end
@@ -93,7 +104,7 @@ private
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = ["aasm_state #{sort_direction}, process_changed_on", 'receipt_code', "LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", 'created_at']
+    columns = ["aasm_state #{sort_direction}, process_changed_on", 'receipt_code', "LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", '', 'created_at']
     columns[params[:iSortCol_0].to_i]
   end
 
