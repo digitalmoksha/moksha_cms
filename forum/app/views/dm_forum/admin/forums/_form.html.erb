@@ -8,7 +8,7 @@
     <%= f.input :is_public, :as => :toggle, :label => 'Make Forum Public?', :hint => 'This will allow anyone to see the forum.  Use option below to restrict to registered users' %>
     <%= f.input :requires_login, :as => :toggle, :label => 'Public Requires Login?', :hint => 'If this is a public forum, user must be logged in to see it.  (All private forums automatically require login)' %>
 
-    <%= submit_or_cancel :cancel_url => admin_forum_category_path(@forum_category) %>
+    <%= submit_or_cancel :cancel_url => @forum.new_record? ? admin_forum_category_path(@forum.forum_category) : admin_forum_path(@forum) %>
 
 	<% end %>
 <% end %>

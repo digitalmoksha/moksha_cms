@@ -14,6 +14,11 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
     end
   end
 
+  #------------------------------------------------------------------------------
+  def show
+    
+  end
+  
   # GET /admin/fms/forums/new
   #------------------------------------------------------------------------------
   def new
@@ -42,7 +47,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
   #------------------------------------------------------------------------------
   def update
     if @forum.update_attributes(params[:forum])
-      redirect_to admin_forum_category_url(@forum.forum_category), notice: 'Forum was successfully updated.'
+      redirect_to admin_forum_url(@forum), notice: 'Forum was successfully updated.'
     else
       render action: :edit
     end
@@ -62,6 +67,27 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
 
     #--- this action will be called via ajax
     render nothing: true
+  end
+  
+  #------------------------------------------------------------------------------
+  def forum_users
+    respond_to do |format|
+      format.json { render json: ForumUserDatatable.new(view_context, @forum) }
+    end
+  end
+  
+  #------------------------------------------------------------------------------
+  def forum_add_member
+    user = User.find(params[:user_id])
+    user.add_role(:member, @forum)
+    redirect_to admin_forum_url(@forum), notice: "Forum access granted for #{user.full_name}"
+  end
+  
+  #------------------------------------------------------------------------------
+  def forum_delete_member
+    user = User.find(params[:user_id])
+    user.remove_role(:member, @forum)
+    redirect_to admin_forum_url(@forum), notice: "Forum access removed for #{user.full_name}"
   end
   
 private

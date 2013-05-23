@@ -4,12 +4,12 @@
     <ul class="link_list">
       <% ForumCategory.ordered.each do |forum_category| %>
         <li>
-          <%= link_to forum_category.name.to_s_default, admin_forum_category_path(forum_category) %>
+          <strong><%= link_to forum_category.name.to_s_default, admin_forum_category_path(forum_category) %></strong>
           <% unless forum_category.forums.empty? %>
             <ul class="arrow-list">
               <% forum_category.forums.each do |forum| %>
                 <li>
-                  <%= link_to forum.name, admin_forum_category_path(forum_category) %>
+                  <%= link_to forum.name, admin_forum_path(forum) %>
                 </li>
               <% end %>
             </ul>

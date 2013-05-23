@@ -99,4 +99,13 @@ class Forum < ActiveRecord::Base
       false
     end
   end
+  
+  #------------------------------------------------------------------------------
+  def member_list
+    users = []
+    roles.each do |role|
+      users += role.users
+    end
+    return users
+  end
 end

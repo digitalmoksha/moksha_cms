@@ -12,8 +12,14 @@ DmForum::Engine.routes.draw do
           resources :forums
         end
         match '/forums/sort',      :controller => 'forums', :action => :sort, :as => :forum_sort
-        resources :forums
-        
+        resources :forums do
+          member do
+            get  'forum_users', :action => :forum_users, :as => :forum_users
+            get  'forum_add_member', :action => :forum_add_member, :as => :forum_add_member
+            get  'forum_delete_member', :action => :forum_delete_member, :as => :forum_delete_member
+          end
+        end
+
         # --- simplifying nested resources, from http://weblog.jamisbuck.org/2007/2/5/nesting-resources
         # match '/courses/sort',      :controller => 'courses', :action => :sort, :as => :course_sort
         # resources :courses do

@@ -1,0 +1,60 @@
+<% content_for :content_title, icon_label('font-comment', @forum.name) %>
+<% content_for :content_title_extra do %>
+  <div class='navbar'><ul class='nav pull-right'>
+    <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @forum], :class => "nav-btn-primary", title: 'Edit') %></li>
+    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @forum], :method => :delete, :class => "nav-btn-danger", :confirm => 'Are you sure you wish to delete this forum?  All comments will also be deleted!') %></li>
+  </ul></div>
+<% end %>
+
+<%= render :partial => 'dm_forum/admin/forum_categories/index_sidebar' %>
+
+<div class="block well body">
+
+    <dl>
+      <dt>Category</dt>
+      <dd><%= link_to @forum.forum_category.name, admin_forum_category_path(@forum.forum_category) %></dd>
+      <dt>Description</dt>
+      <dd><%= @forum.description %></dd>
+    </dl>
+
+</div>
+
+<div class="row-fluid">
+
+  <%= content_frame :title => 'Users with Access', :class => 'span6' do %>
+    <div class="table-overflow">
+      <table class="table table-striped table-bordered table-block">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Country</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @forum.member_list.each do |user| %>
+            <tr>
+              <td><%= link_to(icons("icon-minus"), dm_forum.forum_delete_member_admin_forum_path(@forum, :user_id => user.id), :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+              <td><%= user.country.english_name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <%= content_frame :title => 'Forum Access', :class => 'span6' do %>
+    <div class="table-overflow">
+      <table id="forum_user_table" class="table table-striped table-bordered table-block" data-source="<%= dm_forum.forum_users_admin_forum_url %>">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Country</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+  
+</div>

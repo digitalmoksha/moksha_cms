@@ -1,19 +1,12 @@
+<% content_for :content_title, icon_label('font-comments', @forum_category.name) %>
+<% content_for :content_title_extra do %>
+  <div class='navbar'><ul class='nav pull-right'>
+    <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @forum_category], :class => "nav-btn-primary", title: 'Edit') %></li>
+    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @forum_category], :method => :delete, :class => "nav-btn-danger", :confirm => 'Are you sure you wish to delete this forum?  All comments will also be deleted!') %></li>
+  </ul></div>
+<% end %>
+
 <%= render :partial => 'dm_forum/admin/forum_categories/index_sidebar' %>
-
-<div class="block">
-  <ul class="breadcrumb">
-      <li class="active"><%= @forum_category.name.to_s_default %></li>
-  </ul>
-
-  <% toolbar = render :partial => 'content_toolbar', :locals => { :item => @forum_category } %>
-  <%= content_box :title => "Forum Category", :toolbar => toolbar do %>
-    <dl>
-      <dt>Name</dt>
-      <dd><%= @forum_category.name.to_s_default %></dd>
-    </dl>
-  <% end %>
-
-</div>
 
 <% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), new_admin_forum_category_forum_path(@forum_category), :title => 'New Forum', :class => "nav-btn-primary") ]) %>
 <%= content_frame :title => 'Forums', :toolbar => toolbar do %>
@@ -33,7 +26,7 @@
             <tr class="item" data-item_id="<%= forum.id %>">
               <td class="sort_handle"></td>
               <td>
-                <%= link_to forum.name, [:edit, :admin, forum] %>
+                <%= link_to forum.name, [:admin, forum] %>
                 <div class="description">
                   <%= forum.description %>
                 </div>

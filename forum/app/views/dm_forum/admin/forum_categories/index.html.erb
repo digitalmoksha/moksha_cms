@@ -1,7 +1,9 @@
+<% content_for :content_title, icon_label('font-comments', 'Forum Categories') %>
+
 <%= render :partial => 'dm_forum/admin/forum_categories/index_sidebar' %>
 
 <% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), new_admin_forum_category_path, :title => 'New Category', :class => "nav-btn-primary") ]) %>
-<%= content_frame :title => 'Forum Categories', :toolbar => toolbar do %>
+<%= content_frame :title => '', :toolbar => toolbar do %>
   <div class="table-overflow">
     <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%= dm_forum.admin_forum_category_sort_path %>">
       <thead>
