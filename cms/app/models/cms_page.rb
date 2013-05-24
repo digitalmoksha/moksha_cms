@@ -91,14 +91,23 @@ class CmsPage < ActiveRecord::Base
                             :published => true, :title => 'Front Page')
     end
 
+    unless (standard = CmsPage.find_by_slug('standard_pages'))
+      standard = site.children.create(slug: 'standard_pages', pagetype: 'pagelink',
+                                      published: false, title: 'Standard Pages')
+    end
+    
     unless CmsPage.find_by_slug('missing')
-      site.children.create( :slug => 'missing', :pagetype => 'content', :template => '404',
-                            :published => true, :title => 'Page Missing')
+      standard.children.create( :slug => 'missing', :pagetype => 'content', :template => '404',
+                                :published => true, :title => 'Page Missing')
     end
     
     unless CmsPage.find_by_slug('coming_soon')
-      site.children.create( :slug => 'coming_soon', :pagetype => 'content', :template => 'coming_soon',
-                            :published => true, :title => 'Coming Soon')
+      standard.children.create( :slug => 'coming_soon', :pagetype => 'content', :template => 'coming_soon',
+                                :published => true, :title => 'Coming Soon')
+    end
+    unless CmsPage.find_by_slug('signup_success')
+      standard.children.create( :slug => 'signup_success', :pagetype => 'content',
+                                :published => true, :title => 'Signup Success')
     end
   end
 

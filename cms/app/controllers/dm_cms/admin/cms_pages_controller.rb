@@ -63,7 +63,6 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def ajax_sort
     new_position = params[:item][:position].to_i + 1
-    debugger
     @current_page.update_attributes(:position => new_position, :parent_id => params[:item][:parent_id])
 
     #--- this action will be called via ajax

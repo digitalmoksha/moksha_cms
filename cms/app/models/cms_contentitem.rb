@@ -27,7 +27,7 @@ class CmsContentitem < ActiveRecord::Base
   #validate              :validate_default_content_present
 
   # --- content types supported
-  CONTENT_TYPES = [ 'Textile', 'Markdown', 'HTML' ]
+  CONTENT_TYPES = [ 'Markdown', 'Textile', 'HTML' ]
 
   after_update          :clear_cache
   before_destroy        :clear_cache
