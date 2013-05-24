@@ -47,7 +47,7 @@ private
     registrations = @workshop.registrations.includes(:user_profile => [:country]).order("#{sort_column} #{sort_direction}")
     registrations = registrations.page(page).per_page(per_page)
     if params[:sSearch].present?
-      registrations = registrations.where("user_profiles.first_name like :search OR user_profiles.last_name like :search OR users.email like :search OR receipt_code like :search", search: "%#{params[:sSearch]}%")
+      registrations = registrations.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(user_profiles.email) like :search OR receipt_code like :search", search: "%#{params[:sSearch]}%")
     end
     registrations
   end
