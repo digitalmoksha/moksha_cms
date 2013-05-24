@@ -21,7 +21,8 @@
 
 <div class="row-fluid">
 
-  <%= content_frame :title => 'Users with Access', :class => 'span6' do %>
+  <% toolbar = toolbar_button(@forum.member_list.count, '#', :title => 'Number of users with forum access', :class => 'label label-success pull-right') %>
+  <%= content_frame :title => 'Users with Access', :toolbar => toolbar, :class => 'span6' do %>
     <div class="table-overflow">
       <table class="table table-striped table-bordered table-block">
         <thead>
