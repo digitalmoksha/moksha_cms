@@ -7,7 +7,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def index
     CmsPage.create_default_site if CmsPage.roots.empty?
-    @tree = CmsPage.arrange
+    @tree = CmsPage.arrange(order: :position)
   end
   
   #------------------------------------------------------------------------------
@@ -63,6 +63,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def ajax_sort
     new_position = params[:item][:position].to_i + 1
+    debugger
     @current_page.update_attributes(:position => new_position, :parent_id => params[:item][:parent_id])
 
     #--- this action will be called via ajax
