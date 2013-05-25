@@ -34,6 +34,9 @@ class Workshop < ActiveRecord::Base
   validates_presence_of   :ending_on
   validates_presence_of   :deadline_on
 
+  scope                   :upcoming,  :conditions => ["ending_on > ? AND archived_on IS NULL", (Date.today - 1).to_s], :order => 'starting_on DESC'
+  scope                   :past,      :conditions => ["ending_on <= ? AND archived_on IS NULL", (Date.today - 1).to_s], :order => 'starting_on DESC'
+
   #------------------------------------------------------------------------------
   def title_slug
     send("title_#{Account.current.preferred_default_locale}")

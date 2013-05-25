@@ -17,7 +17,7 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <%= render :partial => 'registration_stats' %>
+  <%= render :partial => 'registration_stats', locals: {workshop: @workshop} %>
 
   <ul class="navigation-light block">
     <li><%= link_to 'Edit Workshop', edit_admin_workshop_url(@workshop) %></li>

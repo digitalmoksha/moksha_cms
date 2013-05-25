@@ -5,7 +5,8 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
   
   #------------------------------------------------------------------------------
   def index
-    @workshops = Workshop.where('archived_on IS NULL').order('starting_on DESC')
+    @workshops      = Workshop.upcoming
+    @workshops_past = Workshop.past
   end
 
   #------------------------------------------------------------------------------
