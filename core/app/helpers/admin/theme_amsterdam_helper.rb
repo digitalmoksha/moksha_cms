@@ -180,6 +180,20 @@ module Admin::ThemeAmsterdamHelper
     out.html_safe
   end
   
+  # output a slim horizontal progress bar, with a label, value text, percentage, 
+  # and color (such as info, success, pending, etc)
+  #------------------------------------------------------------------------------
+  def slim_progress_bar(options = {})
+    #--- if no label specified, value will not get displayed properly
+    options[:label] = '&nbsp;'.html_safe if (options[:label].blank? && options[:value])
+
+    render(:partial => 'dm_core/admin/shared/slim_progress_bar', 
+           :locals => { label: options[:label], 
+                        value: options[:value].to_s,
+                        color: (options[:color] || 'info'), 
+                        percentage: options[:percentage].to_i})
+  end
+  
   # Format flash messages for admin theme
   #------------------------------------------------------------------------------
   def flash_admin
