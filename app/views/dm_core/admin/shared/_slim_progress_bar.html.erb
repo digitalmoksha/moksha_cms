@@ -1,0 +1,7 @@
+<% unless label.blank? %>
+  <strong><%= label %></strong>
+<% end %>
+<% unless value.blank? %>
+  <strong class="pull-right"><%= value %></strong>
+<% end %>
+<div class="progress progress-<%= color %> slim"><div class="bar" data-percentage="<%= percentage %>"></div></div>    
