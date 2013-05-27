@@ -106,8 +106,12 @@ class CmsPage < ActiveRecord::Base
                                 :published => true, :title => 'Coming Soon')
     end
     unless CmsPage.find_by_slug('signup_success')
-      standard.children.create( :slug => 'signup_success', :pagetype => 'content',
-                                :published => true, :title => 'Signup Success')
+      standard.children.create( :slug => 'signup_success', :pagetype => 'pagelink',
+                                :link => 'index', :published => true, :title => 'Signup Success')
+    end
+    unless CmsPage.find_by_slug('confirmation_success')
+      standard.children.create( :slug => 'confirmation_success', :pagetype => 'pagelink',
+                                :link => 'index', :published => true, :title => 'Confirmaton Success')
     end
   end
 
