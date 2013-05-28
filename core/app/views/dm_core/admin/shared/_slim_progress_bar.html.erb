@@ -5,3 +5,6 @@
   <strong class="pull-right"><%= value %></strong>
 <% end %>
 <div class="progress progress-<%= color %> slim"><div class="bar" data-percentage="<%= percentage %>"></div></div>    
+<% unless bottom_label.blank? %>
+  <span class="bottom_label"><%= bottom_label %></span>
+<% end %>
