@@ -30,3 +30,23 @@
     <li><%= slim_progress_bar(label: 'No Show', value: "#{num}", color: 'noshow', percentage: num.percent_of(num_registrations)) %></li>
   <% end %>
 </ul>
+
+<div class="separator"></div>
+
+<% financials = @workshop.financial_details(:summary) %>
+<h5>Price Distribution <small>for attending</small></h5>
+<ul class="text-stats block">
+    <li><%= financials[:summary][:total_possible].format(:no_cents_if_whole => true) %><span>best</span></li>
+    <li><%= financials[:summary][:total_possible_worst].format(:no_cents_if_whole => true) %><span>worst (80%)</span></li>
+    <li style="color:green">n/a<span>paid</span></li>
+</ul>
+
+<ul class="block progress-statistics">
+  <% num_attending = workshop.registrations.number_of(:attending) %>
+  <% workshop.registrations.number_of(:for_all_prices).each do |price_id, registration_count| %>
+    <% price = WorkshopPrice.find_by_id(price_id ) %>
+    <li><%= slim_progress_bar(label: price.price_formatted, value: registration_count, color: 'success', 
+            percentage: registration_count.percent_of(num_attending), bottom_label: price.price_description) %></li>
+  <% end %>
+</ul>
+

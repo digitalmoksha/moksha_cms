@@ -19,6 +19,8 @@
 <% content_for :sidebar do %>
   <%= render :partial => 'registration_stats', locals: {workshop: @workshop} %>
 
+  <div class="separator"></div>
+
   <ul class="navigation-light block">
     <li><%= link_to 'Edit Workshop', edit_admin_workshop_url(@workshop) %></li>
     <li><%= link_to 'New Registration', register_new_url(@workshop), :targe => '_blank' %></li>

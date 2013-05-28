@@ -8,6 +8,13 @@
   <div class="row-fluid">
     <% for workshop in workshop_row  %>
       <%= content_box title: link_to(workshop.title, [:admin, workshop]), toolbar: "<span class='label label-info pull-right'>#{present(workshop).start_end_date}</span>", class: 'span6' do %>
+        <% financials = workshop.financial_details(:summary) %>
+        <ul class="text-stats-content">
+            <li><%= financials[:summary][:total_possible].format(:no_cents_if_whole => true) %><span>best</span></li>
+            <li><%= financials[:summary][:total_possible_worst].format(:no_cents_if_whole => true) %><span>worst (80%)</span></li>
+            <li style="color:green">n/a<span>paid</span></li>
+        </ul>
+        <div class="separator-reflected" style="margin: 10px 0px;"></div>
         <% num_registrations = workshop.registrations.count %>
         <ul class="block progress-statistics">
           <% num = workshop.registrations.number_of(:attending) %>
@@ -43,6 +50,7 @@
             </div>
           </div>
         </div>
+        
       <% end %>
     <% end %>
   </div>

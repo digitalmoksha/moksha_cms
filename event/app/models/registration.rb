@@ -19,10 +19,12 @@ class Registration < ActiveRecord::Base
   accepts_nested_attributes_for :user_profile
   
   default_scope           { where(account_id: Account.current.id) }
+  scope                   :attending, where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL")
 
   after_create            :set_receipt_code
   
   validates_presence_of   :workshop_price_id, :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
+  
   
   # Receipt code: (workshop.id)-(registration.id).  eg.  003-101
   #------------------------------------------------------------------------------
@@ -59,7 +61,7 @@ class Registration < ActiveRecord::Base
     include_confirmed = (options[:only_confirmed] ? 'AND confirmed_on IS NOT NULL' : '')
     case state
     when :attending
-      number_of(:paid) + number_of(:accepted)
+      attending.count
     when :unpaid
       #--- the number of unpaid is the same as the number of accepted
       number_of(:accepted)
@@ -70,9 +72,12 @@ class Registration < ActiveRecord::Base
     when :registrations
       #--- don't count any canceled
       where("aasm_state <> 'canceled' AND aasm_state <> 'refunded' AND archived_on IS NULL #{include_confirmed}").count
-    when :registrations_by_paymenttype
-      #--- number of registrations paid with a particular payment type
+    when :at_price
+      #--- number of registrations for a particular price
       where("(aasm_state = 'paid' OR aasm_state = 'accepted') AND workshop_price_id = #{options[:price_id]} AND archived_on IS NULL #{include_confirmed}").count
+    when :for_all_prices
+      #--- array of counts per price
+      where("(aasm_state = 'paid' OR aasm_state = 'accepted') AND archived_on IS NULL #{include_confirmed}").count(:group => :workshop_price_id)
     when :user_updated
       #--- how many users updated their record
       where("user_updated_at IS NOT NULL AND (aasm_state = 'paid' OR aasm_state = 'accepted') AND archived_on IS NULL #{include_confirmed}").count
@@ -84,6 +89,31 @@ class Registration < ActiveRecord::Base
       where("archived_on IS NULL #{include_confirmed}").count_in_state(state)
     end
   end
+  
+  # #------------------------------------------------------------------------------
+  # def total_amount
+  #   purchased_amount - discount
+  # end
+  # 
+  # #------------------------------------------------------------------------------
+  # def purchased_amount_cents
+  #   (event_payment.nil? || event_payment.amount.nil?) ? 0 : (event_payment.amount * 100)
+  # end
+  # 
+  # #------------------------------------------------------------------------------
+  # def discount_cents
+  #   if discount_value.blank?
+  #     0
+  #   else
+  #     if discount_use_percent
+  #       purchased_amount_cents * discount_value / 100
+  #     else
+  #       (discount_value * 100)
+  #     end
+  #   end
+  # end
+  
+  
 
 =begin
   acts_as_reportable
@@ -218,30 +248,6 @@ class Registration < ActiveRecord::Base
   def balance_owed(formatted = false)
     balance = total_amount_cents - amount
     return (formatted && !event_payment.nil?) ? ut_currency_cents(balance, event_payment.country) : balance
-  end
-  
-  #------------------------------------------------------------------------------
-  def purchased_amount_cents
-    (event_payment.nil? || event_payment.amount.nil?) ? 0 : (event_payment.amount * 100)
-  end
-  
-  #------------------------------------------------------------------------------
-  def total_amount_cents(formatted = false)
-    total = purchased_amount_cents - discount_cents
-    return (formatted && !event_payment.nil?) ? ut_currency_cents(total, event_payment.country) : total
-  end
-  
-  #------------------------------------------------------------------------------
-  def discount_cents
-    if discount_value.blank?
-      0
-    else
-      if discount_use_percent
-        purchased_amount_cents * discount_value / 100
-      else
-        (discount_value * 100)
-      end
-    end
   end
   
   #------------------------------------------------------------------------------
