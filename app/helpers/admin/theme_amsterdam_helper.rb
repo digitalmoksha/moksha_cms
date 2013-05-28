@@ -191,7 +191,8 @@ module Admin::ThemeAmsterdamHelper
            :locals => { label: options[:label], 
                         value: options[:value].to_s,
                         color: (options[:color] || 'info'), 
-                        percentage: options[:percentage].to_i})
+                        percentage: options[:percentage].to_i,
+                        bottom_label: options[:bottom_label]})
   end
   
   # Format flash messages for admin theme
