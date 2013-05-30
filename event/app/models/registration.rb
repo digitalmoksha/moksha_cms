@@ -25,6 +25,7 @@ class Registration < ActiveRecord::Base
   
   validates_presence_of   :workshop_price_id, :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
   
+  delegate :first_name, :last_name, :email, :address, :address2, :city, :state, :country, :zipcode, :phone, :to => :user_profile
   
   # Receipt code: (workshop.id)-(registration.id).  eg.  003-101
   #------------------------------------------------------------------------------
@@ -88,6 +89,84 @@ class Registration < ActiveRecord::Base
       #--- must be wanting to count the process states
       where("archived_on IS NULL #{include_confirmed}").count_in_state(state)
     end
+  end
+
+  # Setup the columns for exporting data as csv.
+  #------------------------------------------------------------------------------
+  def self.csv_columns
+    column_definitions = []
+    column_definitions <<     ["receipt_code",      "item.receipt_code", 75]
+    column_definitions <<     ['process_state',     'item.aasm_state', 100]
+    column_definitions <<     ["full_name",         "item.full_name", 100]
+    column_definitions <<     ["last_name",         "item.last_name.capitalize", 100]
+    column_definitions <<     ["first_name",        "item.first_name.capitalize", 100]
+    column_definitions <<     ["email",             "item.email.downcase", 150]
+    column_definitions <<     ["address",           "item.address", 150]
+    column_definitions <<     ["address2",          "item.address2"]
+    column_definitions <<     ["city",              "item.city.capitalize", 100]
+    column_definitions <<     ["state",             "item.state.capitalize"]
+    column_definitions <<     ["zipcode",           "item.zipcode"]
+    column_definitions <<     ["country",           "item.country.code"]
+
+    column_definitions <<     ['registered_on',     'item.created_at.to_date', 75, {:type => 'DateTime', :numberformat => 'd mmm, yyyy'}]
+
+    column_definitions <<     ["price",             "item.workshop_price.price", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+    column_definitions <<     ["paydesc",           "item.workshop_price.payment_desc"]
+
+    # column_definitions <<     ['groups',            'item.student.nil? ? "" :  ((item.student.studentgroup.collect {|x| x.name }).join(", "))'] if sys_admin?
+    # column_definitions <<     ['tags',              '(item.privatetag_list + item.publictag_list).join(" ")']
+    # 
+    # #--- add the list of groups
+    # groups = Studentgroup.find(:all, :order => :name)
+    # groups.each do |group|
+    #   add = ["g_#{group.name}", "item.student.nil? ? '' :  ((item.student.studentgroup.detect {|x| x.name == '#{group.name}'}) ? 'x' : '')"]
+    #   column_definitions << add
+    # end
+    # 
+    # #--- add the list of tags
+    # workshop.find_registration_tags(:privatetags).each do |tag|
+    #   add = ["tag_#{tag.name}", "item.privatetags.empty? ? '' :  ((item.privatetags.detect {|x| x.name == '#{tag.name}'}) ? 'x' : '')"]
+    #   column_definitions << add
+    # end
+    # workshop.find_registration_tags(:publictags).each do |tag|
+    #   add = ["tag_#{tag.name}", "item.publictags.empty? ? '' :  ((item.publictags.detect {|x| x.name == '#{tag.name}'}) ? 'x' : '')"]
+    #   column_definitions << add
+    # end
+    # 
+    # # ---- add the extra fields defined in the workshop record
+    # workshop.custom_field_defs.each_with_index do | x, index |
+    #   column_definitions << [ "#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.data : ''"]
+    # end
+
+    # query = EventRegistration.where(:event_workshop_id => params[:id]).order("lastname ASC")
+    # 
+    # if !params[:state].blank?
+    #   case params[:state]
+    #   when 'attending'
+    #     query = query.where("(process_state = 'paid' OR process_state = 'accepted') AND archived_on IS NULL")
+    #     filename += "_attending"
+    #   when 'confirmed'
+    #     query = query.where("confirmed_on IS NOT NULL AND (process_state = 'paid' OR process_state = 'accepted') AND archived_on IS NULL")
+    #     filename += "_confirmed"
+    #   when 'unconfirmed'
+    #     query = query.where("confirmed_on IS NULL AND (process_state = 'paid' OR process_state = 'accepted') AND archived_on IS NULL")
+    #     filename += "_unconfirmed"
+    #   else
+    #     #--- must be wanting to export the process states
+    #     query = query.where("process_state = ? AND archived_on IS NULL", params[:state].to_s)
+    #     filename += "_#{params[:state].to_s}"
+    #   end
+    #   event_registrations = query
+    # elsif !params[:privatetags].blank?
+    #   event_registrations = query.tagged_with(params[:privatetags], :on => :privatetags)
+    # elsif !params[:publictags].blank?
+    #   event_registrations = query.tagged_with(params[:publictags], :on => :publictags)
+    # else
+    #   event_registrations = query.where("archived_on IS NULL")
+    # end
+    # 
+
+    return column_definitions
   end
   
   # #------------------------------------------------------------------------------

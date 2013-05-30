@@ -1,5 +1,6 @@
 class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationController
-
+  include CsvExporter
+  
   before_filter   :workshop_lookup, :except => [:index, :new, :create]
   before_filter   :set_title
   
@@ -45,8 +46,8 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: RegistrationDatatable.new(view_context) }
-    end
-    
+      format.csv { data_export(Registration.csv_columns, @registrations, :filename => @workshop.slug, :expressions => true, :format => 'csv') }
+    end    
   end
   
   # Edit/create of the registration state emails.  :email_type is passed in
