@@ -6,23 +6,21 @@ class DmCms::BlogsController < DmCms::ApplicationController
   helper DmCms::PagesHelper
   include DmCore::RenderHelper
 
-  before_filter   :blog_lookup, :except =>  [:list, :categories]
+  before_filter   :blog_lookup, :except =>  [:index]
 
-  layout    'cms_templates/blog', :only => [:list, :show, :categories]
+  layout    'cms_templates/blog', :only => [:index, :show]
   
   #------------------------------------------------------------------------------
-  def categories
-    @forum_categories = ForumCategory.ordered
-  end
-  
-  #------------------------------------------------------------------------------
-  def list
+  def index
     @blogs = CmsBlog.available_to_user(current_user)
+    @posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).published.order('published_on DESC').paginate :page => page_number
+    render action: :show
   end
 
   #------------------------------------------------------------------------------
   def show
-    @posts = @blog.posts
+    @blogs = CmsBlog.available_to_user(current_user)
+    @posts = @blog.posts.paginate :page => page_number
   end
 
 protected

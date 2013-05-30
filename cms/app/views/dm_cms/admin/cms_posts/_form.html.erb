@@ -12,6 +12,8 @@
             <li class="sep">-</li>
             <li><input name="cms_post[published_on_time]" type="text" class="time_select" value="<%= @post.published_on.strftime("%I:%M%p") unless @post.published_on.nil? %>" placeholder="Select time..." /></li>
         </ul>
+        <div class="clearfix"></div>
+        <p class="help-block">Leave blank to publish immediately</p>
       </div>
       <div class="clearfix"></div>
     </div>

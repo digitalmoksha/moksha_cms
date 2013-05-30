@@ -1,15 +1,18 @@
-<div class="block">
-  <ul class="breadcrumb">
-      <li class="active"><%= @blog.title %></li>
-  </ul>
+<% content_for :content_title, icon_label('font-bullhorn', @blog.title) %>
+<% content_for :content_title_extra do %>
+  <div class='navbar'><ul class='nav pull-right'>
+    <li><%= present(@blog).label_published %></li>
+    <li><%= link_to(icon_label('icon-search', 'View'), blog_show_url(@blog), :class => "nav-btn-primary", title: 'View', :target => '_blank') %></li>
+    <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @blog], :class => "nav-btn-primary", title: 'Edit') %></li>
+    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @blog], :method => :delete, :class => "nav-btn-danger", :confirm => 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!') %></li>
+  </ul></div>
+<% end %>
 
-  <% toolbar = render :partial => 'content_toolbar', :locals => { :item => @blog } %>
-  <%= content_box :title => "Blog", :toolbar => toolbar do %>
+<div class="block well body">
   <dl>
     <dt>Slug</dt>
     <dd><%= @blog.slug %></dd>
   </dl>
-  <% end %>
 
 </div>
 

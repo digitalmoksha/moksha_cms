@@ -1,6 +1,11 @@
+<% content_for :content_title, icon_label('font-bullhorn', 'Blogs') %>
+<% content_for :content_title_extra do %>
+  <div class='navbar'><ul class='nav pull-right'>
+    <li><%= link_to(icon_label('icon-plus', 'New'), new_admin_cms_blog_path, :title => 'New Blog', :class => "nav-btn-primary") %></li>
+  </ul></div>
+<% end %>
 
-<% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), new_admin_cms_blog_path, :title => 'New Blog', :class => "nav-btn-primary") ]) %>
-<%= content_frame :title => 'Blogs', :toolbar => toolbar do %>
+<%= content_frame  do %>
   <div class="table-overflow">
     <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%= dm_cms.admin_cms_blog_sort_path %>">
       <thead>

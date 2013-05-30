@@ -34,4 +34,10 @@ class CmsBlog < ActiveRecord::Base
     send("title_#{Account.current.preferred_default_locale}")
   end
 
+  # Are any of the blogs readable by this user? One positive is all need...
+  #------------------------------------------------------------------------------
+  def any_readable_blogs?(user)
+    CmsBlog.all.any? { |b| b.can_be_read_by?(user) }
+  end
+
 end

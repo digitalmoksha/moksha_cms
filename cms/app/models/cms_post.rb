@@ -14,6 +14,8 @@ class CmsPost < ActiveRecord::Base
   default_scope           { where(account_id: Account.current.id) }
   scope                   :published, lambda { where("published_on <= ?", Time.now ) }
   
+  self.per_page = 10
+
   # --- validations
   # validates_length_of     :slug, :maximum => 50
   # validates_presence_of   :slug

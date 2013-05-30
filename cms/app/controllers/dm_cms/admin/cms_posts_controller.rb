@@ -65,7 +65,9 @@ private
 
   #------------------------------------------------------------------------------
   def prepare_date_time_attribute
-    params[:cms_post][:published_on] = DateTime.parse(params[:cms_post].delete(:published_on_date) + " " + params[:cms_post].delete(:published_on_time))
+    date = params[:cms_post].delete(:published_on_date)
+    time = params[:cms_post].delete(:published_on_time)
+    params[:cms_post][:published_on] = (date.blank? ? Time.now : DateTime.parse(date + " " + time))
   end
   
   # Set some values for the template based on the controller
