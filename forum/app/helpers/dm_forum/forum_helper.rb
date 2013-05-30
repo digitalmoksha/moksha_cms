@@ -112,15 +112,6 @@ module DmForum
       end
     end
 
-    #------------------------------------------------------------------------------
-    def pagination(collection)
-      if collection.total_entries > 1
-        "<div class='pagination'>".html_safe  + 
-        will_paginate(collection, :inner_window => 8, :next_label => I18n.t('fms.next_page').html_safe, :previous_label => I18n.t('fms.prev_page').html_safe) +
-        "</div>".html_safe
-      end
-    end
-    
 =begin
     def flash_messages
       flash.map do |name, message|

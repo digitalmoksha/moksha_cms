@@ -36,8 +36,6 @@ de:
     user_is_administrator: Administrator
     user_is_moderator: Moderator
     suspended_user_comment: Dieser Kommentar wurde entfernt
-    next_page: Weiter
-    prev_page: "Früher"
     post_edited: 'edited %{when} ago'
     forums: Forums
     page_nr: 'page %{nr}'
@@ -46,7 +44,6 @@ de:
       no_recent_activity: No recent activity
       comma_locked_topic: "This topic is locked."
       unmoderated_html: 'This forum is currently unmoderated.<br />Please always be courteous.'
-    next_page: next page
     recent_posts: Recent Posts
     searching_for: Searching for
     by_user: 'by %{user}'
