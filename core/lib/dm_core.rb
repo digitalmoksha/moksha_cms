@@ -2,6 +2,7 @@ require "dm_core/engine"
 require "dm_core/nls"
 require "dm_core/state_select"
 require 'dm_core/liquid_extensions'
+require 'dm_core/csv_exporter'
 
 include Nls
 
