@@ -19,7 +19,7 @@ class DmForum::ForumsController < DmForum::ApplicationController
   # GET /forum
   #------------------------------------------------------------------------------
   def list
-    @forums = Forum.available_forums(current_user)
+    @forums = Forum.available_to_user(current_user)
   end
 
   # GET /forum/:slug
