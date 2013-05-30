@@ -60,5 +60,15 @@ module DmCore
         end
       end
     end
+    
+    #------------------------------------------------------------------------------
+    def pagination(collection)
+      if collection.total_entries > 1
+        "<div class='pagination'>".html_safe  + 
+        will_paginate(collection, :inner_window => 8, :next_label => I18n.t('core.next_page').html_safe, :previous_label => I18n.t('core.prev_page').html_safe) +
+        "</div>".html_safe
+      end
+    end
+    
   end
 end

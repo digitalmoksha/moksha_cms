@@ -43,6 +43,15 @@ module DmCore
           user.has_role? :member, self
         end
         
+        #------------------------------------------------------------------------------
+        def member_list
+          users = []
+          roles.each do |role|
+            users += role.users
+          end
+          return users
+        end
+
         # Can this forum be read by a user
         #------------------------------------------------------------------------------
         def can_be_read_by?(attempting_user)

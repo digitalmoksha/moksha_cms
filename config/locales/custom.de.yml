@@ -16,3 +16,8 @@ de:
       wwmmdd: "%A, %d. %b"
       wwmmddyy: "%A, %d. %b, %Y"
       hhmmpp: "%H:%M"
+
+  core:
+    next_page: "Weiter <i class='icon-angle-right'></i>"
+    prev_page: "<i class='icon-angle-left'></i> Früher"
+    
