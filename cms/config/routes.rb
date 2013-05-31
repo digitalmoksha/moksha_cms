@@ -23,6 +23,12 @@ DmCms::Engine.routes.draw do
         end
       end
       resources :cms_blogs do
+        member do
+          get     'blog_users',          :action => :blog_users, :as => :blog_users
+          get     'blog_add_member',     :action => :blog_add_member, :as => :blog_add_member
+          post    'blog_add_member',     :action => :blog_add_member, :as => :blog_add_member
+          delete  'blog_delete_member',  :action => :blog_delete_member, :as => :blog_delete_member
+        end
         resources :cms_posts
       end
       resources :cms_posts
