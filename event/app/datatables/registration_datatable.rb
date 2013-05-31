@@ -104,7 +104,7 @@ private
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = ["aasm_state #{sort_direction}, process_changed_on", 'receipt_code', "LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", '', 'created_at']
+    columns = ["aasm_state #{sort_direction}, process_changed_on", 'receipt_code', "LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", '', 'ems_registrations.created_at']
     columns[params[:iSortCol_0].to_i]
   end
 
