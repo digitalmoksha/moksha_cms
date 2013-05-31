@@ -11,10 +11,6 @@ $(document).ready(function() {
      bStateSave: false,
      aaSorting: [[0, 'asc']],
      sDom: '<"datatable-header"f>t<"datatable-footer">',
-     aoColumnDefs: [
-//       { bSortable: false, aTargets: [ 5 ] },
-//       { bSortable: false, aTargets: [ 6 ] }
-     ],
      oLanguage: {
        sLengthMenu: "<span>Show entries:</span> _MENU_"
      },
