@@ -21,6 +21,32 @@
 
 <div class="row-fluid">
 
+  <%= content_box :title => 'Grant Forum Access', :class => 'span6' do %>
+    <h5>Add Workshop Attendees</h5>
+    <p>Add all attendees of a workshop to this forum. Duplicates will be ignored. Only those marked "Accepted" or "Paid" will be added</p>
+    <p><em>Note: Only users with an account will be added.</em></p>
+    <%= simple_form_for :workshop_forum, :url => dm_forum.forum_add_member_admin_forum_path(@forum), :html => { :class => 'form-horizontal' } do |f| %>
+      <%= select_tag :workshop_id, options_from_collection_for_select(Workshop.upcoming, :id, :title), :include_blank => true, class: "style" %>
+      <%= submit_tag 'Add', :class => "btn btn-primary" %>
+    <% end %>
+
+    <div class="separator"></div>
+    
+    <h5>Add Individual Users</h5>
+    <div class="table-overflow">
+      <table id="forum_user_table" class="table table-striped table-bordered" data-source="<%= dm_forum.forum_users_admin_forum_url %>">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Country</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+  
   <% toolbar = toolbar_button(@forum.member_list.count, '#', :title => 'Number of users with forum access', :class => 'label label-success pull-right') %>
   <%= content_frame :title => 'Users with Access', :toolbar => toolbar, :class => 'span6' do %>
     <div class="table-overflow">
@@ -34,7 +60,7 @@
         <tbody>
           <% @forum.member_list.each do |user| %>
             <tr>
-              <td><%= link_to(icons("icon-minus"), dm_forum.forum_delete_member_admin_forum_path(@forum, :user_id => user.id), :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+              <td><%= link_to(icons("icon-minus"), dm_forum.forum_delete_member_admin_forum_path(@forum, :user_id => user.id), :method => :delete, :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
               <td><%= user.country.english_name %></td>
             </tr>
           <% end %>
@@ -43,19 +69,4 @@
     </div>
   <% end %>
 
-  <%= content_frame :title => 'Forum Access', :class => 'span6' do %>
-    <div class="table-overflow">
-      <table id="forum_user_table" class="table table-striped table-bordered table-block" data-source="<%= dm_forum.forum_users_admin_forum_url %>">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Country</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-  <% end %>
-  
 </div>

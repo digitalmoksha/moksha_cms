@@ -14,9 +14,10 @@ DmForum::Engine.routes.draw do
         match '/forums/sort',      :controller => 'forums', :action => :sort, :as => :forum_sort
         resources :forums do
           member do
-            get  'forum_users', :action => :forum_users, :as => :forum_users
-            get  'forum_add_member', :action => :forum_add_member, :as => :forum_add_member
-            get  'forum_delete_member', :action => :forum_delete_member, :as => :forum_delete_member
+            get     'forum_users',          :action => :forum_users, :as => :forum_users
+            get     'forum_add_member',     :action => :forum_add_member, :as => :forum_add_member
+            post    'forum_add_member',     :action => :forum_add_member, :as => :forum_add_member
+            delete  'forum_delete_member',  :action => :forum_delete_member, :as => :forum_delete_member
           end
         end
 

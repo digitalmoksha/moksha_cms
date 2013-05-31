@@ -1,97 +1,97 @@
 cs:
   fms:
     count_forums:
-      zero: "no forum"
-      one: "1 forum"
-      other: "%{num} forums"
+      zero: "žádná fóra"
+      one: "1 fórum"
+      other: "%{num} fór"
     count_users:
-      zero: "no users"
-      one: "1 user"
-      other: "%{num} users"
+      zero: "žádní uživatelé"
+      one: "1 uživatel"
+      other: "%{num} uživatelů"
     count_users_active:
-      zero: "no active users"
-      one: "1 active user"
-      other: "%{num} active users"
+      zero: "žádní aktivní uživatelé"
+      one: "1 aktivní uživatel"
+      other: "%{num} aktivních uživatelů"
     count_users_lurking:
-      zero: "no lurking users"
-      one: "1 lurking user"
-      other: "%{num} lurking users"
+      zero: "žádní skrytí uživatelé"
+      one: "1 skrytý uživatel"
+      other: "%{num} skrytých uživatelů"
     count_voices:
-      zero: "no voices"
-      one: "1 voice"
-      other: "%{num} voices"
+      zero: "žádný hlas"
+      one: "1 hlas"
+      other: "%{num} hlasů"
     count_topics:
-      zero: "no topics"
-      one: "1 topic"
-      other: "%{num} topics"
+      zero: "žádné téma"
+      one: "1 téma"
+      other: "%{num} témat"
     count_comments:
-      zero: "no comments"
-      one: "1 comment"
-      other: "%{num} comments"
+      zero: "žádný komentář"
+      one: "1 komentář"
+      other: "%{num} komentářů"
     count_comments_found:
-      zero: "no comments found"
-      one: "1 comment found"
-      other: "%{count} comments found"
-    comment_age: "commented %{when} ago"
-    user_is_administrator: Administrator
-    user_is_moderator: Moderator
-    suspended_user_comment: This comment has been removed
-    post_edited: 'edited %{when} ago'
-    forums: Forums
-    page_nr: 'page %{nr}'
+      zero: "žádný komentář nenalezen"
+      one: "nalezen 1 komentář"
+      other: "%{count} komentářů nalezeno"
+    comment_age: "komentováno před %{when}"
+    user_is_administrator: Administrátor
+    user_is_moderator: Moderátor
+    suspended_user_comment: Tento komentář byl odstraněn
+    post_edited: 'upraveno před %{when}'
+    forums: Fóra
+    page_nr: 'strana %{nr}'
     views_forums:
-      recent_activity: Recent activity
-      no_recent_activity: No recent activity
-      comma_locked_topic: "This topic is locked."
-      unmoderated_html: 'This forum is currently unmoderated.<br />Please always be courteous.'
-    recent_posts: Recent Posts
-    searching_for: Searching for
-    by_user: 'by %{user}'
-    in_forum: 'in %{forum}'
+      recent_activity: Nedávná aktivita
+      no_recent_activity: Žádná nedávná aktivita
+      comma_locked_topic: "Toto téma je uzamčeno."
+      unmoderated_html: 'Toto fórum momentálně není moderováno.<br />Prosím, buďte vždy zdvořilí.'
+    recent_posts: Nedávné příspěvky
+    searching_for: Hledat
+    by_user: 'od %{user}'
+    in_forum: 've %{forum}'
     views_posts:
-      formatting_help: Formatting Help
-      formatting_desc: is used for formatting text.
+      formatting_help: Pomoc s formátováním
+      formatting_desc: užívá se pro formátování textu.
       formatting_bold: '**bold**'
       formatting_italics: '*italics*, _italics_'
       formatting_blockquote: '&gt; <span>(quotes)</span>'
       formatting_icode: '`code`'
       formatting_horizontal_rule: '*** <span>(horizontal rule)</span>'
       formatting_list: '* <span>or</span> 1. <span>(lists)</span>'
-      save: 'Save post'
-    topic: Topic
-    locked: Locked
-    or: or
-    cancel: cancel
-    reply: Reply
+      save: 'Uložit příspěvek'
+    topic: Téma
+    locked: Uzamčeno
+    or: nebo
+    cancel: Zrušit
+    reply: Odpovědět
     admin:
-      edit_post: Edit post
-    suspended_user_post: This post has been removed
-    reply_to_topic: Reply to topic
+      edit_post: Upravit příspěvek
+    suspended_user_post: Tento příspěvek byl odstraněn
+    reply_to_topic: Odpovědet na téma
     views_topics:
-      topic: Name
-      body: Body
-      delete_sure: 'Delete this topic forever?'
-      locked_topic: 'This topic is locked.'
-      save_reply: Save reply
-      cancel: Cancel
-      lock_topic: Locked
-    sticky: Sticky
-    edit_topic: Edit topic
-    post_topic: Post topic
-    new_topic: New topic
-    voices: Voices
-    edit: edit
-    delete: delete
-    all: all topics
-    monitored: only watched topics
-    started: Started by
-    comment_age: "%{when} ago"
-    by_user_html: "by %{user}"
-    moderator: Moderator
-    replies: replies
-    views: views
-    last_post_on: "Last post by %{user} :: %{date}"
-    comments_header: Comments
-    no_topics: Be the first to create a topic
-    no_monitored_topics: There are currently no topics being monitored
-    no_forums: The Forum section will be available soon
+      topic: Název
+      body: Text příspěvku
+      delete_sure: 'Navždy odstranit toto téma?'
+      locked_topic: 'Toto téma je uzamčeno.'
+      save_reply: Uložit odpověď
+      cancel: Zrušit
+      lock_topic: Uzamčeno
+    sticky: Permanentní
+    edit_topic: Upravit téma
+    post_topic: Zveřejnit téma
+    new_topic: Nové téma
+    voices: Hlasy
+    edit: upravit
+    delete: smazat
+    all: všechna témata
+    monitored: jen sledovaná témata
+    started: Započato
+    comment_age: "před %{when}"
+    by_user_html: "od %{user}"
+    moderator: Moderátor
+    replies: odpovědi
+    views: zobrazení
+    last_post_on: "Poslední příspěvek od %{user} :: %{date}"
+    comments_header: Komentáře
+    no_topics: 'Buďte první, kdo vytvoří téma'
+    no_monitored_topics: V dané chvíli nejsou monitorována žádná témata
+    no_forums: Sekce Fóra bude brzy k dispozici

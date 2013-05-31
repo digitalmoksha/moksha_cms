@@ -76,11 +76,28 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
     end
   end
   
+  # Add user(s) to forum.
+  # => user_id: add a single user
+  # => workshop_id: add all attending users, ignore duplicates
   #------------------------------------------------------------------------------
   def forum_add_member
-    user = User.find(params[:user_id])
-    user.add_role(:member, @forum)
-    redirect_to admin_forum_url(@forum), notice: "Forum access granted for #{user.full_name}"
+    if !params[:user_id].blank?
+      user = User.find(params[:user_id])
+      user.add_role(:member, @forum)
+      redirect_to admin_forum_url(@forum), notice: "Forum access granted for #{user.full_name}"
+    elsif !params[:workshop_id].blank?
+      workshop  = Workshop.find(params[:workshop_id])
+      added     = 0
+      workshop.registrations.attending.each do |r|
+        if r.user_profile.user && !r.user_profile.user.has_role?(:member, @forum)
+          r.user_profile.user.add_role(:member, @forum)
+          added += 1
+        end
+      end
+      redirect_to admin_forum_url(@forum), notice: "Forum access granted for #{added} user(s)"
+    else
+      redirect_to admin_forum_url(@forum), alert: "Incorrect parameters supplied"
+    end
   end
   
   #------------------------------------------------------------------------------
