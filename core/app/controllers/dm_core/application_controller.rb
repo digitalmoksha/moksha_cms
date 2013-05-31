@@ -11,6 +11,7 @@ module DmCore
     before_filter   :theme_resolver
     before_filter   :site_enabled?, :unless => :devise_controller?
     before_filter   :ssl_redirect
+    after_filter    :store_location
     
     include DmCore::AccountHelper
 
@@ -21,6 +22,18 @@ module DmCore
 
   protected
 
+    # store last url as long as it isn't a /users path
+    #------------------------------------------------------------------------------
+    def store_location
+      session[:previous_url] = request.fullpath unless request.fullpath =~ /\/users/
+    end
+
+    # override Devise method, on login go to previous url if possible
+    #------------------------------------------------------------------------------
+    def after_sign_in_path_for(resource)
+      session[:previous_url] || root_path
+    end
+  
     # if site is not enabled, only allow a logged in Admin user to access pages
     # otherwise, redirect to the 'coming_soon' page
     #------------------------------------------------------------------------------

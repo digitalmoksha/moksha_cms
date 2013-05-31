@@ -49,7 +49,7 @@ module DmCore
           roles.each do |role|
             users += role.users
           end
-          return users
+          return users.sort_by {|u| u.full_name.downcase}
         end
 
         # Can this forum be read by a user
