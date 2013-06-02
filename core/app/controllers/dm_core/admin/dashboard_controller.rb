@@ -12,7 +12,7 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
     @results = "Updating 'site_assets'...\r\n"
     @results += `svn up #{path}`
     if File.exists?("#{Account.current.theme_path}/protected_assets")
-      path = File.readlink("#{Account.current.theme_path}/protected_assets")
+      path = File.join(File.readlink("#{Account.current.theme_path}"), "protected_assets")
       @results += "\nUpdating 'protected_assets'...\r\n"
       @results += `svn up #{path}`
     end
