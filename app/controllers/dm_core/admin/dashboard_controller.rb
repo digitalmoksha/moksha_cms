@@ -11,9 +11,10 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
     path = File.readlink("#{Rails.root}/public/#{account_site_assets(false)}")
     @results = "Updating 'site_assets'...\r\n"
     @results += `svn up #{path}`
-    if File.exists?("#{Rails.root}/protected_assets")
+    if File.exists?("#{Account.current.theme_path}/protected_assets")
+      path = File.readlink("#{Account.current.theme_path}/protected_assets")
       @results += "\nUpdating 'protected_assets'...\r\n"
-      @results += `svn up #{Rails.root}/protected_assets`
+      @results += `svn up #{path}`
     end
   end
   

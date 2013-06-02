@@ -128,6 +128,12 @@ class Account < ActiveRecord::Base
     Account.theme_data(account_prefix)
   end
   
+  # get the account's theme path
+  #------------------------------------------------------------------------------
+  def theme_path
+    Rails.root.join('themes', account_prefix)
+  end
+  
   # Read the _theme.yml file located in the /site_assets/_account_prefix_/theme folder
   # Returns just the theme data - not the top level account_prefix
   # {todo} make the location a config variable
