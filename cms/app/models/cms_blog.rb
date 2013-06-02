@@ -18,6 +18,7 @@ class CmsBlog < ActiveRecord::Base
   scope :published,         where(:published => true)
   
   has_many                  :posts, :class_name => 'CmsPost', :order => "published_on DESC", :dependent => :destroy
+  belongs_to                :account
 
   # --- validations
   # validates_length_of     :slug, :maximum => 50

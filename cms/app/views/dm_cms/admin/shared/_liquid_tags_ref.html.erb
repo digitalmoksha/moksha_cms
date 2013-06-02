@@ -1,5 +1,5 @@
 <% content_for :sidebar do %>
-  <div class="tagsinput">
+  <div class="tagsinput block">
     <p>List of available tags<br><small><em>click for details</em></small></p>
     <% Liquid::Template.tags.sort.each do |tag, tag_class| %>
       <% unless tag_class.details[:summary].blank? %>

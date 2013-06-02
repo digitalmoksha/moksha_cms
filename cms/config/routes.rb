@@ -31,7 +31,11 @@ DmCms::Engine.routes.draw do
         end
         resources :cms_posts
       end
-      resources :cms_posts
+      resources :cms_posts do
+        member do
+          get     'send_notifications_emails',          :action => :send_notifications_emails, :as => :send_notifications_emails
+        end
+      end
       match '/cms_blogs/sort',                             :controller => 'cms_blogs', :action => :sort, :as => :cms_blog_sort
     end
 

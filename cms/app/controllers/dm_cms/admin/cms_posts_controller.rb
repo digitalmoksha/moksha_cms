@@ -50,6 +50,11 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
     redirect_to admin_cms_blog_url(@blog), notice: 'Post was successfully deleted.'
   end
   
+  #------------------------------------------------------------------------------
+  def send_notifications_emails
+    status = @post.send_notification_emails
+    redirect_to admin_cms_blog_url(@blog), notice: "Notification emails sent ==>  Success: #{status[:success]}  Failed: #{status[:failed]}"
+  end
 private
 
   #------------------------------------------------------------------------------

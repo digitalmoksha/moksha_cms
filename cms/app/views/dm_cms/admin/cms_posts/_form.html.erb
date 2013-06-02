@@ -30,3 +30,13 @@
 <% end %>
 
 <%= render :partial => 'dm_cms/admin/shared/liquid_tags_ref' %>
+
+<% unless @post.new_record? %>
+  <% content_for :sidebar do %>
+    <% if @post.notification_sent_on.nil? %>
+      <%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), :class => "action-button btn-primary", :confirm => 'This will send a post notification email to each user of this blog.  Are you sure?' %>
+    <% else %>
+      <%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), :class => "action-button btn-warning", :confirm => "WARNING: An emal was already sent on #{format_datetime(@post.notification_sent_on)}.  Are you sure you want to send another?" %>
+    <% end %>
+  <% end %>
+<% end %>
