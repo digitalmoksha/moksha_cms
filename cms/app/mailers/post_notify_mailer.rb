@@ -9,7 +9,7 @@ class PostNotifyMailer < DmCore::SiteMailer
     @recipients                 = email
     @blog_title                 = post.cms_blog.title
     @post_title                 = post.title
-    @post_summary               = post.summary
+    @post_summary               = post.display_summary
     @post_link                  = dm_cms.post_show_url(post.cms_blog.slug, post.slug, locale: I18n.locale)
 
     headers = { "Reply-To" => account.preferred_smtp_from_email, 
