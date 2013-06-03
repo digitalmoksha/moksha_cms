@@ -4,7 +4,7 @@ module Liquid
   #
   # {% image_path src : source_img %}
   #------------------------------------------------------------------------------
-  class ImagePath < DmCore::LiquidTag
+  class UrlImage < DmCore::LiquidTag
     include ActionView::Helpers::TagHelper 
     include ActionView::Helpers::AssetTagHelper
     include Sprockets::Helpers::RailsHelper
@@ -14,18 +14,19 @@ module Liquid
     #------------------------------------------------------------------------------
     def render(context)
       src = expand_url(@attributes["src"], "#{context.registers[:account_site_assets]}/images/")
-      return src.nil? ? '' : src.html.safe
+      return src.nil? ? '' : src
     end
   
     def self.details
       { name: self.tag_name,
         summary: 'Returns location of image',
         description: "Give the location/path of an image. Will pull image from the site's images directory unless a full path is given.",
-        example: "{% image_path src: placeholder_190x105.jpg %}",
+        example: "{% url_image src: placeholder_190x105.jpg %}",
         category: 'image'
       }
     end
   end
   
-  Template.register_tag('image_path', ImagePath)
+  Template.register_tag('image_path', UrlImage)
+  Template.register_tag('url_image', UrlImage)
 end
