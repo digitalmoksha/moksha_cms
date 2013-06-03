@@ -20,4 +20,5 @@ de:
   core:
     next_page: "Weiter <i class='icon-angle-right'></i>"
     prev_page: "<i class='icon-angle-left'></i> Früher"
-    
+    login: Anmelden
+    logout: Abmelden

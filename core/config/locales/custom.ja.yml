@@ -20,3 +20,5 @@ ja:
   core:
     next_page: "Next <i class='icon-angle-right'></i>"
     prev_page: "<i class='icon-angle-left'></i> Previous"
+    login: ログイン
+    logout: ログアウト

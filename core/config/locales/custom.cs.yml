@@ -20,3 +20,5 @@ cs:
   core:
     next_page: "Další <i class='icon-angle-right'></i>"
     prev_page: "<i class='icon-angle-left'></i> Předchozí"
+    login: Přihlášení
+    logout: Odhlášení
