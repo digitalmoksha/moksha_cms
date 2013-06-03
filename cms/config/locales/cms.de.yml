@@ -1,6 +1,8 @@
 de:
   cms:
     recent_posts: Aktuelle Beiträge
-    all_recent_psots: Alle Aktuelle Beiträge
+    all_recent_posts: Zurück zur Übersicht
     available_blogs: Verfügbare Blogs
-    
+    blog_header: Blogs
+    read_more: 'Weiterlesen...'
+    blog_summary_date: Datum

@@ -1,6 +1,8 @@
 en:
   cms:
     recent_posts: Recent Posts
-    all_recent_psots: All Recent Posts
+    all_recent_posts: All Recent Posts
     available_blogs: Available Blogs
-    
+    blog_header: Blogs
+    read_more: 'Read More...'
+    blog_summary_date: Date
