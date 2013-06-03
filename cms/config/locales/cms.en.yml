@@ -6,3 +6,5 @@ en:
     blog_header: Blogs
     read_more: 'Read More...'
     blog_summary_date: Date
+    blog_notify_new_post: A new post has been published for the blog
+    blog_notify_read_post: Read full post

@@ -1,6 +1,6 @@
-<p>A new post has been published for the blog: '<strong><%= @blog_title %></strong>'</p>
+<p><%= I18n.t 'cms.blog_notify_new_post' %>: '<strong><%= @blog_title %></strong>'</p>
 
-<a href="<%= @post_link %>">Read full post</a>
+<a href="<%= @post_link %>"><%= I18n.t 'cms.blog_notify_read_post' %></a>
 
 <h3><%= @post_title %></h3>
 

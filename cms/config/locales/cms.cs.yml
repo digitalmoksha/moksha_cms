@@ -6,3 +6,5 @@ cs:
     blog_header: Blogs
     read_more: 'Čtěte více...'
     blog_summary_date: Datum
+    blog_notify_new_post: Nový příspěvek byl zveřejněn na blogu
+    blog_notify_read_post: Přečtěte si celý příspěvek
