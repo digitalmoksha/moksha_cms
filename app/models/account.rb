@@ -11,7 +11,8 @@ class Account < ActiveRecord::Base
                           :preferred_support_email, :preferred_google_analytics_tracker_id,
                           :preferred_mailchimp_api_key, :preferred_site_title
   attr_accessible         :preferred_smtp_address, :preferred_smtp_port, :preferred_smtp_domain,
-                          :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email
+                          :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email,
+                          :preferred_blog_from_email
   attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
 
   validates_presence_of   :domain
@@ -43,6 +44,7 @@ class Account < ActiveRecord::Base
   preference              :smtp_user_name,                  :string
   preference              :smtp_password,                   :string
   preference              :smtp_from_email,                 :string
+  preference              :blog_from_email,                 :string
                         
   #--- PayPal           
   preference              :paypal_merchant_id,              :string
