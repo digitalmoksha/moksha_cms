@@ -38,8 +38,10 @@
         <dd><%= @account.preferred_smtp_password.blank? ? 'n/a' : ('&bull;' * @account.preferred_smtp_password.length).html_safe if @account.preferred_smtp_password %></dd>
         <dt>SMTP Domain</dt>
         <dd><%= @account.preferred_smtp_domain.to_s_default %></dd>
-        <dt>SMTP From Address</dt>
+        <dt>SMTP From/Reply Address</dt>
         <dd><%= @account.preferred_smtp_from_email.to_s_default %></dd>
+        <dt>Blog From/Reply Address</dt>
+        <dd><%= @account.preferred_blog_from_email.to_s_default %></dd>
         <dt>MailChimp API Key</dt>
         <dd><%= @account.preferred_mailchimp_api_key.to_s_default %></dd>
       </dl>
