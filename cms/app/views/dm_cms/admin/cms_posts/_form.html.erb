@@ -17,12 +17,15 @@
       </div>
       <div class="clearfix"></div>
     </div>
+
     <%= locale_frame :title => '' do |locale| %>
       <%= f.input "title_#{locale}", :label => 'Post Title', :id => 'title_error', :required => true %>
       <%= f.input "summary_#{locale}", :label => 'Summary', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 4 %>
       <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 18 %>
     <% end %>
-    <%= f.input "image", :label => 'Post Image', :id => 'image_error' %>
+
+    <%= f.input :image, :label => 'Post Image', :id => 'image_error' %>
+    <%= f.input :comments_allowed, :as => :toggle, :label => 'Allow Comments', :hint => 'Turn on if you want commenting for this post.' %>
 
     <%= submit_or_cancel :cancel_url => admin_cms_blog_path(@blog) %>
 

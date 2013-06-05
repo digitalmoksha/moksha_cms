@@ -1,6 +1,6 @@
 class CmsPost < ActiveRecord::Base
 
-  attr_accessible         :slug, :published_on, :title, :content, :summary, :image
+  attr_accessible         :slug, :published_on, :title, :content, :summary, :image, :comments_allowed
   
   # --- globalize
   translates              :title, :summary, :content, :fallbacks_for_empty_translations => true, :versioning => true
@@ -9,6 +9,8 @@ class CmsPost < ActiveRecord::Base
   extend FriendlyId
   friendly_id             :title_slug, use: :slugged
 
+  acts_as_commentable
+  
   belongs_to              :cms_blog
   belongs_to              :account
   
@@ -25,6 +27,12 @@ class CmsPost < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def is_published?
     published_on <= Time.now
+  end
+  
+  # Allow comments if also enabled in the blog
+  #------------------------------------------------------------------------------
+  def comments_allowed?
+    cms_blog.comments_allowed? && comments_allowed
   end
   
   # Base the slug on the default locale

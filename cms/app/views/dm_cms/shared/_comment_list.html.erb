@@ -1,0 +1,11 @@
+<%= pagination(comment_list) %>
+
+<div class="comments clearfix">
+  <ul class="comment_list">
+    <% for comment in comment_list do %>
+      <%= render partial: 'dm_cms/shared/comment', object: comment, locals: { commenting_on: commenting_on } %>
+    <% end %>
+  </ul>
+</div>
+
+<%= pagination(comment_list) %>

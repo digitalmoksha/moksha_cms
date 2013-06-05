@@ -15,7 +15,7 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def new
-    @post = @blog.posts.build
+    @post = @blog.posts.build(comments_allowed: @blog.comments_allowed)
   end
 
   #------------------------------------------------------------------------------

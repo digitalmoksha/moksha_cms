@@ -33,24 +33,21 @@ DmCms::Engine.routes.draw do
       end
       resources :cms_posts do
         member do
-          get     'send_notifications_emails',          :action => :send_notifications_emails, :as => :send_notifications_emails
+          get     'send_notifications_emails',    :action => :send_notifications_emails, :as => :send_notifications_emails
         end
       end
-      match '/cms_blogs/sort',                             :controller => 'cms_blogs', :action => :sort, :as => :cms_blog_sort
+      match '/cms_blogs/sort',                    :controller => 'cms_blogs', :action => :sort, :as => :cms_blog_sort
     end
 
     scope 'blog' do
-      match '/',                                    :controller => 'blogs', :action => :index, :as => :blog_root
-      match '/:id',                                 :controller => 'blogs', :action => :show, :as => :blog_show
-      match '/:cms_blog_id/:id',                    :controller => 'posts', :action => :show, :as => :post_show
+      match '/',                                  :controller => 'blogs', :action => :index, :as => :blog_root
+      match '/:id',                               :controller => 'blogs', :action => :show, :as => :blog_show
+      match '/:cms_blog_id/:id',                  :controller => 'posts', :action => :show, :as => :post_show
       resources :cms_blogs do
-        resources :cms_posts do
-          resources :cms_post_comments
-        end
+        resources :cms_posts
       end
-
-      resources :cms_blog_comments do
-        get :search, :on => :collection
+      resources :cms_posts do
+        post    :ajax_add_comment,                :controller => 'posts', :action => :ajax_add_comment
       end
     end
 

@@ -8,3 +8,7 @@ cs:
     blog_summary_date: Datum
     blog_notify_new_post: K dispozici je nový příspěvek v blogu
     blog_notify_read_post: Přečtěte si celý příspěvek
+    reply: Odpovědět
+    suspended_user_post: Tento příspěvek byl odstraněn
+    comment_body: Text příspěvku
+    add_comment: Přidat komentář

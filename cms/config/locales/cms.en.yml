@@ -8,3 +8,8 @@ en:
     blog_summary_date: Date
     blog_notify_new_post: There is a new post in the blog
     blog_notify_read_post: Read full post
+    reply: Reply
+    suspended_user_post: This post has been removed
+    comment_body: Body
+    add_comment: Add a Comment
+    
