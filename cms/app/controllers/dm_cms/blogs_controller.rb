@@ -12,16 +12,17 @@ class DmCms::BlogsController < DmCms::ApplicationController
   
   #------------------------------------------------------------------------------
   def index
-    @blogs =        CmsBlog.available_to_user(current_user)
-    @posts =        CmsPost.where(cms_blog_id: @blogs.map(&:id)).published.order('published_on DESC').paginate page: page_number
+    @blogs        = CmsBlog.available_to_user(current_user)
+    @posts        = CmsPost.where(cms_blog_id: @blogs.map(&:id)).published.order('published_on DESC').paginate page: page_number
     @recent_posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).published.order('published_on DESC').limit(5)
     render action: :show
   end
 
   #------------------------------------------------------------------------------
   def show
-    @blogs = CmsBlog.available_to_user(current_user)
-    @posts = @blog.posts.paginate :page => page_number
+    @blogs        = CmsBlog.available_to_user(current_user)
+    @posts        = @blog.posts.paginate :page => page_number
+    @recent_posts = @blog.posts.limit(5)
   end
 
 protected
