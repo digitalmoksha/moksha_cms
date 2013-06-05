@@ -35,9 +35,12 @@ protected
 
   #------------------------------------------------------------------------------
   def post_lookup
-    @blog = CmsBlog.find_by_slug!(params[:cms_blog_id])
+    @blog = CmsBlog.find_by_slug(params[:cms_blog_id])
+    redirect_to blog_root_path and return if @blog.nil?
     authorize! :read, @blog
+    
     @post = @blog.posts.find_by_slug(params[:id])
+    redirect_to blog_show_path(@blog) and return if @post.nil?
   end
 
 end
