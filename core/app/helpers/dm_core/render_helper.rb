@@ -1,6 +1,11 @@
 module DmCore
   module RenderHelper
     
+    #------------------------------------------------------------------------------
+    def avatar_for(user, size=32)
+      image_tag('dm_core/user.gif', width: size, height: size, class: 'image')
+    end
+
     # Used in pagination - get the current page number being displayed
     #------------------------------------------------------------------------------
     def page_number

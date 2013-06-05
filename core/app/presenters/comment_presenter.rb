@@ -14,7 +14,7 @@ class CommentPresenter < BasePresenter
   
   #------------------------------------------------------------------------------
   def author
-    comment.user.nil? ? 'Anonymous' : comment.user.first_name
+    comment.user.nil? ? 'Anonymous' : comment.user.display_name
   end
   
 end
