@@ -11,12 +11,6 @@ module DmForum
       end
     end
 
-    # {todo}
-    #------------------------------------------------------------------------------
-    def avatar_for(user, size=32)
-      image_tag('dm_core/user.gif', width: size, height: size, class: 'image')
-    end
-
     #------------------------------------------------------------------------------
     def modify_history(function, name, path, params_hash=nil)
       state = "null"

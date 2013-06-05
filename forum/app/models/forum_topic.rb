@@ -28,8 +28,10 @@ class ForumTopic < ActiveRecord::Base
   #--- forum's site, set by callback
   belongs_to              :forum_site, :counter_cache => true
 
+  #--- don't use acts_as_commentable since we're using a specialized ForumComment class
   has_many                :forum_comments, {:as => :commentable, :dependent => :destroy}
   has_one                 :recent_comment, :as => :commentable, :class_name => "ForumComment", :conditions => 'ancestry_depth = 1', :order => "created_at DESC"
+
   has_many                :voices, :through => :forum_comments, :source => :user, :uniq => true
   has_many                :monitorships, :dependent => :delete_all
   has_many                :monitoring_users, :through => :monitorships, :source => :user, :conditions => ['fms_monitorships.active = ?', true]
