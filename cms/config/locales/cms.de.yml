@@ -6,9 +6,14 @@ de:
     blog_header: Blogs
     read_more: 'Weiterlesen...'
     blog_summary_date: Datum
+    blog_summary_comments: Kommentare
     blog_notify_new_post: Es gibt einen neuen Beitrag im Blog
     blog_notify_read_post: Lies hier den kompletten Beitrag
     reply: Antworten
     suspended_user_post: Dieser Beitrag wurde bereits entfernt
     comment_body: Inhalt
+    comment_submit: Absenden
     add_comment: Dein Kommentar
+    comments_header: Kommentare
+    delete: löschen
+    comments_stat: Kommentare    

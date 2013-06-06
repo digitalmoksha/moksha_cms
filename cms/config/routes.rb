@@ -48,6 +48,9 @@ DmCms::Engine.routes.draw do
       end
       resources :cms_posts do
         post    :ajax_add_comment,                :controller => 'posts', :action => :ajax_add_comment
+        # get     'ajax_edit_comment/:id',          :controller => 'posts', :action => :ajax_edit_comment, :as => :ajax_edit_comment_comment
+        # post    'ajax_edit_comment/:id',          :controller => 'posts', :action => :ajax_edit_comment, :as => :ajax_edit_comment_comment
+        delete  'ajax_delete_comment/:id',        :controller => 'posts', :action => :ajax_delete_comment, :as => :ajax_delete_comment_comment
       end
     end
 

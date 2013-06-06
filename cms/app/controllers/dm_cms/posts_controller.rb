@@ -6,7 +6,7 @@ class DmCms::PostsController < DmCms::ApplicationController
   helper DmCms::PagesHelper
   include DmCore::RenderHelper
 
-  before_filter   :post_lookup, except: [:ajax_add_comment, :ajax_delete_comment]
+  before_filter   :post_lookup, except: [:ajax_add_comment, :ajax_edit_comment, :ajax_delete_comment]
 
   layout    'cms_templates/blog_post'
   
@@ -25,9 +25,24 @@ class DmCms::PostsController < DmCms::ApplicationController
     redirect_to :back
   end
   
+  # #------------------------------------------------------------------------------
+  # def ajax_edit_comment
+  #   @comment  = Comment.find(params[:id])
+  #   @post     = comment.commentable
+  #   authorize! :read, @post.cms_blog
+  # 
+  #   if put_or_post?
+  #   end
+  #   
+  #   @post.comments.create(:body => params[:comment][:body], :user_id => current_user.id)
+  #   redirect_to :back
+  # end
+  
   #------------------------------------------------------------------------------
   def ajax_delete_comment
-    Comment.find(params[:id]) if is_admin?
+    if is_admin?
+      Comment.find(params[:id]).destroy
+    end
     redirect_to :back and return
   end
   
