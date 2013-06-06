@@ -4,7 +4,12 @@ class CommentPresenter < BasePresenter
 
   #------------------------------------------------------------------------------
   def formatted_comment
-    markdown(comment.body, :safe => true)
+    if (comment.user.is_admin?)
+      #--- allow an admin user to put in full markdown/liquid
+      liquidize_markdown(comment.body, {})
+    else
+      markdown(comment.body, :safe => true)
+    end
   end
   
   #------------------------------------------------------------------------------
