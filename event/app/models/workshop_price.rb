@@ -24,7 +24,7 @@ class WorkshopPrice < ActiveRecord::Base
   translates              :price_description, :sub_description, :payment_details, :fallbacks_for_empty_translations => true
   globalize_accessors     :locals => DmCore::Language.language_array
 
-  CURRENCY_TYPES = { 'EUR' => 'EUR', 'CHF' => 'CHF', 'GBP' => 'GBP', 'USD' => 'USD' }
+  CURRENCY_TYPES = { 'EUR' => 'EUR', 'CHF' => 'CHF', 'GBP' => 'GBP', 'CZK' => 'CZK', 'USD' => 'USD', 'JPY' => 'JPY', 'INR' => 'INR' }
 
   #------------------------------------------------------------------------------
   def visible?
