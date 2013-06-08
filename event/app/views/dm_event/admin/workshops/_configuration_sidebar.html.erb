@@ -3,9 +3,7 @@
     <li><%= link_to "Workshop Prices".html_safe, admin_workshop_workshop_prices_path(@workshop) %></li>
     <li><a href="#" title="" class="expand">Email Notifications<strong><%= @workshop.require_review? ? '5' : '4' %></strong></a>
       <ul>
-        <% if @workshop.require_review? %>
-          <li><%= link_to "Pending Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'pending') %></li>
-        <% end %>
+        <li><%= link_to "Pending Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'pending') %></li>
         <li><%= link_to "Accepted Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'accepted') %></li>
         <li><%= link_to "Paid Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'paid') %></li>
         <li><%= link_to "Waitlisted Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'waitlisted') %></li>
