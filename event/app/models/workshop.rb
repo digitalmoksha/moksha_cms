@@ -18,7 +18,7 @@ class Workshop < ActiveRecord::Base
   
   attr_accessible         :title, :description, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
                           :contact_email, :contact_phone, :require_review, :require_account, :require_address,
-                          :require_photo
+                          :require_photo, :published
 
   # --- globalize
   translates              :title, :description, :fallbacks_for_empty_translations => true
@@ -30,11 +30,17 @@ class Workshop < ActiveRecord::Base
 
   validates_presence_of   :starting_on
   validates_presence_of   :ending_on
-  validates_presence_of   :deadline_on
+  # validates_presence_of   :deadline_on
 
   default_scope           { where(account_id: Account.current.id) }
+  
+  #--- upcoming and past are used in the admin, so should be published and non-published
   scope                   :upcoming,  where('ending_on > ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC')
   scope                   :past,      where('ending_on <= ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC')
+
+  #--- available is list of published and registration open and not ended
+  scope                   :available, where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', 
+                                      (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC')
 
   #------------------------------------------------------------------------------
   def title_slug
@@ -55,10 +61,15 @@ class Workshop < ActiveRecord::Base
     ending_on < Time.now
   end
   
-  # Is the registration closed
+  # Is the registration closed?  If deadline is null, then registration is open ended
   #------------------------------------------------------------------------------
   def registration_closed?
-    deadline_on < Time.now.to_date
+    !published? || (deadline_on ? (deadline_on < Time.now.to_date) : false)
+  end
+  
+  #------------------------------------------------------------------------------
+  def published?
+    published
   end
 
   # toggle the archive state of the workshop

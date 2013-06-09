@@ -7,7 +7,7 @@
 <% @workshops.in_groups_of(2, false) do |workshop_row| %>
   <div class="row-fluid">
     <% for workshop in workshop_row  %>
-      <%= content_box title: link_to(workshop.title, [:admin, workshop]), toolbar: "<span class='label label-info pull-right'>#{present(workshop).start_end_date}</span>", class: 'span6' do %>
+      <%= content_box title: link_to(workshop.title, [:admin, workshop]), toolbar: "<span class='pull-right'>#{present(workshop).label_published}</span>", class: 'span6' do %>
         <% financials = workshop.financial_details(:summary) %>
         <ul class="text-stats-content">
             <li><%= financials[:summary][:total_possible].format(:no_cents_if_whole => true) %><span>best</span></li>

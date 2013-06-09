@@ -25,6 +25,9 @@ de:
     registration_country: Land
     registration_zipcode: Postleitzahl
     registration_account_required: 'Um für diese Veranstaltung zu registrieren, müssen Sie in Ihrem Benutzerkonto angemeldet sein.'
+    registration_closed_heading: Anmeldung geschlossen
+    registration_closed_text: "Wir sind nicht mehr die Annahme von Registrierungen für den Kurs %{value}"
+    registration_closed_list: Die folgenden Kurse sind derzeit für die Anmeldung geöffnet
   activerecord:
     errors:
       models:

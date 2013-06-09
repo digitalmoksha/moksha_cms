@@ -61,3 +61,5 @@ width: auto;
 .receipt_section .ticket ul { list-style: none; position: relative; float: left; display: block; left: 50%; }
 .receipt_section .ticket ul li { position: relative;
   display: block; right: 50%; }
+
+.registration_closed h2 { margin-bottom: 20px;}

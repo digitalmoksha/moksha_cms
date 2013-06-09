@@ -10,11 +10,15 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   def new
     redirect_to main_app.root_url and return if @workshop.nil?
     
-    @registration               = @workshop.registrations.build
-    @registration.user_profile  = current_user ? current_user.user_profile : UserProfile.new
-    if (@workshop.require_address || !@workshop.require_account) && !@registration.user_profile.address_valid?
-      #--- address is required and there are missing fields in the profile
-      @registration.user_profile.address_required = true
+    if !@workshop.registration_closed? || is_admin?
+      @registration               = @workshop.registrations.build
+      @registration.user_profile  = current_user ? current_user.user_profile : UserProfile.new
+      if (@workshop.require_address || !@workshop.require_account) && !@registration.user_profile.address_valid?
+        #--- address is required and there are missing fields in the profile
+        @registration.user_profile.address_required = true
+      end
+    else
+      render action: :closed
     end
   end
 

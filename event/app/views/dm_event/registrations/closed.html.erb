@@ -1,0 +1,13 @@
+<% available = Workshop.available %>
+<div id="workshop_registration" class="registration_closed">
+  <h2><%= I18n.t "ems.registration_closed_heading" %></h2>
+  <p><%= I18n.t "ems.registration_closed_text", value: @workshop.title %></p>
+  <% if available %>
+    <p><%= I18n.t 'ems.registration_closed_list' %></p>
+    <ul>
+      <% available.each do |workshop| %>
+        <li><%= link_to workshop.title, register_new_url(workshop) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

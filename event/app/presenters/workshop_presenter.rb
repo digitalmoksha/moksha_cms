@@ -11,7 +11,7 @@ class WorkshopPresenter < EventCommonPresenter
   
   #------------------------------------------------------------------------------
   def label_published
-    # model.published? ? h.colored_label('Published', :success) : h.colored_label('Draft')
+    !model.registration_closed? ? h.colored_label(start_end_date, :success) : h.colored_label(start_end_date)
   end
 
   #------------------------------------------------------------------------------
