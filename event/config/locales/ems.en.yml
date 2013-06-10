@@ -26,7 +26,8 @@ en:
     registration_zipcode: Zipcode
     registration_account_required: 'In order to register for this event, you must be logged into your user account.'
     registration_closed_heading: Registration Closed
-    registration_closed_text: "We are no longer accepting registrations for the course %{value}"
+    registration_closed_text: "We are no longer accepting registrations for the course '%{title}'"
+    registration_closed_email: "For any questions you may contact %{email}."
     registration_closed_list: The following courses are currently open for registration
   activerecord:
     errors:

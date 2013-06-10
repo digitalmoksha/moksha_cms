@@ -1,7 +1,8 @@
 <% available = Workshop.available %>
 <div id="workshop_registration" class="registration_closed">
   <h2><%= I18n.t "ems.registration_closed_heading" %></h2>
-  <p><%= I18n.t "ems.registration_closed_text", value: @workshop.title %></p>
+  <p><%= I18n.t "ems.registration_closed_text", title: @workshop.title %></p>
+  <p><%= I18n.t "ems.registration_closed_email", email: @workshop.contact_email %></p>
   <% if available %>
     <p><%= I18n.t 'ems.registration_closed_list' %></p>
     <ul>
