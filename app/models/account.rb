@@ -3,6 +3,8 @@ class Account < ActiveRecord::Base
 
   class DomainNotFound < StandardError
   end
+  class LoginRequired < StandardError
+  end
   
   self.table_name   = 'core_accounts'
   attr_accessible         :company_name, :contact_email, :default_site_id, :domain, :account_prefix
