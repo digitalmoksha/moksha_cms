@@ -16,3 +16,5 @@ en:
     add_comment: Add a Comment
     comments_header: Comments
     delete: delete
+    comments_stat: Comments
+    blog_login_required: Login is required to access this blog

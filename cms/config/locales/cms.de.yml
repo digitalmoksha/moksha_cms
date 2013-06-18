@@ -16,4 +16,6 @@ de:
     add_comment: Dein Kommentar
     comments_header: Kommentare
     delete: löschen
-    comments_stat: Kommentare    
+    comments_stat: Kommentare
+    blog_login_required: 'Anmeldung ist erforderlich, um diesen Blog zugreifen'
+    

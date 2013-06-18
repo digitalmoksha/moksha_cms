@@ -16,3 +16,5 @@ cs:
     add_comment: Přidat komentář
     comments_header: Komentáře
     delete: smazat
+    comments_stat: Komentáře
+    blog_login_required: Přihlášení je vyžadováno pro přístup k tomuto blogu
