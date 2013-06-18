@@ -11,7 +11,7 @@ module DmCore
     before_filter   :theme_resolver
     before_filter   :site_enabled?, :unless => :devise_controller?
     before_filter   :ssl_redirect
-    after_filter    :store_location
+    before_filter   :store_location
     
     include DmCore::AccountHelper
 
@@ -22,7 +22,9 @@ module DmCore
 
   protected
 
-    # store last url as long as it isn't a /users path
+    # Store last url as long as it isn't a /users path
+    # Call from a before_filter - this ensures that if you're coming to a page
+    # from an email link, the url gets saved before getting redirected to the login
     #------------------------------------------------------------------------------
     def store_location
       session[:previous_url] = request.fullpath unless request.fullpath =~ /\/users/
@@ -170,11 +172,15 @@ module DmCore
       request.env["exception_notifier.exception_data"] = { :user => current_user, :account => current_account }
     end
 
-    # Note: rescue_from should be listed form generic exception to most specific
+    # Note: rescue_from should be listed from generic exception to most specific
     #------------------------------------------------------------------------------
     rescue_from CanCan::AccessDenied do |exception|
       #--- Redirect to the index page if we get an access denied
       redirect_to main_app.root_url, :alert => exception.message
+    end
+    rescue_from Account::LoginRequired do |exception|
+      #--- Redirect to the login page
+      redirect_to main_app.new_user_session_path, :alert => exception.message
     end
     rescue_from Account::DomainNotFound do |exception|
       #--- log the invalid domain and render nothing.
