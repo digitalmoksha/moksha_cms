@@ -29,7 +29,7 @@ private
       [
         registration_actions(registration),
         h(registration.receipt_code),
-        h(registration.user_profile.full_name),
+        link_to(registration.full_name, url_helpers.edit_admin_registration_path(I18n.locale, registration)),
         workshop_price(registration),
         h(format_date(registration.created_at))
       ]
@@ -85,7 +85,9 @@ private
   #------------------------------------------------------------------------------
   def workshop_price(registration)
     if registration.workshop_price
-      "<span data-placement='left' class='hovertip' title='#{registration.workshop_price.price_description}'>#{registration.workshop_price.price_formatted}</span>".html_safe
+      color = (registration.balance_owed > 0) ? 'balance_owed' : 'balance_paid'
+      amount = (registration.balance_owed == 0) ? 'paid' : registration.balance_owed.format(:no_cents_if_whole => true)
+      "<span data-placement='left' class='hovertip #{color}' title='#{registration.workshop_price.price.format(:no_cents_if_whole => true)} &mdash; #{registration.workshop_price.price_description}'>#{amount}</span>".html_safe
     else
       '-'
     end

@@ -5,25 +5,26 @@ DmEvent::Engine.routes.draw do
       scope 'ems' do
         resources :workshops do
           member do
-            get  'edit_system_email/:email_type', :action => 'edit_system_email', :as => 'edit_system_email'
-            post 'edit_system_email/:email_type', :action => 'edit_system_email', :as => 'edit_system_email'
-            put  'edit_system_email/:email_type', :action => 'edit_system_email', :as => 'edit_system_email'
+            get  'edit_system_email/:email_type',     :action => 'edit_system_email', :as => 'edit_system_email'
+            post 'edit_system_email/:email_type',     :action => 'edit_system_email', :as => 'edit_system_email'
+            put  'edit_system_email/:email_type',     :action => 'edit_system_email', :as => 'edit_system_email'
           end
           resources :workshop_prices
         end
         resources :registrations do
           member do
-            put  'action_state/:state_event', :action => 'action_state', :as => 'action_state'
+            put  'action_state/:state_event',         :action => 'action_state', :as => 'action_state'
+            post 'ajax_new_payment',                  :action => 'ajax_new_payment'
           end
         end
         resources :workshop_prices
-        match '/workshop_prices/sort',      :controller => :workshop_prices, :action => :sort, :as => :workshop_price_sort
+        match '/workshop_prices/sort',                :controller => :workshop_prices, :action => :sort, :as => :workshop_price_sort
       end
     end
 
     match '/event/register/:id/new',                  :controller => 'registrations', :action => :new, :as => :register_new
     match '/event/register/:id/create',               :controller => 'registrations', :action => :create, :as => :register_create, :via => :post
-    match '/event/register/success/(:receipt_code)',    :controller => 'registrations', :action => :success, :as => :register_success
+    match '/event/register/success/(:receipt_code)',  :controller => 'registrations', :action => :success, :as => :register_success
   end
 
 end

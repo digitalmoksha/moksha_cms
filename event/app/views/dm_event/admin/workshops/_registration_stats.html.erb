@@ -38,7 +38,7 @@
 <ul class="text-stats block">
     <li><%= financials[:summary][:total_possible].format(:no_cents_if_whole => true) %><span>best</span></li>
     <li><%= financials[:summary][:total_possible_worst].format(:no_cents_if_whole => true) %><span>worst (80%)</span></li>
-    <li style="color:green">n/a<span>paid</span></li>
+    <li style="color:green"><%= financials[:summary][:total_paid].format(:no_cents_if_whole => true) %><span>paid</span></li>
 </ul>
 
 <ul class="block progress-statistics">

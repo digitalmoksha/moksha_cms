@@ -7,25 +7,33 @@ class Registration < ActiveRecord::Base
   include DmEvent::Concerns::RegistrationStateMachine
   include DmEvent::Concerns::RegistrationStateEmail
   
-  self.table_name         = 'ems_registrations'
+  self.table_name               = 'ems_registrations'
 
-  attr_accessible         :workshop_price_id, :registered_locale, :user_profile_attributes
+  attr_accessible               :workshop_price_id, :discount_value, :discount_use_percent,
+                                :payment_comment,
+                                :registered_locale, :user_profile_attributes
   
-  belongs_to              :workshop, :counter_cache => true
-  belongs_to              :workshop_price
-  belongs_to              :user_profile
-  belongs_to              :account
+  belongs_to                    :workshop, :counter_cache => true
+  belongs_to                    :workshop_price
+  belongs_to                    :user_profile
+  belongs_to                    :account
+  has_many                      :payment_histories, :as => :owner, :dependent => :destroy                              
+  
+  monetize                      :amount_paid_cents, :with_model_currency => :amount_paid_currency, :allow_nil => true
   
   accepts_nested_attributes_for :user_profile
   
-  default_scope           { where(account_id: Account.current.id) }
-  scope                   :attending, where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL")
+  default_scope                 { where(account_id: Account.current.id) }
+  scope                         :attending, where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL")
 
-  after_create            :set_receipt_code
+  after_create                  :set_receipt_code
   
-  validates_presence_of   :workshop_price_id, :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
+  validates_presence_of         :workshop_price_id, :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
+  validates_presence_of         :workshop_price_id, :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
+  validates_numericality_of     :discount_value, allow_nil: true
+  validates_length_of           :payment_comment, :maximum => 255
   
-  delegate :first_name, :last_name, :email, :address, :address2, :city, :state, :country, :zipcode, :phone, :to => :user_profile
+  delegate :first_name, :last_name, :full_name, :email, :address, :address2, :city, :state, :country, :zipcode, :phone, :to => :user_profile
   
   # Receipt code: (workshop.id)-(registration.id).  eg.  003-101
   #------------------------------------------------------------------------------
@@ -40,21 +48,38 @@ class Registration < ActiveRecord::Base
     return receipt_code.split('-')[1].to_i
   end
 
+  # Price of this registration (without discount)
   #------------------------------------------------------------------------------
   def price
-    workshop_price ? workshop_price.price : 'n/a'
+    workshop_price ? workshop_price.price : Money.new(0, "USD")
+  end
+  
+  # Price with discount
+  #------------------------------------------------------------------------------
+  def discounted_price
+    price - discount
   end
   
   #------------------------------------------------------------------------------
-  def full_name
-    user_profile.full_name
+  def discount
+    return Money.new(0, "USD") if workshop_price.nil?
+    
+    unless discount_value.blank?
+      cents = (discount_use_percent ? (workshop_price.price.cents * discount_value / 100) : (discount_value * 100))
+    else
+      cents = 0
+    end
+    Money.new(cents, workshop_price.price.currency)
   end
 
+  # Return the amount still owed, based on the current payments made.
+  # balance_owed is positive if payment is still required.  Negative if there
+  # has been an overpayment
   #------------------------------------------------------------------------------
-  def email_address
-    user_profile.email
+  def balance_owed
+    discounted_price - amount_paid
   end
-
+  
   # Return the number of items specified, in particular the number of items in 
   # a particular state
   #------------------------------------------------------------------------------
@@ -112,104 +137,52 @@ class Registration < ActiveRecord::Base
 
     column_definitions <<     ["price",             "item.workshop_price.price", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
     column_definitions <<     ["paydesc",           "item.workshop_price.payment_desc"]
-
-    # column_definitions <<     ['groups',            'item.student.nil? ? "" :  ((item.student.studentgroup.collect {|x| x.name }).join(", "))'] if sys_admin?
-    # column_definitions <<     ['tags',              '(item.privatetag_list + item.publictag_list).join(" ")']
-    # 
-    # #--- add the list of groups
-    # groups = Studentgroup.find(:all, :order => :name)
-    # groups.each do |group|
-    #   add = ["g_#{group.name}", "item.student.nil? ? '' :  ((item.student.studentgroup.detect {|x| x.name == '#{group.name}'}) ? 'x' : '')"]
-    #   column_definitions << add
-    # end
-    # 
-    # #--- add the list of tags
-    # workshop.find_registration_tags(:privatetags).each do |tag|
-    #   add = ["tag_#{tag.name}", "item.privatetags.empty? ? '' :  ((item.privatetags.detect {|x| x.name == '#{tag.name}'}) ? 'x' : '')"]
-    #   column_definitions << add
-    # end
-    # workshop.find_registration_tags(:publictags).each do |tag|
-    #   add = ["tag_#{tag.name}", "item.publictags.empty? ? '' :  ((item.publictags.detect {|x| x.name == '#{tag.name}'}) ? 'x' : '')"]
-    #   column_definitions << add
-    # end
-    # 
-    # # ---- add the extra fields defined in the workshop record
-    # workshop.custom_field_defs.each_with_index do | x, index |
-    #   column_definitions << [ "#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.data : ''"]
-    # end
-
-    # query = EventRegistration.where(:event_workshop_id => params[:id]).order("lastname ASC")
-    # 
-    # if !params[:state].blank?
-    #   case params[:state]
-    #   when 'attending'
-    #     query = query.where("(process_state = 'paid' OR process_state = 'accepted') AND archived_on IS NULL")
-    #     filename += "_attending"
-    #   when 'confirmed'
-    #     query = query.where("confirmed_on IS NOT NULL AND (process_state = 'paid' OR process_state = 'accepted') AND archived_on IS NULL")
-    #     filename += "_confirmed"
-    #   when 'unconfirmed'
-    #     query = query.where("confirmed_on IS NULL AND (process_state = 'paid' OR process_state = 'accepted') AND archived_on IS NULL")
-    #     filename += "_unconfirmed"
-    #   else
-    #     #--- must be wanting to export the process states
-    #     query = query.where("process_state = ? AND archived_on IS NULL", params[:state].to_s)
-    #     filename += "_#{params[:state].to_s}"
-    #   end
-    #   event_registrations = query
-    # elsif !params[:privatetags].blank?
-    #   event_registrations = query.tagged_with(params[:privatetags], :on => :privatetags)
-    # elsif !params[:publictags].blank?
-    #   event_registrations = query.tagged_with(params[:publictags], :on => :publictags)
-    # else
-    #   event_registrations = query.where("archived_on IS NULL")
-    # end
-    # 
+    column_definitions <<     ["discount",          "item.discount", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
 
     return column_definitions
   end
-  
-  # #------------------------------------------------------------------------------
-  # def total_amount
-  #   purchased_amount - discount
-  # end
-  # 
-  # #------------------------------------------------------------------------------
-  # def purchased_amount_cents
-  #   (event_payment.nil? || event_payment.amount.nil?) ? 0 : (event_payment.amount * 100)
-  # end
-  # 
-  # #------------------------------------------------------------------------------
-  # def discount_cents
-  #   if discount_value.blank?
-  #     0
-  #   else
-  #     if discount_use_percent
-  #       purchased_amount_cents * discount_value / 100
-  #     else
-  #       (discount_value * 100)
-  #     end
-  #   end
-  # end
-  
-  
+
+  # Payment was entered manually, create the history record
+  #------------------------------------------------------------------------------
+  def manual_payment(amount_string, currency, user_profile,
+                     options = { item_ref: '', payment_method: 'cash', bill_to_name: '' } )
+    amount            = Money.parse(amount_string, currency)
+    payment_history   = self.payment_histories.create(
+        :anchor_id            => receipt_code,
+        :item_ref             => options[:item_ref],
+        :cost                 => amount_string,
+        :quantity             => 1,
+        :discount             => 0,
+        :total_cents          => amount.cents,
+        :total_currency       => amount.currency.iso_code,
+        :payment_method       => options[:payment_method],
+        :bill_to_name         => options[:bill_to_name],
+        :payment_date         => Time.now,
+        :user_profile_id      => user_profile.id)
+        
+    if payment_history.errors.empty?
+      self.update_attribute(:amount_paid_cents, (self.amount_paid + self.workshop_price.to_base_currency(amount)).cents)
+      self.reload
+      self.send('paid!') if balance_owed <= 0 && !self.paid?
+    end
+    return payment_history
+  end
+
 
 =begin
   acts_as_reportable
   acts_as_commentable
   acts_as_taggable_on     :publictags, :privatetags
   
-  belongs_to              :country
-  belongs_to              :event_payment
   has_and_belongs_to_many :studentgroup, :uniq => true   #--- TODO have no idea what this is used for
+  has_many                :custom_fields, :as => :owner, :dependent => :destroy
+
+  has_many                :payment_histories, :as => :owner, :dependent => :destroy
   has_many                :payment_histories_old, :class_name => 'PaymentHistory', 
                             :finder_sql => 'SELECT payment_histories.* ' +
                               'FROM payment_histories ' +
                               'WHERE #{receiptcode} = payment_histories.anchor_id'
                               
-  has_many                :custom_fields, :as => :owner, :dependent => :destroy
-  has_many                :payment_histories, :as => :owner, :dependent => :destroy
-
   has_one                 :photo, :class_name => 'EventRegistrationPhoto', :dependent => :destroy
   
   #=== validation rules
@@ -219,19 +192,6 @@ class Registration < ActiveRecord::Base
   validates_length_of     :roomate_pref,          :maximum => 255,  :allow_nil => true
   validates_presence_of   :roomate_pref,                            :if => Proc.new { |reg| reg.event_workshop.show_rooming}
   
-  validates_length_of     :health_conditions,     :maximum => 255,  :if => Proc.new { |reg| reg.event_workshop.show_medical}
-  validates_presence_of   :health_conditions,                       :if => Proc.new { |reg| reg.event_workshop.show_medical}
-  validates_length_of     :medication_allergies,  :maximum => 255,  :if => Proc.new { |reg| reg.event_workshop.show_medical}
-  validates_presence_of   :medication_allergies,                    :if => Proc.new { |reg| reg.event_workshop.show_medical}
-  validates_length_of     :special_requirements,  :maximum => 255,  :if => Proc.new { |reg| reg.event_workshop.show_medical}
-  validates_presence_of   :special_requirements,                    :if => Proc.new { |reg| reg.event_workshop.show_medical}
-  validates_length_of     :psych_care,            :maximum => 255,  :if => Proc.new { |reg| reg.event_workshop.show_medical}
-  validates_presence_of   :psych_care,                              :if => Proc.new { |reg| reg.event_workshop.show_medical}
-  validates_presence_of   :arrival_at,                              :if => Proc.new { |reg| reg.event_workshop.show_arrival_departure}
-  validates_presence_of   :departure_at,                            :if => Proc.new { |reg| reg.event_workshop.show_arrival_departure}
-
-  validates_email_veracity_of  :email,                                                    :if => Proc.new { |reg| !reg.student_id }
-
   validates_with               EventRegistrationValidator
 
   #validates_associated         :custom_fields
@@ -239,7 +199,6 @@ class Registration < ActiveRecord::Base
   # --- because Europe doesn't really have states, dont' require or show it unless US
   # validates_presence_of       :state,       :message => "is a required field"
 
-  composed_of                 :price, :class_name => 'Money', :mapping => [%w(amount cents)]
   attr_accessor               :substitutions  
   
   before_create               :set_name
@@ -313,25 +272,6 @@ class Registration < ActiveRecord::Base
     else
       return true
     end
-  end
-  
-  #------------------------------------------------------------------------------
-  def amount_formatted(empty_string = "")
-    (paid? || amount > 0) ? ut_currency_cents(amount, event_payment.country) : empty_string
-  end
-  
-  # Return the amount (in cents) still owed, based on the current payments made.
-  # balance_owed is positive if payment is still required.  Negative if there
-  # has been an overpayment
-  #------------------------------------------------------------------------------
-  def balance_owed(formatted = false)
-    balance = total_amount_cents - amount
-    return (formatted && !event_payment.nil?) ? ut_currency_cents(balance, event_payment.country) : balance
-  end
-  
-  #------------------------------------------------------------------------------
-  def discount_formatted(empty_string = "")
-    ut_currency_cents(discount_cents, event_payment.country)
   end
   
   # state_and_country

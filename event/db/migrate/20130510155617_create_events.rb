@@ -27,21 +27,6 @@ class CreateEvents < ActiveRecord::Migration
       t.datetime    :created_at
       t.datetime    :updated_at
       t.integer     :account_id
-      # t.string      :template,                        :limit => 50
-      # t.string      :heardabout_list
-      # t.boolean     :heardabout_required,                            :default => false
-      # t.boolean     :show_personal,                                  :default => false
-      # t.boolean     :show_medical,                                   :default => false
-      # t.boolean     :show_spiritual,                                 :default => false
-      # t.boolean     :show_arrival_departure,                         :default => false
-      # t.boolean     :show_photo,                                     :default => false
-      # t.boolean     :show_programdate,                               :default => true
-      # t.boolean     "shoppingcart_immediate_checkout"
-      # t.string      "invitation_code"
-      # t.text        "information_text"
-      # t.boolean     "track_payments",                                 :default => true
-      # t.text        "event_information_text"
-      # t.text        "note"
     end
     
     add_index :ems_workshops, ["slug"], :name => "workshopname_key"
@@ -66,38 +51,6 @@ class CreateEvents < ActiveRecord::Migration
       t.datetime    :updated_at
       t.integer     :account_id
       t.integer     :lock_version,                       :default => 0
-      # t.string   :firstname,            :limit => 50
-      # t.string   :lastname,             :limit => 50
-      # t.string   :email,                :limit => 60
-      # t.string   :address,              :limit => 70
-      # t.string   :address2,             :limit => 70
-      # t.string   :city,                 :limit => 20
-      # t.string   :state,                :limit => 30, :default => "",    :null => false
-      # t.string   :zipcode,              :limit => 10
-      # t.integer  :country_id
-      # t.string   :phone,                :limit => 20
-      # t.string   :fax,                  :limit => 20
-      # t.date     :dob
-      # t.string   :gender,               :limit => 1,  :default => "",    :null => false
-      # t.boolean  :married,                            :default => false
-      # t.string   :cell,                 :limit => 20
-      # t.string   :children
-      # t.string   :occupation_skills
-      # t.string   :roomate_pref
-      # t.boolean  :speak_english,                      :default => true
-      # t.string   :health_conditions
-      # t.string   :medication_allergies
-      # t.string   :special_requirements
-      # t.string   :psych_care
-      # t.string   :item_code
-      # t.string   :heardabout,           :limit => 50
-      # t.datetime :payment_verified_at
-      # t.string   :token,                :limit => 40
-      # t.integer  :room_id
-      # t.integer  :arrival_vehicle_id
-      # t.integer  :departure_vehicle_id
-      # t.datetime :arrival_at
-      # t.datetime :departure_at
     end
     
     add_index :ems_registrations, ["receipt_code"], :name => "receipt_code_key"
@@ -131,8 +84,6 @@ class CreateEvents < ActiveRecord::Migration
       t.integer     :account_id
       t.datetime    :created_at
       t.datetime    :updated_at
-      # t.string      "shoppingcart_code"
-      # t.string      "payment_type",      :limit => 20
     end
 
   end

@@ -18,7 +18,8 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
     when 'take action'
       flash[:error] = "Please select an action to take"
     else
-      @registration.send("#{@state_event}!")
+      #--- send to state machine if it's an allowed event
+      @registration.send("#{@state_event}!") if @registration.aasm.events.include? @state_event.to_sym
     end
   
     respond_to do |format|
@@ -29,27 +30,63 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
   rescue ActiveRecord::StaleObjectError
   end
 
+  #------------------------------------------------------------------------------
+  def edit
+    @registration = Registration.find(params[:id])
+    @workshop     = @registration.workshop
 
+    # #--- build up the custom field objects
+    # @workshop.custom_field_defs.each do |c|
+    #   @event_registration.custom_fields.build(:custom_field_def_id => c.id) unless @event_registration.custom_fields.detect { |f| f.custom_field_def_id == c.id }
+    # end
+  end
+
+  #------------------------------------------------------------------------------
+  def update
+    @registration = Registration.find(params[:id])
+    @workshop     = @registration.workshop
+
+    #--- save without validation, so can update without having to fill in all details
+    @registration.attributes = params[:registration]
+    if @registration.save(:validate => false)
+      redirect_to admin_workshop_url(@workshop), notice: 'Registration was successfully updated.'
+    else
+      render :action => :edit
+    end
+  rescue ActiveRecord::StaleObjectError
+    redirect_to :action => :edit, :id => @registration, :alert => 'Changes not saved - registration was modified by someone else'
+  end
+
+  # Record a new payment for the event
+  #------------------------------------------------------------------------------
+  def ajax_new_payment
+    @registration     = Registration.find(params[:id])
+    @workshop         = @registration.workshop
+    @payment_history  = @registration.manual_payment(
+                              params[:payment_history][:amount],
+                              params[:payment_history][:amount_currency],
+                              current_user.user_profile,
+                              item_ref: params[:payment_history][:description],
+                              payment_method: params[:payment_history][:payment_method],
+                              bill_to_name: params[:payment_history][:bill_to_name],
+                        )
+
+    if @payment_history.errors.empty?
+      @registration.update_attribute(:receipt_requested, params[:payment_history][:receipt_requested])
+    end
+
+    respond_to do |format|
+      format.html {
+        flash[:notice] = "Payment was successfully added"           if @payment_history.errors.empty?
+        flash[:alert]  = "There was a problem adding this payment"  unless @payment_history.errors.empty?
+        redirect_to edit_admin_registration_path(@registration)
+      }
+      format.js { render :action => :ajax_new_payment }
+    end
+  end
 
 
 =begin
-  helper :registration
-  helper 'dm_event/event_workshops'
-  helper 'dm_event/custom_fields'
-
-  include CsvExporter
-  include DmUtilities::SortHelper
-
-  can_edit_on_the_spot
-
-  permit "#{SystemRoles::Admin} on Event or #{SystemRoles::System}", :only => ['destroy', 'export']
-  permit "#{SystemRoles::Access} on Event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}"
-
-  #------------------------------------------------------------------------------
-  def index
-    list
-    render :action => 'list'
-  end
 
   #------------------------------------------------------------------------------
   def list
@@ -145,76 +182,6 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
 
     #--- don't include teachers, photos, etc.  Really degrades performance
     @students = Student.paginate :page => params[:page], :per_page => 100, :include => [:country], :conditions => condition, :order => sort_clause
-  end
-
-  #------------------------------------------------------------------------------
-  def show
-    @event_registration = EventRegistration.find(params[:id])
-  end
-
-  # [deprecated]
-  #------------------------------------------------------------------------------
-  def new
-    unless params[:id] == nil
-      @workshop           = EventWorkshop.find_by_id(params[:id])
-      permit "#{SystemRoles::Moderator} on :workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @workshop.event
-
-      @event_registration = EventRegistration.new(:event_workshop_id => @workshop.id,
-                                                  :country_id => @workshop.country_id)
-      if @workshop.event_payment.length == 1
-        @event_registration.event_payment_id = @workshop.event_payment[0].id
-      end
-    else
-      redirect_to :controller => 'events', :action => 'list'
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  def create
-    params[:event_registration][:price]         = params[:price].to_money
-    @event_registration = EventRegistration.new(params[:event_registration])
-
-    if @event_registration.save
-      flash[:notice] = 'EventRegistration was successfully created.'
-      redirect_back_or_default(:action => 'list', :id => @event_registration.event_workshop_id)
-    else
-      @workshop = EventWorkshop.find_by_id(@event_registration.event_workshop_id)
-      render :action => 'new'
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  def edit
-    @event_registration = EventRegistration.find(params[:id])
-    @workshop           = @event_registration.event_workshop
-    permit "#{SystemRoles::Moderator} on :workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @workshop.event
-
-    #--- build up the custom field objects
-    @workshop.custom_field_defs.each do |c|
-      @event_registration.custom_fields.build(:custom_field_def_id => c.id) unless @event_registration.custom_fields.detect { |f| f.custom_field_def_id == c.id }
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  def update
-    @event_registration = EventRegistration.find(params[:id])
-    @workshop           = @event_registration.event_workshop
-    permit "#{SystemRoles::Moderator} on :workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @workshop.event
-
-    params[:event_registration] ||= Hash.new
-
-    #--- save without validation, so that we can update a registration without having to fill in all details
-    @event_registration.attributes = params[:event_registration]
-    if @event_registration.save(:validate => false)
-      @event_registration.update_attribute(:item_code,  @event_registration.event_payment.shoppingcart_code) unless (@event_registration.event_payment.nil? || @event_registration.event_payment.shoppingcart_code.blank?)
-      flash[:notice] = 'Registration was successfully updated'
-      redirect_back_or_default(:action => 'list', :id => @event_registration.event_workshop_id)
-    else
-      render :action => 'edit'
-    end
-  rescue ActiveRecord::StaleObjectError
-    flash[:error] = 'Changes not saved - registration was modified by someone else'
-    redirect_to :action => 'edit', :id => @event_registration
   end
 
   #------------------------------------------------------------------------------
@@ -359,42 +326,6 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
   #------------------------------------------------------------------------------
   def ajax_cancel_update
     render :action => :ajax_cancel_update
-  end
-
-  #------------------------------------------------------------------------------
-  def ajax_new_payment
-    @event_registration = EventRegistration.find(params[:id])
-    @payment_history = @event_registration.payment_histories.create(
-        :anchor_id            => @event_registration.receiptcode,
-        :cost                 => params[:payment_history][:cost],
-        :item_id              => params[:payment_history][:item_id],
-        :quantity             => 1,
-        :discount             => 0,
-        :total_cents          => EventPayment.payment_total_cents(params[:payment_history][:cost]),
-        :payment_method       => params[:payment_history][:payment_method],
-        :bill_to_name         => params[:payment_history][:bill_to_name],
-        :payment_date         => Time.now,
-        :manual_entry         => true,
-        :currency_country_id  => params[:payment_history][:currency_country_id])
-    if @payment_history.errors.empty?
-      @event_registration.update_attribute(:amount, @event_registration.amount + @event_registration.event_payment.to_base_currency_cents(@payment_history.total_cents, @payment_history.currency_country)) #@payment_history.total_cents)
-      @event_registration.update_attribute(:receipt_requested, params[:event_registration][:receipt_requested])
-      @event_registration.reload
-      @event_registration.send('paid!') if @event_registration.balance_owed <= 0 && !@event_registration.paid?
-      #--- checkin person if "Save and Checkin" pressed
-      if params[:commit].downcase != 'save'
-        @event_registration.checkin_at       = Time.new
-        success = @event_registration.save(:validate => false)
-      end
-    end
-
-    respond_to do |format|
-      format.html {
-        flash[:notice] = "Payment added #{@event_registration.payment_histories.sum(:cost)}" if @payment_history.errors.empty?
-        redirect_to :action => 'edit', :id => @event_registration
-      }
-      format.js { render :action => :ajax_new_payment }
-    end
   end
 
   #------------------------------------------------------------------------------

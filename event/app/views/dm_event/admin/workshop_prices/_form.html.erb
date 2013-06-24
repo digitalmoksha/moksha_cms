@@ -23,7 +23,7 @@
     <%= f.input :price_currency, :collection => WorkshopPrice::CURRENCY_TYPES %>
     <%= f.input :valid_until, :as => :string, :input_html => {:class => 'datepicker'} %>
     <%= f.input :total_available %>
-    <%= f.input :disabled, :as => :toggle, :label => 'Disable?' %>
+    <%= f.input :disabled, :as => :toggle_checked, :label => 'Disable?' %>
 
     <div class="semi-block">
       <h6 class="subtitle">Alternate Price/Currenies</h6>
@@ -49,7 +49,7 @@
     
 </div>
 
-    <%= submit_or_cancel :cancel_url => admin_workshop_path(@workshop) %>
+    <%= submit_or_cancel :cancel_url => admin_workshop_workshop_prices_path(@workshop) %>
 
   <% end %>
 <% end %>

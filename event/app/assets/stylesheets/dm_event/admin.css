@@ -248,3 +248,16 @@
   background-color: #444;
 }
 
+.workshop_price_list li { margin-bottom: 15px; }
+.workshop_price_list input { float: left; }
+.workshop_price_list .price_details { margin-left: 30px; }
+
+.price_details .price { font-weight: bold; }
+.price_details .sub_description {
+  margin-left: 0px;
+  font-style: italic;
+}
+.price_details .expires { margin-left: 20px; }
+
+.balance_paid {color: green;}
+.balance_owed {color: red;}

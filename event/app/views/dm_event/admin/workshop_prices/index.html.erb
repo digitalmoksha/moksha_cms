@@ -1,3 +1,8 @@
+<% content_for :sidebar do %>
+  <ul class="navigation-light block">
+    <li><%= link_to 'Back to Workshop', edit_admin_workshop_url(@workshop) %></li>
+  </ul>
+<% end %>
 
 <% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), new_admin_workshop_workshop_price_path(@workshop), :title => 'New Forum', :class => "nav-btn-primary") ]) %>
 <%= content_frame :title => 'Workshop Prices', :toolbar => toolbar do %>

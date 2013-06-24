@@ -1,0 +1,96 @@
+<% content_for :content_title, "#{h(@registration.full_name)} <small>#{h(@workshop.title)}</small>".html_safe %>
+<% content_for :sidebar do %>
+<% end %>
+
+<div class="row-fluid">
+  <% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'New Payment', class: "nav-btn-primary") ]) %>
+  <%= content_frame :title => 'Recorded Payments', class: 'span6', :toolbar => toolbar do %>
+    <div class="table-overflow">
+      <table class="table table-condensed table-gradient table-hover">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th width="50">Paid</th>
+            <th>Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @registration.payment_histories.order('created_on ASC').each do |payment| %>
+            <tr>
+              <td><%= format_date(payment.created_on) %></td>
+              <td><%= payment.item_ref %></td>
+              <td><%= payment.total.format(:no_cents_if_whole => true, :symbol => true) %></td>
+              <td><%= payment.payment_method %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <%= content_box :title => 'Payment Details', class: 'span6' do %>
+    <%= simple_form_for(@registration, :url => admin_registration_path) do |f| %>
+      <%= f.error_notification :message => "Please review the problems below" %>
+      <ul class="workshop_price_list">
+        <% @workshop.workshop_prices.each do |p| %>
+          <li>
+            <label><%= radio_button 'registration', 'workshop_price_id', p.id %><%= price_details(p) %></label>
+          </li>
+        <% end %>
+      </ul>
+
+      <div class="separator"></div>
+
+      <% if false #--- [todo] can try for a more fancy selection style some other time %>
+        <div class="form-horizontal control-group integer optional registration_discount_value">
+          <label class="integer optional control-label" for="registration_discount_value">Discount</label>
+          <div class="controls">
+            <div class="input-append">
+              <input class="numeric integer optional" id="registration_discount_value" name="registration[discount_value]" type="text" />
+              <div class="btn-group" data-toggle="buttons-radio">
+                <input name="registration[discount_use_precent]" type="button" class="btn" value='%'>
+                <input name="registration[discount_use_precent]" type="button" class="btn" value='$'>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% discount_currency = @registration.workshop_price ? @registration.workshop_price.price.currency.symbol : '-' %>
+      <div class="form-horizontal control-group integer optional registration_discount_value">
+        <label class="integer optional control-label" for="registration_discount_value">Discount</label>
+        <div class="controls input-append">
+          <%= f.text_field :discount_value, class: "numeric integer optional", size: '' %>
+          <div class="btn-group">
+            <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]], {}, {style: "width: 60px", class: "select optional"} %>
+          </div>
+        </div>
+      </div>
+      <%= f.input :payment_comment, :label => 'Comment', :as => :text_full_width, :rows => 3 %>
+      
+      <%= submit_or_cancel :cancel_url => admin_workshop_path(@workshop) %>
+    <% end %>
+  <% end %>
+
+</div>
+
+<%= simple_form_for(:payment_history, :url => ajax_new_payment_admin_registration_path(@registration)) do |f| %>
+  <%= modal_dialog title: 'Enter New Payment', id: 'enter_new_payment', include_save: true  do %>
+    <div class="form-horizontal control-group integer required registration_discount_value">
+      <label class="integer control-label required" for="registration_discount_value"><abbr title="required">*</abbr> Amount</label>
+      <div class="controls input-append">
+        <%= f.text_field :amount, class: "numeric integer optional", size: '' %>
+        <div class="btn-group">
+          <%= f.select :amount_currency, @registration.workshop_price.currency_list, {}, {style: "width: 60px", class: "select"} %>
+        </div>
+      </div>
+    </div>
+    <%= f.input :payment_method, :label => 'Method', as: 'select', :collection => WorkshopPrice::PAYMENT_METHODS, :include_blank => false, input_html: {style: "width: 200px"} %>
+    <div class="clearfix"></div>
+    <%= f.input :description, :label => 'Description', required: false %>
+    <%= f.input :bill_to_name, :label => 'Payed By', required: false %>
+    <%= f.input :receipt_requested, as: 'boolean', label: false, inline_label: 'Customer would like a receipt', required: false %>
+  <% end %>
+
+<% end %>

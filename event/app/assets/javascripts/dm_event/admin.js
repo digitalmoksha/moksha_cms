@@ -24,4 +24,5 @@ $(document).ready(function() {
     selector: '.hovertip',
     delay: {show: 200, hide: 0 }
   });
+  
 });

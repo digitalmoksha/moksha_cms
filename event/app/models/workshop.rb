@@ -104,9 +104,8 @@ class Workshop < ActiveRecord::Base
       if registration.workshop_price
         #--- Calculate the summary values
         financials[:summary][:total_possible]     += registration.price # [todo] registration.total_amount_cents
-
-        # financials[:summary][:total_paid]         += registration.amount.nil? ? 0 : registration.amount
-        # financials[:summary][:total_outstanding]  += registration.balance_owed
+        financials[:summary][:total_paid]         += registration.amount_paid.nil? ? 0 : registration.amount_paid
+        financials[:summary][:total_outstanding]  += registration.balance_owed
         # if registration.confirmed?
         #   financials[:summary][:confirmed_total_possible]     += registration.total_amount_cents
         #   financials[:summary][:confirmed_total_paid]         += registration.amount.nil? ? 0 : registration.amount
