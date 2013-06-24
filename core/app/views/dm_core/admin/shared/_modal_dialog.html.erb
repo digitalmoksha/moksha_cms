@@ -1,0 +1,15 @@
+<div class="modal hide fade" id="<%= options[:id] %>" tabindex="-1" role="dialog" aria-labelledby="<% "#{options[:id]}_title" %>" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h5 id="<% "#{options[:id]}_title" %>"><%= options[:title] %></h5>
+  </div>
+  <div class="modal-body">
+    <%= content %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Cancel</button>
+    <% if options[:include_save] %>
+      <button class="btn btn-primary">Save</button>
+    <% end %>
+  </div>
+</div>

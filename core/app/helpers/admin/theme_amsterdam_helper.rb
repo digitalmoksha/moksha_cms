@@ -79,6 +79,18 @@ module Admin::ThemeAmsterdamHelper
     end
   end
 
+  # Similar to a content_box, but don't wrap the content in a div "body" tag, which has
+  # margins/padding.  Useful for forms and tables
+  #------------------------------------------------------------------------------
+  def modal_dialog(options = {}, &block)
+    options[:title]         ||= ''
+    options[:id]            ||= ''
+    options[:include_save] = options[:include_save].nil? ? false : options[:include_save]
+    
+    content = with_output_buffer(&block)
+    render :partial => 'dm_core/admin/shared/modal_dialog', :locals => { :options => options, :content => content }
+  end
+
   # Displays a "well" with content, flush to the edges.  Optional title and explanation
   # text
   #------------------------------------------------------------------------------
