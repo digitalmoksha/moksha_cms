@@ -28,6 +28,8 @@ class PaymentHistory < ActiveRecord::Base
   serialize                 :item_details
   monetize                  :total_cents, :with_model_currency => :total_currency, :allow_nil => true
 
+  default_scope             { where(account_id: Account.current.id) }
+
   validates_numericality_of :cost
 
   # This will get overridden by any specilized integrations, such as Ultracart
