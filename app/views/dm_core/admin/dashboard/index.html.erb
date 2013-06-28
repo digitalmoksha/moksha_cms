@@ -1,47 +1,7 @@
 <%= render :partial => 'dm_core/admin/dashboard/index_sidebar' %>
 
-<% toolbar = toolbar_button(User.count, dm_core.admin_users_path, :title => 'Number of registered users', :class => 'badge badge-info pull-right') %>
-<%= content_frame :title => 'Recent New Users', :toolbar => toolbar do %>
-  <div class="table-overflow">
-    <table class="table table-bordered table-block">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Registered On</th>
-          <th>Last Access</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% User.order('created_at DESC').limit(5).each do |user| %>
-          <tr>
-            <td><%= user.display_name %></td>
-            <td><%= "#{time_ago_in_words(user.created_at)} ago" %></td>
-            <td><%= user.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.last_access_at)} ago" %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
+<div class="row-fluid">
+  <%= render partial: 'dm_core/admin/dashboard/widget_recent_new_users' %>
 
-<% toolbar = toolbar_button(User.count, dm_core.admin_users_path, :title => 'Number of Registered Users', :class => 'label label-success pull-right') %>
-<%= content_frame :title => 'Recent User Activity', :toolbar => toolbar, :class => 'span6' do %>
-  <div class="table-overflow">
-    <table class="table table-bordered table-block">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th style="text-align: center">Last Login</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% UserProfile.order('last_access_at DESC').limit(5).each do |profile| %>
-          <tr>
-            <td><%= profile.full_name %></td>
-            <td align="center"><%= profile.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(profile.last_access_at)} ago" %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
+  <%= render partial: 'dm_core/admin/dashboard/widget_recent_user_activity' %>
+</div>

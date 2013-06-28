@@ -19,19 +19,6 @@
 
 <% content_for :sidebar do %>
 
-  <!-- Sidebar stats -->
-  <ul class="topstats block">
-    <li>
-      <% accessed_users = UserProfile.access_last_30_days %>
-      <div class="left">Active Users:<h1><%= accessed_users[:total] %></h1></div>
-      <div class="topchart" id="access_user_sparkline"><%= accessed_users[:list] %></div>
-    </li>
-    <li>
-      <% new_users = User.new_last_30_days %>
-      <div class="left">New Users:<h1><%= new_users[:total] %></h1></div>
-      <div class="topchart" id="new_user_sparkline"><%= new_users[:list] %></div>
-    </li>
-  </ul>
-  <!-- /sidebar stats -->
+  <%= render partial: 'dm_core/admin/dashboard/widget_sidebar_user_stats' %>
   
 <% end %>
