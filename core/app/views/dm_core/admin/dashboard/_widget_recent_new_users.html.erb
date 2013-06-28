@@ -1,0 +1,23 @@
+<% toolbar = toolbar_button(User.current_account_users.count, dm_core.admin_users_path, :title => 'Number of registered users', :class => 'label label-success pull-right') %>
+<%= content_frame :title => 'Recent New Users', :toolbar => toolbar, :class => 'span6' do %>
+  <div class="table-overflow">
+    <table class="table table-bordered table-block">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Registered On</th>
+          <th>Last Login</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% User.current_account_users.order('user_site_profiles.created_at DESC').limit(5).each do |user| %>
+          <tr>
+            <td><%= user.full_name %></td>
+            <td align="center"><%= "#{time_ago_in_words(user.created_at)} ago" %></td>
+            <td align="center"><%= user.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.last_access_at)} ago" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

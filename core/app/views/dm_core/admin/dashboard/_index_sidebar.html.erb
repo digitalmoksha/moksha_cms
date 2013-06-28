@@ -4,11 +4,13 @@
   <ul class="text-stats block">
     <li><%= link_to "n/a<span>subscribers</span>".html_safe, '#' %></li>
     <li><%= link_to "n/a<span>contributions</span>".html_safe, '#' %></li>
-    <li><%= link_to "#{User.count}<span>users</span>".html_safe, dm_core.admin_users_path %></li>
+    <li><%= link_to "#{User.current_account_users.count}<span>users</span>".html_safe, dm_core.admin_users_path %></li>
   </ul>
   <!-- /text stats -->
 
   <!-- Sidebar stats -->
+  <%= render partial: 'dm_core/admin/dashboard/widget_sidebar_user_stats' %>
+
   <ul class="topstats block">
     <li>
       <div class="left">Since launch:<h1>$15,859</h1></div>

@@ -23,22 +23,25 @@ module DmCore
 
         belongs_to              :country, :class_name => 'DmCore::Country'
         has_one                 :user_profile, :dependent => :destroy
+        has_many                :user_site_profiles, :dependent => :destroy
+        has_one                 :current_site_profile, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
+
         accepts_nested_attributes_for :user_profile
-        
+
         validates_presence_of   :email
 
         after_create            :add_account
-        after_update            :udpate_profile_email
-        
-        delegate                :first_name, :last_name, :full_name, :display_name, :country, :last_access_at,
-                                :to => :user_profile
-        
-        scope                   :online, lambda { where('last_access_at >= ?', 10.minutes.ago.utc) }
-        
+        after_update            :update_profile_email
+
+        delegate                :first_name, :last_name, :full_name, :display_name, :country, :to => :user_profile
+        delegate                :last_access_at, :to => :current_site_profile
+
+        scope                   :current_account_users, lambda { includes(:user_site_profiles).where("user_site_profiles.account_id = #{Account.current.id}") }
+        scope                   :online, lambda { includes(:user_site_profiles).where('user_site_profiles.last_access_at >= ?', 10.minutes.ago.utc) }
 
         # Keep the profile email in sync with the user's email
         #------------------------------------------------------------------------------
-        def udpate_profile_email
+        def update_profile_email
           user_profile.update_attribute(:email, email) if self.email_changed?
         end
         
@@ -47,6 +50,15 @@ module DmCore
         def add_account
           self.skip_reconfirmation!  # make sure a second confirmation email is not sent
           self.update_attribute(:account_id, Account.current.id)
+          ensure_site_profile_exists
+        end
+        
+        #------------------------------------------------------------------------------
+        def ensure_site_profile_exists
+          if current_site_profile.nil?
+            user_site_profiles.create().update_attribute(:account_id, Account.current.id)
+            self.reload
+          end
         end
         
         # Determine if this user has the Admin role
@@ -57,7 +69,8 @@ module DmCore
         
         #------------------------------------------------------------------------------
         def update_last_access
-          user_profile.update_attribute(:last_access_at, Time.now.utc) if user_profile.last_access_at.nil? || (user_profile.last_access_at <= 10.minutes.ago)
+          ensure_site_profile_exists
+          current_site_profile.update_attribute(:last_access_at, Time.now.utc) if current_site_profile.last_access_at.nil? || (current_site_profile.last_access_at <= 10.minutes.ago)
         end
         
         # check if a user is active
@@ -83,14 +96,6 @@ module DmCore
       end
 
       module ClassMethods
-
-        #------------------------------------------------------------------------------
-        def new_last_30_days
-          items = 27.step(0, -3).map do |date| 
-            self.where('created_at <= ? AND created_at > ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime).count
-          end
-          return { :total => items.inject(:+), :list => items.join(',') }
-        end
 
         # Query for users that don't have a specific role.  Useful for getting users
         # are not :admin
