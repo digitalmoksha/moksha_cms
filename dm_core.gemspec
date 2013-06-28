@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'amoeba', '~> 2.0'         # for hanlding model duplicating
   s.add_dependency 'friendly_id', "~> 4.0.9"
   s.add_dependency 'aasm'
+  s.add_dependency 'money-rails'
 
   #--- really, we need a patched level of globalize for best performance.  include main one here, and override in app's gem file
   # gem 'globalize3', :git => 'git://github.com/svenfuchs/globalize3.git', :ref => 'dfad4bfeb331d39222c49e321515927b378bfd28'
