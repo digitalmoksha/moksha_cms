@@ -19,6 +19,7 @@ require 'ranked-model'
 require 'amoeba'
 require 'friendly_id'
 require 'aasm'
+require 'money-rails'
 
 module DmCore
   class Engine < ::Rails::Engine
