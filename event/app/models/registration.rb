@@ -145,7 +145,7 @@ class Registration < ActiveRecord::Base
   # Payment was entered manually, create the history record
   #------------------------------------------------------------------------------
   def manual_payment(amount_string, currency, user_profile,
-                     options = { item_ref: '', payment_method: 'cash', bill_to_name: '' } )
+                     options = { item_ref: '', payment_method: 'cash', bill_to_name: '', payment_date: Time.now } )
     amount            = Money.parse(amount_string, currency)
     payment_history   = self.payment_histories.create(
         :anchor_id            => receipt_code,
@@ -157,7 +157,7 @@ class Registration < ActiveRecord::Base
         :total_currency       => amount.currency.iso_code,
         :payment_method       => options[:payment_method],
         :bill_to_name         => options[:bill_to_name],
-        :payment_date         => Time.now,
+        :payment_date         => options[:payment_date],
         :user_profile_id      => user_profile.id)
         
     if payment_history.errors.empty?

@@ -18,7 +18,7 @@
         <tbody>
           <% @registration.payment_histories.order('created_on ASC').each do |payment| %>
             <tr>
-              <td><%= format_date(payment.created_on) %></td>
+              <td><%= format_date(payment.payment_date) %></td>
               <td><%= payment.item_ref %></td>
               <td><%= payment.total.format(:no_cents_if_whole => true, :symbol => true) %></td>
               <td><%= payment.payment_method %></td>
@@ -76,7 +76,18 @@
 </div>
 
 <%= simple_form_for(:payment_history, :url => ajax_new_payment_admin_registration_path(@registration)) do |f| %>
-  <%= modal_dialog title: 'Enter New Payment', id: 'enter_new_payment', include_save: true  do %>
+  <%= modal_dialog title: 'Enter New Payment', id: 'enter_new_payment', include_save: true do %>
+    <div class="form-horizontal control-group string required registration_payment_date">
+      <label class="string control-label" for="registration_payment_date">
+        Paid On
+      </label>
+      <div class="controls">
+        <ul class="dates-range no-append">
+            <li><input name="payment_history[payment_date]" type="text" value="<%= Date.today %>" placeholder="Select date..." class="datepicker" ></li>
+        </ul>
+      </div>
+      <div class="clearfix"></div>
+    </div>
     <div class="form-horizontal control-group integer required registration_discount_value">
       <label class="integer control-label required" for="registration_discount_value"><abbr title="required">*</abbr> Amount</label>
       <div class="controls input-append">

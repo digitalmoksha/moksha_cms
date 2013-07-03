@@ -69,6 +69,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
                               item_ref: params[:payment_history][:description],
                               payment_method: params[:payment_history][:payment_method],
                               bill_to_name: params[:payment_history][:bill_to_name],
+                              payment_date: params[:payment_history][:payment_date]
                         )
 
     if @payment_history.errors.empty?
