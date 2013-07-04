@@ -11,7 +11,7 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::ApplicationCont
 
   #------------------------------------------------------------------------------
   def new
-    @workshop_price = @workshop.workshop_prices.build
+    @workshop_price = @workshop.workshop_prices.build(price_currency: @workshop.base_currency)
   end
 
   #------------------------------------------------------------------------------

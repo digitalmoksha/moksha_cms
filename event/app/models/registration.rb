@@ -26,6 +26,7 @@ class Registration < ActiveRecord::Base
   default_scope                 { where(account_id: Account.current.id) }
   scope                         :attending, where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL")
 
+  before_create                 :set_currency
   after_create                  :set_receipt_code
   
   validates_presence_of         :workshop_price_id, :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
@@ -34,6 +35,12 @@ class Registration < ActiveRecord::Base
   validates_length_of           :payment_comment, :maximum => 255
   
   delegate :first_name, :last_name, :full_name, :email, :address, :address2, :city, :state, :country, :zipcode, :phone, :to => :user_profile
+  
+  # The amount_paid currency should match the workshop base currency
+  #------------------------------------------------------------------------------
+  def set_currency
+    self[:amount_paid_currency] = workshop.base_currency
+  end
   
   # Receipt code: (workshop.id)-(registration.id).  eg.  003-101
   #------------------------------------------------------------------------------
@@ -63,7 +70,7 @@ class Registration < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def discount
     return Money.new(0, "USD") if workshop_price.nil?
-    
+
     unless discount_value.blank?
       cents = (discount_use_percent ? (workshop_price.price.cents * discount_value / 100) : (discount_value * 100))
     else

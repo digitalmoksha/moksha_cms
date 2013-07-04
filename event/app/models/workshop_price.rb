@@ -1,3 +1,9 @@
+# Note: The currency of a WorkshopPrice is the base currency of it's workshop.
+# If they were different, we would need to always have an exchange rate available
+# to convert to/from the workshop and the price currency.
+# With the alternate price/currencies, the exchange rate is directly based on
+# the prices in the two currencies.
+#------------------------------------------------------------------------------
 class WorkshopPrice < ActiveRecord::Base
 
   self.table_name         = 'ems_workshop_prices'
@@ -30,7 +36,13 @@ class WorkshopPrice < ActiveRecord::Base
   validates_presence_of   :recurring_period,    :if => Proc.new { |w| w.recurring_amount }
   validates_presence_of   :recurring_number,    :if => Proc.new { |w| w.recurring_amount }
 
-  CURRENCY_TYPES = { 'EUR' => 'EUR', 'CHF' => 'CHF', 'GBP' => 'GBP', 'CZK' => 'CZK', 'USD' => 'USD', 'JPY' => 'JPY', 'INR' => 'INR' }
+  CURRENCY_TYPES = {'British Pound (&pound;)'.html_safe => 'GBP',
+                    'Czech Koruna (&#x4B;&#x10D;)'.html_safe => 'CZK',
+                    'Euro (&euro;)'.html_safe => 'EUR',
+                    'Indian Rupee (Rs)' => 'INR',
+                    'Japanese Yen (&yen;)'.html_safe => 'JPY',
+                    'Swiss Franc (Fr)' => 'CHF',
+                    'US Dollar ($)' => 'USD' }
   PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Wire Transfer']
 
   #------------------------------------------------------------------------------

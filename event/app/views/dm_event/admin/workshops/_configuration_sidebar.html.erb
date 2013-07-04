@@ -10,6 +10,7 @@
         <li><%= link_to "Rejected Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'rejected') %></li>
       </ul>
     </li>
+    <li><%= link_to "View Registrations".html_safe, [:admin, @workshop] %></li>
   </ul>
   
 <% end %>

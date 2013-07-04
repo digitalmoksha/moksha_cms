@@ -18,7 +18,7 @@ class Workshop < ActiveRecord::Base
   
   attr_accessible         :title, :description, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
                           :contact_email, :contact_phone, :require_review, :require_account, :require_address,
-                          :require_photo, :published
+                          :require_photo, :published, :base_currency
 
   # --- globalize
   translates              :title, :description, :fallbacks_for_empty_translations => true
@@ -28,8 +28,12 @@ class Workshop < ActiveRecord::Base
   friendly_id             :title_slug, use: :slugged
   resourcify
 
+  validates_presence_of   :country_id
+  validates_presence_of   :base_currency
   validates_presence_of   :starting_on
   validates_presence_of   :ending_on
+  validates_presence_of   :contact_email
+  
   # validates_presence_of   :deadline_on
 
   default_scope           { where(account_id: Account.current.id) }

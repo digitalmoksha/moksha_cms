@@ -1,10 +1,14 @@
 <% content_for :content_title_extra do %>
-  <div class='navbar'><ul class='nav pull-right'>
-    <%= present(@workshop).label_published %>
-  </ul></div>
+  <div class='navbar'>
+    <ul class='nav pull-right'>
+      <li><%= present(@workshop).label_published %></li>
+      <li><%= link_to(icon_label('icon-edit', 'Edit'), edit_admin_workshop_url(@workshop), :title => 'Edit Workshop', :class => "nav-btn-primary") %></li>
+    </ul>
+  </div>
 <% end %>
 
-<%= content_frame :title => 'Registrations' do %>
+<% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), register_new_url(@workshop), :target => '_blank', :title => 'New Registration', :class => "nav-btn-primary") ]) %>
+<%= content_frame :title => 'Registrations', :toolbar => toolbar do %>
   <div class="table-overflow">
     <table id="registration_table" class="table table-striped table-bordered table-block" data-source="<%= dm_event.admin_workshop_url(@workshop) %>">
       <thead>
@@ -27,11 +31,7 @@
 
   <div class="separator"></div>
 
-  <ul class="navigation-light block">
-    <li><%= link_to 'Edit Workshop', edit_admin_workshop_url(@workshop) %></li>
-    <li><%= link_to 'New Registration', register_new_url(@workshop), :targe => '_blank' %></li>
-    <li><%= link_to 'Export Registrations (.csv)', admin_workshop_url(@workshop, :format => 'csv') %></li>
-  </ul>
+  <%= link_to 'Export Registrations (.csv)', admin_workshop_url(@workshop, :format => 'csv'), :class => "action-button blue" %>
 
 <% end %>
 
