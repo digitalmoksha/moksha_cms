@@ -47,9 +47,13 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   #------------------------------------------------------------------------------
   def success
     @registration = Registration.find_by_receipt_code(params[:receipt_code])
+    if @registration.nil? || current_user.nil? || @registration.user_profile.user != current_user
+      #--- not logged in or not the users registration
+      flash[:alert] = 'Sorry, you are either not logged in or this is an invalid registraton for this user'
+      redirect_to main_app.root_url and return
+    end
     @workshop     = @registration.workshop if @registration
     @receipt_content = @registration.email_state_notification(@registration.current_state, false)
-    redirect_to main_app.root_url and return if @registration.nil? || @registration.user_profile.user != current_user
   end
 
 private
