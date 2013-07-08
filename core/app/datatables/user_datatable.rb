@@ -25,12 +25,12 @@ private
   def data
     users.map do |user|
       [
-        h(user.full_name),
+        user.user_profile.public_avatar.present? ? image_tag(user.user_profile.public_avatar_url(:sq35), width: 35, height: 35) : '',
+        link_to(h(user.full_name), url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => "Edit #{h(user.full_name)}"),
         h(user.email),
         user.country.nil? ? 'n/a' : user.country.english_name,
         user.last_access_at.nil? ? colored_label('n/a', :warning) : "#{time_ago_in_words(user.last_access_at)} ago",
-        (user.is_admin? ? colored_label('Admin', :success) : (user.has_role?(:beta) ? colored_label('Beta', :warning) : (user.has_role?(:author) ? colored_label('Author', :info) : 'User' ))),
-        "<ul class='table-controls'>#{user_actions(user)}</ul>"
+        (user.is_admin? ? colored_label('Admin', :success) : (user.has_role?(:beta) ? colored_label('Beta', :warning) : (user.has_role?(:author) ? colored_label('Author', :info) : 'User' )))
       ]
     end
   end
@@ -51,13 +51,6 @@ private
   end
 
   #------------------------------------------------------------------------------
-  def user_actions(user)
-    actions = ''
-    actions << '<li>' + link_to(icons("font-edit"), url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => 'Edit', :class => 'btn hovertip') + '</li>'
-    actions << '<li>' + link_to(icons("font-remove"), url_helpers.admin_user_path(user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => 'btn hovertip') + '</li>'
-  end
-  
-  #------------------------------------------------------------------------------
   def page
     params[:iDisplayStart].to_i/per_page + 1
   end
@@ -69,7 +62,7 @@ private
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = ["LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", 'LOWER(user_profiles.email)', 'globalize_countries.english_name', 'user_site_profiles.last_access_at']
+    columns = ['', "LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", 'LOWER(user_profiles.email)', 'globalize_countries.english_name', 'user_site_profiles.last_access_at']
     columns[params[:iSortCol_0].to_i]
   end
 

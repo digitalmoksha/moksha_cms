@@ -10,6 +10,7 @@
   <p><%= I18n.t 'core.profile_public_explanation' %></p>
   <%= f.input :public_name, :label => I18n.t('core.profile_public_name'), :required => true %>
   <%= f.input :country_id, :collection => ut_country_select_collection(false), :label => I18n.t('core.profile_country'), :required => true %>
+  <%= f.input :public_avatar, label: "<strong>#{I18n.t('core.profile_public_upload')}</strong>", :as => :image, :input_html => {:preview_version => :sq100} %>
 
   <h2><%= I18n.t 'core.profile_private_title' %></h2>
   <p><%= I18n.t 'core.profile_private_explanation' %></p>

@@ -9,7 +9,8 @@ module DmCore
       included do
         attr_accessible         :email, :first_name, :last_name, :public_name,
                                 :address, :address2, :city, :state, :zipcode,
-                                :country_id, :address_required
+                                :country_id, :address_required,
+                                :public_avatar, :private_avatar
         
         #--- for when a service (like event registration), needs to require a valid address
         #    can be set by the service to enable the validations
@@ -42,6 +43,15 @@ module DmCore
         validates_length_of     :cell,              :maximum => 20
 
         after_create            :add_account
+
+        # Avatars
+        # => public_avatar is for use in forums, blog comments, etc.
+        # => private_avatar is for use in special events where building a group
+        #    is important.
+        # => use_private_avatar_for_public is currently NOT used 
+        #------------------------------------------------------------------------------
+        mount_uploader          :public_avatar, AvatarUploader
+        mount_uploader          :private_avatar, AvatarUploader
 
         #------------------------------------------------------------------------------
         def address_required=(value)
