@@ -22,3 +22,37 @@ de:
     prev_page: "<i class='icon-angle-left'></i> Früher"
     login: Anmelden
     logout: Abmelden
+    account: Rechnung
+    errors_below: Bitte überprüfen Sie die folgenden Probleme
+
+    profile_email: E-Mail
+    profile_password: Passwort
+    profile_password_confirmation: Passwort Bestätigung
+    profile_current_password: Aktuelles Passwort
+    profile_first_name: Vorname
+    profile_last_name: Nachname
+    profile_address: Adresse
+    profile_address2: Adresse
+    profile_city: Ort
+    profile_state: Bundesland
+    profile_country: Land
+    profile_zipcode: Postleitzahl
+    profile_public_name: Öffentlicher Benutzername
+    profile_update_btn: Aktualisieren Sie Ihr Profil
+    profile_account_settings: Account-Einstellungen
+    profile_details_settings: 'Public / Privates Profil'
+    profile_public_title: Öffentliches Profil
+    profile_public_explanation: 'Die folgenden Informationen werden sichtbar sein, andere Menschen, wie Beiträge im Forum oder Kommentare im Blog.'
+    profile_private_title: Privates Profil
+    profile_private_explanation: 'Diese Informationen werden vertraulich behandelt und nicht an Dritte weitergegeben.'
+    profile_account_title: "Aktualisieren Email / Konto Login"
+    profile_account_explanation: "Denken Sie daran: nächste Mal anmelden, werden Sie Ihre E-Mail-Adresse aktualisiert."
+    profile_account_password_title: Ändern Sie Ihr Passwort
+    profile_account_password_current_title: Aktuelles Passwort
+    profile_account_password_current_explanation: "Ihre aktuelle Kennwort ist erforderlich, um Änderungen vorzunehmen."
+    profile_profile_updated: Ihr Profil wurde aktualisiert
+    profile_email_confirmation: 'Eine E-Mail wurde an die neue E-Mail-Adresse geschickt worden - müssen Sie auf den Bestätigungslink klicken, bevor Sie sich anmelden können mit dem neuen E-Mail-Adresse'
+    profile_password_updated: Ihr Passwort wurde aktualisiert
+    profile_email_needs_confirmation: 'Ihre E-Mail-Adresse wurde bereits geändert worden'
+    profile_email_needs_confirmation_2: 'Eine E-Mail an diese Adresse zur Bestätigung gesandt. Wenn Sie nicht die Bestätigung per E-Mail, aktualisieren Sie einfach die E-Mail noch einmal neu zu senden Sie die Bestätigung.'
+    
