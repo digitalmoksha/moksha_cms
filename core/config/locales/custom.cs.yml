@@ -22,3 +22,37 @@ cs:
     prev_page: "<i class='icon-angle-left'></i> Předchozí"
     login: Přihlášení
     logout: Odhlášení
+    account: Účet
+    errors_below: Přečtěte si prosím níže uvedené problémy,
+
+    profile_email: E-mail
+    profile_password: Heslo
+    profile_password_confirmation: Potvrzení hesla
+    profile_current_password: Proud hesla
+    profile_first_name: Křestní jméno
+    profile_last_name: Příjmení
+    profile_address: Ulice a číslo
+    profile_address2: Ulice a číslo
+    profile_city: Město
+    profile_state: Stát/provincie/region
+    profile_country: Země
+    profile_zipcode: Poštovní směrovací číslo
+    profile_public_name: Zveřejňované jméno
+    profile_update_btn: Aktualizovat
+    profile_account_settings: Nastavení účtu
+    profile_details_settings: 'Veřejné / Soukromé profil'
+    profile_public_title: Veřejný profil
+    profile_public_explanation: 'Následující informace bude viditelné pro ostatní lidi, jako jsou příspěvky ve fóru nebo v komentářích v blogu.'
+    profile_private_title: Soukromý profil
+    profile_private_explanation: 'Tyto informace budou drženy v tajnosti, a nesdílí ji s nikým.'
+    profile_account_title: "Aktualizace e-mail / Přihlášení"
+    profile_account_explanation: "Pamatujte si: příště přihlášení budete používat aktualizovaný e-mailovou adresu."
+    profile_account_password_title: Změnit heslo
+    profile_account_password_current_title: Proud hesla
+    profile_account_password_current_explanation: Vaše aktuální heslo je nutné provádět žádné změny.
+    profile_profile_updated: Váš profil byl aktualizován
+    profile_email_confirmation: 'E-mail byl odeslán na novou e-mailovou adresu - musíte kliknout na potvrzovací odkaz, než se můžete přihlásit pomocí nového e-mailovou adresu'
+    profile_password_updated: Vaše heslo bylo aktualizováno
+    profile_email_needs_confirmation: 'Vaše e-mailová adresa již byla změněna na'
+    profile_email_needs_confirmation_2: 'E-mail byl odeslán na zadanou emailovou adresu pro potvrzení. Pokud jste neobdrželi potvrzovací e-mail, jednoduše aktualizovat e-mail znovu odeslat znovu potvrdit.'
+    
