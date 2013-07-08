@@ -43,6 +43,7 @@ de:
     profile_details_settings: 'Public / Privates Profil'
     profile_public_title: Öffentliches Profil
     profile_public_explanation: 'Die folgenden Informationen werden sichtbar sein, andere Menschen, wie Beiträge im Forum oder Kommentare im Blog.'
+    profile_public_upload: Laden Sie ein Foto für den Einsatz in Ihrem öffentlichen Profil
     profile_private_title: Privates Profil
     profile_private_explanation: 'Diese Informationen werden vertraulich behandelt und nicht an Dritte weitergegeben.'
     profile_account_title: "Aktualisieren Email / Konto Login"

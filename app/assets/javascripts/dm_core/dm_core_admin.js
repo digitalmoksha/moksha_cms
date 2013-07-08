@@ -134,10 +134,10 @@ $(document).ready(function() {
      bProcessing: false,
      bServerSide: true,
      bStateSave: true,
-     aaSorting: [[3, 'desc']],
+     aaSorting: [[4, 'desc']],
      sDom: '<"datatable-header"fl>t<"datatable-footer"ip>',
      aoColumnDefs: [
-       { bSortable: false, aTargets: [ 4 ] },
+       { bSortable: false, aTargets: [ 0 ] },
        { bSortable: false, aTargets: [ 5 ] }
      ],
      oLanguage: {

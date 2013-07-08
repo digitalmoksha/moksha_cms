@@ -43,6 +43,7 @@ cs:
     profile_details_settings: 'Veřejné / Soukromé profil'
     profile_public_title: Veřejný profil
     profile_public_explanation: 'Následující informace bude viditelné pro ostatní lidi, jako jsou příspěvky ve fóru nebo v komentářích v blogu.'
+    profile_public_upload: Nahrajte fotografie pro použití ve vašem veřejném profilu
     profile_private_title: Soukromý profil
     profile_private_explanation: 'Tyto informace budou drženy v tajnosti, a nesdílí ji s nikým.'
     profile_account_title: "Aktualizace e-mail / Přihlášení"

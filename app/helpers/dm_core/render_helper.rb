@@ -1,9 +1,21 @@
 module DmCore
   module RenderHelper
     
+    # gives the public avatar for a user
     #------------------------------------------------------------------------------
     def avatar_for(user, size=32)
-      image_tag('dm_core/user.gif', width: size, height: size, class: 'image')
+      case 
+      when size <= 35
+        avatar = user.user_profile.public_avatar_url(:sq35)
+      when size <= 100
+        avatar = user.user_profile.public_avatar_url(:sq100)
+      when size <= 200
+        avatar = user.user_profile.public_avatar_url(:sq200)
+      else
+        avatar = user.user_profile.public_avatar_url
+      end
+      # image_tag('dm_core/user.gif', width: size, height: size, class: 'image')
+      image_tag(avatar, width: size, height: size, class: 'image')
     end
 
     # Used in pagination - get the current page number being displayed
