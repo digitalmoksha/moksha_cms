@@ -1,5 +1,5 @@
 <li class="clearfix" id="<%= dom_id(comment) %>">
-  <div class="user"><%= avatar_for comment.user, 48 %></div>
+  <div class="user"><%= avatar_for comment.user, 50 %></div>
   <p class="comment_author"><%= truncate(present(comment).author, :length => 30) %></p>
   <p class="info">
     <%= format_datetime comment.created_at %>
