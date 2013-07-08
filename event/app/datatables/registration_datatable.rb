@@ -29,7 +29,7 @@ private
       [
         registration_actions(registration),
         h(registration.receipt_code),
-        link_to(registration.full_name, url_helpers.edit_admin_registration_path(I18n.locale, registration)),
+        name_and_avatar(registration),
         workshop_price(registration),
         h(format_date(registration.created_at))
       ]
@@ -41,6 +41,12 @@ private
     @registrations ||= fetch_registrations
   end
 
+  #------------------------------------------------------------------------------
+  def name_and_avatar(registration)
+    # image_tag(registration.user_profile.public_avatar_url(:sq35), width: 25, height: 25) + link_to(registration.full_name, url_helpers.edit_admin_registration_path(I18n.locale, registration))
+    link_to(registration.full_name, url_helpers.edit_admin_registration_path(I18n.locale, registration))
+  end
+  
   #------------------------------------------------------------------------------
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
