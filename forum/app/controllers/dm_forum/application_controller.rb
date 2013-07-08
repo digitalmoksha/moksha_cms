@@ -1,4 +1,6 @@
-class DmForum::ApplicationController < DmCore::ApplicationController
+# Subclass from main ApplicationController, which will subclass from DmCore
+#------------------------------------------------------------------------------
+class DmForum::ApplicationController < ::ApplicationController
   include ApplicationHelper  
 
   #--- these are needed to support rendering layouts built for the CMS
