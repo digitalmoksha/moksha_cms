@@ -64,6 +64,23 @@ class CmsPage < ActiveRecord::Base
     return page.template
   end
 
+  # Return a list of published children pages
+  # => user, to check for permissions
+  # => include_blank_titles to true to include pages with blank titles.  
+  #      do not include by default
+  #------------------------------------------------------------------------------
+  def published_children(user, options = {include_blank_titles: false})
+    pages = []
+    if self.has_children?
+      self.children.each do |child|
+        if child.is_published? || (user && user.is_admin?)
+          pages << child unless child[:title].blank? && !options[:include_blank_titles]
+        end
+      end
+    end
+    return pages
+  end
+  
   #------------------------------------------------------------------------------
   def self.page_types
     PAGETYPE
