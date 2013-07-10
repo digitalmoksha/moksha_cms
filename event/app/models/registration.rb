@@ -127,24 +127,25 @@ class Registration < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def self.csv_columns
     column_definitions = []
-    column_definitions <<     ["receipt_code",      "item.receipt_code", 75]
-    column_definitions <<     ['process_state',     'item.aasm_state', 100]
-    column_definitions <<     ["full_name",         "item.full_name", 100]
-    column_definitions <<     ["last_name",         "item.last_name.capitalize", 100]
-    column_definitions <<     ["first_name",        "item.first_name.capitalize", 100]
-    column_definitions <<     ["email",             "item.email.downcase", 150]
-    column_definitions <<     ["address",           "item.address", 150]
-    column_definitions <<     ["address2",          "item.address2"]
-    column_definitions <<     ["city",              "item.city.capitalize", 100]
-    column_definitions <<     ["state",             "item.state.capitalize"]
-    column_definitions <<     ["zipcode",           "item.zipcode"]
-    column_definitions <<     ["country",           "item.country.code"]
+    column_definitions <<     ["Receipt Code",      "item.receipt_code", 75]
+    column_definitions <<     ['Process State',     'item.aasm_state', 100]
+    column_definitions <<     ["Full Name",         "item.full_name", 100]
+    column_definitions <<     ["Last Name",         "item.last_name.capitalize", 100]
+    column_definitions <<     ["First Name",        "item.first_name.capitalize", 100]
+    column_definitions <<     ["Email",             "item.email.downcase", 150]
+    column_definitions <<     ["Address",           "item.address", 150]
+    column_definitions <<     ["Address2",          "item.address2"]
+    column_definitions <<     ["City",              "item.city.capitalize", 100]
+    column_definitions <<     ["State",             "item.state.capitalize"]
+    column_definitions <<     ["Zipcode",           "item.zipcode"]
+    column_definitions <<     ["Country",           "item.country.code"]
 
-    column_definitions <<     ['registered_on',     'item.created_at.to_date', 75, {:type => 'DateTime', :numberformat => 'd mmm, yyyy'}]
+    column_definitions <<     ['Registered on',     'item.created_at.to_date', 75, {:type => 'DateTime', :numberformat => 'd mmm, yyyy'}]
 
-    column_definitions <<     ["price",             "item.workshop_price.price", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
-    column_definitions <<     ["paydesc",           "item.workshop_price.payment_desc"]
-    column_definitions <<     ["discount",          "item.discount", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+    column_definitions <<     ["Price",             "item.workshop_price.price", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+    column_definitions <<     ["Price Description", "item.workshop_price.price_description"]
+    column_definitions <<     ["Price Sub Descr",   "item.workshop_price.sub_description"]
+    column_definitions <<     ["Discount",          "item.discount", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
 
     return column_definitions
   end
