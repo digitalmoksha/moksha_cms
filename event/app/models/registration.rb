@@ -58,7 +58,7 @@ class Registration < ActiveRecord::Base
   # Price of this registration (without discount)
   #------------------------------------------------------------------------------
   def price
-    workshop_price ? workshop_price.price : Money.new(0, "USD")
+    workshop_price ? workshop_price.price : Money.new(0, workshop.base_currency)
   end
   
   # Price with discount
@@ -69,7 +69,7 @@ class Registration < ActiveRecord::Base
   
   #------------------------------------------------------------------------------
   def discount
-    return Money.new(0, "USD") if workshop_price.nil?
+    return Money.new(0, workshop.base_currency) if workshop_price.nil?
 
     unless discount_value.blank?
       cents = (discount_use_percent ? (workshop_price.price.cents * discount_value / 100) : (discount_value * 100))
@@ -171,7 +171,8 @@ class Registration < ActiveRecord::Base
     if payment_history.errors.empty?
       self.update_attribute(:amount_paid_cents, (self.amount_paid + self.workshop_price.to_base_currency(amount)).cents)
       self.reload
-      self.send('paid!') if balance_owed <= 0 && !self.paid?
+      debugger
+      self.send('paid!') if balance_owed.cents <= 0 && !self.paid?
     end
     return payment_history
   end

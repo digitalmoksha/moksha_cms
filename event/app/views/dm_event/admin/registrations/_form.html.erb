@@ -1,5 +1,8 @@
 <% content_for :content_title, "#{h(@registration.full_name)} <small>#{h(@workshop.title)}</small>".html_safe %>
 <% content_for :sidebar do %>
+  <ul class="navigation-light block">
+    <li><%= link_to "View Registrations".html_safe, [:admin, @workshop] %></li>
+  </ul>
 <% end %>
 
 <div class="row-fluid">
