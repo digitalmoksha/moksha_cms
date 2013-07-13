@@ -125,7 +125,9 @@
   <% #--- only allow editing of manual payments %>
   <% if payment_history.user_profile %>
     <%= simple_form_for(payment_history, :url => ajax_edit_payment_admin_registration_path(locale: I18n.locale, id: @registration, payment_id: payment_history.id)) do |f| %>
-      <%= modal_dialog title: 'Enter New Payment', id: "edit_payment_#{payment_history.id}", include_save: true do %>
+      <%= modal_dialog title: 'Enter New Payment', id: "edit_payment_#{payment_history.id}", include_save: true,
+                       delete_url: ajax_delete_payment_admin_registration_path(locale: I18n.locale, id: @registration, payment_id: payment_history.id),
+                       delete_msg: 'Are you sure you want to delete this payment?' do %>
         <div class="form-horizontal control-group string required registration_payment_date">
           <label class="string control-label" for="registration_payment_date">
             Paid On

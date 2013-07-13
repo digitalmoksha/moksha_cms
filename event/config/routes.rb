@@ -13,9 +13,10 @@ DmEvent::Engine.routes.draw do
         end
         resources :registrations do
           member do
-            put  'action_state/:state_event',         :action => 'action_state', :as => 'action_state'
-            post 'ajax_payment',                      :action => 'ajax_payment'
-            put  'ajax_edit_payment/:payment_id',     :action => 'ajax_payment', :as => 'ajax_edit_payment'
+            put    'action_state/:state_event',         :action => 'action_state', :as => 'action_state'
+            post   'ajax_payment',                      :action => 'ajax_payment'
+            put    'ajax_edit_payment/:payment_id',     :action => 'ajax_payment', :as => 'ajax_edit_payment'
+            delete 'ajax_delete_payment/:payment_id',   :action => 'ajax_delete_payment', :as => 'ajax_delete_payment'
           end
         end
         resources :workshop_prices

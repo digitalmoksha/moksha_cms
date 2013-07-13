@@ -189,6 +189,19 @@ class Registration < ActiveRecord::Base
     return payment_history
   end
 
+  # delete a payment and update the registrations total amount paid
+  #------------------------------------------------------------------------------
+  def delete_payment(payment_id)
+    payment = PaymentHistory.find(payment_id)
+    if payment
+      self.update_attribute(:amount_paid_cents, (self.amount_paid - self.workshop_price.to_base_currency(payment.total)).cents)
+      payment.destroy
+      suppress_transition_email
+      self.send('accept!') if balance_owed.cents > 0 && self.paid?
+      return true
+    end
+    return false
+  end
 
 =begin
   acts_as_reportable

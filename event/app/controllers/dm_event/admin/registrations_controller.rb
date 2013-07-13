@@ -9,12 +9,12 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
     case @state_event
     when 'delete'
       @registration.destroy
-    when 'verify payment'
-      @registration.verify_payment
-    when 'archive', 'unarchive'
-      @registration.toggle_archive
-    when 'confirm', 'unconfirm'
-      @registration.toggle_confirm
+    # when 'verify payment'
+    #   @registration.verify_payment
+    # when 'archive', 'unarchive'
+    #   @registration.toggle_archive
+    # when 'confirm', 'unconfirm'
+    #   @registration.toggle_confirm
     when 'take action'
       flash[:error] = "Please select an action to take"
     else
@@ -87,50 +87,17 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
     end
   end
 
-  # Record a new payment for the event
   #------------------------------------------------------------------------------
-  def ajax_edit_payment
-  end
-  
-=begin
-
-  #------------------------------------------------------------------------------
-  def list
-    unless params[:id] == nil
-      @workshop = EventWorkshop.find_by_id(params[:id])
-      permit "#{SystemRoles::Moderator} on :workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @workshop.event
-
-      #sort_init 'created_at', 'asc', nil, nil, false, true
-      sort_init 'event_registrations.firstname, event_registrations.lastname', 'asc', nil, 'student', false, true
-      sort_update
-
-      query = @workshop.event_registration.includes(:event_payment, :student, :country).order(sort_clause)
-
-      @show_all = true
-      if params[:commit] == 'Search'
-        wildname = params[:name].sql_wildcard
-        query = query.where(
-                        "(event_registrations.receiptcode LIKE ? OR event_registrations.lastname LIKE ? OR
-                         event_registrations.firstname LIKE ? OR event_registrations.email LIKE ? OR
-                         students.lastname LIKE ? OR students.firstname LIKE ? OR
-                         students.middlename LIKE ? OR students.nickname LIKE ? OR
-                         students.email LIKE ?)",
-                        wildname, wildname, wildname, wildname,
-                        wildname, wildname, wildname, wildname, wildname)
-      elsif params[:commit] == 'SearchTag'
-        query = query.tagged_with(params[:name])
-      elsif params[:commit] == 'SearchState'
-        query = query.where("event_registrations.process_state LIKE ?", params[:name])
-      else
-        query = query.where(params[:archived] ? 'event_registrations.archived_on IS NOT NULL' : 'event_registrations.archived_on IS NULL')
-      end
-      @event_registrations = query.paginate :page => params[:page], :per_page => 100
+  def ajax_delete_payment
+    @registration     = Registration.find(params[:id])
+    if @registration.delete_payment(params[:payment_id])
+      redirect_to edit_admin_registration_path(@registration), notice: 'Payment was deleted'
     else
-      flash[:error] = 'Select a workshop to view registrations'
-      redirect_to :controller => 'event_workshops', :action => 'list'
+      redirect_to edit_admin_registration_path(@registration), error: 'Problem deleting payment'
     end
-    store_location
   end
+
+=begin
 
   #------------------------------------------------------------------------------
   def checkin
@@ -171,28 +138,6 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
       redirect_to :controller => 'event_workshops', :action => 'list'
     end
     store_location
-  end
-
-  #------------------------------------------------------------------------------
-  def student_search
-    @workshop = EventWorkshop.find_by_id(params[:id])
-    permit "#{SystemRoles::CashierLeader} on :workshop or #{SystemRoles::Moderator} on :workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @workshop.event
-
-    sort_init 'firstname, lastname', 'asc', params[:controller] + '_student_search_sort', nil, false, true
-    sort_update
-
-    wildname = params[:name].sql_wildcard
-    condition = ["(students.lastname LIKE ? or students.firstname LIKE ? or students.middlename LIKE ? or students.nickname LIKE ? or students.email LIKE ? or students.city LIKE ? or students.address LIKE ?)", wildname,
-                wildname, wildname, wildname, wildname, wildname, wildname]
-    @show_all = true
-
-    #--- don't include teachers, photos, etc.  Really degrades performance
-    @students = Student.paginate :page => params[:page], :per_page => 100, :include => [:country], :conditions => condition, :order => sort_clause
-  end
-
-  #------------------------------------------------------------------------------
-  def cancel_edit
-    redirect_back_or_default(:action => 'list', :id => params[:id])
   end
 
   #------------------------------------------------------------------------------

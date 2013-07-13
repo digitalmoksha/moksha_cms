@@ -25,7 +25,7 @@ module DmEvent
           state :refunded,            :after_enter => :state_refunded
           state :noshow,              :after_enter => :state_noshow
           state :deleted
-    
+
           #------------------------------------------------------------------------------
           event :start do
             transitions :from => :open,       :to => :waitlisted, :guard => Proc.new {|o| o.workshop.waitlisting?}   
@@ -47,6 +47,7 @@ module DmEvent
           #------------------------------------------------------------------------------
           event :accept do
             transitions :from => :pending,    :to => :accepted
+            transitions :from => :paid,       :to => :accepted
             transitions :from => :reviewing,  :to => :accepted
             transitions :from => :rejected,   :to => :accepted
             transitions :from => :waitlisted, :to => :accepted
@@ -159,8 +160,9 @@ module DmEvent
         # send the email if it's defined
         #------------------------------------------------------------------------------
         def state_acceptance
+debugger
           update_state_date
-          email_state_notification(:accepted)
+          email_state_notification(:accepted) unless @suppress_transition_email
         end
 
         # send the email if it's defined
@@ -221,6 +223,11 @@ module DmEvent
           aasm_state == 'pending' || aasm_state == 'waitlisted' || attending?
         end
 
+        # don't send a the notification email during a state transition
+        #------------------------------------------------------------------------------
+        def suppress_transition_email
+          @suppress_transition_email = true
+        end
       end
 
       #------------------------------------------------------------------------------
