@@ -7,6 +7,9 @@
     <%= content %>
   </div>
   <div class="modal-footer">
+    <% if options[:delete_url] %>
+      <%= link_to "Delete", options[:delete_url], method: :delete, data: { confirm: options[:delete_msg] }, title: 'Delete', class: "btn btn-danger", style: 'float:left' %>
+    <% end %>
     <button type="button" class="btn" data-dismiss="modal">Cancel</button>
     <% if options[:include_save] %>
       <button type="submit" class="btn btn-primary">Save</button>
