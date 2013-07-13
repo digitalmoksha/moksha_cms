@@ -1,4 +1,11 @@
 <% content_for :content_title, "#{h(@registration.full_name)} <small>#{h(@workshop.title)}</small>".html_safe %>
+<% content_for :content_title_extra do %>
+  <div class='navbar'>
+    <ul class='nav pull-right'>
+      <li><%= present(@registration).admin_status_label %></li>
+    </ul>
+  </div>
+<% end %>
 <% content_for :sidebar do %>
   <ul class="navigation-light block">
     <li><%= link_to "View Registrations".html_safe, [:admin, @workshop] %></li>
@@ -12,10 +19,11 @@
       <table class="table table-condensed table-gradient table-hover">
         <thead>
           <tr>
-            <th>Date</th>
+            <th width="75">Date</th>
             <th>Description</th>
             <th width="50">Paid</th>
             <th>Method</th>
+            <th width="18"><%= icon_label('icon-edit', '') %></th>
           </tr>
         </thead>
         <tbody>
@@ -25,6 +33,11 @@
               <td><%= payment.item_ref %></td>
               <td><%= payment.total.format(:no_cents_if_whole => true, :symbol => true) %></td>
               <td><%= payment.payment_method %></td>
+              <td>
+                <% if payment.user_profile #--- only allow editing of manual payments %>
+                  <%= link_to(icon_label('icon-edit', ''), '#', data: { toggle: "modal", target: "#edit_payment_#{payment.id}"}, title: 'Edit Payment') %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
@@ -78,7 +91,7 @@
 
 </div>
 
-<%= simple_form_for(:payment_history, :url => ajax_new_payment_admin_registration_path(@registration)) do |f| %>
+<%= simple_form_for(:payment_history, :url => ajax_payment_admin_registration_path(@registration)) do |f| %>
   <%= modal_dialog title: 'Enter New Payment', id: 'enter_new_payment', include_save: true do %>
     <div class="form-horizontal control-group string required registration_payment_date">
       <label class="string control-label" for="registration_payment_date">
@@ -94,17 +107,50 @@
     <div class="form-horizontal control-group integer required registration_discount_value">
       <label class="integer control-label required" for="registration_discount_value"><abbr title="required">*</abbr> Amount</label>
       <div class="controls input-append">
-        <%= f.text_field :amount, class: "numeric integer optional", size: '' %>
+        <%= f.text_field :cost, class: "numeric integer optional", size: '' %>
         <div class="btn-group">
-          <%= f.select :amount_currency, @registration.workshop_price.currency_list, {}, {style: "width: 60px", class: "select"} %>
+          <%= f.select :total_currency, @registration.workshop_price.currency_list, {}, {style: "width: 60px", class: "select"} %>
         </div>
       </div>
     </div>
     <%= f.input :payment_method, :label => 'Method', as: 'select', :collection => WorkshopPrice::PAYMENT_METHODS, :include_blank => false, input_html: {style: "width: 200px"} %>
     <div class="clearfix"></div>
-    <%= f.input :description, :label => 'Description', required: false %>
+    <%= f.input :item_ref, :label => 'Description', required: false %>
     <%= f.input :bill_to_name, :label => 'Payed By', required: false %>
     <%= f.input :receipt_requested, as: 'boolean', label: false, inline_label: 'Customer would like a receipt', required: false %>
   <% end %>
+<% end %>
 
+<% @registration.payment_histories.order('created_on ASC').each do |payment_history| %>
+  <% #--- only allow editing of manual payments %>
+  <% if payment_history.user_profile %>
+    <%= simple_form_for(payment_history, :url => ajax_edit_payment_admin_registration_path(locale: I18n.locale, id: @registration, payment_id: payment_history.id)) do |f| %>
+      <%= modal_dialog title: 'Enter New Payment', id: "edit_payment_#{payment_history.id}", include_save: true do %>
+        <div class="form-horizontal control-group string required registration_payment_date">
+          <label class="string control-label" for="registration_payment_date">
+            Paid On
+          </label>
+          <div class="controls">
+            <ul class="dates-range no-append">
+                <li><input name="payment_history[payment_date]" type="text" value="<%= payment_history.payment_date.to_date %>" placeholder="Select date..." class="datepicker" ></li>
+            </ul>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="form-horizontal control-group integer required registration_discount_value">
+          <label class="integer control-label required" for="registration_discount_value"><abbr title="required">*</abbr> Amount</label>
+          <div class="controls input-append">
+            <%= f.text_field :cost, class: "numeric integer optional", size: '' %>
+            <div class="btn-group">
+              <%= f.select :total_currency, @registration.workshop_price.currency_list, {}, {style: "width: 60px", class: "select"} %>
+            </div>
+          </div>
+        </div>
+        <%= f.input :payment_method, :label => 'Method', as: 'select', :collection => WorkshopPrice::PAYMENT_METHODS, :include_blank => false, input_html: {style: "width: 200px"} %>
+        <div class="clearfix"></div>
+        <%= f.input :item_ref, :label => 'Description', required: false %>
+        <%= f.input :bill_to_name, :label => 'Payed By', required: false %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>

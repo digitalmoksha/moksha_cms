@@ -1,9 +1,5 @@
-# Define presentation-specific methods here. Helpers are accessed through
-# `helpers` (aka `h`).
-#
-# This class is used to contain some common presenter functions
 #------------------------------------------------------------------------------
-class WorkshopPresenter < EventCommonPresenter
+class RegistrationPresenter < EventCommonPresenter
   presents  :model
   
   #------------------------------------------------------------------------------
@@ -19,4 +15,9 @@ class WorkshopPresenter < EventCommonPresenter
     format_date_range(model.starting_on, model.ending_on)
   end
   
+  #------------------------------------------------------------------------------
+  def admin_status_label
+    h.colored_label(model.current_state.to_s.titlecase, "#{model.current_state}")
+  end
+
 end

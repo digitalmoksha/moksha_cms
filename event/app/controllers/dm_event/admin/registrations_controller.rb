@@ -59,14 +59,15 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
 
   # Record a new payment for the event
   #------------------------------------------------------------------------------
-  def ajax_new_payment
+  def ajax_payment
     @registration     = Registration.find(params[:id])
     @workshop         = @registration.workshop
-    @payment_history  = @registration.manual_payment(
-                              params[:payment_history][:amount],
-                              params[:payment_history][:amount_currency],
+    previous_payment  = params[:payment_id] ? PaymentHistory.find(params[:payment_id]) : nil
+    @payment_history  = @registration.manual_payment(previous_payment,
+                              params[:payment_history][:cost],
+                              params[:payment_history][:total_currency],
                               current_user.user_profile,
-                              item_ref: params[:payment_history][:description],
+                              item_ref: params[:payment_history][:item_ref],
                               payment_method: params[:payment_history][:payment_method],
                               bill_to_name: params[:payment_history][:bill_to_name],
                               payment_date: params[:payment_history][:payment_date]
@@ -82,11 +83,15 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
         flash[:alert]  = "There was a problem adding this payment"  unless @payment_history.errors.empty?
         redirect_to edit_admin_registration_path(@registration)
       }
-      format.js { render :action => :ajax_new_payment }
+      format.js { render :action => :ajax_payment }
     end
   end
 
-
+  # Record a new payment for the event
+  #------------------------------------------------------------------------------
+  def ajax_edit_payment
+  end
+  
 =begin
 
   #------------------------------------------------------------------------------
