@@ -86,6 +86,8 @@ module Admin::ThemeAmsterdamHelper
     options[:title]         ||= ''
     options[:id]            ||= ''
     options[:include_save] = options[:include_save].nil? ? false : options[:include_save]
+    options[:delete_url]    ||= nil
+    options[:delete_msg]    ||= 'Are you sure you want to DELETE this?'
     
     content = with_output_buffer(&block)
     render :partial => 'dm_core/admin/shared/modal_dialog', :locals => { :options => options, :content => content }
