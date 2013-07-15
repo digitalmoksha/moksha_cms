@@ -1,2 +1,2 @@
-<% @title = 'Edit Price' %>
+<% content_for :content_title, "Edit Price <small>#{@workshop.title}</small>".html_safe %>
 <%= render 'form' %>

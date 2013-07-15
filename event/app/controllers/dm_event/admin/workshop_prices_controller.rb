@@ -2,7 +2,6 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::ApplicationCont
 
   before_filter     :workshop_lookup, :only   => [:index, :new, :create]
   before_filter     :price_lookup,  :except => [:index, :new, :create]
-  before_filter     :set_title
   
   #------------------------------------------------------------------------------
   def index
@@ -98,11 +97,6 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::ApplicationCont
 
     #--- this action will be called via ajax
     render nothing: true
-  end
-  
-  #------------------------------------------------------------------------------
-  def set_title
-    content_for :content_title, @workshop.title
   end
   
   #------------------------------------------------------------------------------

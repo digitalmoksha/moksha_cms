@@ -1,3 +1,4 @@
+<% content_for :content_title, "Manage Prices <small>#{@workshop.title}</small>".html_safe %>
 <% content_for :sidebar do %>
   <ul class="navigation-light block">
     <li><%= link_to 'Back to Workshop', edit_admin_workshop_url(@workshop) %></li>

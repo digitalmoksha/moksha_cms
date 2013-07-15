@@ -2,7 +2,6 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
   include CsvExporter
   
   before_filter   :workshop_lookup, :except => [:index, :new, :create]
-  before_filter   :set_title
   
   #------------------------------------------------------------------------------
   def index
@@ -46,6 +45,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: RegistrationDatatable.new(view_context) }
+      # format.xls { data_export(Registration.csv_columns, @registrations, :filename => @workshop.slug, :expressions => true, :format => 'xls') }
       format.csv { data_export(Registration.csv_columns, @registrations, :filename => @workshop.slug, :expressions => true, :format => 'csv') }
     end    
   end
@@ -67,6 +67,11 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     end    
   end
   
+  #------------------------------------------------------------------------------
+  def financials
+    @financials = @workshop.financial_details
+  end
+
 private
 
   #------------------------------------------------------------------------------
@@ -83,11 +88,6 @@ private
     params[:workshop][:ending_on] = DateTime.parse(end_date) unless end_date.blank?
   end
   
-  #------------------------------------------------------------------------------
-  def set_title
-    content_for :content_title, (@workshop ? @workshop.title : 'Event Workshops')
-  end
-
 =begin
 
   # include CsvExporter
@@ -196,13 +196,6 @@ private
     
       redirect_to :action => :edit, :id => new_workshop
     end
-  end
-
-  #------------------------------------------------------------------------------
-  def financials
-    @event_workshop = EventWorkshop.find(params[:id])
-
-    permit "#{SystemRoles::Finances} on :event_workshop or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @event_workshop.event
   end
 
   #------------------------------------------------------------------------------
@@ -670,28 +663,6 @@ public
       @back_link    = url_for(:action => :report_list, :id => @event_workshop)
       
       render :template => 'hanuman/shared/report_custom', :layout => 'report_layout'
-    end
-  end
-  
-  # Uses Ruport
-  #------------------------------------------------------------------------------
-  def report_rent_receipts
-    @event_workshop = EventWorkshop.find(params[:id])
-    permit "#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @event_workshop.event do
-      @specs            = Hash.new
-      params[:report] ||= {}
-      @exchange_rates           = (params[:report][:exchange_rates]) ? params[:report][:exchange_rates] : ''
-      @workshop_days            = (params[:report][:workshop_days]) ? params[:report][:workshop_days].to_i : nil
-    
-      @specs[:event_workshop] = EventWorkshop.find(params[:id])
-      @specs[:columns]        = Array.new
-      @specs[:columns]       << ["Name",            "item.full_name.capitalize"]
-      @specs[:columns]       << ["Arrival",         "item.arrival_at"]
-      @specs[:columns]       << ["Departure",       "item.departure_at"]
-
-      @report_html = EventRentReceipt.render_html( :specifications => @specs, :exchange_rates => @exchange_rates, :workshop_days => @workshop_days )
-    
-      render :layout =>  'report_layout'
     end
   end
   

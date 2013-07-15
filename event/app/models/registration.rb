@@ -127,7 +127,7 @@ class Registration < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def self.csv_columns
     column_definitions = []
-    column_definitions <<     ["Receipt Code",      "item.receipt_code", 75]
+    column_definitions <<     ["Receipt Code",      "'R-' + item.receipt_code", 75] # 'R-' makes sure Numbers treats as a String, not a Date
     column_definitions <<     ['Process State',     'item.aasm_state', 100]
     column_definitions <<     ["Full Name",         "item.full_name", 100]
     column_definitions <<     ["Last Name",         "item.last_name.capitalize", 100]
@@ -142,10 +142,12 @@ class Registration < ActiveRecord::Base
 
     column_definitions <<     ['Registered on',     'item.created_at.to_date', 75, {:type => 'DateTime', :numberformat => 'd mmm, yyyy'}]
 
-    column_definitions <<     ["Price",             "item.workshop_price.price", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+    column_definitions <<     ["Price",             "item.workshop_price.price.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
     column_definitions <<     ["Price Description", "item.workshop_price.price_description"]
     column_definitions <<     ["Price Sub Descr",   "item.workshop_price.sub_description"]
-    column_definitions <<     ["Discount",          "item.discount", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+    column_definitions <<     ["Discount",          "item.discount.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+    column_definitions <<     ["Paid",              "item.amount_paid.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+    column_definitions <<     ["Balance",           "item.balance_owed.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
 
     return column_definitions
   end

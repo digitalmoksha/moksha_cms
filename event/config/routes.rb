@@ -8,6 +8,7 @@ DmEvent::Engine.routes.draw do
             get  'edit_system_email/:email_type',     :action => 'edit_system_email', :as => 'edit_system_email'
             post 'edit_system_email/:email_type',     :action => 'edit_system_email', :as => 'edit_system_email'
             put  'edit_system_email/:email_type',     :action => 'edit_system_email', :as => 'edit_system_email'
+            get  'financials',                        :action => 'financials'
           end
           resources :workshop_prices
         end

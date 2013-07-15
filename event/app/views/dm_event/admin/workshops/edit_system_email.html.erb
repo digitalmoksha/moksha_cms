@@ -1,3 +1,4 @@
+<% content_for :content_title, "#{@system_email.email_type.capitalize} Email <small>#{@workshop.title}</small>".html_safe %>
 <% content_for :sidebar do %>
   <%= render :partial => 'configuration_sidebar' %>
 
@@ -44,14 +45,10 @@
 <% submit_url = edit_system_email_admin_workshop_path(@workshop) %>
 <%= simple_form_for(@system_email, :url => submit_url) do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
-  <%= content_box :title => "#{@system_email.email_type.capitalize} Email" do %>
-
-    <%= locale_frame :title => '' do |locale| %>
-      <%= f.input "subject_#{locale}", :label => 'Email Subject', :id => 'title_error', :required => true %>
-      <%= f.input "body_#{locale}", :label => 'Email Body', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 4 %>
-    <% end %>
-
-    <%= submit_or_cancel :cancel_url => admin_workshop_path(@workshop) %>
-
+  <%= locale_frame :title => '' do |locale| %>
+    <%= f.input "subject_#{locale}", :label => 'Email Subject', :id => 'title_error', :required => true %>
+    <%= f.input "body_#{locale}", :label => 'Email Body', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 4 %>
   <% end %>
-<% end %>
+
+  <%= submit_or_cancel :cancel_url => admin_workshop_path(@workshop) %>
+  <% end %>

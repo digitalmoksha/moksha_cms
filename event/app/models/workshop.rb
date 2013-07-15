@@ -92,13 +92,9 @@ class Workshop < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def financial_details(level = :detail)
     #--- pick currency of first price
-    currency = workshop_prices.empty? ? 'USD' : workshop_prices[0].price.currency
-    financials = {:summary => { :total_possible => Money.new(0, currency),          :total_possible_worst => Money.new(0, currency),
-                                :total_paid => Money.new(0, currency),              :total_outstanding => Money.new(0, currency), 
-                                :total_outstanding_worst => Money.new(0, currency), :confirmed_total_possible => Money.new(0, currency),
-                                :confirmed_total_paid => Money.new(0, currency),    :confirmed_total_outstanding => Money.new(0, currency),
-                                :confirmed_total_possible_worst => Money.new(0, currency),
-                                :confirmed_total_outstanding_worst => Money.new(0, currency)},
+    financials = {:summary => { total_possible: Money.new(0, base_currency),          total_possible_worst: Money.new(0, base_currency),
+                                total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency), 
+                                total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency) },
                   :collected => {},
                   :collected_monthly => {},
                   :payment_type => {},
@@ -107,60 +103,44 @@ class Workshop < ActiveRecord::Base
     registrations.attending.each do |registration|
       if registration.workshop_price
         #--- Calculate the summary values
-        financials[:summary][:total_possible]     += registration.price # [todo] registration.total_amount_cents
-        financials[:summary][:total_paid]         += registration.amount_paid.nil? ? 0 : registration.amount_paid
+        financials[:summary][:total_possible]     += registration.discounted_price
+        financials[:summary][:total_paid]         += registration.amount_paid.nil? ? Money.new(0, base_currency) : registration.amount_paid
         financials[:summary][:total_outstanding]  += registration.balance_owed
-        # if registration.confirmed?
-        #   financials[:summary][:confirmed_total_possible]     += registration.total_amount_cents
-        #   financials[:summary][:confirmed_total_paid]         += registration.amount.nil? ? 0 : registration.amount
-        #   financials[:summary][:confirmed_total_outstanding]  += registration.balance_owed
-        # end
+        financials[:summary][:total_discoutns]    += registration.discount
+
+        if level == :detail
+          #--- Calculate what has been collected, by payment method
+          registration.payment_histories.each do |payment_history|
+            financials[:collected]["#{payment_history.payment_method}"] = Money.new(0, base_currency) if financials[:collected]["#{payment_history.payment_method}"].nil?
+            financials[:collected]["#{payment_history.payment_method}"] += payment_history.total
         
-        # if level == :detail
-        #   #--- Calculate possible amount for each payment type
-        #   payment_type = EventPayment::PAYMENT_TYPES[registration.event_payment.payment_type]
-        #   financials[:payment_type]["#{payment_type}"] = 0 if financials[:payment_type]["#{payment_type}"].nil?
-        #   financials[:payment_type]["#{payment_type}"] += registration.total_amount_cents
-        # 
-        #   #--- Calculate what has been collected, by payment method
-        #   registration.payment_histories.each do |payment_history|
-        #     financials[:collected]["#{payment_history.payment_method}"] = 0 if financials[:collected]["#{payment_history.payment_method}"].nil?
-        #     financials[:collected]["#{payment_history.payment_method}"] += payment_history.total_cents
-        # 
-        #     month = payment_history.payment_date.beginning_of_month
-        #     financials[:collected_monthly][month] = 0 if financials[:collected_monthly][month].nil?
-        #     financials[:collected_monthly][month] += payment_history.total_cents
-        #   end
-        #   
-        #   #--- Calculate payment projection
-        #   unless registration.event_payment.recurring_number.blank?
-        #     payment_date = registration.created_at
-        #     registration.event_payment.recurring_number.times do
-        #       month = payment_date.beginning_of_month
-        #       financials[:projected][month] = 0 if financials[:projected][month].nil?
-        #       financials[:projected][month] += (registration.event_payment.recurring_amount * 100)
-        #       payment_date += registration.event_payment.recurring_period.days
-        #     end
-        #   else
-        #     if registration.event_payment.payment_type == 'cc'
-        #       #--- since it's a credit card, payment should have been immediate
-        #       month = registration.created_at.beginning_of_month
-        #     else
-        #       #--- cash, check, wire, donation: assume that payment will be made on the day of the event
-        #       month = self.startdate.beginning_of_month
-        #     end
-        #     financials[:projected][month] = 0 if financials[:projected][month].nil?
-        #     financials[:projected][month] += registration.total_amount_cents
-        #   end
-        # end
+            month = payment_history.payment_date.beginning_of_month
+            financials[:collected_monthly][month] = Money.new(0, base_currency) if financials[:collected_monthly][month].nil?
+            financials[:collected_monthly][month] += payment_history.total
+          end
+          
+          #--- Calculate payment projection
+          unless registration.workshop_price.recurring_number.blank?
+            payment_date = registration.created_at
+            registration.event_payment.recurring_number.times do
+              month = payment_date.beginning_of_month
+              financials[:projected][month] = Money.new(0, base_currency) if financials[:projected][month].nil?
+              financials[:projected][month] += Money.new(registration.workshop_price.recurring_amount, base_currency)
+              payment_date += registration.workshop_price.recurring_period.days
+            end
+          else
+            #--- assume that payment will be made on the day of the event
+            month = self.starting_on.beginning_of_month
+            financials[:projected][month] = Money.new(0, base_currency) if financials[:projected][month].nil?
+            financials[:projected][month] += registration.balance_owed
+          end
+        end
       end
     end
     
     #--- give a worst case value - reduce by 20%
     financials[:summary][:total_possible_worst]               = financials[:summary][:total_possible] * 0.80
     financials[:summary][:total_outstanding_worst]            = financials[:summary][:total_outstanding] * 0.80
-    financials[:summary][:confirmed_total_possible_worst]     = financials[:summary][:confirmed_total_possible] * 0.80
-    financials[:summary][:confirmed_total_outstanding_worst]  = financials[:summary][:confirmed_total_outstanding] * 0.80
     
     return financials
   end

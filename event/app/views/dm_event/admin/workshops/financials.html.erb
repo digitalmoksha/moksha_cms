@@ -1,0 +1,142 @@
+<% content_for :content_title, "Financial Summary <small>#{@workshop.title}</small>".html_safe %>
+
+<% content_for :sidebar do %>
+  <ul class="navigation-light block">
+    <li><%= link_to 'View Registrations', [:admin, @workshop] %></li>
+    <li><%#= link_to 'Transactions', financials_list_admin_workshop(@workshop) %></li>
+  </ul>
+<% end %>
+  
+<%= content_frame :title => "Financial Summary <small>#{@workshop.title}</small>" do %>
+<% end %>
+
+<% if false %>
+<%= content_box :title => "#{@event_workshop.title}", :fieldset => false do %>
+  <%= content_tab :default => true do %>
+    <div class="sub_block">
+      <ul class="lineitem_list payment_history_container">
+        <li class="header">
+          <table class="payment_history" cellspacing="0" cellpadding="0">
+            <tr>
+              <th class="name">Summary</th>
+              <th class="cost">Confirmed</th>
+              <th class="cost">Total</th>
+            </tr>
+          </table>
+        </li>
+        <li>
+          <div class="row_item">
+            <table class="payment_history" cellspacing="0" cellpadding="0">
+              <tr>
+                <th><strong>Worst Possible</strong></th>
+                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_possible_worst], @event_workshop.primary_currency, :precision => 0) %></td>
+                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_possible_worst], @event_workshop.primary_currency, :precision => 0) %></td>
+              </tr>
+              <tr>
+                <th><strong>Best Possible</strong></th>
+                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_possible], @event_workshop.primary_currency, :precision => 0) %></td>
+                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_possible], @event_workshop.primary_currency, :precision => 0) %></td>
+              </tr>
+              <tr>
+                <th><strong>Paid</strong></th>
+                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_paid], @event_workshop.primary_currency, :precision => 0) %></td>
+                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_paid], @event_workshop.primary_currency, :precision => 0) %></td>
+              </tr>
+              <tr>
+                <th><strong>Worst Outstanding</strong></th>
+                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_outstanding_worst], @event_workshop.primary_currency, :precision => 0) %></td>
+                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_outstanding_worst], @event_workshop.primary_currency, :precision => 0) %></td>
+              </tr>
+              <tr>
+                <th><strong>Best Outstanding</strong></th>
+                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_outstanding], @event_workshop.primary_currency, :precision => 0) %></td>
+                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_outstanding], @event_workshop.primary_currency, :precision => 0) %></td>
+              </tr>
+            </table>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="sub_block">
+      <ul class="lineitem_list payment_history_container">
+        <li class="header">
+          <table class="payment_history" cellspacing="0" cellpadding="0">
+            <tr>
+              <th class="name">Payment Types</th>
+              <th class="cost">Total</th>
+            </tr>
+          </table>
+        </li>
+        <li>
+          <div class="row_item">
+            <table class="payment_history" cellspacing="0" cellpadding="0">
+              <% financials[:payment_type].each do |item| %>
+                <tr>
+                  <th><strong><%=h item[0] %></strong></th><td class="cost"><%=h ut_currency_cents(item[1], @event_workshop.primary_currency, :precision => 0) %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sub_block">
+      <ul class="lineitem_list payment_history_container">
+        <li class="header">
+          <table class="payment_history" cellspacing="0" cellpadding="0">
+            <tr>
+              <th class="name">Collected Payments</th>
+              <th class="cost">Total</th>
+            </tr>
+          </table>
+        </li>
+        <li>
+          <div class="row_item">
+            <table class="payment_history" cellspacing="0" cellpadding="0">
+              <% financials[:collected].each do |item| %>
+                <tr>
+                  <th><strong><%=h item[0] %></strong></th><td class="cost"><%=h ut_currency_cents(item[1], @event_workshop.primary_currency, :precision => 0) %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+  <% end %>
+<% end %>
+  
+<%= content_box :title => "Monthly Projected and Actuals", :fieldset => false do %>
+  <%= content_tab :default => true do %>
+    <div class="sub_block">
+      <ul class="lineitem_list payment_history_container">
+        <li class="header">
+          <table class="payment_history" cellspacing="0" cellpadding="0">
+            <tr>
+              <th class="name">Date</th>
+              <th class="cost">Projected</th>
+              <th class="cost">Actual</th>
+            </tr>
+          </table>
+        </li>
+        <%- financials[:projected].sort.each_with_index do |item, index| -%>
+          <li class="<%= odd_even_class(index) %>">
+            <div class="row_item">
+              <table class="payment_history" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td class="name"><%=h item[0].localize("%b %Y") %></td>
+                  <td class="cost"><%= ut_currency_cents(item[1], @event_workshop.primary_currency, :precision => 0) %></td>
+                  <td class="cost"><%= ut_currency_cents(financials[:collected_monthly][item[0]], @event_workshop.primary_currency, :precision => 0) %></td>
+                </tr>
+              </table>
+            </div>
+          </li>
+        <%- end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
+<% end %>
