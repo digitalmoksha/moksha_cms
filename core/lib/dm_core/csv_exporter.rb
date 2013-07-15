@@ -20,8 +20,6 @@ module CsvExporter
     else
       csv_export(column_definitions, data_array, options)
     end
-  
-    #options[:format] == 'xls' ? excel_export(column_definitions, data_array, options) : csv_export(column_definitions, data_array, options)
   end
 
   # Exports data to a CSV formatted file.
