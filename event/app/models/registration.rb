@@ -158,7 +158,9 @@ class Registration < ActiveRecord::Base
   def manual_payment(payment_history, cost, total_currency, user_profile,
                      options = { item_ref: '', payment_method: 'cash', bill_to_name: '', payment_date: Time.now } )
     amount            = Money.parse(cost, total_currency)
+    
     if payment_history
+      new_amount_paid = self.amount_paid - self.workshop_price.to_base_currency(payment_history.total) + self.workshop_price.to_base_currency(amount)
       payment_history.update_attributes(
         :item_ref             => options[:item_ref],
         :cost                 => cost,
@@ -169,6 +171,7 @@ class Registration < ActiveRecord::Base
         :payment_date         => options[:payment_date],
         :user_profile_id      => user_profile.id)
     else
+      new_amount_paid = self.amount_paid + self.workshop_price.to_base_currency(amount)
       payment_history   = self.payment_histories.create(
           :anchor_id            => receipt_code,
           :item_ref             => options[:item_ref],
@@ -184,9 +187,9 @@ class Registration < ActiveRecord::Base
     end
         
     if payment_history.errors.empty?
-      self.update_attribute(:amount_paid_cents, (self.amount_paid + self.workshop_price.to_base_currency(amount)).cents)
+      self.update_attribute(:amount_paid_cents, new_amount_paid.cents)
       self.reload
-      self.send('paid!') if balance_owed.cents <= 0 && !self.paid?
+      self.send('paid!') if balance_owed.cents <= 0 && self.accepted?
     end
     return payment_history
   end
