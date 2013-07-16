@@ -17,10 +17,12 @@
   <script type="text/javascript" src="<%= admin_theme_path %>js/jquery_ui_custom.js"></script>
 
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/charts/excanvas.min.js"></script>
-  <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/charts/jquery.flot.js"></script>
-  <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/charts/jquery.flot.resize.js"></script>
+  <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/charts/jquery.flot.min.js"></script>
+  <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/charts/jquery.flot.pie.min.js"></script>
+  <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/charts/jquery.flot.resize.min.js"></script>
+  <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/charts/jquery.flot.categories.min.js"></script>
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/charts/jquery.sparkline.min.js"></script>
-
+  
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.tagsinput.min.js"></script>
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.inputlimiter.min.js"></script>
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.maskedinput.min.js"></script>
@@ -55,9 +57,8 @@
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/bootstrap/bootstrap-progressbar.js"></script>
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/bootstrap/bootstrap-colorpicker.js"></script>
 
-  <script type="text/javascript" src="<%= admin_theme_path %>js/functions/custom.js"></script>
-  <script type="text/javascript" src="<%= admin_theme_path %>js/charts/chart.js"></script>
+  <script type="text/javascript" src="<%= admin_theme_path %>_custom/custom.js"></script>
 
-	<%= yield :head %>
+  <%= yield :head if content_for(:head)%>
 
 </head>
