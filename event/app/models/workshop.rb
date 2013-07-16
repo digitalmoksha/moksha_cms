@@ -95,10 +95,11 @@ class Workshop < ActiveRecord::Base
     financials = {:summary => { total_possible: Money.new(0, base_currency),          total_possible_worst: Money.new(0, base_currency),
                                 total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency), 
                                 total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency) },
-                  :collected => {},
-                  :collected_monthly => {},
-                  :payment_type => {},
-                  :projected => {}}
+                  collected: {},
+                  collected_monthly: {},
+                  payment_type: {},
+                  projected: {}
+                 }
                   
     registrations.attending.each do |registration|
       if registration.workshop_price
@@ -111,28 +112,13 @@ class Workshop < ActiveRecord::Base
         if level == :detail
           #--- Calculate what has been collected, by payment method
           registration.payment_histories.each do |payment_history|
-            financials[:collected]["#{payment_history.payment_method}"] = Money.new(0, base_currency) if financials[:collected]["#{payment_history.payment_method}"].nil?
-            financials[:collected]["#{payment_history.payment_method}"] += payment_history.total
+            payment_method = payment_history.payment_method
+            financials[:collected]["#{payment_method}"] = Money.new(0, base_currency) if financials[:collected]["#{payment_method}"].nil?
+            financials[:collected]["#{payment_method}"] += payment_history.total
         
             month = payment_history.payment_date.beginning_of_month
             financials[:collected_monthly][month] = Money.new(0, base_currency) if financials[:collected_monthly][month].nil?
             financials[:collected_monthly][month] += payment_history.total
-          end
-          
-          #--- Calculate payment projection
-          unless registration.workshop_price.recurring_number.blank?
-            payment_date = registration.created_at
-            registration.event_payment.recurring_number.times do
-              month = payment_date.beginning_of_month
-              financials[:projected][month] = Money.new(0, base_currency) if financials[:projected][month].nil?
-              financials[:projected][month] += Money.new(registration.workshop_price.recurring_amount, base_currency)
-              payment_date += registration.workshop_price.recurring_period.days
-            end
-          else
-            #--- assume that payment will be made on the day of the event
-            month = self.starting_on.beginning_of_month
-            financials[:projected][month] = Money.new(0, base_currency) if financials[:projected][month].nil?
-            financials[:projected][month] += registration.balance_owed
           end
         end
       end

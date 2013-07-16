@@ -41,6 +41,8 @@
     <li style="color:green"><%= financials[:summary][:total_paid].format(:no_cents => true) %><span>paid</span></li>
 </ul>
 
+<%= link_to 'Financial Details', financials_admin_workshop_url(@workshop), {style: "margin-bottom: 10px; display: inline-block;"} %>
+
 <ul class="block progress-statistics">
   <% num_attending = workshop.registrations.number_of(:attending) %>
   <% workshop.registrations.number_of(:for_all_prices).each do |price_id, registration_count| %>

@@ -1,4 +1,4 @@
-<% content_for :content_title, "Financial Summary <small>#{@workshop.title}</small>".html_safe %>
+<% content_for :content_title, "Financial Details <small>#{@workshop.title}</small>".html_safe %>
 
 <% content_for :sidebar do %>
   <ul class="navigation-light block">
@@ -7,136 +7,115 @@
   </ul>
 <% end %>
   
-<%= content_frame :title => "Financial Summary <small>#{@workshop.title}</small>" do %>
-<% end %>
-
-<% if false %>
-<%= content_box :title => "#{@event_workshop.title}", :fieldset => false do %>
-  <%= content_tab :default => true do %>
-    <div class="sub_block">
-      <ul class="lineitem_list payment_history_container">
-        <li class="header">
-          <table class="payment_history" cellspacing="0" cellpadding="0">
-            <tr>
-              <th class="name">Summary</th>
-              <th class="cost">Confirmed</th>
-              <th class="cost">Total</th>
-            </tr>
-          </table>
-        </li>
-        <li>
-          <div class="row_item">
-            <table class="payment_history" cellspacing="0" cellpadding="0">
-              <tr>
-                <th><strong>Worst Possible</strong></th>
-                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_possible_worst], @event_workshop.primary_currency, :precision => 0) %></td>
-                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_possible_worst], @event_workshop.primary_currency, :precision => 0) %></td>
-              </tr>
-              <tr>
-                <th><strong>Best Possible</strong></th>
-                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_possible], @event_workshop.primary_currency, :precision => 0) %></td>
-                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_possible], @event_workshop.primary_currency, :precision => 0) %></td>
-              </tr>
-              <tr>
-                <th><strong>Paid</strong></th>
-                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_paid], @event_workshop.primary_currency, :precision => 0) %></td>
-                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_paid], @event_workshop.primary_currency, :precision => 0) %></td>
-              </tr>
-              <tr>
-                <th><strong>Worst Outstanding</strong></th>
-                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_outstanding_worst], @event_workshop.primary_currency, :precision => 0) %></td>
-                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_outstanding_worst], @event_workshop.primary_currency, :precision => 0) %></td>
-              </tr>
-              <tr>
-                <th><strong>Best Outstanding</strong></th>
-                <td class="cost confirmed_color"><%=h ut_currency_cents(financials[:summary][:confirmed_total_outstanding], @event_workshop.primary_currency, :precision => 0) %></td>
-                <td class="cost"><%=h ut_currency_cents(financials[:summary][:total_outstanding], @event_workshop.primary_currency, :precision => 0) %></td>
-              </tr>
-            </table>
-          </div>
-        </li>
-      </ul>
+<div class="row-fluid">
+  <%= content_box :title => 'Summary', class: 'span12' do %>
+    <div class="chart span6" style="height: 185px;margin-bottom:20px;" id="payment_outstanding_chart" 
+         data-values="<%= [ {label: "Paid: #{@financials[:summary][:total_paid].format(:no_cents_if_whole => true, :symbol => true)}", 
+                             data: @financials[:summary][:total_paid].to_f, color: '#4DB24A' },
+                            {label: "Outstanding: #{@financials[:summary][:total_outstanding].format(:no_cents_if_whole => true, :symbol => true)}",
+                             data: @financials[:summary][:total_outstanding].to_f, color: '#F24E50' }
+                          ].to_json %>">
     </div>
-    
-    <div class="sub_block">
-      <ul class="lineitem_list payment_history_container">
-        <li class="header">
-          <table class="payment_history" cellspacing="0" cellpadding="0">
-            <tr>
-              <th class="name">Payment Types</th>
-              <th class="cost">Total</th>
-            </tr>
-          </table>
-        </li>
-        <li>
-          <div class="row_item">
-            <table class="payment_history" cellspacing="0" cellpadding="0">
-              <% financials[:payment_type].each do |item| %>
-                <tr>
-                  <th><strong><%=h item[0] %></strong></th><td class="cost"><%=h ut_currency_cents(item[1], @event_workshop.primary_currency, :precision => 0) %></td>
-                </tr>
-              <% end %>
-            </table>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="sub_block">
-      <ul class="lineitem_list payment_history_container">
-        <li class="header">
-          <table class="payment_history" cellspacing="0" cellpadding="0">
-            <tr>
-              <th class="name">Collected Payments</th>
-              <th class="cost">Total</th>
-            </tr>
-          </table>
-        </li>
-        <li>
-          <div class="row_item">
-            <table class="payment_history" cellspacing="0" cellpadding="0">
-              <% financials[:collected].each do |item| %>
-                <tr>
-                  <th><strong><%=h item[0] %></strong></th><td class="cost"><%=h ut_currency_cents(item[1], @event_workshop.primary_currency, :precision => 0) %></td>
-                </tr>
-              <% end %>
-            </table>
-          </div>
-        </li>
-      </ul>
-    </div>
-    
-  <% end %>
-<% end %>
   
-<%= content_box :title => "Monthly Projected and Actuals", :fieldset => false do %>
-  <%= content_tab :default => true do %>
-    <div class="sub_block">
-      <ul class="lineitem_list payment_history_container">
-        <li class="header">
-          <table class="payment_history" cellspacing="0" cellpadding="0">
-            <tr>
-              <th class="name">Date</th>
-              <th class="cost">Projected</th>
-              <th class="cost">Actual</th>
-            </tr>
-          </table>
-        </li>
-        <%- financials[:projected].sort.each_with_index do |item, index| -%>
-          <li class="<%= odd_even_class(index) %>">
-            <div class="row_item">
-              <table class="payment_history" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td class="name"><%=h item[0].localize("%b %Y") %></td>
-                  <td class="cost"><%= ut_currency_cents(item[1], @event_workshop.primary_currency, :precision => 0) %></td>
-                  <td class="cost"><%= ut_currency_cents(financials[:collected_monthly][item[0]], @event_workshop.primary_currency, :precision => 0) %></td>
-                </tr>
-              </table>
-            </div>
-          </li>
-        <%- end %>
-      </ul>
+    <div class="span6">
+      <table class="table table-bordered table-condensed" style="margin-top:10px">
+        <thead>
+          <tr>
+            <th class="name"></th>
+            <th class="cost">Best</th>
+            <th class="cost">Worst <small>(80%)</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><strong>Projected Revenue</strong></th>
+            <td class="cost"><%= @financials[:summary][:total_possible].format(:no_cents_if_whole => true, :symbol => true) %></td>
+            <td class="cost"><%= @financials[:summary][:total_possible_worst].format(:no_cents_if_whole => true, :symbol => true) %></td>
+          </tr>
+          <tr>
+            <th><strong>Outstanding</strong></th>
+            <td class="cost"><%= @financials[:summary][:total_outstanding].format(:no_cents_if_whole => true, :symbol => true) %></td>
+            <td class="cost"><%= @financials[:summary][:total_outstanding_worst].format(:no_cents_if_whole => true, :symbol => true) %></td>
+          </tr>
+          <tr>
+            <th><strong>Paid</strong></th>
+            <td colspan="2" class="cost"><%= @financials[:summary][:total_paid].format(:no_cents_if_whole => true, :symbol => true) %></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   <% end %>
-<% end %>
+</div>
+
+<div class="row-fluid">
+
+  <%= content_box :title => 'Collected Payments by Month', class: 'span6' do %>
+    <div class="span7 chart" style="height: 200px" id="collected_monthly_chart" 
+         data-values="<%= financial_collected_monthly_json(@financials[:collected_monthly]) %>"
+         data-currencysymbol="<%= Money.new(0, @workshop.base_currency).symbol %>" >
+    </div>  
+    <div class="span5">
+      <table class="table table-bordered table-condensed" style="margin-top:10px">
+        <tbody>
+          <% @financials[:collected_monthly].sort.each_with_index do |item, index| -%>
+            <tr>
+              <td class="name"><%= item[0].localize("%b %Y") %></td>
+              <td class="cost" style="text-align: right;"><%= @financials[:collected_monthly][item[0]].format(:no_cents_if_whole => true, :symbol => true) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <%= content_box :title => 'Collected Payments by Method', class: 'span6' do %>
+    <div class="chart" style="height: 185px;" id="collected_chart" data-values="<%= financial_collected_json(@financials[:collected]) %>">
+    </div>  
+  <% end %>
+
+</div>
+
+<%= content_box :title => 'List of Payments' do %>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th class="date">Date</th>
+        <th class="name">Name</th>
+        <th class="item_id">Item ID / Description</th>
+        <th class="cost">Paid</th>
+        <th class="payment_method">Payment Method</th>
+        <th class="type">Recorded By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @payments.sort { |x, y| x.payment_date <=> y.payment_date }.each_with_index do |payment, index| -%>
+        <tr>
+          <td class="date"><%= format_date(payment.payment_date) %></td>
+          <td class="name"><%= payment.owner.full_name %></td>
+          <td class="item_id"><%= payment.item_ref %></td>
+          <td class="cost"><%= payment.total.format(:no_cents_if_whole => true, :symbol => true) %></td>
+          <td class="payment_method"><%= payment.payment_method %></td>
+          <td class="type"><%= payment.user_profile.nil? ? 'Automated' : payment.user_profile.public_name %></td>
+        </tr>
+        <% if !payment.bill_to_name.blank? || payment.discount.to_i > 0 || (!payment.order_details.nil? && !payment.order_details['coupon'].nil?) %>
+          <tr>
+            <td colspan="6">
+              <ul class="row_detail">
+                <% unless payment.bill_to_name.blank? %>
+                  <li><strong>Payed by:</strong> <%=h payment.bill_to_name %></li>
+                <% end %>
+                <% if payment.discount.to_i > 0 %>
+                  <li><strong>Discount:</strong> <%=h payment.discount %></li>
+                <% end %>
+                <% unless payment.order_details.nil? || payment.order_details['coupon'].nil? %>
+                  <li><strong>Coupon Code:</strong> <%=h payment.order_details['coupon']['coupon_code'] %></li>
+                <% end %>
+              </ul>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <% end %>

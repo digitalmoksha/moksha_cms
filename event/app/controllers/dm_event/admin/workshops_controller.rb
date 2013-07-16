@@ -3,6 +3,8 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
   
   before_filter   :workshop_lookup, :except => [:index, :new, :create]
   
+  helper DmEvent::WorkshopsHelper
+
   #------------------------------------------------------------------------------
   def index
     @workshops      = Workshop.upcoming
@@ -70,6 +72,8 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
   #------------------------------------------------------------------------------
   def financials
     @financials = @workshop.financial_details
+    @payments = []
+    @workshop.registrations.each {|x| @payments.concat(x.payment_histories)}
   end
 
 private
@@ -199,14 +203,6 @@ private
   end
 
   #------------------------------------------------------------------------------
-  def financials_list
-    @event_workshop = EventWorkshop.find(params[:id])
-    @payments = []
-    @event_workshop.event_registration.each {|x| @payments.concat(x.payment_histories)}
-    permit "#{SystemRoles::Finances} on :event_workshop or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @event_workshop.event
-  end
-
-  #------------------------------------------------------------------------------
   def payment_matrix
     @event_workshop = EventWorkshop.find(params[:id])
     @payments = []
@@ -224,64 +220,6 @@ public
     end
   end
 
-  #------------------------------------------------------------------------------
-  def preview_pending
-    show_preview_email(params[:event_workshop][:pending_subject], '', params[:event_workshop][:pending_email])
-  end
-
-  #------------------------------------------------------------------------------
-  def preview_accepted
-    show_preview_email(params[:event_workshop][:accepted_subject], '', params[:event_workshop][:accepted_email])
-  end
-
-  #------------------------------------------------------------------------------
-  def preview_rejected
-    show_preview_email(params[:event_workshop][:rejected_subject], '', params[:event_workshop][:rejected_email])
-  end
-
-  #------------------------------------------------------------------------------
-  def preview_waitlisted
-    show_preview_email(params[:event_workshop][:waitlisted_subject], '', params[:event_workshop][:waitlisted_email])
-  end
-
-  #------------------------------------------------------------------------------
-  def preview_paid
-    show_preview_email(params[:event_workshop][:paid_subject], '', params[:event_workshop][:paid_email])
-  end
-
-  # [todo] Major rework needed
-  #------------------------------------------------------------------------------
-  def show_preview_email(subject, html, plain)
-    render :update do |page|
-      page << "window.open('#{url_for(:controller => :event_workshops, :action => :preview_email, :html => html, :plain => plain, :subject => subject)}', 
-        'email_preview', 'width=600, height=400, toolbar=0, location=0, directories=0, status=0, scrollbars=1, resizable=1, copyhistory=0, menuBar=0');"
-    end
-  end
-  
-  #------------------------------------------------------------------------------
-  def preview_email
-    @subject, @html, @plain = params[:subject], params[:html], params[:plain]
-    render :layout => false
-  end
-  
-  #------------------------------------------------------------------------------
-  def preview_email_markitup
-    @event_workshop = EventWorkshop.find(params[:id])
-    @event_registration = @event_workshop.event_registration.first
-    
-    contact_email = @event_workshop.contact_email
-    account       = @event_workshop.event.account
-    @subject      = account.preferred(:event_prepend_subject) + "Test Subject"
-    @content      = params['data']
-    @state        = 'pending'
-
-    if @event_registration.nil?
-      render :text => "You must register one person before you can preview the email"
-    else
-      render :template => "registration_notify_mailer/#{account.path_prefix}_receipt", :formats => [:html], :layout => false
-    end
-    
-  end
   #------------------------------------------------------------------------------
   def report_list
     @event_workshop = EventWorkshop.find(params[:id])    
@@ -802,22 +740,5 @@ public
     render :nothing => true 
   end 
 
-private
-  # Allow the kitchen_sink account to have visibility into all other events
-  #------------------------------------------------------------------------------
-  def find_event_by_id(event_id)
-    if kitchen_sink?
-      return Event.find_by_id(event_id)
-    else
-      return current_account.events.find_by_id(event_id)
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  def cache_permissions(workshop = nil)
-    #--- cache permissions
-    @permissions = {  :workshop_admin           => (sys_admin? || permit?("#{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}")),
-                      :kitchen_sink             => permit?("#{SystemRoles::KitchenSink}")}
-  end
 =end
 end

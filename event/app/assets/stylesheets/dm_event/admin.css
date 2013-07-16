@@ -151,24 +151,23 @@
 .label-canceled, .badge-canceled { background-color: #8d248f; }
 .label-canceled[href], .badge-canceled[href] { background-color: #8d248f;}
 .btn-canceled, .progress-canceled .bar, .progress .bar-canceled {
-  background-color: hsl(0, 0%, 79%) !important;
+  background-color: #8d248f !important;
   background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(rgba(218, 122, 221, 0.98) 0%, #8c238f 100%);
+  background-image: -moz-linear-gradient(rgba(218, 122, 221, 0.98) 0%, #8c238f 100%);
+  background-image: -ms-linear-gradient(rgba(218, 122, 221, 0.98) 0%, #8c238f 100%);
+  background-image: -o-linear-gradient(rgba(218, 122, 221, 0.98) 0%, #8c238f 100%);
+  background-image: linear-gradient(rgba(218, 122, 221, 0.98) 0%, #8c238f 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fcfcfc", endColorstr="#c9c9c9");
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#fcfcfc), to(#c9c9c9));
-  background-image: -moz-linear-gradient(top, #fcfcfc, #c9c9c9);
-  background-image: -ms-linear-gradient(top, #fcfcfc, #c9c9c9);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fcfcfc), color-stop(100%, #c9c9c9));
-  background-image: -webkit-linear-gradient(top, #fcfcfc, #c9c9c9);
-  background-image: -o-linear-gradient(top, #fcfcfc, #c9c9c9);
-  background-image: linear-gradient(#fcfcfc, #c9c9c9);
-  border-color: #c9c9c9 #c9c9c9 hsl(0, 0%, 74%);
+  border-color: #8d248f #8d248f;
   color: #333 !important;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33);
   -webkit-font-smoothing: antialiased;
 }
+.btn-canceled .caret { border-top-color: #fff; border-bottom-color: #fff; }
 .btn-canceled:active, .btn-canceled.active, .btn-group.open .btn-canceled.dropdown-toggle {
-  border-color: #c9c9c9;
-  background-color: #c9c9c9;
+  border-color: #8d248f;
+  background-color: #8d248f;
 }
 
 .rejected_color, .unsubscribed_color { color: #d10029;}
@@ -261,3 +260,6 @@
 
 .balance_paid {color: green;}
 .balance_owed {color: red;}
+
+
+
