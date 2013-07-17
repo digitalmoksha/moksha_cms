@@ -47,7 +47,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: RegistrationDatatable.new(view_context) }
-      # format.xls { data_export(Registration.csv_columns, @registrations, :filename => @workshop.slug, :expressions => true, :format => 'xls') }
+      format.xls { data_export(Registration.csv_columns, @registrations, :filename => @workshop.slug, :expressions => true, :format => 'xls') }
       format.csv { data_export(Registration.csv_columns, @registrations, :filename => @workshop.slug, :expressions => true, :format => 'csv') }
     end    
   end
