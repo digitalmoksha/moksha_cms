@@ -1,7 +1,7 @@
 require 'csv'
-# require 'dm_utilities/scio_excel'
+require 'dm_core/scio_excel'
+
 # require 'ruport'
-# require 'dm_utilities/rendering_helper'
 
 # Implements CSV Export functionality
 #------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ module CsvExporter
   def data_export(column_definitions, data_array, options = {})
     case options[:format]
     when 'xls'
-      # excel_export(column_definitions, data_array, options)
+      excel_export(column_definitions, data_array, options)
     when 'ruport'
       # ruport_export(column_definitions, data_array, options)
     else
@@ -27,7 +27,16 @@ module CsvExporter
   #   Array of items, where each item is an array of 
   #     name used in CSV column
   #     name used to access the value in the data records
-  #     ex) [["firstname", "firstname"], ["register_date", "created_at"]]
+  #     width of field
+  #     optional formatting instructions as a Hash
+  #     ex)
+  #        column_definitions = []
+  #        column_definitions <<     ["Receipt Code",      "'R-' + item.receipt_code", 75]
+  #        column_definitions <<     ["State",             "item.state.capitalize"]
+  #        column_definitions <<     ['Process State',     'item.aasm_state', 100]
+  #        column_definitions <<     ['Registered on',     'item.created_at.to_date', 75, {:type => 'DateTime', :numberformat => 'd mmm, yyyy'}]
+  #        column_definitions <<     ["Price",             "item.workshop_price.price.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+  #
   # data_array: an array of objects (link from a find)
   # :filename => 'file_name' name of file to save as.
   # :expressions => true : the data definintion can be a complex expression, 
@@ -37,7 +46,7 @@ module CsvExporter
   def csv_export(column_definitions, data_array, options = {})
     options.symbolize_keys
     outputArray = Array.new
-    csv_string = CSV.generate do |csv|
+    csv_string  = CSV.generate do |csv|
       column_definitions.each { |x| outputArray << x[0] }
       csv << outputArray
 
@@ -58,7 +67,7 @@ module CsvExporter
     end
   end
 
-  # Exports data to a CSV formatted file, using columns from directly from a table
+  # Exports data to a CSV formatted file, using columns directly from a table
   # table_name: name of the table exporting. Column names are pulled from it.
   # data_array: an array of hashes (link from a find)
   #------------------------------------------------------------------------------
@@ -73,9 +82,18 @@ module CsvExporter
   # Exports data to an Excel formatted file.
   # column_definitions: defines the name of the fields and how they are accessed.
   #   Array of items, where each item is an array of 
-  #     name used in column
+  #     name used in CSV column
   #     name used to access the value in the data records
-  #     ex) [["firstname", "firstname"], ["register_date", "created_at"]]
+  #     width of field
+  #     optional formatting instructions as a Hash
+  #     ex)
+  #        column_definitions = []
+  #        column_definitions <<     ["Receipt Code",      "'R-' + item.receipt_code", 75]
+  #        column_definitions <<     ["State",             "item.state.capitalize"]
+  #        column_definitions <<     ['Process State',     'item.aasm_state', 100]
+  #        column_definitions <<     ['Registered on',     'item.created_at.to_date', 75, {:type => 'DateTime', :numberformat => 'd mmm, yyyy'}]
+  #        column_definitions <<     ["Price",             "item.workshop_price.price.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+  #
   # data_array: an array of objects (link from a find)
   # :filename => 'file_name' name of file to save as.
   # :expressions => true : the data definintion can be a complex expression, 
@@ -112,12 +130,13 @@ module CsvExporter
     wb.rows     = rows
   
     if options[:filename]
-      send_data wb.create, :filename => to_excel_filename(options[:filename]), :disposition => 'attachment', :type => 'application/vnd.ms-excel'
+      send_data wb.create, :filename => to_excel_filename(options[:filename]), :disposition => 'attachment', :type => 'application/excel'
     else
       return wb.create
     end
   end
 
+=begin
   #------------------------------------------------------------------------------
   def ruport_export(column_definitions, data_array, options = {})
     options.symbolize_keys
@@ -138,7 +157,8 @@ module CsvExporter
     end
     return table
   end
-
+=end
+  
 private
   #------------------------------------------------------------------------------
   def get_data_value(item, data_def, options)
@@ -163,7 +183,6 @@ private
       when 'Number'
         return value.to_i
       when 'link'
-      
       end
     end
   
