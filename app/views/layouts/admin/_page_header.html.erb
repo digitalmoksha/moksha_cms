@@ -9,7 +9,6 @@
   <link href="<%= admin_theme_path %>_custom/custom.css" rel="stylesheet" type="text/css" />
   <%= stylesheet_link_tag 'admin' %>
   
-  <!-- <link href="<%= admin_theme_path %>css/bootstrap.css" rel="stylesheet" type="text/css" /> -->
   <!--[if IE]> <link href="<%= admin_theme_path %>css/ie.css" rel="stylesheet" type="text/css"> <![endif]-->
 
   <%= javascript_include_tag 'admin' %>
@@ -27,7 +26,8 @@
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.inputlimiter.min.js"></script>
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.maskedinput.min.js"></script>
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.autosize.js"></script>
-  <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.ibutton.js"></script>
+  <!-- remove until fix for stealing click from textarea
+     <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.ibutton.js"></script> -->
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.dualListBox.js"></script>
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.validate.js"></script>
   <script type="text/javascript" src="<%= admin_theme_path %>js/plugins/forms/jquery.uniform.min.js"></script>
