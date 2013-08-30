@@ -10,6 +10,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   #------------------------------------------------------------------------------
   def general
     if put_or_post?
+      @account.general_validation = true
       if @account.update_attributes(params[:account])
         redirect_to(dm_core.admin_account_general_path, notice: "Account was successfully updated.") and return
       else
@@ -22,6 +23,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   #------------------------------------------------------------------------------
   def email
     if put_or_post?
+      @account.email_validation = true
       params[:account].delete(:preferred_smtp_password) if params[:account][:preferred_smtp_password].blank?
       if @account.update_attributes(params[:account])
         redirect_to(dm_core.admin_account_email_path, notice: "Account was successfully updated.") and return
@@ -34,6 +36,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   #------------------------------------------------------------------------------
   def analytics
     if put_or_post?
+      @account.analytics_validation = true
       if @account.update_attributes(params[:account])
         redirect_to(dm_core.admin_account_analytics_path, notice: "Account was successfully updated.") and return
       else
