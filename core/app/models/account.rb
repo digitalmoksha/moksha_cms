@@ -18,15 +18,17 @@ class Account < ActiveRecord::Base
   attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
   attr_accessible         :preferred_newsletter_settings
 
-  validates_presence_of   :domain
-  validates_presence_of   :account_prefix
-  validates_presence_of   :preferred_default_locale
-  validates_presence_of   :preferred_locales
-  validates_presence_of   :preferred_smtp_address
-  validates_presence_of   :preferred_smtp_port
-  validates_presence_of   :preferred_smtp_user_name
-  validates_presence_of   :preferred_smtp_from_email
-  validates_presence_of   :preferred_webmaster_email
+  attr_accessor           :email_validation, :general_validation, :analytics_validation
+
+  validates_presence_of   :domain,                                :if => Proc.new { |p| p.general_validation }
+  validates_presence_of   :account_prefix,                        :if => Proc.new { |p| p.general_validation }
+  validates_presence_of   :preferred_default_locale,              :if => Proc.new { |p| p.general_validation }
+  validates_presence_of   :preferred_locales,                     :if => Proc.new { |p| p.general_validation }
+  validates_presence_of   :preferred_smtp_address,                :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_port,                   :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_user_name,              :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_from_email,             :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_webmaster_email,             :if => Proc.new { |p| p.email_validation }
 
   after_create            :create_default_roles
                         
