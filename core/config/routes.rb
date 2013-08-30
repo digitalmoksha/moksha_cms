@@ -14,7 +14,15 @@ DmCore::Engine.routes.draw do
           get  :masquerade
         end
       end
-      resource :account
+
+      get  '/account/',                 to: 'accounts#show'
+      get  '/account/general',          to: 'accounts#general'
+      put  '/account/general',          to: 'accounts#general'
+      get  '/account/email',            to: 'accounts#email'
+      put  '/account/email',            to: 'accounts#email'
+      get  '/account/analytics',        to: 'accounts#analytics'
+      put  '/account/analytics',        to: 'accounts#analytics'
+
     end
   end
 end

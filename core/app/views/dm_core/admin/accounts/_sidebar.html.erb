@@ -1,0 +1,13 @@
+<% content_for :content_title_extra do %>
+  <div class='navbar'>
+    <ul class='nav pull-right'>
+      <li><%= @account.preferred_site_enabled? ? colored_label('Site Published', :success) : colored_label('Site Disabled') %></li>
+    </ul>
+  </div>
+<% end %>
+
+<ul class="navigation-light block">
+  <li><%= link_to "General".html_safe, dm_core.admin_account_general_path %></li>
+  <li><%= link_to "Email".html_safe, dm_core.admin_account_email_path %></li>
+  <li><%= link_to "Analytics &amp; PayPal".html_safe, dm_core.admin_account_analytics_path %></li>
+</ul>

@@ -16,6 +16,7 @@ class Account < ActiveRecord::Base
                           :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email,
                           :preferred_blog_from_email
   attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
+  attr_accessible         :preferred_newsletter_settings
 
   validates_presence_of   :domain
   validates_presence_of   :account_prefix
@@ -52,6 +53,10 @@ class Account < ActiveRecord::Base
   preference              :paypal_merchant_id,              :string
   preference              :paypal_cert_id,                  :string
 
+  #--- Newsletter Settings - uses the 'group' function to have one preference and many values
+  #    ex) current_account.preferred_newsletter_settings(:mailchimp_api_key)
+  preference              :newsletter_settings,             :string
+  
   #--- eager load all preferences when an object is found
   after_find              :preferences
   
