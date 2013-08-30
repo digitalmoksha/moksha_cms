@@ -1,0 +1,17 @@
+<% content_for :sidebar do %>
+  <%= render :partial => 'sidebar' %>
+<% end %>
+
+<%= simple_form_for(@account, :url => dm_core.admin_account_analytics_url) do |f| %>
+  <%= f.error_notification :message => "Please review the problems below"%>
+
+	<%= content_box :title => 'Analytics and PayPal' do %>
+
+    <%= f.input :preferred_google_analytics_tracker_id, :label => 'Google Analytics Tracker ID' %>
+    <%= f.input :preferred_paypal_merchant_id, :label => 'PayPal Merchant ID' %>
+    <%= f.input :preferred_paypal_cert_id, :label => 'PayPal Cert ID' %>
+
+    <%= submit_or_cancel :cancel_url => dm_core.admin_account_analytics_path %>
+
+	<% end %>
+<% end %>

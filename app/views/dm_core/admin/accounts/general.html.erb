@@ -1,0 +1,23 @@
+<% content_for :sidebar do %>
+  <%= render :partial => 'sidebar' %>
+<% end %>
+
+<%= simple_form_for(@account, :url => dm_core.admin_account_general_url) do |f| %>
+  <%= f.error_notification :message => "Please review the problems below"%>
+
+	<%= content_box :title => 'General Settings' do %>
+
+    <%= f.input :domain %>
+    <%= f.input :account_prefix %>
+    <%= f.input :preferred_site_title, :label => 'Site Title' %>
+    <%= f.input :company_name %>
+    <%= f.input :contact_email %>
+    <%= f.input :preferred_default_locale, :required => true, :label => 'Default Locale'%>  
+    <%= f.input :preferred_locales, :required => true, :label => 'Supported Locales', :hint => "Comma seperated. Ex: 'en, de'" %>  
+    <%= f.input :preferred_ssl_enabled, :as => :toggle, :label => 'Enable SSL?' %>
+    <%= f.input :preferred_site_enabled, :as => :toggle, :label => 'Publish Site?' %>
+
+    <%= submit_or_cancel :cancel_url => dm_core.admin_account_general_path %>
+
+	<% end %>
+<% end %>
