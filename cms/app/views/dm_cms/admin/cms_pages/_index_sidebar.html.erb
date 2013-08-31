@@ -4,6 +4,14 @@
 	  <%= link_to "Clear Entire Page Cache", admin_expire_cache_path, :class => "action-button blue" %>
   </div>
   
+  <% if !current_account.preferred_site_enabled? %>
+    <div class="notice outer">
+      <div class="note note-warning">
+        Site is currently disabled - all requests will be sent to &#x27;Coming Soon&#x27; page unless logged in
+      </div>
+    </div>
+  <% end %>
+  
   <% if false %>
     <div class="block outer" style="padding: 5px;">
       <ul class="link_list">
