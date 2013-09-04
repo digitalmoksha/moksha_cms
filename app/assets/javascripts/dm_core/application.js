@@ -11,3 +11,4 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require dm_core/underscore-1.4.4-min
+//= require dm_core/common_js
