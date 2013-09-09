@@ -114,6 +114,7 @@ module DmCms::PagesHelper
   # return a link to the page's slug, with the passed in link text
   #------------------------------------------------------------------------------
   def page_link(page, text)
+    text ||= ''
     link_to text.html_safe, dm_cms.showpage_url(page.slug)
   end
   
