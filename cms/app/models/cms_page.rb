@@ -1,3 +1,8 @@
+# Implementation Note: if the 'menutitle' is blank, that indicates the page should
+# not be shown in menus.  It can still be published and directly linked to, but
+# it should not show up in any auto-generated menus.  This gives the ability
+# to have many pages in a section, with some of them 'hidden' from the main menu
+# lists, but can still be linked to and shown.
 #------------------------------------------------------------------------------
 class CmsPage < ActiveRecord::Base
   class Translation < ::Globalize::ActiveRecord::Translation
@@ -9,8 +14,8 @@ class CmsPage < ActiveRecord::Base
   attr_accessible         :slug, :pagetype, :published, :template, :link, :menuimage, :requires_login,
                           :title, :title_en, :menutitle, :parent_id
 
-  # --- globalize
-  translates              :title, :menutitle, :fallbacks_for_empty_translations => true, :versioning => true
+  # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
+  translates              :title, :menutitle, :fallbacks_for_empty_translations => true #, :versioning => true
   globalize_accessors     :locals => DmCore::Language.language_array
     
   # --- versioning - skip anything translated
@@ -74,7 +79,7 @@ class CmsPage < ActiveRecord::Base
     if self.has_children?
       self.children.each do |child|
         if child.is_published? || (user && user.is_admin?)
-          pages << child unless child[:title].blank? && !options[:include_blank_titles]
+          pages << child unless child[:menutitle].blank? && !options[:include_blank_titles]
         end
       end
     end

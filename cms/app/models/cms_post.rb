@@ -2,8 +2,8 @@ class CmsPost < ActiveRecord::Base
 
   attr_accessible         :slug, :published_on, :title, :content, :summary, :image, :comments_allowed
   
-  # --- globalize
-  translates              :title, :summary, :content, :fallbacks_for_empty_translations => true, :versioning => true
+  # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
+  translates              :title, :summary, :content, :fallbacks_for_empty_translations => true #, :versioning => true
   globalize_accessors     :locals => DmCore::Language.language_array
     
   extend FriendlyId

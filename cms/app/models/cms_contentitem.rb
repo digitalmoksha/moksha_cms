@@ -9,7 +9,7 @@ class CmsContentitem < ActiveRecord::Base
   acts_as_list          :scope => :cms_page
   default_scope         { where(account_id: Account.current.id).order("position ASC") }
   
-  # --- globalize
+  # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates            :content, :fallbacks_for_empty_translations => true
   globalize_accessors   :locales => DmCore::Language.language_array
 

@@ -50,6 +50,7 @@ module DmCms::PagesHelper
     return content
   end
 
+  # Generates a simple multi-level page menu including children
   #------------------------------------------------------------------------------
   def main_menu(options = {})
     return '' if (root = CmsPage.roots[0]).nil?
@@ -80,13 +81,13 @@ module DmCms::PagesHelper
         menu_str += "<li>#{link_to page.menutitle, dm_cms.showpage_url(page.slug)}#{submenu}</li>"
       end
     end
-    menu_str = ("<ul #{options[:ul]}>" + menu_str + "</ul>")
+    return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>")
   end
   
   # return true if the page should be allowed to be dislpayed in a menu
   #------------------------------------------------------------------------------
   def allow_page_in_menu?(page)
-    (page.is_published? || is_admin?) && page_authorized?(page) && !page.menutitle.blank?    
+    page.present? && (page.is_published? || is_admin?) && page_authorized?(page) && !page.menutitle.blank?    
   end
   
   #------------------------------------------------------------------------------
@@ -110,6 +111,11 @@ module DmCms::PagesHelper
     return menu_str.html_safe
   end
   
+  # return a link to the page's slug, with the passed in link text
+  #------------------------------------------------------------------------------
+  def page_link(page, text)
+    link_to text.html_safe, dm_cms.showpage_url(page.slug)
+  end
   
   private
 

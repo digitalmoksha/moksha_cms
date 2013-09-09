@@ -27,8 +27,8 @@
       </div>
       <% current_account.site_locales.each do |locale| %>        
         <div id="tab_<%= locale %>" class="tab-pane fade">
-          <%= f.input "title_#{locale}", :label => 'Page Title' %>
-          <%= f.input "menutitle_#{locale}", :label => 'Menu Title' %>
+          <%= f.input "title_#{locale}", :label => 'Page Title', hint: 'The title of the page, shown in the browser title' %>
+          <%= f.input "menutitle_#{locale}", :label => 'Menu Title', hint: 'Text shown in a menu (which might be shorter than the full title).  If blank, <br/>page will not show up in any auto-generated menus' %>
         </div>
       <% end %>
     </div>	
