@@ -1,6 +1,7 @@
 require 'ranked-model'
 require 'money-rails'
 require 'dm_core'
+require 'activemerchant'
 
 module DmEvent
   class Engine < ::Rails::Engine
