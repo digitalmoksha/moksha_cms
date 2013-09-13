@@ -18,7 +18,7 @@ class Workshop < ActiveRecord::Base
   
   attr_accessible         :title, :description, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
                           :contact_email, :contact_phone, :require_review, :require_account, :require_address,
-                          :require_photo, :published, :base_currency
+                          :require_photo, :published, :base_currency, :event_style, :funding_goal
 
   # --- globalize
   translates              :title, :description, :fallbacks_for_empty_translations => true
@@ -33,6 +33,7 @@ class Workshop < ActiveRecord::Base
   validates_presence_of   :starting_on
   validates_presence_of   :ending_on
   validates_presence_of   :contact_email
+  validates_presence_of   :event_style
   
   # validates_presence_of   :deadline_on
 
@@ -45,6 +46,10 @@ class Workshop < ActiveRecord::Base
   #--- available is list of published and registration open and not ended
   scope                   :available, where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', 
                                       (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC')
+
+  monetize                :funding_goal_cents, :with_model_currency => :base_currency, :allow_nil => true
+
+  EVENT_STYLES = [['Workshop', 'workshop'], ['Crowdfunding', 'crowdfunding']]
 
   #------------------------------------------------------------------------------
   def title_slug
@@ -85,6 +90,11 @@ class Workshop < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def archived?
     self.archived_on ? true : false
+  end
+
+  #------------------------------------------------------------------------------
+  def crowdfunding?
+    self.event_style == 'crowdfunding'
   end
 
   # Return financial summary and details
@@ -131,7 +141,16 @@ class Workshop < ActiveRecord::Base
     return financials
   end
 
-
+  #------------------------------------------------------------------------------
+  def total_paid
+    total_paid = Money.new(0, base_currency)
+    registrations.attending.each do |registration|
+      if registration.workshop_price
+        total_paid += registration.amount_paid.nil? ? Money.new(0, base_currency) : registration.amount_paid
+      end
+    end
+    return total_paid
+  end
   
 =begin
   

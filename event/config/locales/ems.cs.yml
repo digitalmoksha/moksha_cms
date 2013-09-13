@@ -29,6 +29,10 @@ cs:
     registration_closed_text: "Jsme již přijímá registrace na kurz '%{title}'"
     registration_closed_email: "V případě jakýchkoliv dotazů se můžete obrátit na %{email}."
     registration_closed_list: Následující kurzy jsou v současné době otevřen pro registraci
+    choose_payment_method: Vyberte si způsob platby
+    donate_button: Darovat
+    project_goal: Cíl projektu
+    amount_raised: Částka Zvýšený
   activerecord:
     errors:
       models:

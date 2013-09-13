@@ -29,6 +29,10 @@ en:
     registration_closed_text: "We are no longer accepting registrations for the course '%{title}'"
     registration_closed_email: "For any questions you may contact %{email}."
     registration_closed_list: The following courses are currently open for registration
+    choose_payment_method: Choose Your Payment Method
+    donate_button: Donate
+    project_goal: Project Goal
+    amount_raised: Amount Raised
   activerecord:
     errors:
       models:

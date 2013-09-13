@@ -29,6 +29,10 @@ ja:
     registration_closed_text: "We are no longer accepting registrations for the course '%{title}'"
     registration_closed_email: "For any questions you may contact %{email}."
     registration_closed_list: The following courses are currently open for registration
+    choose_payment_method: お支払方法を選択してください
+    donate_button: 寄付する
+    project_goal: プロジェクト目標
+    amount_raised: 量に発生
   activerecord:
     errors:
       models:

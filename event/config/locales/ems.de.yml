@@ -29,6 +29,10 @@ de:
     registration_closed_text: "Eine Registrierung zum Programm '%{title}' ist leider nicht mehr möglich."
     registration_closed_email: "Bei Fragen wende dich bitte an %{email}."
     registration_closed_list: Die folgenden Programme sind derzeit für die Anmeldung geöffnet
+    choose_payment_method: Wählen Sie Ihre Zahlungsmethode
+    donate_button: Jetzt helfen
+    project_goal: Projektziel
+    amount_raised: Betrag erhöht
   activerecord:
     errors:
       models:

@@ -12,6 +12,8 @@
   <% end %>
 
   <%= well_frame do %>
+    <%= f.input :event_style, label: 'Event Style', required: true, collection: Workshop::EVENT_STYLES,
+                hint: 'Is this a workshop or a crowdfunding/donation type of event' %>
     <%= f.input :published, :as => :toggle_checked, label: 'Publish', hint: 'Make available for registrations' %>
     <%= f.input :country_id, required: true, wrapper_html: { :class => 'searchDrop' }, input_html: { :class => 'chosen_select' }, 
                 collection: ut_country_select_collection, label_method: lambda {|t| t[0]}, value_method: lambda {|t| t[1]},
@@ -65,6 +67,10 @@
     <%= f.input :require_address, :as => :toggle_checked, :label => 'Require Address', :hint => 'Address in profile must be filled out' %>
     <%#= f.input :require_photo, :as => :toggle_checked, :label => 'Require Photo', :hint => 'A photo must be uploaded into profile' %>
     <%= f.input :require_review, :as => :toggle_checked, :label => 'Review Registrations', :hint => 'All new registrations become "Pending", waiting for approval' %>
+  <% end %>
+  
+  <%= well_frame do %>
+    <%= f.input :funding_goal, :label => 'Funding Goal', hint: 'Goal (in the currency above) of this funding project' %>
   <% end %>
   
   <%= submit_or_cancel :cancel_url => (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>

@@ -1,0 +1,11 @@
+<% percent = @workshop.total_paid.cents.percent_of(@workshop.funding_goal.cents) %>
+<div class="donation_status">
+  <div class="progress_bar" data-value="<%= percent %>"><span> <%= "#{percent}%" %> / <%= @workshop.funding_goal.format(:no_cents => true) %></span></div>  
+  <div class="donation_status_text">
+    <h2 class="goal"><%= I18n.t 'ems.project_goal' %></h2>
+    <h2 class="goal_amount"><%= @workshop.funding_goal.format(:no_cents => true) %></h2>
+    <h2 class="raised"><%= I18n.t 'ems.amount_raised' %></h2>
+    <h2 class="raised_amount"><%= @workshop.total_paid.format(:no_cents => true) %></h2>
+  </div>
+  <div class="donate_button"><a href="#ticket_information"><%= I18n.t "ems.donate_button" %></a></div>
+</div>

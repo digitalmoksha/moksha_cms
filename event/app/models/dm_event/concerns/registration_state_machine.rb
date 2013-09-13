@@ -136,6 +136,7 @@ module DmEvent
           event :pending do
             transitions :from => :reviewing,  :to => :pending
             transitions :from => :waitlisted, :to => :pending
+            transitions :from => :noshow,     :to => :pending
           end
 
         end
@@ -160,7 +161,6 @@ module DmEvent
         # send the email if it's defined
         #------------------------------------------------------------------------------
         def state_acceptance
-debugger
           update_state_date
           email_state_notification(:accepted) unless @suppress_transition_email
         end
