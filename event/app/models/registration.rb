@@ -158,7 +158,8 @@ class Registration < ActiveRecord::Base
   # a manual entry if the user_profile is filled in - means a human did it.
   #------------------------------------------------------------------------------
   def manual_payment(payment_history, cost, total_currency, user_profile,
-                     options = { item_ref: '', payment_method: 'cash', bill_to_name: '', payment_date: Time.now } )
+                     options = { item_ref: '', payment_method: 'cash', bill_to_name: '', payment_date: Time.now,
+                                 notify_data: nil, transaction_id: nil, status: '' } )
     amount            = Money.parse(cost, total_currency)
     
     if payment_history
@@ -185,7 +186,11 @@ class Registration < ActiveRecord::Base
           :payment_method       => options[:payment_method],
           :bill_to_name         => options[:bill_to_name],
           :payment_date         => options[:payment_date],
-          :user_profile_id      => user_profile ? user_profile.id : nil)
+          :user_profile_id      => (user_profile ? user_profile.id : nil),
+          :notify_data          => notify_data,
+          :transaction_id       => transaction_id,
+          :status               => (user_profile ? "Completed" : status)
+      )
     end
         
     if payment_history.errors.empty?
@@ -215,12 +220,15 @@ class Registration < ActiveRecord::Base
   def paypal_ipn(notify)
     if notify.acknowledge
       # @payment = Payment.find_by_confirmation(notify.transaction_id) ||
-      manual_payment( nil,
-                      notify.amount,
-                      notify.currency,
-                      nil,
-                      payment_method: 'paypal',
-                      payment_date: notify.received_at
+      payment_history = manual_payment( nil,
+                                        notify.amount.to_s,
+                                        notify.currency,
+                                        nil,
+                                        payment_method: 'paypal',
+                                        payment_date: notify.received_at,
+                                        notify_data: notify,
+                                        transaction_id: notify.transaction_id,
+                                        status: notify.status
                     )
         # enrollment.invoice.payments.create(:amount => notify.amount,
         #   :payment_method => 'paypal', :confirmation => notify.transaction_id,
@@ -228,15 +236,15 @@ class Registration < ActiveRecord::Base
         #   :test => notify.test?)
       begin
         if notify.complete?
-          # @payment.status = notify.status
+          payment_history = notify.status
         else
           logger.error("Failed to verify Paypal's notification, please investigate")
         end
       rescue => e
-        # @payment.status = 'Error'
+        payment_history = 'Error'
         raise
       ensure
-        # @payment.save
+        payment_history.save
       end
     end
   end
