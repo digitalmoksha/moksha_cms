@@ -236,12 +236,12 @@ class Registration < ActiveRecord::Base
         #   :test => notify.test?)
       begin
         if notify.complete?
-          payment_history = notify.status
+          payment_history.status = notify.status
         else
           logger.error("Failed to verify Paypal's notification, please investigate")
         end
       rescue => e
-        payment_history = 'Error'
+        payment_history.status = 'Error'
         raise
       ensure
         payment_history.save
