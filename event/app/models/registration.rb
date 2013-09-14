@@ -187,9 +187,9 @@ class Registration < ActiveRecord::Base
           :bill_to_name         => options[:bill_to_name],
           :payment_date         => options[:payment_date],
           :user_profile_id      => (user_profile ? user_profile.id : nil),
-          :notify_data          => notify_data,
-          :transaction_id       => transaction_id,
-          :status               => (user_profile ? "Completed" : status)
+          :notify_data          => options[:notify_data],
+          :transaction_id       => options[:transaction_id],
+          :status               => (user_profile ? "Completed" : options[:status])
       )
     end
         
