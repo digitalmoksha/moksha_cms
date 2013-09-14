@@ -12,8 +12,9 @@
 # bill_to_name     =>  who actually paid / was billed to
 # item_details     =>  any specific item details sent by payment processor
 # order_details    =>  any specific order details sent by payment processor
-# current_stage    =>  current stage of payment
+# status           =>  status of payment
 # user_profile_id  =>  user_profile if payment was enetered manually
+# notify_data      =>  data from the notification object, in case it's needed
 #------------------------------------------------------------------------------
 class PaymentHistory < ActiveRecord::Base
 
@@ -21,11 +22,12 @@ class PaymentHistory < ActiveRecord::Base
 
   attr_accessible           :anchor_id, :item_ref, :cost, :quantity, :discount,
                             :total_cents, :total_currency, :payment_method, :bill_to_name,
-                            :payment_date, :user_profile_id
+                            :payment_date, :user_profile_id, :notify_data, :transaction_id, :status
   belongs_to                :owner, :polymorphic => true
   belongs_to                :user_profile
   serialize                 :order_details
   serialize                 :item_details
+  serialize                 :notify_data
   monetize                  :total_cents, :with_model_currency => :total_currency, :allow_nil => true
 
   default_scope             { where(account_id: Account.current.id) }
