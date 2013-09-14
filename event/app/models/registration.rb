@@ -215,13 +215,13 @@ class Registration < ActiveRecord::Base
   def paypal_ipn(notify)
     if notify.acknowledge
       # @payment = Payment.find_by_confirmation(notify.transaction_id) ||
-      registration.manual_payment(nil,
-                                  notify.amount,
-                                  notify.currency,
-                                  nil,
-                                  payment_method: 'paypal',
-                                  payment_date: notify.received_at
-                              )
+      manual_payment( nil,
+                      notify.amount,
+                      notify.currency,
+                      nil,
+                      payment_method: 'paypal',
+                      payment_date: notify.received_at
+                    )
         # enrollment.invoice.payments.create(:amount => notify.amount,
         #   :payment_method => 'paypal', :confirmation => notify.transaction_id,
         #   :description => notify.params['item_name'], :status => notify.status,
