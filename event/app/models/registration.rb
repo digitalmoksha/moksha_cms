@@ -185,7 +185,7 @@ class Registration < ActiveRecord::Base
           :payment_method       => options[:payment_method],
           :bill_to_name         => options[:bill_to_name],
           :payment_date         => options[:payment_date],
-          :user_profile_id      => user_profile.id)
+          :user_profile_id      => user_profile ? user_profile.id : nil)
     end
         
     if payment_history.errors.empty?
