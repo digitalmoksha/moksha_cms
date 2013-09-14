@@ -10,12 +10,12 @@
           :phone => '',
           :email => @registration.email
       service.item_name @registration.workshop.title
-      service.invoice "INV-#{@registration.receipt_code}"
       service.tax '0.00'
 
-      #service.notify_url url_for(:only_path => false, :action => 'payments_notify')
+      service.notify_url dm_event.register_paypal_ipn_url if Rails.env.production?
       service.return_url dm_event.register_success_url(@registration.receipt_code)
-      service.cancel_return_url url_for(only_path: false, action: 'payment_abandoned', receipt_code: @registration.receipt_code) %>
+      service.cancel_return_url dm_event.register_payment_abandoned_url(@registration.receipt_code)
+  %>
 
       <!-- display payment summary here -->
       <% if locale == :de %>

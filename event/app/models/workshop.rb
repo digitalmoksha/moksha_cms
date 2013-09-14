@@ -18,7 +18,7 @@ class Workshop < ActiveRecord::Base
   
   attr_accessible         :title, :description, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
                           :contact_email, :contact_phone, :require_review, :require_account, :require_address,
-                          :require_photo, :published, :base_currency, :event_style, :funding_goal
+                          :require_photo, :published, :base_currency, :event_style, :funding_goal, :payments_enabled
 
   # --- globalize
   translates              :title, :description, :fallbacks_for_empty_translations => true

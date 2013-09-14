@@ -6,7 +6,9 @@
 class Registration < ActiveRecord::Base
   include DmEvent::Concerns::RegistrationStateMachine
   include DmEvent::Concerns::RegistrationStateEmail
-  
+  include ActiveMerchant::Billing::Integrations
+
+
   self.table_name               = 'ems_registrations'
 
   attr_accessible               :workshop_price_id, :discount_value, :discount_use_percent,
@@ -207,6 +209,38 @@ class Registration < ActiveRecord::Base
     end
     return false
   end
+
+  # Handle PayPal notification logic
+  #------------------------------------------------------------------------------
+  def paypal_ipn(notify)
+    if notify.acknowledge
+      # @payment = Payment.find_by_confirmation(notify.transaction_id) ||
+      registration.manual_payment(nil,
+                                  notify.amount,
+                                  notify.currency,
+                                  nil,
+                                  payment_method: 'paypal',
+                                  payment_date: notify.received_at
+                              )
+        # enrollment.invoice.payments.create(:amount => notify.amount,
+        #   :payment_method => 'paypal', :confirmation => notify.transaction_id,
+        #   :description => notify.params['item_name'], :status => notify.status,
+        #   :test => notify.test?)
+      begin
+        if notify.complete?
+          # @payment.status = notify.status
+        else
+          logger.error("Failed to verify Paypal's notification, please investigate")
+        end
+      rescue => e
+        # @payment.status = 'Error'
+        raise
+      ensure
+        # @payment.save
+      end
+    end
+  end
+
 
 =begin
   acts_as_reportable

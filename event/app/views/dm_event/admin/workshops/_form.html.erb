@@ -67,6 +67,7 @@
     <%= f.input :require_address, :as => :toggle_checked, :label => 'Require Address', :hint => 'Address in profile must be filled out' %>
     <%#= f.input :require_photo, :as => :toggle_checked, :label => 'Require Photo', :hint => 'A photo must be uploaded into profile' %>
     <%= f.input :require_review, :as => :toggle_checked, :label => 'Review Registrations', :hint => 'All new registrations become "Pending", waiting for approval' %>
+    <%= f.input :payments_enabled, :as => :toggle_checked, label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>
   <% end %>
   
   <%= well_frame do %>

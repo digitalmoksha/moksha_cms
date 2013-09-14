@@ -38,7 +38,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @registration.user_profile.assign_attributes(profile_params)
 
     if @registration.save
-      if @workshop.crowdfunding?
+      if @workshop.payments_enabled?
         redirect_to register_choose_payment_url(@registration.receipt_code)
       else
         redirect_to register_success_url(@registration.receipt_code)
@@ -53,7 +53,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   def choose_payment
     @registration = Registration.find_by_receipt_code(params[:receipt_code])
     @workshop     = @registration.workshop if @registration
-    redirect_to main_app.root_url and return if @registration.nil? || !@registration.pending?
+    redirect_to main_app.root_url and return if @registration.nil? || !@registration.accepted?
   end
   
   # Success page for a registration.  Look up the receipt code and display success.
@@ -68,42 +68,21 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
       redirect_to main_app.root_url and return
     end
     @workshop     = @registration.workshop if @registration
-    @receipt_content = @registration.email_state_notification(@registration.current_state, false)
+    @receipt_content = @registration.email_state_notification(@registration.current_state, false) || ""
   end
 
   # TODO Not working yet
   #------------------------------------------------------------------------------
-  def payments_notify
-    # notify        = Paypal::Notification.new(request.raw_post)
-    # registration  = Registration.find_by_receipt_code(notify.item_id)
-    # 
-    # if notify.acknowledge
-    #   @payment = Payment.find_by_confirmation(notify.transaction_id) ||
-    #   registration.manual_payment(nil, notify.amount, total_currency, nil,
-    #                      options = { item_ref: '', payment_method: 'paypal', bill_to_name: '', payment_date: Time.now } )
-    #     enrollment.invoice.payments.create(:amount => notify.amount,
-    #       :payment_method => 'paypal', :confirmation => notify.transaction_id,
-    #       :description => notify.params['item_name'], :status => notify.status,
-    #       :test => notify.test?)
-    #   begin
-    #     if notify.complete?
-    #       @payment.status = notify.status
-    #     else
-    #       logger.error("Failed to verify Paypal's notification, please investigate")
-    #     end
-    #   rescue => e
-    #     @payment.status = 'Error'
-    #     raise
-    #   ensure
-    #     @payment.save
-    #   end
-    # end
-    # render :nothing => true
+  def paypal_ipn
+    notify        = Paypal::Notification.new(request.raw_post)
+    registration  = Registration.find_by_receipt_code(notify.item_id)
+    registration.paypal_ipn(notify)
+    render :nothing => true
   end
   
   # This could get called from a gateway (such as Paypal) when they decide to not
   # complete the payment, usually by clicking a Cancel link. In that case, we
-  # want to move the registration state to "noshow", so we can see how many 
+  # want to move the registration state to "cancelled", so we can see how many 
   # payments get abandoned
   # Paypal: this is passed in as the cancel url
   #------------------------------------------------------------------------------
@@ -111,8 +90,8 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @registration = Registration.find_by_receipt_code(params[:receipt_code])
     redirect_to main_app.root_url and return if @registration.nil?
 
-    if @registration.pending?
-      @registration.send('noshow!')
+    if @registration.accepted?
+      @registration.send('cancelled!')
       flash[:alert] = 'Your payment was canceled'
     end
     redirect_to dm_event.register_new_path(@registration.workshop) and return

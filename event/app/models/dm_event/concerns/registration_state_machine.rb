@@ -136,7 +136,6 @@ module DmEvent
           event :pending do
             transitions :from => :reviewing,  :to => :pending
             transitions :from => :waitlisted, :to => :pending
-            transitions :from => :noshow,     :to => :pending
           end
 
         end
