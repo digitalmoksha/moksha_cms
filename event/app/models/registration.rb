@@ -8,6 +8,8 @@ class Registration < ActiveRecord::Base
   include DmEvent::Concerns::RegistrationStateEmail
   include ActiveMerchant::Billing::Integrations
 
+  protect_from_forgery :except => [:paypal_ipn]
+
 
   self.table_name               = 'ems_registrations'
 
@@ -219,8 +221,8 @@ class Registration < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def paypal_ipn(notify)
     if notify.acknowledge
-      # @payment = Payment.find_by_confirmation(notify.transaction_id) ||
-      payment_history = manual_payment( nil,
+      payment_history = PaymentHistory.find_by_transaction_id(notify.transaction_id) ||
+                        manual_payment( nil,
                                         notify.amount.to_s,
                                         notify.currency,
                                         nil,
