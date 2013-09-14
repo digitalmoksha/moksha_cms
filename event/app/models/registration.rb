@@ -8,9 +8,6 @@ class Registration < ActiveRecord::Base
   include DmEvent::Concerns::RegistrationStateEmail
   include ActiveMerchant::Billing::Integrations
 
-  protect_from_forgery :except => [:paypal_ipn]
-
-
   self.table_name               = 'ems_registrations'
 
   attr_accessible               :workshop_price_id, :discount_value, :discount_use_percent,

@@ -3,6 +3,8 @@ ActionView::Base.send(:include, ActiveMerchant::Billing::Integrations::ActionVie
 class DmEvent::RegistrationsController < DmEvent::ApplicationController
   include ActiveMerchant::Billing::Integrations
 
+  protect_from_forgery :except => [:paypal_ipn]
+
   helper          DmEvent::WorkshopsHelper
   helper          DmEvent::RegistrationsHelper
   layout          'layouts/event_templates/register'
