@@ -221,9 +221,9 @@ class Registration < ActiveRecord::Base
   def paypal_ipn(notify)
     logger.error('===> Enter: Registration.paypal_ipn')
     if notify.acknowledge
-      # payment_history = PaymentHistory.find_by_transaction_id(notify.transaction_id) ||
-      payment_history = manual_payment( nil,
-                                        notify.amount.to_s,
+      payment_history = PaymentHistory.find_by_transaction_id(notify.transaction_id) ||
+                          manual_payment( nil,
+                                        notify.amount.to_f.to_s,
                                         notify.currency,
                                         nil,
                                         payment_method: 'paypal',
@@ -232,10 +232,6 @@ class Registration < ActiveRecord::Base
                                         transaction_id: notify.transaction_id,
                                         status: notify.status
                     )
-        # enrollment.invoice.payments.create(:amount => notify.amount,
-        #   :payment_method => 'paypal', :confirmation => notify.transaction_id,
-        #   :description => notify.params['item_name'], :status => notify.status,
-        #   :test => notify.test?)
         logger.error(payment_history.inspect)
       begin
         if notify.complete?
