@@ -217,6 +217,7 @@ class Registration < ActiveRecord::Base
   # Handle PayPal notification logic
   #------------------------------------------------------------------------------
   def paypal_ipn(notify)
+    logger.error('===> Enter: Registration.paypal_ipn')
     if notify.acknowledge
       # payment_history = PaymentHistory.find_by_transaction_id(notify.transaction_id) ||
       payment_history = manual_payment( nil,
@@ -233,6 +234,7 @@ class Registration < ActiveRecord::Base
         #   :payment_method => 'paypal', :confirmation => notify.transaction_id,
         #   :description => notify.params['item_name'], :status => notify.status,
         #   :test => notify.test?)
+        logger.error(payment_history.inspect)
       begin
         if notify.complete?
           payment_history.status = notify.status

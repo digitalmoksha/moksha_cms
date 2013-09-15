@@ -76,8 +76,13 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   # TODO Not working yet
   #------------------------------------------------------------------------------
   def paypal_ipn
+    logger.error('===> Enter: controller::paypal_ipn')
     notify        = Paypal::Notification.new(request.raw_post)
     registration  = Registration.find_by_receipt_code(notify.item_id)
+
+    logger.error(registration.inspect)
+    logger.error(notify.inspect)
+    
     registration.paypal_ipn(notify)
     render :nothing => true
   end
