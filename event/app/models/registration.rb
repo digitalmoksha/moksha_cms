@@ -196,6 +196,8 @@ class Registration < ActiveRecord::Base
       self.update_attribute(:amount_paid_cents, new_amount_paid.cents)
       self.reload
       self.send('paid!') if balance_owed.cents <= 0 && self.accepted?
+    else
+      logger.error("===> Error: Registration.manual_payment: #{payment_history.errors.inspect}")
     end
     return payment_history
   end
