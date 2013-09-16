@@ -19,9 +19,9 @@ module Liquid
       #------------------------------------------------------------------------------
       def tags
         if Account.current.nil?
-          tags_namespaced('top')
+          tags_namespaced('top').merge(@tags)
         else
-          tags_namespaced('top').merge(tags_namespaced(Account.current.account_prefix))
+          tags_namespaced('top').merge(@tags).merge(tags_namespaced(Account.current.account_prefix))
         end
       end
       
