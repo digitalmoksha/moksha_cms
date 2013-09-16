@@ -12,6 +12,13 @@ module DmEvent::WorkshopsHelper
     return description
   end
 
+  #------------------------------------------------------------------------------
+  def render_workshop_sidebar(workshop)
+    return '' if workshop.sidebar.nil?
+
+    liquidize_markdown(render(:inline => workshop.sidebar), {})
+  end
+
   # Convert the financial "collected" data into json for pie charts
   #------------------------------------------------------------------------------
   def financial_collected_json(collected)

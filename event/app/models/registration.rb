@@ -237,6 +237,7 @@ class Registration < ActiveRecord::Base
         if notify.complete?
           payment_history.status = notify.status
         else
+          # TODO need to handle refunding, etc
           logger.error("Failed to verify Paypal's notification, please investigate")
         end
       rescue => e

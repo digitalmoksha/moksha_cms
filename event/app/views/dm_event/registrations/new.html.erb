@@ -1,5 +1,5 @@
 <% content_for :sidebar do %>
-  <%= render :partial => "sidebar_#{@workshop.event_style}" %>
+  <%= render_workshop_sidebar(@workshop) %>
 <% end %>
 
 <div id="workshop_registration">

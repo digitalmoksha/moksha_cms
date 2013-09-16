@@ -9,6 +9,7 @@
   <%= locale_frame :title => '' do |locale| %>
     <%= f.input "title_#{locale}", :label => 'Title', :id => 'title_error', :required => true %>
     <%= f.input "description_#{locale}", :label => 'Description', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 12 %>
+    <%= f.input "sidebar_#{locale}", :label => 'Sidebar', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 8 %>
   <% end %>
 
   <%= well_frame do %>
