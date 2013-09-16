@@ -3,7 +3,7 @@
 # item_ref         =>  specfic item number
 # item_name        =>  item's name
 # quantity         =>  number of items
-# cost             =>  cost of item, as a string
+# cost             =>  cost of item, as a number string (to_f.to_s)
 # discount         =>  any coupon/dicsount
 # total_cents      =>  total amount in cents
 # total_currency   =>  currency 3 char code
