@@ -17,8 +17,9 @@ class Workshop < ActiveRecord::Base
   has_one                 :noshow_email,      :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'noshow'"
   
   attr_accessible         :title, :description, :sidebar, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
-                          :contact_email, :contact_phone, :require_review, :require_account, :require_address,
-                          :require_photo, :published, :base_currency, :event_style, :funding_goal, :payments_enabled
+                          :contact_email, :contact_phone, :require_review, :require_account, :show_address, :require_address,
+                          :require_photo, :published, :base_currency, :event_style, :funding_goal, :funding_goal_cents,
+                          :payments_enabled
 
   # --- globalize
   translates              :title, :description, :sidebar, :fallbacks_for_empty_translations => true

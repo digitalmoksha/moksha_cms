@@ -18,10 +18,12 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     if !@workshop.registration_closed? || is_admin?
       @registration               = @workshop.registrations.build
       @registration.user_profile  = current_user ? current_user.user_profile : UserProfile.new
-      if (@workshop.require_address || !@workshop.require_account) && !@registration.user_profile.address_valid?
+      
+      if @workshop.require_address && !@registration.user_profile.address_valid?
         #--- address is required and there are missing fields in the profile
         @registration.user_profile.address_required = true
       end
+      @registration.user_profile.userless_registration = true if current_user.nil? && !@workshop.require_account
     else
       render action: :closed
     end

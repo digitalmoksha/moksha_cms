@@ -65,7 +65,8 @@
     <%= f.input :contact_email, :label => 'Contact Email' %>
     <%= f.input :contact_phone, :label => 'Contact Phone' %>
     <%= f.input :require_account, :as => :toggle_checked, :label => 'Require Account', :hint => 'Must have a user account to register - necessary for forum/blog access' %>
-    <%= f.input :require_address, :as => :toggle_checked, :label => 'Require Address', :hint => 'Address in profile must be filled out' %>
+    <%= f.input :show_address, :as => :toggle_checked, :label => 'Show Address', :hint => 'Show address fields (only if user is not logged in)' %>
+    <%= f.input :require_address, :as => :toggle_checked, :label => 'Require Address', :hint => 'Address in profile must be filled out (only if Show Address is checked)' %>
     <%#= f.input :require_photo, :as => :toggle_checked, :label => 'Require Photo', :hint => 'A photo must be uploaded into profile' %>
     <%= f.input :require_review, :as => :toggle_checked, :label => 'Review Registrations', :hint => 'All new registrations become "Pending", waiting for approval' %>
     <%= f.input :payments_enabled, :as => :toggle_checked, label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>

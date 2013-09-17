@@ -14,9 +14,8 @@
         <%= render :partial => 'section_prices', :locals => {:f => f} %>
       </div>
 
-      <% if @registration.user_profile.address_required %>
-        <%= render :partial => 'section_address', :locals => {:f => f} %>
-      <% end %>
+      <%= render :partial => 'section_address', :locals => {:f => f} %>
+
       <% save_label = @workshop.crowdfunding? ? I18n.t('ems.donate_button') : I18n.t('ems.register_btn') %>
       <%= submit_or_cancel :save => save_label, :cancel => I18n.t('ems.cancel_btn'), :cancel_url => admin_workshops_path %>
     <% end %>
