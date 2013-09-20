@@ -29,7 +29,7 @@ module DmCore
         validates_presence_of   :first_name,        :if => :require_name?
         validates_presence_of   :last_name,         :if => :require_name?
         validates_presence_of   :country_id,        :if => :require_country?
-        validates_presence_of   :email,             :if => :require_email?
+        validates_presence_of   :email,             :if => Proc.new { |p| p.address_required }
         validates_presence_of   :address,           :if => Proc.new { |p| p.address_required }
         validates_presence_of   :city,              :if => Proc.new { |p| p.address_required }
         validates_presence_of   :zipcode,           :if => Proc.new { |p| p.address_required }
@@ -90,12 +90,6 @@ module DmCore
         # Override this method if you don't want to require country
         #------------------------------------------------------------------------------
         def require_country?
-          true
-        end
-
-        # Override this method if you don't want to require email
-        #------------------------------------------------------------------------------
-        def require_email?
           true
         end
 
