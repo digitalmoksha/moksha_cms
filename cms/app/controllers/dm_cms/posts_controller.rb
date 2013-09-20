@@ -52,7 +52,7 @@ protected
   def post_lookup
     @blog = CmsBlog.find_by_slug(params[:cms_blog_id])
     redirect_to blog_root_path and return if @blog.nil?
-    raise Account::LoginRequired.new(I18n.t('cms.blog_login_required')) if !current_user
+    raise Account::LoginRequired.new(I18n.t('cms.blog_login_required')) if !current_user && !@blog.is_public?
     authorize! :read, @blog
     
     @post = @blog.posts.find_by_slug(params[:id])
