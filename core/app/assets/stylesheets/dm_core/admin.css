@@ -1,5 +1,6 @@
 /* @override 
-	http://dev.telugubasha.net:3000/assets/dm_core/admin.css?body=1 */
+	http://dev.telugubasha.net:3000/assets/dm_core/admin.css?body=1
+	http://dev.srikaleshwarancientknowledgeschool.com:3000/assets/dm_core/admin.css?body=1 */
 
 .tree_open > dl dt a.tree_expand, .tree_closed > dl dt a.tree_expand {
   text-indent: -6000px;
@@ -85,4 +86,8 @@
 }
 #tree_sort a {
   border: none;
+}
+
+div.ace_editor {
+  border: 1px solid #ddd;
 }
