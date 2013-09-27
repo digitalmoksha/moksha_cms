@@ -9,6 +9,7 @@
 //= require ace/mode-markdown.js
 //= require ace/theme-textmate.js
 //= require aced-rails.js
+//= require dm_core/admin_extra.js
 
 // Function for toggling the revealing of an item, through slide and fading
 //----------------------------------------------------------------
