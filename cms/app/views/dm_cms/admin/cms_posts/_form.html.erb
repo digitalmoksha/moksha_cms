@@ -20,8 +20,8 @@
 
     <%= locale_frame :title => '' do |locale| %>
       <%= f.input "title_#{locale}", :label => 'Post Title', :id => 'title_error', :required => true %>
-      <%= f.input "summary_#{locale}", :label => 'Summary', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 4 %>
-      <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 18 %>
+      <%= f.input "summary_#{locale}", :label => 'Summary', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 100px;"} %>
+      <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 500px;"} %>
     <% end %>
 
     <%= f.input :image, :label => 'Post Image', :id => 'image_error' %>
