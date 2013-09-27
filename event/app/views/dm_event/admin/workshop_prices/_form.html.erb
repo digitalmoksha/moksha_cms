@@ -15,7 +15,7 @@
     <%= locale_frame :title => '' do |locale| %>
       <%= f.input "price_description_#{locale}", :label => 'Title', :id => 'title_error', :required => true %>
       <%= f.input "sub_description_#{locale}", :label => 'Sub-title', :id => 'title_error', :required => true %>
-      <%= f.input "payment_details_#{locale}", :label => 'Payment Details', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 4,
+      <%= f.input "payment_details_#{locale}", :label => 'Payment Details', :hint => 'Markdown format', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 200px;"},
                  :hint => 'Any special details/instructions for this price (Markdown)' %>
     <% end %>
     

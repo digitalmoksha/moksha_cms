@@ -8,8 +8,8 @@
   <%= f.error_notification :message => "Please review the problems below"%>
   <%= locale_frame :title => '' do |locale| %>
     <%= f.input "title_#{locale}", :label => 'Title', :id => 'title_error', :required => true %>
-    <%= f.input "description_#{locale}", :label => 'Description', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 12 %>
-    <%= f.input "sidebar_#{locale}", :label => 'Sidebar', :hint => 'Markdown format', :wrapper => :vertical, :as => :text_full_width, :mono => true, :rows => 8 %>
+    <%= f.input "description_#{locale}", :label => 'Description', :hint => 'Markdown format', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 500px;"} %>
+    <%= f.input "sidebar_#{locale}", :label => 'Sidebar', :hint => 'Markdown format', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 200px;"} %>
   <% end %>
 
   <%= well_frame do %>
