@@ -25,7 +25,7 @@ private
   def data
     users.map do |user|
       [
-        user.user_profile.public_avatar.present? ? image_tag(user.user_profile.public_avatar_url(:sq35), width: 35, height: 35) : '',
+        link_to((user.user_profile.public_avatar.present? ? image_tag(user.user_profile.public_avatar_url(:sq35), width: 35, height: 35) : ''), user.user_profile.public_avatar_url),
         link_to(h(user.full_name), url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => "Edit #{h(user.full_name)}"),
         h(user.email),
         user.country.nil? ? 'n/a' : user.country.english_name,
