@@ -25,11 +25,8 @@ module Liquid
   
     #------------------------------------------------------------------------------
     def file_path(file_name, context)
-      if @attributes['protected'] == 'true' || @attributes['protected'] == 'yes' || @attributes['protected'] == '1'
-        expand_url(file_name, "/protected_asset/")
-      else
-        expand_url(file_name, "#{context.registers[:account_site_assets]}/images/")
-      end
+      path = @attributes['protected'].as_boolean ? "/protected_asset/" : "#{context.registers[:account_site_assets]}/images/"
+      expand_url(file_name, path)
     end
     
     def self.details
