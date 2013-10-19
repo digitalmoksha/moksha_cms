@@ -16,7 +16,8 @@
     <%= f.input :preferred_smtp_domain, :label => 'SMTP Domain' %>
     <%= f.input :preferred_smtp_from_email, :label => 'SMTP From/Reply Email', :required => true, :hint => 'from/reply address set on standard system emails' %>
     <%= f.input :preferred_blog_from_email, :label => 'Blog From/Reply Email', :hint => 'from/reply address set on blog notification emails' %>
-    <%= f.input :preferred_mailchimp_api_key, :label => 'MailChimp API Key' %>
+    <%= f.input :preferred_nms_use_mailchimp, :as => :toggle, :label => 'Newsletters with Mailchimp?', hint: 'Are you using MailChimp for your newsletter?' %>
+    <%= f.input :preferred_nms_api_key, :label => 'Newsletter API Key', hint: 'Such as the Mailchimp API Key' %>
 
     <%= submit_or_cancel :cancel_url => dm_core.admin_account_email_path %>
 
