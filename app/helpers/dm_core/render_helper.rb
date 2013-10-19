@@ -27,22 +27,35 @@ module DmCore
     # Wrapper to pull the list of countries from our table
     #------------------------------------------------------------------------------
     def ut_country_select(object, method, options = {:include_blank => true}, html_options = {})    
-      collection = ut_country_select_collection(false)
+      collection = ut_country_select_collection(include_blank: false, as: options[:as])
       select(object, method, collection, options, html_options)
     end
 
     # Wrapper to pull the list of countries from our table
     #------------------------------------------------------------------------------
     def ut_country_select_tag(name, selected = nil, options = {:include_blank => true}, html_options = {})
-      collection = ut_country_select_collection(options[:include_blank])
+      collection = ut_country_select_collection(options)
       select_tag(name, options_for_select(collection, selected.to_i), html_options)
     end
 
     # Just return the collection for the countries
+    # :as => :id      return the ids of the Country objects
+    # :as => :code    return the 2-letter country code
+    # :as => :name    return the country's english name
+    # (old interface passed in only a true or false to indicate include_blank)
     #------------------------------------------------------------------------------
-    def ut_country_select_collection(include_blank = true)
-      collection = (include_blank ? [[" ", ""]] : [])
-      collection += ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.find(:all, :order => 'english_name').collect {|p| [ p.english_name, p.id ] }    
+    def ut_country_select_collection(options = {include_blank: true, :as => :id})
+      options = {include_blank: options, :as => :id} if !options.is_a?(Hash)
+      
+      collection = (options[:include_blank] ? [[" ", ""]] : [])
+      case options[:as]
+      when :code
+        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_CODE + DmCore::Country.find(:all, :order => 'english_name').collect {|p| [ p.english_name, p.code ] }
+      when :name
+        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_NAME + DmCore::Country.find(:all, :order => 'english_name').collect {|p| [ p.english_name, p.english_name ] }
+      else
+        collection += ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.find(:all, :order => 'english_name').collect {|p| [ p.english_name, p.id ] }
+      end
     end
 
     # Wrapper to pull a list of countries from our table
@@ -51,7 +64,7 @@ module DmCore
     # for that country.
     #------------------------------------------------------------------------------
     def ut_country_select_with_states(object, method, method_state, options = {:include_blank => true}, html_options = {})    
-      collection = ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.find(:all, :order => 'english_name').collect {|p| [ p.english_name, p.id ] }
+      collection = ut_country_select_collection(include_blank: false, as: options[:as])
       state_object_method = "#{object.to_s}[#{method_state.to_s}]"
       html_options[:id] ||= 'country_select'
       html_options.merge!({:data => {:progressid => "indicator_country", :objectname => state_object_method}})

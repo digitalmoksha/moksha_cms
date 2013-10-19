@@ -83,14 +83,36 @@ class StateCountryConstants
   # Primary / favorite countries - pre-pended to general list of countries
   #------------------------------------------------------------------------------
   PRIMARY_COUNTRIES = [
-                          ['Austria', 13],
-                          ['Czech Republic', 54],
-                          ['Germany', 55], 
-                          ['India', 101], 
-                          ['Japan', 109], 
-                          ['Switzerland', 41], 
-                          ['United Kingdom', 75], 
-                          ['United States', 223], 
+                          ['Austria',         13],
+                          ['Czech Republic',  54],
+                          ['Germany',         55], 
+                          ['India',           101], 
+                          ['Japan',           109], 
+                          ['Switzerland',     41], 
+                          ['United Kingdom',  75], 
+                          ['United States',   223], 
+                          ['------------------------', '']
+                      ].freeze
+  PRIMARY_COUNTRIES_CODE = [
+                          ['Austria',         'AT'],
+                          ['Czech Republic',  'CZ'],
+                          ['Germany',         'DE'], 
+                          ['India',           'IN'], 
+                          ['Japan',           'JP'], 
+                          ['Switzerland',     'CH'], 
+                          ['United Kingdom',  'UK'], 
+                          ['United States',   'US'], 
+                          ['------------------------', '']
+                      ].freeze
+  PRIMARY_COUNTRIES_NAME = [
+                          ['Austria',         'Austria'],
+                          ['Czech Republic',  'Czech Republic'],
+                          ['Germany',         'Germany'], 
+                          ['India',           'India'], 
+                          ['Japan',           'Japan'], 
+                          ['Switzerland',     'Switzerland'], 
+                          ['United Kingdom',  'United Kingdom'], 
+                          ['United States',   'United States'], 
                           ['------------------------', '']
                       ].freeze
                         

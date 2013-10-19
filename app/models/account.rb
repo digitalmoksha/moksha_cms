@@ -11,12 +11,12 @@ class Account < ActiveRecord::Base
   attr_accessible         :preferred_site_enabled, :preferred_default_locale, :preferred_locales,
                           :preferred_ssl_enabled, :preferred_webmaster_email,
                           :preferred_support_email, :preferred_google_analytics_tracker_id,
-                          :preferred_mailchimp_api_key, :preferred_site_title
+                          :preferred_site_title
   attr_accessible         :preferred_smtp_address, :preferred_smtp_port, :preferred_smtp_domain,
                           :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email,
                           :preferred_blog_from_email
   attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
-  attr_accessible         :preferred_newsletter_settings
+  attr_accessible         :preferred_nms_use_mailchimp, :preferred_nms_api_key, :preferred_nms_lists_synced_on
 
   attr_accessor           :email_validation, :general_validation, :analytics_validation
 
@@ -57,7 +57,12 @@ class Account < ActiveRecord::Base
 
   #--- Newsletter Settings - uses the 'group' function to have one preference and many values
   #    ex) current_account.preferred_newsletter_settings(:mailchimp_api_key)
-  preference              :newsletter_settings,             :string
+  # [todo] decided against this for now, use specific preferences
+  # [todo] figure out best way to inject these gem specific prefs from the gem itself
+  # preference              :newsletter_settings,             :string
+  preference              :nms_use_mailchimp,               :boolean, :default => false
+  preference              :nms_api_key,                     :string
+  preference              :nms_lists_synced_on,             :datetime
   
   #--- eager load all preferences when an object is found
   after_find              :preferences
