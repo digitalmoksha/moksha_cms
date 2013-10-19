@@ -1,0 +1,9 @@
+cs:
+  nms:
+    subscribe_button: Přihlásit
+    subscription_successful: "Úspěšně jste se přihlásili k odběru newsletteru. Aby bylo možné aktivovat předplatné, poslali jsme vám potvrzovací e-mail. Musíte kliknout na odkaz pro potvrzení, aby dostávat newsletter."
+    
+    #--- Mailchimp specific errors
+    List_DoesNotExist: Uvedené v seznamu neexistuje
+    List_AlreadySubscribed: Tento e-mail je již předplatné
+    Email_NotExists: Uvedený e-mail neexistuje

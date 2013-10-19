@@ -1,3 +1,3 @@
-class DmNewsletter::ApplicationController < ApplicationController
+class DmNewsletter::ApplicationController < ::ApplicationController
   include ApplicationHelper
 end

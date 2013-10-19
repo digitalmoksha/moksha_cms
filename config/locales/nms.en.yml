@@ -1,0 +1,9 @@
+en:
+  nms:
+    subscribe_button: Subscribe
+    subscription_successful: "You have successfully subscribed to the newsletter. In order to activate your subscription, we have sent you a confirmation e-mail.  You must click the confirmation link in order to receive the newsletter."
+      
+    #--- Mailchimp specific errors
+    List_DoesNotExist: The specified list does not exist
+    List_AlreadySubscribed: This email is already subscribed
+    Email_NotExists: The specified email does not exist
