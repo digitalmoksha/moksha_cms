@@ -18,3 +18,4 @@ cs:
     delete: smazat
     comments_stat: Komentáře
     blog_login_required: Přihlášení je vyžadováno pro přístup k tomuto blogu
+    comment_login_required: Prosím přihlašte se ke svému uživatelskému účtu a zanechat komentář

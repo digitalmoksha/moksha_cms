@@ -21,7 +21,7 @@ class DmCms::PostsController < DmCms::ApplicationController
   def ajax_add_comment
     @post  = CmsPost.find_by_slug(params[:cms_post_id])
     authorize! :read, @post.cms_blog
-    @post.comments.create(:body => params[:comment][:body], :user_id => current_user.id)
+    @post.comments.create(:body => params[:comment][:body], :user_id => current_user.id) if current_user && !params[:comment][:body].blank?
     redirect_to :back
   end
   
