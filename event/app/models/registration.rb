@@ -218,33 +218,42 @@ class Registration < ActiveRecord::Base
 
   # Handle PayPal notification logic
   #------------------------------------------------------------------------------
-  def paypal_ipn(notify)
+  def self.paypal_ipn(notify)
     logger.error('===> Enter: Registration.paypal_ipn')
+    logger.error(notify.inspect)
+    registration = Registration.find_by_receipt_code(notify.item_id)
+    
     if notify.acknowledge
-      payment_history = PaymentHistory.find_by_transaction_id(notify.transaction_id) ||
-                          manual_payment( nil,
-                                        notify.amount.to_f.to_s,
-                                        notify.currency,
-                                        nil,
-                                        payment_method: 'paypal',
-                                        payment_date: notify.received_at,
-                                        notify_data: notify,
-                                        transaction_id: notify.transaction_id,
-                                        status: notify.status
-                    )
-        logger.error(payment_history.inspect)
-      begin
-        if notify.complete?
-          payment_history.status = notify.status
-        else
-          # TODO need to handle refunding, etc
-          logger.error("Failed to verify Paypal's notification, please investigate")
+      if registration
+        logger.error(registration.inspect)
+        payment_history = PaymentHistory.find_by_transaction_id(notify.transaction_id) ||
+                            registration.manual_payment( nil,
+                                          notify.amount.to_f.to_s,
+                                          notify.currency,
+                                          nil,
+                                          payment_method: 'paypal',
+                                          payment_date: notify.received_at,
+                                          notify_data: notify,
+                                          transaction_id: notify.transaction_id,
+                                          status: notify.status
+                      )
+          logger.error(payment_history.inspect)
+        begin
+          if notify.complete?
+            payment_history.status = notify.status
+          else
+            # TODO need to handle refunding, etc
+            logger.error("Failed to verify Paypal's notification, please investigate")
+          end
+        rescue => e
+          payment_history.status = 'Error'
+          raise
+        ensure
+          payment_history.save
         end
-      rescue => e
-        payment_history.status = 'Error'
-        raise
-      ensure
-        payment_history.save
+      else
+        #--- [todo] a linked registration was not found.  Should be stored in payment table anyway
+        logger.error("   > Error: Registration was not found: #{notify.item_id}"
       end
     end
   end
