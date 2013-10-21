@@ -253,7 +253,7 @@ class Registration < ActiveRecord::Base
         end
       else
         #--- [todo] a linked registration was not found.  Should be stored in payment table anyway
-        logger.error("   > Error: Registration was not found: #{notify.item_id}"
+        logger.error("   > Error: Registration was not found: #{notify.item_id}")
       end
     end
   end
