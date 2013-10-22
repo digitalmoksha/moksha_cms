@@ -145,28 +145,21 @@ class Account < ActiveRecord::Base
     }
   end
   
-  #------------------------------------------------------------------------------
-  def theme_data
-    Account.theme_data(account_prefix)
-  end
-  
   # get the account's theme path
   #------------------------------------------------------------------------------
   def theme_path
     Rails.root.join('themes', account_prefix)
   end
-  
-  # Read the _theme.yml file located in the /site_assets/_account_prefix_/theme folder
-  # Returns just the theme data - not the top level account_prefix
-  # {todo} make the location a config variable
+
+  # Get the name of the current theme - which is simply the account prefix
   #------------------------------------------------------------------------------
-  def self.theme_data(theme_name)
-    theme_file = Rails.root.join('themes', theme_name, '_theme.yml')
-    if File.exists?(theme_file)
-      (YAML::load_file(theme_file))[theme_name]
-    else
-      nil
-    end
+  def current_theme
+    account_prefix
   end
   
+  # Get the name of the parent theme
+  #------------------------------------------------------------------------------
+  def parent_theme
+    ThemesForRails.config.parent_theme(current_theme)
+  end
 end
