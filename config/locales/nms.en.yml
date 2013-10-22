@@ -1,9 +1,14 @@
 en:
   nms:
     subscribe_button: Subscribe
+    unsubscribe_button: Unsubscribe
+    update_subscription_button: Update Subscription
     subscription_successful: "You have successfully subscribed to the newsletter. In order to activate your subscription, we have sent you a confirmation e-mail.  You must click the confirmation link in order to receive the newsletter."
-      
+    subscription_updated: Your subscription was successfully updated
+    unsubscribe_successful: Your email has been unsubscribed
+    
     #--- Mailchimp specific errors
     List_DoesNotExist: The specified list does not exist
     List_AlreadySubscribed: This email is already subscribed
     Email_NotExists: The specified email does not exist
+    mc_unknown_error: Unknown Mailchimp error occurred

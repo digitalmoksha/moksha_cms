@@ -7,17 +7,43 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
   def subscribe_to_newsletter
     subscription_params = params['subscription']
     user_or_email       = current_user ? current_user : subscription_params['email']
-    @newsletter         = Newsletter.find_newsletter(subscription_params['token'])
-    subscription_params.delete('token')
+    @newsletter         = Newsletter.find_newsletter(params['token'])
     
-    respond_to do |format|
+    if @newsletter
       result = @newsletter.subscribe(user_or_email, subscription_params)
-      if result == true
-        format.html { redirect_to (request.env['HTTP_REFERER'].blank? ? main_app.index_url : :back), notice: 'You have been subscribed' }
-        format.js { render json: { success: true } }
-      else
-        format.html { redirect_to :back }
-        format.js { render json: { success: false, msg: result.to_s } }
+      respond_to do |format|
+        if result[:success]
+          msg = (result[:update_existing] ? I18n.t('nms.subscription_updated') : I18n.t('nms.subscription_successful'))
+          format.html { redirect_to (request.env['HTTP_REFERER'].blank? ? main_app.index_url : :back), notice: msg }
+          format.js { render json: { success: true, msg: msg } }
+        else
+          msg = I18n.t(@newsletter.map_error_to_msg(result[:code]))
+          format.html { redirect_to :back, alert: msg }
+          format.js { render json: { success: false, msg: msg } }
+        end
+      end
+    end
+  end
+
+  # Unsubscribe current user from newsletter.  We only support direct unsubscribing
+  # for a logged in user
+  #------------------------------------------------------------------------------
+  def unsubscribe_from_newsletter
+    email       = current_user ? current_user.email : ''
+    @newsletter = Newsletter.find_newsletter(params['token'])
+    
+    if (@newsletter)
+      result = @newsletter.unsubscribe(email)
+      respond_to do |format|
+        if result
+          msg = I18n.t('nms.unsubscribe_successuful')
+          format.html { redirect_to (request.env['HTTP_REFERER'].blank? ? main_app.index_url : :back), notice: msg }
+          format.js { render json: { success: true, msg: msg } }
+        else
+          msg = I18n.t('nms.Email_NotExists')
+          format.html { redirect_to :back, alert: msg }
+          format.js { render json: { success: false, msg: msg } }
+        end
       end
     end
   end
