@@ -11,6 +11,19 @@ class MailchimpNewsletter < Newsletter
   validate        :validate_list_id
   after_create    :update_list_stats
   
+  #------------------------------------------------------------------------------
+  def self.signup_information(token, options = {})
+    information = { newsletter: self.find_newsletter(token, options) }
+    if information[:newsletter]
+      information[:grouping] = information[:newsletter].groupings[0]
+      if options[:current_user]
+        subscriber = MailchimpNewsletterSubscriber.subscriber_info(information[:newsletter], options[:current_user].email)
+        information[:subscriber] = (subscriber && subscriber.subscribed? ? subscriber : nil)
+      end
+    end
+    return information
+  end
+
   # Make sure list id is specified, and it's valid with MailChimp
   #------------------------------------------------------------------------------
   def validate_list_id
@@ -35,30 +48,46 @@ class MailchimpNewsletter < Newsletter
   # subscribe user or email to the newsletter
   #------------------------------------------------------------------------------
   def subscribe(user_or_email, options = {FNAME: '', LNAME: ''})
-    return I18n.t("nms.#{MAILCHIMP_ERRORS[232]}") if user_or_email.blank?
+    return { success: false, code: 232 } if user_or_email.blank?
+    api        = MailchimpNewsletter.api
     
     #--- remove any invalid merge vars or other options
     merge_vars = options.except('new-email', :email, :optin_ip, :optin_time, :mc_location,
-                                :mc_language, :mc_notes)
+                                :mc_language, :mc_notes, :update_existing)
 
     #--- groupings needs to be an Array, but the form usually sends it as a Hash
-    merge_vars['groupings'] = [merge_vars['groupings']] if merge_vars['groupings'] && !merge_vars['groupings'].is_a?(Array)
+    merge_vars['GROUPINGS'] = [merge_vars['GROUPINGS']] if merge_vars['GROUPINGS'] && !merge_vars['GROUPINGS'].is_a?(Array)
 
-    api        = MailchimpNewsletter.api
-    
-    if user_or_email.is_a?(String)
-      email               = {email: user_or_email}
-    else
+    #--- update data if user logged in. Don't for an unprotected subscribe. but honor value if passed in
+    options.reverse_merge!  update_existing: user_or_email.is_a?(User)
+
+    if user_or_email.is_a?(User)
       email               = {email: user_or_email.email}
       merge_vars[:FNAME]  = user_or_email.first_name
       merge_vars[:LNAME]  = user_or_email.last_name
+    else
+      email               = {email: user_or_email}
     end
     merge_vars[:SPAMAPI]  = 1
-    api.lists.subscribe(id: self.mc_id, email: email, merge_vars: merge_vars, double_optin: true)
-    return true
+    api.lists.subscribe(id: self.mc_id, email: email, merge_vars: merge_vars, 
+                        double_optin: true, update_existing: options[:update_existing], replace_interests: true)
+    return { success: true, code: 0, update_existing: options[:update_existing] }
   rescue Gibbon::MailChimpError => exception
     Rails.logger.info "=== Error Subscribing #{email} : #{exception.to_s}"
-    return MAILCHIMP_ERRORS[exception.code] ? I18n.t("nms.#{MAILCHIMP_ERRORS[exception.code]}") : exception.to_s
+    return { success: false, code: exception.code, update_existing: options[:update_existing] }
+  end
+
+  # unsubscribe email from the newsletter
+  #------------------------------------------------------------------------------
+  def unsubscribe(email)
+    return false if email.blank?
+
+    api = MailchimpNewsletter.api
+    api.lists.unsubscribe(id: self.mc_id, email: {email: email}, delete_member: false, send_goodbye: true, send_notify: true)
+    return true
+  rescue Gibbon::MailChimpError => exception
+    Rails.logger.info "=== Error Unsubscribing #{email} : #{exception.to_s}"
+    return false
   end
 
   #------------------------------------------------------------------------------
@@ -80,6 +109,11 @@ class MailchimpNewsletter < Newsletter
     end
   end
 
+  #------------------------------------------------------------------------------
+  def map_error_to_msg(code)
+    return MAILCHIMP_ERRORS[code] ? "nms.#{MAILCHIMP_ERRORS[code]}" : 'nms.mc_unknown_error'
+  end
+  
   # Grab an API object to work with
   #------------------------------------------------------------------------------
   def self.api

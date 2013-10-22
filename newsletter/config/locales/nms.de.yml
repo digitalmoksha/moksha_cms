@@ -1,9 +1,14 @@
 de:
   nms:
     subscribe_button: Anmelden
+    unsubscribe_button: Abmelden
+    update_subscription_button: Update-Abonnement
     subscription_successful: "Du hast dich erfolgreich für den Newsletter angemeldet. Damit deine Anmeldung aktiviert wird, haben wir dir eine Email Bestätigung gesendet.  Bestätige den in dieser Email gesendeten Link um sicherzustellen, dass du den Newsletter empfängst."
+    subscription_updated: Ihr Abonnement wurde erfolgreich aktualisiert
+    unsubscribe_successful: Ihre E-Mail wurde abgemeldet
     
     #--- Mailchimp specific errors
     List_DoesNotExist: Die angegebene Liste existiert nicht
     List_AlreadySubscribed: Diese E-Mail ist bereits abonniert
     Email_NotExists: Die angegebene E-Mail existiert nicht
+    mc_unknown_error: Unknown Mailchimp error occurred

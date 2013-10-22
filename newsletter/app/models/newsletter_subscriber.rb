@@ -1,16 +1,18 @@
+# [todo] currently not saving subscriber info in database, only working with a 
+# temporary object.  Look at caching/syncing subscriber info for performance
 #------------------------------------------------------------------------------
-class NewsletterSubscriber < ActiveRecord::Base
+class NewsletterSubscriber #< ActiveRecord::Base
 
+=begin
   belongs_to              :newsletter
   
   validates_presence_of     :email
   validates_presence_of     :firstname,   :if => Proc.new { |sub| sub.newsletter.require_name}
   validates_presence_of     :lastname,    :if => Proc.new { |sub| sub.newsletter.require_name}
   validates_presence_of     :country,     :if => Proc.new { |sub| sub.newsletter.require_country}
-
+  
   default_scope             { where(account_id: Account.current.id) }
 
-=begin
   #------------------------------------------------------------------------------
   # protect admin values from being assigned via a malicious form
   # attr_accessible makes everything protected except those listed

@@ -6,4 +6,14 @@ class StandardNewsletter < Newsletter
 
   validates_presence_of   :name
 
+  #------------------------------------------------------------------------------
+  def self.signup_information(token, options = {})
+    #--- [todo] implement
+  end
+
+  #------------------------------------------------------------------------------
+  def map_error_to_msg(code)
+    #--- [todo] implement
+  end
+
 end

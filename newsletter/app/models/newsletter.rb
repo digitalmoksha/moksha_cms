@@ -21,12 +21,20 @@ class Newsletter < ActiveRecord::Base
   def update_list_stats
   end
   
+  #------------------------------------------------------------------------------
+  def map_error_to_msg(code)
+  end
+  
   # Find the newsletter associated with the token
   #------------------------------------------------------------------------------
   def self.find_newsletter(token, options = {})
     Newsletter.find_by_token(token)
   end
   
+  #------------------------------------------------------------------------------
+  def self.signup_information(token, options = {})
+  end
+
 protected
 
   #------------------------------------------------------------------------------
