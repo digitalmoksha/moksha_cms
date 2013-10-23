@@ -7,10 +7,14 @@
 
 	<%= content_box :title => 'Site Wide Metadata Settings' do %>
 
-    <%= f.input :preferred_site_title, label: 'Site Title', required: true %>
-    <%= f.input :preferred_site_keywords, label: 'Site Keywords', hint: 'Keywords embedded into each page (meta name="keywords")' %>
-    <%= f.input :preferred_site_copyright, label: 'Site Copyright', hint: 'Copyright embedded into each page (meta name="copyright")' %>
-    <%= f.input :preferred_site_description, label: 'Site Description', hint: 'Description embedded into each page (meta name="description")' %>
+    <%= f.input :preferred_site_title,        label: 'Site Title', required: true %>
+    <%= f.input :preferred_site_keywords,     label: 'Site Keywords', hint: 'Keywords embedded into each page (meta name="keywords")' %>
+    <%= f.input :preferred_site_copyright,    label: 'Site Copyright', hint: 'Copyright embedded into each page (meta name="copyright")' %>
+    <%= f.input :preferred_site_description,  label: 'Site Description', hint: 'Description embedded into each page (meta name="description")' %>
+    <%= f.input :preferred_facebook_url,      label: 'Facebook URL' %>
+    <%= f.input :preferred_youtube_url,       label: 'YouTube URL' %>
+    <%= f.input :preferred_twitter_url,       label: 'Twitter URL' %>
+    <%= f.input :preferred_linkedin_url,      label: 'LinkedIn URL' %>
 
     <%= submit_or_cancel :cancel_url => dm_core.admin_account_metadata_path %>
 

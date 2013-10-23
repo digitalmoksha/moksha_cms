@@ -12,7 +12,8 @@ class Account < ActiveRecord::Base
                           :preferred_ssl_enabled, :preferred_webmaster_email,
                           :preferred_support_email, :preferred_google_analytics_tracker_id
   attr_accessible         :preferred_site_title, :preferred_site_keywords, :preferred_site_copyright,
-                          :preferred_site_description
+                          :preferred_site_description, :preferred_youtube_url, :preferred_facebook_url,
+                          :preferred_twitter_url, :preferred_linkedin_url
   attr_accessible         :preferred_smtp_address, :preferred_smtp_port, :preferred_smtp_domain,
                           :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email,
                           :preferred_blog_from_email
@@ -22,23 +23,20 @@ class Account < ActiveRecord::Base
 
   attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation
 
-  validates_presence_of   :domain,                                :if => Proc.new { |p| p.general_validation }
-  validates_presence_of   :account_prefix,                        :if => Proc.new { |p| p.general_validation }
-  validates_presence_of   :preferred_default_locale,              :if => Proc.new { |p| p.general_validation }
-  validates_presence_of   :preferred_locales,                     :if => Proc.new { |p| p.general_validation }
-  validates_presence_of   :preferred_smtp_address,                :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_smtp_port,                   :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_smtp_user_name,              :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_smtp_from_email,             :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_webmaster_email,             :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_site_title,                  :if => Proc.new { |p| p.metadata_validation }
-
+  validates_presence_of   :domain,                                      :if => Proc.new { |p| p.general_validation }
+  validates_presence_of   :account_prefix,                              :if => Proc.new { |p| p.general_validation }
+  validates_presence_of   :preferred_default_locale,                    :if => Proc.new { |p| p.general_validation }
+  validates_presence_of   :preferred_locales,                           :if => Proc.new { |p| p.general_validation }
+  validates_presence_of   :preferred_smtp_address,                      :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_port,                         :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_user_name,                    :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_from_email,                   :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_webmaster_email,                   :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_site_title,       :maximum => 255, :if => Proc.new { |p| p.metadata_validation }
+  validates_length_of     :preferred_site_description, :maximum => 255, :if => Proc.new { |p| p.metadata_validation }
+  validates_length_of     :preferred_site_keywords,    :maximum => 255, :if => Proc.new { |p| p.metadata_validation }
+   
   after_create            :create_default_roles
-                        
-  preference              :site_title,                      :string
-  preference              :site_keywords,                   :string
-  preference              :site_copyright,                  :string
-  preference              :site_description,                :string
 
   preference              :ssl_enabled,                     :boolean, :default => false
   preference              :default_locale,                  :string,  :default => 'en'
@@ -46,6 +44,16 @@ class Account < ActiveRecord::Base
   preference              :site_enabled,                    :boolean, :default => false
   preference              :google_analytics_tracker_id,     :string
   
+  #--- Site wide page settings
+  preference              :site_title,                      :string
+  preference              :site_keywords,                   :string
+  preference              :site_copyright,                  :string
+  preference              :site_description,                :string
+  preference              :youtube_url,                     :string
+  preference              :facebook_url,                    :string
+  preference              :twitter_url,                     :string
+  preference              :linkedin_url,                    :string
+
   #--- Email / SMTP settings
   preference              :webmaster_email,                 :string
   preference              :support_email,                   :string
@@ -62,11 +70,7 @@ class Account < ActiveRecord::Base
   preference              :paypal_merchant_id,              :string
   preference              :paypal_cert_id,                  :string
 
-  #--- Newsletter Settings - uses the 'group' function to have one preference and many values
-  #    ex) current_account.preferred_newsletter_settings(:mailchimp_api_key)
-  # [todo] decided against this for now, use specific preferences
-  # [todo] figure out best way to inject these gem specific prefs from the gem itself
-  # preference              :newsletter_settings,             :string
+  #--- Newsletter
   preference              :nms_use_mailchimp,               :boolean, :default => false
   preference              :nms_api_key,                     :string
   preference              :nms_lists_synced_on,             :datetime
