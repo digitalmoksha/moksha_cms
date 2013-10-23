@@ -2,12 +2,33 @@
 module DmCms
   module RenderHelper
 
+    # build title to use on a page
     #------------------------------------------------------------------------------
-    def main_title
+    def page_title
       title = current_account.preferred_site_title
       content_for?(:page_title) ? "#{content_for :page_title} | #{title}" : title
     end
+    alias :main_title :page_title  # keep old main_title around for now
 
+    # keywords to use in meta name='keywords'
+    #------------------------------------------------------------------------------
+    def page_keywords
+      content_for?(:page_keywords) ? content_for(:page_keywords) : current_account.preferred_site_keywords
+    end
+
+    # copyright to use in meta name='copyright'
+    #------------------------------------------------------------------------------
+    def page_copyright
+      content_for?(:page_copyright) ? content_for(:page_copyright) : current_account.preferred_site_copyright
+    end
+
+    # description to use in meta name='description'
+    #------------------------------------------------------------------------------
+    def page_description
+      content_for?(:page_description) ? content_for(:page_description) : current_account.preferred_site_description
+    end
+
+    
     # Returns an image tag, where the src defaults to the site_assets image folder
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
