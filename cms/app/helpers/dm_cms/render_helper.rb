@@ -28,6 +28,21 @@ module DmCms
       content_for?(:page_description) ? content_for(:page_description) : current_account.preferred_site_description
     end
 
+    #------------------------------------------------------------------------------
+    def social_url(name)
+      case name
+      when :facebook
+        current_account.preferred_facebook_url
+      when :youtube
+        current_account.preferred_youtube_url
+      when :twitter
+        current_account.preferred_twitter_url
+      when :linkedin
+        current_account.preferred_linkedin_url
+      else
+        nil
+      end
+    end
     
     # Returns an image tag, where the src defaults to the site_assets image folder
     # Supports both relative paths and explicit url
