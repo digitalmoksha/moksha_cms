@@ -22,6 +22,8 @@ DmCore::Engine.routes.draw do
       put  '/account/email',            to: 'accounts#email'
       get  '/account/analytics',        to: 'accounts#analytics'
       put  '/account/analytics',        to: 'accounts#analytics'
+      get  '/account/metadata',         to: 'accounts#metadata'
+      put  '/account/metadata',         to: 'accounts#metadata'
 
     end
   end

@@ -10,15 +10,17 @@ class Account < ActiveRecord::Base
   attr_accessible         :company_name, :contact_email, :default_site_id, :domain, :account_prefix
   attr_accessible         :preferred_site_enabled, :preferred_default_locale, :preferred_locales,
                           :preferred_ssl_enabled, :preferred_webmaster_email,
-                          :preferred_support_email, :preferred_google_analytics_tracker_id,
-                          :preferred_site_title
+                          :preferred_support_email, :preferred_google_analytics_tracker_id
+  attr_accessible         :preferred_site_title, :preferred_site_keywords, :preferred_site_copyright,
+                          :preferred_site_description
   attr_accessible         :preferred_smtp_address, :preferred_smtp_port, :preferred_smtp_domain,
                           :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email,
                           :preferred_blog_from_email
   attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
   attr_accessible         :preferred_nms_use_mailchimp, :preferred_nms_api_key, :preferred_nms_lists_synced_on
+  attr_accessible         
 
-  attr_accessor           :email_validation, :general_validation, :analytics_validation
+  attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation
 
   validates_presence_of   :domain,                                :if => Proc.new { |p| p.general_validation }
   validates_presence_of   :account_prefix,                        :if => Proc.new { |p| p.general_validation }
@@ -29,10 +31,15 @@ class Account < ActiveRecord::Base
   validates_presence_of   :preferred_smtp_user_name,              :if => Proc.new { |p| p.email_validation }
   validates_presence_of   :preferred_smtp_from_email,             :if => Proc.new { |p| p.email_validation }
   validates_presence_of   :preferred_webmaster_email,             :if => Proc.new { |p| p.email_validation }
+  validates_presence_of   :preferred_site_title,                  :if => Proc.new { |p| p.metadata_validation }
 
   after_create            :create_default_roles
                         
   preference              :site_title,                      :string
+  preference              :site_keywords,                   :string
+  preference              :site_copyright,                  :string
+  preference              :site_description,                :string
+
   preference              :ssl_enabled,                     :boolean, :default => false
   preference              :default_locale,                  :string,  :default => 'en'
   preference              :locales,                         :string,  :default => 'en, de'

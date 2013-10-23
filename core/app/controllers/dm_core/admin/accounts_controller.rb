@@ -45,6 +45,18 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
     end
   end
 
+  #------------------------------------------------------------------------------
+  def metadata
+    if put_or_post?
+      @account.metadata_validation = true
+      if @account.update_attributes(params[:account])
+        redirect_to(dm_core.admin_account_metadata_path, notice: "Account was successfully updated.") and return
+      else
+        render action: "metadata"
+      end
+    end
+  end
+
 private
 
   #------------------------------------------------------------------------------
