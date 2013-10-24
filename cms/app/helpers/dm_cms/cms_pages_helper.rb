@@ -14,11 +14,14 @@ module DmCms::CmsPagesHelper
     end.join.html_safe  
   end
   
+  # Return a list of templates defined in the theme.yml and it's parent theme.
+  # The child templates should override any parent templates
   #------------------------------------------------------------------------------
   def template_menu_list
     theme = current_account.theme_data
-    if theme
-      [['Inherit from parent', '']] + theme['templates'].collect {|key, value| [value['name'], key] }
+    unless theme.empty?
+      templates = (current_account.theme_data(parent: true)['templates'] || {}).merge(theme['templates'] || {})
+      [['Inherit from parent', '']] + templates.collect {|key, value| [value['name'], key] }
     else
       nil
     end
