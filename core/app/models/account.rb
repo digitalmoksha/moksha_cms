@@ -156,10 +156,15 @@ class Account < ActiveRecord::Base
     }
   end
   
-  # get the account's theme path
+  #------------------------------------------------------------------------------
+  def theme_data
+    ThemesForRails.config.themes_data(current_theme)
+  end
+  
+  # get the account's theme filesystem path
   #------------------------------------------------------------------------------
   def theme_path
-    Rails.root.join('themes', account_prefix)
+    "#{ThemesForRails.config.themes_path}/#{current_theme}"
   end
 
   # Get the name of the current theme - which is simply the account prefix
