@@ -156,9 +156,16 @@ class Account < ActiveRecord::Base
     }
   end
   
+  # Return the current theme's data structure.
+  # parent: true    will give the parent theme's data
+  # if no data exists, return an empty hash
   #------------------------------------------------------------------------------
-  def theme_data
-    ThemesForRails.config.themes_data(current_theme)
+  def theme_data(options = {})
+    if options[:parent]
+      ThemesForRails.config.themes_data(parent_theme) || {}
+    else
+      ThemesForRails.config.themes_data(current_theme) || {}
+    end
   end
   
   # get the account's theme filesystem path
