@@ -1,6 +1,4 @@
 module Liquid
-  
-  #------------------------------------------------------------------------------
   class UrlProtected < DmCore::LiquidTag
     include ActionView::Helpers::TagHelper 
     include ActionView::Helpers::AssetTagHelper

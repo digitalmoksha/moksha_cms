@@ -20,6 +20,8 @@ DmCms::Engine.routes.draw do
           post :create_content
           get  :move_up
           get  :move_down
+          get  :markdown
+          post :markdown
         end
       end
       resources :cms_blogs do

@@ -1,29 +1,25 @@
 module Liquid
-  # {% video_frame width : 720, caption : 'some caption', class : some_class
-  #          title: 'some_title', :id : some_id, alt : alt_text, side : right %}
-  #------------------------------------------------------------------------------
   class Div < DmCore::LiquidBlock
 
-    # width defaults to 720.  Best supported widths are 150, 220, 340, 720, 940
     #------------------------------------------------------------------------------
     def render(context)
-      @attributes.reverse_merge!  'class' =>  '', 'id' => '', 'style' => ''
+      @attributes.reverse_merge!  'class' =>  '', 'id' => '', 'style' => '', 'markdown' => ''
 
-      output  = super
-      content = RedCloth.new(output.strip).to_html.html_safe
-      style   = "style='#{@attributes["style"]}'" unless @attributes['style'].blank?
-      dclass  = "class='#{@attributes["class"]}'" unless @attributes['class'].blank?
-      id      = "id='#{@attributes["id"]}'" unless @attributes['id'].blank?
+      output    = super
+      style     = "style='#{@attributes["style"]}'" unless @attributes['style'].blank?
+      dclass    = "class='#{@attributes["class"]}'" unless @attributes['class'].blank?
+      id        = "id='#{@attributes["id"]}'" unless @attributes['id'].blank?
+      markdown  = "markdown='#{@attributes["markdown"]}'" unless @attributes['markdown'].blank?
       
-      out += "<notextile><div #{[id, dclass, style].join(' ')}>"
-      out += content
-      out += "</div></notextile>"
+      out  = "<div #{[id, dclass, style, markdown].join(' ')}>"
+      out += output
+      out += "</div>"
     end
 
     def self.details
       { name: self.tag_name,
         summary: 'HTML div block',
-        description: "Outpus an HTML 'div' block.  You can specify id, class, and style.",
+        description: "Outpus an HTML 'div' block.  You can specify id, class, and style.  You can also specify the markdown modifier, such as 'markdown: 0'",
         example: self.example,
         category: 'structure'
       }

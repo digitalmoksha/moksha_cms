@@ -1,9 +1,8 @@
-module Liquid
-  
-  # Returns the path of an image in site assets, unless a full path is provided.
-  #
-  # {% image_path src : source_img %}
-  #------------------------------------------------------------------------------
+# Returns the path of an image in site assets, unless a full path is provided.
+#
+# {% image_path src : source_img %}
+#------------------------------------------------------------------------------
+module Liquid  
   class UrlImage < DmCore::LiquidTag
     include ActionView::Helpers::TagHelper 
     include ActionView::Helpers::AssetTagHelper

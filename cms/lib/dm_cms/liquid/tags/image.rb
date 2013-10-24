@@ -1,10 +1,9 @@
+# Simple image tag - uses rails helper 
+#
+# {% image src : source_img, class : ccc, title : ttt, size : 16x16, width : www, height : hhh,
+#          alt : aaa, style : sss, id : iii, mouseover : mmm}
+#------------------------------------------------------------------------------
 module Liquid
-  
-  # Simple image tag - uses rails helper 
-  #
-  # {% image src : source_img, class : ccc, title : ttt, size : 16x16, width : www, height : hhh, alt : aaa, style : sss, id : iii,
-  #          mouseover : mmm}
-  #------------------------------------------------------------------------------
   class Image < DmCore::LiquidTag
     include ActionView::Helpers::TagHelper 
     include ActionView::Helpers::AssetTagHelper

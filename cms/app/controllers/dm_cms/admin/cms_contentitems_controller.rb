@@ -4,6 +4,8 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   before_filter   :current_content, :except =>  [:new_content, :create_content]
   before_filter   :set_title
 
+  include DmCore::LiquidHelper
+
   #------------------------------------------------------------------------------
   def new_content
     @cms_contentitem        = CmsContentitem.new
@@ -59,6 +61,14 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   def move_down
     @cms_contentitem.move_lower
     redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
+  end
+  
+  #------------------------------------------------------------------------------
+  def markdown
+    @text = ''
+    if put_or_post?
+      @text = params[:sample_text][:markdown]
+    end
   end
 
 protected
