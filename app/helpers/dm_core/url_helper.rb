@@ -23,5 +23,88 @@ module DmCore
         return path + url
       end
     end
+    
+    # Returns an image tag, where the src defaults to the site_assets image folder
+    # Supports both relative paths and explicit url
+    #------------------------------------------------------------------------------
+    def site_image_tag(src, options = {})
+      image_tag(site_image_path(src),  options)
+    end
+
+    # Returns a path to a site image, relative to the site_assets folder
+    # Supports both relative paths and explicit url
+    #------------------------------------------------------------------------------
+    def site_image_path(src)
+      rewrite_asset_path(expand_url(src, "#{account_site_assets}/images/"))
+    end
+
+    # Returns a path to a site assets, relative to the site_assets folder
+    # Supports both relative paths and explicit url
+    #------------------------------------------------------------------------------
+    def site_asset_path(src)
+      rewrite_asset_path(expand_url(src, "#{account_site_assets}/"))
+    end
+
+    #------------------------------------------------------------------------------
+    # Following code pulled from the Rails 3.0 source. 
+    #    action_pack/lib/action_view/helpers/asset_tag_helper.rb 
+    # Generates an asset id to be used for any assets we don't want in the asset 
+    # pipeline.  Asset id gets appeneded as a query string to url.
+    # 
+    # Use case: all themes are precompiled, but a single stylesheet per
+    # theme lives outside the pipeline, so that it can be updated without having
+    # to recompile all assets of all sites/themes.
+    #
+    # Simplify the task: create the asset_id and append to the url - don't currently
+    # take into account asset hosts, etc.
+    #------------------------------------------------------------------------------
+    
+    @@asset_timestamps_cache = {}
+    @@asset_timestamps_cache_guard = Mutex.new
+    @@cache_asset_timestamps = true
+    
+    # Use the RAILS_ASSET_ID environment variable or the source's
+    # modification time as its cache-busting asset id.
+    #------------------------------------------------------------------------------
+    def rails_asset_id(source)
+      if asset_id = ENV["RAILS_ASSET_ID"]
+        asset_id
+      else
+        if @@cache_asset_timestamps && (asset_id = @@asset_timestamps_cache[source])
+          asset_id
+        else
+          path = File.join(Rails.root, 'public', source)
+          asset_id = File.exist?(path) ? File.mtime(path).to_i.to_s : ''
+
+          if @@cache_asset_timestamps
+            @@asset_timestamps_cache_guard.synchronize do
+              @@asset_timestamps_cache[source] = asset_id
+            end
+          end
+
+          asset_id
+        end
+      end
+    end
+    
+    # Break out the asset path rewrite in case plugins wish to put the asset id
+    # someplace other than the query string.
+    #------------------------------------------------------------------------------
+    def rewrite_asset_path(source, path = nil)
+      if path && path.respond_to?(:call)
+        return path.call(source)
+      elsif path && path.is_a?(String)
+        return path % [source]
+      end
+
+      asset_id = rails_asset_id(source)
+      if asset_id.blank?
+        source
+      else
+        source + "?#{asset_id}"
+      end
+    end
+
+    
   end
 end
