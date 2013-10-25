@@ -44,28 +44,6 @@ module DmCms
       end
     end
     
-    # Returns an image tag, where the src defaults to the site_assets image folder
-    # Supports both relative paths and explicit url
-    #------------------------------------------------------------------------------
-    def site_image_tag(src, options = {})
-      src = expand_url(src, "#{account_site_assets}/images/")
-      image_tag(src,  options)
-    end
-
-    # Returns a path to a site image, relative to the site_assets folder
-    # Supports both relative paths and explicit url
-    #------------------------------------------------------------------------------
-    def site_image_path(src, options = {})
-      return expand_url(src, "#{account_site_assets}/images/")
-    end
-
-    # Returns a path to a site assets, relative to the site_assets folder
-    # Supports both relative paths and explicit url
-    #------------------------------------------------------------------------------
-    def site_asset_path(src, options = {})
-      return expand_url(src, "#{account_site_assets}/")
-    end
-
     # insert the standard google analystics code, is tracker id set in account
     #------------------------------------------------------------------------------
     def google_analytics_tag
