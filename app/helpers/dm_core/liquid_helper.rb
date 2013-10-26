@@ -5,7 +5,7 @@ module DmCore::LiquidHelper
 
   # Pass :view in a register so this view (with helpers) can be used inside of a tag
   #------------------------------------------------------------------------------
-  def liquidize_textile(content, arguments)
+  def liquidize_textile(content, arguments = {})
     doc = RedCloth.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
                               :registers => { :controller => controller, :view => self,
                                               :account_site_assets => account_site_assets,
@@ -17,7 +17,7 @@ module DmCore::LiquidHelper
 
   # use the kramdown library
   #------------------------------------------------------------------------------
-  def liquidize_markdown(content, arguments)
+  def liquidize_markdown(content, arguments = {})
     doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
                               :registers => { :controller => controller, :view => self, 
                                               :account_site_assets => account_site_assets,
@@ -27,7 +27,7 @@ module DmCore::LiquidHelper
   end
 
   #------------------------------------------------------------------------------
-  def liquidize_html(content, arguments)
+  def liquidize_html(content, arguments = {})
     doc = Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
                               :registers => { :controller => controller, :view => self, 
                                               :account_site_assets => account_site_assets,
