@@ -1,21 +1,21 @@
 <% new_record = @cms_contentitem.new_record? %>
 <% submit_url = (new_record ? create_content_admin_cms_contentitem_path(@current_page) : admin_cms_contentitem_path(@cms_contentitem)) %>
-<% title = (new_record ? "New Content" : "Editing Content for: #{@cms_contentitem.container}") %>
+<% title = (new_record ? "New Content" : @cms_contentitem.container.capitalize) %>
 
 
 <%= simple_form_for @cms_contentitem, :url => submit_url do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
   <%= f.hidden_field :original_updated_on %>
-  <%= content_frame :title => title, :toolbar => :languages do %>
+  <%= content_frame :title => title, :toolbar => :languages, :include_general => :last do %>
     <div class="tab-content">
-      <div id="tab_general" class="tab-pane active fade in">
+      <div id="tab_general" class="tab-pane fade">
         <%= f.input :itemtype, :label => 'Item Type', :collection => CmsContentitem::CONTENT_TYPES, :include_blank => false %>
         <%= f.input :container, :label => 'Content Name', :hint => 'This is normally "body" or "sidebar" or something' %>
         <%= f.input :enable_cache, :as => :toggle, :label => 'Cache Content' %>
       </div>
-      <% current_account.site_locales.each do |locale| %>        
-        <div id="tab_<%= locale %>" class="tab-pane fade">
-          <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 600px;"} %>
+      <% current_account.site_locales.each do |locale| %>
+        <div id="tab_<%= locale %>" class="tab-pane fade <%= 'active in' if Account.current.preferred_default_locale == locale %>">
+          <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 400px;"} %>
         </div>
       <% end %>
     </div>
@@ -23,5 +23,6 @@
   <% end %>
 <% end %>
 
+<%= render :partial => 'sidebar' %>
 <%= render :partial => 'dm_cms/admin/shared/liquid_tags_ref' %>
 

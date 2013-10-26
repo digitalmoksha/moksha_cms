@@ -29,9 +29,9 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def update
     if @cms_contentitem.update_attributes(params[:cms_contentitem])
-      redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
+      redirect_to edit_admin_cms_contentitem_url(@cms_contentitem), notice: 'Content updated'
      else
-      render :action => :edit
+      render :action => :edit, alert: 'An error of some kind occurred'
      end
   end
 
