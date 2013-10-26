@@ -175,11 +175,12 @@ module Admin::ThemeAmsterdamHelper
   #------------------------------------------------------------------------------
   def language_toolbar_tabs(include_general = true)
     out    = "<ul class='nav nav-tabs pull-right'>"
-    out   +=   "<li class='active'>#{link_to 'General', '#tab_general', :data => {:toggle => 'tab'} }" if include_general
+    out   +=   "<li class='active'>#{link_to 'General', '#tab_general', :data => {:toggle => 'tab'} }</li>" if include_general == true
     Account.current.site_locales.each do |locale|
-      active = "class='active'" if !include_general && Account.current.preferred_default_locale == locale
+      active = "class='active'" if include_general != true && Account.current.preferred_default_locale == locale
       out +=  "<li #{active}>#{link_to nls_flag_image(locale), '#tab_' + locale.to_s, :data => {:toggle => 'tab'} }</li>"
     end
+    out   +=   "<li>#{link_to 'General', '#tab_general', :data => {:toggle => 'tab'} }</li>" if include_general == :last
     out   += "</ul>"
     out.html_safe
   end

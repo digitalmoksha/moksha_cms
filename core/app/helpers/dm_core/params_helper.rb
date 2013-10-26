@@ -5,7 +5,7 @@ module DmCore
     #------------------------------------------------------------------------------
     def css_style_width(width = '')
       width = width.to_s.as_css_size
-      return width.blank? ? '' : " width:#{width};"
+      return width.blank? ? '' : "width:#{width};"
     end
 
   end
