@@ -19,6 +19,7 @@ require 'amoeba'
 require 'friendly_id'
 require 'aasm'
 require 'money-rails'
+require 'exception_notification'
 
 module DmCore
   class Engine < ::Rails::Engine
