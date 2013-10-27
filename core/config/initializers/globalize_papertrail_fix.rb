@@ -2,8 +2,7 @@
 # field at the same time caused the translated field in other locales to be
 # replaced with the data of the changed translated field (it's previous data).
 # Fix was outlined here: https://github.com/globalize/globalize/issues/117
-# They say it is fixed in later versions, will have to try that later.
-# For now, this is a critical fix.
+# This has not been fixed as of the 3.0-stable release on Oct 24, 2013
 #------------------------------------------------------------------------------
 module PaperTrail
   module Model
