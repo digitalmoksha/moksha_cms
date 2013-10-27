@@ -14,7 +14,6 @@ gem "jquery-rails"
 # your gem to rubygems.org.
 
 gem 'dm_ruby_extensions',         :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'
-gem 'easy_globalize3_accessors',  :git => 'git://github.com/digitalmoksha/easy_globalize3_accessors.git'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.0'
