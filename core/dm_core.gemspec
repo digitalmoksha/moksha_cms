@@ -40,6 +40,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'aasm'
   s.add_dependency 'money-rails'  
   s.add_dependency 'globalize', '~> 3.0.0'   # translations in database
+  s.add_dependency 'exception_notification', '~> 4.0'
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem "preferences", "~> 0.5.0", :git => "git://github.com/madebydna/preferences.git"
