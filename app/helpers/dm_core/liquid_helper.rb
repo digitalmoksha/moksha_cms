@@ -11,7 +11,6 @@ module DmCore::LiquidHelper
                                               :account_site_assets => account_site_assets,
                                               :current_user => current_user}))
     #doc.hard_breaks = false
-
     return doc.to_html.html_safe
   end
 

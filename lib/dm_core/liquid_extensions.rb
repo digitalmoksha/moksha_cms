@@ -100,6 +100,13 @@ module DmCore
       super    
     end
     
+    # Liquid will automatically throw away a block with empty/blank content.
+    # Call this in the tag's render method to allow the tag to be rendered anyway
+    #------------------------------------------------------------------------------
+    def allow_empty_block
+      @blank = false
+    end
+    
     class << self
       #------------------------------------------------------------------------------
       def tag_name

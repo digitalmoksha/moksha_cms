@@ -8,7 +8,7 @@ AcedRails.configure do |config|
   #   mono_industrial, monokai, pastel_on_dark, solarized_dark, solarized_light, textmate,
   #   tomorrow, tomorrow_night, tomorrow_night_blue, tomorrow_night_bright,
   #   tomorrow_night_eighties, twilight, vibrant_ink, xcode
-  config.themes = [:crimson_editor]
+  config.themes = [:crimson_editor, :twilight, :tomorrow_night]
 
   # select modes
   # available modes:
@@ -19,7 +19,7 @@ AcedRails.configure do |config|
   #   objectivec, ocaml, perl, pgsql, php, powershell, python, r, rdoc, rhtml,
   #   ruby, scad, scala, scheme, scss, sh, sql, stylus, svg, tcl, tex, text,
   #   textile, tm_snippet, typescript, vbscript, xml, xquery, yaml
-  config.modes = [:markdown]
+  config.modes = [:liquid, :markdown, :textile, :html, :ruby, :text]
 
   # select workers:
   # available workers (use in pair with themes):
