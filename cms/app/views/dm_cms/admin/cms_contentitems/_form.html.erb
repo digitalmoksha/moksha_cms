@@ -15,7 +15,7 @@
       </div>
       <% current_account.site_locales.each do |locale| %>
         <div id="tab_<%= locale %>" class="tab-pane fade <%= 'active in' if Account.current.preferred_default_locale == locale %>">
-          <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 400px;"} %>
+          <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :editor, :mode => @cms_contentitem.itemtype, input_html: {style: "height: 400px;"} %>
         </div>
       <% end %>
     </div>
