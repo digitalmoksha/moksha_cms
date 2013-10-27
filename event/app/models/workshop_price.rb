@@ -59,7 +59,7 @@ class WorkshopPrice < ActiveRecord::Base
   
   #------------------------------------------------------------------------------
   def price_formatted
-    price.format(:no_cents_if_whole => true, :symbol => true)
+    price.nil? ? '' : price.format(:no_cents_if_whole => true, :symbol => true)
   end
   
   #------------------------------------------------------------------------------

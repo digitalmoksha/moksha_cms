@@ -90,7 +90,7 @@ private
   
   #------------------------------------------------------------------------------
   def workshop_price(registration)
-    if registration.workshop_price
+    if registration.workshop_price && registration.workshop_price.price
       color = (registration.balance_owed.cents > 0) ? 'balance_owed' : 'balance_paid'
       amount = (registration.balance_owed.cents == 0) ? 'paid' : registration.balance_owed.format(:no_cents_if_whole => true)
       "<span data-placement='left' class='hovertip #{color}' title='#{registration.workshop_price.price.format(:no_cents_if_whole => true)} &mdash; #{registration.workshop_price.price_description}'>#{amount}</span>".html_safe

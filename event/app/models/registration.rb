@@ -59,7 +59,7 @@ class Registration < ActiveRecord::Base
   # Price of this registration (without discount)
   #------------------------------------------------------------------------------
   def price
-    workshop_price ? workshop_price.price : Money.new(0, workshop.base_currency)
+    (workshop_price && workshop_price.price) ? workshop_price.price : Money.new(0, workshop.base_currency)
   end
   
   # Price with discount
@@ -70,7 +70,7 @@ class Registration < ActiveRecord::Base
   
   #------------------------------------------------------------------------------
   def discount
-    return Money.new(0, workshop.base_currency) if workshop_price.nil?
+    return Money.new(0, workshop.base_currency) if workshop_price.nil? || workshop_price.price.nil?
 
     unless discount_value.blank?
       cents = (discount_use_percent ? (workshop_price.price.cents * discount_value / 100) : (discount_value * 100))
