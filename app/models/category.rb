@@ -5,7 +5,7 @@ class Category < ActiveRecord::Base
   attr_accessible       :name, :description
 
   include RankedModel
-  ranks   :row_order
+  ranks                 :row_order, :with_same => :account_id
 
   default_scope         { where(account_id: Account.current.id) }
   scope                 :ordered, order('row_order ASC')
