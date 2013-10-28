@@ -1,0 +1,24 @@
+<% payment_service_for @registration.receipt_code, current_account.preferred_paypal_merchant_id,
+        :amount => @registration.price.amount, :currency => 'EUR',
+        :service => :paypal do |service|
+
+    service.customer :first_name => @registration.first_name,
+        :last_name => @registration.last_name,
+        :phone => '',
+        :email => @registration.email
+    service.item_name @registration.workshop.title
+    service.tax '0.00'
+    service.cmd '_donations' if @registration.workshop.crowdfunding?
+
+    service.notify_url dm_event.register_paypal_ipn_url if Rails.env.production?
+    service.return_url dm_event.register_success_url(@registration.receipt_code)
+    service.cancel_return_url dm_event.register_payment_abandoned_url(@registration.receipt_code)
+%>
+
+    <!-- display payment summary here -->
+    <% if locale == :de %>
+      <%= submit_tag '', type: :image, src: "https://www.paypal.com/de_DE/DE/i/btn/btn_xpressCheckout.gif" %>
+    <% else %>
+      <%= submit_tag '', type: :image, src: "https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" %>
+    <% end %>
+<% end %>
