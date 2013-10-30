@@ -41,11 +41,6 @@ class CmsPost < ActiveRecord::Base
     send("title_#{Account.current.preferred_default_locale}")
   end
 
-  #------------------------------------------------------------------------------
-  def display_summary
-    summary || (content.blank? ? '' : content.smart_truncate(:words => 50))
-  end
-  
   # Send an email for state notification.  if send_email is false, just return 
   # the content of the email
   #------------------------------------------------------------------------------

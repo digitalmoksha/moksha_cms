@@ -27,24 +27,21 @@ module DmCms::PagesHelper
 
   #------------------------------------------------------------------------------
   def render_content_item(content_item)
-    if content_item.content.nil?
-      content = ""
+    if content_item.content.blank?
+      content = ''
     else
       # --- process content type
       case content_item.itemtype.downcase
         when 'textile'
-          xcontent = render :inline => content_item.content
-          #content = textilize(xcontent)
-          content = liquidize_textile(xcontent, {})
+          content = liquidize_textile(content_item.content)
         when 'markdown'
-          xcontent = render :inline => content_item.content
-          #content = markdown(xcontent, :safe => false)
-          content = liquidize_markdown(xcontent, {})
+          #--- if we ever need to render erb, this is how to do it
+          #    xcontent = render :inline => content_item.content
+          content = liquidize_markdown(content_item.content)
         when 'html'
-          xcontent = render :inline => content_item.content
-          content = liquidize_html(xcontent, {})
+          content = liquidize_html(content_item.content)
         else
-          content = ""
+          content = ''
       end
     end
     return content

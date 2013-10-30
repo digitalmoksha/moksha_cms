@@ -1,9 +1,10 @@
 class DmCms::PostsController < DmCms::ApplicationController
   include ApplicationHelper  
 
-  helper DmCms::RenderHelper
-  helper DmCore::LiquidHelper
-  helper DmCms::PagesHelper
+  helper  DmCms::RenderHelper
+  helper  DmCore::LiquidHelper
+  helper  DmCms::PagesHelper
+  helper  DmCms::PostsHelper
   include DmCore::RenderHelper
 
   before_filter   :post_lookup, except: [:ajax_add_comment, :ajax_edit_comment, :ajax_delete_comment]

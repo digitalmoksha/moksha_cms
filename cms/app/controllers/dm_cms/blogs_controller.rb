@@ -1,9 +1,10 @@
 class DmCms::BlogsController < DmCms::ApplicationController
   include ApplicationHelper  
 
-  helper DmCms::RenderHelper
-  helper DmCore::LiquidHelper
-  helper DmCms::PagesHelper
+  helper  DmCms::RenderHelper
+  helper  DmCore::LiquidHelper
+  helper  DmCms::PagesHelper
+  helper  DmCms::PostsHelper
   include DmCore::RenderHelper
 
   before_filter   :blog_lookup, :except =>  [:index]
