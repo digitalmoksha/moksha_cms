@@ -6,7 +6,11 @@
         <% @workshop.workshop_prices.each do |p| %>
           <% if p.visible? and !@workshop.price_sold_out?(p) %>
             <li>
-              <label><%= radio_button 'registration', 'workshop_price_id', p.id %><%= price_details(p) %></label>
+              <% if @workshop.workshop_prices.size == 1 # if only one price, pre-select it %>
+                <label><%= radio_button 'registration', 'workshop_price_id', p.id, checked: true %><%= price_details(p) %></label>
+              <% else %>
+                <label><%= radio_button 'registration', 'workshop_price_id', p.id %><%= price_details(p) %></label>
+              <% end %>
             </li>
           <% end %>
         <% end %>
