@@ -17,7 +17,7 @@ module DmCore
     # path.
     #------------------------------------------------------------------------------
     def expand_url(url, path)
-      if url.blank? || url.start_with?('http', '/')
+      if url.blank? || url.start_with?('http', 'https', '/')
         return url
       else
         return path + url
@@ -43,6 +43,13 @@ module DmCore
     #------------------------------------------------------------------------------
     def site_asset_path(src)
       rewrite_asset_path(expand_url(src, "#{account_site_assets}/"))
+    end
+
+    # Returns a path to a site assets, relative to the site_assets folder
+    # Supports both relative paths and explicit url
+    #------------------------------------------------------------------------------
+    def site_asset_url(src)
+      rewrite_asset_path(expand_url(src, "#{account_site_assets_url}/"))
     end
 
     #------------------------------------------------------------------------------

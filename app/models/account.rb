@@ -22,7 +22,8 @@ class Account < ActiveRecord::Base
   attr_accessible         
 
   attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation
-
+  attr_accessor           :url_base  #--- stores the current base site url for this request. useful to mailers where request object not available
+  
   validates_presence_of   :domain,                                      :if => Proc.new { |p| p.general_validation }
   validates_presence_of   :account_prefix,                              :if => Proc.new { |p| p.general_validation }
   validates_presence_of   :preferred_default_locale,                    :if => Proc.new { |p| p.general_validation }
