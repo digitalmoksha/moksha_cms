@@ -1,5 +1,7 @@
 require 'kramdown'
 
+# Note: do not make a call to current_user in this file.  Was not able to get
+# that helper included in the mailers.
 #------------------------------------------------------------------------------
 module DmCore::LiquidHelper
 
@@ -8,8 +10,7 @@ module DmCore::LiquidHelper
   def liquidize_textile(content, arguments = {})
     doc = RedCloth.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
                               :registers => { :controller => controller, :view => self,
-                                              :account_site_assets => account_site_assets,
-                                              :current_user => current_user}))
+                                              :account_site_assets => account_site_assets }))
     #doc.hard_breaks = false
     return doc.to_html.html_safe
   end
@@ -19,8 +20,7 @@ module DmCore::LiquidHelper
   def liquidize_markdown(content, arguments = {})
     doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
                               :registers => { :controller => controller, :view => self, 
-                                              :account_site_assets => account_site_assets,
-                                              :current_user => current_user}),
+                                              :account_site_assets => account_site_assets }),
                           :parse_block_html => true)
     return doc.to_html.html_safe
   end
@@ -29,8 +29,7 @@ module DmCore::LiquidHelper
   def liquidize_html(content, arguments = {})
     doc = Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
                               :registers => { :controller => controller, :view => self, 
-                                              :account_site_assets => account_site_assets,
-                                              :current_user => current_user})
+                                              :account_site_assets => account_site_assets })
     return doc.html_safe
   end
 
