@@ -14,11 +14,12 @@ module DmEvent
         #------------------------------------------------------------------------------
         def to_liquid
           result = {
-            'price'         => (workshop_price.nil? ? '' : workshop_price.price_formatted),
-            'receipt_code'   => receipt_code.to_s,
-            'price_description'     => "#{workshop_price.price_description unless workshop_price.nil?}",
-            'title'          => workshop.title,
-            'fullname'       => user_profile.full_name
+            'price'               => (workshop_price.nil? ? '' : workshop_price.price_formatted),
+            'receipt_code'        => receipt_code.to_s,
+            'price_description'   => "#{workshop_price.price_description unless workshop_price.nil?}",
+            'title'               => workshop.title,
+            'fullname'            => user_profile.full_name,
+            'payment_url'         => self.payment_url
             # 'balance'        => balance_owed(true)
           }
           # result['arrival_date'] = format_date(arrival_at, true) if event_workshop.show_arrival_departure
@@ -58,7 +59,7 @@ module DmEvent
           }
           substitutions['payment_details'] = Liquid::Template.parse(workshop_price.payment_details).render(substitutions) unless workshop_price.payment_details.blank?
           substitutions['subject']         = Liquid::Template.parse(system_email.subject).render(substitutions)
-
+          
           template  = Liquid::Template.parse(system_email.body)
           content   = template.render(substitutions)
           return {:content => content, :substitutions => substitutions}

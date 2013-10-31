@@ -216,6 +216,12 @@ class Registration < ActiveRecord::Base
     return false
   end
 
+  # Return the payment page url, so that it can be used in emails
+  #------------------------------------------------------------------------------
+  def payment_url
+    DmEvent::Engine.routes.url_helpers.register_choose_payment_url(self.receipt_code, host: Account.current.url_host, locale: I18n.locale)
+  end
+  
   # Handle PayPal notification logic
   #------------------------------------------------------------------------------
   def self.paypal_ipn(notify)
