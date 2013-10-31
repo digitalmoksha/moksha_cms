@@ -21,9 +21,8 @@
     <% end %>
   <% else %>
     <div class='ticket_information account_required'>
-      <p><%= I18n.t 'ems.registration_account_required' %></p>
-      <ul>
-        <li><%= link_to nls(:signin_link), main_app.new_user_session_path %></li>
+      <%= link_to nls(:signin_link), main_app.new_user_session_path, class: 'button green', style: 'margin-bottom: 20px' %>
+      <ul class="clear">
         <li><%= link_to nls(:signin_register_link), main_app.new_user_registration_path %></li>
         <li><%= link_to nls(:signin_forgot_password_link), main_app.new_user_password_path %></li>
         <li><%= link_to nls(:signin_confirmation_instructions_link), main_app.new_user_confirmation_path %></li>
