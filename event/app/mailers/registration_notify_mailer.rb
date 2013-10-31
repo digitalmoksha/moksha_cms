@@ -3,7 +3,9 @@ class RegistrationNotifyMailer < DmCore::SiteMailer
   #--- [todo] See how we can use a defined system layout, but different one per site
   # layout "system_email_layout"
   
-  helper DmCore::LiquidHelper
+  helper  DmCore::LiquidHelper
+  helper  DmCore::UrlHelper
+  helper  DmCore::AccountHelper
     
   #------------------------------------------------------------------------------
   def registration_notify(registration, content, substitutions)
