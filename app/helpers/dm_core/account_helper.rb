@@ -36,6 +36,7 @@ module DmCore
       #--- set the current request site url for use where request object is not avail,
       #    like in ActionMailer
       Account.current.url_base  = request.protocol + request.host_with_port
+      Account.current.url_host  = request.host_with_port
       yield
     ensure
       Account.current = nil

@@ -103,7 +103,7 @@ protected
   # to have the proper value for the locale in the url
   #------------------------------------------------------------------------------
   def default_url_options(options={})
-    options.merge({ :locale => I18n.locale })
+    options.merge({ locale: I18n.locale })
   end
 
   # Set the locale of this request.
