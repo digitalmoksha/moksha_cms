@@ -4,6 +4,6 @@
 
 <h3><%= @post_title %></h3>
 
-<%= @post_summary %>
+<%= display_post_summary(@post) %>
 
 <p><%= link_to I18n.t('cms.read_more'), @post_link %></p>
