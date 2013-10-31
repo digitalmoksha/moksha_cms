@@ -1,4 +1,6 @@
 module DmCms::PostsHelper
+  include DmCore::LiquidHelper
+  
   
   # Display the blog summary.  Support liquid tags and markdown in the summary
   # field.  If the there is no summary, grab the first :words from the content

@@ -1,7 +1,10 @@
 class PostNotifyMailer < DmCore::SiteMailer
   
-  helper DmCore::LiquidHelper
-    
+  helper  DmCms::PostsHelper
+  helper  DmCore::LiquidHelper
+  helper  DmCore::UrlHelper
+  helper  DmCore::AccountHelper
+
   #------------------------------------------------------------------------------
   def post_notify(post, email)
     account                     = post.account
@@ -9,8 +12,8 @@ class PostNotifyMailer < DmCore::SiteMailer
     @recipients                 = email
     @blog_title                 = post.cms_blog.title
     @post_title                 = post.title
-    @post_summary               = post.display_summary
     @post_link                  = dm_cms.post_show_url(post.cms_blog.slug, post.slug, locale: I18n.locale)
+    @post                       = post
 
     headers = { "Return-Path" => account.preferred_blog_from_email || account.preferred_smtp_from_email }
     mail( from: account.preferred_blog_from_email || account.preferred_smtp_from_email,
