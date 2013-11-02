@@ -18,7 +18,8 @@ class Account < ActiveRecord::Base
                           :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email,
                           :preferred_blog_from_email
   attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
-  attr_accessible         :preferred_sofort_user_id, :preferred_sofort_project_id, :preferred_sofort_project_password
+  attr_accessible         :preferred_sofort_user_id, :preferred_sofort_project_id, 
+                          :preferred_sofort_project_password, :preferred_sofort_notification_password
   attr_accessible         :preferred_nms_use_mailchimp, :preferred_nms_api_key, :preferred_nms_lists_synced_on
   attr_accessible         
 
@@ -76,6 +77,7 @@ class Account < ActiveRecord::Base
   preference              :sofort_user_id,                  :string
   preference              :sofort_project_id,               :string
   preference              :sofort_project_password,         :string
+  preference              :sofort_notification_password,    :string
 
   #--- Newsletter
   preference              :nms_use_mailchimp,               :boolean, :default => false
