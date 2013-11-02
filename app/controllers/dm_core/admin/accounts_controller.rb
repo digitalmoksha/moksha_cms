@@ -37,6 +37,8 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   def analytics
     if put_or_post?
       @account.analytics_validation = true
+      params[:account].delete(:preferred_sofort_project_password) if params[:account][:preferred_sofort_project_password].blank?
+      params[:account].delete(:preferred_sofort_notification_password) if params[:account][:preferred_sofort_notification_password].blank?
       if @account.update_attributes(params[:account])
         redirect_to(dm_core.admin_account_analytics_path, notice: "Account was successfully updated.") and return
       else
