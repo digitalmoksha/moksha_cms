@@ -1,0 +1,18 @@
+<% payment_service_for @registration.receipt_code, current_account.preferred_sofort_user_id,
+        credential2:  current_account.preferred_sofort_project_id,
+        credential3:  current_account.preferred_sofort_project_password,
+        credential4:  '',  #--- notification password
+        amount:       @registration.balance_owed,
+        currency:     @registration.balance_owed.currency.iso_code,
+        service: :directebanking do |service|
+          service.item_name         @registration.workshop.title
+          service.description       @registration.workshop.title
+          service.reason_2          @registration.receipt_code
+          service.notify_url        dm_event.payment_sofort_ipn_url if Rails.env.production?
+          service.return_url        dm_event.register_success_url(@registration.receipt_code)
+          service.cancel_return_url dm_event.register_choose_payment_url(@registration.receipt_code)
+%>
+
+    <!-- display payment summary here -->
+    <%= image_submit_tag "dm_event/payment_logos/sofort/#{I18n.locale}/200x75.png", width: 150 %>
+<% end %>

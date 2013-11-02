@@ -222,10 +222,10 @@ class Registration < ActiveRecord::Base
     DmEvent::Engine.routes.url_helpers.register_choose_payment_url(self.receipt_code, host: Account.current.url_host, locale: I18n.locale)
   end
   
-  # Handle PayPal notification logic
+  # Handle Payment notification logic
   #------------------------------------------------------------------------------
-  def self.paypal_ipn(notify)
-    logger.error('===> Enter: Registration.paypal_ipn')
+  def self.payment_ipn(notify, payment_method = '')
+    logger.error('===> Enter: Registration.payment_ipn')
     logger.error(notify.inspect)
     registration = Registration.find_by_receipt_code(notify.item_id)
     
@@ -237,7 +237,7 @@ class Registration < ActiveRecord::Base
                                           notify.amount.to_f.to_s,
                                           notify.currency,
                                           nil,
-                                          payment_method: 'paypal',
+                                          payment_method: payment_method,
                                           payment_date: notify.received_at,
                                           notify_data: notify,
                                           transaction_id: notify.transaction_id,
@@ -249,7 +249,7 @@ class Registration < ActiveRecord::Base
             payment_history.status = notify.status
           else
             # TODO need to handle refunding, etc
-            logger.error("Failed to verify Paypal's notification, please investigate")
+            logger.error("Failed to verify #{payment_method} payment notification, please investigate")
           end
         rescue => e
           payment_history.status = 'Error'

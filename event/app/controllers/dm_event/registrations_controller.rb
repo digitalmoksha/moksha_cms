@@ -3,7 +3,7 @@ ActionView::Base.send(:include, ActiveMerchant::Billing::Integrations::ActionVie
 class DmEvent::RegistrationsController < DmEvent::ApplicationController
   include ActiveMerchant::Billing::Integrations
 
-  protect_from_forgery :except => [:paypal_ipn]
+  protect_from_forgery :except => [:paypal_ipn, :sofort_ipn]
 
   helper          DmEvent::WorkshopsHelper
   helper          DmEvent::RegistrationsHelper
@@ -75,47 +75,33 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @receipt_content = @registration.email_state_notification(@registration.current_state, false) || ""
   end
 
+  #------------------------------------------------------------------------------
+  # Payment Methods
+  #------------------------------------------------------------------------------
+  
   # TODO Not fully working yet
   #------------------------------------------------------------------------------
   def paypal_ipn
     logger.error('===> Enter: controller::paypal_ipn')
-    notify        = Paypal::Notification.new(request.raw_post)
-    Registration.paypal_ipn(notify)
+    notify = Paypal::Notification.new(request.raw_post)
+    Registration.payment_ipn(notify, 'paypal')
 
     render :nothing => true
   end
   
-  # This could get called from a gateway (such as Paypal) when they decide to not
-  # complete the payment, usually by clicking a Cancel link. In that case, we
-  # want to move the registration state to "cancelled", so we can see how many 
-  # payments get abandoned
-  # Paypal: this is passed in as the cancel url
-  #------------------------------------------------------------------------------
-  def payment_abandoned
-    @registration = Registration.find_by_receipt_code(params[:receipt_code])
-    redirect_to main_app.root_url and return if @registration.nil?
-
-    if @registration.accepted?
-      @registration.send('cancelled!')
-      flash[:alert] = 'Your payment was canceled'
-    end
-    redirect_to dm_event.register_new_path(@registration.workshop) and return
-  end
-
-
 private
 
   #------------------------------------------------------------------------------
   def workshop_lookup
     @workshop = Workshop.find_by_slug(params[:id])
   end
+end
+  
   
 =begin
   helper          'dm_event/event_registrations'
   helper          'dm_event/custom_fields'
 
-  include         Ultracart::UltracartHelper
-  
   before_filter   :login_required, :only => [:show_registrations]
   before_filter   :ssl_required
 
@@ -378,53 +364,4 @@ public
     @workshop.template.blank? ? render(:action => :event_information_page) : render(:action => :event_information_page, :layout => "#{account_layouts}/#{@workshop.template}")
   end
 
-  # This function is called by UltraCart when an item is purchased from the online
-  # store.  The entire order is sent.  Initially, we will look for the 
-  # registration code we place in a ticket order, and mark the appropriate record
-  # as payed in the database.  But this also sets up the possibility of keeping
-  # our own records purchase records and doing our own reporting.
-  #------------------------------------------------------------------------------
-  def verify_payment
-    #--- the specifics for order have already been parsed into the params block
-    receipts = EventPayment.verify_payment(current_account, params)
-
-    receipts.each do |r|
-      begin
-        email_receipt(EventRegistration.receiptcode_to_id(r[:receiptcode]), r[:cost_cents], r[:description])      
-      rescue Exception => e
-        #--- if there is a problem sending the receipt, we should send place it on a queue for 
-        #--- sending later TODO.  But we need to do the render below so that Ultracart
-        #--- doesn't send the notification again.
-      end
-    end
-
-    render :nothing => true, :status => 200
-  end
-
-  #------------------------------------------------------------------------------
-  def generate_shoppingcart_link(registration)
-    anchor_id = PaymentHistory.generate_anchor_id(registration.receiptcode)
-    item_options = [{:name => 'registration_code', :value => anchor_id}]
-    options = {
-      :MerchantID                   => current_account.preferred(:ultracart_merchant_id),
-      :ThemeCode                    => current_account.preferred(:ultracart_theme_code),
-      :BillingFirstName             => registration.firstname,
-      :BillingLastName              => registration.lastname,
-      :BillingAddress1              => registration.address,
-      :BillingAddress2              => registration.address2,
-      :BillingCity                  => registration.city,
-      :BillingState                 => registration.state,
-      :BillingPostalCode            => registration.zipcode,
-      :BillingCountry               => registration.country.english_name,
-      :BillingDayPhone              => registration.phone,
-      :Email                        => registration.email,
-      :OVERRIDECATALOGURL           => current_account.preferred(:ultracart_continue_shopping_url),
-      :OVERRIDECONTINUESHOPPINGURL  => current_account.preferred(:ultracart_continue_shopping_url),
-      :item_options                 => item_options
-    }
-    options[:ImmediateCheckout] = true if registration.event_workshop.shoppingcart_immediate_checkout
-    
-    url_for_ultracart(registration.item_code, Ultracart::Config.cart_url, true, options)
-  end
 =end
-end

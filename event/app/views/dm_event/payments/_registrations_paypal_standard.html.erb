@@ -9,7 +9,7 @@
           service.item_name           @registration.workshop.title
           service.tax                 '0.00'
           service.cmd                 '_donations' if @registration.workshop.crowdfunding?
-          service.notify_url          dm_event.register_paypal_ipn_url if Rails.env.production?
+          service.notify_url          dm_event.payment_paypal_ipn_url if Rails.env.production?
           service.return_url          dm_event.register_success_url(@registration.receipt_code)
           service.cancel_return_url   dm_event.register_choose_payment_url(@registration.receipt_code)
 %>
