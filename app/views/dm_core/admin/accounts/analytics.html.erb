@@ -5,11 +5,22 @@
 <%= simple_form_for(@account, :url => dm_core.admin_account_analytics_url) do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
 
-	<%= content_box :title => 'Analytics and PayPal' do %>
+	<%= content_box :title => 'Analytics and Payment Configuration' do %>
 
-    <%= f.input :preferred_google_analytics_tracker_id, :label => 'Google Analytics Tracker ID' %>
-    <%= f.input :preferred_paypal_merchant_id, :label => 'PayPal Merchant ID' %>
-    <%= f.input :preferred_paypal_cert_id, :label => 'PayPal Cert ID' %>
+    <%= well_frame title: 'Google Analytics' do %>
+      <%= f.input :preferred_google_analytics_tracker_id, :label => 'Tracker ID' %>
+    <% end %>
+    
+    <%= well_frame title: 'PayPal' do %>
+      <%= f.input :preferred_paypal_merchant_id, :label => 'Merchant ID' %>
+      <%= f.input :preferred_paypal_cert_id, :label => 'Cert ID' %>
+    <% end %>
+
+    <%= well_frame title: 'Sofort (sofort.com)' do %>
+      <%= f.input :preferred_sofort_user_id, :label => 'User ID' %>
+      <%= f.input :preferred_sofort_project_id, :label => 'Project ID' %>
+      <%= f.input :preferred_sofort_project_password, :label => 'Project Password' %>
+    <% end %>
 
     <%= submit_or_cancel :cancel_url => dm_core.admin_account_analytics_path %>
 
