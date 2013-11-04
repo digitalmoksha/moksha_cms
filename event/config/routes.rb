@@ -30,7 +30,7 @@ DmEvent::Engine.routes.draw do
     match '/event/register/success/(:receipt_code)',            :controller => 'registrations', :action => :success,            :as => :register_success
     match '/event/register/choose_payment/(:receipt_code)',     :controller => 'registrations', :action => :choose_payment,     :as => :register_choose_payment
     match '/event/register/payments_return',                    :controller => 'registrations', :action => :payments_return,    :as => :register_payments_return
-    match '/event/register/paypal_ipn',                         :controller => 'registrations', :action => :paypal_ipn,         :as => :register_paypal_ipn
+    match '/event/payment/paypal_ipn',                          :controller => 'payments',      :action => :paypal_ipn,         :as => :payment_paypal_ipn
     match '/event/payment/sofort_ipn',                          :controller => 'payments',      :action => :sofort_ipn,         :as => :payment_sofort_ipn
   end
 

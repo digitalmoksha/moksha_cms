@@ -75,20 +75,6 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @receipt_content = @registration.email_state_notification(@registration.current_state, false) || ""
   end
 
-  #------------------------------------------------------------------------------
-  # Payment Methods
-  #------------------------------------------------------------------------------
-  
-  # TODO Not fully working yet
-  #------------------------------------------------------------------------------
-  def paypal_ipn
-    logger.error('===> Enter: controller::paypal_ipn')
-    notify = Paypal::Notification.new(request.raw_post)
-    Registration.payment_ipn(notify, 'paypal')
-
-    render :nothing => true
-  end
-  
 private
 
   #------------------------------------------------------------------------------
