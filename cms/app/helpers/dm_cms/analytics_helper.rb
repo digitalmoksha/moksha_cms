@@ -13,5 +13,15 @@ module DmCms
       end    
     end
     
+    #------------------------------------------------------------------------------
+    def mint_tag
+      # if Rails.env.production? && !request.ssl?
+      #   "" # [todo] "<script src='/mint/?js' type='text/javascript'></script>".html_safe
+      # elsif Rails.env.production? && request.ssl?
+      #   "" # [todo] "<script src='/mint/?js' type='text/javascript'></script>".html_safe
+      # end
+    end
+  
+    
   end
 end

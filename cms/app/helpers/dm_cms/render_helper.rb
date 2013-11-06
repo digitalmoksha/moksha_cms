@@ -1,6 +1,7 @@
 #------------------------------------------------------------------------------
 module DmCms
   module RenderHelper
+    include DmCms::AnalyticsHelper
 
     # build title to use on a page
     #------------------------------------------------------------------------------
