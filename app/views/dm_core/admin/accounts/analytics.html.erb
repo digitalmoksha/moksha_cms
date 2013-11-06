@@ -23,6 +23,16 @@
       <%= f.input :preferred_sofort_notification_password, :label => 'Notification Password' %>
     <% end %>
 
+    <%= well_frame title: 'Paymill' do %>
+      <%= f.input :preferred_paymill_private_key, :label => 'Private Key' %>
+      <%= f.input :preferred_paymill_public_key, :label => 'Public Key' %>
+    <% end %>
+
+    <%= well_frame title: 'Stripe' do %>
+      <%= f.input :preferred_stripe_private_key, :label => 'Private Key' %>
+      <%= f.input :preferred_stripe_public_key, :label => 'Public Key' %>
+    <% end %>
+
     <%= submit_or_cancel :cancel_url => dm_core.admin_account_analytics_path %>
 
 	<% end %>
