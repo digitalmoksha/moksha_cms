@@ -17,5 +17,5 @@ de:
     comments_header: Kommentare
     delete: löschen
     comments_stat: Kommentare
-    blog_login_required: 'Anmeldung ist erforderlich, um diesen Blog zugreifen'
+    blog_login_required: 'Um diesen Blog zu sehen, melde Dich bitte an.'
     comment_login_required: "Bitte loggen Sie sich ein, um Ihre Benutzerkonto, um einen Kommentar zu verfassen"
