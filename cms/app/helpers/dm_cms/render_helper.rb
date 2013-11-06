@@ -44,21 +44,5 @@ module DmCms
       end
     end
     
-    # insert the standard google analystics code, is tracker id set in account
-    #------------------------------------------------------------------------------
-    def google_analytics_tag
-      if Rails.env.production? && !current_account.preferred_google_analytics_tracker_id.blank?
-        x = <<-CMD
-        <script>
-            var _gaq=[['_setAccount','#{current_account.preferred_google_analytics_tracker_id}'],['_setDomainName','#{current_account.domain}'],['_setCustomVar',1,'logged-in','subscriber',1],['_trackPageview'],['_addIgnoredRef', '#{current_account.domain}']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
-        CMD
-        x.html_safe
-      end
-    end
-
   end
 end
