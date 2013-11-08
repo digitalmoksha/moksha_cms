@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'friendly_id', "~> 4.0.9"
   s.add_dependency 'aasm'
   s.add_dependency 'money-rails'  
-  s.add_dependency 'globalize', '~> 3.0.0'   # translations in database
+  s.add_dependency 'globalize', '3.0.0'       # translations in database
   s.add_dependency 'exception_notification', '4.0.0'
   
   #--- make sure the following gems are included in your app's Gemfile
