@@ -1,11 +1,11 @@
 class CmsBlog < ActiveRecord::Base
   include DmCore::Concerns::PublicPrivate
 
-  attr_accessible         :slug, :published, :requires_login, :comments_allowed
+  attr_accessible           :slug, :published, :requires_login, :comments_allowed
   
   # --- globalize
-  translates              :title, :fallbacks_for_empty_translations => true
-  globalize_accessors     :locals => DmCore::Language.language_array
+  translates                :title, :fallbacks_for_empty_translations => true
+  globalize_accessors       :locales => DmCore::Language.language_array
     
   extend FriendlyId
   friendly_id               :title_slug, use: :slugged

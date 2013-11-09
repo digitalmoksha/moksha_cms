@@ -16,7 +16,7 @@ class CmsPage < ActiveRecord::Base
 
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates              :title, :menutitle, :fallbacks_for_empty_translations => true #, :versioning => true
-  globalize_accessors     :locals => DmCore::Language.language_array
+  globalize_accessors     :locales => DmCore::Language.language_array
     
   # --- versioning - skip anything translated
   has_paper_trail         :skip => [:title, :menutitle]
