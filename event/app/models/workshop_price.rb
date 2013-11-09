@@ -28,7 +28,7 @@ class WorkshopPrice < ActiveRecord::Base
 
   # --- globalize
   translates              :price_description, :sub_description, :payment_details, :fallbacks_for_empty_translations => true
-  globalize_accessors     :locals => DmCore::Language.language_array
+  globalize_accessors     :locales => DmCore::Language.language_array
 
   validates_presence_of   :price_currency,      :if => Proc.new { |w| w.price_cents }
   validates_presence_of   :alt1_price_currency, :if => Proc.new { |w| w.alt1_price_cents }

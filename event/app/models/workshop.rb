@@ -23,7 +23,7 @@ class Workshop < ActiveRecord::Base
 
   # --- globalize
   translates              :title, :description, :sidebar, :fallbacks_for_empty_translations => true
-  globalize_accessors     :locals => DmCore::Language.language_array
+  globalize_accessors     :locales => DmCore::Language.language_array
 
   extend FriendlyId
   friendly_id             :title_slug, use: :slugged
