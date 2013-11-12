@@ -1,0 +1,14 @@
+fi:
+  nms:
+    subscribe_button: Tilaa
+    unsubscribe_button: Peruuta
+    update_subscription_button: Päivitä tilaus
+    subscription_successful: "Olet onnistuneesti tilannut uutiskirjeen. Aktivoidaksesi tilauksesi, olemme lähettäneet sinulle vahvistusviestin. Sinun tulee klikata vahvistuslinkkiä vastaanottaaksesi uutiskirjeen."
+    subscription_updated: Tilauksesi on onnistuneesti päivitetty
+    unsubscribe_successful: Viestisi on peruttu
+    
+    #--- Mailchimp specific errors
+    List_DoesNotExist: Määriteltyä luetteloa ei ole olemassa
+    List_AlreadySubscribed: Tämä viesti on jo tilattu
+    Email_NotExists: Määriteltyä viestiä ei ole olemassa
+    mc_unknown_error: Tuntematon mailchimp virhe
