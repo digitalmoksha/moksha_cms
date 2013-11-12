@@ -1,0 +1,97 @@
+fi:
+  fms:
+    count_forums:
+      zero: "ei foorumia"
+      one: "1 foorumi"
+      other: "%{num} foorumia"
+    count_users:
+      zero: "ei käyttäjiä"
+      one: "1 käyttäjä"
+      other: "%{num} käyttäjää"
+    count_users_active:
+      zero: "ei aktiivisia käyttäjiä"
+      one: "1 aktiivinen käyttäjä"
+      other: "%{num} aktiivista käyttäjää"
+    count_users_lurking:
+      zero: "ei piileviä käyttäjiä"
+      one: "1 piilevä käyttäjä"
+      other: "%{num} piileviä käyttäjiä"
+    count_voices:
+      zero: "ei ääniä"
+      one: "1 ääni"
+      other: "%{num} ääntä"
+    count_topics:
+      zero: "ei aiheita"
+      one: "1 aihe"
+      other: "%{num} aihetta"
+    count_comments:
+      zero: "ei kommentteja"
+      one: "1 kommentti"
+      other: "%{num} kommenttia"
+    count_comments_found:
+      zero: "ei löydetty kommentteja"
+      one: "1 kommentti löydetty"
+      other: "%{count} kommenttia löydetty"
+    comment_age: "kommentoitu %{when} sitten"
+    user_is_administrator: Ylläpitäjä
+    user_is_moderator: Valvoja
+    suspended_user_comment: Tämä kommentti on poistettu
+    post_edited: 'muokattu %{when} sitten'
+    forums: Foorumit
+    page_nr: 'sivu %{nr}'
+    views_forums:
+      recent_activity: Viimeisimpiä tapahtumia
+      no_recent_activity: Ei tapahtumia äskettäin
+      comma_locked_topic: "Tämä aihe on lukittu."
+      unmoderated_html: 'Tämä foorumi on tällä hetkellä valvomaton.<br />Olethan kohtelias ja ystävällinen.'
+    recent_posts: Tuoreet viestit
+    searching_for: etsiminen
+    by_user: '%{user}'
+    in_forum: '%{forum}'
+    views_posts:
+      formatting_help: Formatting Help
+      formatting_desc: on käytetty muotoiltuun tekstiin.
+      formatting_bold: '**bold**'
+      formatting_italics: '*italics*, _italics_'
+      formatting_blockquote: '&gt; <span>(quotes)</span>'
+      formatting_icode: '`code`'
+      formatting_horizontal_rule: '*** <span>(horizontal rule)</span>'
+      formatting_list: '* <span>or</span> 1. <span>(lists)</span>'
+      save: 'Säästä viesti'
+    topic: Aihe
+    locked: Lukittu
+    or: tai
+    cancel: peruuta
+    reply: Vastaa
+    admin:
+      edit_post: Muokkaa viestiä
+    suspended_user_post: Tämä viesti on poistettu
+    reply_to_topic: Vastaa aiheeseen
+    views_topics:
+      topic: Nimi      
+      body: Body
+      delete_sure: 'Poista tämä aihe lopullisesti?'
+      locked_topic: 'Tämä aihe on lukittu.'
+      save_reply: Säästä vastaus
+      cancel: Peruuta
+      lock_topic: Lukittu
+    sticky: Sticky
+    edit_topic: Muokkaa aihetta
+    post_topic: Lähetä viesti
+    new_topic: Uusi aihe
+    voices: Ääniä
+    edit: muokkaa
+    delete: poista
+    all: kaikki aiheet
+    monitored: vain valvottuja aiheita
+    started: Aloittaja
+    comment_age: "%{when} sitten"
+    by_user_html: "%{user}"
+    moderator: Valvoja
+    replies: vastaukset
+    views: katselukerrat
+    last_post_on: "Viimeinen viesti %{user} :: %{date}"
+    comments_header: Kommentit
+    no_topics: Ole ensimmäinen luomassa aihe
+    no_monitored_topics: Tällä hetkellä ei ole valvottuja aiheita
+    no_forums: Foorumi osio on saatavilla pian
