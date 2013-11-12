@@ -1,0 +1,42 @@
+fi:
+  ems:
+    registration_subtitle: Rekisteröinti
+    register_btn: Rekisteröi
+    cancel_btn: Peruuta
+    ticket_receipt_arrival: Saapuminen
+    ticket_receipt_attendee: Osallistuja
+    ticket_receipt_departure: Lähtö
+    ticket_receipt_event: Tapahtuma
+    ticket_receipt_questions: "Jos sinulla on mitä tahansa kysyttävää tapahtumaa koskien, lähetä viesti %{value}"
+    ticket_receipt_questions_telephone: "tai soita %{value}"
+    ticket_receipt_thank_you: Kiitos
+    ticket_receipt_ticket_number: Lipun numero
+    ticket_receipt_price: Hinta
+    ticket_information: Lipun tiedot
+    ticket_contact: Yhteystiedot
+    registration_receipt_title: Varauksen vastaanottaminen
+    registration_email: Sähköposti
+    registration_first_name: Etunimi
+    registration_last_name: Sukunimi
+    registration_address: Osoite
+    registration_address2: Osoite
+    registration_city: Kaupunki
+    registration_state: Alue
+    registration_country: Maa
+    registration_zipcode: Postinumero
+    registration_account_required: 'Ilmoittautuaksesi thän tapahtumaan sinun tulee kirjautua sisään käyttäjätilillesi.'
+    registration_closed_heading: Rekisteröinti suljettu
+    registration_closed_text: "Emme hyväksy enää uusia rekisteröintejä kurssille '%{title}'"
+    registration_closed_email: "Jos sinulla on kysyttävää, ota yhteys %{email}."
+    registration_closed_list: Seuraavien kurssien rekisteröinti on yhä avoinna
+    choose_payment_method: Valitse maksutapa
+    donate_button: Lahjoita
+    project_goal: Projektin päämäärä
+    amount_raised: Määrä noussut
+  activerecord:
+    errors:
+      models:
+        registration:
+          attributes:
+            workshop_price_id:
+              blank: Valitse maksutapa
