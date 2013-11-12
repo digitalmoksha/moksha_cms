@@ -85,7 +85,7 @@ module Admin::ThemeAmsterdamHelper
   def modal_dialog(options = {}, &block)
     options[:title]         ||= ''
     options[:id]            ||= ''
-    options[:include_save] = options[:include_save].nil? ? false : options[:include_save]
+    options[:include_save]    = options[:include_save].nil? ? false : options[:include_save]
     options[:delete_url]    ||= nil
     options[:delete_msg]    ||= 'Are you sure you want to DELETE this?'
     
@@ -101,13 +101,14 @@ module Admin::ThemeAmsterdamHelper
     options[:id]            ||= ''
     options[:class]         ||= ''
     options[:explanation]   ||= ''
+    options[:first]           = options[:first].nil? ? false : options[:first]
+    class_options             = options[:first] ? options[:class] : "semi-block #{options[:class]}"
     heading                   = ''
     
     heading += "<h6 class='subtitle'>#{options[:title]}</h6>" unless options[:title].blank?
     heading += "<p class='explanation'>#{options[:explanation]}</p>" unless options[:explanation].blank?
-    
     content = with_output_buffer(&block)
-    content_tag :div, :id => options[:id], :class => "semi-block #{options[:class]}" do
+    content_tag :div, :id => options[:id], :class => class_options do
       heading.html_safe + content_tag(:div, content, :class => 'well')
     end
   end
