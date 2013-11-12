@@ -1,0 +1,21 @@
+fi:
+  cms:
+    recent_posts: Uusimmat viestit
+    all_recent_posts: Kaikki uusimmat viestit
+    available_blogs: Saatavilla olevat blogit
+    blog_header: Blogit
+    read_more: 'Lue lisää...'
+    blog_summary_date: Päivä
+    blog_summary_comments: Kommentit
+    blog_notify_new_post: Blogissa on uusi viesti
+    blog_notify_read_post: Lue koko viesti
+    reply: Vastaa
+    suspended_user_post: Tämä viesti onn poistettu
+    comment_body: Body
+    comment_submit: Kommentoi
+    add_comment: Lisää kommentti
+    comments_header: Kommentit
+    delete: poista
+    comments_stat: Kommentit
+    blog_login_required: Thän blogiin pääsyyn vaaditaan sisään kirjautuminen
+    comment_login_required: Kirjaudu käyttäjätiliisi kommentoidaksesi
