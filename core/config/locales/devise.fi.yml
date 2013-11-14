@@ -19,6 +19,8 @@ fi:
       invalid_token: 'Virheellinen valtuutusavain.'
       timeout: 'Istuntosi on vanhentunut, kirjaudu uudelleen sisään jatkaaksesi.'
       inactive: 'Käyttäjätiliäsi ei ole vielä aktivoitu.'
+      user:
+        not_found_in_database: "Virheellinen sähköpostiosoite tai salasana."
     sessions:
       signed_in: 'Sisäänkirjautuminen onnistui.'
       signed_out: 'Sinut on kirjattu ulos palvelusta onnistuneesti.'
