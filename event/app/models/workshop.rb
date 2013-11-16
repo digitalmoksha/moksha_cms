@@ -48,7 +48,8 @@ class Workshop < ActiveRecord::Base
   scope                   :available, where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', 
                                       (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC')
 
-  monetize                :funding_goal_cents, :with_model_currency => :base_currency, :allow_nil => true
+  #--- don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
+  monetize                :funding_goal_cents, :with_model_currency => :base_currency
 
   EVENT_STYLES = [['Workshop', 'workshop'], ['Crowdfunding', 'crowdfunding']]
 
