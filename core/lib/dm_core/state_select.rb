@@ -85,6 +85,7 @@ class StateCountryConstants
   PRIMARY_COUNTRIES = [
                           ['Austria',         13],
                           ['Czech Republic',  54],
+                          ['Finland',         68],
                           ['Germany',         55], 
                           ['India',           101], 
                           ['Japan',           109], 
@@ -96,6 +97,7 @@ class StateCountryConstants
   PRIMARY_COUNTRIES_CODE = [
                           ['Austria',         'AT'],
                           ['Czech Republic',  'CZ'],
+                          ['Finalnd',         'FI'],
                           ['Germany',         'DE'], 
                           ['India',           'IN'], 
                           ['Japan',           'JP'], 
@@ -107,6 +109,7 @@ class StateCountryConstants
   PRIMARY_COUNTRIES_NAME = [
                           ['Austria',         'Austria'],
                           ['Czech Republic',  'Czech Republic'],
+                          ['Finland',         'Finland'],
                           ['Germany',         'Germany'], 
                           ['India',           'India'], 
                           ['Japan',           'Japan'], 
