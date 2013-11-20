@@ -49,17 +49,18 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def subscribe(user_or_email, options = {FNAME: '', LNAME: ''})
     return { success: false, code: 232 } if user_or_email.blank?
-    api        = MailchimpNewsletter.api
-    
-    #--- remove any invalid merge vars or other options
-    merge_vars = options.except('new-email', :email, :optin_ip, :optin_time, :mc_location,
-                                :mc_language, :mc_notes, :update_existing)
-
-    #--- groupings needs to be an Array, but the form usually sends it as a Hash
-    merge_vars['GROUPINGS'] = [merge_vars['GROUPINGS']] if merge_vars['GROUPINGS'] && !merge_vars['GROUPINGS'].is_a?(Array)
+    api         = MailchimpNewsletter.api
+    headers     = options[:headers] || {'Accept-Language' => 'en'}
 
     #--- update data if user logged in. Don't for an unprotected subscribe. but honor value if passed in
     options.reverse_merge!  update_existing: user_or_email.is_a?(User)
+
+    #--- remove any invalid merge vars or other options
+    merge_vars = options.except('new-email', :email, :optin_ip, :optin_time, :mc_location, :mc_notes,
+                                :update_existing, :mc_language, :headers)
+
+    #--- groupings needs to be an Array, but the form usually sends it as a Hash
+    merge_vars['GROUPINGS'] = [merge_vars['GROUPINGS']] if merge_vars['GROUPINGS'] && !merge_vars['GROUPINGS'].is_a?(Array)
 
     if user_or_email.is_a?(User)
       email               = {email: user_or_email.email}
@@ -70,7 +71,8 @@ class MailchimpNewsletter < Newsletter
     end
     merge_vars[:SPAMAPI]  = 1
     api.lists.subscribe(id: self.mc_id, email: email, merge_vars: merge_vars, 
-                        double_optin: true, update_existing: options[:update_existing], replace_interests: true)
+                        double_optin: true, update_existing: options[:update_existing], replace_interests: true,
+                        headers: headers)
     return { success: true, code: 0, update_existing: options[:update_existing] }
   rescue Gibbon::MailChimpError => exception
     Rails.logger.info "=== Error Subscribing #{email} : #{exception.to_s}"
