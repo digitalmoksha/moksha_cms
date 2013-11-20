@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.2.13"
 
   #--- dont' forget to add 'require' statement in engine.rb
-  s.add_dependency 'gibbon', '~> 0.5.0'
+  # s.add_dependency 'gibbon', '~> 0.5.0'  use forked version to fix passing headers to api call
 
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'

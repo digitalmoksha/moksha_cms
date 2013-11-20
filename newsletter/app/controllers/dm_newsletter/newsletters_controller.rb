@@ -2,13 +2,16 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
 
   # Handle a newsletter signup.  By submitting using a Rails form
   # and then adding via the MailChimp API, it should cut out automated signups
-  # from spam bots, because the authenticity token will be validated first
+  # from spam bots, because the authenticity token will be validated first.
+  # Setting the Accept-Language will cause MC to send the confirmation in the users
+  # language if the list auto-translate is turned on
   #------------------------------------------------------------------------------
   def subscribe_to_newsletter
     subscription_params = params['subscription']
     user_or_email       = current_user ? current_user : subscription_params['email']
     @newsletter         = Newsletter.find_newsletter(params['token'])
-    
+    subscription_params.merge( {headers: {'Accept-Language' => request.env['HTTP_ACCEPT_LANGUAGE']}} )
+
     if @newsletter
       result = @newsletter.subscribe(user_or_email, subscription_params)
       respond_to do |format|
