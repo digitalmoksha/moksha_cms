@@ -63,9 +63,10 @@ class MailchimpNewsletter < Newsletter
     merge_vars['GROUPINGS'] = [merge_vars['GROUPINGS']] if merge_vars['GROUPINGS'] && !merge_vars['GROUPINGS'].is_a?(Array)
 
     if user_or_email.is_a?(User)
-      email               = {email: user_or_email.email}
-      merge_vars[:FNAME]  = user_or_email.first_name
-      merge_vars[:LNAME]  = user_or_email.last_name
+      email                 = {email: user_or_email.email}
+      merge_vars[:FNAME]    = user_or_email.first_name
+      merge_vars[:LNAME]    = user_or_email.last_name
+      merge_vars[:COUNTRY]  = user_or_email.country.english_name if user_or_email.country
     else
       email               = {email: user_or_email}
     end

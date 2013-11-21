@@ -10,7 +10,7 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
     subscription_params = params['subscription']
     user_or_email       = current_user ? current_user : subscription_params['email']
     @newsletter         = Newsletter.find_newsletter(params['token'])
-    subscription_params.merge( {headers: {'Accept-Language' => request.env['HTTP_ACCEPT_LANGUAGE']}} )
+    subscription_params.merge!( {headers: {'Accept-Language' => request.env['HTTP_ACCEPT_LANGUAGE']}} )
 
     if @newsletter
       result = @newsletter.subscribe(user_or_email, subscription_params)
