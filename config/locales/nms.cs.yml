@@ -1,8 +1,8 @@
 cs:
   nms:
     subscribe_button: Přihlásit
-    unsubscribe_button: Odhlásit
-    update_subscription_button: Aktualizace předplatné
+    unsubscribe_button: Zrušit odběr
+    update_subscription_button: Odebírat zpravodaj/e
     subscription_successful: "Úspěšně jste se přihlásili k odběru newsletteru. Aby bylo možné aktivovat předplatné, poslali jsme vám potvrzovací e-mail. Musíte kliknout na odkaz pro potvrzení, aby dostávat newsletter."
     subscription_updated: Vaše předplatné byl úspěšně aktualizován
     unsubscribe_successful: Váš e-mail byl odhlášen
