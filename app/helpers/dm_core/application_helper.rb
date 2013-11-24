@@ -21,6 +21,11 @@ module DmCore
     def is_admin?
       user_signed_in? && current_user.is_admin?
     end
+
+    #------------------------------------------------------------------------------
+    def is_sysadmin?
+      user_signed_in? && current_user.is_sysadmin?
+    end
   
     # for determining if use is on a paritcular page, for active nav highlighting
     # http://stackoverflow.com/questions/3705898/best-way-to-add-current-class-to-nav-in-rails-3

@@ -64,7 +64,13 @@ module DmCore
         # Determine if this user has the Admin role
         #------------------------------------------------------------------------------
         def is_admin?
-          has_role?(:admin)
+          has_role?(:admin) || is_sysadmin?
+        end
+        
+        # Determine if this user has the Admin role
+        #------------------------------------------------------------------------------
+        def is_sysadmin?
+          has_role?(:sysadmin)
         end
         
         #------------------------------------------------------------------------------
