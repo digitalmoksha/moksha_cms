@@ -102,10 +102,14 @@ class Account < ActiveRecord::Base
   # Find the account using the specified host (usually from the request url).
   # Check for certain special subdomains before lookup:
   #   dev, www, backoffice, staging, stg-
+  # Supports xip.io format for testing on local network
+  #   dev.testapp.net.192.168.1.5.xip.io
+  # is a valid address.  See http://xip.io for more info
   #------------------------------------------------------------------------------
   def self.find_account(host)
     host      ||= ""
     separated   = host.downcase.split('.')
+    separated   = separated[0..-7] if host.end_with?('xip.io') # strip off xip.io and ip address
     separated   = separated.delete_if { |x| x == 'dev' || x == 'www' || x == 'backoffice' || x =~ /stg-/ || x == 'staging' }
     self.find_by_domain(separated.join('.')) or raise Account::DomainNotFound.new("Invalid domain: #{host}")
   end
