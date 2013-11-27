@@ -13,7 +13,8 @@ class DmCore::ApplicationController < ActionController::Base
   before_filter   :site_enabled?, :unless => :devise_controller?
   before_filter   :ssl_redirect
   before_filter   :store_location
-  
+  before_filter   :set_cache_buster
+
   include DmCore::AccountHelper
 
   #------------------------------------------------------------------------------
@@ -22,6 +23,20 @@ class DmCore::ApplicationController < ActionController::Base
   end
 
 protected
+
+  # Nov 27, 2013: There seems to be a nasty Safari 7 bug (and in iOS7).  If a 304 is returned,
+  # an empty page can be cached, resulting in a blank page.
+  # http://tech.vg.no/2013/10/02/ios7-bug-shows-white-page-when-getting-304-not-modified-from-server/
+  # So set headers so that this content will not be cahced, until there is a fix
+  # http://stackoverflow.com/questions/711418/how-to-prevent-browser-page-caching-in-rails
+  #------------------------------------------------------------------------------
+  def set_cache_buster
+    if !request.user_agent.scan(/Safari/).nil?
+      response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+      response.headers["Pragma"]        = "no-cache"
+      response.headers["Expires"]       = "Fri, 01 Jan 1990 00:00:00 GMT"
+    end
+  end
 
   # Store last url as long as it isn't a /users path
   # Call from a before_filter - this ensures that if you're coming to a page
