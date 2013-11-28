@@ -1,0 +1,23 @@
+<div class="ticket">
+  <table>
+    <tr><td><strong><%= I18n.t('ems.ticket_receipt_event') %>:</strong></td><td><%=h @registration.workshop.title %></td></tr>
+    <tr><td><strong><%= I18n.t('ems.ticket_receipt_attendee') %>:</strong></td><td><%=h @registration.full_name %></td></tr>
+    <tr><td><strong><%= I18n.t('ems.ticket_receipt_ticket_number') %>:</strong></td><td><%=h @registration.receipt_code %></td></tr>
+  </table>
+</div>
+
+<p><%= I18n.t('email.salutation', :value => h(@registration.full_name)) %></p>
+
+<p><%= I18n.t('ems.ticket_outstanding_balance') %>:</p>
+
+<p><strong><%= @balance_owed %></strong></p>
+
+<p><%= I18n.t('ems.ticket_payment_link_leadin' )%>::</p>
+
+<p><%= link_to I18n.t('ems.ticket_payment_link_text'), @payment_link %></p>
+
+<p>If you wish to cancel your participation, please send an email to <%= @registration.workshop.contact_email %>.</p>
+
+<p><%= I18n.t('ems.ticket_receipt_questions', :value => h(@registration.workshop.contact_email)) %></p>
+
+<p><%= I18n.t('email.thank_you') %></p>

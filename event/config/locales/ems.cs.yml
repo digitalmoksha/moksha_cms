@@ -9,11 +9,14 @@ cs:
     ticket_receipt_event: Událost
     ticket_receipt_questions: "Pokud máte ohledně události nějaké otázky, pošlete nám, prosím, e-mail %{value}"
     ticket_receipt_questions_telephone: "nebo zatelefonujte %{value}"
-    ticket_receipt_thank_you: Děkujeme
     ticket_receipt_ticket_number: Číslo lístku
     ticket_receipt_price: Cena
     ticket_information: Informace o lístku
     ticket_contact: Kontaktní informace
+    ticket_outstanding_balance: "Jste přihlášen/a na výše uvedený program. Z kurzovného Vám zbývá k úhradě"
+    ticket_payment_link_leadin: Tuto částku můžete uhradit skrze následující odkaz
+    ticket_payment_link_text: Zaplatit
+    ticket_payment_reminder_subject: "Platba Reminder: %{value}"
     registration_receipt_title: Potvrzení o rezervaci
     registration_email: E-mail
     registration_first_name: Křestní jméno

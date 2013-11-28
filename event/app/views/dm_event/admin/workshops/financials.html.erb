@@ -3,8 +3,8 @@
 <% content_for :sidebar do %>
   <ul class="navigation-light block">
     <li><%= link_to 'View Registrations', [:admin, @workshop] %></li>
-    <li><%#= link_to 'Transactions', financials_list_admin_workshop(@workshop) %></li>
   </ul>
+  <%= link_to 'Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop), :class => "action-button blue" %>
 <% end %>
   
 <div class="row-fluid">
@@ -75,6 +75,32 @@
 
 </div>
 
+<% unpaid = @workshop.registrations.unpaid.order('payment_reminder_sent_on ASC') %>
+<%= content_box :title => "#{unpaid.count} Unpaid Participants" do %>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th class="name">Name</th>
+        <th class="cost">Balance</th>
+        <th class="date">Registered On</th>
+        <th class="date">Last Reminded On</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% unpaid.each do |registration| -%>
+        <tr>
+          <td class="name"><%= registration.full_name %></td>
+          <td class="cost"><%= registration.balance_owed.format %></td>
+          <td class="date"><%= format_date(registration.created_at) %></td>
+          <td class="date" <%= "style='background-color: #A2D8AA;'".html_safe if registration.payment_reminder_due? %>>
+            <%= registration.payment_reminder_sent_on.nil? ? 'not yet' : distance_of_time_in_words_to_now(registration.payment_reminder_sent_on) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
 <%= content_box :title => 'List of Payments' do %>
   <table class="table table-bordered table-condensed table-striped">
     <thead>
@@ -99,7 +125,8 @@
         </tr>
         <% if !payment.bill_to_name.blank? || payment.discount.to_i > 0 || (!payment.order_details.nil? && !payment.order_details['coupon'].nil?) %>
           <tr>
-            <td colspan="6">
+            <td></td>
+            <td colspan="5">
               <ul class="row_detail">
                 <% unless payment.bill_to_name.blank? %>
                   <li><strong>Payed by:</strong> <%=h payment.bill_to_name %></li>
@@ -117,5 +144,4 @@
       <% end %>
     </tbody>
   </table>
-</div>
 <% end %>

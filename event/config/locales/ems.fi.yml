@@ -9,11 +9,14 @@ fi:
     ticket_receipt_event: Tapahtuma
     ticket_receipt_questions: "Jos sinulla on mitä tahansa kysyttävää tapahtumaa koskien, lähetä viesti %{value}"
     ticket_receipt_questions_telephone: "tai soita %{value}"
-    ticket_receipt_thank_you: Kiitos
     ticket_receipt_ticket_number: Lipun numero
     ticket_receipt_price: Hinta
     ticket_information: Lipun tiedot
     ticket_contact: Yhteystiedot
+    ticket_outstanding_balance: "Sinä olet juuri rekisteröitynyt yllä olevaan tapahtumaan. Sinun erääntynyt saldosi on"
+    ticket_payment_link_leadin: Ole hyvä ja maksa käyttäen seuraavaa linkkiä
+    ticket_payment_link_text: Maksa tästä
+    ticket_payment_reminder_subject: "Maksumuistutusta: %{value}"
     registration_receipt_title: Varauksen vastaanottaminen
     registration_email: Sähköposti
     registration_first_name: Etunimi

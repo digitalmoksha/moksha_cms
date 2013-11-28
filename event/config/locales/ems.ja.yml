@@ -1,42 +1,45 @@
 ja:
   ems:
-    registration_subtitle: Registration
-    register_btn: Register
-    cancel_btn: Cancel
+    registration_subtitle: 登録
+    register_btn: 登録
+    cancel_btn: キャンセル
     ticket_receipt_arrival: 到着
     ticket_receipt_attendee: 出席者
     ticket_receipt_departure: 出発
     ticket_receipt_event: イベント
-    ticket_receipt_questions: "もしこのイベントに関して不明な点があれば、メール %{value}"
-    ticket_receipt_questions_telephone: "またはお電話 %{value} でお問い合わせ下さい。"
-    ticket_receipt_thank_you: 宜しくお願い致します。
-    ticket_receipt_ticket_number: チケットナンバー
-    ticket_receipt_price: Price
-    ticket_informaton: Ticket Information
-    ticket_contact: Contact Information
-    registration_receipt_title: 予約申し込み受領書
-    registration_email: Eメールアドレス
-    registration_first_name: 名（ローマ字）
-    registration_last_name: 姓（ローマ字）
+    ticket_receipt_questions: "イベントに関してご不明な点がある場合は、下記にメールして下さい。 %{value}"
+    ticket_receipt_questions_telephone: "もしくは、お電話下さい。 %{value}"
+    ticket_receipt_ticket_number: チケット番号
+    ticket_receipt_price: 料金
+    ticket_information: チケット情報
+    ticket_contact: 連絡先情報
+    ticket_outstanding_balance: "You are currently registered for the event shown above.  Your outstanding balance is"
+    ticket_payment_link_leadin: Please make your payment using the following link
+    ticket_payment_link_text: Make Payment
+    ticket_payment_reminder_subject: "お支払い通知: %{value}"
+    registration_receipt_title: 予約受理
+    registration_email: Eメール
+    registration_first_name: 名
+    registration_last_name: 姓
     registration_address: 住所
-    registration_address2: 住所
+    registration_address2: 住所2
     registration_city: 市
-    registration_state: 都／府／県
-    registration_country: 国名
+    registration_state: 都道府県
+    registration_country: 国
     registration_zipcode: 郵便番号
-    registration_account_required: 'In order to register for this event, you must be logged into your user account.'
-    registration_closed_heading: Registration Closed
-    registration_closed_text: "We are no longer accepting registrations for the course '%{title}'"
-    registration_closed_email: "For any questions you may contact %{email}."
-    registration_closed_list: The following courses are currently open for registration
-    choose_payment_method: お支払方法を選択してください
+    registration_account_required: 'このイベントに登録するためには、あなたはご自分のユーザーアカウントにログインしなければなりません。'
+    registration_closed_heading: 登録は締め切られました
+    registration_closed_text: "下記の講座への登録はもう受け付けていません '%{title}'"
+    registration_closed_email: "ご不明な点がある場合は、下記にご連絡下さい %{email}."
+    registration_closed_list: 現在、登録して頂けるのは下記の講座です
+    choose_payment_method: お支払い方法を選択して下さい
     donate_button: 寄付する
-    project_goal: プロジェクト目標
-    amount_raised: 量に発生
+    project_goal: Project Goal
+    amount_raised: Amount Raised
   activerecord:
     errors:
       models:
         registration:
           attributes:
             workshop_price_id:
-              blank: Please select a payment method
+              blank: お支払い方法を選択して下さい。

@@ -76,6 +76,12 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     @workshop.registrations.each {|x| @payments.concat(x.payment_histories)}
   end
 
+  #------------------------------------------------------------------------------
+  def send_payment_reminder_emails
+    status = @workshop.send_payment_reminder_emails
+    redirect_to financials_admin_workshop_url(@workshop), notice: "Reminder emails sent ==>  Success: #{status[:success]}  Failed: #{status[:failed]}"
+  end
+
 private
 
   #------------------------------------------------------------------------------

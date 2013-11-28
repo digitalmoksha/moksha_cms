@@ -9,11 +9,14 @@ de:
     ticket_receipt_event: Veranstaltung
     ticket_receipt_questions: "Bei weiteren Fragen zum Seminar bitte via E-Mail %{value}"
     ticket_receipt_questions_telephone: "oder Telefon %{value}"
-    ticket_receipt_thank_you: "Vielen Dank"
     ticket_receipt_ticket_number: Ticketnummer
     ticket_receipt_price: Preis
     ticket_information: Ticket-Informationen
     ticket_contact: Kontakt-Informationen
+    ticket_outstanding_balance: "You are currently registered for the event shown above.  Your outstanding balance is"
+    ticket_payment_link_leadin: Please make your payment using the following link
+    ticket_payment_link_text: Make Payment
+    ticket_payment_reminder_subject: "Zahlungserinnerung: %{value}"
     registration_receipt_title: Anmeldebestätigung
     registration_email: E-Mail
     registration_first_name: Vorname

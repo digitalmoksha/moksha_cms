@@ -7,6 +7,8 @@ class RegistrationNotifyMailer < DmCore::SiteMailer
   helper  DmCore::UrlHelper
   helper  DmCore::AccountHelper
     
+  layout 'email_templates/dm_event_email_layout'
+
   #------------------------------------------------------------------------------
   def registration_notify(registration, content, substitutions)
     contact_email               = registration.workshop.contact_email

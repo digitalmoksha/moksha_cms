@@ -26,6 +26,9 @@ class Registration < ActiveRecord::Base
   
   default_scope                 { where(account_id: Account.current.id) }
   scope                         :attending, where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL")
+  scope                         :accepted,  where("aasm_state = 'accepted' AND archived_on IS NULL")
+  scope                         :paid,      where("aasm_state = 'paid' AND archived_on IS NULL")
+  scope                         :unpaid,    where("aasm_state = 'accepted' AND archived_on IS NULL")  # same as accepted
 
   before_create                 :set_currency
   after_create                  :set_receipt_code
@@ -124,6 +127,14 @@ class Registration < ActiveRecord::Base
     end
   end
 
+  # Is it time to send a payment reminder?
+  # Due first 7 days after iniital registration.  Then every 14 days after that
+  #------------------------------------------------------------------------------
+  def payment_reminder_due?
+    time_period = self.payment_reminder_sent_on.nil? ? (self.created_at + 7.days) : (self.payment_reminder_sent_on + 14.days)
+    self.balance_owed > 0 && time_period < Time.now
+  end
+  
   # Setup the columns for exporting data as csv.
   #------------------------------------------------------------------------------
   def self.csv_columns

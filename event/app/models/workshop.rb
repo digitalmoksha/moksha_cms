@@ -124,7 +124,7 @@ class Workshop < ActiveRecord::Base
         if level == :detail
           #--- Calculate what has been collected, by payment method
           registration.payment_histories.each do |payment_history|
-            payment_method = payment_history.payment_method
+            payment_method = payment_history.payment_method.titlecase
             financials[:collected]["#{payment_method}"] = Money.new(0, base_currency) if financials[:collected]["#{payment_method}"].nil?
             financials[:collected]["#{payment_method}"] += payment_history.total
         
@@ -154,6 +154,26 @@ class Workshop < ActiveRecord::Base
     return total_paid
   end
   
+  # Send out payment reminder emails to unpaid attendees
+  #------------------------------------------------------------------------------
+  def send_payment_reminder_emails
+    success = failed = 0
+    registrations.unpaid.each do |registration|
+      if registration.payment_reminder_due?
+        email = PaymentReminderMailer.payment_reminder(registration).deliver
+        if email
+          registration.update_attribute(:payment_reminder_sent_on, Time.now)
+          success += 1
+        else
+          failed += 1
+        end
+      end
+    end
+    return {success: success, failed: failed}
+  end
+
+
+
 =begin
   
   has_many    :custom_field_defs, :as => :owner, :order => 'position', :dependent => :destroy
@@ -225,17 +245,6 @@ class Workshop < ActiveRecord::Base
   def registered?(student_obj)
     return false if student_obj.nil?
     (e = event_registration.find_by_student_id(student_obj.id)) ? e.registered? : false
-  end
-  
-  # Choose the primary currency to be the currency of the first payment currency,
-  # or the workshop's country
-  #------------------------------------------------------------------------------
-  def primary_currency
-    if event_payment.empty?
-      return country
-    else
-      return event_payment[0].country
-    end
   end
   
   #------------------------------------------------------------------------------
@@ -335,16 +344,7 @@ class Workshop < ActiveRecord::Base
   def copy_custom_fields_to(workshop)
     custom_field_defs.each { |field| field.create_copy(workshop.id) }
   end
-  
-  # Return a list of upcoming workshops
-  #------------------------------------------------------------------------------
-  def self.upcoming_workshops(registration_deadline = false)
-    if registration_deadline
-      EventWorkshop.find(:all, :conditions => ["regdeadline > ?", Time.now], :order => 'startdate ASC')
-    else
-      EventWorkshop.find(:all, :conditions => ["enddate > ?", Time.now], :order => 'startdate ASC')
-    end
-  end
+
 =end
   
 end

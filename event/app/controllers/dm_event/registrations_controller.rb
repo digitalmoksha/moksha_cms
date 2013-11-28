@@ -52,12 +52,20 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     end
   end
 
-  # Only allow proceed with payment if the registration is still in pending
+  # Only allow to proceed with payment if the registration is still in pending
   #------------------------------------------------------------------------------
   def choose_payment
     @registration = Registration.find_by_receipt_code(params[:receipt_code])
     @workshop     = @registration.workshop if @registration
     redirect_to main_app.root_url and return if @registration.nil? || !@registration.accepted?
+
+    if @workshop.require_account
+      raise Account::LoginRequired.new(I18n.t('core.login_required')) if current_user.nil?
+      if @registration.user_profile.user != current_user && !is_admin?
+        flash[:alert] = I18n.t('core.resource_invalid')
+        redirect_to main_app.root_url and return
+      end
+    end
   end
   
   # Success page for a registration.  Look up the receipt code and display success.
@@ -68,11 +76,11 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @registration = Registration.find_by_receipt_code(params[:receipt_code])
     if @registration.nil? || current_user.nil? || @registration.user_profile.user != current_user
       #--- not logged in or not the users registration
-      flash[:alert] = 'Sorry, you are either not logged in or this is an invalid registraton for this user'
+      flash[:alert] = I18n.t('core.resource_invalid')
       redirect_to main_app.root_url and return
     end
-    @workshop     = @registration.workshop if @registration
-    @receipt_content = @registration.email_state_notification(@registration.current_state, false) || ""
+    @workshop         = @registration.workshop if @registration
+    @receipt_content  = @registration.email_state_notification(@registration.current_state, false) || ""
   end
 
 private
