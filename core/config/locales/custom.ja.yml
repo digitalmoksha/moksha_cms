@@ -15,44 +15,53 @@ ja:
       mmddyy: "%b %d, %Y"
       wwmmdd: "%a, %b %d"
       wwmmddyy: "%a, %b %d, %Y"
-      hhmmpp: "%H:%M"
+      hhmmpp: "%I:%M %p"
 
+  english: "English"
+  
   core:
-    next_page: "Next <i class='icon-angle-right'></i>"
-    prev_page: "<i class='icon-angle-left'></i> Previous"
+    next_page: "次のページ <i class='icon-angle-right'></i>"
+    prev_page: "<i class='icon-angle-left'></i> 前のページ"
     login: ログイン
     logout: ログアウト
-    account: My Account
-    errors_below: Please review the problems below
+    account: 自分のアカウント
+    errors_below: 下記の問題を再検討して下さい
+    login_required: 最初のアカウントにログインしてください
+    resource_invalid: 要求されたページには、アカウントで利用できない
 
-    profile_email: Eメールアドレス
-    profile_password: Password
-    profile_password_confirmation: Password Confirmation
-    profile_current_password: Current Password
-    profile_first_name: 名（ローマ字）
-    profile_last_name: 姓（ローマ字）
+    profile_email: Eメール
+    profile_password: パスワード
+    profile_password_confirmation: パスワード（確認）
+    profile_current_password: 現在のパスワード
+    profile_first_name: 名
+    profile_last_name: 姓
     profile_address: 住所
-    profile_address2: 住所
+    profile_address2: 住所2
     profile_city: 市
-    profile_state: 都／府／県
-    profile_country: 国名
+    profile_state: 都道府県
+    profile_country: 国
     profile_zipcode: 郵便番号
-    profile_public_name: Public Name
-    profile_update_btn: Update
-    profile_account_settings: Account Settings
-    profile_details_settings: 'Public / Private Profile'
-    profile_public_title: Public Profile
-    profile_public_explanation: 'The following information will be visible to other people, such as posts in the forum or comments in the blog.'
-    profile_public_upload: Upload a photo for use in your public profile
-    profile_private_title: Private Profile
-    profile_private_explanation: 'This information will be kept private and not shared with anyone.'
-    profile_account_title: "Update Email / Account Login"
-    profile_account_explanation: "Remember: next time you login, you will use your updated email address."
-    profile_account_password_title: Change Your Password
-    profile_account_password_current_title: Current Password
-    profile_account_password_current_explanation: Your current password is required to make any changes.
-    profile_profile_updated: Your profile has been updated
-    profile_email_confirmation: An email has been sent to the new email address - you must click on the confirmation link before you can login using the new email address
-    profile_password_updated: Your password has been updated
-    profile_email_needs_confirmation: 'Your email address has already been changed to'
-    profile_email_needs_confirmation_2: 'An email was sent to that address for confirmation.  If you did not receive the confirmation email, simply update the email again to re-send the confirmation.'
+    profile_public_name: ニックネーム
+    profile_update_btn: 更新
+    profile_account_settings: アカウント設定
+    profile_details_settings: '公開 / 非公開 プロフィール'
+    profile_public_title: 公開プロフィール
+    profile_public_explanation: '下記の情報はフォーラムの投稿メッセージやブログのコメント欄などにおいて他の方々に表示されます。'
+    profile_public_upload: 公開プロフィール用の写真をアップロードする
+    profile_private_title: 非公開プロフィール
+    profile_private_explanation: 'この情報は非公開に保たれ、どなたとも共有されません。'
+    profile_account_title: "Eメールアドレス / アカウントのログイン情報 を更新する"
+    profile_account_explanation: "注意: 次回ログイン時は、更新されたeメールアドレスを使用して下さい。"
+    profile_account_password_title: パスワードを変更する
+    profile_account_password_current_title: 現在のパスワード
+    profile_account_password_current_explanation: 変更を行うためには、あなたの現在のパスワードの入力が必要です。
+    profile_profile_updated: あなたのプロフィールは更新されました
+    profile_email_confirmation: 新しいeメールアドレスにメールが送られました - 新しいeメールアドレスを用いてログインするためには、メール中の認証リンクをクリックしなければなりません。
+    profile_password_updated: あなたのパスワードは更新されました
+    profile_email_needs_confirmation: 'あなたのeメールアドレスは次のように変更されています'
+    profile_email_needs_confirmation_2: '確認のために、そのアドレスにメールが送られました。確認メールが届かなかった場合は、eメールアドレスをもう一度更新して頂くと再送信されます。'
+
+  email:
+    salutation: "%{value} 様"
+    thank_you: 宜しくお願い致します
+    

@@ -26,7 +26,9 @@ en:
     logout: Logout
     account: My Account
     errors_below: Please review the problems below
-
+    login_required: Please login to your account first
+    resource_invalid: Requested page is not available in your account
+    
     profile_email: Email
     profile_password: Password
     profile_password_confirmation: Password Confirmation
@@ -58,3 +60,8 @@ en:
     profile_password_updated: Your password has been updated
     profile_email_needs_confirmation: 'Your email address has already been changed to'
     profile_email_needs_confirmation_2: 'An email was sent to that address for confirmation.  If you did not receive the confirmation email, simply update the email again to re-send the confirmation.'
+
+  email:
+    salutation: "Dear %{value},"
+    thank_you: Thank you
+    

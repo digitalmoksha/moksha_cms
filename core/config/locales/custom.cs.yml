@@ -24,6 +24,8 @@ cs:
     logout: Odhlášení
     account: Účet
     errors_below: Přečtěte si prosím níže uvedené problémy,
+    login_required: "Prosím, přihlaste se ke svému účtu první"
+    resource_invalid: Požadovaná stránka není k dispozici ve vašem účtu
 
     profile_email: E-mail
     profile_password: Heslo
@@ -56,4 +58,8 @@ cs:
     profile_password_updated: Vaše heslo bylo aktualizováno
     profile_email_needs_confirmation: 'Vaše e-mailová adresa již byla změněna na'
     profile_email_needs_confirmation_2: 'E-mail byl odeslán na zadanou emailovou adresu pro potvrzení. Pokud jste neobdrželi potvrzovací e-mail, jednoduše aktualizovat e-mail znovu odeslat znovu potvrdit.'
+    
+  email:
+    salutation: 'Drahý/Drahá %{value},'
+    thank_you: Děkujeme
     
