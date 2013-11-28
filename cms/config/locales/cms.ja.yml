@@ -1,21 +1,21 @@
 ja:
   cms:
-    recent_posts: Recent Posts
-    all_recent_posts: All Recent Posts
-    available_blogs: Available Blogs
-    blog_header: Blogs
-    read_more: 'Read More...'
-    blog_summary_date: Date
-    blog_summary_comments: Comments
-    blog_notify_new_post: There is a new post in the blog
-    blog_notify_read_post: Read full post
-    reply: Reply
-    suspended_user_post: This post has been removed
-    comment_body: Body
-    comment_submit: Submit Comment
-    add_comment: Add a Comment
-    comments_header: Comments
-    delete: delete
-    comments_stat: Comments
-    blog_login_required: Login is required to access this blog
-    comment_login_required: Please login to your user account to leave a comment
+    recent_posts: 最近の投稿メッセージ
+    all_recent_posts: 全ての最近の投稿メッセージ
+    available_blogs: 利用可能なブログ
+    blog_header: ブログ
+    read_more: '詳しく読む'
+    blog_summary_date: 日付
+    blog_summary_comments: コメント
+    blog_notify_new_post: ブログに新しい投稿メッセージがあります
+    blog_notify_read_post: 投稿メッセージ全文を読む
+    reply: 返信
+    suspended_user_post: この投稿メッセージは削除されました
+    comment_body: 本文
+    comment_submit: コメントを送信する
+    add_comment: コメントを付け加える
+    comments_header: コメント
+    delete: 削除
+    comments_stat: コメント
+    blog_login_required: このブログにアクセスするにはログインが必要です
+    comment_login_required: コメントを残すにはご自分のユーザーアカウントにログインして下さい

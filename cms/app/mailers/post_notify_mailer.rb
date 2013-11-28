@@ -5,6 +5,8 @@ class PostNotifyMailer < DmCore::SiteMailer
   helper  DmCore::UrlHelper
   helper  DmCore::AccountHelper
 
+  layout 'email_templates/dm_cms_email_layout'
+
   #------------------------------------------------------------------------------
   def post_notify(post, email)
     account                     = post.account
