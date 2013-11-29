@@ -13,9 +13,9 @@ de:
     ticket_receipt_price: Preis
     ticket_information: Ticket-Informationen
     ticket_contact: Kontakt-Informationen
-    ticket_outstanding_balance: "Sie sind derzeit für die oben gezeigte Ereignis registriert. Ihre Restbetrag ist"
-    ticket_payment_link_leadin: Sie bitte Ihre Zahlung über den folgenden Link
-    ticket_payment_link_text: Machen Zahlungs
+    ticket_outstanding_balance: "Du bist zu der oben genannten Veranstaltung registriert. Laut unseren Unterlagen steht noch eine Begleichung von Gebühren aus in Höhe von"
+    ticket_payment_link_leadin: Bitte wähle eine der verschiedenen Zahlungsmethoden in folgendem Link
+    ticket_payment_link_text: Jetzt bezahlen
     ticket_payment_reminder_subject: "Zahlungserinnerung: %{value}"
     registration_receipt_title: Anmeldebestätigung
     registration_email: E-Mail
