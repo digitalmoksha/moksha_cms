@@ -17,6 +17,7 @@ fi:
     ticket_payment_link_leadin: Ole hyvä ja maksa käyttäen seuraavaa linkkiä
     ticket_payment_link_text: Maksa tästä
     ticket_payment_reminder_subject: "Maksumuistutusta: %{value}"
+    ticket_if_you_wish_to_cancel: "Jos haluat keskeyttää osallistumisesi, lähetä sähköpostia osoitteeseen %{value}."
     registration_receipt_title: Varauksen vastaanottaminen
     registration_email: Sähköposti
     registration_first_name: Etunimi

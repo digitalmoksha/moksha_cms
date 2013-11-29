@@ -17,6 +17,7 @@ cs:
     ticket_payment_link_leadin: Tuto částku můžete uhradit skrze následující odkaz
     ticket_payment_link_text: Zaplatit
     ticket_payment_reminder_subject: "Platba Reminder: %{value}"
+    ticket_if_you_wish_to_cancel: "Pokud si přejete zrušit svou účast, prosím, zašlete e-mail na %{value}."
     registration_receipt_title: Potvrzení o rezervaci
     registration_email: E-mail
     registration_first_name: Křestní jméno

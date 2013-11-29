@@ -17,6 +17,7 @@ en:
     ticket_payment_link_leadin: Please make your payment using the following link
     ticket_payment_link_text: Make Payment
     ticket_payment_reminder_subject: "Payment Reminder: %{value}"
+    ticket_if_you_wish_to_cancel: "If you wish to cancel your participation, please send an email to %{value}."
     registration_receipt_title: Reservation Receipt
     registration_email: Email
     registration_first_name: First Name

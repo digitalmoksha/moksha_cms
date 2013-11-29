@@ -17,6 +17,7 @@ de:
     ticket_payment_link_leadin: Bitte wähle eine der verschiedenen Zahlungsmethoden in folgendem Link
     ticket_payment_link_text: Jetzt bezahlen
     ticket_payment_reminder_subject: "Zahlungserinnerung: %{value}"
+    ticket_if_you_wish_to_cancel: "Wenn Sie Ihre Teilnahme stornieren möchten, wenden Sie sich bitte per Email an %{value}."
     registration_receipt_title: Anmeldebestätigung
     registration_email: E-Mail
     registration_first_name: Vorname

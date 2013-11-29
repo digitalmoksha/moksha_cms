@@ -13,9 +13,10 @@ ja:
     ticket_receipt_price: 料金
     ticket_information: チケット情報
     ticket_contact: 連絡先情報
-    ticket_outstanding_balance: "You are currently registered for the event shown above.  Your outstanding balance is"
-    ticket_payment_link_leadin: Please make your payment using the following link
-    ticket_payment_link_text: Make Payment
+    ticket_outstanding_balance: "現在あなたは上記のイベントに登録されています。あなたがまだお支払いになっていない金額は"
+    ticket_payment_link_leadin: 下記のリンクを用いてご自分のお支払いを行なって下さい。
+    ticket_payment_link_text: 支払いをする
+    ticket_if_you_wish_to_cancel: "あなたの参加をキャンセルしたい場合は、にメールを送ってください %{value}."
     ticket_payment_reminder_subject: "お支払い通知: %{value}"
     registration_receipt_title: 予約受理
     registration_email: Eメール
