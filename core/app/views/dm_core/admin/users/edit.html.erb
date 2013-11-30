@@ -1,6 +1,6 @@
 <% content_for :sidebar do %>
   <%= link_to "Become This User", dm_core.masquerade_admin_user_path(@user.id), :class => "action-button blue block" %>
-  <%#= link_to "Delete This User", dm_core.admin_user_path(@user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => "action-button red" %>
+  <%= link_to("Delete This User", dm_core.admin_user_path(@user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => "action-button red") if is_sysadmin? %>
 <% end %>
 
 <% @title = "#{@user.display_name} (#{@user.email})" %>
