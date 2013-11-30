@@ -172,6 +172,28 @@ class Workshop < ActiveRecord::Base
     return {success: success, failed: failed}
   end
 
+  # Find list of new users (within a certain date range) that have not registered
+  # for any events.  Not perfect, since people can register just to access special
+  # content.  But gives rough idea of people creating an account but not realizing
+  # they need to register for the event they want to participate in.
+  #------------------------------------------------------------------------------
+  def self.lost_sheep(days_ago = 10)
+    lost = []
+    new_users = User.where(created_at: (Time.now - days_ago.day)..Time.now, account_id: Account.current.id)
+    new_users.each do |user|
+      if user.user_site_profiles.where(account_id: Account.current.id)
+        if user.user_profile.registrations.count == 0
+          lost << user
+        end
+      end
+    end
+    puts "----------------------------------------------"
+    puts "Domain: #{Account.current.domain} found #{lost.count}"
+    puts "   #{(Time.now - days_ago.day).localize(:format => :mmddyy)} -- #{Time.now.localize(:format => :mmddyy)}"
+    puts "----------------------------------------------"
+    lost.each {|user| puts "#{user.created_at.localize(:format => :mmddyy)} \t #{user.full_name}\t\t\t#{user.email}" }
+    return nil
+  end
 
 
 =begin
