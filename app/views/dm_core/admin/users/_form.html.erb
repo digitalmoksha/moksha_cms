@@ -10,7 +10,7 @@
                 :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
                 :label => "Country" %>
     
-    <%= f.input :role_ids, :collection => Role.where(:resource_type => nil).order('name asc'), 
+    <%= f.input :role_ids, :collection => Role.where(:resource_type => nil).order('name asc').reject {|r| r.name == 'sysadmin' },
              :label_method => :name, 
              :value_method => :id,
              :as => :check_boxes, 
