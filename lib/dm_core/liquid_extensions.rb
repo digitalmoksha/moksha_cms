@@ -72,6 +72,17 @@ module DmCore
       super
     end
 
+    # return a url path to the file.  
+    #------------------------------------------------------------------------------
+    def file_path(file_name, context, default_folder = 'images', is_protected = false)
+      return '' if file_name.blank?
+      if is_protected
+        file_name.expand_url("/protected_asset/")
+      else
+        file_name.expand_url("#{context.registers[:account_site_assets]}/#{default_folder}/")
+      end
+    end
+
     class << self
       #------------------------------------------------------------------------------
       def tag_name
@@ -107,6 +118,17 @@ module DmCore
       @blank = false
     end
     
+    # return a url path to the file.  
+    #------------------------------------------------------------------------------
+    def file_path(file_name, context, default_folder = 'images', is_protected = false)
+      return '' if file_name.blank?
+      if is_protected
+        file_name.expand_url("/protected_asset/")
+      else
+        file_name.expand_url("#{context.registers[:account_site_assets]}/#{default_folder}/")
+      end
+    end
+
     class << self
       #------------------------------------------------------------------------------
       def tag_name
