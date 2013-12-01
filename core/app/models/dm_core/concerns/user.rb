@@ -67,10 +67,11 @@ module DmCore
           has_role?(:admin) || is_sysadmin?
         end
         
-        # Determine if this user has the Admin role
+        # Determine if this user has the sysadmin role.  It spans the entire system,
+        # not limited to one account.
         #------------------------------------------------------------------------------
         def is_sysadmin?
-          has_role?(:sysadmin)
+          self.roles.unscoped.where(name: 'sysadmin').size > 0
         end
         
         #------------------------------------------------------------------------------
