@@ -9,6 +9,7 @@
 <% content_for :sidebar do %>
   <ul class="navigation-light block">
     <li><%= link_to "View Registrations".html_safe, [:admin, @workshop] %></li>
+    <li><%= link_to 'Customer Payment Link', @registration.payment_url, target: '_blank' %></li>
   </ul>
 <% end %>
 
