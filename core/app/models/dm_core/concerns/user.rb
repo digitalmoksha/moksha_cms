@@ -71,7 +71,7 @@ module DmCore
         # not limited to one account.
         #------------------------------------------------------------------------------
         def is_sysadmin?
-          self.roles.unscoped.where(name: 'sysadmin').size > 0
+          false #self.roles.unscoped.where(name: 'sysadmin').size > 0
         end
         
         #------------------------------------------------------------------------------
