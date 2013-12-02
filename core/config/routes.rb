@@ -12,6 +12,7 @@ DmCore::Engine.routes.draw do
       resources :users do
         member do
           get  :masquerade
+          get  :confirm
         end
       end
 
