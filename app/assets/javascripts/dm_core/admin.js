@@ -184,4 +184,12 @@ $(document).ready(function() {
   };
   $("div[class^='widget']").toolbarTabs(); //Run function on any div with class name of "Content Tabs"
 
+  // Attach tooltip to any class with 'hovertip' inside the main content
+  // block.  Must do this way to ensure tooltips work in new ajax content
+  //----------------------------------------------------------------
+  $('.content').tooltip( {
+    selector: '.hovertip',
+    delay: {show: 200, hide: 0 }
+  });
+
 });
