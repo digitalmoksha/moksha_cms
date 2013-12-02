@@ -34,11 +34,6 @@ $(document).ready(function() {
      sAjaxSource: $('#registration_table').data('source')
   });
 
-  $('#registration_table').tooltip( {
-    selector: '.hovertip',
-    delay: {show: 200, hide: 0 }
-  });
-  
   // Financial charts
   //------------------------------------------------------------------------------
   
