@@ -2,8 +2,10 @@ DmCms::Engine.routes.draw do
   scope ":locale" do
 
     namespace :admin do
-      match '/cms_pages/expire_cache_total',                   :controller => 'cms_pages', :action => :expire_cache_total, :as => :expire_cache
+      match '/cms_pages/expire_cache_total',                    :controller => 'cms_pages', :action => :expire_cache_total, :as => :expire_cache
       match '/cms_pages/ajax_sort',                             :controller => 'cms_pages', :action => :ajax_sort, :as => :cms_page_sort
+      match '/cms_pages/ajax_sort',                             :controller => 'cms_pages', :action => :ajax_sort, :as => :cms_page_sort
+      match '/dashboard/widget_blog_comments(/:comment_day)',   :controller => 'dashboard', :action => :widget_blog_comments, :as => :widget_blog_comments
       resources :cms_pages do
         member do
           get  :new_page
