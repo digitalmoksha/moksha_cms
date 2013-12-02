@@ -13,11 +13,12 @@ fi:
     ticket_receipt_price: Hinta
     ticket_information: Lipun tiedot
     ticket_contact: Yhteystiedot
-    ticket_outstanding_balance: "Sinä olet juuri rekisteröitynyt yllä olevaan tapahtumaan. Sinun erääntynyt saldosi on"
-    ticket_payment_link_leadin: Ole hyvä ja maksa käyttäen seuraavaa linkkiä
-    ticket_payment_link_text: Maksa tästä
-    ticket_payment_reminder_subject: "Maksumuistutusta: %{value}"
-    ticket_if_you_wish_to_cancel: "Jos haluat keskeyttää osallistumisesi, lähetä sähköpostia osoitteeseen %{value}."
+    ticket_registered_following_event: Olet juuri rekistöitynyt seuraavaan tapahtumaan
+    ticket_outstanding_balance: "Laskujemme mukaan, seuraava summa tulee yhä maksaa"
+    ticket_payment_link_leadin: Voit maksaa seuraavan linkin kautta
+    ticket_payment_link_text: Maksa
+    ticket_payment_reminder_subject: "Maksumuistutus: %{value}"
+    ticket_if_already_paid: "Jos olet jo maksanut tämän, ole hyvä ja lähetä meille viesti %{value}."
     registration_receipt_title: Varauksen vastaanottaminen
     registration_email: Sähköposti
     registration_first_name: Etunimi

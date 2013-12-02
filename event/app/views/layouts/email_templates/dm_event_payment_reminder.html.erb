@@ -1,12 +1,8 @@
-<div class="ticket">
-  <table>
-    <tr><td><strong><%= I18n.t('ems.ticket_receipt_event') %>:</strong></td><td><%=h @registration.workshop.title %></td></tr>
-    <tr><td><strong><%= I18n.t('ems.ticket_receipt_attendee') %>:</strong></td><td><%=h @registration.full_name %></td></tr>
-    <tr><td><strong><%= I18n.t('ems.ticket_receipt_ticket_number') %>:</strong></td><td><%=h @registration.receipt_code %></td></tr>
-  </table>
-</div>
-
 <p><%= I18n.t('email.salutation', :value => h(@registration.full_name)) %></p>
+
+<p><%= I18n.t('ems.ticket_registered_following_event') %>:</p>
+
+<p><strong><%=h @registration.workshop.title %></strong></p>
 
 <p><%= I18n.t('ems.ticket_outstanding_balance') %>:</p>
 
@@ -16,7 +12,7 @@
 
 <p><%= link_to I18n.t('ems.ticket_payment_link_text'), @payment_link %></p>
 
-<p><%= I18n.t('ems.ticket_if_you_wish_to_cancel', :value => h(@registration.workshop.contact_email))%></p>
+<p><%= I18n.t('ems.ticket_if_already_paid', :value => h(@registration.workshop.contact_email))%></p>
 
 <p><%= I18n.t('ems.ticket_receipt_questions', :value => h(@registration.workshop.contact_email)) %></p>
 

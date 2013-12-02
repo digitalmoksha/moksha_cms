@@ -13,11 +13,12 @@ cs:
     ticket_receipt_price: Cena
     ticket_information: Informace o lístku
     ticket_contact: Kontaktní informace
-    ticket_outstanding_balance: "Jste přihlášen/a na výše uvedený program. Z kurzovného Vám zbývá k úhradě"
+    ticket_registered_following_event: Jste přihlášen/a na program
+    ticket_outstanding_balance: "Podle naší evidence Vám z kurzovného zbývá zaplatit"
     ticket_payment_link_leadin: Tuto částku můžete uhradit skrze následující odkaz
     ticket_payment_link_text: Zaplatit
-    ticket_payment_reminder_subject: "Platba Reminder: %{value}"
-    ticket_if_you_wish_to_cancel: "Pokud si přejete zrušit svou účast, prosím, zašlete e-mail na %{value}."
+    ticket_payment_reminder_subject: "Připomínka úhrady kurzovného: %{value}"
+    ticket_if_already_paid: "Pokud jste již platbu provedli nebo byste se chtěli domluvit na jiné formě úhrady, napište nám na tento e-mail: %{value}."
     registration_receipt_title: Potvrzení o rezervaci
     registration_email: E-mail
     registration_first_name: Křestní jméno
