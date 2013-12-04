@@ -3,7 +3,7 @@
   <h2><%= I18n.t "ems.registration_closed_heading" %></h2>
   <p><%= I18n.t "ems.registration_closed_text", title: @workshop.title %></p>
   <p><%= I18n.t "ems.registration_closed_email", email: @workshop.contact_email %></p>
-  <% if available %>
+  <% unless available.empty? %>
     <p><%= I18n.t 'ems.registration_closed_list' %></p>
     <ul>
       <% available.each do |workshop| %>

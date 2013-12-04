@@ -7,7 +7,7 @@ de:
     ticket_receipt_attendee: Teilnehmer
     ticket_receipt_departure: Abfahrt
     ticket_receipt_event: Veranstaltung
-    ticket_receipt_questions: "Bei weiteren Fragen zum Seminar bitte via E-Mail %{value}"
+    ticket_receipt_questions: "Bei weiteren Fragen zum Seminar freuen wir uns über eine kurze E-Mail an %{value}"
     ticket_receipt_questions_telephone: "oder Telefon %{value}"
     ticket_receipt_ticket_number: Ticketnummer
     ticket_receipt_price: Preis
