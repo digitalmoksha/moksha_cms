@@ -80,18 +80,20 @@
   <table class="table table-bordered table-condensed table-striped">
     <thead>
       <tr>
+        <th class="receipt_code">Receipt</th>
         <th class="name">Name</th>
         <th class="cost">Balance</th>
-        <th class="date">Registered On</th>
-        <th class="date">Last Reminded On</th>
+        <th class="date">Registered</th>
+        <th class="date">Reminded</th>
       </tr>
     </thead>
     <tbody>
       <% unpaid.each do |registration| -%>
         <tr>
+          <td class="receipt_code" style="white-space:nowrap"><%= registration.receipt_code %></td>
           <td class="name"><%= registration.full_name %></td>
           <td class="cost"><%= registration.balance_owed.format %></td>
-          <td class="date"><%= format_date(registration.created_at) %></td>
+          <td class="date" style="white-space:nowrap"><%= format_date(registration.created_at) %></td>
           <td class="date" <%= "style='background-color: #A2D8AA;'".html_safe if registration.payment_reminder_due? %>>
             <%= registration.payment_reminder_sent_on.nil? ? 'not yet' : distance_of_time_in_words_to_now(registration.payment_reminder_sent_on) %>
           </td>
@@ -116,11 +118,11 @@
     <tbody>
       <% @payments.sort { |x, y| x.payment_date <=> y.payment_date }.each_with_index do |payment, index| -%>
         <tr>
-          <td class="date"><%= format_date(payment.payment_date) %></td>
+          <td class="date" style="white-space:nowrap"><%= format_date(payment.payment_date) %></td>
           <td class="name"><%= payment.owner.full_name %></td>
           <td class="item_id"><%= payment.item_ref %></td>
           <td class="cost"><%= payment.total.format(:no_cents_if_whole => true, :symbol => true) %></td>
-          <td class="payment_method"><%= payment.payment_method %></td>
+          <td class="payment_method" style="white-space:nowrap"><%= payment.payment_method.titleize %></td>
           <td class="type"><%= payment.user_profile.nil? ? 'Automated' : payment.user_profile.public_name %></td>
         </tr>
         <% if !payment.bill_to_name.blank? || payment.discount.to_i > 0 || (!payment.order_details.nil? && !payment.order_details['coupon'].nil?) %>

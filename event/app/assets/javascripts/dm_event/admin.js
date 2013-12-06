@@ -23,10 +23,10 @@ $(document).ready(function() {
      bProcessing: false,
      bServerSide: true,
      bStateSave: true,
-     aaSorting: [[2, 'asc']],
+     aaSorting: [[4, 'desc']],
      sDom: '<"datatable-header"fl>t<"datatable-footer"ip>',
      aoColumnDefs: [
-      { bSortable: false, aTargets: [ 3 ] }
+      { bSortable: false, aTargets: [ 3, 5 ] }
      ],
      oLanguage: {
        sLengthMenu: "<span>Show entries:</span> _MENU_"

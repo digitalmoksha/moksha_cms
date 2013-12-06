@@ -2,6 +2,7 @@ class RegistrationDatatable
   include Admin::ThemeAmsterdamHelper
   include DmEvent::RegistrationsHelper
   include DmUtilities::DateHelper
+  include DmCore::ApplicationHelper
   
   delegate :params, :h, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
   delegate :url_helpers, to: 'DmEvent::Engine.routes'
@@ -28,10 +29,11 @@ private
     registrations.map do |registration|
       [
         registration_actions(registration),
-        h(registration.receipt_code),
+        "<span style='white-space:nowrap;'>#{h(registration.receipt_code)}</span>",
         name_and_avatar(registration),
         workshop_price(registration),
-        h(format_date(registration.created_at))
+        "<span style='white-space:nowrap;'>#{h(format_date(registration.created_at))}</span>",
+        (registration.user_profile.user ? present(registration.user_profile.user).last_access : colored_label('no user', :gray))
       ]
     end
   end
@@ -74,9 +76,6 @@ private
     actions = registration.aasm.permissible_events
     actions.sort! {|x,y| x.to_s <=> y.to_s}
 
-    # actions.insert(actions.size, 'Verify Payment') if event_registration.paid?
-    # event_registration.confirmed? ? actions.insert(actions.size, 'UnConfirm') : actions.insert(actions.size, 'Confirm') 
-    # event_registration.archived? ? actions.insert(actions.size, 'UnArchive') : actions.insert(actions.size, 'Archive') 
     output = ''
     actions.each do |action|
       output << '<li>' +

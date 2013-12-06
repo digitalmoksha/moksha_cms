@@ -36,15 +36,14 @@
 
   <% financials = @workshop.financial_details(:summary) %>
   <h5>Price Distribution <small>for attending</small></h5>
-  <ul class="text-stats block">
+  <ul class="text-stats">
     <li><%= financials[:summary][:total_possible].format(:no_cents => true) %><span>best</span></li>
     <li><%= financials[:summary][:total_possible_worst].format(:no_cents => true) %><span>worst (80%)</span></li>
     <li style="color:green"><%= financials[:summary][:total_paid].format(:no_cents => true) %><span>paid</span></li>
   </ul>
+  <%= link_to 'Financial Details', financials_admin_workshop_url(@workshop), {class: 'btn-link',style: "padding-top: 10px; display:inline-block;"} %>
 
-  <%= link_to 'Financial Details', financials_admin_workshop_url(@workshop), {style: "margin-bottom: 10px; display: inline-block;"} %>
-
-  <ul class="block progress-statistics">
+  <ul class="semi-block progress-statistics">
     <% num_attending = workshop.registrations.number_of(:attending) %>
     <% workshop.registrations.number_of(:for_all_prices).each do |price_id, registration_count| %>
       <% if price_id %>
