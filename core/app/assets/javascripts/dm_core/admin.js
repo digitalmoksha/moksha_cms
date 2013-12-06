@@ -25,7 +25,17 @@ function toggle_reveal(item, options) {
 //------------------------------------------------------------------------------
 
 $(document).ready(function() {
-  
+
+  // For any div that has a data-load attribute, load up the supplied url and put in div.
+  // For example:
+  //   <div id="widget_lesson_comments" data-load="<%= dm_lms.admin_widget_lesson_comments_path(comment_day: 0) %>">
+  //   </div>
+  //----------------------------------------------------------------
+  $("div[data-load]").filter(":visible").each(function(){
+    var path = $(this).attr('data-load');
+    $(this).load(path);
+  });
+
   //----------------------------------------------------------------
   $('#drag_sort').sortable({
     axis: 'y',

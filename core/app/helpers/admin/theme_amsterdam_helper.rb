@@ -170,7 +170,7 @@ module Admin::ThemeAmsterdamHelper
   def toolbar_button(label, url, options = {})
     options[:class] ||= 'btn btn-mini btn-primary pull-right'
     options[:title] ||= label
-    link_to(label, url, :title => options[:title], :class => options[:class], :style => options[:style])
+    link_to(label, url, options)
   end
   
   #------------------------------------------------------------------------------
