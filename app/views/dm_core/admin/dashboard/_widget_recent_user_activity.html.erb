@@ -12,7 +12,7 @@
         <% User.current_account_users.order('user_site_profiles.last_access_at DESC').limit(5).each do |user| %>
           <tr>
             <td><%= user.full_name %></td>
-            <td align="center"><%= user.last_access_at.nil? ? '<span class="label label-warning">n/a</span>'.html_safe : "#{time_ago_in_words(user.last_access_at)} ago" %></td>
+            <td align="center"><%= present(user).last_access %></td>
           </tr>
         <% end %>
       </tbody>
