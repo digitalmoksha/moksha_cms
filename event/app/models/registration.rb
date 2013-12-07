@@ -132,7 +132,7 @@ class Registration < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def payment_reminder_due?
     time_period = self.payment_reminder_sent_on.nil? ? (self.created_at + 7.days) : (self.payment_reminder_sent_on + 14.days)
-    self.balance_owed > 0 && time_period < Time.now
+    self.balance_owed > Money.new(0, workshop.base_currency) && time_period < Time.now
   end
   
   # Setup the columns for exporting data as csv.
