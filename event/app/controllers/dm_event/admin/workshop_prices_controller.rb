@@ -19,7 +19,7 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::ApplicationCont
 
   #------------------------------------------------------------------------------
   def create
-    @workshop_price = @workshop.workshop_prices.new(params[:workshop_price])
+    @workshop_price = @workshop.workshop_prices.new(params[:workshop_price].merge(price_currency: @workshop.base_currency))
     if @workshop_price.save
       redirect_to admin_workshop_workshop_prices_url(@workshop), notice: 'Price was successfully created.'
     else
