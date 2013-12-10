@@ -19,8 +19,10 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::ApplicationCont
 
   #------------------------------------------------------------------------------
   def create
-    @workshop_price = @workshop.workshop_prices.new(params[:workshop_price].merge(price_currency: @workshop.base_currency))
+    attributes = WorkshopPrice.prepare_prices(params[:workshop_price].merge(price_currency: @workshop.base_currency))
+    @workshop_price = @workshop.workshop_prices.new(attributes)
     if @workshop_price.save
+      debugger
       redirect_to admin_workshop_workshop_prices_url(@workshop), notice: 'Price was successfully created.'
     else
       render action: :new
@@ -29,7 +31,8 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::ApplicationCont
 
   #------------------------------------------------------------------------------
   def update
-    if @workshop_price.update_attributes(params[:workshop_price])
+    attributes = WorkshopPrice.prepare_prices(params[:workshop_price].merge(price_currency: @workshop.base_currency))
+    if @workshop_price.update_attributes(attributes)
       redirect_to admin_workshop_workshop_prices_url(@workshop), notice: 'Price was successfully updated.'
     else
       render action: :edit

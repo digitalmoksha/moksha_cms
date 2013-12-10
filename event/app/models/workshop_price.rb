@@ -19,16 +19,16 @@ class WorkshopPrice < ActiveRecord::Base
 
   default_scope           { where(account_id: Account.current.id).order('row_order ASC') }
 
+  # --- globalize
+  translates              :price_description, :sub_description, :payment_details, :fallbacks_for_empty_translations => true
+  globalize_accessors     :locales => DmCore::Language.language_array
+
   monetize                :price_cents, :with_model_currency => :price_currency, :allow_nil => true
   monetize                :alt1_price_cents, :with_model_currency => :alt1_price_currency, :allow_nil => true
   monetize                :alt2_price_cents, :with_model_currency => :alt2_price_currency, :allow_nil => true
 
   include RankedModel
   ranks                   :row_order, :with_same => :workshop_id
-
-  # --- globalize
-  translates              :price_description, :sub_description, :payment_details, :fallbacks_for_empty_translations => true
-  globalize_accessors     :locales => DmCore::Language.language_array
 
   validates_presence_of   :price_currency,      :if => Proc.new { |w| w.price_cents }
   validates_presence_of   :alt1_price_currency, :if => Proc.new { |w| w.alt1_price_cents }
@@ -45,6 +45,20 @@ class WorkshopPrice < ActiveRecord::Base
                     'US Dollar ($)' => 'USD' }
   PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Wire Transfer']
 
+  # For some reason, the initial monetized price gets created with the default
+  # Money currency.  Need to use the current currency, as the internal fractional
+  # value depends on it.  For example, 
+  #  "15000".to_money('JPY').cents == 15000
+  #  "15000".to_money('EUR').cents == 1500000
+  # Call this method on the attributes before passing into new() or update_attributes()
+  #------------------------------------------------------------------------------
+  def self.prepare_prices(attributes = {})
+    attributes['price']       = attributes['price'].to_money(attributes['price_currency']) if attributes['price'].present? && attributes['price_currency'].present?
+    attributes['alt1_price']  = attributes['alt1_price'].to_money(attributes['alt1_price_currency']) if attributes['alt1_price'].present? && attributes['alt1_price_currency'].present?
+    attributes['alt2_price']  = attributes['alt2_price'].to_money(attributes['alt2_price_currency']) if attributes['alt2_price'].present? && attributes['alt2_price_currency'].present?
+    return attributes
+  end
+  
   #------------------------------------------------------------------------------
   def visible?
     !(disabled? || (!valid_starting_on.nil? && valid_starting_on > Time.now.to_date) || (!valid_until.nil? && valid_until < Time.now.to_date))
