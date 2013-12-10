@@ -20,8 +20,8 @@ class CmsPost < ActiveRecord::Base
   self.per_page = 10
 
   # --- validations
-  # validates_length_of     :slug, :maximum => 50
-  # validates_presence_of   :slug
+  validates_presence_of     :slug
+  validates_uniqueness_of   :slug, case_sensitive: false
   # validates_uniqueness_of :slug, :scope => :account_id
   
   #------------------------------------------------------------------------------
@@ -35,6 +35,12 @@ class CmsPost < ActiveRecord::Base
     cms_blog.comments_allowed? && comments_allowed
   end
   
+  # regenerate slug if it's blank
+  #------------------------------------------------------------------------------
+  def should_generate_new_friendly_id?
+    self.slug.blank?
+  end
+
   # Base the slug on the default locale
   #------------------------------------------------------------------------------
   def title_slug

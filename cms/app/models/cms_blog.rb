@@ -21,8 +21,8 @@ class CmsBlog < ActiveRecord::Base
   belongs_to                :account
 
   # --- validations
-  # validates_length_of     :slug, :maximum => 50
-  # validates_presence_of   :slug
+  validates_presence_of     :slug
+  validates_uniqueness_of   :slug, case_sensitive: false
   # validates_uniqueness_of :slug, :scope => :account_id
   
   #------------------------------------------------------------------------------
@@ -30,6 +30,12 @@ class CmsBlog < ActiveRecord::Base
     published
   end
   
+  # regenerate slug if it's blank
+  #------------------------------------------------------------------------------
+  def should_generate_new_friendly_id?
+    self.slug.blank?
+  end
+
   #------------------------------------------------------------------------------
   def title_slug
     send("title_#{Account.current.preferred_default_locale}")
