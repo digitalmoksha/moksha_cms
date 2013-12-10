@@ -16,7 +16,7 @@ class Workshop < ActiveRecord::Base
   has_one                 :refunded_email,    :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'refunded'"
   has_one                 :noshow_email,      :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'noshow'"
   
-  attr_accessible         :title, :description, :sidebar, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
+  attr_accessible         :slug, :title, :description, :sidebar, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
                           :contact_email, :contact_phone, :require_review, :require_account, :show_address, :require_address,
                           :require_photo, :published, :base_currency, :event_style, :funding_goal, :funding_goal_cents,
                           :payments_enabled
@@ -29,12 +29,15 @@ class Workshop < ActiveRecord::Base
   friendly_id             :title_slug, use: :slugged
   resourcify
 
+  # --- validations
   validates_presence_of   :country_id
   validates_presence_of   :base_currency
   validates_presence_of   :starting_on
   validates_presence_of   :ending_on
   validates_presence_of   :contact_email
   validates_presence_of   :event_style
+  validates_presence_of   :slug
+  validates_uniqueness_of :slug, case_sensitive: false
   
   # validates_presence_of   :deadline_on
 
@@ -52,6 +55,12 @@ class Workshop < ActiveRecord::Base
   monetize                :funding_goal_cents, :with_model_currency => :base_currency
 
   EVENT_STYLES = [['Workshop', 'workshop'], ['Crowdfunding', 'crowdfunding']]
+
+  # regenerate slug if it's blank
+  #------------------------------------------------------------------------------
+  def should_generate_new_friendly_id?
+    self.slug.blank?
+  end
 
   #------------------------------------------------------------------------------
   def title_slug

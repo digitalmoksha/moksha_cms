@@ -6,15 +6,18 @@
 <% submit_url = (@workshop.new_record? ? admin_workshops_path : admin_workshop_path) %>
 <%= simple_form_for(@workshop, :url => submit_url) do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
-  <%= locale_frame :title => '' do |locale| %>
+  <%= locale_frame :title => 'Translations' do |locale| %>
     <%= f.input "title_#{locale}", :label => 'Title', :id => 'title_error', :required => true %>
     <%= f.input "description_#{locale}", :label => 'Description', :hint => 'Markdown format', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 500px;"} %>
     <%= f.input "sidebar_#{locale}", :label => 'Sidebar', :hint => 'Markdown format', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 200px;"} %>
   <% end %>
 
   <%= well_frame do %>
+    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.<br>For non-Roman languages such as Japanese, you must specify the slug explicitly.'.html_safe %>
     <%= f.input :event_style, label: 'Event Style', required: true, collection: Workshop::EVENT_STYLES,
                 hint: 'Is this a workshop or a crowdfunding/donation type of event' %>
+  <% end %>
+  <%= well_frame do %>
     <%= f.input :published, :as => :toggle_checked, label: 'Publish', hint: 'Make available for registrations' %>
     <%= f.input :country_id, required: true, wrapper_html: { :class => 'searchDrop' }, input_html: { :class => 'chosen_select' }, 
                 collection: ut_country_select_collection, label_method: lambda {|t| t[0]}, value_method: lambda {|t| t[1]},

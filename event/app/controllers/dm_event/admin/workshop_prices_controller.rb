@@ -22,7 +22,6 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::ApplicationCont
     attributes = WorkshopPrice.prepare_prices(params[:workshop_price].merge(price_currency: @workshop.base_currency))
     @workshop_price = @workshop.workshop_prices.new(attributes)
     if @workshop_price.save
-      debugger
       redirect_to admin_workshop_workshop_prices_url(@workshop), notice: 'Price was successfully created.'
     else
       render action: :new
