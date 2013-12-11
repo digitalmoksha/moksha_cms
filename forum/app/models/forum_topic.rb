@@ -6,8 +6,11 @@ class ForumTopic < ActiveRecord::Base
   attr_accessible         :title, :body, :sticky, :locked
   attr_readonly           :comments_count, :hits, :forum_posts_count
 
+  # --- FriendlyId
   extend FriendlyId
   friendly_id             :title, use: :slugged
+  validates_presence_of   :slug
+  validates_uniqueness_of :slug, case_sensitive: false
 
   before_validation       :set_default_attributes, :on => :create
 
@@ -41,6 +44,12 @@ class ForumTopic < ActiveRecord::Base
 
   default_scope           { where(account_id: Account.current.id) }
 
+  # use babosa gem (to_slug) to allow better handling of multi-language slugs
+  #------------------------------------------------------------------------------
+  def normalize_friendly_id(text)
+    text.to_s.to_slug.normalize.to_s
+  end
+  
   # The first comment on a topic is the topic text.  So the number of *replies*
   # is the number of comments - 1
   #------------------------------------------------------------------------------

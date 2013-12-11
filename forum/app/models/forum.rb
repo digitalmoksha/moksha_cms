@@ -2,10 +2,15 @@ class Forum < ActiveRecord::Base
   include DmCore::Concerns::PublicPrivate
 
   self.table_name             = 'fms_forums'
-  attr_accessible             :name, :description, :published, :is_public, :requires_login
+  attr_accessible             :slug, :name, :description, :published, :is_public, :requires_login
 
+  # --- FriendlyId
   extend FriendlyId
   friendly_id                 :name, use: :slugged
+  validates_presence_of       :slug
+  validates_uniqueness_of     :slug, case_sensitive: false
+  before_save                 :normalize_slug
+
   resourcify
 
   include RankedModel
@@ -25,8 +30,27 @@ class Forum < ActiveRecord::Base
   default_scope               { where(account_id: Account.current.id).order(:row_order) }
   scope :published,           where(:published => true)
 
+  # --- validations
   validates_presence_of       :name
 
+  # If user set slug sepcifically, we need to make sure it's been normalized
+  #------------------------------------------------------------------------------
+  def normalize_slug
+    self.slug = normalize_friendly_id(self.slug)
+  end
+  
+  # regenerate slug if it's blank
+  #------------------------------------------------------------------------------
+  def should_generate_new_friendly_id?
+    self.slug.blank?
+  end
+
+  # use babosa gem (to_slug) to allow better handling of multi-language slugs
+  #------------------------------------------------------------------------------
+  def normalize_friendly_id(text)
+    text.to_s.to_slug.normalize.to_s
+  end
+  
   #------------------------------------------------------------------------------
   def monitored_topics(user)
     self.forum_topics.joins(:monitorships).where(:fms_monitorships => {:user_id => user, :active => true})

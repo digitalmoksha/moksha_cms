@@ -3,6 +3,7 @@
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
 	<%= content_box :title => @title do %>
     <%= f.input :name, :required => true, :autofocus => true %>  
+    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
     <%= f.input :description, :as => :text, :label => 'Description', :input_html => { :rows => 4, :class => 'input-block-level' } %>
     <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
     <%= f.input :is_public, :as => :toggle, :label => 'Make Forum Public?', :hint => 'This will allow anyone to see the forum.  Use option below to restrict to registered users' %>
