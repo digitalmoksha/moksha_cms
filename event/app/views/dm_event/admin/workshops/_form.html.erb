@@ -13,7 +13,7 @@
   <% end %>
 
   <%= well_frame do %>
-    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.<br>For non-Roman languages such as Japanese, you must specify the slug explicitly.'.html_safe %>
+    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
     <%= f.input :event_style, label: 'Event Style', required: true, collection: Workshop::EVENT_STYLES,
                 hint: 'Is this a workshop or a crowdfunding/donation type of event' %>
   <% end %>
