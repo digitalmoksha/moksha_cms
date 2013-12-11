@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'ancestry'
   s.add_dependency 'ranked-model'             # sort order for a list
   s.add_dependency 'amoeba', '~> 2.0'         # for handling model duplicating
+  s.add_dependency 'babosa', '~> 0.3'         # for better unicode slug handling with friendly_id
   s.add_dependency 'friendly_id', "~> 4.0.9"
   s.add_dependency 'aasm'
   s.add_dependency 'money-rails'  
