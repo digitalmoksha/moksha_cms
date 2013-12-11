@@ -6,8 +6,12 @@ class CmsPost < ActiveRecord::Base
   translates              :title, :summary, :content, :fallbacks_for_empty_translations => true #, :versioning => true
   globalize_accessors     :locales => DmCore::Language.language_array
     
+  # --- FriendlyId
   extend FriendlyId
   friendly_id             :title_slug, use: :slugged
+  validates_presence_of   :slug
+  validates_uniqueness_of :slug, case_sensitive: false
+  before_save             :normalize_slug
 
   acts_as_commentable
   
@@ -18,12 +22,31 @@ class CmsPost < ActiveRecord::Base
   scope                   :published, lambda { where("published_on <= ?", Time.now ) }
   
   self.per_page = 10
-
-  # --- validations
-  validates_presence_of     :slug
-  validates_uniqueness_of   :slug, case_sensitive: false
-  # validates_uniqueness_of :slug, :scope => :account_id
   
+  # If user set slug sepcifically, we need to make sure it's been normalized
+  #------------------------------------------------------------------------------
+  def normalize_slug
+    self.slug = normalize_friendly_id(self.slug)
+  end
+  
+  # regenerate slug if it's blank
+  #------------------------------------------------------------------------------
+  def should_generate_new_friendly_id?
+    self.slug.blank?
+  end
+
+  # use babosa gem (to_slug) to allow better handling of multi-language slugs
+  #------------------------------------------------------------------------------
+  def normalize_friendly_id(text)
+    text.to_s.to_slug.normalize.to_s
+  end
+  
+  # Base the slug on the default locale
+  #------------------------------------------------------------------------------
+  def title_slug
+    send("title_#{Account.current.preferred_default_locale}")
+  end
+
   #------------------------------------------------------------------------------
   def is_published?
     published_on <= Time.now
@@ -35,18 +58,6 @@ class CmsPost < ActiveRecord::Base
     cms_blog.comments_allowed? && comments_allowed
   end
   
-  # regenerate slug if it's blank
-  #------------------------------------------------------------------------------
-  def should_generate_new_friendly_id?
-    self.slug.blank?
-  end
-
-  # Base the slug on the default locale
-  #------------------------------------------------------------------------------
-  def title_slug
-    send("title_#{Account.current.preferred_default_locale}")
-  end
-
   # Send an email for state notification.  if send_email is false, just return 
   # the content of the email
   #------------------------------------------------------------------------------

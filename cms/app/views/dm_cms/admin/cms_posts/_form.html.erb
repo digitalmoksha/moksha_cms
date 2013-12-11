@@ -24,7 +24,7 @@
       <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 500px;"} %>
     <% end %>
 
-    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.<br>For non-Roman languages such as Japanese, you must specify the slug explicitly.'.html_safe %>
+    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
     <%= f.input :image, :label => 'Post Image', :id => 'image_error' %>
     <%= f.input :comments_allowed, :as => :toggle, :label => 'Allow Comments', :hint => 'Turn on if you want commenting for this post.' %>
 

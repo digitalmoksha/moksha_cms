@@ -7,8 +7,13 @@ class CmsBlog < ActiveRecord::Base
   translates                :title, :fallbacks_for_empty_translations => true
   globalize_accessors       :locales => DmCore::Language.language_array
     
+  # --- FriendlyId
   extend FriendlyId
   friendly_id               :title_slug, use: :slugged
+  validates_presence_of     :slug
+  validates_uniqueness_of   :slug, case_sensitive: false
+  before_save               :normalize_slug
+
   resourcify
 
   include RankedModel
@@ -20,27 +25,34 @@ class CmsBlog < ActiveRecord::Base
   has_many                  :posts, :class_name => 'CmsPost', :order => "published_on DESC", :dependent => :destroy
   belongs_to                :account
 
-  # --- validations
-  validates_presence_of     :slug
-  validates_uniqueness_of   :slug, case_sensitive: false
-  # validates_uniqueness_of :slug, :scope => :account_id
-  
-  #------------------------------------------------------------------------------
-  def is_published?
-    published
-  end
-  
   # regenerate slug if it's blank
   #------------------------------------------------------------------------------
   def should_generate_new_friendly_id?
     self.slug.blank?
   end
 
+  # If user set slug sepcifically, we need to make sure it's been normalized
+  #------------------------------------------------------------------------------
+  def normalize_slug
+    self.slug = normalize_friendly_id(self.slug)
+  end
+  
+  # use babosa gem (to_slug) to allow better handling of multi-language slugs
+  #------------------------------------------------------------------------------
+  def normalize_friendly_id(text)
+    text.to_s.to_slug.normalize.to_s
+  end
+  
   #------------------------------------------------------------------------------
   def title_slug
     send("title_#{Account.current.preferred_default_locale}")
   end
 
+  #------------------------------------------------------------------------------
+  def is_published?
+    published
+  end
+  
   # Are any of the blogs readable by this user? One positive is all need...
   #------------------------------------------------------------------------------
   def any_readable_blogs?(user)
