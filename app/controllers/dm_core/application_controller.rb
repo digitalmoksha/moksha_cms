@@ -13,7 +13,7 @@ class DmCore::ApplicationController < ActionController::Base
   before_filter   :site_enabled?, :unless => :devise_controller?
   before_filter   :ssl_redirect
   before_filter   :store_location
-  before_filter   :set_cache_buster
+  # before_filter   :set_cache_buster
 
   include DmCore::AccountHelper
 
