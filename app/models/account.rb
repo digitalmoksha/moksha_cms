@@ -23,9 +23,9 @@ class Account < ActiveRecord::Base
                           :preferred_sofort_project_password, :preferred_sofort_notification_password
   attr_accessible         :preferred_paymill_private_key, :preferred_paymill_public_key
   attr_accessible         :preferred_stripe_private_key, :preferred_stripe_public_key
+  attr_accessible         :preferred_subscription_processor
 
   attr_accessible         :preferred_nms_use_mailchimp, :preferred_nms_api_key, :preferred_nms_lists_synced_on
-  attr_accessible         
 
   attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation
   attr_accessor           :url_base, :url_host  #--- stores the current base site url for this request. useful to mailers where request object not available
@@ -90,6 +90,9 @@ class Account < ActiveRecord::Base
   #--- Stripe
   preference              :stripe_public_key,               :string
   preference              :stripe_private_key,              :string
+  
+  #--- Subscritpion Payments
+  preference              :subscription_processor,          :string
 
   #--- Newsletter
   preference              :nms_use_mailchimp,               :boolean, :default => false
