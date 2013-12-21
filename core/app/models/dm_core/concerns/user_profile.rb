@@ -51,17 +51,17 @@ module DmCore
         #    is important.
         # => use_private_avatar_for_public is currently NOT used 
         #------------------------------------------------------------------------------
-        mount_uploader          :public_avatar, AvatarUploader
+        mount_uploader          :public_avatar,  AvatarUploader
         mount_uploader          :private_avatar, AvatarUploader
 
         #------------------------------------------------------------------------------
         def address_required=(value)
-          @address_required = (value == "true" || value == "1" || value == true) ? true : false
+          @address_required = (value == true || value.as_boolean)
         end
         
         #------------------------------------------------------------------------------
         def userless_registration=(value)
-          @userless_registration = (value == "true" || value == "1" || value == true) ? true : false
+          @userless_registration = (value == true || value.as_boolean)
         end
         
         # When a profile is created, attach it to the current account
@@ -98,19 +98,8 @@ module DmCore
         #------------------------------------------------------------------------------
         def address_valid?
           not_valid = email.blank? || first_name.blank? || last_name.blank? || address.blank? || city.blank? ||
-                      zipcode.blank? || country.blank? 
+                      zipcode.blank? || country.blank?
           return !not_valid
-        end
-
-      end
-
-      module ClassMethods
-        #------------------------------------------------------------------------------
-        def access_last_30_days
-          items = 27.step(0, -3).map do |date| 
-            where('last_access_at <= ? AND last_access_at > ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime).count
-          end
-          return { :total => items.inject(:+), :list => items.join(',') }
         end
 
       end
