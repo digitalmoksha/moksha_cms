@@ -1,7 +1,7 @@
 class ForumSite < ActiveRecord::Base
   class UndefinedError < StandardError; end
 
-  set_table_name            'fms_forum_sites'
+  self.table_name           = 'fms_forum_sites'
 
   attr_accessible           :enabled, :description, :tagline
 
