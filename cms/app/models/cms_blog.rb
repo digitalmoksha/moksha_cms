@@ -9,9 +9,8 @@ class CmsBlog < ActiveRecord::Base
     
   # --- FriendlyId
   extend FriendlyId
-  friendly_id               :title_slug, use: :slugged
+  friendly_id               :title_slug, use: :scoped, scope: :account_id
   validates_presence_of     :slug
-  validates_uniqueness_of   :slug, case_sensitive: false
   before_save               :normalize_slug
 
   resourcify

@@ -89,7 +89,7 @@ private
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
   def set_title
-    text = @current_page.nil? ? 'Pages' : @current_page.title
+    text = @current_page.nil? ? 'Pages' : present(@current_page).admin_edit_title
     content_for :content_title, icon_label('font-paste', text)
   end
 

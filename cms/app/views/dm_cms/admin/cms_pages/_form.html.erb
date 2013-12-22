@@ -4,34 +4,30 @@
 
 <%= simple_form_for @cms_page, :url => submit_url do |f| %>
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
-  <%= content_frame :title => "#{title} #{@current_page.slug}", :toolbar => :languages do %>
-    <div class="tab-content">
-      <div id="tab_general" class="tab-pane active fade in">
-        <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
-        <%= f.input :slug, :label => 'Page Slug', :hint => 'Name page will be known by - must be unique' %>
-        <%= f.input :pagetype, :label => 'Page Type', :collection => CmsPage::PAGETYPE, :include_blank => false %>
-        <div id="pagetype_link">
-          <%= f.input :link %>
-        </div>
-        <% templates = template_menu_list %>
-        <% if templates %>
-          <%= f.input :template, :label => 'Template to Use', :collection => templates, :include_blank => false,
-                  :hint => 'Template to use for this page. Child pages can inherit this template' %>
-        <% else %>
-          <%= f.input :template, :label => 'Template to Use', :hint => "Leave blank to inherit the parent's template" %>
-        <% end %>
-        <% if false #--- disable this for now %>
-          <%= f.input :menuimage, :label => 'Menu Image' %>
-        <% end %>
-        <%= f.input :requires_login, :as => :toggle, :label => 'Requires Login', :hint => 'Page will require user to be logged in to access' %>
-      </div>
-      <% current_account.site_locales.each do |locale| %>        
-        <div id="tab_<%= locale %>" class="tab-pane fade">
-          <%= f.input "title_#{locale}", :label => 'Page Title', hint: 'The title of the page, shown in the browser title' %>
-          <%= f.input "menutitle_#{locale}", :label => 'Menu Title', hint: 'Text shown in a menu (which might be shorter than the full title).  If blank, <br/>page will not show up in any auto-generated menus' %>
-        </div>
-      <% end %>
-    </div>	
+  <%= content_box :title => "#{title} #{@current_page.slug}" do %>
+    <%= locale_frame :title => '' do |locale| %>
+      <%= f.input "title_#{locale}", :label => 'Page Title', hint: 'The title of the page, shown in the browser title' %>
+      <%= f.input "menutitle_#{locale}", :label => 'Menu Title', hint: 'Text shown in a menu (which might be shorter than the full title).  If blank, <br/>page will not show up in any auto-generated menus' %>
+    <% end %>
+
+    <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
+    <%= f.input :slug, :label => 'Page Slug', :hint => 'Leave blank to have auto-generated based on title.' %>
+    <%= f.input :pagetype, :label => 'Page Type', :collection => CmsPage::PAGETYPE, :include_blank => false %>
+    <div id="pagetype_link">
+      <%= f.input :link %>
+    </div>
+    <% templates = template_menu_list %>
+    <% if templates %>
+      <%= f.input :template, :label => 'Template to Use', :collection => templates, :include_blank => false,
+              :hint => 'Template to use for this page. Child pages can inherit this template' %>
+    <% else %>
+      <%= f.input :template, :label => 'Template to Use', :hint => "Leave blank to inherit the parent's template" %>
+    <% end %>
+    <% if false #--- disable this for now %>
+      <%= f.input :menuimage, :label => 'Menu Image' %>
+    <% end %>
+    <%= f.input :requires_login, :as => :toggle, :label => 'Requires Login', :hint => 'Page will require user to be logged in to access' %>
+
     <%= submit_or_cancel :cancel_url => {:action => :show, :id => @current_page} %>
 
   <% end %>
