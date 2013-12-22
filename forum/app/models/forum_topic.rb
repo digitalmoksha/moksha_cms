@@ -8,9 +8,8 @@ class ForumTopic < ActiveRecord::Base
 
   # --- FriendlyId
   extend FriendlyId
-  friendly_id             :title, use: :slugged
+  friendly_id             :title, use: :scoped, scope: :account_id
   validates_presence_of   :slug
-  validates_uniqueness_of :slug, case_sensitive: false
 
   before_validation       :set_default_attributes, :on => :create
 

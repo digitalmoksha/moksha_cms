@@ -6,9 +6,8 @@ class Forum < ActiveRecord::Base
 
   # --- FriendlyId
   extend FriendlyId
-  friendly_id                 :name, use: :slugged
+  friendly_id                 :name, use: :scoped, scope: :account_id
   validates_presence_of       :slug
-  validates_uniqueness_of     :slug, case_sensitive: false
   before_save                 :normalize_slug
 
   resourcify
