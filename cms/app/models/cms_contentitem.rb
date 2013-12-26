@@ -61,6 +61,12 @@ class CmsContentitem < ActiveRecord::Base
     end
   end
   
+  # Generate any data to pass when rendering with Liquid
+  #------------------------------------------------------------------------------
+  def to_liquid
+    cms_page.to_liquid
+  end
+  
   #------------------------------------------------------------------------------
   def deep_clone(new_cms_page_id)
     new_cms_contentitem                  = self.clone

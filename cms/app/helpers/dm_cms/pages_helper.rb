@@ -33,13 +33,13 @@ module DmCms::PagesHelper
       # --- process content type
       case content_item.itemtype.downcase
         when 'textile'
-          content = liquidize_textile(content_item.content)
+          content = liquidize_textile(content_item.content, content_item.to_liquid)
         when 'markdown'
           #--- if we ever need to render erb, this is how to do it
           #    xcontent = render :inline => content_item.content
-          content = liquidize_markdown(content_item.content)
+          content = liquidize_markdown(content_item.content, content_item.to_liquid)
         when 'html'
-          content = liquidize_html(content_item.content)
+          content = liquidize_html(content_item.content, content_item.to_liquid)
         else
           content = ''
       end

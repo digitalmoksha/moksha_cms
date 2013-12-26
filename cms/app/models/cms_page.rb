@@ -121,6 +121,18 @@ class CmsPage < ActiveRecord::Base
     PAGETYPE
   end
 
+  # Generate any data to pass when rendering with Liquid
+  #------------------------------------------------------------------------------
+  def to_liquid
+    { 'page' => 
+      {
+        'title'     => self.title,
+        'menutitle' => self.menutitle,
+        'slug'      => self.slug
+      }
+    }
+  end
+  
   # Check if this page has been cookied.  If needed, we will set a cookie, using
   # the page's slug, to a value of 1.  This indicates that the page has
   # been visited.  This is only needed in cases where we want to ensure a page
