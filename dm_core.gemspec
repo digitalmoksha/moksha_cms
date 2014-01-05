@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'kramdown'
   s.add_dependency "liquid", "~> 2.3"
   s.add_dependency 'acts_as_commentable', "~> 4.0"
+  s.add_dependency 'acts_as_votable', '~> 0.8.0'
   s.add_dependency 'ancestry'
   s.add_dependency 'ranked-model'             # sort order for a list
   s.add_dependency 'amoeba', '~> 2.0'         # for handling model duplicating
