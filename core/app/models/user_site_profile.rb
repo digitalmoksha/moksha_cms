@@ -8,6 +8,9 @@ class UserSiteProfile < ActiveRecord::Base
 
   belongs_to              :user
 
+  #--- votability on a per site basis
+  acts_as_voter
+  
   #------------------------------------------------------------------------------
   def self.new_last_30_days
     items = 27.step(0, -3).map do |date| 

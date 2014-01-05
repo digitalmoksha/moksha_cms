@@ -14,7 +14,6 @@ module DmCore
         devise :database_authenticatable, :registerable, :confirmable,
                :recoverable, :rememberable, :trackable, :validatable
 
-        # Setup accessible (or protected) attributes for your model
         attr_accessible         :email, :password, :password_confirmation, :remember_me,
                                   :user_profile_attributes
         attr_accessible         :role_ids, :email, :password, :password_confirmation, :remember_me,
@@ -25,6 +24,9 @@ module DmCore
         has_one                 :user_profile, :dependent => :destroy
         has_many                :user_site_profiles, :dependent => :destroy
         has_one                 :current_site_profile, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
+        
+        #--- this allows us to use @user.voting.likes @post and it will be stored with the site specific user profile
+        has_one                 :voting, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
 
         accepts_nested_attributes_for :user_profile
 
