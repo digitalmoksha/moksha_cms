@@ -19,7 +19,7 @@ module DmCore
   
         #   Note: don't use a default account scope as it makes some of the User 
         #   associations a little more difficult
-        scope                   :this_site, where(account_id: Account.current.id)
+        scope                   :this_site, lambda { where(account_id: Account.current.id) }
       end
 
       module ClassMethods
