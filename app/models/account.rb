@@ -136,6 +136,13 @@ class Account < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def self.current_by_prefix(account_prefix)
     Account.current = Account.find_by_account_prefix(account_prefix)
+
+    #--- set the current request site url for use where request object is not avail,
+    #    like in ActionMailer or from a rake task
+    protocol                  = Account.current.ssl_enabled? ? 'https://' : 'http://'
+    host_with_port            = Account.current.domain
+    Account.current.url_base  = protocol + host_with_port
+    Account.current.url_host  = host_with_port
   end
   
   #------------------------------------------------------------------------------

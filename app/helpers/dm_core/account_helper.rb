@@ -32,7 +32,7 @@ module DmCore
     #------------------------------------------------------------------------------
     def scope_current_account
       Account.current           = Account.find_account(request.host)
-      
+
       #--- set the current request site url for use where request object is not avail,
       #    like in ActionMailer
       Account.current.url_base  = request.protocol + request.host_with_port
