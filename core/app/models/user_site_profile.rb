@@ -6,25 +6,6 @@
 #------------------------------------------------------------------------------
 class UserSiteProfile < ActiveRecord::Base
 
-  belongs_to              :user
-
-  #--- votability on a per site basis
-  acts_as_voter
-  
-  #------------------------------------------------------------------------------
-  def self.new_last_30_days
-    items = 27.step(0, -3).map do |date| 
-      self.where('created_at <= ? AND created_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime, Account.current.id).count
-    end
-    return { :total => items.inject(:+), :list => items.join(',') }
-  end
-
-  #------------------------------------------------------------------------------
-  def self.access_last_30_days
-    items = 27.step(0, -3).map do |date| 
-      where('last_access_at <= ? AND last_access_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime, Account.current.id).count
-    end
-    return { :total => items.inject(:+), :list => items.join(',') }
-  end
+  include DmCore::Concerns::UserSiteProfile
 
 end
