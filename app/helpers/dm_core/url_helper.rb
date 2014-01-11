@@ -38,6 +38,13 @@ module DmCore
       rewrite_asset_path(expand_url(src, "#{account_site_assets}/images/"))
     end
 
+    # Returns a url to a site image, relative to the site_assets folder
+    # Supports both relative paths and explicit url
+    #------------------------------------------------------------------------------
+    def site_image_url(src)
+      rewrite_asset_path(expand_url(src, "#{account_site_assets_url}/images/"))
+    end
+
     # Returns a path to a site assets, relative to the site_assets folder
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------

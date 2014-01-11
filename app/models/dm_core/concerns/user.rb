@@ -35,7 +35,7 @@ module DmCore
         after_create            :add_account
         after_update            :update_profile_email
 
-        delegate                :first_name, :last_name, :full_name, :display_name, :country, :to => :user_profile
+        delegate                :first_name, :last_name, :full_name, :display_name, :name, :country, :to => :user_profile
         delegate                :last_access_at, :to => :current_site_profile
 
         scope                   :current_account_users, lambda { includes(:user_site_profiles).where("user_site_profiles.account_id = #{Account.current.id}") }
