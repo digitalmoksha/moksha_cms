@@ -6,6 +6,7 @@ class DmCms::PostsController < DmCms::ApplicationController
   helper  DmCms::PagesHelper
   helper  DmCms::PostsHelper
   include DmCore::RenderHelper
+  include DmCore::UrlHelper
 
   before_filter   :post_lookup, except: [:ajax_add_comment, :ajax_edit_comment, :ajax_delete_comment]
 
@@ -16,6 +17,11 @@ class DmCms::PostsController < DmCms::ApplicationController
     @blogs        = CmsBlog.available_to_user(current_user)
     @recent_posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).published.order('published_on DESC').limit(5)
     @comments     = @post.comments.paginate page: page_number
+
+    #--- set title / meta data
+    content_for :page_title, @post.title
+    set_meta description: @post.summary, "og:description" => @post.summary
+    set_meta "og:image" => site_image_path(@post.image) if @post.image.present?
   end
 
   #------------------------------------------------------------------------------

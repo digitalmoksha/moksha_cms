@@ -1,5 +1,6 @@
 require 'ancestry'
 require 'acts_as_list'
+require 'meta-tags-helpers'
 require 'dm_core'
 
 module DmCms

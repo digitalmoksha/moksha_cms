@@ -21,7 +21,8 @@ Gem::Specification.new do |s|
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'ancestry'
   s.add_dependency 'acts_as_list', '~> 0.2'
-
+  s.add_dependency 'meta-tags-helpers', '~> 0.2.0'
+  
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'
   # gem 'dm_core', :git => 'git://github.com/digitalmoksha/dm_core.git'
