@@ -74,6 +74,7 @@ module DmCore
         def full_name
           first_name.to_s + " " + last_name.to_s
         end
+        alias :name :full_name
 
         # for displaying their displayable profile name
         #------------------------------------------------------------------------------
