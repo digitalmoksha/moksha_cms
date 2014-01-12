@@ -37,6 +37,11 @@ module DmCore
           is_public == false
         end
   
+        #------------------------------------------------------------------------------
+        def visibility_to_s
+          is_public? ? 'public' : is_private? ? 'private' : 'protected'
+        end
+
         # Is the user a member of this object?
         #------------------------------------------------------------------------------
         def member?(user)
