@@ -24,6 +24,9 @@ class CmsBlog < ActiveRecord::Base
   has_many                  :posts, :class_name => 'CmsPost', :order => "published_on DESC", :dependent => :destroy
   belongs_to                :account
 
+  preference                :show_social_buttons,  :boolean, :default => false
+  attr_accessible           :preferred_show_social_buttons
+
   # regenerate slug if it's blank
   #------------------------------------------------------------------------------
   def should_generate_new_friendly_id?
@@ -50,6 +53,11 @@ class CmsBlog < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def is_published?
     published
+  end
+  
+  #------------------------------------------------------------------------------
+  def show_social_buttons?
+    preferred_show_social_buttons? && !is_private?
   end
   
   # Are any of the blogs readable by this user? One positive is all need...

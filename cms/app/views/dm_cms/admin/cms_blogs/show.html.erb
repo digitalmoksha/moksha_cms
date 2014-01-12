@@ -12,8 +12,12 @@
   <dl class="dl-horizontal">
     <dt>Slug</dt>
     <dd><%= @blog.slug %></dd>
+    <dt>Visibility</dt>
+    <dd><%= @blog.visibility_to_s %></dd>
     <dt>Commenting Allowed?</dt>
     <dd><div class="checkbox on_off inline"><input type="checkbox" <%= 'checked="1"' if @blog.comments_allowed %> disabled="disabled" /></div></dd>
+    <dt>Social Buttons?</dt>
+    <dd><div class="checkbox on_off inline"><input type="checkbox" <%= 'checked="1"' if @blog.show_social_buttons? %> disabled="disabled" /></div></dd>
   </dl>
 
 </div>
