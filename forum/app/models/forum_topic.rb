@@ -8,8 +8,7 @@ class ForumTopic < ActiveRecord::Base
 
   # --- FriendlyId
   extend FriendlyId
-  friendly_id             :title, use: :scoped, scope: :account_id
-  validates_presence_of   :slug
+  include DmCore::Concerns::FriendlyId
 
   before_validation       :set_default_attributes, :on => :create
 
@@ -45,8 +44,8 @@ class ForumTopic < ActiveRecord::Base
 
   # use babosa gem (to_slug) to allow better handling of multi-language slugs
   #------------------------------------------------------------------------------
-  def normalize_friendly_id(text)
-    text.to_s.to_slug.normalize.to_s
+  def model_slug
+    title
   end
   
   # The first comment on a topic is the topic text.  So the number of *replies*

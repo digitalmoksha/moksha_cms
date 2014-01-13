@@ -9,9 +9,9 @@
 
 <% if can? :moderate, @forum %>
   <div class="clearfix">
-    <%= form.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('fms.sticky')}" %>
+    <%= form.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('fms.sticky')}".html_safe %>
   </div>
   <div class="clearfix">
-    <%= form.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('fms.views_topics.lock_topic')}" %>
+    <%= form.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('fms.views_topics.lock_topic')}".html_safe %>
   </div>
 <% end %>
