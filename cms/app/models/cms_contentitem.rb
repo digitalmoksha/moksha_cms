@@ -24,7 +24,7 @@ class CmsContentitem < ActiveRecord::Base
   validates_length_of   :itemtype,    :maximum => 30
   validates_length_of   :container,   :maximum => 30
   validate              :validate_conflict, only: :update
-  #validate              :validate_default_content_present
+  validates             :content, liquid: { :locales => true }, presence_default_locale: true
 
   # --- content types supported
   CONTENT_TYPES = [ 'Markdown', 'Textile', 'HTML' ]
@@ -53,14 +53,6 @@ class CmsContentitem < ActiveRecord::Base
     end
   end
 
-  # [todo] does not check proper attribute
-  #------------------------------------------------------------------------------
-  def validate_default_content_present
-    if attributes["content_#{Account.current.preferred_default_locale}"].blank?
-      errors.add("content_#{Account.current.preferred_default_locale}", "should not be blank")
-    end
-  end
-  
   # Generate any data to pass when rendering with Liquid
   #------------------------------------------------------------------------------
   def to_liquid

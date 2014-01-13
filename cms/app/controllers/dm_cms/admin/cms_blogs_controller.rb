@@ -22,7 +22,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
     @blog = CmsBlog.new(params[:cms_blog])
     
     if @blog.save
-      redirect_to admin_cms_blog_url(@log), notice: 'Blog was successfully created.'
+      redirect_to admin_cms_blog_url(@blog), notice: 'Blog was successfully created.'
     else
       render action: :new
     end

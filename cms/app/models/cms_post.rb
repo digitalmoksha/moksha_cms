@@ -8,9 +8,7 @@ class CmsPost < ActiveRecord::Base
     
   # --- FriendlyId
   extend FriendlyId
-  friendly_id             :title_slug, use: :scoped, scope: :account_id
-  validates_presence_of   :slug
-  before_save             :normalize_slug
+  include DmCore::Concerns::FriendlyId
 
   acts_as_commentable
   
@@ -20,29 +18,15 @@ class CmsPost < ActiveRecord::Base
   default_scope           { where(account_id: Account.current.id) }
   scope                   :published, lambda { where("published_on <= ?", Time.now ) }
   
+  validates               :title, presence_default_locale: true
+  validates               :summary, liquid: { :locales => true }, presence_default_locale: true
+  validates               :content, liquid: { :locales => true }, presence_default_locale: true
+  
   self.per_page = 10
-  
-  # If user set slug sepcifically, we need to make sure it's been normalized
-  #------------------------------------------------------------------------------
-  def normalize_slug
-    self.slug = normalize_friendly_id(self.slug)
-  end
-  
-  # regenerate slug if it's blank
-  #------------------------------------------------------------------------------
-  def should_generate_new_friendly_id?
-    self.slug.blank?
-  end
-
-  # use babosa gem (to_slug) to allow better handling of multi-language slugs
-  #------------------------------------------------------------------------------
-  def normalize_friendly_id(text)
-    text.to_s.to_slug.normalize.to_s
-  end
   
   # Base the slug on the default locale
   #------------------------------------------------------------------------------
-  def title_slug
+  def model_slug
     send("title_#{Account.current.preferred_default_locale}")
   end
 
