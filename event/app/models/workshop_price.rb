@@ -30,6 +30,8 @@ class WorkshopPrice < ActiveRecord::Base
   include RankedModel
   ranks                   :row_order, :with_same => :workshop_id
 
+  validates               :price_description, presence_default_locale: true
+  validates               :payment_details, liquid: { :locales => true }
   validates_presence_of   :price_currency,      :if => Proc.new { |w| w.price_cents }
   validates_presence_of   :alt1_price_currency, :if => Proc.new { |w| w.alt1_price_cents }
   validates_presence_of   :alt2_price_currency, :if => Proc.new { |w| w.alt2_price_cents }

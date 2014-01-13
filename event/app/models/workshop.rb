@@ -27,9 +27,7 @@ class Workshop < ActiveRecord::Base
 
   # --- FriendlyId
   extend FriendlyId
-  friendly_id             :title_slug, use: :scoped, scope: :account_id
-  validates_presence_of   :slug
-  before_save             :normalize_slug
+  include DmCore::Concerns::FriendlyId
 
   resourcify
 
@@ -40,6 +38,9 @@ class Workshop < ActiveRecord::Base
   validates_presence_of   :ending_on
   validates_presence_of   :contact_email
   validates_presence_of   :event_style
+  validates               :title, presence_default_locale: true
+  validates               :description, liquid: { :locales => true }
+  validates               :sidebar, liquid: { :locales => true }, presence_default_locale: true
   
   # validates_presence_of   :deadline_on
 
@@ -58,26 +59,8 @@ class Workshop < ActiveRecord::Base
 
   EVENT_STYLES = [['Workshop', 'workshop'], ['Crowdfunding', 'crowdfunding']]
 
-  # If user set slug sepcifically, we need to make sure it's been normalized
   #------------------------------------------------------------------------------
-  def normalize_slug
-    self.slug = normalize_friendly_id(self.slug)
-  end
-  
-  # regenerate slug if it's blank
-  #------------------------------------------------------------------------------
-  def should_generate_new_friendly_id?
-    self.slug.blank?
-  end
-
-  # use babosa gem (to_slug) to allow better handling of multi-language slugs
-  #------------------------------------------------------------------------------
-  def normalize_friendly_id(text)
-    text.to_s.to_slug.normalize.to_s
-  end
-  
-  #------------------------------------------------------------------------------
-  def title_slug
+  def model_slug
     send("title_#{Account.current.preferred_default_locale}")
   end
 
