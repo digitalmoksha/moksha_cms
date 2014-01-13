@@ -14,6 +14,6 @@ class Category < ActiveRecord::Base
   translates            :name, :description, :fallbacks_for_empty_translations => true
   globalize_accessors   :locales => DmCore::Language.language_array
 
-  validates_presence_of :name
+  validates             :name, presence_default_locale: true
 
 end
