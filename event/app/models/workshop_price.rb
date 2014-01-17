@@ -1,3 +1,6 @@
+# [todo] re-evaluate whether alternate currencies are really needed.  I can't
+# think of a real use case at the moment, and it adds unnecessary complexity.
+#
 # Note: The currency of a WorkshopPrice is the base currency of it's workshop.
 # If they were different, we would need to always have an exchange rate available
 # to convert to/from the workshop and the price currency.
@@ -35,8 +38,8 @@ class WorkshopPrice < ActiveRecord::Base
   validates_presence_of   :price_currency,      :if => Proc.new { |w| w.price_cents }
   validates_presence_of   :alt1_price_currency, :if => Proc.new { |w| w.alt1_price_cents }
   validates_presence_of   :alt2_price_currency, :if => Proc.new { |w| w.alt2_price_cents }
-  validates_presence_of   :recurring_period,    :if => Proc.new { |w| w.recurring_amount }
-  validates_presence_of   :recurring_number,    :if => Proc.new { |w| w.recurring_amount }
+  validates_presence_of   :recurring_period,    :if => Proc.new { |w| w.recurring_number }
+  validates_presence_of   :recurring_number,    :if => Proc.new { |w| w.recurring_period }
 
   CURRENCY_TYPES = {'British Pound (&pound;)'.html_safe => 'GBP',
                     'Czech Koruna (&#x4B;&#x10D;)'.html_safe => 'CZK',
@@ -76,6 +79,17 @@ class WorkshopPrice < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def price_formatted
     price.nil? ? '' : price.format(:no_cents_if_whole => true, :symbol => true)
+  end
+  
+  # returns the amount of a payment
+  #------------------------------------------------------------------------------
+  def payment_price
+    recurring_payments? ? (price / recurring_number) : price
+  end
+  
+  #------------------------------------------------------------------------------
+  def recurring_payments?
+    recurring_number.to_i > 1
   end
   
   #------------------------------------------------------------------------------

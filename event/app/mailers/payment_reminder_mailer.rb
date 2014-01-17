@@ -12,7 +12,7 @@ class PaymentReminderMailer < DmCore::SiteMailer
     @subject                    = I18n.t('ems.ticket_payment_reminder_subject', value: registration.workshop.title)
     @recipients                 = registration.email
     @registration               = registration
-    @balance_owed               = registration.balance_owed.format
+    @payment_owed               = registration.payment_owed.format
     @payment_link               = registration.payment_url
 
     headers = { "Reply-To" => account.preferred_smtp_from_email, "Return-Path" => account.preferred_smtp_from_email }

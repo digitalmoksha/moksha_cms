@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'ranked-model'             # sort order for a list
   s.add_dependency 'money-rails'
-  s.add_dependency 'activemerchant', '~> 1.38.0'
+  s.add_dependency 'activemerchant', '~> 1.42'
   s.add_dependency 'mini_magick', '~> 3.3'
   s.add_dependency 'carrierwave', '~> 0.5.7'
 

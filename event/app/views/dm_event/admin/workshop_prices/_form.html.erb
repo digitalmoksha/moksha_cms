@@ -25,24 +25,25 @@
     <%= f.input :total_available %>
     <%= f.input :disabled, :as => :toggle_checked, :label => 'Disable?' %>
 
-    <div class="semi-block">
-      <h6 class="subtitle">Alternate Price/Currenies</h6>
-      <p class="explanation">Specify different currencies. Each currency should be unique (don't choose to Euro based countries).  Payments in a different currency will be 
-        converted to the base currency.  Note that discounts are applied to the base currency value.</p>
-      <div class="well">
-        <%= f.input :alt1_price, :label => 'Price 2' %>
-        <%= f.input :alt1_price_currency, :label => 'Currency 2', :collection => WorkshopPrice::CURRENCY_TYPES %>
-        <%= f.input :alt2_price, :label => 'Price 3' %>
-        <%= f.input :alt2_price_currency, :label => 'Currency 3', :collection => WorkshopPrice::CURRENCY_TYPES %>
+    <% if false %>
+      <div class="semi-block">
+        <h6 class="subtitle">Alternate Price/Currenies</h6>
+        <p class="explanation">Specify different currencies. Each currency should be unique (don't choose to Euro based countries).  Payments in a different currency will be 
+          converted to the base currency.  Note that discounts are applied to the base currency value.</p>
+        <div class="well">
+          <%= f.input :alt1_price, :label => 'Price 2' %>
+          <%= f.input :alt1_price_currency, :label => 'Currency 2', :collection => WorkshopPrice::CURRENCY_TYPES %>
+          <%= f.input :alt2_price, :label => 'Price 3' %>
+          <%= f.input :alt2_price_currency, :label => 'Currency 3', :collection => WorkshopPrice::CURRENCY_TYPES %>
+        </div>
       </div>
-    </div>
+    <% end %>
     <div class="semi-block">
       <h6 class="subtitle">Recurring Payments</h6>
       <p class="explanation">This is for indicating a regularly scheduled payment, such as a monthly payment plan.</p>
       <div class="well">
-        <%= f.input :recurring_amount, :label => 'Amount', :hint => 'Amount Every Period' %>
-        <%= f.input :recurring_period, :label => 'Number of Days', :hint => 'Number of Days in Period' %>
         <%= f.input :recurring_number, :label => 'Number of Periods', :hint => 'Number of Periods (Payments)' %>
+        <%= f.input :recurring_period, :label => 'Number of Days', :hint => 'Number of Days in Period' %>
       </div>
     </div>
     <div class="clearfix"></div>

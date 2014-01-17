@@ -1,6 +1,6 @@
 <% payment_service_for @registration.receipt_code, current_account.preferred_paypal_merchant_id,
-        amount:   @registration.balance_owed.amount,
-        currency: @registration.balance_owed.currency.iso_code,
+        amount:   @registration.payment_owed.amount,
+        currency: @registration.payment_owed.currency.iso_code,
         service:  :paypal do |service|
           service.customer            :first_name => @registration.first_name,
                                       :last_name => @registration.last_name,

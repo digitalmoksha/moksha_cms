@@ -91,6 +91,12 @@ class Registration < ActiveRecord::Base
     discounted_price - amount_paid
   end
   
+  # suggested amount of next payment
+  #------------------------------------------------------------------------------
+  def payment_owed
+    [workshop_price.payment_price, balance_owed].min
+  end
+  
   # Return the number of items specified, in particular the number of items in 
   # a particular state
   #------------------------------------------------------------------------------
