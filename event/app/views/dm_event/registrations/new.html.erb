@@ -17,16 +17,11 @@
       <%= render :partial => 'section_address', :locals => {:f => f} %>
 
       <% save_label = @workshop.crowdfunding? ? I18n.t('ems.donate_button') : I18n.t('ems.register_btn') %>
-      <%= submit_or_cancel :save => save_label, :cancel => I18n.t('ems.cancel_btn'), :cancel_url => admin_workshops_path %>
+      <%= submit_tag save_label, class: 'btn btn-primary' %>
+      <%= link_to I18n.t('ems.cancel_btn'), main_app.index_url, class: 'btn' %>
     <% end %>
   <% else %>
-    <div class='ticket_information account_required'>
-      <%= link_to nls(:signin_link), main_app.new_user_session_path, class: 'button green', style: 'margin-bottom: 20px' %>
-      <ul class="clear">
-        <li><%= link_to nls(:signin_register_link), main_app.new_user_registration_path %></li>
-        <li><%= link_to nls(:signin_forgot_password_link), main_app.new_user_password_path %></li>
-        <li><%= link_to nls(:signin_confirmation_instructions_link), main_app.new_user_confirmation_path %></li>
-      </ul>
-    </div>
+    <%= link_to I18n.t('core.login'), main_app.new_user_session_path, class: 'btn btn-primary', style: 'margin-bottom: 20px' %>
+    <%= link_to I18n.t('core.create_account'), main_app.new_user_registration_path, class: 'btn'  %>
   <% end %>
 </div>
