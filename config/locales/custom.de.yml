@@ -26,6 +26,7 @@ de:
     errors_below: Bitte überprüfen Sie die folgenden Probleme
     login_required: Bitte auf Ihr Konto erst anmelden
     resource_invalid: Angeforderte Seite ist auf Ihrem Konto nicht verfügbar
+    create_account: Neues Benutzerkonto anlegen
 
     profile_email: E-Mail
     profile_password: Neues Passwort

@@ -28,6 +28,7 @@ en:
     errors_below: Please review the problems below
     login_required: Please login to your account first
     resource_invalid: Requested page is not available in your account
+    create_account: Create Account
     
     profile_email: Email
     profile_password: Password
