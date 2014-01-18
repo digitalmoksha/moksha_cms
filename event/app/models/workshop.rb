@@ -31,6 +31,9 @@ class Workshop < ActiveRecord::Base
 
   resourcify
 
+  preference              :show_social_buttons,  :boolean, :default => false
+  attr_accessible         :preferred_show_social_buttons
+
   # --- validations
   validates_presence_of   :country_id
   validates_presence_of   :base_currency
@@ -76,6 +79,11 @@ class Workshop < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def past?
     ending_on < Time.now
+  end
+  
+  #------------------------------------------------------------------------------
+  def show_social_buttons?
+    preferred_show_social_buttons?
   end
   
   # Is the registration closed?  If deadline is null, then registration is open ended

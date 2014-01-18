@@ -5,6 +5,10 @@
 <div id="workshop_registration">
   <div id="workshop_description">
     <%= render_workshop_description(@workshop) %>
+    <% if @workshop.show_social_buttons? %>
+      <div class="clearfix"></div>
+      <%= render(:partial => "dm_cms/shared/social_buttons") %>
+    <% end %>
   </div>
 
   <% unless @workshop.require_account && current_user.nil? %>
