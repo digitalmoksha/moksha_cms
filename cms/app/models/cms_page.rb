@@ -39,6 +39,9 @@ class CmsPage < ActiveRecord::Base
 
   default_scope           { where(account_id: Account.current.id).order("ancestry_depth, position ASC") }
   
+  preference              :show_social_buttons,  :boolean, :default => false
+  attr_accessible         :preferred_show_social_buttons
+
   amoeba do
     enable
   end
@@ -67,6 +70,11 @@ class CmsPage < ActiveRecord::Base
     published
   end
 
+  #------------------------------------------------------------------------------
+  def show_social_buttons?
+    preferred_show_social_buttons?
+  end
+  
   # is this a special divider page - which doesn't get rendered, it's for adding
   # categories in a sub menu
   #------------------------------------------------------------------------------

@@ -27,6 +27,7 @@
       <%= f.input :menuimage, :label => 'Menu Image' %>
     <% end %>
     <%= f.input :requires_login, :as => :toggle, :label => 'Requires Login', :hint => 'Page will require user to be logged in to access' %>
+    <%= f.input :preferred_show_social_buttons, :as => :toggle, label: 'Show social buttons' %>
 
     <%= submit_or_cancel :cancel_url => {:action => :show, :id => @current_page} %>
 
