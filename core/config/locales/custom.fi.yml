@@ -28,6 +28,7 @@ fi:
     errors_below: Tarkista ongelmat alla
     login_required: Ole hyvä ja kirjaudu tilillesi ensin
     resource_invalid: Sivu ei ole käytettävissä tililläsi
+    create_account: Luo tili
 
     profile_email: Sähköposti
     profile_password: Salasana

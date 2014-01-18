@@ -26,6 +26,7 @@ cs:
     errors_below: Přečtěte si prosím níže uvedené problémy,
     login_required: "Prosím, přihlaste se ke svému účtu první"
     resource_invalid: Požadovaná stránka není k dispozici ve vašem účtu
+    create_account: Vytvořit účet
 
     profile_email: E-mail
     profile_password: Heslo

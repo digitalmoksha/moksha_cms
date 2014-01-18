@@ -28,6 +28,7 @@ ja:
     errors_below: 下記の問題を再検討して下さい
     login_required: 最初のアカウントにログインしてください
     resource_invalid: 要求されたページには、アカウントで利用できない
+    create_account: アカウントを作成
 
     profile_email: Eメール
     profile_password: パスワード
