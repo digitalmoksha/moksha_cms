@@ -8,6 +8,8 @@
       <% end %>
     <% else %>
       <p><%= I18n.t 'cms.comment_login_required' %></p>
+      <%= link_to I18n.t('core.login'), main_app.new_user_session_path, class: 'btn btn-primary', style: 'margin-bottom: 20px' %>
+      <%= link_to I18n.t('core.create_account'), main_app.new_user_registration_path, class: 'btn'  %>
     <% end %>
   </div>
 <% end %>

@@ -18,4 +18,4 @@ fi:
     delete: poista
     comments_stat: Kommentit
     blog_login_required: Thän blogiin pääsyyn vaaditaan sisään kirjautuminen
-    comment_login_required: Kirjaudu käyttäjätiliisi kommentoidaksesi
+    comment_login_required: "Ole hyvä ja kirjaudu sisään tilillesi kommentoidaksesi. Jos sinulla ei ole käyttäjätiliä, voit luoda sellaisen."
