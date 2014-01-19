@@ -19,3 +19,16 @@ fi:
     comments_stat: Kommentit
     blog_login_required: Thän blogiin pääsyyn vaaditaan sisään kirjautuminen
     comment_login_required: "Ole hyvä ja kirjaudu sisään tilillesi kommentoidaksesi. Jos sinulla ei ole käyttäjätiliä, voit luoda sellaisen."
+    
+    contact_form:
+      sent: "Kiitos, kun viestisi on lähetetty sähköpostitse meille."
+      send_button: Lähetä viesti
+      name: 'Nimi'
+      reason: 'Syynä kirjallisesti'
+      subject: Aihe
+      message: Viesti...
+      reason_list:
+        reason_1: 'Palaute'
+        reason_2: 'Tekninen ongelma'
+        reason_3: 'Muut'
+    

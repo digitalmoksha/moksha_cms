@@ -15,9 +15,14 @@ module Liquid
     def self.details
       { name: self.tag_name,
         summary: 'Returns url of a protected asset',
-        description: "Give the location/url of a protected asset file.",
-        example: "{% url_protected src: 'teachers/something.pdf' %}",
-        category: 'url'
+        category: 'url',
+        description: <<-END_OF_DESCRIPTION
+Give the location/url of a protected asset file.
+
+~~~
+{% url_protected src: 'teachers/something.pdf' %}
+~~~
+END_OF_DESCRIPTION
       }
     end
   end

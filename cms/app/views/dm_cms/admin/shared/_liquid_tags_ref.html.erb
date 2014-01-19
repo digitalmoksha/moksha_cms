@@ -18,8 +18,8 @@
         <h5 id="myModalLabel"><%= tag %></h5>
       </div>
       <div class="modal-body">
-        <p><%= tag_class.details[:description] %></p>
-        <pre><%= tag_class.details[:example] %></pre>
+        <%= markdown tag_class.details[:description], safe: false %>
+        <%= "<pre>#{tag_class.details[:example]}</pre>".html_safe if tag_class.details[:example].present? %>
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal">Close</button>

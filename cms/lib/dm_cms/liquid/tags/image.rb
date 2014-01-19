@@ -31,19 +31,19 @@ module Liquid
     def self.details
       { name: self.tag_name,
         summary: 'Displays an image',
-        description: "Displays an image. Will pull image from the site's images directory unless a full path is given.  All attributes are optional except <code>src</code>",
-        example: self.example,
-        category: 'image'
-      }
-    end
+        category: 'image',
+        description: <<-END_OF_DESCRIPTION
+Displays an image. Will pull image from the site's images directory unless a full path is given.
+All attributes are optional except `src`
 
-    def self.example
-      example = <<-END_OF_STRING
+~~~
 {% image src: placeholder_190x105.jpg, class: right, protected: true,
        title: "Some title", size: 16x16, width: www, 
        height: hhh, alt: "Alt text",
        style : sss, id : iii, mouseover : mmm %}
-END_OF_STRING
+~~~
+END_OF_DESCRIPTION
+      }
     end
   end
   

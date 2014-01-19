@@ -15,9 +15,14 @@ module Liquid
     def self.details
       { name: self.tag_name,
         summary: 'Returns url of an asset',
-        description: "Give the location/url of an asset file. Is relative to the site's main asset directory unless a full path/url is given.",
-        example: "{% url_asset src: 'library/something.pdf' %}",
-        category: 'url'
+        category: 'url',
+        description: <<-END_OF_DESCRIPTION
+Give the location/url of an asset file. Is relative to the site's main asset directory unless a full path/url is given.
+
+~~~
+{% url_asset src: 'library/something.pdf' %}
+~~~
+END_OF_DESCRIPTION
       }
     end
   end

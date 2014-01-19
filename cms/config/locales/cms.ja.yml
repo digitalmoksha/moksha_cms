@@ -19,3 +19,16 @@ ja:
     comments_stat: コメント
     blog_login_required: このブログにアクセスするにはログインが必要です
     comment_login_required: "コメントを投稿するために、アカウントにログインしてください。 ユーザーアカウントをお持ちでない場合は、1を作成することができます。 "
+    
+    contact_form:
+      sent: "あなたのメッセージは、私たちに電子メールで送信された、ありがとうございます。"
+      send_button: メッセージを送る
+      name: '名前'
+      reason: '執筆の理由'
+      subject: テーマ
+      message: メッセージ...
+      reason_list:
+        reason_1: 'フィードバック'
+        reason_2: '技術的問題'
+        reason_3: 'その他'
+    

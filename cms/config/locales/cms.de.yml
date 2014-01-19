@@ -19,3 +19,16 @@ de:
     comments_stat: Kommentare
     blog_login_required: 'Um diesen Blog zu sehen, melde Dich bitte an.'
     comment_login_required: "Bitte melde dich mit deinen Benutzerdaten an, um einen Kommentar zu veröffentlichen. Falls du noch kein Benutzerkonto hast, kannst du unter nachfolgendem Link eines anlegen."
+    
+    contact_form:
+      sent: "Danke, Ihre Nachricht wurde an uns per E-Mail."
+      send_button: Nachricht senden
+      name: 'Name'
+      reason: 'Grund für das Schreiben'
+      subject: Thema
+      message: Nachricht...
+      reason_list:
+        reason_1: 'Rückkopplung'
+        reason_2: 'Technisches Problem'
+        reason_3: 'Andere'
+    

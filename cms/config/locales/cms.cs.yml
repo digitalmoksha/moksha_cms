@@ -19,3 +19,16 @@ cs:
     comments_stat: Komentáře
     blog_login_required: Přihlášení je vyžadováno pro přístup k tomuto blogu
     comment_login_required: "Prosím, přihlaste se ke svému účtu, abyste mohl psát komentář. Pokud nemáte uživatelský účet, můžete si jej vytvořit."
+    
+    contact_form:
+      sent: "Děkujeme, Vaše zpráva byla e-mailem na nás."
+      send_button: Poslat zprávu
+      name: 'Název'
+      reason: 'Důvod pro psaní'
+      subject: Předmět
+      message: Zpráva...
+      reason_list:
+        reason_1: 'Zpětná vazba'
+        reason_2: 'Technický problém'
+        reason_3: 'Další'
+    

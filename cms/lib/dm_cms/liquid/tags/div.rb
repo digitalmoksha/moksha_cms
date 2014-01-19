@@ -19,17 +19,18 @@ module Liquid
     def self.details
       { name: self.tag_name,
         summary: 'HTML div block',
-        description: "Outpus an HTML 'div' block.  You can specify id, class, and style.  You can also specify the markdown modifier, such as 'markdown: 0'",
-        example: self.example,
-        category: 'structure'
-      }
-    end
-    def self.example
-      example = <<-END_OF_STRING
+        category: 'structure',
+        description: <<-END_OF_DESCRIPTION
+Outpus an HTML 'div' block.  You can specify id, class, and style.
+You can also specify the markdown modifier, such as 'markdown: 0'
+
+~~~
 {% div id: some_id, class: some_class, style: some_style %}
 ...content
 {% enddiv %}
-END_OF_STRING
+~~~
+END_OF_DESCRIPTION
+      }
     end
   end
 

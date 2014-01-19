@@ -19,17 +19,18 @@ module Liquid
     def self.details
       { name: self.tag_name,
         summary: 'HTML blockquote',
-        description: "Outpus an HTML 'blockquote' with optional author.  You can specify id, class, and style.  Specify 'dash: false' to remove the dash on the authors name.",
-        example: self.example,
-        category: 'structure'
-      }
-    end
-    def self.example
-      example = <<-END_OF_STRING
+        category: 'structure',
+        description: <<-END_OF_DESCRIPTION
+Outpus an HTML 'blockquote' with optional author.  You can specify id, class, and style.
+Specify `dash: false` to remove the dash on the authors name.
+
+~~~
 {% quote author: 'Favorite Person', id: some_id, class: some_class, style: some_style, dash: false %}
-...content
+  ...content
 {% endquote %}
-END_OF_STRING
+~~~
+END_OF_DESCRIPTION
+      }
     end
   end
 

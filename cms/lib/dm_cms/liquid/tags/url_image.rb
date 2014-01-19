@@ -19,9 +19,14 @@ module Liquid
     def self.details
       { name: self.tag_name,
         summary: 'Returns location of image',
-        description: "Give the location/path of an image. Will pull image from the site's images directory unless a full path is given.",
-        example: "{% url_image src: placeholder_190x105.jpg %}",
-        category: 'image'
+        category: 'image',
+        description: <<-END_OF_DESCRIPTION
+Give the location/path of an image. Will pull image from the site's images directory unless a full path is given.
+
+~~~
+{% url_image src: placeholder_190x105.jpg %}
+~~~
+END_OF_DESCRIPTION
       }
     end
   end

@@ -19,3 +19,16 @@ en:
     comments_stat: Comments
     blog_login_required: Login is required to access this blog
     comment_login_required: "Please log in to your account to post a comment. If you do not have a user account, you can create one." 
+    
+    contact_form:
+      sent: "Thank you, your message was emailed to us."
+      send_button: Send Message
+      name: 'Name'
+      reason: 'Reason for writing'
+      subject: Subject
+      message: Message...
+      reason_list:
+        reason_1: 'Feedback'
+        reason_2: 'Technical Problem'
+        reason_3: 'Other'
+        
