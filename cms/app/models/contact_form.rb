@@ -15,9 +15,10 @@ class ContactForm < ::MailForm::Base
 
   #------------------------------------------------------------------------------
   def headers
-    { :subject => "#{reason}: #{subject}" , 
-      :to => Account.current.preferred_support_email,
-      :from => %("#{name}" <#{email}>)
+    { subject:  "#{reason}: #{subject}" , 
+      to:       Account.current.preferred_support_email,
+      from:     %("#{name}" <#{email}>),
+      reply_to: %("#{name}" <#{email}>)
     }
   end
 end
