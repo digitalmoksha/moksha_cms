@@ -11,7 +11,7 @@ class ContactForm < ::MailForm::Base
   attribute :reason,      :validate => true
   attribute :nickname,    :captcha  => true
   
-  append    :remote_ip, :user_agent, :session   # append these values to the end of all emails
+  # append    :remote_ip, :user_agent, :session   # append these values to the end of all emails
 
   #------------------------------------------------------------------------------
   def headers
