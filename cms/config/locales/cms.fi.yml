@@ -26,6 +26,7 @@ fi:
       name: 'Nimi'
       reason: 'Syynä kirjallisesti'
       subject: Aihe
+      subject_prefix: Contact Form
       message: Viesti...
       reason_list:
         reason_1: 'Palaute'

@@ -21,14 +21,15 @@ de:
     comment_login_required: "Bitte melde dich mit deinen Benutzerdaten an, um einen Kommentar zu veröffentlichen. Falls du noch kein Benutzerkonto hast, kannst du unter nachfolgendem Link eines anlegen."
     
     contact_form:
-      sent: "Danke, Ihre Nachricht wurde an uns per E-Mail."
+      sent: "Vielen Dank, Ihre Nachricht wurde erfolgreich gesendet."
       send_button: Nachricht senden
       name: 'Name'
-      reason: 'Grund für das Schreiben'
+      reason: 'Bereich: Bitte auswählen'
       subject: Thema
+      subject_prefix: Kontaktformular
       message: Nachricht...
       reason_list:
-        reason_1: 'Rückkopplung'
+        reason_1: 'Feedback'
         reason_2: 'Technisches Problem'
         reason_3: 'Andere'
     

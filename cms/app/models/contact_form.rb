@@ -15,7 +15,7 @@ class ContactForm < ::MailForm::Base
 
   #------------------------------------------------------------------------------
   def headers
-    { subject:  "#{reason}: #{subject}" , 
+    { subject:  "#{I18n.t('cms.contact_form.subject_prefix')}: #{reason}: #{subject}" , 
       to:       Account.current.preferred_support_email,
       from:     %("#{name}" <#{email}>),
       reply_to: %("#{name}" <#{email}>)

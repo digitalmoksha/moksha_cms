@@ -26,6 +26,7 @@ cs:
       name: 'Název'
       reason: 'Důvod pro psaní'
       subject: Předmět
+      subject_prefix: Contact Form
       message: Zpráva...
       reason_list:
         reason_1: 'Zpětná vazba'

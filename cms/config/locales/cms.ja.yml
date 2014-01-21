@@ -26,6 +26,7 @@ ja:
       name: '名前'
       reason: '執筆の理由'
       subject: テーマ
+      subject_prefix: Contact Form
       message: メッセージ...
       reason_list:
         reason_1: 'フィードバック'
