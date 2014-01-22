@@ -26,7 +26,7 @@ class DmCms::PostsController < DmCms::ApplicationController
 
   #------------------------------------------------------------------------------
   def ajax_add_comment
-    @post  = CmsPost.find_by_slug(params[:cms_post_id])
+    @post  = CmsPost.find_by_slug(params[:cms_post_id].slug_param)
     authorize! :read, @post.cms_blog
     @post.comments.create(:body => params[:comment][:body], :user_id => current_user.id) if current_user && !params[:comment][:body].blank?
     redirect_to :back
@@ -57,12 +57,12 @@ protected
 
   #------------------------------------------------------------------------------
   def post_lookup
-    @blog = CmsBlog.find_by_slug(params[:cms_blog_id])
+    @blog = CmsBlog.find_by_slug(params[:cms_blog_id].slug_param)
     redirect_to blog_root_path and return if @blog.nil?
     raise Account::LoginRequired.new(I18n.t('cms.blog_login_required')) if !current_user && !@blog.is_public?
     authorize! :read, @blog
     
-    @post = @blog.posts.find_by_slug(params[:id])
+    @post = @blog.posts.find_by_slug(params[:id].slug_param)
     redirect_to blog_show_path(@blog) and return if @post.nil?
   end
 

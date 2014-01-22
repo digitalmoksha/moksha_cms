@@ -115,7 +115,7 @@ protected
   #------------------------------------------------------------------------------
   def current_page
     if params[:id].to_i == 0
-      @current_page = CmsPage.find_by_slug(params[:id])
+      @current_page = CmsPage.find_by_slug(params[:id].slug_param)
     else
       @current_page = CmsPage.find(params[:id])
     end

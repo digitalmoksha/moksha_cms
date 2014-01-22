@@ -22,12 +22,6 @@ class CmsPage < ActiveRecord::Base
   has_paper_trail         :skip => [:title, :menutitle]
   
   # --- FriendlyId
-  # extend FriendlyId
-  # friendly_id             :title_slug, use: :scoped, scope: :account_id
-  # validates_presence_of   :slug
-  # before_save             :normalize_slug
-
-  # --- FriendlyId
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
 
