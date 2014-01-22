@@ -33,7 +33,7 @@ protected
 
   #------------------------------------------------------------------------------
   def blog_lookup
-    @blog = CmsBlog.find(params[:id])
+    @blog = CmsBlog.find(params[:id].slug_param)
     redirect_to blog_root_path and return if @blog.nil?
     authorize! :read, @blog
   end
