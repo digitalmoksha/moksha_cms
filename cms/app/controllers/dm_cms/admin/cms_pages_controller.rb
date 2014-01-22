@@ -1,7 +1,7 @@
 class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   helper "dm_cms/cms_pages"
   
-  before_filter   :current_page, :except => [:file_tree, :expire_cache_total]
+  before_filter   :current_page, :except => [:index, :file_tree, :expire_cache_total]
   before_filter   :set_title
 
   #------------------------------------------------------------------------------
