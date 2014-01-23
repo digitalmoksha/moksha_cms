@@ -19,7 +19,7 @@ class Workshop < ActiveRecord::Base
   attr_accessible         :slug, :title, :description, :sidebar, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
                           :contact_email, :contact_phone, :require_review, :require_account, :show_address, :require_address,
                           :require_photo, :published, :base_currency, :event_style, :funding_goal, :funding_goal_cents,
-                          :payments_enabled
+                          :payments_enabled, :image
 
   # --- globalize
   translates              :title, :description, :sidebar, :fallbacks_for_empty_translations => true
@@ -32,7 +32,8 @@ class Workshop < ActiveRecord::Base
   resourcify
 
   preference              :show_social_buttons,  :boolean, :default => false
-  attr_accessible         :preferred_show_social_buttons
+  preference              :header_accent_color,  :string
+  attr_accessible         :preferred_show_social_buttons, :preferred_header_accent_color
 
   # --- validations
   validates_presence_of   :country_id
