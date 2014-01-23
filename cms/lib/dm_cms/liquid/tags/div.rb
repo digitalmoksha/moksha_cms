@@ -21,14 +21,17 @@ module Liquid
         summary: 'HTML div block',
         category: 'structure',
         description: <<-END_OF_DESCRIPTION
-Outpus an HTML 'div' block.  You can specify id, class, and style.
-You can also specify the markdown modifier, such as 'markdown: 0'
+Outputs an HTML 'div' block.  You can specify id, class, and style.
+You can also specify the markdown modifier, such as 'markdown: 0', if you don't wish the contents to be 
+processed by Markdown.
 
 ~~~
-{% div id: some_id, class: some_class, style: some_style %}
+{% div id: some_id, class: "class1 class2", style: "color: red; background-color: #aaa;" %}
 ...content
 {% enddiv %}
 ~~~
+
+_Note:_ `class` and `style` are specified the same as a normal HTML div
 END_OF_DESCRIPTION
       }
     end

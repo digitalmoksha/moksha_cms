@@ -23,7 +23,8 @@ class CmsBlog < ActiveRecord::Base
   belongs_to                :account
 
   preference                :show_social_buttons,  :boolean, :default => false
-  attr_accessible           :preferred_show_social_buttons
+  preference                :header_accent_color,  :string
+  attr_accessible           :preferred_show_social_buttons, :preferred_header_accent_color
 
   validates                 :title, presence_default_locale: true
 

@@ -11,7 +11,8 @@
     <%= f.input :requires_login, :as => :toggle, :label => 'Public Requires Login?', :hint => 'If this is a public blog, user must be logged in to see it.  (All private blogs automatically require login)' %>
     <%= f.input :comments_allowed, :as => :toggle, :label => 'Allow Comments', :hint => 'Controls whether commenting is allowed for this blog.  If on, then each post can decided whether to allow comments' %>
     <%= f.input :preferred_show_social_buttons, :as => :toggle, label: 'Show social buttons', hint: 'This setting will be ignored for private blogs' %>
-    <%= f.input :image, :label => 'Blog Image', hint: 'An image for the entire blog' %>
+    <%= f.input :image, :label => 'Header Image', hint: 'An image for the entire blog' %>
+    <%= f.input :preferred_header_accent_color, :label => 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
 
     <%= submit_or_cancel :cancel_url => admin_cms_blogs_path %>
 
