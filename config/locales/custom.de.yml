@@ -46,7 +46,8 @@ de:
     profile_details_settings: 'Benutzerdaten'
     profile_public_title: Öffentliches Profil
     profile_public_explanation: 'Die folgenden Informationen sind für andere Benutzer sichtbar, wenn du Beiträge im Forum und im Blog veröffentlichst.'
-    profile_public_upload: Hier kannst du ein Foto von dir hochladen.
+    profile_public_upload: Foto
+    profile_public_upload_help: 'Hier kannst du ein Foto von dir hochladen (gif, jpg, png)'
     profile_private_title: Geschütztes Profil
     profile_private_explanation: 'Die folgenden Daten werden nur intern verwendet und nicht mit anderen Benutzern geteilt.'
     profile_account_title: "Email-Adresse ändern"

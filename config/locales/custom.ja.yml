@@ -48,7 +48,8 @@ ja:
     profile_details_settings: '公開 / 非公開 プロフィール'
     profile_public_title: 公開プロフィール
     profile_public_explanation: '下記の情報はフォーラムの投稿メッセージやブログのコメント欄などにおいて他の方々に表示されます。'
-    profile_public_upload: 公開プロフィール用の写真をアップロードする
+    profile_public_upload: 写真
+    profile_public_upload_help: '公開プロフィール用の写真をアップロードする (gif, jpg, png)'
     profile_private_title: 非公開プロフィール
     profile_private_explanation: 'この情報は非公開に保たれ、どなたとも共有されません。'
     profile_account_title: "Eメールアドレス / アカウントのログイン情報 を更新する"

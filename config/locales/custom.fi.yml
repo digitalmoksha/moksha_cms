@@ -48,7 +48,8 @@ fi:
     profile_details_settings: 'Julkinen / Henkilökohtainen profiili'
     profile_public_title: Julkinen profiili
     profile_public_explanation: 'Sellaiset tiedot, kuten viestit foorumilla ja blogin kommentit, tulevat näkymään muille.'
-    profile_public_upload: Lataa kuva julkiseen profiiliisi
+    profile_public_upload: Kuva
+    profile_public_upload_help: 'Lataa kuva julkiseen profiiliisi (gif, jpg, png)'
     profile_private_title: Henkilökohtainen Profiili
     profile_private_explanation: 'Nämä tiedot pysyvät henkilökohtaisina eikä niihin ole kenelläkään pääsyä.'
     profile_account_title: "Päivitä sähköposti / Tiliin kirjautuminen"

@@ -2,29 +2,37 @@
   <%= render :partial => 'dm_core/profile/profile_sidebar' %>
 <% end %>
 
-<%= simple_form_for(@user, :url => dm_core.edit_profile_account_path) do |f| %>
+<%= simple_form_for(@user, :url => dm_core.edit_profile_account_path, html: {id: 'profile_form', class: 'profile_account_form'}) do |f| %>
   <%= flash_notices %>
   <%= f.error_notification :message => I18n.t('core.errors_below') %>
 
-  <h2><%= I18n.t 'core.profile_account_title' %></h2>
-  <p><%= I18n.t 'core.profile_account_explanation' %></p>
-  <% if !@user.unconfirmed_email.blank? && flash[:notice].blank? %>
-    <div class="alert alert-error">
-      <p><%= I18n.t 'core.profile_email_needs_confirmation' %><br />
-        <strong>&nbsp;&nbsp;&nbsp;<%= @user.unconfirmed_email %></strong><br />
-        <%= I18n.t 'core.profile_email_needs_confirmation_2' %>
-      </p>
-    </div>
-  <% end %>
-  <%= f.input :email, :label => I18n.t('core.profile_email'), :required => true %>
+  <fieldset>
+    <h2><%= I18n.t 'core.profile_account_title' %></h2>
+    <p><%= I18n.t 'core.profile_account_explanation' %></p>
+    <% if !@user.unconfirmed_email.blank? && flash[:notice].blank? %>
+      <div class="alert alert-error">
+        <p><%= I18n.t 'core.profile_email_needs_confirmation' %><br />
+          <strong>&nbsp;&nbsp;&nbsp;<%= @user.unconfirmed_email %></strong><br />
+          <%= I18n.t 'core.profile_email_needs_confirmation_2' %>
+        </p>
+      </div>
+    <% end %>
+    <%= f.input :email, :label => I18n.t('core.profile_email'), :required => true %>
+  </fieldset>
   
-  <h2><%= I18n.t 'core.profile_account_password_title' %></h2>
-  <%= f.input :password, label: I18n.t('core.profile_password') %>
-  <%= f.input :password_confirmation, label: I18n.t('core.profile_password_confirmation') %>
+  <fieldset>
+    <h2><%= I18n.t 'core.profile_account_password_title' %></h2>
+    <%= f.input :password, label: I18n.t('core.profile_password') %>
+    <%= f.input :password_confirmation, label: I18n.t('core.profile_password_confirmation') %>
+  </fieldset>
 
-  <h2><%= I18n.t 'core.profile_account_password_current_title' %></h2>
-  <p><%= I18n.t 'core.profile_account_password_current_explanation' %></p>
-  <%= f.input :current_password, label: I18n.t('core.profile_current_password') %>
+  <fieldset>
+    <h2><%= I18n.t 'core.profile_account_password_current_title' %></h2>
+    <p><%= I18n.t 'core.profile_account_password_current_explanation' %></p>
+    <%= f.input :current_password, label: I18n.t('core.profile_current_password'), :required => true %>
+  </fieldset>
 
-  <%= f.button :submit, I18n.t('core.profile_update_btn') %>
+  <fieldset class="submit_form">
+    <%= f.button :submit, I18n.t('core.profile_update_btn'), class: 'btn btn-primary' %>
+  </fieldset>
 <% end %>

@@ -2,26 +2,32 @@
   <%= render :partial => 'dm_core/profile/profile_sidebar' %>
 <% end %>
 
-<%= simple_form_for(@user_profile, :url => dm_core.edit_profile_details_path) do |f| %>
+<%= simple_form_for(@user_profile, :url => dm_core.edit_profile_details_path, html: {id: 'profile_form', class: 'profile_details_form'}) do |f| %>
   <%= flash_notices %>
   <%= f.error_notification :message => I18n.t('core.errors_below') %>
 
-  <h2><%= I18n.t 'core.profile_public_title' %></h2>
-  <p><%= I18n.t 'core.profile_public_explanation' %></p>
-  <%= f.input :public_name, :label => I18n.t('core.profile_public_name'), :required => true %>
-  <%= f.input :country_id, :collection => ut_country_select_collection(false), :label => I18n.t('core.profile_country'), :required => true %>
-  <%= f.input :public_avatar, label: "<strong>#{I18n.t('core.profile_public_upload')}</strong>", :as => :image, :input_html => {:preview_version => :sq100} %>
+  <fieldset>
+    <h2><%= I18n.t 'core.profile_public_title' %></h2>
+    <p><%= I18n.t 'core.profile_public_explanation' %></p>
+    <%= f.input :public_name, :label => I18n.t('core.profile_public_name'), :required => true %>
+    <%= f.input :country_id, :collection => ut_country_select_collection(false), :label => I18n.t('core.profile_country'), :required => true %>
+    <%= f.input :public_avatar, label: I18n.t('core.profile_public_upload'), :as => :image, hint: I18n.t('core.profile_public_upload_help'), :input_html => {:preview_version => :sq100} %>
+  </fieldset>
 
-  <h2><%= I18n.t 'core.profile_private_title' %></h2>
-  <p><%= I18n.t 'core.profile_private_explanation' %></p>
-  <%= f.input :first_name, :label => I18n.t('core.profile_first_name'), :required => true %>
-  <%= f.input :last_name, :label => I18n.t('core.profile_last_name'), :required => true %>
-  <%= f.input :address, :label => I18n.t('core.profile_address') %>
-  <%= f.input :address2, :label => I18n.t('core.profile_address2') %>
-  <%= f.input :city, :label => I18n.t('core.profile_city') %>
-  <%= f.input :state, :label => I18n.t('core.profile_state') %>
-  <%= f.input :zipcode, :label => I18n.t('core.profile_zipcode') %>
+  <fieldset>
+    <h2><%= I18n.t 'core.profile_private_title' %></h2>
+    <p><%= I18n.t 'core.profile_private_explanation' %></p>
+    <%= f.input :first_name, :label => I18n.t('core.profile_first_name'), :required => true %>
+    <%= f.input :last_name, :label => I18n.t('core.profile_last_name'), :required => true %>
+    <%= f.input :address, :label => I18n.t('core.profile_address') %>
+    <%= f.input :address2, :label => I18n.t('core.profile_address2') %>
+    <%= f.input :city, :label => I18n.t('core.profile_city') %>
+    <%= f.input :state, :label => I18n.t('core.profile_state') %>
+    <%= f.input :zipcode, :label => I18n.t('core.profile_zipcode') %>
+  </fieldset>
 
-  <%= f.button :submit, I18n.t('core.profile_update_btn') %>
+  <fieldset class="submit_form">
+    <%= f.button :submit, I18n.t('core.profile_update_btn'), class: 'btn btn-primary' %>
+  </fieldset>
 
 <% end %>
