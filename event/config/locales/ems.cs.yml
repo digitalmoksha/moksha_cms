@@ -7,7 +7,7 @@ cs:
     ticket_receipt_attendee: Účastník
     ticket_receipt_departure: Odjezd
     ticket_receipt_event: Událost
-    ticket_receipt_questions: "Pokud máte ohledně události nějaké otázky, pošlete nám, prosím, e-mail %{value}"
+    ticket_receipt_questions: "V případě dalších otázek nás, prosím, kontaktujte na %{value}"
     ticket_receipt_questions_telephone: "nebo zatelefonujte %{value}"
     ticket_receipt_ticket_number: Číslo lístku
     ticket_receipt_price: Cena

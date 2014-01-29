@@ -7,7 +7,7 @@ en:
     ticket_receipt_attendee: Attendee
     ticket_receipt_departure: Departure
     ticket_receipt_event: Event
-    ticket_receipt_questions: "If you have any questions regarding the event, please email %{value}"
+    ticket_receipt_questions: "If you have any questions, please email us at %{value}"
     ticket_receipt_questions_telephone: "or telephone %{value}"
     ticket_receipt_ticket_number: Ticket Number
     ticket_receipt_price: Price

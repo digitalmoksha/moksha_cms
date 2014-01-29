@@ -7,7 +7,7 @@ ja:
     ticket_receipt_attendee: 出席者
     ticket_receipt_departure: 出発
     ticket_receipt_event: イベント
-    ticket_receipt_questions: "イベントに関してご不明な点がある場合は、下記にメールして下さい。 %{value}"
+    ticket_receipt_questions: "ご不明な点がございましたら、メールでお問い合わせください %{value}"
     ticket_receipt_questions_telephone: "もしくは、お電話下さい。 %{value}"
     ticket_receipt_ticket_number: チケット番号
     ticket_receipt_price: 料金

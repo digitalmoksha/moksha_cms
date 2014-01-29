@@ -7,7 +7,7 @@ fi:
     ticket_receipt_attendee: Osallistuja
     ticket_receipt_departure: Lähtö
     ticket_receipt_event: Tapahtuma
-    ticket_receipt_questions: "Jos sinulla on mitä tahansa kysyttävää tapahtumaa koskien, lähetä viesti %{value}"
+    ticket_receipt_questions: "Jos sinulla on kysyttävää, lähetä meille sähköpostia osoitteeseen %{value}"
     ticket_receipt_questions_telephone: "tai soita %{value}"
     ticket_receipt_ticket_number: Lipun numero
     ticket_receipt_price: Hinta
