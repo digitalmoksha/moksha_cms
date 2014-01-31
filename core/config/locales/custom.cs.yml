@@ -35,7 +35,7 @@ cs:
     reset_password_email_1: 'Dobrý den %{value}'
     reset_password_email_2: 'Bylo zažádáno o změnu Vašeho hesla, což můžete učinit přes níže uvedený odkaz.'
     reset_password_email_3: "Pokud jste o to nezažádali Vy, tento e-mail prosím ignorujte."
-    reset_password_email_4: "Pro odblokování svého účtu klikněte na níže uvedený odkaz."
+    reset_password_email_4: "Vaše heslo se nezmění, dokud se nezobrazí na výše uvedený odkaz a vytvořit novou."
     reset_password_email_link: Změnit mé heslo
     unlock_email_1: 'Dobrý den %{value}'
     unlock_email_2: 'Váš účet byl zablokován kvůli opakovaným neúspěšným pokusům o přihlášení.'

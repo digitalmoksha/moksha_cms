@@ -37,7 +37,7 @@ en:
     reset_password_email_1: 'Hello %{value}'
     reset_password_email_2: 'Someone has requested a link to change your password, and you can do this through the link below.'
     reset_password_email_3: "If you didn't request this, please ignore this email."
-    reset_password_email_4: "Click the link below to unlock your account"
+    reset_password_email_4: "Your password won't change until you access the link above and create a new one."
     reset_password_email_link: Change my password
     unlock_email_1: 'Hello %{value}'
     unlock_email_2: 'Your account has been locked due to an excessive amount of unsuccessful sign in attempts.'

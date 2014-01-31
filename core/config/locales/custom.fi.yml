@@ -37,7 +37,7 @@ fi:
     reset_password_email_1: 'Hei %{value}'
     reset_password_email_2: 'Joku on pyytänyt linkkiä vaihtaakseen salasanasi, voit tehdä sen alla olevan linkin kautta.'
     reset_password_email_3: "Ellet olet pyytänyt tätä, voit jättää tämän viestin huomiotta."
-    reset_password_email_4: "Klikkaa alla olevaa linkkiä avataksesi tilisi"
+    reset_password_email_4: "Salasana ei muutu, ennen kuin käyttää yllä olevaa linkkiä ja luo uusi."
     reset_password_email_link: Muuta salasana
     unlock_email_1: 'Hei %{value}'
     unlock_email_2: 'Käyttäjätilisi on lukittu liiallisista epäonnistuneista kirjautumisyrityksistä johtuen.'
