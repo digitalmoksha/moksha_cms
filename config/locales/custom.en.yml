@@ -30,6 +30,20 @@ en:
     resource_invalid: Requested page is not available in your account
     create_account: Create Account
     
+    confirmation_email_1: 'Thank you for registering for an account on %{value}'
+    confirmation_email_2: 'Please click on the following link to complete your registration:'
+    confirmation_email_3: 'Thank you!'
+    confirmation_email_link: Confirm my account
+    reset_password_email_1: 'Hello %{value}'
+    reset_password_email_2: 'Someone has requested a link to change your password, and you can do this through the link below.'
+    reset_password_email_3: "If you didn't request this, please ignore this email."
+    reset_password_email_4: "Click the link below to unlock your account"
+    reset_password_email_link: Change my password
+    unlock_email_1: 'Hello %{value}'
+    unlock_email_2: 'Your account has been locked due to an excessive amount of unsuccessful sign in attempts.'
+    unlock_email_3: "Click the link below to unlock your account"
+    unlock_email_link: Unlock my account
+    
     profile_email: Email
     profile_password: Password
     profile_password_confirmation: Password Confirmation

@@ -1,0 +1,7 @@
+<p><%= I18n.t('core.confirmation_email_1', value: Account.current.domain) %></p>
+
+<p><strong><%= I18n.t('core.confirmation_email_2') %></strong></p>
+
+<p style="padding-top: 20px;padding-bottom:20px"><%= link_to I18n.t('core.confirmation_email_link'), Account.current.url_base + confirmation_path(@resource, :confirmation_token => @resource.confirmation_token, :locale => DmCore::Language.locale), class: 'button' %></p>
+
+<p><%= I18n.t('core.confirmation_email_3') %></p>
