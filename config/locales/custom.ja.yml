@@ -37,7 +37,7 @@ ja:
     reset_password_email_1: 'こんにちは %{value}'
     reset_password_email_2: 'どなたかがあなたのパスワードを変更するためのリンクを送るように依頼されました。下記のリンクから変更して頂けます。'
     reset_password_email_3: "あなたがこれを依頼していない場合は、このメールを無視して下さい。"
-    reset_password_email_4: "ご自分のアカウントを解除するには下記のリンクをクリックして下さい。"
+    reset_password_email_4: "あなたのパスワードは、上記のリンクにアクセスするまで、変更し、新しいものを作成しません。"
     reset_password_email_link: パスワードを変更する
     unlock_email_1: 'こんにちは %{value}'
     unlock_email_2: 'あなたのアカウントは、サインインに何度も失敗したためにロックされています。'
