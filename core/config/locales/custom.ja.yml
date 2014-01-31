@@ -30,6 +30,20 @@ ja:
     resource_invalid: 要求されたページには、アカウントで利用できない
     create_account: アカウントを作成
 
+    confirmation_email_1: '%{value} 上のアカウントを登録して頂き有り難うございました。'
+    confirmation_email_2: '登録手続きを完了させるには次のリンクをクリックして下さい:'
+    confirmation_email_3: '宜しくお願い致します。'
+    confirmation_email_link: アカウントを認証する
+    reset_password_email_1: 'こんにちは %{value}'
+    reset_password_email_2: 'どなたかがあなたのパスワードを変更するためのリンクを送るように依頼されました。下記のリンクから変更して頂けます。'
+    reset_password_email_3: "あなたがこれを依頼していない場合は、このメールを無視して下さい。"
+    reset_password_email_4: "ご自分のアカウントを解除するには下記のリンクをクリックして下さい。"
+    reset_password_email_link: パスワードを変更する
+    unlock_email_1: 'こんにちは %{value}'
+    unlock_email_2: 'あなたのアカウントは、サインインに何度も失敗したためにロックされています。'
+    unlock_email_3: "ご自分のアカウントを解除するには下記のリンクをクリックして下さい。"
+    unlock_email_link: アカウントを解除する
+
     profile_email: Eメール
     profile_password: パスワード
     profile_password_confirmation: パスワード（確認）

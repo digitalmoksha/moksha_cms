@@ -30,6 +30,20 @@ fi:
     resource_invalid: Sivu ei ole käytettävissä tililläsi
     create_account: Luo tili
 
+    confirmation_email_1: 'Kiitos rekisteröitymisestäsi %{value} käyttäjätilille'
+    confirmation_email_2: 'Klikkaa seuraavaa linkkiä päättääksesi rekisteröitymisesi:'
+    confirmation_email_3: 'Kiitos!'
+    confirmation_email_link: Vahvista tilini
+    reset_password_email_1: 'Hei %{value}'
+    reset_password_email_2: 'Joku on pyytänyt linkkiä vaihtaakseen salasanasi, voit tehdä sen alla olevan linkin kautta.'
+    reset_password_email_3: "Ellet olet pyytänyt tätä, voit jättää tämän viestin huomiotta."
+    reset_password_email_4: "Klikkaa alla olevaa linkkiä avataksesi tilisi"
+    reset_password_email_link: Muuta salasana
+    unlock_email_1: 'Hei %{value}'
+    unlock_email_2: 'Käyttäjätilisi on lukittu liiallisista epäonnistuneista kirjautumisyrityksistä johtuen.'
+    unlock_email_3: "Klikkaa alla olevaa linkkiä avataksesi tilisi."
+    unlock_email_link: Avaa tilini
+
     profile_email: Sähköposti
     profile_password: Salasana
     profile_password_confirmation: Salasanan vahvistaminen

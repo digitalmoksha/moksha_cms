@@ -28,6 +28,20 @@ de:
     resource_invalid: Angeforderte Seite ist auf Ihrem Konto nicht verfügbar
     create_account: Neues Benutzerkonto anlegen
 
+    confirmation_email_1: 'Vielen Dank für deine Registrierung eines Benutzerkontos auf %{value}'
+    confirmation_email_2: 'Bitte klicke auf folgenden Link, um deine Registrierung abzuschließen:'
+    confirmation_email_3: 'Vielen Dank!'
+    confirmation_email_link: Ich will mein Konto bestätigen
+    reset_password_email_1: 'Hallo %{value}'
+    reset_password_email_2: 'Jemand hat einen Link, um Ihr Passwort zu ändern angefordert, und Sie können dies über den Link unten tun.'
+    reset_password_email_3: "Wenn Sie nicht angefordert haben diese, ignorieren Sie diese E-Mail."
+    reset_password_email_4: "Ihr Passwort wird sich nicht ändern, bis Sie auf den obigen Link zugreifen und eine neue erstellen."
+    reset_password_email_link: Mein Passwort ändern
+    unlock_email_1: 'Hallo %{value}'
+    unlock_email_2: 'Ihr Konto wurde aufgrund einer übermäßigen Menge von Zeichen in erfolglose Versuche gesperrt.'
+    unlock_email_3: "Klicken Sie auf den untenstehenden Link, um Ihr Konto zu entsperren"
+    unlock_email_link: Schalte mein Konto
+
     profile_email: E-Mail
     profile_password: Neues Passwort
     profile_password_confirmation: Neues Passwort - wiederholen

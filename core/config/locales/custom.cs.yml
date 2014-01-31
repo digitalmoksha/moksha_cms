@@ -28,6 +28,20 @@ cs:
     resource_invalid: Požadovaná stránka není k dispozici ve vašem účtu
     create_account: Vytvořit účet
 
+    confirmation_email_1: 'Děkujeme za Vaši registraci na %{value}'
+    confirmation_email_2: 'Pro dokončení registrace klikněte, prosím, na následující odkaz:'
+    confirmation_email_3: 'Děkujeme!'
+    confirmation_email_link: Potvrdit můj účet
+    reset_password_email_1: 'Dobrý den %{value}'
+    reset_password_email_2: 'Bylo zažádáno o změnu Vašeho hesla, což můžete učinit přes níže uvedený odkaz.'
+    reset_password_email_3: "Pokud jste o to nezažádali Vy, tento e-mail prosím ignorujte."
+    reset_password_email_4: "Pro odblokování svého účtu klikněte na níže uvedený odkaz."
+    reset_password_email_link: Změnit mé heslo
+    unlock_email_1: 'Dobrý den %{value}'
+    unlock_email_2: 'Váš účet byl zablokován kvůli opakovaným neúspěšným pokusům o přihlášení.'
+    unlock_email_3: "Pro odblokování svého účtu klikněte na níže uvedený odkaz."
+    unlock_email_link: Odblokovat účet
+
     profile_email: E-mail
     profile_password: Heslo
     profile_password_confirmation: Potvrzení hesla
