@@ -96,3 +96,5 @@ en:
     no_followed_topics: There are currently no topics being followed
     no_forums: The Forum section will be available soon
     comment_notification_inform: You will automatically receive notification of any future comments
+    follow: Follow
+    follow_stop: Stop Following

@@ -95,4 +95,6 @@ de:
     no_topics: 'Sei der Erste, der ein Thema erstellt'
     no_followed_topics: 'Es liegen noch keine Themen zu überwachenden'
     no_forums: Das Forum Abschnitt wird in Kürze verfügbar
-    comment_notification_inform: Sie erhalten automatisch alle von ihnen in Zukunft Kommentare
+    comment_notification_inform: "Du wirst automatisch benachrichtigt, wenn ein neuer Kommentar gepostet wurde."
+    follow: Abonnieren
+    follow_stop: Nicht mehr folgen

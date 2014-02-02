@@ -96,3 +96,5 @@ cs:
     no_followed_topics: V dané chvíli nejsou monitorována žádná témata
     no_forums: Sekce Fóra bude brzy k dispozici
     comment_notification_inform: Budete automaticky dostávat oznámení jakýchkoli budoucích komentářů
+    follow: Sledovat
+    follow_stop: Přestaňte Po

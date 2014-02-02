@@ -96,3 +96,5 @@ fi:
     no_followed_topics: Tällä hetkellä ei ole valvottuja aiheita
     no_forums: Foorumi osio on saatavilla pian
     comment_notification_inform: Saat automaattisesti ilmoituksen mahdollisista tulevista kommentteja
+    follow: Seurata
+    follow_stop: Stop Following
