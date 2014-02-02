@@ -19,6 +19,8 @@ de:
     comments_stat: Kommentare
     blog_login_required: 'Um diesen Blog zu sehen, melde Dich bitte an.'
     comment_login_required: "Bitte melde dich mit deinen Benutzerdaten an, um einen Kommentar zu veröffentlichen. Falls du noch kein Benutzerkonto hast, kannst du unter nachfolgendem Link eines anlegen."
+    comment_notify:
+      disclaimer: "Sie erhalten diese Mail, da Sie angegeben Neuigkeiten zu diesem Blog / Forum informiert werden wollten."
     
     contact_form:
       sent: "Vielen Dank, Ihre Nachricht wurde erfolgreich gesendet."

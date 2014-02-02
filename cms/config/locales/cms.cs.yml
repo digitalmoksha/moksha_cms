@@ -19,6 +19,8 @@ cs:
     comments_stat: Komentáře
     blog_login_required: Přihlášení je vyžadováno pro přístup k tomuto blogu
     comment_login_required: "Prosím, přihlaste se ke svému účtu, abyste mohl psát komentář. Pokud nemáte uživatelský účet, můžete si jej vytvořit."
+    comment_notify:
+      disclaimer: "Obdrželi jste tento e-mail, protože je uvedeno byste chtěli být informováni o změnách tohoto blogu / fóru."
     
     contact_form:
       sent: "Děkujeme, Vaše zpráva byla e-mailem na nás."
