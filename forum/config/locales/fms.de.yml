@@ -83,7 +83,7 @@ de:
     edit: bearbeiten
     delete: löschen
     all: Alle Themen
-    monitored: Bereits besuchte Themen
+    followed: Bereits besuchte Themen
     started: Begonnen von
     comment_age: "%{when} vor"
     by_user_html: "von %{user}"
@@ -93,5 +93,6 @@ de:
     last_post_on: "Letzter Eintrag von %{user} :: %{date}"
     comments_header: Kommentare
     no_topics: 'Sei der Erste, der ein Thema erstellt'
-    no_monitored_topics: 'Es liegen noch keine Themen zu überwachenden'
+    no_followed_topics: 'Es liegen noch keine Themen zu überwachenden'
     no_forums: Das Forum Abschnitt wird in Kürze verfügbar
+    comment_notification_inform: Sie erhalten automatisch alle von ihnen in Zukunft Kommentare

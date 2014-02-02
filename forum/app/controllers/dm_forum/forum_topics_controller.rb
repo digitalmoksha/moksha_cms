@@ -24,7 +24,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
     @forum_topic.hit! unless user_signed_in? && @forum_topic.user_id == current_user.id
     @forum_comments = @forum_topic.forum_comments.paginate :page => page_number
     @forum_comment  = ForumComment.new
-    @monitoring     = user_signed_in? && @forum_topic.monitoring_users.where(:id => current_user).present?
+    @following      = user_signed_in? && @forum_topic.followed_by?(current_user.following)
   end
   
   #------------------------------------------------------------------------------
@@ -67,6 +67,17 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   def destroy
     @forum_topic.destroy if is_admin?
     redirect_to @forum
+  end
+  
+  #------------------------------------------------------------------------------
+  def toggle_follow
+    @forum_topic  = @forum.forum_topics.find(params[:forum_topic_id])
+    @following    = current_user.following.following?(@forum_topic)
+    if @following
+      current_user.following.stop_following(@forum_topic)
+    else
+      current_user.following.follow(@forum_topic)
+    end
   end
   
 protected

@@ -83,7 +83,7 @@ ja:
     edit: edit
     delete: delete
     all: all topics
-    monitored: only watched topics
+    followed: only watched topics
     started: Started by
     comment_age: "%{when} ago"
     by_user_html: "by %{user}"
@@ -93,5 +93,6 @@ ja:
     last_post_on: "Last post by %{user} :: %{date}"
     comments_header: Comments
     no_topics: Be the first to create a topic
-    no_monitored_topics: There are currently no topics being monitored
+    no_followed_topics: There are currently no topics being followed
     no_forums: The Forum section will be available soon
+    comment_notification_inform: あなたは自動的に将来のコメントの通知を受け取ります

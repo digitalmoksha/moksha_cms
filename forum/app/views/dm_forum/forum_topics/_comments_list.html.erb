@@ -1,7 +1,5 @@
 <a name="<%= dom_id @forum_comments.first %>" id="<%= dom_id @forum_comments.first %>">&#xA0;</a>
 
-<%= pagination(@forum_comments) %>
-
 <% if @forum_comments.first.is_root? %>
   <div class="comments clearfix">
     <ul class="comment_list first_comment">
@@ -11,6 +9,8 @@
 <% end %>
 
 <h3 style="text-transform: uppercase"><%= I18n.t 'fms.comments_header' %></h3>
+
+<%= pagination(@forum_comments) %>
 
 <% if user_signed_in? and !@forum_topic.locked? %>
   <p><%= link_to I18n.t('fms.reply_to_topic'), "#reply" %></p>
@@ -26,6 +26,7 @@
 
 <%= pagination(@forum_comments) %>
 
+<div class="clear"></div>
 <script type='text/javascript'><!--//--><![CDATA[//><!--
 // if (history && history.replaceState && $$('.pagination')) {
 //   $$('.pagination a').invoke('observe', 'click', function(){

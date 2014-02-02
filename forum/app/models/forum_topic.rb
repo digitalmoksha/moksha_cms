@@ -10,6 +10,8 @@ class ForumTopic < ActiveRecord::Base
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
 
+  acts_as_followable
+  
   before_validation       :set_default_attributes, :on => :create
 
   after_create            :create_initial_comment
@@ -20,7 +22,8 @@ class ForumTopic < ActiveRecord::Base
 
   #--- creator of forum topic
   belongs_to              :user
-
+  belongs_to              :account
+  
   #--- creator of recent comment
   belongs_to              :last_user, :class_name => "User"
 
@@ -34,8 +37,6 @@ class ForumTopic < ActiveRecord::Base
   has_one                 :recent_comment, :as => :commentable, :class_name => "ForumComment", :conditions => 'ancestry_depth = 1', :order => "created_at DESC"
 
   has_many                :voices, :through => :forum_comments, :source => :user, :uniq => true
-  has_many                :monitorships, :dependent => :delete_all
-  has_many                :monitoring_users, :through => :monitorships, :source => :user, :conditions => ['fms_monitorships.active = ?', true]
   
   validates_presence_of   :user_id, :forum_site_id, :forum_id, :title
   validates_presence_of   :body, :on => :create

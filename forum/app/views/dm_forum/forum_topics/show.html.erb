@@ -2,10 +2,8 @@
 
 <% content_for :sidebar do %>
 
-  <div id="monitor_button">
-    <%= render(:partial => 'dm_forum/monitorships/monitor_topic_button', :object => @monitoring, :as => :monitoring) %>
-  </div>
-  
+  <%= render(:partial => 'dm_forum/forum_topics/follow_button', :object => @following, :as => :following) %>
+  <div class="clear"></div>
   <div class="forum_sidebar_voices">
     <h5><%= I18n.t 'fms.voices' %></h5>
     <ul>
@@ -55,6 +53,7 @@
       <h3 id="reply" style="text-transform: uppercase"><%= I18n.t 'fms.reply_to_topic' %></h3>
 
       <div id="comment_reply_form" class="comment_reply_form">
+        <p><small><em><%= I18n.t('fms.comment_notification_inform')%></em></small></p>
         <%= simple_form_for [@forum, @forum_topic, @forum_topic.forum_comments.new] do |f| %>
           <%= f.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), 
                           :input_html => {:rows => 10} %>

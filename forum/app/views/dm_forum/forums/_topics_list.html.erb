@@ -3,21 +3,21 @@
 <% end %>
 
 <% if user_signed_in? %>
-  <span class="monitor_filter">
-  <% if @monitored %>
+  <span class="follow_filter">
+  <% if @followed %>
     <span class='filter'>
       <i class="icon-th"></i>
       <%= link_to((I18n.t 'fms.all'), forum_show_path(@forum), :id => 'filter_link') %>
     </span>
     &nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-th-large"></i>
-    <%= I18n.t 'fms.monitored' %>
+    <%= I18n.t 'fms.followed' %>
   <% else %>
     <i class="icon-th"></i>
     <%= I18n.t 'fms.all' %>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <span class='filter'>
       <i class="icon-th-large"></i>
-      <%= link_to((I18n.t 'fms.monitored'), forum_show_path(@forum)+"?monitored=true", :id => 'filter_link') %> 
+      <%= link_to((I18n.t 'fms.followed'), forum_show_path(@forum)+"?followed=true", :id => 'filter_link') %> 
     </span>
   <% end %>
   </span>
@@ -61,8 +61,8 @@
     <% end %>
   </ul>
 <% else %>
-  <% if @monitored %>
-    <div class="no_items"><%= I18n.t "fms.no_monitored_topics" %></div>
+  <% if @followed %>
+    <div class="no_items"><%= I18n.t "fms.no_followed_topics" %></div>
   <% else %>
     <div class="no_items"><%= I18n.t "fms.no_topics" %></div>
   <% end %>
@@ -78,7 +78,7 @@ if (history && history.replaceState) {
     $$('.pagination a').invoke('observe', 'click', function(){
       <%= p = Hash.new
        p.update('page' => params[:page].to_i) if params[:page]
-       p.update('monitored' => 'true') if @monitored
+       p.update('followed' => 'true') if @followed
        modify_history('pushState', @forum.name, "#{@forum.slug}.html", p) %>
     });
   }

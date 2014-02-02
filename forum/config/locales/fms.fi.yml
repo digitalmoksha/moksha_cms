@@ -83,7 +83,7 @@ fi:
     edit: muokkaa
     delete: poista
     all: kaikki aiheet
-    monitored: vain valvottuja aiheita
+    followed: vain valvottuja aiheita
     started: Aloittaja
     comment_age: "%{when} sitten"
     by_user_html: "%{user}"
@@ -93,5 +93,6 @@ fi:
     last_post_on: "Viimeinen viesti %{user} :: %{date}"
     comments_header: Kommentit
     no_topics: Ole ensimmäinen luomassa aihe
-    no_monitored_topics: Tällä hetkellä ei ole valvottuja aiheita
+    no_followed_topics: Tällä hetkellä ei ole valvottuja aiheita
     no_forums: Foorumi osio on saatavilla pian
+    comment_notification_inform: Saat automaattisesti ilmoituksen mahdollisista tulevista kommentteja

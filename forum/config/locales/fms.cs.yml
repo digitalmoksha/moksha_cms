@@ -83,7 +83,7 @@ cs:
     edit: upravit
     delete: smazat
     all: všechna témata
-    monitored: jen sledovaná témata
+    followed: jen sledovaná témata
     started: Započato
     comment_age: "před %{when}"
     by_user_html: "od %{user}"
@@ -93,5 +93,6 @@ cs:
     last_post_on: "Poslední příspěvek od %{user} :: %{date}"
     comments_header: Komentáře
     no_topics: 'Buďte první, kdo vytvoří téma'
-    no_monitored_topics: V dané chvíli nejsou monitorována žádná témata
+    no_followed_topics: V dané chvíli nejsou monitorována žádná témata
     no_forums: Sekce Fóra bude brzy k dispozici
+    comment_notification_inform: Budete automaticky dostávat oznámení jakýchkoli budoucích komentářů

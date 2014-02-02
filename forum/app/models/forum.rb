@@ -51,8 +51,8 @@ class Forum < ActiveRecord::Base
   end
   
   #------------------------------------------------------------------------------
-  def monitored_topics(user)
-    self.forum_topics.joins(:monitorships).where(:fms_monitorships => {:user_id => user, :active => true})
+  def followed_topics(user)
+    user.following.following_by_type('ForumTopic').where(forum_id: self.id)
   end
 
   #------------------------------------------------------------------------------
@@ -70,4 +70,18 @@ class Forum < ActiveRecord::Base
     end
   end
   
+  # Send comment notifications to any followers
+  #------------------------------------------------------------------------------
+  def self.notify_followers(start_time, end_time = Time.now)
+    comments          = Comment.where(commentable_type: 'ForumTopic', created_at: start_time..end_time)
+    comments_by_topic = comments.group_by {|i| i.commentable_id }
+    comments_by_topic.each do |topic_id, topic_comments|
+      forum_topic = ForumTopic.find(topic_id)
+      followers   = forum_topic.followers
+      followers.each do |follower|
+        email =  ForumNotificationMailer.follower_notification(follower.user, forum_topic, topic_comments).deliver
+        # puts "I'm a follower: #{follower.user.email}: topic: #{forum_topic.title}  count: #{topic_comments.count}"
+      end
+    end
+  end
 end

@@ -20,10 +20,10 @@
 
   <% if can? :moderate, @forum %>
     <div class="clearfix">
-      <%= f.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('fms.sticky')}" %>
+      <%= f.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('fms.sticky')}".html_safe %>
     </div>
     <div class="clearfix">
-      <%= f.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('fms.locked')}" %>
+      <%= f.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('fms.locked')}".html_safe %>
     </div>
   <% end %>
 

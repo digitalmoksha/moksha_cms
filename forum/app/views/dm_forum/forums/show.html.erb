@@ -30,8 +30,8 @@
 
 <div id="topics_list">
   <%= render(:partial => 'forum_header', :object => @forum, :as => :forum) %>
-  <%= if @monitored        
-        render(:partial => 'topics_list', :object => @monitored_topics, :as => :forum_topics)
+  <%= if @followed        
+        render(:partial => 'topics_list', :object => @followed_topics, :as => :forum_topics)
       else
         render(:partial => 'topics_list', :object => @forum_topics, :as => :forum_topics)
      end

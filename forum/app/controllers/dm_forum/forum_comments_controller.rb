@@ -11,10 +11,10 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
   # /forums/1/topics/1/posts
   #------------------------------------------------------------------------------
   def index
-    @monitored        = user_signed_in? && params[:monitored]
+    @followed         = user_signed_in? && params[:followed]
     @q                = params[:q] ? params[:q].purify : nil
     @posts            = (@parent ? @parent.forum_comments : ForumSite.site.forum_comments).search(@q, :page => page_number)
-    @monitored_posts  = user_signed_in? ? (@parent ? @parent.forum_comments : ForumSite.site.forum_comments).search_monitored(current_user.id, @q, :page => page_number) : nil
+    @followed_posts   = user_signed_in? ? (@parent ? @parent.forum_comments : ForumSite.site.forum_comments).search_followed(current_user.id, @q, :page => page_number) : nil
     @users            = @user ? {@user.id => @user} : User.index_from(@posts)
   end
 
@@ -33,6 +33,7 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
     if @forum_comment.new_record?
       redirect_to forum_forum_topic_path(@forum, @forum_topic)
     else
+      current_user.following.follow(@forum_topic)
       flash[:notice] = 'Comment successfully created.'
       redirect_to(forum_forum_topic_path(@forum, @forum_topic, {:anchor => dom_id(@forum_comment), :page => @forum_topic.last_page}))
     end
