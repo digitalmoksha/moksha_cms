@@ -29,11 +29,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'country_select'           
   s.add_dependency 'paper_trail', '~> 2'      # table versioning
   s.add_dependency "RedCloth", "~> 4.2"
-  s.add_dependency "bluecloth", "~> 2.2"      # only for a very specific instance
   s.add_dependency 'kramdown'
   s.add_dependency "liquid", "~> 2.3"
+  s.add_dependency "sanitize"
   s.add_dependency 'acts_as_commentable', "~> 4.0"
   s.add_dependency 'acts_as_votable', '~> 0.8.0'
+  s.add_dependency 'acts_as_follower', '~> 0.1.1'
   s.add_dependency 'ancestry'
   s.add_dependency 'ranked-model'             # sort order for a list
   s.add_dependency 'amoeba', '~> 2.0'         # for handling model duplicating

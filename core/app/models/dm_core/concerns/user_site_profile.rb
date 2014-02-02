@@ -16,7 +16,10 @@ module DmCore
 
         #--- votability on a per site basis
         acts_as_voter
-  
+        
+        #--- allows following posts, forum topics, etc
+        acts_as_follower
+        
         #   Note: don't use a default account scope as it makes some of the User 
         #   associations a little more difficult
         scope                   :this_site, lambda { where(account_id: Account.current.id) }
