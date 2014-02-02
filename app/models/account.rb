@@ -33,11 +33,12 @@ class Account < ActiveRecord::Base
   attr_accessible         :preferred_stripe_private_key, :preferred_stripe_public_key
   attr_accessible         :preferred_subscription_processor
   attr_accessible         :preferred_default_currency
+  attr_accessible         :preferred_follower_notifications_sent_at
 
   attr_accessible         :preferred_nms_use_mailchimp, :preferred_nms_api_key, :preferred_nms_lists_synced_on
 
   attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation
-  attr_accessor           :url_base, :url_host  #--- stores the current base site url for this request. useful to mailers where request object not available
+  attr_accessor           :url_base, :url_host, :url_protocol  #--- stores the current base site url for this request. useful to mailers where request object not available
   
   validates_presence_of   :domain,                                      :if => Proc.new { |p| p.general_validation }
   validates_presence_of   :account_prefix,                              :if => Proc.new { |p| p.general_validation }
@@ -109,6 +110,9 @@ class Account < ActiveRecord::Base
   preference              :nms_api_key,                     :string
   preference              :nms_lists_synced_on,             :datetime
   
+  #--- status values (no UI)
+  preference              :follower_notifications_sent_at,  :datetime # when last follower notifications were sent
+  
   #--- eager load all preferences when an object is found
   after_find              :preferences
   
@@ -149,10 +153,9 @@ class Account < ActiveRecord::Base
 
     #--- set the current request site url for use where request object is not avail,
     #    like in ActionMailer or from a rake task
-    protocol                  = Account.current.ssl_enabled? ? 'https://' : 'http://'
-    host_with_port            = Account.current.domain
-    Account.current.url_base  = protocol + host_with_port
-    Account.current.url_host  = host_with_port
+    Account.current.url_protocol  = Account.current.ssl_enabled? ? 'https://' : 'http://'
+    Account.current.url_host      = Account.current.domain
+    Account.current.url_base      = Account.current.url_protocol + Account.current.url_host
   end
   
   #------------------------------------------------------------------------------

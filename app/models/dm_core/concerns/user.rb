@@ -25,8 +25,11 @@ module DmCore
         has_many                :user_site_profiles, :dependent => :destroy
         has_one                 :current_site_profile, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
         
-        #--- this allows us to use @user.voting.likes @post and it will be stored with the site specific user profile
+        #--- this allows us to use @user.voting.likes(@post) and it will be stored with the site specific user profile
         has_one                 :voting, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
+
+        #--- this allows us to use @user.following.follow(@post) and it will be stored with the site specific user profile
+        has_one                 :following, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
 
         accepts_nested_attributes_for :user_profile
 
