@@ -6,6 +6,14 @@ class Account < ActiveRecord::Base
   class LoginRequired < StandardError
   end
   
+  CURRENCY_TYPES    = { 'British Pound (&pound;)'.html_safe => 'GBP',
+                        'Czech Koruna (&#x4B;&#x10D;)'.html_safe => 'CZK',
+                        'Euro (&euro;)'.html_safe => 'EUR',
+                        'Indian Rupee (Rs)' => 'INR',
+                        'Japanese Yen (&yen;)'.html_safe => 'JPY',
+                        'Swiss Franc (Fr)' => 'CHF',
+                        'US Dollar ($)' => 'USD' }
+  
   self.table_name   = 'core_accounts'
   attr_accessible         :company_name, :contact_email, :default_site_id, :domain, :account_prefix
   attr_accessible         :preferred_site_enabled, :preferred_default_locale, :preferred_locales,
@@ -24,6 +32,7 @@ class Account < ActiveRecord::Base
   attr_accessible         :preferred_paymill_private_key, :preferred_paymill_public_key
   attr_accessible         :preferred_stripe_private_key, :preferred_stripe_public_key
   attr_accessible         :preferred_subscription_processor
+  attr_accessible         :preferred_default_currency
 
   attr_accessible         :preferred_nms_use_mailchimp, :preferred_nms_api_key, :preferred_nms_lists_synced_on
 
@@ -93,6 +102,7 @@ class Account < ActiveRecord::Base
   
   #--- Subscritpion Payments
   preference              :subscription_processor,          :string
+  preference              :default_currency,                :string
 
   #--- Newsletter
   preference              :nms_use_mailchimp,               :boolean, :default => false
