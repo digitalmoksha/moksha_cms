@@ -51,6 +51,11 @@ module LiquidExtensions
     def render_erb(context, file_name, locals = {})
       context.registers[:controller].send(:render_to_string, :partial => file_name, :locals => locals)
     end
+
+    #------------------------------------------------------------------------------
+    def context_account_site_assets(context)
+      context.registers[:account_site_assets]
+    end
   end
 end
 
@@ -70,17 +75,6 @@ module DmCore
         @attributes[key] = ((value.delete "\"").delete "\'")
       end
       super
-    end
-
-    # return a url path to the file.  
-    #------------------------------------------------------------------------------
-    def file_path(file_name, context, default_folder = 'images', is_protected = false)
-      return '' if file_name.blank?
-      if is_protected
-        file_name.expand_url("/protected_asset/")
-      else
-        file_name.expand_url("#{context.registers[:account_site_assets]}/#{default_folder}/")
-      end
     end
 
     class << self
@@ -118,17 +112,6 @@ module DmCore
       @blank = false
     end
     
-    # return a url path to the file.  
-    #------------------------------------------------------------------------------
-    def file_path(file_name, context, default_folder = 'images', is_protected = false)
-      return '' if file_name.blank?
-      if is_protected
-        file_name.expand_url("/protected_asset/")
-      else
-        file_name.expand_url("#{context.registers[:account_site_assets]}/#{default_folder}/")
-      end
-    end
-
     class << self
       #------------------------------------------------------------------------------
       def tag_name
