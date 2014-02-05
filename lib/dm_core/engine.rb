@@ -23,6 +23,7 @@ require 'friendly_id'
 require 'aasm'
 require 'money-rails'
 require 'exception_notification'
+require 'aws-sdk'
 
 module DmCore
   class Engine < ::Rails::Engine
