@@ -10,24 +10,20 @@ module Liquid
     include Sprockets::Helpers::RailsHelper
     include Sprockets::Helpers::IsolatedHelper
     include DmCore::UrlHelper
+    include DmCore::ParamsHelper
+    include DmCore::AccountHelper
 
     #------------------------------------------------------------------------------
     def render(context)
       @attributes.reverse_merge!  'alt' =>  ''
-      src       = file_path(@attributes["src"], context)
-      mouseover = file_path(@attributes["mouseover"], context)
+      src       = file_url(@attributes["src"], account_site_assets: context_account_site_assets(context), default_folder: 'images', protected: @attributes['protected'].as_boolean)
 
       image_tag(src,  class: @attributes["class"], title: @attributes["title"], size: @attributes["size"], 
                       width: @attributes["width"], height: @attributes["height"], alt: @attributes["alt"],
-                      style: @attributes["style"], id: @attributes["id"], mouseover: mouseover)
+                      style: @attributes["style"], id: @attributes["id"])
     end
   
     #------------------------------------------------------------------------------
-    def file_path(file_name, context)
-      path = @attributes['protected'].as_boolean ? "/protected_asset/" : "#{context.registers[:account_site_assets]}/images/"
-      expand_url(file_name, path)
-    end
-    
     def self.details
       { name: self.tag_name,
         summary: 'Displays an image',
@@ -40,7 +36,7 @@ All attributes are optional except `src`
 {% image src: placeholder_190x105.jpg, class: right, protected: true,
        title: "Some title", size: 16x16, width: www, 
        height: hhh, alt: "Alt text",
-       style : sss, id : iii, mouseover : mmm %}
+       style : sss, id : iii %}
 ~~~
 END_OF_DESCRIPTION
       }

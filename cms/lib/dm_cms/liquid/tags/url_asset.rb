@@ -5,10 +5,12 @@ module Liquid
     include Sprockets::Helpers::RailsHelper
     include Sprockets::Helpers::IsolatedHelper
     include DmCore::UrlHelper
+    include DmCore::ParamsHelper
+    include DmCore::AccountHelper
 
     #------------------------------------------------------------------------------
     def render(context)
-      src = expand_url(@attributes["src"], "#{context.registers[:account_site_assets]}/")
+      src = file_url(@attributes["src"], account_site_assets: context_account_site_assets(context), default_folder: '', protected: @attributes['protected'].as_boolean)
       return src.nil? ? '' : src
     end
   
