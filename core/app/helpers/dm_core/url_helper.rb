@@ -50,7 +50,7 @@ module DmCore
       object_name = uri.path.gsub(/^\//, '')
       expire_mins = (uri.query.blank? ? nil : CGI::parse(uri.query)['expires'][0]) || '10'
       
-      s3 = AWS::S3.new(access_key_id: access_key, secret_access_key: secret_key)
+      s3 = ::AWS::S3.new(access_key_id: access_key, secret_access_key: secret_key)
       object = s3.buckets[bucket].objects[object_name]
       object.url_for(:get, {expires: expire_mins.to_i.minutes.from_now, secure: secure}).to_s
     end
