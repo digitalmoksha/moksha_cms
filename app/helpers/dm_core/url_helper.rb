@@ -13,15 +13,53 @@ module DmCore
       request.put? || request.post?
     end
   
+    # Given a file name (relative or absolute), generate a full url path (usually
+    # will not include the protocol)
+    #------------------------------------------------------------------------------
+    def file_url(file_name, options = {})
+      options.reverse_merge!  default_folder: 'images', account_site_assets: account_site_assets
+      if file_name.blank?
+        ''
+      elsif file_name.start_with?('s3://', 's3s://')
+        # amazon S3 url - generate a signed expiring link
+        s3_generate_expiring_link(file_name)
+      elsif file_name.absolute_url?
+        # it's absolute, nothing to do
+        file_name
+      elsif options[:protected]
+        # a protected asset, append our protected asset name (which will trigger a
+        # special route to handle the file)
+        file_name.expand_url("/protected_asset/")
+      else
+        # append our site's asset folder and default folder
+        folder = options[:default_folder].blank? ? '' : "#{options[:default_folder]}/"
+        file_name.expand_url("#{options[:account_site_assets]}/#{folder}")
+      end
+    end
+
+    # Generate an AWS S3 expiring link, using a special formatted url
+    #   s3://bucket_name/object_name?expires=120    => non-SSL, expires in 120 minutes
+    #   s3s://bucket_name/object_name?expires=20    => SSL, expires in 20 minutes
+    #------------------------------------------------------------------------------
+    def s3_generate_expiring_link(url)
+      access_key  = Account.current.theme_data['AWS_ACCESS_KEY_ID']
+      secret_key  = Account.current.theme_data['AWS_SECRET_ACCESS_KEY']
+      uri         = URI.parse(url)
+      secure      = (uri.scheme == 's3s')
+      bucket      = uri.host
+      object_name = uri.path.gsub(/^\//, '')
+      expire_mins = (uri.query.blank? ? nil : CGI::parse(uri.query)['expires'][0]) || '10'
+      
+      s3 = AWS::S3.new(access_key_id: access_key, secret_access_key: secret_key)
+      object = s3.buckets[bucket].objects[object_name]
+      object.url_for(:get, {expires: expire_mins.to_i.minutes.from_now, secure: secure}).to_s
+    end
+
     # if a relative url path is given, then expand it by prepending the supplied 
     # path.
     #------------------------------------------------------------------------------
     def expand_url(url, path)
-      if url.blank? || url.start_with?('http', 'https', '/')
-        return url
-      else
-        return path + url
-      end
+      url.expand_url(path)
     end
     
     # Returns an image tag, where the src defaults to the site_assets image folder
@@ -35,28 +73,28 @@ module DmCore
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
     def site_image_path(src)
-      rewrite_asset_path(expand_url(src, "#{account_site_assets}/images/"))
+      rewrite_asset_path(src.expand_url("#{account_site_assets}/images/"))
     end
 
     # Returns a url to a site image, relative to the site_assets folder
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
     def site_image_url(src)
-      rewrite_asset_path(expand_url(src, "#{account_site_assets_url}/images/"))
+      rewrite_asset_path(src.expand_url("#{account_site_assets_url}/images/"))
     end
 
     # Returns a path to a site assets, relative to the site_assets folder
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
     def site_asset_path(src)
-      rewrite_asset_path(expand_url(src, "#{account_site_assets}/"))
+      rewrite_asset_path(src.expand_url("#{account_site_assets}/"))
     end
 
     # Returns a path to a site assets, relative to the site_assets folder
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
     def site_asset_url(src)
-      rewrite_asset_path(expand_url(src, "#{account_site_assets_url}/"))
+      rewrite_asset_path(src.expand_url("#{account_site_assets_url}/"))
     end
 
     #------------------------------------------------------------------------------
