@@ -42,7 +42,7 @@ module DmCore::LiquidHelper
   #------------------------------------------------------------------------------
   def markdown(content, options = {safe: true})
     html = ::Kramdown::Document.new(content).to_html.html_safe
-    sanitize_text(html, level: :relaxed).html_safe if options[:safe]
+    return options[:safe] ? sanitize_text(html, level: :relaxed).html_safe : html
   end
   
   # Uses Sanitize gem to fully sanitize any text.  
