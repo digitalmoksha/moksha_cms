@@ -11,7 +11,6 @@ module DmCore
       def account
         @user = current_user
         if put_or_post?
-          @user = User.find(current_user.id)
           if @user.update_with_password(params[:user])
             #--- Sign in the user bypassing validation in case his password changed
             sign_in @user, :bypass => true
