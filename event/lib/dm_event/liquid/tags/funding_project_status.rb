@@ -9,6 +9,7 @@ module Liquid
     include Sprockets::Helpers::IsolatedHelper
     include DmCore::UrlHelper
     include DmCore::ParamsHelper
+    include DmCore::AccountHelper
 
     #------------------------------------------------------------------------------
     def render(context)
@@ -18,7 +19,7 @@ module Liquid
       output                = super
       content               = output.strip
       workshop_id           = @attributes['project_id'] unless @attributes['project_id'].blank?
-      image                 = file_path(@attributes["image"], context)
+      image                 = file_url(@attributes["image"], account_site_assets: context_account_site_assets(context), default_folder: 'images', protected: @attributes['protected'].as_boolean)
       @attributes['style'] += css_style_width(@attributes['width'])
       
       context.registers[:view].render(partial: 'dm_event/liquid_tags/funding_project_status', 
@@ -33,11 +34,6 @@ module Liquid
     end
 
     #------------------------------------------------------------------------------
-    def file_path(file_name, context)
-      path = @attributes['protected'].as_boolean ? "/protected_asset/" : "#{context.registers[:account_site_assets]}/images/"
-      expand_url(file_name, path)
-    end
-
     def self.details
       { name: self.tag_name,
         summary: 'Funding Project Status',
