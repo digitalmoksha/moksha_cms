@@ -41,7 +41,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'babosa', '~> 0.3'         # for better unicode slug handling with friendly_id
   s.add_dependency 'friendly_id', "~> 4.0.9"
   s.add_dependency 'aasm'
-  s.add_dependency 'money-rails'  
+  s.add_dependency 'money-rails', '~> 0.8.0'
   s.add_dependency 'globalize', '~> 3.0.3'       # translations in database
   s.add_dependency 'exception_notification', '4.0.0'
   s.add_dependency 'aws-sdk', '~> 1.0'
