@@ -40,8 +40,12 @@ module DmCore::LiquidHelper
   # Goal is to allow untrusted users to add comments/text with some formatting and
   # linking, but provide safe output
   #------------------------------------------------------------------------------
-  def markdown(content, options = {safe: true})
-    html = ::Kramdown::Document.new(content).to_html.html_safe
+  def markdown(content = '', options = {safe: true}, &block)
+    if block_given?
+      html = ::Kramdown::Document.new(capture(&block)).to_html.html_safe      
+    else
+      html = ::Kramdown::Document.new(content).to_html.html_safe
+    end
     return options[:safe] ? sanitize_text(html, level: :relaxed).html_safe : html
   end
   
