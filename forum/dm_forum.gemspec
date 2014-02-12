@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.2.13"
 
   #--- dont' forget to add 'require' statement in engine.rb
-  s.add_dependency 'ranked-model'             # sort order for a list
+  s.add_dependency 'ranked-model', '~> 0.3.0'             # sort order for a list
 
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'
