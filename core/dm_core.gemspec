@@ -21,30 +21,31 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails'
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency "mysql2", ">= 0.3.11"
-  s.add_dependency 'devise', '~> 2.1'         # Authentication
-  s.add_dependency "rolify", ">= 3.2.0"       # User Roles
-  s.add_dependency "cancan", "~> 1.6"         # Authorization
-  s.add_dependency "simple_form", "~> 2.0"    # Form handling
-  s.add_dependency "will_paginate", "~> 3.0"  # pagination
-  s.add_dependency 'country_select'           
-  s.add_dependency 'paper_trail', '~> 2'      # table versioning
+  s.add_dependency 'devise', '~> 2.1'             # Authentication
+  s.add_dependency "rolify", ">= 3.2.0"           # User Roles
+  s.add_dependency "cancan", "~> 1.6"             # Authorization
+  s.add_dependency "simple_form", "~> 2.0"        # Form handling
+  s.add_dependency "will_paginate", "~> 3.0"      # pagination
+  s.add_dependency 'country_select', "~> 1.3.1"           
+  s.add_dependency 'paper_trail', '~> 2'          # table versioning
   s.add_dependency "RedCloth", "~> 4.2"
-  s.add_dependency 'kramdown'
+  s.add_dependency 'kramdown', "~> 1.3.1"
   s.add_dependency "liquid", "~> 2.3"
-  s.add_dependency "sanitize"
+  s.add_dependency "sanitize", "~> 2.1.0"
   s.add_dependency 'acts_as_commentable', "~> 4.0"
   s.add_dependency 'acts_as_votable', '~> 0.8.0'
   s.add_dependency 'acts_as_follower', '~> 0.1.1'
-  s.add_dependency 'ancestry'
-  s.add_dependency 'ranked-model'             # sort order for a list
-  s.add_dependency 'amoeba', '~> 2.0'         # for handling model duplicating
-  s.add_dependency 'babosa', '~> 0.3'         # for better unicode slug handling with friendly_id
+  s.add_dependency 'ancestry', "~> 2.0.0"
+  s.add_dependency 'ranked-model', '~> 0.3.0'     # sort order for a list
+  s.add_dependency 'amoeba', '~> 2.0'             # for handling model duplicating
+  s.add_dependency 'babosa', '~> 0.3'             # for better unicode slug handling with friendly_id
   s.add_dependency 'friendly_id', "~> 4.0.9"
-  s.add_dependency 'aasm'
-  s.add_dependency 'money-rails', '~> 0.8.0'
-  s.add_dependency 'globalize', '~> 3.0.3'       # translations in database
+  s.add_dependency 'aasm', '~> 3.1.0'
+  s.add_dependency 'money-rails', '~> 0.9.0'
+  s.add_dependency 'globalize', '~> 3.0.3'        # translations in database
   s.add_dependency 'exception_notification', '4.0.0'
   s.add_dependency 'aws-sdk', '~> 1.0'
+  s.add_dependency 'biggs', "~> 0.3.3"            # address formatting
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem "preferences", "~> 0.5.0", :git => "git://github.com/madebydna/preferences.git"
