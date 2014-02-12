@@ -8,7 +8,7 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def render(context)
-      src = expand_url(@attributes["src"], "/protected_asset/")
+      src = file_url(@attributes["src"], account_site_assets: context_account_site_assets(context), default_folder: '', protected: true)
       return src.nil? ? '' : src
     end
   
