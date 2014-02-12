@@ -21,9 +21,11 @@ require 'amoeba'
 require 'babosa'
 require 'friendly_id'
 require 'aasm'
+require 'monetize/core_extensions'
 require 'money-rails'
 require 'exception_notification'
 require 'aws-sdk'
+require 'biggs'
 
 module DmCore
   class Engine < ::Rails::Engine
@@ -35,5 +37,6 @@ module DmCore
         include DmCore::ApplicationHelper
       end
     end
+    Money.silence_core_extensions_deprecations = true  # can remove once upgrade to Money 6.1
   end
 end
