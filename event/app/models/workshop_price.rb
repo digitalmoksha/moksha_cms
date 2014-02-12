@@ -41,13 +41,6 @@ class WorkshopPrice < ActiveRecord::Base
   validates_presence_of   :recurring_period,    :if => Proc.new { |w| w.recurring_number }
   validates_presence_of   :recurring_number,    :if => Proc.new { |w| w.recurring_period }
 
-  CURRENCY_TYPES = {'British Pound (&pound;)'.html_safe => 'GBP',
-                    'Czech Koruna (&#x4B;&#x10D;)'.html_safe => 'CZK',
-                    'Euro (&euro;)'.html_safe => 'EUR',
-                    'Indian Rupee (Rs)' => 'INR',
-                    'Japanese Yen (&yen;)'.html_safe => 'JPY',
-                    'Swiss Franc (Fr)' => 'CHF',
-                    'US Dollar ($)' => 'USD' }
   PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Wire Transfer']
 
   # For some reason, the initial monetized price gets created with the default

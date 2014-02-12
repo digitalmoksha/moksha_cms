@@ -20,7 +20,7 @@
     <% end %>
     
     <%= f.input :price %>
-    <%= f.input :price_currency, :collection => WorkshopPrice::CURRENCY_TYPES, disabled: true, hint: 'This is always the primary currency of the workshop' %>
+    <%= f.input :price_currency, :collection => Account::CURRENCY_TYPES, disabled: true, hint: 'This is always the primary currency of the workshop' %>
     <%= f.input :valid_until, :as => :string, :input_html => {:class => 'datepicker'} %>
     <%= f.input :total_available %>
     <%= f.input :disabled, :as => :toggle_checked, :label => 'Disable?' %>
@@ -32,9 +32,9 @@
           converted to the base currency.  Note that discounts are applied to the base currency value.</p>
         <div class="well">
           <%= f.input :alt1_price, :label => 'Price 2' %>
-          <%= f.input :alt1_price_currency, :label => 'Currency 2', :collection => WorkshopPrice::CURRENCY_TYPES %>
+          <%= f.input :alt1_price_currency, :label => 'Currency 2', :collection => Account::CURRENCY_TYPES %>
           <%= f.input :alt2_price, :label => 'Price 3' %>
-          <%= f.input :alt2_price_currency, :label => 'Currency 3', :collection => WorkshopPrice::CURRENCY_TYPES %>
+          <%= f.input :alt2_price_currency, :label => 'Currency 3', :collection => Account::CURRENCY_TYPES %>
         </div>
       </div>
     <% end %>

@@ -22,7 +22,7 @@
     <%= f.input :country_id, required: true, wrapper_html: { :class => 'searchDrop' }, input_html: { :class => 'chosen_select' }, 
                 collection: ut_country_select_collection, label_method: lambda {|t| t[0]}, value_method: lambda {|t| t[1]},
                 label: 'Country' %>
-    <%= f.input :base_currency, label: 'Currency', required: true, collection: WorkshopPrice::CURRENCY_TYPES,
+    <%= f.input :base_currency, label: 'Currency', required: true, collection: Account::CURRENCY_TYPES,
                 hint: 'Currency used for this workshop',
                 disabled: !(@workshop.workshop_prices.empty?) %>
     <div class="form-horizontal control-group string required workshop_starting_on">
