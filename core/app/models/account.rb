@@ -29,8 +29,6 @@ class Account < ActiveRecord::Base
   attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
   attr_accessible         :preferred_sofort_user_id, :preferred_sofort_project_id, 
                           :preferred_sofort_project_password, :preferred_sofort_notification_password
-  attr_accessible         :preferred_paymill_private_key, :preferred_paymill_public_key
-  attr_accessible         :preferred_stripe_private_key, :preferred_stripe_public_key
   attr_accessible         :preferred_subscription_processor
   attr_accessible         :preferred_default_currency
   attr_accessible         :preferred_follower_notifications_sent_at
@@ -93,14 +91,6 @@ class Account < ActiveRecord::Base
   preference              :sofort_project_password,         :string
   preference              :sofort_notification_password,    :string
 
-  #--- Paymill
-  preference              :paymill_public_key,              :string
-  preference              :paymill_private_key,             :string
-
-  #--- Stripe
-  preference              :stripe_public_key,               :string
-  preference              :stripe_private_key,              :string
-  
   #--- Subscritpion Payments
   preference              :subscription_processor,          :string
   preference              :default_currency,                :string
