@@ -5,6 +5,8 @@ module Liquid
     include Sprockets::Helpers::RailsHelper
     include Sprockets::Helpers::IsolatedHelper
     include DmCore::UrlHelper
+    include DmCore::ParamsHelper
+    include DmCore::AccountHelper
 
     #------------------------------------------------------------------------------
     def render(context)
