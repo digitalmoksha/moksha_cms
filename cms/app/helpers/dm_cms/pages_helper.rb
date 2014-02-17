@@ -26,7 +26,7 @@ module DmCms::PagesHelper
   end
 
   #------------------------------------------------------------------------------
-  def snippet_by_name(slug)
+  def snippet(slug)
     cms_snippet = CmsSnippet.find_by_slug(slug)
     if cms_snippet
       render :partial => 'dm_cms/pages/snippet_fragment', locals: {snippet_fragment: cms_snippet}
@@ -36,7 +36,7 @@ module DmCms::PagesHelper
   end
 
   #------------------------------------------------------------------------------
-  def snippet_by_name?(slug)
+  def snippet?(slug)
     CmsSnippet.where(slug: slug).count == 0 ? false : true
   end
 
