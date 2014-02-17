@@ -26,6 +26,21 @@ module DmCms::PagesHelper
   end
 
   #------------------------------------------------------------------------------
+  def snippet_by_name(slug)
+    cms_snippet = CmsSnippet.find_by_slug(slug)
+    if cms_snippet
+      render :partial => 'dm_cms/pages/snippet_fragment', locals: {snippet_fragment: cms_snippet}
+    else
+      render text: 'Snippet not found'
+    end
+  end
+
+  #------------------------------------------------------------------------------
+  def snippet_by_name?(slug)
+    CmsSnippet.where(slug: slug).count == 0 ? false : true
+  end
+
+  #------------------------------------------------------------------------------
   def render_content_item(content_item)
     if content_item.content.blank?
       content = ''
@@ -141,16 +156,7 @@ module DmCms::PagesHelper
     (@current_page == page or @current_page.parent_id == page.id) ? true : false
   end
 
-
 =begin  
-  # Given the name of a container, queries for all content items for that 
-  # container within the given page.
-  #------------------------------------------------------------------------------
-  def snippet_by_name( name )
-    @items = current_account.cms_snippets.find_all_by_container(name)
-    render :partial => (@items.nil? ? 'not_found' : 'snippet_fragment'), :collection => @items
-  end
-
   # -- Preferred method
   # given the accessname of a section, builds a list of links of all children of 
   # the specific section.

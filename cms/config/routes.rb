@@ -26,6 +26,7 @@ DmCms::Engine.routes.draw do
           post :markdown
         end
       end
+      resources :cms_snippets
       resources :cms_blogs do
         member do
           get     'blog_users',          :action => :blog_users, :as => :blog_users

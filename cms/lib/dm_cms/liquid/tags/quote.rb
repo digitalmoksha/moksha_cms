@@ -12,7 +12,7 @@ module Liquid
       
       out  = "<blockquote #{[id, dclass, style].join(' ')}>"
       out += output
-      out += "<footer markdown='0'>#{'&mdash; ' if @attributes['dash']}#{@attributes['author']}</footer>" unless @attributes['author'].blank?
+      out += "\r\n<footer markdown='0'>#{'&mdash; ' if @attributes['dash']}#{@attributes['author']}</footer>" unless @attributes['author'].blank?
       out += "</blockquote>"
     end
 

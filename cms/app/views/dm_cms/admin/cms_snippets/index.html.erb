@@ -1,0 +1,34 @@
+<% content_for :content_title_extra do %>
+  <div class='navbar'><ul class='nav pull-right'>
+    <li><%= link_to(icon_label('icon-plus', 'New'), new_admin_cms_snippet_path, :title => 'New Snippet', :class => "nav-btn-primary") %></li>
+  </ul></div>
+<% end %>
+
+<%= content_frame  do %>
+  <div class="table-overflow">
+    <table class="table table-striped table-bordered table-block">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th width="50">Type</th>
+          <th width="50">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cms_snippets.each do |cms_snippet| %>
+          <% present cms_snippet do |snippet_presenter| %>
+            <tr class="item">
+              <td>
+                <%= link_to cms_snippet.slug, edit_admin_cms_snippet_path(cms_snippet) %>
+              </td>
+              <td><%= cms_snippet.description %></td>
+              <td><%= cms_snippet.itemtype %></td>
+              <td><%= snippet_presenter.label_published %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

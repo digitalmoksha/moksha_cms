@@ -1,0 +1,12 @@
+<%#--- leave formatting alone - prefer final html to be as natural as possible %>
+<% if is_admin? %>
+<div class="fragment" id="fragment_<%= snippet_fragment.id %>">
+<%= render_content_item(snippet_fragment) %>
+</div>
+<% elsif snippet_fragment.enable_cache %>
+  <% cache("snippet/#{DmCore::Language.locale}/fragment/#{snippet_fragment.container}_#{snippet_fragment.id}" ) do %>
+<%= render_content_item(snippet_fragment) %>
+  <% end %>
+<% else %>
+<%= render_content_item(snippet_fragment) %>
+<% end %>
