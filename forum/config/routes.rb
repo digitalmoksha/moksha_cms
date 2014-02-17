@@ -5,6 +5,7 @@ DmForum::Engine.routes.draw do
   
   scope ":locale" do
     namespace :admin do
+      match '/dashboard/widget_forum_comments(/:comment_day)',   :controller => 'dashboard', :action => :widget_forum_comments, :as => :widget_forum_comments
       scope 'fms' do
         resource  :forum_site
         match '/forum_categories/sort',      :controller => 'forum_categories', :action => :sort, :as => :forum_category_sort
