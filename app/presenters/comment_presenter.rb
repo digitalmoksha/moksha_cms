@@ -14,7 +14,7 @@ class CommentPresenter < BasePresenter
   
   #------------------------------------------------------------------------------
   def date_posted
-    h.distance_of_time_in_words_to_now(comment.created_at) + " ago"
+    format_datetime comment.created_at
   end
   
   #------------------------------------------------------------------------------
