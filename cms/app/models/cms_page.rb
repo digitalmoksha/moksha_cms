@@ -117,6 +117,11 @@ class CmsPage < ActiveRecord::Base
         'title'     => self.title,
         'menutitle' => self.menutitle,
         'slug'      => self.slug
+      },
+      'subscription' =>
+      {
+        'trial?'    => false,
+        'active?'   => true
       }
     }
   end
