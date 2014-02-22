@@ -2,7 +2,7 @@
   <div class="user"><%= avatar_for comment.user, 50 %></div>
   <p class="comment_author"><%= truncate(present(comment).author, :length => 30) %></p>
   <p class="info">
-    <%= format_datetime comment.created_at %>
+    <%= present(comment).date_posted %>
     <%= ' | '.html_safe + link_to(I18n.t('cms.reply'), '#reply') if comment.commentable.comments_allowed? && user_signed_in? %>
     <% if false #user_signed_in? && can?(:edit, comment) %>
       | <%= link_to I18n.t('fms.admin.edit_post'), [commenting_on, :ajax_edit_comment, comment] %>
