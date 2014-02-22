@@ -6,7 +6,7 @@
     <% end %>
   </p>
   <p class="info">
-    <%= format_datetime comment_item.created_at %>
+    <%= present(comment_item).date_posted %>
     <% edited = edited_on_tag(comment_item) %>
     <%= " | #{edited}".html_safe if edited %>
     <%= ' | '.html_safe + link_to(I18n.t 'fms.reply', '#reply') unless @forum_topic.locked? || !user_signed_in? %>
