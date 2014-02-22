@@ -25,7 +25,9 @@
 
     <%= well_frame title: 'Subscription Processor' do %>
       <%= f.input :preferred_subscription_processor, label: 'Use', collection: ['paymill', 'stripe'], include_blank: true,
-                 hint: 'Used only for subscriber content. DO NOT set or change this unless you know what you are doing' %>
+                  hint: 'Used only for subscriber content. DO NOT set or change this unless you know what you are doing' %>
+      <%= f.input :preferred_subscription_bcc_email, label: 'Email bcc', include_blank: true,
+                  hint: 'Copies of subscription emails will be sent to this address' %>
       <%= f.input :preferred_default_currency, label: 'Default Currency', collection: Account::CURRENCY_TYPES,
                   hint: 'Default currency used for this site' %>
     <% end %>

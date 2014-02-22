@@ -29,7 +29,7 @@ class Account < ActiveRecord::Base
   attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
   attr_accessible         :preferred_sofort_user_id, :preferred_sofort_project_id, 
                           :preferred_sofort_project_password, :preferred_sofort_notification_password
-  attr_accessible         :preferred_subscription_processor
+  attr_accessible         :preferred_subscription_processor, :preferred_subscription_bcc_email
   attr_accessible         :preferred_default_currency
   attr_accessible         :preferred_follower_notifications_sent_at
 
@@ -94,6 +94,7 @@ class Account < ActiveRecord::Base
   #--- Subscritpion Payments
   preference              :subscription_processor,          :string
   preference              :default_currency,                :string
+  preference              :subscription_bcc_email,          :string
 
   #--- Newsletter
   preference              :nms_use_mailchimp,               :boolean, :default => false
