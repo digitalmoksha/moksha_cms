@@ -1,4 +1,5 @@
 class RegistrationDatatable
+  include ActionView::Helpers::TagHelper
   include Admin::ThemeAmsterdamHelper
   include DmEvent::RegistrationsHelper
   include DmUtilities::DateHelper

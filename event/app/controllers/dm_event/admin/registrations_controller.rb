@@ -7,8 +7,6 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
     @registration = Registration.find(params[:id])
     @state_event  = params[:state_event].downcase
     case @state_event
-    when 'delete'
-      @registration.destroy
     # when 'verify payment'
     #   @registration.verify_payment
     # when 'archive', 'unarchive'
@@ -30,6 +28,13 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
   rescue ActiveRecord::StaleObjectError
   end
 
+  #------------------------------------------------------------------------------
+  def destroy
+    registration = Registration.find(params[:id])
+    registration.destroy
+    redirect_to admin_workshop_url(registration.workshop), notice: 'Registration was successfully deleted.'
+  end
+  
   #------------------------------------------------------------------------------
   def edit
     @registration = Registration.find(params[:id])

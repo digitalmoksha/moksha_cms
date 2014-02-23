@@ -134,11 +134,19 @@ class Registration < ActiveRecord::Base
   end
 
   # Is it time to send a payment reminder?
-  # Due first 7 days after iniital registration.  Then every 14 days after that
+  # Due first 7 days after inital registration.  Then every 14 days after that
   #------------------------------------------------------------------------------
   def payment_reminder_due?
     time_period = self.payment_reminder_sent_on.nil? ? (self.created_at + 7.days) : (self.payment_reminder_sent_on + 14.days)
     self.balance_owed > Money.new(0, workshop.base_currency) && time_period < Time.now
+    
+    # if recurring_period since last paymnet
+    # if 7 days after registration and no payment
+    # if 14 days since last reminder and no payment
+    # if resume_reminders is past
+    # last_payment = payment_histories.order('created_on').last
+    # if workshop_price.recurring?
+    #   if 
   end
   
   # Setup the columns for exporting data as csv.

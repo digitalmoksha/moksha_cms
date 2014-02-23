@@ -24,7 +24,6 @@ module DmEvent
           state :canceled,            :after_enter => :state_canceled
           state :refunded,            :after_enter => :state_refunded
           state :noshow,              :after_enter => :state_noshow
-          state :deleted
 
           #------------------------------------------------------------------------------
           event :start do
@@ -105,19 +104,6 @@ module DmEvent
             transitions :from => :accepted,   :to => :waitlisted
             transitions :from => :canceled,   :to => :waitlisted
             transitions :from => :paid,       :to => :waitlisted
-          end
-
-          #------------------------------------------------------------------------------
-          event :delete do
-            transitions :from => :pending,    :to => :deleted
-            transitions :from => :reviewing,  :to => :deleted
-            transitions :from => :accepted,   :to => :deleted
-            transitions :from => :rejected,   :to => :deleted
-            transitions :from => :paid,       :to => :deleted
-            transitions :from => :canceled,   :to => :deleted
-            transitions :from => :waitlisted, :to => :deleted
-            transitions :from => :refunded,   :to => :deleted
-            transitions :from => :noshow,     :to => :deleted
           end
 
           #------------------------------------------------------------------------------
