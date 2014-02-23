@@ -1,4 +1,5 @@
 class UserDatatable
+  include ActionView::Helpers::TagHelper
   include Admin::ThemeAmsterdamHelper
   include DmCore::ApplicationHelper
   
