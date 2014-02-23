@@ -90,7 +90,7 @@ private
   #------------------------------------------------------------------------------
   def set_title
     text = @current_page.nil? ? 'Pages' : present(@current_page).admin_edit_title
-    content_for :content_title, icon_label('font-paste', text)
+    content_for :content_title, text
   end
 
 end

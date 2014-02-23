@@ -1,3 +1,4 @@
+<% content_for :content_title, icon_label('font-paste', present(@current_page).admin_edit_title) %>
 <% content_for :secondary_title, "#{@current_page.slug} &mdash; #{@current_page.title}".html_safe %>
 <ul class="midnav midnav-font">
   <li><%= link_to "#{icons('font-plus')}<span>Add Content Block</span>".html_safe, new_content_admin_cms_contentitem_path(@current_page), :title => 'Add Content Block' %></li>

@@ -1,4 +1,5 @@
 class BlogUserDatatable
+  include ActionView::Helpers::TagHelper
   include Admin::ThemeAmsterdamHelper
   
   delegate :params, :h, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view

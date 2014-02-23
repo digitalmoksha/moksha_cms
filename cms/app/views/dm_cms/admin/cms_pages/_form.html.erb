@@ -4,7 +4,7 @@
 
 <%= simple_form_for @cms_page, :url => submit_url do |f| %>
   <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
-  <%= content_box :title => "#{title} #{@current_page.slug}" do %>
+  <%= content_box do %>
     <%= locale_frame :title => '' do |locale| %>
       <%= f.input "title_#{locale}", :label => 'Page Title', hint: 'The title of the page, shown in the browser title' %>
       <%= f.input "menutitle_#{locale}", :label => 'Menu Title', hint: 'Text shown in a menu (which might be shorter than the full title).  If blank, <br/>page will not show up in any auto-generated menus' %>

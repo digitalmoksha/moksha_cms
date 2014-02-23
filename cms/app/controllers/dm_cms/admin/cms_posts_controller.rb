@@ -2,7 +2,6 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
 
   before_filter   :blog_lookup, :only =>    [:index, :new, :create]
   before_filter   :post_lookup, :except =>  [:index, :new, :create]
-  before_filter   :set_title
   
   #------------------------------------------------------------------------------
   def index
@@ -44,8 +43,14 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
     end
   end
 
+  # Note: can't simply do a destroy - since the comments reference this object, 
+  # when they are deleted they cause the object to be stale in memory, which then
+  # raises a StaleObject exception.
+  # For reference: https://github.com/rails/rails/pull/9448
   #------------------------------------------------------------------------------
   def destroy
+    @post.comments.destroy_all
+    @post.reload
     @post.destroy
     redirect_to admin_cms_blog_url(@blog), notice: 'Post was successfully deleted.'
   end
@@ -73,12 +78,6 @@ private
     date = params[:cms_post].delete(:published_on_date)
     time = params[:cms_post].delete(:published_on_time)
     params[:cms_post][:published_on] = (date.blank? ? Time.now : DateTime.parse(date + " " + time))
-  end
-  
-  # Set some values for the template based on the controller
-  #------------------------------------------------------------------------------
-  def set_title
-    content_for :content_title, @blog.title
   end
   
 end
