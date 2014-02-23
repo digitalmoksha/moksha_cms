@@ -16,14 +16,13 @@ module Admin::ThemeAmsterdamHelper
     style  = ''
     style += (options[:size].blank?  ? '' : "font-size:#{options[:size]}px;")
     style += (options[:color].blank? ? '' : "color:#{options[:color]};")
-    style  = (style.blank? ? '' : "style='#{style}'")
     
-    "<i class='#{icon_type}' #{style}></i>".html_safe
+    content_tag(:i, '', class: icon_type, style: style)
   end
   
   #------------------------------------------------------------------------------
   def icon_label(icon_type, text, options = {})
-    "#{icons(icon_type, options)} #{text}".html_safe
+    icons(icon_type, options) + ' ' + text
   end
     
   # A colored text label.
@@ -31,19 +30,16 @@ module Admin::ThemeAmsterdamHelper
   #------------------------------------------------------------------------------
   def colored_label(text, style = :plain)
     if style == :plain
-      "<span class='label'>#{text}</span>".html_safe
+      content_tag :span, text, class: 'label'
     else
-      "<span class='label label-#{style.to_s}'>#{text}</span>".html_safe
+      content_tag :span, text, class: "label label-#{style.to_s}"
     end
   end
 
   #------------------------------------------------------------------------------
   def content_box(options = {}, &block)
-    options[:title]         ||= ''
     options[:id]            ||= ''
     options[:class]         ||= ''
-    options[:toolbar]       ||= ''
-    options[:include_general] = options[:include_general].nil? ? true : options[:include_general]
     
     if options[:toolbar] == :languages
       options[:toolbar] = language_toolbar_tabs(options[:include_general])
@@ -52,8 +48,8 @@ module Admin::ThemeAmsterdamHelper
 
     content = with_output_buffer(&block)
     content_tag :div, :id => options[:id], :class => "block well #{options[:class]}" do
-      "<div class='navbar'><div class='navbar-inner'><h5>#{options[:title]}</h5>#{options[:toolbar]}</div></div>".html_safe +
-      content_tag(:div, content, :class => 'body')
+      concat(content_heading(options))
+      options[:body] == false ? concat(content) : concat(content_tag(:div, content, class: 'body'))
     end
   end
 
@@ -61,21 +57,28 @@ module Admin::ThemeAmsterdamHelper
   # margins/padding.  Useful for forms and tables
   #------------------------------------------------------------------------------
   def content_frame(options = {}, &block)
+    options[:body] = false
+    content_box(options, &block)
+  end
+
+  #------------------------------------------------------------------------------
+  def content_heading(options = {})
     options[:title]         ||= ''
-    options[:id]            ||= ''
-    options[:class]         ||= ''
     options[:toolbar]       ||= ''
     options[:include_general] = options[:include_general].nil? ? true : options[:include_general]
-    
+  
     if options[:toolbar] == :languages
       options[:toolbar] = language_toolbar_tabs(options[:include_general])
       options[:class] += ' navbar-tabs'
     end
-    
-    content = with_output_buffer(&block)
-    content_tag :div, :id => options[:id], :class => "block well #{options[:class]}" do
-      "<div class='navbar'><div class='navbar-inner'><h5>#{options[:title]}</h5>#{options[:toolbar]}</div></div>".html_safe +
-      content
+  
+    if options[:title].present? || options[:toolbar].present?
+      content_tag :div, class: 'navbar' do
+        content_tag :div, class: 'navbar-inner' do
+          concat(content_tag :h5, options[:title]) if options[:title].present?
+          concat(options[:toolbar]) if options[:toolbar].present?
+        end
+      end
     end
   end
 
