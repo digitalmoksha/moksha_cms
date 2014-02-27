@@ -55,7 +55,7 @@ class MailchimpNewsletter < Newsletter
   def subscribe(user_or_email, options = {FNAME: '', LNAME: ''})
     return { success: false, code: 232 } if user_or_email.blank?
     api         = MailchimpNewsletter.api
-    headers     = options[:headers] || {'Accept-Language' => 'en'}
+    headers     = {'Accept-Language' => I18n.locale.to_s}
 
     #--- update data if user logged in. Don't for an unprotected subscribe. but honor value if passed in
     options.reverse_merge!  update_existing: user_or_email.is_a?(User)
