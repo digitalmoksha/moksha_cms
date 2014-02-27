@@ -41,8 +41,13 @@ class MailchimpNewsletter < Newsletter
   # Retrieve list of groupings from Mailchimp
   #------------------------------------------------------------------------------
   def groupings
-    api       = MailchimpNewsletter.api
-    groupings = api.lists.interest_groupings(id: self.mc_id)
+    begin
+      api       = MailchimpNewsletter.api
+      groupings = api.lists.interest_groupings(id: self.mc_id)
+    rescue Gibbon::MailChimpError => exception
+      #--- groupings are not enabled for this list
+      return []
+    end
   end
   
   # subscribe user or email to the newsletter
@@ -70,14 +75,15 @@ class MailchimpNewsletter < Newsletter
     else
       email               = {email: user_or_email}
     end
-    merge_vars[:SPAMAPI]  = 1
+    merge_vars[:SPAMAPI]      = 1
+    merge_vars[:MC_LANGUAGE]  = I18n.locale  # set the language to the current locale they are using
     api.lists.subscribe(id: self.mc_id, email: email, merge_vars: merge_vars, 
                         double_optin: true, update_existing: options[:update_existing], replace_interests: true,
                         headers: headers)
-    return { success: true, code: 0, update_existing: options[:update_existing] }
+    return { success: true, code: 0 }
   rescue Gibbon::MailChimpError => exception
     Rails.logger.info "=== Error Subscribing #{email} : #{exception.to_s}"
-    return { success: false, code: exception.code, update_existing: options[:update_existing] }
+    return { success: false, code: exception.code }
   end
 
   # unsubscribe email from the newsletter
@@ -125,6 +131,13 @@ class MailchimpNewsletter < Newsletter
     else
       nil
     end
+  end
+  
+  # is the email already subscribed to this list
+  #------------------------------------------------------------------------------
+  def email_subscribed?(email)
+    subscriber = MailchimpNewsletterSubscriber.subscriber_info(self, email)
+    return subscriber.present? && subscriber.subscribed?
   end
   
   # Query the lists in MailChimp, and create / update what we have in the database.
