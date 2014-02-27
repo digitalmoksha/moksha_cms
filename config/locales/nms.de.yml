@@ -6,6 +6,7 @@ de:
     subscription_successful: "Du hast dich erfolgreich für den Newsletter angemeldet. Damit deine Anmeldung aktiviert wird, haben wir dir eine Email Bestätigung gesendet.  Bestätige den in dieser Email gesendeten Link um sicherzustellen, dass du den Newsletter empfängst."
     subscription_updated: Ihr Abonnement wurde erfolgreich aktualisiert
     unsubscribe_successful: Ihre E-Mail wurde abgemeldet
+    already_subscribed: Bereits Gezeichnetes
     
     #--- Mailchimp specific errors
     List_DoesNotExist: Die angegebene Liste existiert nicht

@@ -7,7 +7,7 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
   # language if the list auto-translate is turned on
   #------------------------------------------------------------------------------
   def subscribe_to_newsletter
-    subscription_params = params['subscription']
+    subscription_params = params['subscription'] || {}
     user_or_email       = current_user ? current_user : subscription_params['email']
     @newsletter         = Newsletter.find_newsletter(params['token'])
     subscription_params.merge!( {headers: {'Accept-Language' => request.env['HTTP_ACCEPT_LANGUAGE']}} )
@@ -16,7 +16,7 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
       result = @newsletter.subscribe(user_or_email, subscription_params)
       respond_to do |format|
         if result[:success]
-          msg = (result[:update_existing] ? I18n.t('nms.subscription_updated') : I18n.t('nms.subscription_successful'))
+          msg = I18n.t('nms.subscription_successful')
           format.html { redirect_to (request.env['HTTP_REFERER'].blank? ? main_app.index_url : :back), notice: msg }
           format.js { render json: { success: true, msg: msg } }
         else

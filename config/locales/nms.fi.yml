@@ -6,6 +6,7 @@ fi:
     subscription_successful: "Olet onnistuneesti tilannut uutiskirjeen. Aktivoidaksesi tilauksesi, olemme lähettäneet sinulle vahvistusviestin. Sinun tulee klikata vahvistuslinkkiä vastaanottaaksesi uutiskirjeen."
     subscription_updated: Tilauksesi on onnistuneesti päivitetty
     unsubscribe_successful: Viestisi on peruttu
+    already_subscribed: Jo Tilatut
     
     #--- Mailchimp specific errors
     List_DoesNotExist: Määriteltyä luetteloa ei ole olemassa
