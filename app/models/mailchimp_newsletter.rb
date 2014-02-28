@@ -51,6 +51,8 @@ class MailchimpNewsletter < Newsletter
   end
   
   # subscribe user or email to the newsletter
+  # Setting the Accept-Language will cause MC to send the confirmation in the users
+  # language if the list auto-translate is turned on
   #------------------------------------------------------------------------------
   def subscribe(user_or_email, options = {FNAME: '', LNAME: ''})
     return { success: false, code: 232 } if user_or_email.blank?
