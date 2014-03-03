@@ -2,7 +2,7 @@ class Forum < ActiveRecord::Base
   include DmCore::Concerns::PublicPrivate
 
   self.table_name             = 'fms_forums'
-  attr_accessible             :slug, :name, :description, :published, :is_public, :requires_login
+  attr_accessible             :slug, :name, :description, :published, :is_public, :requires_login, :requires_subscription
 
   # --- FriendlyId
   extend FriendlyId
@@ -60,16 +60,6 @@ class Forum < ActiveRecord::Base
     name
   end
   
-  # Can this forum be replied to by user.  Covers whether a topic can be created.
-  #------------------------------------------------------------------------------
-  def can_be_replied_by?(attempting_user)
-    if attempting_user
-      self.published? && (self.is_public? || self.is_protected? || (self.member?(attempting_user)))
-    else
-      false
-    end
-  end
-  
   # Send comment notifications to any followers
   #------------------------------------------------------------------------------
   def self.notify_followers(start_time, end_time = Time.now)
@@ -80,7 +70,6 @@ class Forum < ActiveRecord::Base
       followers   = forum_topic.followers
       followers.each do |follower|
         email =  ForumNotificationMailer.follower_notification(follower.user, forum_topic, topic_comments).deliver
-        # puts "I'm a follower: #{follower.user.email}: topic: #{forum_topic.title}  count: #{topic_comments.count}"
       end
     end
   end
