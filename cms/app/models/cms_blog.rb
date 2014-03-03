@@ -1,7 +1,7 @@
 class CmsBlog < ActiveRecord::Base
   include DmCore::Concerns::PublicPrivate
 
-  attr_accessible           :slug, :published, :requires_login, :comments_allowed, :image
+  attr_accessible           :slug, :published, :requires_login, :requires_subscription, :comments_allowed, :image
   
   # --- globalize
   translates                :title, :fallbacks_for_empty_translations => true
