@@ -79,6 +79,12 @@ module DmCore
           self.roles.where(name: 'sysadmin', account_id: 0).size > 0
         end
         
+        # does the user have a paid subscription
+        #------------------------------------------------------------------------------
+        def is_paid_subscriber?
+          has_role? :paid_subscription
+        end
+        
         #------------------------------------------------------------------------------
         def update_last_access
           ensure_site_profile_exists
