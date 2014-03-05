@@ -91,6 +91,15 @@ module DmCore
           current_site_profile.update_attribute(:last_access_at, Time.now.utc) if current_site_profile.last_access_at.nil? || (current_site_profile.last_access_at <= 10.minutes.ago)
         end
         
+        #------------------------------------------------------------------------------
+        def to_liquid
+          { 'user' => { 'first_name'          => h(first_name),
+                        'last_name'           => h(last_name),
+                        'paid_subscription?'  => is_paid_subscriber?
+                      }
+          }
+        end
+        
         # check if a user is active
         # {todo} add in attribute or state machine for the users state
         #------------------------------------------------------------------------------
