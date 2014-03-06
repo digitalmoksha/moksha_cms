@@ -38,6 +38,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
     @forum_topic = @forum.forum_topics.new(params[:forum_topic])
     @forum_topic.user = current_user
     if @forum_topic.save
+      current_user.following.follow(@forum_topic)
       redirect_to forum_forum_topic_path(@forum, @forum_topic), notice: 'Topic was successfully created.'
     else
       render :action => :new
