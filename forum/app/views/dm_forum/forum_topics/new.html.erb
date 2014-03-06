@@ -1,3 +1,4 @@
+<% content_for :page_title, @forum.forum_category.name %>
 <% content_for :sidebar do %>
   <%= render :partial => "dm_forum/forum_comments/formatting" %>
 <% end %>
@@ -9,7 +10,4 @@
 <h1 id="new_topic"><%= I18n.t 'fms.new_topic' %></h1>
 <p class="subtitle"><%= I18n.t 'fms.by_user', :user => current_user.display_name %></p>
 
-<%= simple_form_for [@forum, @forum_topic] do |f| %>
-  <%= render :partial => "form", :object => f %>
-  <%= submit_or_cancel :save => I18n.t('fms.post_topic'), :cancel => I18n.t('fms.views_topics.cancel'), :cancel_url => [@forum] %>
-<% end %>
+<%= render :partial => "form" %>

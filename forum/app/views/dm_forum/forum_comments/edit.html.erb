@@ -1,3 +1,4 @@
+<% content_for :page_title, @forum_topic.title %>
 <%= render(:partial => 'dm_forum/forums/forum_header', :object => @forum_topic.forum, :as => :forum) %>
 
 <h1 id="topic_title">
@@ -9,8 +10,6 @@
 
 <%= simple_form_for [@forum, @forum_topic, @forum_comment] do |f| %>
   <%#= f.error_messages %>
-  <p id="post_body"><%= f.input :body, :as => :text %></p>
-  <p><%= submit_tag I18n.t('fms.views_posts.save', :class => 'button') %>
-  <%= I18n.t 'fms.or' %> 
-  <%= link_to I18n.t('fms.cancel'), forum_forum_topic_path(@forum_comment.forum_topic.forum, @forum_comment.forum_topic, :page => page_number) %></p>
+    <%= f.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), :input_html => {:rows => 10} %>
+  <%= submit_or_cancel :save => I18n.t('fms.views_posts.save'), :cancel => I18n.t('fms.cancel'), :cancel_url => forum_forum_topic_path(@forum_comment.forum_topic.forum, @forum_comment.forum_topic, :page => page_number) %>
 <% end %>

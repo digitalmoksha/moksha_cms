@@ -1,3 +1,4 @@
+<% content_for :page_title, @forum.forum_category.name %>
 <% content_for :sidebar do %>
 
   <% unless @forum.description.blank? %>
@@ -24,7 +25,6 @@
 
 <%= render :partial => 'category_side_list' %>
 
-<% content_for :page_title, @forum.name %>
 
 <% content_for :crumbs, forum_crumbs %>
 
@@ -37,17 +37,3 @@
      end
   %>
 </div>
-
-<% if user_signed_in? %>
-  <p><%#= link_to I18n.t('fms.new_topic'), new_forum_topic_path(@forum), :class => "utility" %></p>
-<% end%>
-
-<% if false %>
-<script type='text/javascript'><!--//--><![CDATA[//><!--
-if (history  && history.replaceState && $$('.pagination')) {
-  Event.observe(window, 'popstate', function(event){
-    new Ajax.Request("<%= @forum.slug %>", {method: 'get', parameters: event.state})
-  });
-};
-//--><!]]></script>
-<% end %>

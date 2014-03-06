@@ -1,17 +1,23 @@
-<%= form.error_notification :message => "Please review the problems below"%>
-<%= form.input :title, :label => I18n.t('fms.views_topics.topic') %>
+<%= simple_form_for [@forum, @forum_topic] do |f| %>
 
-<% if @forum_topic.new_record? %>
-  <%= form.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), :input_html => {:rows => 10} %>
-<% elsif is_admin? && (forums = ForumSite.site.ordered_forums).length > 1 %>
-  <%= form.input :forum_id, collection: forums, label_method: :name, value_method: :id %>
-<% end %>
+  <%= f.error_notification :message => "Please review the problems below"%>
+  <%= f.input :title, :label => I18n.t('fms.views_topics.topic') %>
 
-<% if can? :moderate, @forum %>
-  <div class="clearfix">
-    <%= form.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('fms.sticky')}".html_safe %>
-  </div>
-  <div class="clearfix">
-    <%= form.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('fms.views_topics.lock_topic')}".html_safe %>
-  </div>
+  <% if @forum_topic.new_record? %>
+    <%= f.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), :input_html => {:rows => 10} %>
+  <% elsif is_admin? %>
+    <%= f.input :forum_id, collection: ForumSite.site.all_forums, label_method: :name, value_method: :id %>
+  <% end %>
+
+  <% if can? :moderate, @forum %>
+    <div class="clearfix">
+      <%= f.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('fms.sticky')}".html_safe %>
+    </div>
+    <div class="clearfix">
+      <%= f.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('fms.views_topics.lock_topic')}".html_safe %>
+    </div>
+  <% end %>
+
+  <%= submit_or_cancel :save => I18n.t('fms.post_topic'), :cancel => I18n.t('fms.views_topics.cancel'),
+            :cancel_url => (@forum_topic.new_record? ? [@forum] : [@forum, @forum_topic]) %>
 <% end %>

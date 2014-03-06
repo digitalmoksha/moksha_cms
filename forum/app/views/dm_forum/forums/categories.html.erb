@@ -1,3 +1,4 @@
+<% content_for :page_title, I18n.t('fms.forums') %>
 <%= render :partial => 'category_side_list' %>
 
 <% forum_displayed = false %>
@@ -12,7 +13,9 @@
             <% if can?(:read, forum) %>
               <li>
                 <%= render(:partial => 'forum_header', :object => forum, :as => :forum) %>
-                <p class="forum_description"><%= forum.description %></p>
+                <% if forum.description.present? %>
+                  <p class="forum_description"><%= forum.description %></p>
+                <% end %>
               </li>
             <% end %>
           <% end %>

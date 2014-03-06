@@ -2,7 +2,7 @@
 
 <% content_for :sidebar do %>
 
-  <%= render(:partial => 'dm_forum/forum_topics/follow_button', :object => @following, :as => :following) %>
+  <%= render(:partial => 'dm_forum/forum_topics/follow_button', :object => @following, :as => :following) if current_user %>
   <div class="clear"></div>
   <div class="forum_sidebar_voices">
     <h5><%= I18n.t 'fms.voices' %></h5>
@@ -16,7 +16,7 @@
 
 <% content_for :crumbs, forum_crumbs(@forum_topic.forum) %>
 
-<div class="comment_section">
+<div class="comment_section" id="comment_section">
 
   <%= render(:partial => 'dm_forum/forums/forum_header', :object => @forum_topic.forum, :as => :forum) %>
 
@@ -38,37 +38,12 @@
   </h1>
 
   <p class="subtitle">
-    <%= I18n.t 'fms.count_comments', :count => @forum_topic.forum_comments.size, 
-              :num => number_with_delimiter(@forum_topic.forum_comments.size) %>,
+    <%= I18n.t 'fms.count_comments', :count => @forum_topic.forum_comments.size - 1, 
+              :num => number_with_delimiter(@forum_topic.forum_comments.size - 1) %>,
     <%= I18n.t 'fms.count_voices', :count => @forum_topic.voices.size, 
               :num => number_with_delimiter(@forum_topic.voices.size) %>
   </p>
 
   <%= render(:partial => 'comments_list') unless @forum_comments.empty?%>
 
-  <% if user_signed_in? %>
-    <% if @forum_topic.locked? %>
-      <p class="topic_locked"><%= I18n.t 'fms.views_topics.locked_topic' %></p>
-    <% else %>
-      <h3 id="reply" style="text-transform: uppercase"><%= I18n.t 'fms.reply_to_topic' %></h3>
-
-      <div id="comment_reply_form" class="comment_reply_form">
-        <p><small><em><%= I18n.t('fms.comment_notification_inform')%></em></small></p>
-        <%= simple_form_for [@forum, @forum_topic, @forum_topic.forum_comments.new] do |f| %>
-          <%= f.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), 
-                          :input_html => {:rows => 10} %>
-          <%= submit_or_cancel :save => I18n.t('fms.views_topics.save_reply'), :cancel => I18n.t('fms.views_topics.cancel'),
-                :cancel_url => [@forum] %>
-        <% end %>
-      </div>
-    <% end %>
-  <% end %>
 </div>
-
-<script type='text/javascript'><!--//--><![CDATA[//><!--
-//if (history  && history.replaceState && $$('.pagination')) {
-//  Event.observe(window, 'popstate', function(event){
-//    if(event.state) new Ajax.Request("<%= @forum_topic.slug %>", {method: 'get', parameters: event.state})
-//  });
-//};
-//--><!]]></script>
