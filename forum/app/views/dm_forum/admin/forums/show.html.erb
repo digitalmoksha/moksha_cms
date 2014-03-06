@@ -22,15 +22,17 @@
 <div class="row-fluid">
 
   <%= content_box :title => 'Grant Forum Access', :class => 'span6' do %>
-    <h5>Add Workshop Attendees</h5>
-    <p>Add all attendees of a workshop to this forum. Duplicates will be ignored. Only those marked "Accepted" or "Paid" will be added</p>
-    <p><em>Note: Only users with an account will be added.</em></p>
-    <%= simple_form_for :workshop_forum, :url => dm_forum.forum_add_member_admin_forum_path(@forum), :html => { :class => 'form-horizontal' } do |f| %>
-      <%= select_tag :workshop_id, options_from_collection_for_select(Workshop.upcoming, :id, :title), :include_blank => true, class: "style" %>
-      <%= submit_tag 'Add', :class => "btn btn-primary" %>
-    <% end %>
+    <% unless Workshop.upcoming.empty? %>
+      <h5>Add Workshop Attendees</h5>
+      <p>Add all attendees of a workshop to this forum. Duplicates will be ignored. Only those marked "Accepted" or "Paid" will be added</p>
+      <p><em>Note: Only users with an account will be added.</em></p>
+      <%= simple_form_for :workshop_forum, :url => dm_forum.forum_add_member_admin_forum_path(@forum), :html => { :class => 'form-horizontal' } do |f| %>
+        <%= select_tag :workshop_id, options_from_collection_for_select(Workshop.upcoming, :id, :title), :include_blank => true, class: "style" %>
+        <%= submit_tag 'Add', :class => "btn btn-primary" %>
+      <% end %>
 
-    <div class="separator"></div>
+      <div class="separator"></div>
+    <% end %>
     
     <h5>Add Individual Users</h5>
     <div class="table-overflow">
