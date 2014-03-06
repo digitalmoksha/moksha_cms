@@ -6,7 +6,7 @@ class ForumPresenter < ForumCommonPresenter
   
   #------------------------------------------------------------------------------
   def visibility
-    forum.is_private? ? 'private' : (forum.is_protected? ? 'protected' : 'public')
+    forum.visibility_to_s
   end
   
   # #delegate :something, to: :course
