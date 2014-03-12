@@ -16,30 +16,10 @@
              :as => :check_boxes, 
              :label => "Roles",
              :item_wrapper_class => 'checkbox inline', :input_html => {:class => 'style'},
-             :hint => 'Still experimental. Note that <Strong>admin</strong> will give access to entire system' %>
+             :hint => 'Still experimental. Note that <Strong>admin</strong> will give access to entire system'.html_safe %>
 
     <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
 
 	<% end %>
 
-  <% if defined?(DmEvent) && current_user.is_sysadmin? %>
-    <%= content_box :title => "Event Registrations" do %>
-      <table class="table table-bordered table-condensed table-striped">
-        <thead>
-          <tr>
-            <th class="name">Workshop Title</th>
-            <th class="name">Domain</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% Registration.unscoped.where(user_profile_id: @user.user_profile).each do |registration| -%>
-            <tr>
-              <td class="name"><%= registration.workshop ? registration.workshop.title : 'oops' %></td>
-              <td class="name"><%= registration.account.domain %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% end %>
-  <% end %>
 <% end %>
