@@ -83,7 +83,7 @@
       <tbody>
         <% SubscriptionPayment.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |payment| -%>
           <tr>
-            <td class="name"><%= format_date(payment.create_at) %></td>
+            <td class="name"><%= format_date(payment.created_at) %></td>
             <td class="name"><%= payment.amount.format %></td>
           </tr>
         <% end %>
