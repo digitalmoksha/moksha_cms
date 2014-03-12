@@ -24,7 +24,8 @@ module DmCore
         has_one                 :user_profile, :dependent => :destroy
         has_many                :user_site_profiles, :dependent => :destroy
         has_one                 :current_site_profile, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
-        
+        has_many                :comments, :dependent => :destroy
+
         #--- this allows us to use @user.voting.likes(@post) and it will be stored with the site specific user profile
         has_one                 :voting, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
 
