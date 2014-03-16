@@ -70,7 +70,7 @@ de:
     profile_account_password_current_title: Altes Passwort
     profile_account_password_current_explanation: "Bitte hier das alte Passwort eingeben, um die Änderung zu bestätigen."
     profile_profile_updated: Ihr Profil wurde aktualisiert
-    profile_email_confirmation: 'Eine E-Mail wurde an die neue E-Mail-Adresse geschickt worden - müssen Sie auf den Bestätigungslink klicken, bevor Sie sich anmelden können mit dem neuen E-Mail-Adresse'
+    profile_email_confirmation: 'Eine E-Mail wurde an die neue E-Mail-Adresse geschickt  - Sie müssen auf den Bestätigungslink klicken, bevor Sie sich mit der neuen E-Mail-Adresse anmelden können'
     profile_password_updated: Ihr Passwort wurde aktualisiert
     profile_email_needs_confirmation: 'Ihre E-Mail-Adresse wurde bereits geändert worden'
     profile_email_needs_confirmation_2: 'Eine E-Mail an diese Adresse zur Bestätigung gesandt. Wenn Sie nicht die Bestätigung per E-Mail, aktualisieren Sie einfach die E-Mail noch einmal neu zu senden Sie die Bestätigung.'
