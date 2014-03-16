@@ -5,6 +5,7 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
   ga('create', '<%= tracking_id %>', '<%= domain_name %>');
+  ga('set', 'anonymizeIp', true);
   ga('send', 'pageview');
 
 </script>
