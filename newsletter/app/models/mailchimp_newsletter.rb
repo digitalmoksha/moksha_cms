@@ -148,7 +148,7 @@ class MailchimpNewsletter < Newsletter
   #       Keep here until final decision.
   #------------------------------------------------------------------------------
   # def self.synchronize
-  #   newsletters = MailchimpNewsletter.find(:all)
+  #   newsletters = MailchimpNewsletter.all
   #   api         = MailchimpNewsletter.api
   #   lists       = api.lists.list
   #   

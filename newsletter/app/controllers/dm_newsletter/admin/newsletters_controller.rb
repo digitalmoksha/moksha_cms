@@ -1,11 +1,12 @@
 class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::ApplicationController
+  include DmNewsletter::PermittedParams
 
   #before_filter   :mailchimp_guard,   only:   [:new, :edit, :create, :update]
   before_filter   :newsletter_lookup, except: [:index, :new, :create, :synchronize_lists]
 
   #------------------------------------------------------------------------------
   def index
-    @newsletters = using_mailchimp? ? MailchimpNewsletter.find(:all) : StandardNewsletter.find(:all)
+    @newsletters = using_mailchimp? ? MailchimpNewsletter.all : StandardNewsletter.all
   end
 
   #------------------------------------------------------------------------------
@@ -19,7 +20,7 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::Applicat
 
   #------------------------------------------------------------------------------
   def create
-    @newsletter = using_mailchimp? ? MailchimpNewsletter.new(params[:mailchimp_newsletter]) : StandardNewsletter.new(params[:standard_newsletter])
+    @newsletter = using_mailchimp? ? MailchimpNewsletter.new(mailchimp_newsletter_params) : StandardNewsletter.new(standard_newsletter_params)
     if @newsletter.save
       redirect_to admin_newsletters_url, notice: 'Newsletter was successfully created.'
     else
@@ -29,7 +30,7 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::Applicat
 
   #------------------------------------------------------------------------------
   def update
-    if @newsletter.update_attributes(params[:newsletter])
+    if @newsletter.update_attributes(newsletter_params)
       redirect_to admin_newsletters_url, notice: 'Newsletter was successfully updated.'
     else
       render action: :edit

@@ -2,8 +2,6 @@
 class Newsletter < ActiveRecord::Base
 
   self.table_name         = 'email_newsletters'
-  attr_accessible         :token, :name, :mc_id, :mc_web_id, :subscribed_count, :unsubscribed_count, 
-                          :cleaned_count, :created_at, :deleted
 
   # [todo] has_many                :newsletter_subscribers, :dependent => :destroy
 
