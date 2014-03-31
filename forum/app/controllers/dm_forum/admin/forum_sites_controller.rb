@@ -1,5 +1,6 @@
 #------------------------------------------------------------------------------
 class DmForum::Admin::ForumSitesController < DmForum::Admin::ApplicationController
+  include DmForum::PermittedParams
 
   before_filter   :forum_site_lookup
 
@@ -20,7 +21,7 @@ class DmForum::Admin::ForumSitesController < DmForum::Admin::ApplicationControll
   # PUT /admin/fms/forum_site
   #------------------------------------------------------------------------------
   def update
-    if @forum_site.update_attributes(params[:forum_site])
+    if @forum_site.update_attributes(forum_site_params)
       redirect_to dm_forum.admin_forum_site_url, notice: "Forum settings were successfully updated."
     else
       render action: :edit

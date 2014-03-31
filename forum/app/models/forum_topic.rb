@@ -3,7 +3,6 @@ class ForumTopic < ActiveRecord::Base
   self.table_name         = 'fms_forum_topics'
 
   attr_accessor           :body
-  attr_accessible         :title, :body, :sticky, :locked
   attr_readonly           :comments_count, :hits, :forum_posts_count
 
   # --- FriendlyId
@@ -34,9 +33,9 @@ class ForumTopic < ActiveRecord::Base
 
   #--- don't use acts_as_commentable since we're using a specialized ForumComment class
   has_many                :forum_comments, {:as => :commentable, :dependent => :destroy}
-  has_one                 :recent_comment, :as => :commentable, :class_name => "ForumComment", :conditions => 'ancestry_depth = 1', :order => "created_at DESC"
+  has_one                 :recent_comment, -> { where(ancestry_depth: 1).order('created_at DESC') }, :as => :commentable, :class_name => "ForumComment"
 
-  has_many                :voices, :through => :forum_comments, :source => :user, :uniq => true
+  has_many                :voices, -> { distinct(true) }, :through => :forum_comments, :source => :user
   
   validates_presence_of   :user_id, :forum_site_id, :forum_id, :title
   validates_presence_of   :body, :on => :create

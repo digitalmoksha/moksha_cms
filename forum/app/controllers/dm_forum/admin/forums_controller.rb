@@ -1,4 +1,5 @@
 class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
+  include DmForum::PermittedParams
 
   before_filter   :category_lookup, :only =>    [:index, :new, :create]
   before_filter   :forum_lookup,    :except =>  [:index, :new, :create]
@@ -33,7 +34,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
   # POST /admin/fms/forums
   #------------------------------------------------------------------------------
   def create
-    @forum = @forum_category.forums.new(params[:forum])
+    @forum = @forum_category.forums.new(forum_params)
     @forum.forum_site = ForumSite.site
     
     if @forum.save
@@ -46,7 +47,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
   # PUT /admin/fms/forums/1
   #------------------------------------------------------------------------------
   def update
-    if @forum.update_attributes(params[:forum])
+    if @forum.update_attributes(forum_params)
       redirect_to admin_forum_url(@forum), notice: 'Forum was successfully updated.'
     else
       render action: :edit
@@ -116,7 +117,7 @@ private
 
   #------------------------------------------------------------------------------
   def forum_lookup
-    @forum = Forum.find(params[:id])
+    @forum = Forum.friendly.find(params[:id])
     @forum_category = @forum.forum_category
   end
 

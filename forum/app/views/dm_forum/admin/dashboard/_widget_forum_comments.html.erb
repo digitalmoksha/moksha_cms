@@ -1,5 +1,6 @@
-<% comment_day = params[:comment_day].to_i %>
-<% comments = Comment.where(commentable_type: ForumTopic, created_at: (Date.today - comment_day.day).midnight..(Date.today - (comment_day - 1).day).midnight).order('created_at DESC') %>
+<% comment_day  = params[:comment_day].to_i %>
+<% date_range   = (Date.today - comment_day.day).midnight..(Date.today - (comment_day - 1).day).midnight %>
+<% comments     = Comment.where(commentable_type: ForumTopic, created_at: date_range).order('created_at DESC') %>
 <% title = comment_day == 0 ? 'Today\'s Forum Comments' : comment_day == 1 ? 'Yesterday\'s Forum Comments' : "Forum Comments #{comment_day} days ago" %>
 <% content_for :forum_title_toolbar do %>
   <%= toolbar_button(comments.size, dm_core.admin_dashboard_path, :title => 'Number of comments today', :class => 'label label-success pull-right') %>

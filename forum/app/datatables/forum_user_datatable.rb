@@ -2,7 +2,7 @@ class ForumUserDatatable
   include ActionView::Helpers::TagHelper
   include Admin::ThemeAmsterdamHelper
   
-  delegate :params, :h, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
+  delegate :params, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
   delegate :url_helpers, to: 'DmForum::Engine.routes'
   
   #------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ private
 
   #------------------------------------------------------------------------------
   def fetch_users
-    users = User.includes(:user_profile => [ :country ] ).order("#{sort_column} #{sort_direction}")
+    users = User.includes(:user_profile => [ :country ] ).references(:user_profile).order("#{sort_column} #{sort_direction}")
     users = users.page(page).per_page(per_page)
     if params[:sSearch].present?
       users = users.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search", search: "%#{params[:sSearch]}%")
@@ -72,9 +72,9 @@ private
   #------------------------------------------------------------------------------
   def action(user)
     if user.has_role? :member, @forum
-      icons("icon-check") + "&nbsp;&nbsp;".html_safe + h(user.full_name)
+      icons("icon-check") + "&nbsp;&nbsp;".html_safe + user.full_name
     else
-      link_to(icons("icon-plus"), url_helpers.forum_add_member_admin_forum_path(@forum, :locale => DmCore::Language.locale, :user_id => user.id), :title => 'Add Access') + "&nbsp;&nbsp;".html_safe + h(user.full_name)
+      link_to(icons("icon-plus"), url_helpers.forum_add_member_admin_forum_path(@forum, :locale => DmCore::Language.locale, :user_id => user.id), :title => 'Add Access') + "&nbsp;&nbsp;".html_safe + user.full_name
     end
   end
 end
