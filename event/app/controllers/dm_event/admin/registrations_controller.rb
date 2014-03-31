@@ -1,4 +1,5 @@
 class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationController
+  include DmEvent::PermittedParams
 
   helper    DmEvent::RegistrationsHelper
 
@@ -52,7 +53,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
     @workshop     = @registration.workshop
 
     #--- save without validation, so can update without having to fill in all details
-    @registration.attributes = params[:registration]
+    @registration.attributes = registration_params
     if @registration.save(:validate => false)
       redirect_to admin_workshop_url(@workshop), notice: 'Registration was successfully updated.'
     else

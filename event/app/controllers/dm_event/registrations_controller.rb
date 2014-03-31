@@ -1,6 +1,7 @@
 ActionView::Base.send(:include, ActiveMerchant::Billing::Integrations::ActionViewHelper)
 
 class DmEvent::RegistrationsController < DmEvent::ApplicationController
+  include DmEvent::PermittedParams
   include ActiveMerchant::Billing::Integrations
 
   protect_from_forgery :except => [:paypal_ipn, :sofort_ipn]
@@ -36,7 +37,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     profile_params                  = params[:registration].delete("user_profile_attributes") if params[:registration]
     profile_params.delete(:id)      if profile_params
 
-    @registration                   = @workshop.registrations.new(params[:registration])
+    @registration                   = @workshop.registrations.new(registration_params)
     @registration.registered_locale = I18n.locale
     @registration.user_profile      = current_user ? current_user.user_profile : UserProfile.new
     @registration.user_profile.assign_attributes(profile_params)

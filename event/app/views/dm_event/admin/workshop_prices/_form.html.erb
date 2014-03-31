@@ -7,7 +7,7 @@
 </ul>
 <p class="explanation">In your email receipts, you can use <code>{{payment_details}}</code> to include the details for the particular price that was chosen.</p>
 
-<% submit_url = (@workshop_price.new_record? ? admin_workshop_workshop_prices_path(@workshop) : admin_workshop_workshop_price_path(@workshop)) %>
+<% submit_url = (@workshop_price.new_record? ? admin_workshop_workshop_prices_path(@workshop) : admin_workshop_workshop_price_path(@workshop, @workshop_price)) %>
 <%= simple_form_for(@workshop_price, :url => submit_url) do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
   <%= content_box :title => @title do %>

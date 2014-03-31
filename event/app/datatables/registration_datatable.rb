@@ -5,7 +5,7 @@ class RegistrationDatatable
   include DmUtilities::DateHelper
   include DmCore::ApplicationHelper
   
-  delegate :params, :h, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
+  delegate :params, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
   delegate :url_helpers, to: 'DmEvent::Engine.routes'
   
   #------------------------------------------------------------------------------
@@ -30,10 +30,10 @@ private
     registrations.map do |registration|
       [
         registration_actions(registration),
-        "<span style='white-space:nowrap;'>#{h(registration.receipt_code)}</span>",
+        "<span style='white-space:nowrap;'>#{registration.receipt_code}</span>",
         name_and_avatar(registration),
         workshop_price(registration),
-        "<span style='white-space:nowrap;'>#{h(format_date(registration.created_at))}</span>",
+        "<span style='white-space:nowrap;'>#{format_date(registration.created_at)}</span>",
         (registration.user_profile.user ? present(registration.user_profile.user).last_access : colored_label('no user', :gray))
       ]
     end

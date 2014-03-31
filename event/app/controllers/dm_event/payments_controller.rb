@@ -20,7 +20,6 @@ class DmEvent::PaymentsController < DmEvent::ApplicationController
   def sofort_ipn
     logger.error('===> Enter: controller::sofort_ipn')
     notify = Directebanking::Notification.new(request.raw_post, credential4: current_account.preferred_sofort_notification_password)
-    debugger
     Payment.event_payment_ipn(notify, 'sofort')
 
     render :nothing => true

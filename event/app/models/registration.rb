@@ -10,10 +10,6 @@ class Registration < ActiveRecord::Base
 
   self.table_name               = 'ems_registrations'
 
-  attr_accessible               :workshop_price_id, :discount_value, :discount_use_percent,
-                                :payment_comment,
-                                :registered_locale, :user_profile_attributes
-  
   belongs_to                    :workshop, :counter_cache => true
   belongs_to                    :workshop_price
   belongs_to                    :user_profile
@@ -25,10 +21,10 @@ class Registration < ActiveRecord::Base
   accepts_nested_attributes_for :user_profile
   
   default_scope                 { where(account_id: Account.current.id) }
-  scope                         :attending, where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL")
-  scope                         :accepted,  where("aasm_state = 'accepted' AND archived_on IS NULL")
-  scope                         :paid,      where("aasm_state = 'paid' AND archived_on IS NULL")
-  scope                         :unpaid,    where("aasm_state = 'accepted' AND archived_on IS NULL")  # same as accepted
+  scope                         :attending, -> { where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL") }
+  scope                         :accepted,  -> { where("aasm_state = 'accepted' AND archived_on IS NULL") }
+  scope                         :paid,      -> { where("aasm_state = 'paid' AND archived_on IS NULL") }
+  scope                         :unpaid,    -> { where("aasm_state = 'accepted' AND archived_on IS NULL") } # same as accepted
 
   before_create                 :set_currency
   after_create                  :set_receipt_code
@@ -101,7 +97,7 @@ class Registration < ActiveRecord::Base
   # a particular state
   #------------------------------------------------------------------------------
   def self.number_of(state, options = {})
-    include_confirmed = (options[:only_confirmed] ? 'AND confirmed_on IS NOT NULL' : '')
+    query = (options[:only_confirmed] ? where.not(confirmed_on: nil) : all)
     case state
     when :attending
       attending.count
@@ -109,27 +105,27 @@ class Registration < ActiveRecord::Base
       #--- the number of unpaid is the same as the number of accepted
       number_of(:accepted)
     when :checkedin
-      where("checkin_at <> 0 AND archived_on IS NULL #{include_confirmed}").count
+      query.where.not(checkin_at: 0).where(archived_on: nil).count
     when :archived
-      where("archived_on IS NOT NULL #{include_confirmed}").count
+      query.where.not(archived_on: nil).count
     when :registrations
       #--- don't count any canceled
-      where("aasm_state <> 'canceled' AND aasm_state <> 'refunded' AND archived_on IS NULL #{include_confirmed}").count
+      query.where(archived_on: nil).where.not(aasm_state: 'canceled').where.not(aasm_state: 'refunded').count
     when :at_price
       #--- number of registrations for a particular price
-      where("(aasm_state = 'paid' OR aasm_state = 'accepted') AND workshop_price_id = #{options[:price_id]} AND archived_on IS NULL #{include_confirmed}").count
+      query.where(archived_on: nil).where("(aasm_state = 'paid' OR aasm_state = 'accepted')").where(workshop_price_id: options[:price_id]).count
     when :for_all_prices
       #--- array of counts per price
-      where("(aasm_state = 'paid' OR aasm_state = 'accepted') AND archived_on IS NULL #{include_confirmed}").count(:group => :workshop_price_id)
+      query.where(archived_on: nil).where("(aasm_state = 'paid' OR aasm_state = 'accepted')").group(:workshop_price_id).count
     when :user_updated
       #--- how many users updated their record
-      where("user_updated_at IS NOT NULL AND (aasm_state = 'paid' OR aasm_state = 'accepted') AND archived_on IS NULL #{include_confirmed}").count
+      query.where(archived_on: nil).where("(aasm_state = 'paid' OR aasm_state = 'accepted')").where.not(user_updated_at: nil).count
     when :confirmed
       #--- how many users confirmed their attendance
-      where("confirmed_on IS NOT NULL AND (aasm_state = 'paid' OR aasm_state = 'accepted') AND archived_on IS NULL").count
+      where.not(confirmed_on: nil).where(archived_on: nil).where("(aasm_state = 'paid' OR aasm_state = 'accepted')").count
     else
       #--- must be wanting to count the process states
-      where("archived_on IS NULL #{include_confirmed}").count_in_state(state)
+      query.where(archived_on: nil, aasm_state: state).count
     end
   end
 
@@ -452,7 +448,7 @@ class Registration < ActiveRecord::Base
   # clear the confirmed_on and user_updated_at fields
   #------------------------------------------------------------------------------
   def self.clear_confirmed_updated
-    find(:all).each do |registration|
+    Registration.all.find_each do |registration|
       registration.update_attribute(:confirmed_on, nil) if registration.confirmed?
       registration.update_attribute(:user_updated_at, nil) if registration.user_updated?
     end
@@ -569,13 +565,13 @@ class Registration < ActiveRecord::Base
   # Generate a list of students with arrival/departure dates
   #------------------------------------------------------------------------------
   def self.report_arrival_departure
-    find_all_by_process_state('accepted', :include => [:student], :conditions => ' event_registrations.archived_on IS NULL')
+    includes(:student).where(process_state: 'accepted').where('event_registrations.archived_on IS NULL')
   end
 
   # Generate a list of students with arrival/departure dates
   #------------------------------------------------------------------------------
   def self.report_firsttime
-    find_all_by_process_state('accepted', :include => [:student], :conditions => 'students.visited_penukonda = 0 AND event_registrations.archived_on IS NULL', :order => 'arrival_at')
+    includes(:student).where(process_state: 'accepted').where('students.visited_penukonda = 0 AND event_registrations.archived_on IS NULL').order('arrival_at')
   end
 
   # Generate a list of students with arrival/departure dates

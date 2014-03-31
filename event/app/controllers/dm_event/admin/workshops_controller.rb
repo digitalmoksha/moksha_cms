@@ -1,4 +1,6 @@
 class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationController
+  include DmEvent::PermittedParams
+  include DmCore::PermittedParams
   include CsvExporter
   
   before_filter   :workshop_lookup, :except => [:index, :new, :create]
@@ -23,7 +25,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
   #------------------------------------------------------------------------------
   def create
     prepare_date_time_attribute
-    @workshop = Workshop.new(params[:workshop])
+    @workshop = Workshop.new(workshop_params)
     if @workshop.save
       redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully created.'
     else
@@ -34,7 +36,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
   #------------------------------------------------------------------------------
   def update
     prepare_date_time_attribute
-    if @workshop.update_attributes(params[:workshop])
+    if @workshop.update_attributes(workshop_params)
       redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully updated.'
     else
       render action: :edit
@@ -62,9 +64,9 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     @system_email = @workshop.send("#{params[:email_type]}_email") || @workshop.send("build_#{params[:email_type]}_email")
     @system_email.email_type = params[:email_type]
     if put_or_post?
-      @system_email.attributes = params[:system_email]
+      @system_email.attributes = system_email_params
       if @system_email.save
-        redirect_to admin_workshop_url(@workshop), notice: 'Email was successfully updated.'
+        redirect_to edit_system_email_admin_workshop_path(@workshop, :email_type => @system_email.email_type), notice: 'Email was successfully updated.'
       end
     end    
   end
@@ -86,7 +88,7 @@ private
 
   #------------------------------------------------------------------------------
   def workshop_lookup
-    @workshop = Workshop.find(params[:id])
+    @workshop = Workshop.friendly.find(params[:id])
   end
 
   #------------------------------------------------------------------------------
@@ -120,7 +122,7 @@ private
     unless params[:id] == nil
       condition         = params[:archived] ? 'archived_on IS NOT NULL' : 'archived_on IS NULL'
       @event            = find_event_by_id(params[:id])
-      @event_workshops  = @event.event_workshop.find(:all, :conditions => condition, :order => 'startdate DESC')
+      @event_workshops  = @event.event_workshop.where(condition).order('startdate DESC')
       @workshop_admin   = permit?("#{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}")
       permit "(#{SystemRoles::Access} on :event or #{SystemRoles::Moderator} on :event) or #{SystemRoles::Admin} on Event or #{SystemRoles::Attendant} or #{SystemRoles::System}"
     else
@@ -141,7 +143,7 @@ private
     else
       condition         = 'archived_on IS NULL'
       @event            = find_event_by_id(params[:id])
-      @event_workshops  = @event.event_workshop.find(:all, :conditions => condition, :order => 'startdate DESC')
+      @event_workshops  = @event.event_workshop.where(condition).order('startdate DESC')
       @workshop_admin   = permit?("#{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}")
       permit "(#{SystemRoles::Access} on :event or #{SystemRoles::Moderator} on :event) or #{SystemRoles::Admin} on Event or #{SystemRoles::System}"
       
@@ -179,7 +181,7 @@ private
                           wildname, wildname,
                           wildname]
           end
-          @results[@results.length-1][0] = EventRegistration.find_all_by_event_workshop_id(event_workshop.id, :conditions => condition, :include => [:event_workshop, :event_payment, :student, :country], :order => sort_clause)
+          @results[@results.length-1][0] = EventRegistration.includes(:event_workshop, :event_payment, :student, :country).where(event_workshop_id: event_workshop.id).where(condition).order(sort_clause)
           @results.delete_at(@results.length-1) if @results[@results.length-1][0].length == 0
         end
       end
@@ -264,7 +266,7 @@ public
                                 ['country',      'item.country.english_name']
                             ]
 
-      workshops = EventWorkshop.find(:all, :order => 'startdate')
+      workshops = EventWorkshop.order('startdate')
       data_export(column_definitions, workshops, :filename => "workshops", :expressions => true, :format => params[:format])
     end
   end
@@ -285,7 +287,7 @@ public
                                 ['indiancell',        'item.student.nil? ? item.localcell : item.student.localcell', 100]
                             ]
 
-      event_registrations = @event_workshop.event_registration.find(:all, :conditions => "(process_state = 'accepted' OR process_state = 'paid') AND archived_on IS NULL", :order => "arrival_at ASC")
+      event_registrations = @event_workshop.event_registration.where("(process_state = 'accepted' OR process_state = 'paid') AND archived_on IS NULL").order("arrival_at ASC")
       data_export(column_definitions, event_registrations, :filename => "arrival_list_#{@event_workshop.title}", :expressions => true, :format => params[:format])
     end
   end
@@ -432,7 +434,7 @@ public
       @include_departure_bus    = (params[:report][:include_departure_bus]) ? params[:report][:include_departure_bus] : false
       @include_user_update      = (params[:report][:include_user_update]) ? params[:report][:include_user_update] : false
       @back_link                = url_for(:action => :report_list, :id => @event_workshop)
-      @vehicles                 = Vehicle.find_all_by_event_workshop_id_and_to_ashram(@event_workshop, true)
+      @vehicles                 = Vehicle.where(event_workshop_id: @event_workshop, to_ashram: true)
       render :layout =>  'report_layout'
     end
   end
@@ -441,7 +443,7 @@ public
   def report_transportation_departure
     @event_workshop = EventWorkshop.find(params[:id])
     permit "#{SystemRoles::Transportation} on :event_workshop or #{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System} or #{SystemRoles::ReportGroups} on :event_workshop", :event => @event_workshop.event do
-      @vehicles                 = Vehicle.find_all_by_event_workshop_id_and_to_ashram(@event_workshop, false)
+      @vehicles                 = Vehicle.where(event_workshop_id: @event_workshop, to_ashram: false)
       render :layout =>  'report_layout'
     end
   end
@@ -471,7 +473,7 @@ public
     permit "#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @event_workshop.event do
       params[:report] ||= {}
       @alternate_currencies = (params[:report][:alternate_currencies]) ? params[:report][:alternate_currencies] : false
-      @accepted             = @event_workshop.event_registrations_attending.find(:all, :order => 'firstname, lastname ASC')
+      @accepted             = @event_workshop.event_registrations_attending.order('firstname, lastname ASC')
       @back_link            = url_for(:action => :report_list, :id => @event_workshop)
       render :layout =>  'report_layout'
     end
@@ -660,8 +662,8 @@ public
     column_definitions << ["Phone #",         "item.student.nil? ? 'n/a' : (item.student.phone)", nil, {}] if sys_admin? or permit?("#{SystemRoles::Admin} on Event or #{SystemRoles::Moderator} on :event_workshop", :event_workshop => event_workshop)
     column_definitions << ["Cell #",          "item.student.nil? ? 'n/a' : (item.student.cell)", nil, {}] if sys_admin? or permit?("#{SystemRoles::Admin} on Event or #{SystemRoles::Moderator} on :event_workshop", :event_workshop => event_workshop)
     column_definitions << ["Local Cell #",    "item.student.nil? ? 'n/a' : (item.student.localcell)", nil, {}]
-    column_definitions << ['Groups (for grouping)', "item.student.nil? ? 'n/a' : (item.student.studentgroup.find_all { |x| !x.historical? }.collect {|x| x.name}.join(', '))", nil, {:type => 'list'}] if sys_admin? or permit?("#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::ReportGroups} on :event_workshop", :event_workshop => event_workshop, :event => event_workshop.event)
-    column_definitions << ['Group List',      "item.student.nil? ? 'n/a' : (item.student.studentgroup.find_all { |x| !x.historical? }.collect {|x| x.name}.join(', '))", nil, {:type => 'list'}] if sys_admin? or permit?("#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::ReportGroups} on :event_workshop", :event_workshop => event_workshop, :event => event_workshop.event)
+    column_definitions << ['Groups (for grouping)', "item.student.nil? ? 'n/a' : (item.student.studentgroup.all { |x| !x.historical? }.collect {|x| x.name}.join(', '))", nil, {:type => 'list'}] if sys_admin? or permit?("#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::ReportGroups} on :event_workshop", :event_workshop => event_workshop, :event => event_workshop.event)
+    column_definitions << ['Group List',      "item.student.nil? ? 'n/a' : (item.student.studentgroup.all { |x| !x.historical? }.collect {|x| x.name}.join(', '))", nil, {:type => 'list'}] if sys_admin? or permit?("#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event or #{SystemRoles::ReportGroups} on :event_workshop", :event_workshop => event_workshop, :event => event_workshop.event)
     column_definitions << ['Events (for grouping)', "item.student.nil? ? 'n/a' : (item.student.event_registrations_attending.collect {|x| x.event_workshop.title.gsub(',', '') if !x.event_workshop.archived?}.join(', '))", nil, {:type => 'list'}] if sys_admin? or permit?("#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event", :event_workshop => event_workshop, :event => event_workshop.event)
     column_definitions << ['Events List',      "item.student.nil? ? 'n/a' : (item.student.event_registrations_attending.collect {|x| x.event_workshop.title.gsub(',', '')}.join(', '))", nil, {:type => 'list'}] if sys_admin? or permit?("#{SystemRoles::Moderator} on :event_workshop or #{SystemRoles::Moderator} on :event or #{SystemRoles::Admin} on Event", :event_workshop => event_workshop, :event => event_workshop.event)
     column_definitions << ["Teacher (Continent)", "(item.student.nil? or item.student.teacher.nil?) ? '' : (item.student.country.continent)", nil, {}] if sys_admin? or permit?("#{SystemRoles::Admin} on Event")

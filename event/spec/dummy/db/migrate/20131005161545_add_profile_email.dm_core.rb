@@ -2,7 +2,7 @@
 class AddProfileEmail < ActiveRecord::Migration
   def up
     add_column    :user_profiles,   :email,   :string
-    User.find(:all).each do |user|
+    User.all.find_each do |user|
       Account.current = Account.find(user.account_id)
       user.user_profile.update_attribute(:email, user.attributes['email'])
     end

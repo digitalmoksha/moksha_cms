@@ -6,21 +6,16 @@ class Workshop < ActiveRecord::Base
   has_many                :registrations, :dependent => :destroy
   has_many                :workshop_prices, :dependent => :destroy
   has_many                :system_emails,     {:as => :emailable, :dependent => :destroy}
-  has_one                 :pending_email,     :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'pending'"
-  has_one                 :accepted_email,    :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'accepted'"
-  has_one                 :rejected_email,    :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'rejected'"
-  has_one                 :paid_email,        :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'paid'"
-  has_one                 :waitlisted_email,  :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'waitlisted'"
-  has_one                 :reviewing_email,   :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'reviewing'"
-  has_one                 :canceled_email,    :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'canceled'"
-  has_one                 :refunded_email,    :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'refunded'"
-  has_one                 :noshow_email,      :class_name => 'SystemEmail', :as => :emailable, :conditions => "email_type LIKE 'noshow'"
+  has_one                 :pending_email,     -> { where("email_type LIKE 'pending'") },    :class_name => 'SystemEmail', :as => :emailable
+  has_one                 :accepted_email,    -> { where("email_type LIKE 'accepted'") },   :class_name => 'SystemEmail', :as => :emailable
+  has_one                 :rejected_email,    -> { where("email_type LIKE 'rejected'") },   :class_name => 'SystemEmail', :as => :emailable
+  has_one                 :paid_email,        -> { where("email_type LIKE 'paid'") },       :class_name => 'SystemEmail', :as => :emailable
+  has_one                 :waitlisted_email,  -> { where("email_type LIKE 'waitlisted'") }, :class_name => 'SystemEmail', :as => :emailable
+  has_one                 :reviewing_email,   -> { where("email_type LIKE 'reviewing'") },  :class_name => 'SystemEmail', :as => :emailable
+  has_one                 :canceled_email,    -> { where("email_type LIKE 'canceled'") },   :class_name => 'SystemEmail', :as => :emailable
+  has_one                 :refunded_email,    -> { where("email_type LIKE 'refunded'") },   :class_name => 'SystemEmail', :as => :emailable
+  has_one                 :noshow_email,      -> { where("email_type LIKE 'noshow'") },     :class_name => 'SystemEmail', :as => :emailable
   
-  attr_accessible         :slug, :title, :description, :sidebar, :country_id, :starting_on, :ending_on, :deadline_on, :info_url,
-                          :contact_email, :contact_phone, :require_review, :require_account, :show_address, :require_address,
-                          :require_photo, :published, :base_currency, :event_style, :funding_goal, :funding_goal_cents,
-                          :payments_enabled, :image
-
   # --- globalize
   translates              :title, :description, :sidebar, :fallbacks_for_empty_translations => true
   globalize_accessors     :locales => DmCore::Language.language_array
@@ -33,7 +28,6 @@ class Workshop < ActiveRecord::Base
 
   preference              :show_social_buttons,  :boolean, :default => false
   preference              :header_accent_color,  :string
-  attr_accessible         :preferred_show_social_buttons, :preferred_header_accent_color
 
   # --- validations
   validates_presence_of   :country_id
@@ -51,12 +45,12 @@ class Workshop < ActiveRecord::Base
   default_scope           { where(account_id: Account.current.id) }
   
   #--- upcoming and past are used in the admin, so should be published and non-published
-  scope                   :upcoming,  where('ending_on > ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC')
-  scope                   :past,      where('ending_on <= ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC')
+  scope                   :upcoming,  -> { where('ending_on > ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC') }
+  scope                   :past,      -> { where('ending_on <= ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC') }
 
   #--- available is list of published and registration open and not ended
-  scope                   :available, where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', 
-                                      (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC')
+  scope                   :available, -> { where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', 
+                                      (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC') }
 
   #--- don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
   monetize                :funding_goal_cents, :with_model_currency => :base_currency
@@ -213,7 +207,7 @@ class Workshop < ActiveRecord::Base
 
 =begin
   
-  has_many    :custom_field_defs, :as => :owner, :order => 'position', :dependent => :destroy
+  has_many    :custom_field_defs, -> { order(:position) }, :as => :owner, :dependent => :destroy
   has_many    :email_campaigns, :as => :campaignable
   has_many    :rooms
 

@@ -42,7 +42,7 @@
       You should then notify as you see fit.</p>
 <% end %>
 
-<% submit_url = edit_system_email_admin_workshop_path(@workshop) %>
+<% submit_url = edit_system_email_admin_workshop_path(@workshop, @system_email.email_type) %>
 <%= simple_form_for(@system_email, :url => submit_url) do |f| %>
   <%= f.error_notification :message => "Please review the problems below"%>
   <%= locale_frame :title => '' do |locale| %>

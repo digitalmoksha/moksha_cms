@@ -16,14 +16,14 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.13"
+  s.add_dependency "rails", "~> 4.0.0"
 
   #--- dont' forget to add 'require' statement in engine.rb
-  s.add_dependency 'ranked-model', '~> 0.3.0'             # sort order for a list
+  s.add_dependency 'ranked-model', '~> 0.4.0'             # sort order for a list
   s.add_dependency 'money-rails', '~> 0.9.0'
   s.add_dependency 'activemerchant', '~> 1.42'
-  s.add_dependency 'mini_magick', '~> 3.3'
-  s.add_dependency 'carrierwave', '~> 0.5.7'
+  s.add_dependency 'mini_magick', '~> 3.7.0'
+  s.add_dependency 'carrierwave', '~> 0.10.0'
 
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'

@@ -11,13 +11,6 @@ class WorkshopPrice < ActiveRecord::Base
 
   self.table_name         = 'ems_workshop_prices'
   
-  attr_accessible         :workshop_id, :price_description, :sub_description, :payment_details,
-                          :disabled, :valid_until, :valid_starting_on, :total_available,
-                          :price, :price_cents, :price_currency, 
-                          :alt1_price, :alt1_price_cents, :alt1_price_currency, 
-                          :alt2_price, :alt2_price_cents, :alt2_price_currency,
-                          :recurring_amount, :recurring_period, :recurring_number
-  
   belongs_to              :workshop
 
   default_scope           { where(account_id: Account.current.id).order('row_order ASC') }

@@ -4,15 +4,15 @@
   <ul class="navigation-light block">
     <li><%= link_to 'View Registrations', [:admin, @workshop] %></li>
   </ul>
-  <%= link_to 'Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop), :class => "action-button blue" %>
+  <%= link_to 'Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop), class: "action-button blue", method: :patch %>
 <% end %>
   
 <div class="row-fluid">
-  <%= content_box :title => 'Summary', class: 'span12' do %>
+  <%= content_box title: 'Summary', class: 'span12' do %>
     <div class="chart span6" style="height: 185px;margin-bottom:20px;" id="payment_outstanding_chart" 
-         data-values="<%= [ {label: "Paid: #{@financials[:summary][:total_paid].format(:no_cents_if_whole => true, :symbol => true)}", 
+         data-values="<%= [ {label: "Paid: #{@financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true)}", 
                              data: @financials[:summary][:total_paid].to_f, color: '#4DB24A' },
-                            {label: "Outstanding: #{@financials[:summary][:total_outstanding].format(:no_cents_if_whole => true, :symbol => true)}",
+                            {label: "Outstanding: #{@financials[:summary][:total_outstanding].format(no_cents_if_whole: true, symbol: true)}",
                              data: @financials[:summary][:total_outstanding].to_f, color: '#F24E50' }
                           ].to_json %>">
     </div>
@@ -29,17 +29,17 @@
         <tbody>
           <tr>
             <th><strong>Projected Revenue</strong></th>
-            <td class="cost"><%= @financials[:summary][:total_possible].format(:no_cents_if_whole => true, :symbol => true) %></td>
-            <td class="cost"><%= @financials[:summary][:total_possible_worst].format(:no_cents_if_whole => true, :symbol => true) %></td>
+            <td class="cost"><%= @financials[:summary][:total_possible].format(no_cents_if_whole: true, symbol: true) %></td>
+            <td class="cost"><%= @financials[:summary][:total_possible_worst].format(no_cents_if_whole: true, symbol: true) %></td>
           </tr>
           <tr>
             <th><strong>Outstanding</strong></th>
-            <td class="cost"><%= @financials[:summary][:total_outstanding].format(:no_cents_if_whole => true, :symbol => true) %></td>
-            <td class="cost"><%= @financials[:summary][:total_outstanding_worst].format(:no_cents_if_whole => true, :symbol => true) %></td>
+            <td class="cost"><%= @financials[:summary][:total_outstanding].format(no_cents_if_whole: true, symbol: true) %></td>
+            <td class="cost"><%= @financials[:summary][:total_outstanding_worst].format(no_cents_if_whole: true, symbol: true) %></td>
           </tr>
           <tr>
             <th><strong>Paid</strong></th>
-            <td colspan="2" class="cost"><%= @financials[:summary][:total_paid].format(:no_cents_if_whole => true, :symbol => true) %></td>
+            <td colspan="2" class="cost"><%= @financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true) %></td>
           </tr>
         </tbody>
       </table>
@@ -49,7 +49,7 @@
 
 <div class="row-fluid">
 
-  <%= content_box :title => 'Collected Payments by Month', class: 'span6' do %>
+  <%= content_box title: 'Collected Payments by Month', class: 'span6' do %>
     <div class="span7 chart" style="height: 200px" id="collected_monthly_chart" 
          data-values="<%= financial_collected_monthly_json(@financials[:collected_monthly]) %>"
          data-currencysymbol="<%= Money.new(0, @workshop.base_currency).symbol %>" >
@@ -60,7 +60,7 @@
           <% @financials[:collected_monthly].sort.each_with_index do |item, index| -%>
             <tr>
               <td class="name"><%= item[0].localize("%b %Y") %></td>
-              <td class="cost" style="text-align: right;"><%= @financials[:collected_monthly][item[0]].format(:no_cents_if_whole => true, :symbol => true) %></td>
+              <td class="cost" style="text-align: right;"><%= @financials[:collected_monthly][item[0]].format(no_cents_if_whole: true, symbol: true) %></td>
             </tr>
           <% end %>
         </tbody>
@@ -68,7 +68,7 @@
     </div>
   <% end %>
 
-  <%= content_box :title => 'Collected Payments by Method', class: 'span6' do %>
+  <%= content_box title: 'Collected Payments by Method', class: 'span6' do %>
     <div class="chart" style="height: 185px;" id="collected_chart" data-values="<%= financial_collected_json(@financials[:collected]) %>">
     </div>  
   <% end %>
@@ -76,7 +76,7 @@
 </div>
 
 <% unpaid = @workshop.registrations.unpaid.order('payment_reminder_sent_on ASC') %>
-<%= content_box :title => "#{unpaid.count} Unpaid Participants" do %>
+<%= content_box title: "#{unpaid.count} Unpaid Participants" do %>
   <table class="table table-bordered table-condensed table-striped">
     <thead>
       <tr>
@@ -103,7 +103,7 @@
   </table>
 <% end %>
 
-<%= content_box :title => 'List of Payments' do %>
+<%= content_box title: 'List of Payments' do %>
   <table class="table table-bordered table-condensed table-striped">
     <thead>
       <tr>
@@ -121,7 +121,7 @@
           <td class="date" style="white-space:nowrap"><%= format_date(payment.payment_date) %></td>
           <td class="name"><%= payment.owner.full_name %></td>
           <td class="item_id"><%= payment.item_ref %></td>
-          <td class="cost"><%= payment.total.format(:no_cents_if_whole => true, :symbol => true) %></td>
+          <td class="cost"><%= payment.total.format(no_cents_if_whole: true, symbol: true) %></td>
           <td class="payment_method" style="white-space:nowrap"><%= payment.payment_method.titleize %></td>
           <td class="type"><%= payment.user_profile.nil? ? 'Automated' : payment.user_profile.public_name %></td>
         </tr>

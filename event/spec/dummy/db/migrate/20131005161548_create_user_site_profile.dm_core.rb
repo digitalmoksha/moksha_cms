@@ -9,7 +9,7 @@ class CreateUserSiteProfile < ActiveRecord::Migration
       t.integer     :account_id
     end
 
-    User.find(:all).each do |user|
+    User.all.find_each do |user|
       Account.current = Account.find(user.account_id)
       p = user.user_site_profiles.create
       p.update_attribute(:account_id, user.attributes['account_id']) 
