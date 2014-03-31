@@ -59,7 +59,7 @@ module Scio
     #   columns << Scio::Excel::Column.new("Name", :width => 276.75, :cell_style => st1, :header_style => st3)
     #
     #   # next, create the data array
-    #   rows = User.find(:all).collect {|u| {"Birthday" => u.bday.strftime("%d/%m/%Y"), "Name" => u.name}}
+    #   rows = User.all.collect {|u| {"Birthday" => u.bday.strftime("%d/%m/%Y"), "Name" => u.name}}
     #
     #   # create the workbook
     #   wb = Scio::Excel::SimpleWorkbook.new("User's birthday List")
@@ -92,7 +92,7 @@ module Scio
     #   columns << Scio::Excel::Column.new("R.U.T", :width => 40, :header_style => sth)
     #
     #   # crear the data
-    #   rows = Cliente.find(:all, :order => 'razon_social').collect {|c|
+    #   rows = Cliente.order('razon_social').collect {|c|
     #     {"Nombre Cliente" => c.razon_social, "R.U.T" => c.rut}
     #   }
     #

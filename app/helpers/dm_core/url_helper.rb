@@ -7,11 +7,11 @@ module DmCore
       DmCore::Language.translate_url(request.url, locale)
     end
     
-    # Usually don't care if a form submits a PUT or POST.  Was something submitted?
-    #------------------------------------------------------------------------------
-    def put_or_post?
-      request.put? || request.post?
-    end
+    # # Usually don't care if a form submits a PUT or POST.  Was something submitted?
+    # #------------------------------------------------------------------------------
+    # def put_or_post?
+    #   request.put? || request.post? || request.patch?
+    # end
   
     # Given a file name (relative or absolute), generate a full url path (usually
     # will not include the protocol)

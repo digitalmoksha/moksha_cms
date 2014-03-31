@@ -15,28 +15,10 @@ class Account < ActiveRecord::Base
                         'US Dollar ($)' => 'USD' }
   
   self.table_name   = 'core_accounts'
-  attr_accessible         :company_name, :contact_email, :default_site_id, :domain, :account_prefix
-  attr_accessible         :preferred_site_enabled, :preferred_default_locale, :preferred_locales,
-                          :preferred_ssl_enabled, :preferred_webmaster_email,
-                          :preferred_support_email, :preferred_google_analytics_tracker_id
-  attr_accessible         :preferred_site_title, :preferred_site_keywords, :preferred_site_copyright,
-                          :preferred_site_description, :preferred_youtube_url, :preferred_facebook_url,
-                          :preferred_twitter_url, :preferred_linkedin_url
-  attr_accessible         :preferred_smtp_address, :preferred_smtp_port, :preferred_smtp_domain,
-                          :preferred_smtp_user_name, :preferred_smtp_password, :preferred_smtp_from_email,
-                          :preferred_blog_from_email
-
-  attr_accessible         :preferred_paypal_merchant_id, :preferred_paypal_cert_id
-  attr_accessible         :preferred_sofort_user_id, :preferred_sofort_project_id, 
-                          :preferred_sofort_project_password, :preferred_sofort_notification_password
-  attr_accessible         :preferred_subscription_processor, :preferred_subscription_bcc_email
-  attr_accessible         :preferred_default_currency
-  attr_accessible         :preferred_follower_notifications_sent_at
-
-  attr_accessible         :preferred_nms_use_mailchimp, :preferred_nms_api_key, :preferred_nms_lists_synced_on
 
   attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation
-  attr_accessor           :url_base, :url_host, :url_protocol  #--- stores the current base site url for this request. useful to mailers where request object not available
+  attr_accessor           :url_base, :url_host, :url_protocol  #--- stores the current base site url for this request. 
+                                                               #    useful to mailers where request object not available
   
   validates_presence_of   :domain,                                      :if => Proc.new { |p| p.general_validation }
   validates_presence_of   :account_prefix,                              :if => Proc.new { |p| p.general_validation }

@@ -25,7 +25,7 @@ class AddUserProfile < ActiveRecord::Migration
       t.integer     :account_id
     end
     
-    User.find(:all).each do |user|
+    User.all.find_each do |user|
       Account.current = Account.find(user.account_id)
       p = user.create_user_profile
       p.update_attributes(first_name: user.attributes['first_name'], last_name: user.attributes['last_name'],

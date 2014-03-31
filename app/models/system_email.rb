@@ -3,7 +3,6 @@
 class SystemEmail < ActiveRecord::Base
 
   self.table_name       = 'core_system_emails'
-  attr_accessible       :email_type
 
   belongs_to            :emailable, :polymorphic => true
 

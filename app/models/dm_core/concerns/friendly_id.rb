@@ -22,7 +22,6 @@ module DmCore
       included do
 
         friendly_id               :model_slug, use: :scoped, scope: :account_id
-        attr_accessible           :slug
         validates_presence_of     :slug
         before_save               :normalize_slug
 
@@ -56,13 +55,3 @@ module DmCore
     end
   end
 end
-
-# Use this on params when finding a slug - ensures it's in same format that 
-# we're storing in the database
-#------------------------------------------------------------------------------
-class String
-  def slug_param
-    self.to_s.to_slug.normalize.to_s
-  end
-end
-

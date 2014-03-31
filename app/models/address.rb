@@ -3,8 +3,6 @@ class Address < ActiveRecord::Base
   self.table_name   = 'core_addresses'
   belongs_to        :addressable, :polymorphic => true
   
-  attr_accessible   :line1, :line2, :city, :state, :zip, :country_code
-  
   attr_accessor     :name
   
   biggs :postal_address,

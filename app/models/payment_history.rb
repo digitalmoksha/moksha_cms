@@ -20,9 +20,6 @@ class PaymentHistory < ActiveRecord::Base
 
   self.table_name         = 'core_payment_histories'
 
-  attr_accessible           :anchor_id, :item_ref, :cost, :quantity, :discount,
-                            :total_cents, :total_currency, :payment_method, :bill_to_name,
-                            :payment_date, :user_profile_id, :notify_data, :transaction_id, :status
   belongs_to                :owner, :polymorphic => true
   belongs_to                :user_profile
   serialize                 :order_details
@@ -33,12 +30,6 @@ class PaymentHistory < ActiveRecord::Base
   default_scope             { where(account_id: Account.current.id) }
 
   validates_numericality_of :cost
-
-  # This will get overridden by any specilized integrations, such as Ultracart
-  #------------------------------------------------------------------------------
-  def initialize(params, options)
-    super(params, options)
-  end
 
   # Generate the anchor code that gets placed in a shopping cart item.  This is
   # used to gain access to some agreed upon item in the database.
