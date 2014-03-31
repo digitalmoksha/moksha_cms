@@ -1,4 +1,5 @@
 class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
+  include DmCms::PermittedParams
   helper "dm_cms/cms_pages"
   
   before_filter   :current_page, :except => [:index, :file_tree, :expire_cache_total]
@@ -6,7 +7,8 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def index
     CmsPage.create_default_site if CmsPage.roots.empty?
-    @tree = CmsPage.arrange(order: :position)
+    # @tree = CmsPage.arrange(order: :position)
+    @tree = CmsPage.arrange(order: :row_order)
   end
   
   #------------------------------------------------------------------------------
@@ -16,7 +18,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def create_page
-    @cms_page = @current_page.children.new(params[:cms_page])
+    @cms_page = @current_page.children.new(cms_page_params)
     respond_to do |format|
       if @cms_page.save
         format.html { redirect_to admin_cms_page_url(@cms_page), notice: 'Page was successfully created.' }
@@ -35,7 +37,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update
-    if @current_page.update_attributes(params[:cms_page])
+    if @current_page.update_attributes(cms_page_params)
       redirect_to :action => :show, :id => @current_page
      else
       @cms_page = @current_page
@@ -61,8 +63,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   # Note that position comes in as 0-based, increment to make 1-based
   #------------------------------------------------------------------------------
   def ajax_sort
-    new_position = params[:item][:position].to_i + 1
-    @current_page.update_attributes(:position => new_position, :parent_id => params[:item][:parent_id])
+    @current_page.update_attributes(row_order_position: params[:item][:position], parent_id: params[:item][:parent_id])
 
     #--- this action will be called via ajax
     render nothing: true
@@ -73,30 +74,6 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     @current_page.destroy
     redirect_to :action => :index
   end
-
-=begin
-  # Based on jQuery File Tree Ruby Connector by Erik Lax
-  # http://datahack.se, 13 July 2008
-  #------------------------------------------------------------------------------
-  def file_tree
-    tree = "<ul class='jqueryFileTree' style='display: none;'>"
-    slug = params[:dir].chomp("/")
-    page = CmsPage.find_by_slug(slug)
-    if page.nil?
-      render :inline => 'Data Unavailable'
-    else
-      page.children.each do |child|
-        if child.has_children?
-      		tree += "<li class='directory collapsed'><a href='#' rel='#{child.slug}/'>#{child.slug}</a></li>";
-        else
-    			tree += "<li class='file'><a href='#' rel='#{child.slug}'>#{child.slug}</a></li>"
-        end
-      end
-      tree += "</ul>"
-      render :inline => tree
-    end
-  end
-=end
 
   # Removes all cache files. This can be used when we're not sure if the
   # cache file for a changed page has been deleted or not
@@ -114,7 +91,7 @@ protected
   #------------------------------------------------------------------------------
   def current_page
     if params[:id].to_i == 0
-      @current_page = CmsPage.find_by_slug(params[:id].slug_param)
+      @current_page = CmsPage.friendly.find(params[:id])
     else
       @current_page = CmsPage.find(params[:id])
     end

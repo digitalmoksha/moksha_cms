@@ -1,5 +1,4 @@
 require 'ancestry'
-require 'acts_as_list'
 require 'meta-tags-helpers'
 require 'mail_form'
 require 'dm_core'

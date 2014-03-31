@@ -1,5 +1,6 @@
 class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
-
+  include DmCms::PermittedParams
+  
   before_filter   :find_snippet, except: [:index, :new, :create]
   before_filter   :set_title
 
@@ -17,7 +18,7 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def create
-    @cms_snippet = CmsSnippet.new(params[:cms_snippet])
+    @cms_snippet = CmsSnippet.new(cms_snippet_params)
     if @cms_snippet.save
       redirect_to admin_cms_snippets_url, notice: 'Snippet successfully created.'
     else
@@ -31,7 +32,7 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update
-    if @cms_snippet.update_attributes(params[:cms_snippet])
+    if @cms_snippet.update_attributes(cms_snippet_params)
       redirect_to admin_cms_snippets_url, notice: 'Content updated'
      else
       render :action => :edit, alert: 'An error of some kind occurred'
@@ -47,7 +48,7 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
   # [todo]
   #------------------------------------------------------------------------------
   def update_fragment
-    if @cms_snippet.update_attributes(params[:cms_snippet])
+    if @cms_snippet.update_attributes(cms_snippet_params)
       #@cms_page.merge!(@item.cms_page.get_page_render_values)
       #respond_to do |format| 
       #  format.js { render :action => :update_fragment } 
@@ -59,7 +60,7 @@ private
 
   #------------------------------------------------------------------------------
   def find_snippet
-    @cms_snippet = CmsSnippet.find(params[:id])
+    @cms_snippet = CmsSnippet.friendly.find(params[:id])
   end
 
   # Set some values for the template based on the controller

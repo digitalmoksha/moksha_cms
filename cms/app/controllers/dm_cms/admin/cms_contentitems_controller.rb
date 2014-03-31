@@ -1,10 +1,10 @@
 class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
+  include DmCms::PermittedParams
+  include DmCore::LiquidHelper
 
   before_filter   :current_page,    :only =>    [:new_content, :create_content]
   before_filter   :current_content, :except =>  [:new_content, :create_content]
   before_filter   :set_title
-
-  include DmCore::LiquidHelper
 
   #------------------------------------------------------------------------------
   def new_content
@@ -14,7 +14,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def create_content
-    @cms_contentitem = @current_page.cms_contentitems.new(params[:cms_contentitem])
+    @cms_contentitem = @current_page.cms_contentitems.new(cms_contentitem_params)
     if @cms_contentitem.save
       redirect_to admin_cms_page_url(@current_page), notice: 'Content successfully created.'
     else
@@ -28,7 +28,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update
-    if @cms_contentitem.update_attributes(params[:cms_contentitem])
+    if @cms_contentitem.update_attributes(cms_contentitem_params)
       redirect_to edit_admin_cms_contentitem_url(@cms_contentitem), notice: 'Content updated'
      else
       render :action => :edit, alert: 'An error of some kind occurred'
@@ -43,7 +43,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update_fragment
-    if @cms_contentitem.update_attributes(params[:cms_contentitem])
+    if @cms_contentitem.update_attributes(cms_contentitem_params)
       #@cms_page.merge!(@item.cms_page.get_page_render_values)
       #respond_to do |format| 
       #  format.js { render :action => :update_fragment } 
@@ -53,13 +53,13 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def move_up
-    @cms_contentitem.move_higher
+    @cms_contentitem.update_attributes(row_order_position: :up)
     redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
   end
 
   #------------------------------------------------------------------------------
   def move_down
-    @cms_contentitem.move_lower
+    @cms_contentitem.update_attributes(row_order_position: :down)
     redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
   end
   
@@ -75,7 +75,7 @@ protected
   
   #------------------------------------------------------------------------------
   def current_page
-    @current_page  = CmsPage.find(params[:id])
+    @current_page  = CmsPage.friendly.find(params[:id])
   end
 
   #------------------------------------------------------------------------------

@@ -1,4 +1,5 @@
 class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
+  include DmCms::PermittedParams
   
   before_filter   :blog_lookup,    :except =>  [:index, :new, :create]
   #before_filter   :set_title
@@ -19,7 +20,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def create
-    @blog = CmsBlog.new(params[:cms_blog])
+    @blog = CmsBlog.new(cms_blog_params)
     
     if @blog.save
       redirect_to admin_cms_blog_url(@blog), notice: 'Blog was successfully created.'
@@ -30,7 +31,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update
-    if @blog.update_attributes(params[:cms_blog])
+    if @blog.update_attributes(cms_blog_params)
       redirect_to admin_cms_blog_url(@blog), notice: 'Blog was successfully updated.'
     else
       render action: :edit
@@ -94,7 +95,7 @@ private
 
   #------------------------------------------------------------------------------
   def blog_lookup
-    @blog = CmsBlog.find(params[:id])
+    @blog = CmsBlog.friendly.find(params[:id])
   end
 
 end

@@ -4,7 +4,7 @@
     <div class='navbar'><ul class='nav pull-right'>
       <li><%= present(@post).label_published %></li>
       <li><%= link_to(icon_label('icon-search', 'View'), post_show_url(@blog, @post), :class => "nav-btn-primary", title: 'View', :target => '_blank') %></li>
-      <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @post], :method => :delete, :class => "nav-btn-danger", :confirm => 'Are you sure you wish to delete this post?  All comments will also be deleted!') %></li>
+      <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @post], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this post?  All comments will also be deleted!'}) %></li>
     </ul></div>
   <% end %>
 <% else %>
@@ -51,9 +51,9 @@
 <% unless @post.new_record? %>
   <% content_for :sidebar do %>
     <% if @post.notification_sent_on.nil? %>
-      <%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), :class => "action-button btn-primary semi-block", :confirm => 'This will send a post notification email to each user of this blog.  Are you sure?' %>
+      <%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), class: "action-button btn-primary semi-block", method: :put, data: {confirm: 'This will send a post notification email to each user of this blog.  Are you sure?'} %>
     <% else %>
-      <%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), :class => "action-button btn-warning semi-block", :confirm => "WARNING: An email was already sent on #{format_datetime(@post.notification_sent_on)}.  Are you sure you want to send another?" %>
+      <%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), class: "action-button btn-warning semi-block", method: :put, data: {confirm: "WARNING: An email was already sent on #{format_datetime(@post.notification_sent_on)}.  Are you sure you want to send another?"} %>
     <% end %>
   <% end %>
 <% end %>

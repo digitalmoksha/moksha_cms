@@ -7,7 +7,7 @@
     <% if false #user_signed_in? && can?(:edit, comment) %>
       | <%= link_to I18n.t('fms.admin.edit_post'), [commenting_on, :ajax_edit_comment, comment] %>
     <% end %>
-    <%= ' | '.html_safe + link_to(I18n.t('cms.delete'), [commenting_on, :ajax_delete_comment, comment], method: :delete, confirm: 'Are you sure you wish to delete this comment?') if is_admin? %>
+    <%= ' | '.html_safe + link_to(I18n.t('cms.delete'), [commenting_on, :ajax_delete_comment, comment], method: :delete, data: {confirm: 'Are you sure you wish to delete this comment?'}) if is_admin? %>
   </p>
   <div class="clearfix"></div>
   <div class="comment_text">

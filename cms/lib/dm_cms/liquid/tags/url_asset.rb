@@ -2,8 +2,7 @@ module Liquid
   class UrlAsset < DmCore::LiquidTag
     include ActionView::Helpers::TagHelper 
     include ActionView::Helpers::AssetTagHelper
-    include Sprockets::Helpers::RailsHelper
-    include Sprockets::Helpers::IsolatedHelper
+    # include Sprockets::Rails::Helper
     include DmCore::UrlHelper
     include DmCore::ParamsHelper
     include DmCore::AccountHelper
