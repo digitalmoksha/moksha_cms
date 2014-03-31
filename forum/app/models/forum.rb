@@ -2,7 +2,6 @@ class Forum < ActiveRecord::Base
   include DmCore::Concerns::PublicPrivate
 
   self.table_name             = 'fms_forums'
-  attr_accessible             :slug, :name, :description, :published, :is_public, :requires_login, :requires_subscription
 
   # --- FriendlyId
   extend FriendlyId
@@ -17,17 +16,15 @@ class Forum < ActiveRecord::Base
   
   belongs_to                  :forum_site
   belongs_to                  :forum_category, :class_name => 'ForumCategory'
-  has_many                    :forum_topics, :order => "sticky desc, last_updated_at desc", :dependent => :destroy
+  has_many                    :forum_topics, -> { order('sticky desc, last_updated_at desc') }, :dependent => :destroy
 
   # this is used to see if a forum is "fresh"... we can't use topics because it puts
   # stickies first even if they are not the most recently modified
-  has_many                    :recent_topics, :class_name => 'ForumTopic', :include => [:user],
-                                :order => "last_updated_at DESC"
-  has_one                     :recent_topic,  :class_name => 'ForumTopic', 
-                                :order => "last_updated_at DESC"
+  has_many                    :recent_topics, -> { includes(:user).order('last_updated_at DESC') }, :class_name => 'ForumTopic'
+  has_one                     :recent_topic,  -> { order('last_updated_at DESC') },                 :class_name => 'ForumTopic'
 
   default_scope               { where(account_id: Account.current.id).order(:row_order) }
-  scope :published,           where(:published => true)
+  scope                       :published, -> { where(:published => true) }
 
   # --- validations
   validates_presence_of       :name

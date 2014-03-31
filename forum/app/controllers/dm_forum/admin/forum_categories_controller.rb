@@ -1,4 +1,5 @@
 class DmForum::Admin::ForumCategoriesController < DmCore::Admin::AdminController
+  include DmForum::PermittedParams
 
   before_filter   :category_lookup, :except =>  [:index, :new, :create]
   
@@ -27,7 +28,7 @@ class DmForum::Admin::ForumCategoriesController < DmCore::Admin::AdminController
   # POST /admin/forum_categories
   #------------------------------------------------------------------------------
   def create
-    @forum_category = ForumCategory.new(params[:forum_category])
+    @forum_category = ForumCategory.new(forum_category_params)
 
     if @forum_category.save
       redirect_to admin_forum_category_url(@forum_category), notice: 'Forum Category was successfully created.'
@@ -39,7 +40,7 @@ class DmForum::Admin::ForumCategoriesController < DmCore::Admin::AdminController
   # PUT /admin/forum_categories/1
   #------------------------------------------------------------------------------
   def update
-    if @forum_category.update_attributes(params[:forum_category])
+    if @forum_category.update_attributes(forum_category_params)
       redirect_to admin_forum_category_url(@forum_category), notice: 'Forum Category was successfully updated.'
     else
       render action: :edit

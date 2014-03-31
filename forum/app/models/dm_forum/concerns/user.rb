@@ -12,7 +12,7 @@ module DmForum
       included do
 
         has_many :forum_comments, {:as => :commentable, :dependent => :delete_all}
-        has_many :forum_topics, :order => "#{ForumTopic.table_name}.created_at desc"
+        has_many :forum_topics, -> { order("#{ForumTopic.table_name}.created_at desc") }
 
         #------------------------------------------------------------------------------
         def available_forums

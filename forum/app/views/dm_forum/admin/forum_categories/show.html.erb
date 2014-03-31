@@ -1,15 +1,15 @@
 <% content_for :content_title, icon_label('font-comments', @forum_category.name) %>
 <% content_for :content_title_extra do %>
   <div class='navbar'><ul class='nav pull-right'>
-    <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @forum_category], :class => "nav-btn-primary", title: 'Edit') %></li>
-    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @forum_category], :method => :delete, :class => "nav-btn-danger", :confirm => 'Are you sure you wish to delete this forum?  All comments will also be deleted!') %></li>
+    <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @forum_category], class: "nav-btn-primary", title: 'Edit') %></li>
+    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @forum_category], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this forum?  All comments will also be deleted!'}) %></li>
   </ul></div>
 <% end %>
 
-<%= render :partial => 'dm_forum/admin/forum_categories/index_sidebar' %>
+<%= render partial: 'dm_forum/admin/forum_categories/index_sidebar' %>
 
-<% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), new_admin_forum_category_forum_path(@forum_category), :title => 'New Forum', :class => "nav-btn-primary") ]) %>
-<%= content_frame :title => 'Forums', :toolbar => toolbar do %>
+<% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), new_admin_forum_category_forum_path(@forum_category), title: 'New Forum', class: "nav-btn-primary") ]) %>
+<%= content_frame title: 'Forums', toolbar: toolbar do %>
   <div class="table-overflow">
     <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%= dm_forum.admin_forum_sort_path %>">
       <thead>

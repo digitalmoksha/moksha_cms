@@ -1,4 +1,5 @@
 class DmForum::ForumTopicsController < DmForum::ApplicationController
+  include DmForum::PermittedParams
 
   before_filter :find_forum
   before_filter :find_topic, :only => [:show, :edit, :update, :destroy]
@@ -35,7 +36,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   #------------------------------------------------------------------------------
   def create
     params[:forum_topic].delete(:forum_id)
-    @forum_topic = @forum.forum_topics.new(params[:forum_topic])
+    @forum_topic = @forum.forum_topics.new(forum_topic_params)
     @forum_topic.user = current_user
     if @forum_topic.save
       current_user.following.follow(@forum_topic)
@@ -52,7 +53,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   #------------------------------------------------------------------------------
   def update
     #current_user.revise @topic, params[:topic]
-    attributes = params[:forum_topic]
+    attributes = forum_topic_params
     @forum_topic.title = attributes[:title] if attributes.key?(:title)
     @forum_topic.sticky, @forum_topic.locked, @forum_topic.forum_id = attributes[:sticky], attributes[:locked], attributes[:forum_id] if can?(:moderate, @forum_topic.forum)
     @forum_topic.save

@@ -1,12 +1,12 @@
 <% content_for :content_title, icon_label('font-comment', @forum.name) %>
 <% content_for :content_title_extra do %>
   <div class='navbar'><ul class='nav pull-right'>
-    <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @forum], :class => "nav-btn-primary", title: 'Edit') %></li>
-    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @forum], :method => :delete, :class => "nav-btn-danger", :confirm => 'Are you sure you wish to delete this forum?  All comments will also be deleted!') %></li>
+    <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @forum], class: "nav-btn-primary", title: 'Edit') %></li>
+    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @forum], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this forum?  All comments will also be deleted!'}) %></li>
   </ul></div>
 <% end %>
 
-<%= render :partial => 'dm_forum/admin/forum_categories/index_sidebar' %>
+<%= render partial: 'dm_forum/admin/forum_categories/index_sidebar' %>
 
 <div class="block well body">
 
@@ -21,14 +21,14 @@
 
 <div class="row-fluid">
 
-  <%= content_box :title => 'Grant Forum Access', :class => 'span6' do %>
+  <%= content_box title: 'Grant Forum Access', class: 'span6' do %>
     <% unless Workshop.upcoming.empty? %>
       <h5>Add Workshop Attendees</h5>
       <p>Add all attendees of a workshop to this forum. Duplicates will be ignored. Only those marked "Accepted" or "Paid" will be added</p>
       <p><em>Note: Only users with an account will be added.</em></p>
-      <%= simple_form_for :workshop_forum, :url => dm_forum.forum_add_member_admin_forum_path(@forum), :html => { :class => 'form-horizontal' } do |f| %>
-        <%= select_tag :workshop_id, options_from_collection_for_select(Workshop.upcoming, :id, :title), :include_blank => true, class: "style" %>
-        <%= submit_tag 'Add', :class => "btn btn-primary" %>
+      <%= simple_form_for :workshop_forum, url: dm_forum.forum_add_member_admin_forum_path(@forum), html: { class: 'form-horizontal' } do |f| %>
+        <%= select_tag :workshop_id, options_from_collection_for_select(Workshop.upcoming, :id, :title), include_blank: true, class: "style" %>
+        <%= submit_tag 'Add', class: "btn btn-primary" %>
       <% end %>
 
       <div class="separator"></div>
@@ -49,8 +49,8 @@
     </div>
   <% end %>
   
-  <% toolbar = toolbar_button(@forum.member_list.count, '#', :title => 'Number of users with forum access', :class => 'label label-success pull-right') %>
-  <%= content_frame :title => 'Users with Access', :toolbar => toolbar, :class => 'span6' do %>
+  <% toolbar = toolbar_button(@forum.member_list.count, '#', title: 'Number of users with forum access', class: 'label label-success pull-right') %>
+  <%= content_frame title: 'Users with Access', toolbar: toolbar, class: 'span6' do %>
     <div class="table-overflow">
       <table class="table table-striped table-bordered table-block">
         <thead>
@@ -62,7 +62,7 @@
         <tbody>
           <% @forum.member_list.each do |user| %>
             <tr>
-              <td><%= link_to(icons("icon-minus"), dm_forum.forum_delete_member_admin_forum_path(@forum, :user_id => user.id), :method => :delete, :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+              <td><%= link_to(icons("icon-minus"), dm_forum.forum_delete_member_admin_forum_path(@forum, user_id: user.id), method: :delete, title: 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
               <td><%= user.country.english_name %></td>
             </tr>
           <% end %>
