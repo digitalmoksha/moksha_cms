@@ -17,7 +17,7 @@ class DmCms::PagesController < DmCms::ApplicationController
     DmCore::Language.locale = current_account.verify_locale(params[:locale])
     
     #--- find the requested page, and if not found try to find the 'missing' page
-    @current_page = CmsPage.find_by_slug(params[:slug].slug_param)
+    @current_page = CmsPage.friendly.find(params[:slug])
     if @current_page.nil? || (!@current_page.is_published? && !is_admin?)
       @current_page = CmsPage.find_by_slug('missing')
       render :action => :show, :layout => "cms_templates/404", :status => 404 && return if @current_page.nil?

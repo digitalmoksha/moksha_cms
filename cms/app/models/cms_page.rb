@@ -11,9 +11,6 @@ class CmsPage < ActiveRecord::Base
 
   #--- NOTE: if you add any new fields, then update the duplicate_with_associations method
   
-  attr_accessible         :slug, :pagetype, :published, :template, :link, :menuimage, :requires_login,
-                          :title, :title_en, :menutitle, :parent_id
-
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates              :title, :menutitle, :fallbacks_for_empty_translations => true #, :versioning => true
   globalize_accessors     :locales => DmCore::Language.language_array
@@ -26,15 +23,16 @@ class CmsPage < ActiveRecord::Base
   include DmCore::Concerns::FriendlyId
 
   # --- associations
-  has_many                :cms_contentitems, :order => :position, :dependent => :destroy
+  has_many                :cms_contentitems, -> { order(:row_order) }, :dependent => :destroy
   has_ancestry            :cache_depth => true
   before_save             :cache_depth  # fixes bug where depth not recalculated when subtree moved
-  acts_as_list            :scope => 'ancestry = \'#{ancestry}\''
 
-  default_scope           { where(account_id: Account.current.id).order("ancestry_depth, position ASC") }
+  include RankedModel
+  ranks                   :row_order, :with_same => [:account_id, :ancestry]
+
+  default_scope           { where(account_id: Account.current.id).order("ancestry, row_order ASC") }
   
   preference              :show_social_buttons,  :boolean, :default => false
-  attr_accessible         :preferred_show_social_buttons
 
   amoeba do
     enable

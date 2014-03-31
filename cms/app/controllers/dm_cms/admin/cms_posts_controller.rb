@@ -1,4 +1,5 @@
 class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
+  include DmCms::PermittedParams
 
   before_filter   :blog_lookup, :only =>    [:index, :new, :create]
   before_filter   :post_lookup, :except =>  [:index, :new, :create]
@@ -24,7 +25,7 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def create
     prepare_date_time_attribute
-    @post = @blog.posts.new(params[:cms_post])
+    @post = @blog.posts.new(cms_post_params)
 
     if @post.save
       redirect_to admin_cms_blog_url(@blog), notice: 'Post was successfully created.'
@@ -36,7 +37,7 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def update
     prepare_date_time_attribute
-    if @post.update_attributes(params[:cms_post])
+    if @post.update_attributes(cms_post_params)
       redirect_to admin_cms_blog_url(@blog), notice: 'Post was successfully updated.'
     else
       render action: :edit
@@ -64,12 +65,12 @@ private
 
   #------------------------------------------------------------------------------
   def blog_lookup
-    @blog = CmsBlog.find(params[:cms_blog_id])
+    @blog = CmsBlog.friendly.find(params[:cms_blog_id])
   end
 
   #------------------------------------------------------------------------------
   def post_lookup
-    @post = CmsPost.find(params[:id])
+    @post = CmsPost.friendly.find(params[:id])
     @blog = @post.cms_blog
   end
 

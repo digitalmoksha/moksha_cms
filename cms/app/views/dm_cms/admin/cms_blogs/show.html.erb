@@ -4,7 +4,7 @@
     <li><%= present(@blog).label_published %></li>
     <li><%= link_to(icon_label('icon-search', 'View'), blog_show_url(@blog), :class => "nav-btn-primary", title: 'View', :target => '_blank') %></li>
     <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @blog], :class => "nav-btn-primary", title: 'Edit') %></li>
-    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @blog], :method => :delete, :class => "nav-btn-danger", :confirm => 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!') %></li>
+    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @blog], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!'}) %></li>
   </ul></div>
 <% end %>
 

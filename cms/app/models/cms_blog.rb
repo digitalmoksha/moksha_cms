@@ -1,8 +1,6 @@
 class CmsBlog < ActiveRecord::Base
   include DmCore::Concerns::PublicPrivate
 
-  attr_accessible           :slug, :published, :requires_login, :requires_subscription, :comments_allowed, :image
-  
   # --- globalize
   translates                :title, :fallbacks_for_empty_translations => true
   globalize_accessors       :locales => DmCore::Language.language_array
@@ -17,14 +15,13 @@ class CmsBlog < ActiveRecord::Base
   ranks                     :row_order, :with_same => :account_id
 
   default_scope             { where(account_id: Account.current.id).order(:row_order) }
-  scope :published,         where(:published => true)
+  scope                     :published, -> { where(:published => true) }
   
-  has_many                  :posts, :class_name => 'CmsPost', :order => "published_on DESC", :dependent => :destroy
+  has_many                  :posts, -> { order('published_on DESC') }, :class_name => 'CmsPost', :dependent => :destroy
   belongs_to                :account
 
   preference                :show_social_buttons,  :boolean, :default => false
   preference                :header_accent_color,  :string
-  attr_accessible           :preferred_show_social_buttons, :preferred_header_accent_color
 
   validates                 :title, presence_default_locale: true
 

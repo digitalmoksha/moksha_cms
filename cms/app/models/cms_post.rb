@@ -1,7 +1,5 @@
 class CmsPost < ActiveRecord::Base
 
-  attr_accessible         :slug, :published_on, :title, :content, :summary, :image, :comments_allowed
-  
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates              :title, :summary, :content, :fallbacks_for_empty_translations => true #, :versioning => true
   globalize_accessors     :locales => DmCore::Language.language_array
@@ -16,7 +14,7 @@ class CmsPost < ActiveRecord::Base
   belongs_to              :account
   
   default_scope           { where(account_id: Account.current.id) }
-  scope                   :published, lambda { where("published_on <= ?", Time.now ) }
+  scope                   :published, -> { where("published_on <= ?", Time.now ) }
   
   validates               :title, presence_default_locale: true
   validates               :summary, liquid: { :locales => true }, presence_default_locale: true

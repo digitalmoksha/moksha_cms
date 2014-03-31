@@ -3,8 +3,6 @@ class CmsSnippet < ActiveRecord::Base
     has_paper_trail
   end
 
-  attr_accessible       :itemtype, :slug, :description, :content, :enable_cache, :published
-
   # --- FriendlyId
   extend FriendlyId
   include DmCore::Concerns::FriendlyId

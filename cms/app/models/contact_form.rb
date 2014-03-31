@@ -4,7 +4,7 @@
 class ContactForm < ::MailForm::Base
   
   attribute :name,        :validate => true
-  attribute :email,       :validate =>  /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i
+  attribute :email,       :validate =>  /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
   attribute :organization                    # Not validated
   attribute :subject,     :validate => true
   attribute :message,     :validate => true

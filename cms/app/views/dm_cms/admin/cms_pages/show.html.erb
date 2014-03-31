@@ -1,21 +1,21 @@
 <% content_for :content_title, icon_label('font-paste', present(@current_page).admin_edit_title) %>
 <% content_for :secondary_title, "#{@current_page.slug} &mdash; #{@current_page.title}".html_safe %>
 <ul class="midnav midnav-font">
-  <li><%= link_to "#{icons('font-plus')}<span>Add Content Block</span>".html_safe, new_content_admin_cms_contentitem_path(@current_page), :title => 'Add Content Block' %></li>
-  <li><%= link_to "#{icons('font-search')}<span>View Page</span>".html_safe, url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), :title => 'View Page', :target => '_blank' %></li>
-  <% if false %><li><%= link_to "#{icons('font-copy')}<span>Duplicate Page</span>".html_safe, duplicate_page_admin_cms_page_path(@current_page), :method => :put, :title => 'Duplicate Page', :confirm => "Are you sure you wish to duplicate this page?" %></li> <% end %>
-  <li><%= link_to "#{icons('font-trash')}<span>Delete Page</span>".html_safe, admin_cms_page_path(@current_page), :method => :delete, :title => 'Delete Page', :confirm => "Are you sure you wish to delete this page?" %></li>
+  <li><%= link_to "#{icons('font-plus')}<span>Add Content Block</span>".html_safe, new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block' %></li>
+  <li><%= link_to "#{icons('font-search')}<span>View Page</span>".html_safe, url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', target: '_blank' %></li>
+  <% if false %><li><%= link_to "#{icons('font-copy')}<span>Duplicate Page</span>".html_safe, duplicate_page_admin_cms_page_path(@current_page), method: :put, title: 'Duplicate Page', data: {confirm: "Are you sure you wish to duplicate this page?"} %></li> <% end %>
+  <li><%= link_to "#{icons('font-trash')}<span>Delete Page</span>".html_safe, admin_cms_page_path(@current_page), method: :delete, title: 'Delete Page', data: {confirm: "Are you sure you wish to delete this page?"} %></li>
 </ul>
 
 <% @current_page.cms_contentitems.each do |item| %>
-  <% toolbar = render :partial => 'content_toolbar', :locals => { :contentitem => item } %>
-  <%= content_frame :title => "#{item.container}", :toolbar => toolbar do %>
+  <% toolbar = render partial: 'content_toolbar', locals: { contentitem: item,  contentitem_list: @current_page.cms_contentitems } %>
+  <%= content_frame title: "#{item.container}", toolbar: toolbar do %>
     <div class="table-overflow">
       <table class="table table-bordered table-block table-gradient table-stats">
         <tbody>
           <tr>
             <td width="75"><em><%= item.itemtype %></em></td>
-            <td class="monospaced"><pre><%= truncate(item.send("content_#{current_account.preferred_default_locale}"), :length => 250) %></pre></td>
+            <td class="monospaced"><pre><%= truncate(item.send("content_#{current_account.preferred_default_locale}"), length: 250) %></pre></td>
           </tr>
         </tbody>
       </table>    
@@ -44,13 +44,13 @@
       <% end %>
     </li>
     <li><span class="contact-name"><strong>Type</strong><i><%= @current_page.pagetype %></i></span></li>
-    <li><span class="contact-name"><strong>Template</strong><i><%= @current_page.page_template %><%= " #{icons('font-arrow-up', :color => '#aaa')}".html_safe if @current_page.template.blank? %></i></span></li>
+    <li><span class="contact-name"><strong>Template</strong><i><%= @current_page.page_template %><%= " #{icons('font-arrow-up', color: '#aaa')}".html_safe if @current_page.template.blank? %></i></span></li>
     <li><span class="contact-name"><strong>Link</strong> <i><%= @current_page.link %></i></span></li>
     <li><span class="contact-name"><strong>Menu Title</strong><i><%= @current_page.menutitle %></i></span></li>
     <li><span class="contact-name"><strong>Menu Image</strong><i><%= @current_page.menuimage %></i></span></li>
   </ul>
   
-  <div class="block"><%= link_to('Edit Page Details', edit_admin_cms_page_path(@current_page), :title => 'Edit Page', :class => "action-button blue") %></div>
+  <div class="block"><%= link_to('Edit Page Details', edit_admin_cms_page_path(@current_page), title: 'Edit Page', class: "action-button blue") %></div>
 
 <% end %>
 

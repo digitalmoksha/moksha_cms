@@ -3,28 +3,28 @@ class CmsContentitem < ActiveRecord::Base
     has_paper_trail
   end
 
-  attr_accessible       :itemtype, :container, :content, :cms_page_id, :enable_cache, :original_updated_on
-
   belongs_to            :cms_page
-  acts_as_list          :scope => :cms_page
-  default_scope         { where(account_id: Account.current.id).order("position ASC") }
+
+  include RankedModel
+  ranks                 :row_order, with_same: [:account_id, :cms_page_id]
+  default_scope         { where(account_id: Account.current.id) }
   
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
-  translates            :content, :fallbacks_for_empty_translations => true
-  globalize_accessors   :locales => DmCore::Language.language_array
+  translates            :content, fallbacks_for_empty_translations: true
+  globalize_accessors   locales: DmCore::Language.language_array
 
   # --- versioning - skip anything translated
-  has_paper_trail       :skip => :content
+  has_paper_trail       skip: :content
   
   amoeba do
     enable
   end
   # --- validations 
-  validates_presence_of :itemtype, :container
-  validates_length_of   :itemtype,    :maximum => 30
-  validates_length_of   :container,   :maximum => 30
+  validates_presence_of :itemtype,          :container
+  validates_length_of   :itemtype,          maximum: 30
+  validates_length_of   :container,         maximum: 30
   validate              :validate_conflict, only: :update
-  validates             :content, liquid: { :locales => true }, presence_default_locale: true
+  validates             :content,           liquid: { locales: true }, presence_default_locale: true
 
   # --- content types supported
   CONTENT_TYPES = [ 'Markdown', 'Textile', 'HTML' ]
@@ -41,6 +41,7 @@ class CmsContentitem < ActiveRecord::Base
   # Try to see if the record has been changed by someone while being edited by someone
   # else.  If original_updated_on is not set, then don't check - allows acts_as_list
   # methods to update without causing a problem.
+  # [todo] still needed since we don't use acts_as_list anymore?
   #------------------------------------------------------------------------------
   def validate_conflict
     if @conflict || (!@original_updated_on.nil? && self.updated_on.to_f > @original_updated_on.to_f)

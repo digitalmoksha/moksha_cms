@@ -1,14 +1,14 @@
 <%
   list = []
-  if @current_page.cms_contentitems.count > 1
-    unless contentitem.first?
-      list << link_to(icons('font-arrow-up'), move_up_admin_cms_contentitem_path(contentitem), :title => "Move content up")
+  if contentitem_list.count > 1
+    unless contentitem == contentitem_list.first
+      list << link_to(icons('font-arrow-up'), move_up_admin_cms_contentitem_path(contentitem), title: "Move content up", method: :patch)
     end
-    unless contentitem.last?
-      list << link_to(icons('font-arrow-down'), move_down_admin_cms_contentitem_path(contentitem), :title => "Move content down")
+    unless contentitem == contentitem_list.last
+      list << link_to(icons('font-arrow-down'), move_down_admin_cms_contentitem_path(contentitem), title: "Move content down", method: :patch)
     end
   end
-  list << link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, contentitem], :class => "nav-btn-primary")
-  list << link_to(icon_label('icon-trash', 'Delete'), [:admin, contentitem], :method => :delete, :class => "nav-btn-danger", :confirm => 'Are you sure you wish to delete this item?')
+  list << link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, contentitem], class: "nav-btn-primary")
+  list << link_to(icon_label('icon-trash', 'Delete'), [:admin, contentitem], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this item?'} )
 %>
 <%= nav_bar_items( list ) %>

@@ -1,7 +1,7 @@
 <% content_for :sidebar do %>
 
   <div class="block">
-	  <%= link_to "Clear Entire Page Cache", admin_expire_cache_path, :class => "action-button blue" %>
+    <%= link_to "Clear Entire Page Cache", admin_expire_cache_path, class: "action-button blue", method: :patch %>
   </div>
   
   <% if !current_account.preferred_site_enabled? %>

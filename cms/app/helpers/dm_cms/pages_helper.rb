@@ -14,7 +14,7 @@ module DmCms::PagesHelper
   #------------------------------------------------------------------------------
   def content_by_name( name )
     unless @current_page.nil?
-      items = @current_page.cms_contentitems.find_all_by_container(name)
+      items = @current_page.cms_contentitems.where(container: name)
       render :partial => (items.nil? ? 'not_found' : 'content_fragment'), :collection => items
     end
   end
@@ -22,7 +22,7 @@ module DmCms::PagesHelper
   # Given the name of a container, check if any content is available
   #------------------------------------------------------------------------------
   def content_by_name?(name)
-    (@current_page.nil? || @current_page.cms_contentitems.count(conditions: [ "container = ?", name ]) == 0) ? false : true
+    (@current_page.nil? || @current_page.cms_contentitems.where(container: name).count == 0) ? false : true
   end
 
   #------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ module DmCms::PagesHelper
     options[:ul]            += "id='#{options[:id]}' "        unless options[:id].blank?
     options[:include_root]   = root                  if options[:include_home]
     options[:active_class] ||= 'current'
-    children    = root.subtree.arrange(order: :position).to_a[0][1]
+    children    = root.subtree.arrange(order: :row_order).to_a[0][1]
     menu_str    = menu_from_pages(children, options)
     return menu_str.html_safe
   end
@@ -108,7 +108,7 @@ module DmCms::PagesHelper
     options[:id]            ||= ''
     options[:class]         ||= ''
     options[:include_root]    = root if options[:include_home]
-    pages                     = root.subtree.arrange(order: :position).to_a[0][1]
+    pages                     = root.subtree.arrange(order: :row_order).to_a[0][1]
     menu_str                  = "<select id='#{options[:id]}' class='#{options[:class]}'>"
     menu_str                 += "<option value='' selected='selected'>#{nls(:main_menu_select_prompt)}</option>"
     if options[:include_home]
@@ -164,7 +164,7 @@ module DmCms::PagesHelper
   def build_menu_for_section(accessname, options = {})
     temp_page   = current_account_site.cms_pages.find_by_accessname(accessname)
     if temp_page
-      pages       = current_account_site.cms_pages.find_all_by_parent_id(temp_page.id, :order => :position)
+      pages       = current_account_site.cms_pages.where(parent_id: temp_page.id).rank(:row_order)
       menu_from_pages(pages, options)
     end
   end
@@ -189,7 +189,7 @@ module DmCms::PagesHelper
       tempPage = current_account_site.cms_pages.find(@cms_page[:page_id])
       queryID =  tempPage.parent_at_level(1)
     end
-    pages = current_account_site.cms_pages.find_all_by_parent_id(queryID, :order => :position)
+    pages = current_account_site.cms_pages.where(parent_id: queryID).rank(:row_order)
     menu_from_pages(pages, options)
   end
   
