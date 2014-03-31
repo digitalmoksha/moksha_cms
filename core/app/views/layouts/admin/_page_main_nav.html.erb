@@ -8,9 +8,9 @@
         <a title="" data-toggle="dropdown"><img src="<%= @admin_theme %>images/user_anon.png" alt="" /><span><%= current_user.display_name %></span><i class="caret"></i></a>
         <ul class="dropdown-menu">
           <li><a href="#" title=""><span class="user-profile"></span>My profile</a></li>
-          <li><%= link_to('<span class="user-settings"></span>Dark theme</a>'.html_safe, dm_core.admin_change_theme_path(:id => 'dark') ) %></li>
-          <li><%= link_to('<span class="user-settings"></span>Teal theme</a>'.html_safe, dm_core.admin_change_theme_path( :id => 'teal')) %></li>
-          <li><%= link_to('<span class="user-logout"></span>Logout</a>'.html_safe, destroy_user_session_path, {:method => :delete}) %></li>
+          <li><%= link_to('<span class="user-settings"></span>Dark theme</a>'.html_safe, dm_core.admin_change_theme_path(:id => 'dark'), method: :patch) %></li>
+          <li><%= link_to('<span class="user-settings"></span>Teal theme</a>'.html_safe, dm_core.admin_change_theme_path( :id => 'teal'), method: :patch) %></li>
+          <li><%= link_to('<span class="user-logout"></span>Logout</a>'.html_safe, destroy_user_session_path, :method => :delete) %></li>
         </ul>
       </li>
       <li class="sidebar-button"><a href="#" title=""><b class="responsive-nav"></b></a></li>

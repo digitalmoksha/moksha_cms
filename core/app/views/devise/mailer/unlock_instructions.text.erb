@@ -4,4 +4,4 @@
 
 <%= I18n.t('core.unlock_email_3') %>
 
-<%= Account.current.url_base + unlock_path(@resource, :unlock_token => @resource.unlock_token, :locale => DmCore::Language.locale) %>
+<%= Account.current.url_base + unlock_path(@resource, :unlock_token => @token, :locale => DmCore::Language.locale) %>

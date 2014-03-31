@@ -4,7 +4,6 @@ class Comment < ActiveRecord::Base
   include           ActsAsCommentable::Comment
 
   self.table_name   = 'core_comments'
-  attr_accessible   :body, :title, :user_id
 
   belongs_to        :commentable, :polymorphic => true, :counter_cache => true
   has_ancestry      :cache_depth => true
@@ -17,6 +16,7 @@ class Comment < ActiveRecord::Base
 
   #--- don't use a counter cache until you can seperate users per account
   belongs_to        :user #, :counter_cache => true
+  belongs_to        :account
   
   self.per_page = 10
 

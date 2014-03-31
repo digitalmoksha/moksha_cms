@@ -14,23 +14,17 @@ module DmCore
         devise :database_authenticatable, :registerable, :confirmable,
                :recoverable, :rememberable, :trackable, :validatable
 
-        attr_accessible         :email, :password, :password_confirmation, :remember_me,
-                                  :user_profile_attributes
-        attr_accessible         :role_ids, :email, :password, :password_confirmation, :remember_me,
-                                  :user_profile, :user_profile_attributes,
-                                  :as => :admin
-
         belongs_to              :country, :class_name => 'DmCore::Country'
         has_one                 :user_profile, :dependent => :destroy
         has_many                :user_site_profiles, :dependent => :destroy
-        has_one                 :current_site_profile, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
+        has_one                 :current_site_profile, -> { where(account_id: Account.current.id) }, class_name: 'UserSiteProfile'
         has_many                :comments, :dependent => :destroy
 
         #--- this allows us to use @user.voting.likes(@post) and it will be stored with the site specific user profile
-        has_one                 :voting, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
+        has_one                 :voting, -> { where(account_id: Account.current.id) }, class_name: 'UserSiteProfile'
 
         #--- this allows us to use @user.following.follow(@post) and it will be stored with the site specific user profile
-        has_one                 :following, class_name: 'UserSiteProfile', :conditions => proc { "account_id = #{Account.current.id}" }
+        has_one                 :following, -> { where(account_id: Account.current.id) }, class_name: 'UserSiteProfile'
 
         accepts_nested_attributes_for :user_profile
 
@@ -42,8 +36,8 @@ module DmCore
         delegate                :first_name, :last_name, :full_name, :display_name, :name, :country, :to => :user_profile
         delegate                :last_access_at, :to => :current_site_profile
 
-        scope                   :current_account_users, lambda { includes(:user_site_profiles).where("user_site_profiles.account_id = #{Account.current.id}") }
-        scope                   :online, lambda { includes(:user_site_profiles).where('user_site_profiles.last_access_at >= ?', 10.minutes.ago.utc) }
+        scope                   :current_account_users, -> { includes(:user_site_profiles).references(:user_site_profiles).where("user_site_profiles.account_id = #{Account.current.id}") }
+        scope                   :online, -> { includes(:user_site_profiles).where('user_site_profiles.last_access_at >= ?', 10.minutes.ago.utc) }
 
         # Keep the profile email in sync with the user's email
         #------------------------------------------------------------------------------

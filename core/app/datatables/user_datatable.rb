@@ -3,7 +3,7 @@ class UserDatatable
   include Admin::ThemeAmsterdamHelper
   include DmCore::ApplicationHelper
   
-  delegate :params, :h, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
+  delegate :params, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
   delegate :url_helpers, to: 'DmCore::Engine.routes'
   
   #------------------------------------------------------------------------------
@@ -28,8 +28,8 @@ private
     users.map do |user|
       [
         "<div class='avatar'>#{link_to present(user).avatar_for(35), user.user_profile.public_avatar_url}</div>",
-        link_to(h(user.full_name), url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => "Edit #{h(user.full_name)}"),
-        h(user.email),
+        link_to(user.full_name, url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => "Edit #{user.full_name}"),
+        user.email,
         user.country.nil? ? 'n/a' : user.country.english_name,
         "<span style='white-space:nowrap'>#{present(user).last_access}</span>",
         present(user).role_label

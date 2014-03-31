@@ -13,14 +13,13 @@ module DmCore
       # conext where it is included (post.rb), rather than be 
       # executed in the module's context (blorgh/concerns/models/post).
       included do
-        attr_accessible         :requires_login, :is_public, :requires_subscription
         
-        scope :all_public,      where(is_public: true)  # includes public and protected
-        scope :by_public,       where(is_public: true, requires_login: false)
-        scope :by_protected,    where(is_public: true, requires_login: true)
-        scope :all_private,     where(is_public: false) # includes private and subscription
-        scope :by_private,      where(is_public: false, requires_subscription: false)
-        scope :by_subscription, where(requires_subscription: true)
+        scope :all_public,      -> { where(is_public: true) } # includes public and protected
+        scope :by_public,       -> { where(is_public: true, requires_login: false) }
+        scope :by_protected,    -> { where(is_public: true, requires_login: true) }
+        scope :all_private,     -> { where(is_public: false) } # includes private and subscription
+        scope :by_private,      -> { where(is_public: false, requires_subscription: false) }
+        scope :by_subscription, -> { where(requires_subscription: true) }
         
         # check if public (does not require login)
         #------------------------------------------------------------------------------

@@ -7,10 +7,6 @@ module DmCore
       # conext where it is included (post.rb), rather than be 
       # executed in the module's context (blorgh/concerns/models/post).
       included do
-        attr_accessible         :email, :first_name, :last_name, :public_name,
-                                :address, :address2, :city, :state, :zipcode,
-                                :country_id, :address_required, :userless_registration,
-                                :public_avatar, :private_avatar
         
         #--- for when a service (like event registration), needs to require a valid address
         #    can be set by the service to enable the validations

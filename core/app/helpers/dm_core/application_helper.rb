@@ -39,9 +39,10 @@ module DmCore
       action.include?(params[:action])
     end
 
+    # Usually don't care if a form submits a PUT or POST.  Was something submitted?
     #------------------------------------------------------------------------------
     def put_or_post? 
-      request.put? || request.post?
+      request.put? || request.post? || request.patch?
     end
   end
 end
