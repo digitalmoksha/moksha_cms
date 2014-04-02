@@ -6,7 +6,7 @@ class DmCore::ApplicationController < ActionController::Base
   around_filter   :scope_current_account
 
   before_filter   :log_additional_data
-  before_filter   :record_activity
+  # before_filter   :record_activity
   before_filter   :set_locale
   before_filter   :set_mailer_url_options
   before_filter   :update_user
@@ -103,27 +103,27 @@ protected
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
 
-  #------------------------------------------------------------------------------
-  def record_activity
-    if Rails.env.production?
-      activity = Activity.new
-
-      #--- who is doing the activity?
-      activity.session_id  = session['session_id'] unless session.nil?
-      activity.user_id     = current_user.id unless current_user.nil?
-      activity.browser     = request.env['HTTP_USER_AGENT']
-      activity.ip_address  = request.env['REMOTE_ADDR']
-
-      #--- what are they doing?
-      activity.controller = controller_name
-      activity.action     = action_name
-      activity.params     = params.to_json
-      activity.slug       = params['slug'] unless params['slug'].blank?
-      activity.lesson     = [params['course_slug'], params['lesson_slug'], params['content_slug']].join(',') unless params['course_slug'].blank?
-
-      activity.save!
-    end
-  end
+  # #------------------------------------------------------------------------------
+  # def record_activity
+  #   if Rails.env.production?
+  #     activity = Activity.new
+  # 
+  #     #--- who is doing the activity?
+  #     activity.session_id  = session['session_id'] unless session.nil?
+  #     activity.user_id     = current_user.id unless current_user.nil?
+  #     activity.browser     = request.env['HTTP_USER_AGENT']
+  #     activity.ip_address  = request.env['REMOTE_ADDR']
+  # 
+  #     #--- what are they doing?
+  #     activity.controller = controller_name
+  #     activity.action     = action_name
+  #     activity.params     = params.to_json
+  #     activity.slug       = params['slug'] unless params['slug'].blank?
+  #     activity.lesson     = [params['course_slug'], params['lesson_slug'], params['content_slug']].join(',') unless params['course_slug'].blank?
+  # 
+  #     activity.save!
+  #   end
+  # end
   
   # Sets the default value for the url options.  Seems to allow links/redirect_to
   # to have the proper value for the locale in the url
