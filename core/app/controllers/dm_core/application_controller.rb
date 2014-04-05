@@ -214,4 +214,8 @@ protected
     logger.error "=====> #{exception.message}  URL: #{request.url}  REMOTE_ADDR: #{request.remote_addr}"
     render :nothing => true
   end
+  rescue_from I18n::InvalidLocale do |exception|
+    #--- an invalid locale was specified - raise error to show 404 page
+    raise ActionController::RoutingError.new('Not Found')
+  end
 end
