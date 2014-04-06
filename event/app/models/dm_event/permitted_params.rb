@@ -16,7 +16,7 @@ module DmEvent
       if current_user.try(:is_admin?)
         params.require(:registration).permit!
       else
-        params.require(:registration).permit()
+        params.require(:registration).permit(:workshop_price_id)
       end
     end
 

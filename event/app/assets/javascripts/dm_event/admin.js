@@ -31,7 +31,9 @@ $(document).ready(function() {
      oLanguage: {
        sLengthMenu: "<span>Show entries:</span> _MENU_"
      },
-     sAjaxSource: $('#registration_table').data('source')
+     sAjaxSource: $('#registration_table').data('source'),
+     bDestroy: true,
+     bRetrieve: true
   });
 
   // Financial charts
