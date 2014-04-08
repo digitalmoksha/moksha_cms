@@ -26,6 +26,7 @@ fi:
       sent: "Kiitos, kun viestisi on lähetetty sähköpostitse meille."
       send_button: Lähetä viesti
       name: 'Nimi'
+      email_placeholder: user@domain.com
       reason: 'Syynä kirjallisesti'
       subject: Aihe
       subject_prefix: Contact Form

@@ -5,7 +5,7 @@
     <%= flash_notices %>
 
     <%= f.input :name,    :label => false, :placeholder => I18n.t('cms.contact_form.name') %>
-    <%= f.input :email,   :label => false, :placeholder => 'user@domain.com' %>
+    <%= f.input :email,   :label => false, :placeholder => I18n.t('cms.contact_form.email_placeholder') %>
     <%= f.input :reason,  :label => false, :prompt => I18n.t('cms.contact_form.reason'), :collection => I18n.t('cms.contact_form.reason_list').values %>
     <%= f.input :subject, :label => false, :placeholder => I18n.t('cms.contact_form.subject') %>
     <%= f.input :message, :as => :text, :label => false, :placeholder => I18n.t('cms.contact_form.message'), :input_html => { :style => 'height: 150px;' } %>

@@ -26,6 +26,7 @@ cs:
       sent: "Děkujeme, Vaše zpráva byla e-mailem na nás."
       send_button: Poslat zprávu
       name: 'Název'
+      email_placeholder: user@domain.com
       reason: 'Důvod pro psaní'
       subject: Předmět
       subject_prefix: Contact Form

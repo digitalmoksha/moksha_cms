@@ -26,6 +26,7 @@ de:
       sent: "Vielen Dank, Ihre Nachricht wurde erfolgreich gesendet."
       send_button: Nachricht senden
       name: 'Name'
+      email_placeholder: user@domain.com
       reason: 'Bereich: Bitte auswählen'
       subject: Thema
       subject_prefix: Kontaktformular

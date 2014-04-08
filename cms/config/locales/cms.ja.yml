@@ -26,6 +26,7 @@ ja:
       sent: "あなたのメッセージは、私たちに電子メールで送信された、ありがとうございます。"
       send_button: メッセージを送る
       name: '名前'
+      email_placeholder: user@domain.com
       reason: '執筆の理由'
       subject: テーマ
       subject_prefix: Contact Form

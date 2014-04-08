@@ -27,6 +27,7 @@ en:
       send_button: Send Message
       name: 'Name'
       reason: 'Reason for writing'
+      email_placeholder: user@domain.com
       subject: Subject
       subject_prefix: Contact Form
       message: Message...
