@@ -4,7 +4,7 @@
 <%= render_content_item(content_fragment) %>
 </div>
 <% elsif content_fragment.enable_cache %>
-  <% cache("page/#{DmCore::Language.locale}/#{content_fragment.cms_page_id}/fragment/#{content_fragment.container}_#{content_fragment.id}" ) do %>
+  <% cache([Account.current.id, DmCore::Language.locale, content_fragment]) do %>
 <%= render_content_item(content_fragment) %>
   <% end %>
 <% else %>

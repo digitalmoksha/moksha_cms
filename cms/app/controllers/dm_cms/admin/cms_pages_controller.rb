@@ -79,7 +79,11 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   # cache file for a changed page has been deleted or not
   #------------------------------------------------------------------------------
   def expire_cache_total
-    expire_fragment(%r{\S})
+    #--- expire only items for this account
+    key_start = fragment_cache_key(Account.current.id)
+    expire_fragment(%r{\A#{key_start}})
+    # expire_fragment(%r{\S}) #--- this would expire *all* cache files
+
     respond_to do |format| 
       format.html { redirect_to({:action => :index}, :notice => 'Page Cache was cleared') } 
       format.js { render :nothing => true }

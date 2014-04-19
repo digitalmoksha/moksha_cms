@@ -1,3 +1,8 @@
+# Note: fragment caching is used during rendering.  The cache key is based
+# on both the model and the current locale (because each model supports
+# multiple translations).  The cache will be busted automatically since
+# the updated_at attribute will be updated on save.
+#------------------------------------------------------------------------------
 class CmsSnippet < ActiveRecord::Base
   class Translation < ::Globalize::ActiveRecord::Translation
     has_paper_trail
@@ -24,9 +29,6 @@ class CmsSnippet < ActiveRecord::Base
   # --- content types supported
   CONTENT_TYPES = [ 'Markdown', 'Textile', 'HTML' ]
 
-  after_update          :clear_cache
-  before_destroy        :clear_cache
-
   #------------------------------------------------------------------------------
   def is_published?
     published
@@ -35,11 +37,6 @@ class CmsSnippet < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def to_liquid
     {}
-  end
-
-  #------------------------------------------------------------------------------
-  def clear_cache
-    ActionController::Base.new.expire_fragment("snippet/#{DmCore::Language.locale}/fragment/#{slug}_#{id}" )
   end
 
 end
