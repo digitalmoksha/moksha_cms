@@ -73,7 +73,7 @@ module DmCms::PagesHelper
     options[:ul]            += "id='#{options[:id]}' "        unless options[:id].blank?
     options[:include_root]   = root                  if options[:include_home]
     options[:active_class] ||= 'current'
-    children    = root.subtree.arrange(order: :row_order).to_a[0][1]
+    children    = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
     menu_str    = menu_from_pages(children, options)
     return menu_str.html_safe
   end
@@ -108,7 +108,7 @@ module DmCms::PagesHelper
     options[:id]            ||= ''
     options[:class]         ||= ''
     options[:include_root]    = root if options[:include_home]
-    pages                     = root.subtree.arrange(order: :row_order).to_a[0][1]
+    pages                     = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
     menu_str                  = "<select id='#{options[:id]}' class='#{options[:class]}'>"
     menu_str                 += "<option value='' selected='selected'>#{nls(:main_menu_select_prompt)}</option>"
     if options[:include_home]

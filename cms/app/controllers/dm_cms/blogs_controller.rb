@@ -13,9 +13,9 @@ class DmCms::BlogsController < DmCms::ApplicationController
   
   #------------------------------------------------------------------------------
   def index
-    @blogs        = CmsBlog.available_to_user(current_user)
-    @posts        = CmsPost.where(cms_blog_id: @blogs.map(&:id)).published.order('published_on DESC').paginate page: page_number
-    @recent_posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).published.order('published_on DESC').limit(5)
+    @blogs        = CmsBlog.available_to_user(current_user).includes(:translations)
+    @posts        = CmsPost.where(cms_blog_id: @blogs.map(&:id)).includes(:cms_blog, :translations).published.order('published_on DESC').paginate page: page_number
+    @recent_posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).includes(:cms_blog, :translations).published.order('published_on DESC').limit(5)
     content_for :page_title, I18n.t('cms.blog_header')
     
     render action: :show
@@ -23,9 +23,9 @@ class DmCms::BlogsController < DmCms::ApplicationController
 
   #------------------------------------------------------------------------------
   def show
-    @blogs        = CmsBlog.available_to_user(current_user)
-    @posts        = @blog.posts.paginate :page => page_number
-    @recent_posts = @blog.posts.limit(5)
+    @blogs        = CmsBlog.available_to_user(current_user).includes(:translations)
+    @posts        = @blog.posts.includes(:cms_blog, :translations).paginate :page => page_number
+    @recent_posts = @blog.posts.includes(:cms_blog, :translations).limit(5)
     content_for :page_title, (@blog ? @blog.title : I18n.t('cms.blog_header'))
   end
 

@@ -14,8 +14,8 @@ class DmCms::PostsController < DmCms::ApplicationController
   
   #------------------------------------------------------------------------------
   def show
-    @blogs        = CmsBlog.available_to_user(current_user)
-    @recent_posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).published.order('published_on DESC').limit(5)
+    @blogs        = CmsBlog.available_to_user(current_user).includes(:translations)
+    @recent_posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).includes(:cms_blog, :translations).published.order('published_on DESC').limit(5)
     @comments     = @post.comments.paginate page: page_number
 
     #--- set title / meta data
