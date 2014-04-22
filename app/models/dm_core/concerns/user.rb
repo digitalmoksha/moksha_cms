@@ -64,14 +64,14 @@ module DmCore
         # Determine if this user has the Admin role
         #------------------------------------------------------------------------------
         def is_admin?
-          has_role?(:admin) || is_sysadmin?
+          @is_admin ||= (has_role?(:admin) || is_sysadmin?)
         end
         
         # Determine if this user has the sysadmin role.  It spans the entire system,
         # not limited to one account.
         #------------------------------------------------------------------------------
         def is_sysadmin?
-          self.roles.where(name: 'sysadmin', account_id: 0).size > 0
+          @is_sysadmin ||= (self.roles.where(name: 'sysadmin', account_id: 0).size > 0)
         end
         
         # does the user have a paid subscription
