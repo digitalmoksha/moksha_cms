@@ -121,8 +121,8 @@ class Workshop < ActiveRecord::Base
                   payment_type: {},
                   projected: {}
                  }
-                  
-    registrations.attending.each do |registration|
+
+    registrations.attending.includes(:workshop_price, :payment_histories).each do |registration|
       if registration.workshop_price
         #--- Calculate the summary values
         financials[:summary][:total_possible]     += registration.discounted_price
@@ -144,11 +144,11 @@ class Workshop < ActiveRecord::Base
         end
       end
     end
-    
+
     #--- give a worst case value - reduce by 20%
     financials[:summary][:total_possible_worst]               = financials[:summary][:total_possible] * 0.80
     financials[:summary][:total_outstanding_worst]            = financials[:summary][:total_outstanding] * 0.80
-    
+
     return financials
   end
 
@@ -163,12 +163,14 @@ class Workshop < ActiveRecord::Base
     return total_paid
   end
   
-  # Send out payment reminder emails to unpaid attendees
+  # Send out payment reminder emails to unpaid attendees, or to a specific one.
+  # if a specific registration, then always send out the email
   #------------------------------------------------------------------------------
-  def send_payment_reminder_emails
-    success = failed = 0
-    registrations.unpaid.each do |registration|
-      if registration.payment_reminder_due?
+  def send_payment_reminder_emails(registration_id = 'all')
+    success     = failed = 0
+    unpaid_list = ( registration_id == 'all' ? registrations.unpaid : registrations.unpaid.where(id: registration_id) )
+    unpaid_list.each do |registration|
+      if registration.payment_reminder_due? || registration_id != 'all'
         email = PaymentReminderMailer.payment_reminder(registration).deliver
         if email
           registration.update_attribute(:payment_reminder_sent_on, Time.now)

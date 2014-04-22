@@ -74,14 +74,15 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
   #------------------------------------------------------------------------------
   def financials
     @financials = @workshop.financial_details
-    @payments = []
-    @workshop.registrations.each {|x| @payments.concat(x.payment_histories)}
+    @payments = PaymentHistory.where(owner_type: 'Registration', owner_id: @workshop.registrations.pluck(:id)).includes(:user_profile, owner: [:user_profile])
   end
 
   #------------------------------------------------------------------------------
   def send_payment_reminder_emails
-    status = @workshop.send_payment_reminder_emails
-    redirect_to financials_admin_workshop_url(@workshop), notice: "Reminder emails sent ==>  Success: #{status[:success]}  Failed: #{status[:failed]}"
+    status  = @workshop.send_payment_reminder_emails(params[:registration_id])
+    msg     = "Reminder emails sent ==>  Success: #{status[:success]}  Failed: #{status[:failed]}"
+    status[:failed] > 0 ? (flash[:warning] = msg) : (flash[:notice] = msg)
+    redirect_to financials_admin_workshop_url(@workshop)
   end
 
 private

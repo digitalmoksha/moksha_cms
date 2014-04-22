@@ -129,6 +129,12 @@ class Registration < ActiveRecord::Base
     end
   end
 
+  # check if the regsitration is unpaid
+  #------------------------------------------------------------------------------
+  def unpaid?
+    self.accepted? && self.archived_on == nil
+  end
+  
   # Is it time to send a payment reminder?
   # Due first 7 days after inital registration.  Then every 14 days after that
   #------------------------------------------------------------------------------

@@ -4,7 +4,7 @@
   <ul class="navigation-light block">
     <li><%= link_to 'View Registrations', [:admin, @workshop] %></li>
   </ul>
-  <%= link_to 'Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop), class: "action-button blue", method: :patch %>
+  <%= link_to 'Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: "action-button blue", method: :patch %>
 <% end %>
   
 <div class="row-fluid">
@@ -85,6 +85,7 @@
         <th class="cost">Balance</th>
         <th class="date">Registered</th>
         <th class="date">Reminded</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -96,6 +97,9 @@
           <td class="date" style="white-space:nowrap"><%= format_date(registration.created_at) %></td>
           <td class="date" <%= "style='background-color: #A2D8AA;'".html_safe if registration.payment_reminder_due? %>>
             <%= registration.payment_reminder_sent_on.nil? ? 'not yet' : distance_of_time_in_words_to_now(registration.payment_reminder_sent_on) %>
+          </td>
+          <td>
+            <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-small', method: :patch %>
           </td>
         </tr>
       <% end %>

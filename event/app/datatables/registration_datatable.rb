@@ -53,7 +53,7 @@ private
   #------------------------------------------------------------------------------
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
-    registrations = @workshop.registrations.includes(:user_profile => [:country]).order("#{sort_column} #{sort_direction}")
+    registrations = @workshop.registrations.includes(:workshop_price, :user_profile => [:user => :current_site_profile]).references(:user_profiles).order("#{sort_column} #{sort_direction}")
     registrations = registrations.page(page).per_page(per_page)
     if params[:sSearch].present?
       registrations = registrations.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(user_profiles.email) like :search OR receipt_code like :search", search: "%#{params[:sSearch]}%")
@@ -112,7 +112,7 @@ private
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = ["aasm_state #{sort_direction}, process_changed_on", 'receipt_code', "LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", '', 'ems_registrations.created_at']
+    columns = ["aasm_state #{sort_direction}, process_changed_on", 'receipt_code', "LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", '', 'ems_registrations.created_at', 'user_site_profiles.last_access_at']
     columns[params[:iSortCol_0].to_i]
   end
 

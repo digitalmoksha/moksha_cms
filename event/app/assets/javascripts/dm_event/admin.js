@@ -26,7 +26,7 @@ $(document).ready(function() {
      aaSorting: [[4, 'desc']],
      sDom: '<"datatable-header"fl>t<"datatable-footer"ip>',
      aoColumnDefs: [
-      { bSortable: false, aTargets: [ 3, 5 ] }
+      { bSortable: false, aTargets: [ 3 ] }
      ],
      oLanguage: {
        sLengthMenu: "<span>Show entries:</span> _MENU_"
