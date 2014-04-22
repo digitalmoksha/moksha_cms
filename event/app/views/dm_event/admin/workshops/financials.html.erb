@@ -4,7 +4,7 @@
   <ul class="navigation-light block">
     <li><%= link_to 'View Registrations', [:admin, @workshop] %></li>
   </ul>
-  <%= link_to 'Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: "action-button blue", method: :patch %>
+  <%= link_to 'Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: "action-button blue", method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"} %>
 <% end %>
   
 <div class="row-fluid">
@@ -99,7 +99,7 @@
             <%= registration.payment_reminder_sent_on.nil? ? 'not yet' : distance_of_time_in_words_to_now(registration.payment_reminder_sent_on) %>
           </td>
           <td>
-            <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-small', method: :patch %>
+            <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-small', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
           </td>
         </tr>
       <% end %>
