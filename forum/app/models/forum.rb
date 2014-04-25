@@ -17,6 +17,7 @@ class Forum < ActiveRecord::Base
   belongs_to                  :forum_site
   belongs_to                  :forum_category, :class_name => 'ForumCategory'
   has_many                    :forum_topics, -> { order('sticky desc, last_updated_at desc') }, :dependent => :destroy
+  belongs_to                  :owner, :polymorphic => true
 
   # this is used to see if a forum is "fresh"... we can't use topics because it puts
   # stickies first even if they are not the most recently modified

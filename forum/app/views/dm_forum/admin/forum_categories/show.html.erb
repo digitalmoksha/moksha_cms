@@ -16,6 +16,7 @@
         <tr>
           <th class="sort_handle"></th>
           <th>Name</th>
+          <th>Associated Event</th>
           <th width="50">Type</th>
           <th width="50">Status</th>
         </tr>
@@ -31,6 +32,7 @@
                   <%= forum.description %>
                 </div>
               </td>
+              <td><%= forum.owner.try(:title) %></td>
               <td><%= forum_presenter.visibility %></td>
               <td><%= forum_presenter.label_published %></td>
             </tr>
