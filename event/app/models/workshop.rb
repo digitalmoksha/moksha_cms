@@ -39,8 +39,8 @@ class Workshop < ActiveRecord::Base
   validates_presence_of   :contact_email
   validates_presence_of   :event_style
   validates               :title, presence_default_locale: true
-  validates               :description, liquid: { :locales => true }
-  validates               :sidebar, liquid: { :locales => true }, presence_default_locale: true
+  validates               :description, liquid: { :locales => true }, presence_default_locale: true
+  validates               :sidebar, liquid: { :locales => true }
   
   # validates_presence_of   :deadline_on
 
