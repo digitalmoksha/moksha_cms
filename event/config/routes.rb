@@ -8,6 +8,7 @@ DmEvent::Engine.routes.draw do
             match 'edit_system_email/:email_type',     action: 'edit_system_email', as: 'edit_system_email', via: [:get, :post, :patch]
             get   'financials',                        action: 'financials'
             patch 'send_payment_reminder_emails',      action: 'send_payment_reminder_emails'
+            match 'additional_configuration',          action: 'additional_configuration', via: [:get, :patch]
           end
           resources :workshop_prices
         end

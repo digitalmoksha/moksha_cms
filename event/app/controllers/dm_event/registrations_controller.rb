@@ -58,6 +58,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   def choose_payment
     @registration = Registration.find_by_receipt_code(params[:receipt_code])
     @workshop     = @registration.workshop if @registration
+    flash[:alert] = I18n.t('core.resource_invalid')
     redirect_to main_app.root_url and return if @registration.nil? || !@registration.accepted?
 
     if @workshop.require_account

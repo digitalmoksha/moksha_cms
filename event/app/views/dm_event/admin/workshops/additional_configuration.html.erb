@@ -1,0 +1,28 @@
+<% content_for :sidebar do %>
+  <%= render :partial => 'configuration_sidebar' %>
+<% end %>
+<% content_for :content_title, "Additional Configuration <small>#{@workshop.title}</small>".html_safe %>
+
+<% submit_url = additional_configuration_admin_workshop_path %>
+<%= simple_form_for(@workshop, :url => submit_url) do |f| %>
+  <%= f.error_notification :message => "Please review the problems below"%>
+
+  <%= well_frame title: 'Visual Settings' do %>
+    <%= f.input :preferred_show_social_buttons, :as => :toggle, label: 'Show social buttons' %>
+    <%= f.input :image, :label => 'Workshop Image' %>
+    <%= f.input :preferred_header_accent_color, :label => 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
+  <% end %>
+
+  <%= well_frame title: 'Associated Blog & Forum' do %>
+    <p style="margin:10px;">
+      Select a blog and forum to be associated with this event.  Any paid or accepted registrations will automatically be granted access
+      to them.
+    </p>
+
+    <%= f.input :cms_blog, label: 'Blog',  collection: CmsBlog.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]), selected: @workshop.cms_blog.try(:id), include_blank: true %>
+    <%= f.input :forum,    label: 'Forum', collection: Forum.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]),   selected: @workshop.forum.try(:id), include_blank: true %>
+  <% end %>
+  
+  <%= submit_or_cancel :cancel_url => (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
+
+<% end %>

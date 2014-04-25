@@ -1,16 +1,17 @@
 <% unless @workshop.new_record? %>
   <ul class="navigation-light block">
-    <li><%= link_to "Workshop Prices".html_safe, admin_workshop_workshop_prices_path(@workshop) %></li>
+    <li><%= link_to "Additional Configuration", additional_configuration_admin_workshop_path(@workshop) %></li>
+    <li><%= link_to "Workshop Prices", admin_workshop_workshop_prices_path(@workshop) %></li>
     <li><a href="#" title="" class="expand">Email Notifications<strong>5</strong></a>
       <ul>
-        <li><%= link_to "Pending Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'pending') %></li>
-        <li><%= link_to "Accepted Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'accepted') %></li>
-        <li><%= link_to "Paid Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'paid') %></li>
-        <li><%= link_to "Waitlisted Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'waitlisted') %></li>
-        <li><%= link_to "Rejected Email".html_safe, edit_system_email_admin_workshop_path(@workshop, :email_type => 'rejected') %></li>
+        <li><%= link_to "Pending Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'pending') %></li>
+        <li><%= link_to "Accepted Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'accepted') %></li>
+        <li><%= link_to "Paid Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'paid') %></li>
+        <li><%= link_to "Waitlisted Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'waitlisted') %></li>
+        <li><%= link_to "Rejected Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'rejected') %></li>
       </ul>
     </li>
-    <li><%= link_to "View Registrations".html_safe, [:admin, @workshop] %></li>
+    <li><%= link_to "View Registrations", [:admin, @workshop] %></li>
   </ul>
   
 <% end %>

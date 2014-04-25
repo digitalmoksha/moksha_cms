@@ -171,22 +171,16 @@ module DmEvent
           email_state_notification(:waitlisted)
         end
 
-        # Don't remove the room_id - this way it will appear in the rooming list as 
-        # notification rooming list preparer
         #------------------------------------------------------------------------------
         def state_canceled
           update_state_date
         end
 
-        # Don't remove the room_id - this way it will appear in the rooming list as 
-        # notification rooming list preparer
         #------------------------------------------------------------------------------
         def state_refunded
           update_state_date
         end
 
-        # Don't remove the room_id - this way it will appear in the rooming list as 
-        # notification rooming list preparer
         #------------------------------------------------------------------------------
         def state_noshow
           update_state_date
@@ -194,7 +188,7 @@ module DmEvent
         
         #------------------------------------------------------------------------------
         def update_state_date
-          update_attribute(:process_changed_on, Time.now)          
+          update_attribute(:process_changed_on, Time.now)
         end
         
         #------------------------------------------------------------------------------
