@@ -48,54 +48,59 @@
   </div>
 <% end %>
 
+<% if @blog.owner %>
+  <div class="row-fluid">
+    <% toolbar = toolbar_button(@blog.member_count(:automatic), '#', :title => 'Number of users with automatic blog access', :class => 'label label-success pull-right') %>
+    <%= content_frame :title => 'Users with Automatic Access', :toolbar => toolbar, :class => 'span12' do %>
+      <div class="body">
+        <h5>Automatic Access Granted for Event</h5>
+        <p><%= @blog.owner.title %></p>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
 <div class="row-fluid">
 
-  <%= content_box :title => 'Grant Blog Access', :class => 'span6' do %>
-    <h5>Add Workshop Attendees</h5>
-    <p>Add all attendees of a workshop to this blog. Duplicates will be ignored. Only those marked "Accepted" or "Paid" will be added</p>
-    <p><em>Note: Only users with an account will be added.</em></p>
-    <%= simple_form_for :workshop_blog, :url => dm_cms.blog_add_member_admin_cms_blog_path(@blog), :html => { :class => 'form-horizontal' } do |f| %>
-      <%= select_tag :workshop_id, options_from_collection_for_select(Workshop.upcoming, :id, :title), :include_blank => true, class: "style" %>
-      <%= submit_tag 'Add', :class => "btn btn-primary" %>
-    <% end %>
-
-    <div class="separator"></div>
-    
-    <h5>Add Individual Users</h5>
-    <div class="table-overflow">
-      <table id="blog_user_table" class="table table-striped table-bordered" data-source="<%= dm_cms.blog_users_admin_cms_blog_url %>">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Country</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-  <% end %>
-  
-  <% toolbar = toolbar_button(@blog.member_list.count, '#', :title => 'Number of users with blog access', :class => 'label label-success pull-right') %>
-  <%= content_frame :title => 'Users with Access', :toolbar => toolbar, :class => 'span6' do %>
-    <div class="table-overflow">
-      <table class="table table-striped table-bordered table-block">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Country</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @blog.member_list.each do |user| %>
+  <% toolbar = toolbar_button(@blog.member_count(:manual), '#', :title => 'Number of users with blog access', :class => 'label label-success pull-right') %>
+  <%= content_box :title => 'Users with Manual Access', :toolbar => toolbar, :class => 'span12' do %>
+    <div class="span6">
+      <div class="table-overflow">
+        <table class="table table-striped table-bordered">
+          <thead>
             <tr>
-              <td><%= link_to(icons("icon-minus"), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, :user_id => user.id), :method => :delete, :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
-              <td><%= user.country.english_name %></td>
+              <th>Name</th>
+              <th>Country</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @blog.member_list.each do |user| %>
+              <tr>
+                <td><%= link_to(icons("icon-minus"), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, :user_id => user.id), :method => :delete, :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+                <td><%= user.country.english_name %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
+
+    <div class="span6">
+      <h5>Add Individual Users</h5>
+      <div class="table-overflow">
+        <table id="blog_user_table" class="table table-striped table-bordered" data-source="<%= dm_cms.blog_users_admin_cms_blog_url %>">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Country</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
   <% end %>
 
 </div>

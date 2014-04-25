@@ -71,7 +71,7 @@ private
 
   #------------------------------------------------------------------------------
   def action(user)
-    if user.has_role? :member, @blog
+    if @blog.member?(user)
       icons("icon-check") + "&nbsp;&nbsp;".html_safe + user.full_name
     else
       link_to(icons("icon-plus"), url_helpers.blog_add_member_admin_cms_blog_path(@blog, :locale => DmCore::Language.locale, :user_id => user.id), :title => 'Add Access') + "&nbsp;&nbsp;".html_safe + user.full_name

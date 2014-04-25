@@ -12,6 +12,7 @@
         <tr>
           <th class="sort_handle"></th>
           <th>Title</th>
+          <th>Associated Event</th>
           <th width="50">Type</th>
           <th width="50">Status</th>
         </tr>
@@ -24,6 +25,7 @@
               <td>
                 <%= link_to blog.title, admin_cms_blog_path(blog) %>
               </td>
+              <td><%= blog.owner.try(:title) %></td>
               <td><%= blog_presenter.visibility %></td>
               <td><%= blog_presenter.label_published %></td>
             </tr>

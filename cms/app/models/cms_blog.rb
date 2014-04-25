@@ -19,6 +19,7 @@ class CmsBlog < ActiveRecord::Base
   
   has_many                  :posts, -> { order('published_on DESC') }, :class_name => 'CmsPost', :dependent => :destroy
   belongs_to                :account
+  belongs_to                :owner, :polymorphic => true
 
   preference                :show_social_buttons,  :boolean, :default => false
   preference                :header_accent_color,  :string

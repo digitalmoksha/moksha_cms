@@ -62,23 +62,12 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
   
   # Add user(s) to blog
   # => user_id: add a single user
-  # => workshop_id: add all attending users, ignore duplicates
   #------------------------------------------------------------------------------
   def blog_add_member
     if !params[:user_id].blank?
       user = User.find(params[:user_id])
-      user.add_role(:member, @blog)
+      @blog.add_member(user)
       redirect_to admin_cms_blog_url(@blog), notice: "Blog access granted for #{user.full_name}"
-    elsif !params[:workshop_id].blank?
-      workshop  = Workshop.find(params[:workshop_id])
-      added     = 0
-      workshop.registrations.attending.each do |r|
-        if r.user_profile.user && !r.user_profile.user.has_role?(:member, @blog)
-          r.user_profile.user.add_role(:member, @blog)
-          added += 1
-        end
-      end
-      redirect_to admin_cms_blog_url(@blog), notice: "Blog access granted for #{added} user(s)"
     else
       redirect_to admin_cms_blog_url(@blog), alert: "Incorrect parameters supplied"
     end
@@ -87,7 +76,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def blog_delete_member
     user = User.find(params[:user_id])
-    user.remove_role(:member, @blog)
+    @blog.remove_member(user)
     redirect_to admin_cms_blog_url(@blog), notice: "Blog access removed for #{user.full_name}"
   end
 
