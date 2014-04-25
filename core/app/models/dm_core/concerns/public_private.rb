@@ -1,4 +1,4 @@
-# Implementation for public/protected/private objects.
+# Implementation for public/protected/private and membership objects.
 # "public"        means it is available for everyone to see, login not required
 # "protected"     means it is available to anyone that is logged in
 # "private"       means it is hidden unless you are an explicit member of the object
@@ -50,19 +50,40 @@ module DmCore
           is_public? ? 'public' : is_subscription_only? ? 'subscription' : is_private? ? 'private' : 'protected'
         end
 
+        # add user as a member. duplicates are not added automatically
+        #------------------------------------------------------------------------------
+        def add_member(user)
+          user.add_role(:member, self)
+        end
+        
+        #------------------------------------------------------------------------------
+        def remove_member(user)
+          user.remove_role(:member, self)
+        end
+        
         # Is the user a member of this object?
         #------------------------------------------------------------------------------
         def member?(user)
-          user.has_role? :member, self
+          user.has_role?(:member, self) || self.owner.try('member?', user)
         end
 
         #------------------------------------------------------------------------------
-        def member_list
-          users = []
-          roles.each do |role|
-            users += role.users
+        def member_count(which_ones = :all)
+          case which_ones
+          when :manual
+            ::User.with_role(:member, self).count
+          when :automatic
+            self.owner.try('member_count')
+          when :all
+            member_count(:manual) + member_count(:automatic)
           end
-          return users.sort_by {|u| u.full_name.downcase}
+        end
+        
+        # Return a list of members that have *manual* access.  Does not include 
+        # members that have access through an "owner" object
+        #------------------------------------------------------------------------------
+        def member_list
+          ::User.with_role(:member, self).includes(:user_profile).sort_by {|u| u.full_name.downcase}
         end
 
         # Can this object be read by a user
@@ -83,8 +104,7 @@ module DmCore
             self.published? && (self.is_public? || self.is_protected? || self.member?(attempting_user) || attempting_user.is_admin? ||
                   (self.is_subscription_only? && attempting_user.is_paid_subscriber?) )
           else
-            # must be logged in to make a reply
-            false
+            false  # must be logged in to make a reply
           end
         end
       end
@@ -103,11 +123,13 @@ module DmCore
             #--- all public/protected, as well as private that they are a member and subscriptions
             objects  = self.all_public.published
             objects += self.by_private.published.with_role(:member, user)
+            self.by_private.published.where('owner_id IS NOT NULL').each do |item|
+              objects << item if item.owner.member?(user)
+            end
             objects += self.by_subscription.published if user.is_paid_subscriber?
             return objects
           end
         end
-        
       end
     end
   end
