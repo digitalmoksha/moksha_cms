@@ -74,7 +74,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @blog.member_list.each do |user| %>
+            <% @blog.member_list(:manual).each do |user| %>
               <tr>
                 <td><%= link_to(icons("icon-minus"), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, :user_id => user.id), :method => :delete, :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
                 <td><%= user.country.english_name %></td>

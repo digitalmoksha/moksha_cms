@@ -44,7 +44,7 @@ class CmsPost < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def send_notification_emails()
     success = failed = 0
-    cms_blog.member_list.each do |user|
+    cms_blog.member_list(:all).each do |user|
       email =  PostNotifyMailer.post_notify(self, user.email).deliver
       success  += 1 if email
       failed   += 1 if email.nil?
