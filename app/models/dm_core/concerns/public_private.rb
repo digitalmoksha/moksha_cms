@@ -82,8 +82,15 @@ module DmCore
         # Return a list of members that have *manual* access.  Does not include 
         # members that have access through an "owner" object
         #------------------------------------------------------------------------------
-        def member_list
-          ::User.with_role(:member, self).includes(:user_profile).sort_by {|u| u.full_name.downcase}
+        def member_list(which_ones = :all)
+          case which_ones
+          when :manual
+            ::User.with_role(:member, self).includes(:user_profile).sort_by {|u| u.full_name.downcase}
+          when :automatic
+            self.owner.try('member_list')
+          when :all
+            member_list(:manual) + member_list(:automatic)
+          end
         end
 
         # Can this object be read by a user
