@@ -18,7 +18,7 @@ cs:
     ticket_payment_link_leadin: Tuto částku můžete uhradit skrze následující odkaz
     ticket_payment_link_text: Zaplatit
     ticket_payment_reminder_subject: "Připomínka úhrady kurzovného: %{value}"
-    ticket_if_already_paid: "Pokud jste již platbu provedli nebo byste se chtěli domluvit na jiné formě úhrady, napište nám na tento e-mail: %{value}."
+    ticket_if_already_paid: "Tento e-mail je automaticky generovaný a poslal náš systém. Pokud jste již zaplatil částku, nebo se domníváte, že připomínka je nesprávná, prosím, pošlete e-mail na %{value}. Pokud jste provedli platbu v posledních třech dnech, ignorujte prosím tuto připomínku. "
     registration_receipt_title: Potvrzení o rezervaci
     registration_email: E-mail
     registration_first_name: Křestní jméno

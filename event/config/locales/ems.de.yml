@@ -7,18 +7,18 @@ de:
     ticket_receipt_attendee: Teilnehmer
     ticket_receipt_departure: Abfahrt
     ticket_receipt_event: Veranstaltung
-    ticket_receipt_questions: "Wenn Sie Fragen haben, mailen Sie uns bitte unter %{value}"
+    ticket_receipt_questions: "Auch bei weiteren Fragen maile uns bitte unter %{value}"
     ticket_receipt_questions_telephone: "oder Telefon %{value}"
     ticket_receipt_ticket_number: Ticketnummer
     ticket_receipt_price: Preis
     ticket_information: Ticket-Informationen
     ticket_contact: Kontakt-Informationen
-    ticket_registered_following_event: Du bist in unserem System für folgende Veranstaltung registriert
-    ticket_outstanding_balance: "Laut unserer Buchhaltung ist von Dir noch folgender Betrag zu begleichen"
+    ticket_registered_following_event: laut unserem Registrierungssystem bist bzw. warst Du Teilnehmer an der folgenden Veranstaltung
+    ticket_outstanding_balance: "Gemäß unserer Buchhaltung ist noch folgender Betrag offen"
     ticket_payment_link_leadin: Du kannst über folgenden Link eine der Zahlungsmethoden auswählen
     ticket_payment_link_text: Jetzt bezahlen
     ticket_payment_reminder_subject: "Zahlungserinnerung: %{value}"
-    ticket_if_already_paid: "Falls Du den Betrag bereits überwiesen hast , setze Dich bitte per Email an %{value} mit uns in Verbindung."
+    ticket_if_already_paid: "Diese Email wird automatisch von unserem Buchungssystem generiert und versendet. Falls Du den Betrag bereits überwiesen hast, oder der Meinung bist, dass die Zahlungserinnerung unbegründet ist, setze Dich bitte per Email an %{value} mit uns in Verbindung. Sollte sich diese Erinnerung mit einer Zahlung in den letzten drei Tagen überschnitten haben, ignoriere sie bitte."
     registration_receipt_title: Anmeldebestätigung
     registration_email: E-Mail
     registration_first_name: Vorname

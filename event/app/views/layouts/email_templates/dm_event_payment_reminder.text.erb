@@ -1,23 +1,19 @@
-<%= I18n.t('ems.ticket_receipt_event') %>: <%=h @registration.workshop.title %>
-<%= I18n.t('ems.ticket_receipt_attendee') %>: <%=h @registration.full_name %>
-<%= I18n.t('ems.ticket_receipt_ticket_number') %>: <%=h @registration.receipt_code %>
-
 <%= I18n.t('email.salutation', :value => h(@registration.full_name)) %>
 
 <%= I18n.t('ems.ticket_registered_following_event') %>:
 
-<%=h @registration.workshop.title %>
+**<%=h @registration.workshop.title %>**
 
 <%= I18n.t('ems.ticket_outstanding_balance') %>:
 
-<%= @payment_owed %>
+**<%= @payment_owed %>**
 
 <%= I18n.t('ems.ticket_payment_link_leadin' )%>:
 
-<%= I18n.t('ems.ticket_payment_link_text') %>: <%= @payment_link %>
-
-<p><%= I18n.t('ems.ticket_if_already_paid', :value => h(@registration.workshop.contact_email))%></p>
+[<%= I18n.t('ems.ticket_payment_link_text') %>](<%= @payment_link %>)
 
 <%= I18n.t('ems.ticket_receipt_questions', :value => h(@registration.workshop.contact_email)) %>
 
 <%= I18n.t('email.thank_you') %>
+
+_<%= I18n.t('ems.ticket_if_already_paid', :value => h(@registration.workshop.contact_email))%>_

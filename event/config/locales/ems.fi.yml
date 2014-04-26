@@ -18,7 +18,7 @@ fi:
     ticket_payment_link_leadin: Voit maksaa seuraavan linkin kautta
     ticket_payment_link_text: Maksa
     ticket_payment_reminder_subject: "Maksumuistutus: %{value}"
-    ticket_if_already_paid: "Jos olet jo maksanut tämän, ole hyvä ja lähetä meille viesti %{value}."
+    ticket_if_already_paid: "Tämä sähköpostiosoite on automaattisesti luotu ja lähetetty järjestelmämme. Jos olet jo maksanut määrän eli uskovat, että muistutus on virheellinen, lähetä sähköpostia osoitteeseen %{value}. Jos olet tehnyt maksun viimeisen kolmen päivän, jätä tämä muistutus."
     registration_receipt_title: Varauksen vastaanottaminen
     registration_email: Sähköposti
     registration_first_name: Etunimi

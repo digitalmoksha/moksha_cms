@@ -13,12 +13,12 @@ en:
     ticket_receipt_price: Price
     ticket_information: Ticket Information
     ticket_contact: Contact Information
-    ticket_registered_following_event: You are currently registered for the following event
+    ticket_registered_following_event: "According to our registration system, you are or were a participant in the following event"
     ticket_outstanding_balance: "According to our accounting, the following amount still needs to be paid"
     ticket_payment_link_leadin: You can make a payment with the following link
     ticket_payment_link_text: Make Payment
     ticket_payment_reminder_subject: "Payment Reminder: %{value}"
-    ticket_if_already_paid: "If you have already paid the amount, please send us an email to %{value}."
+    ticket_if_already_paid: "This email is automatically generated and sent by our system. If you have already paid the amount, or believe that the reminder is incorrect, please send an email to %{value}. If you have made a payment in the last three days, please ignore this reminder."
     registration_receipt_title: Reservation Receipt
     registration_email: Email
     registration_first_name: First Name

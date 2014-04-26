@@ -17,10 +17,9 @@ class PaymentReminderMailer < DmCore::SiteMailer
 
     headers = { "Reply-To" => account.preferred_smtp_from_email, "Return-Path" => account.preferred_smtp_from_email }
 
-    mail(to: @recipients, subject: @subject, theme: account.account_prefix) do |format|
-      format.text { render "layouts/email_templates/dm_event_payment_reminder.text.erb" }
-      format.html { render "layouts/email_templates/dm_event_payment_reminder.html.erb" }
-    end
+    mail(to: @recipients, subject: @subject, theme: account.account_prefix,
+         template_path: 'layouts/email_templates',
+         template_name: 'dm_event_payment_reminder')
   end
 
 end

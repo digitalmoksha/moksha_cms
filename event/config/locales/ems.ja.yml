@@ -13,12 +13,12 @@ ja:
     ticket_receipt_price: 料金
     ticket_information: チケット情報
     ticket_contact: 連絡先情報
-    ticket_registered_following_event: You are currently registered for the following event
+    ticket_registered_following_event: "According to our registration system, you are or were a participant in the following event"
     ticket_outstanding_balance: "According to our accounting, the following amount still needs to be paid"
     ticket_payment_link_leadin: You can make a payment with the following link
     ticket_payment_link_text: Make Payment
     ticket_payment_reminder_subject: "Payment Reminder: %{value}"
-    ticket_if_already_paid: "If you have already paid the amount, please send us an email to %{value}."
+    ticket_if_already_paid: "This email is automatically generated and sent by our system. If you have already paid the amount, or believe that the reminder is incorrect, please send an email to %{value}. If you have made a payment in the last three days, please ignore this reminder."
     registration_receipt_title: 予約受理
     registration_email: Eメール
     registration_first_name: 名
