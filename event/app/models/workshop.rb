@@ -198,7 +198,13 @@ class Workshop < ActiveRecord::Base
   # Provide a list of users that are members (does not include userless registrations)
   #------------------------------------------------------------------------------
   def member_count
-    self.registrations.number_of(:attending)
+    self.registrations.attending.joins(:user_profile => [:user]).references(:user_profile).where('user_profiles.user_id IS NOT NULL').count
+  end
+
+  # Return list of Users that are attending (does not include userless registrations)
+  #------------------------------------------------------------------------------
+  def member_list
+    User.includes(:user_profile).references(:user_profile).where(user_profiles: { id: self.registrations.attending.map(&:user_profile_id) } )
   end
 
   # Find list of new users (within a certain date range) that have not registered
