@@ -87,7 +87,7 @@ module DmCore
           when :manual
             ::User.with_role(:member, self).includes(:user_profile).sort_by {|u| u.full_name.downcase}
           when :automatic
-            self.owner.try('member_list')
+            self.owner ? self.owner.member_list : []
           when :all
             member_list(:manual) + member_list(:automatic)
           end
