@@ -22,9 +22,9 @@ fi:
     comment_notify:
       disclaimer: "Sait tämän sähköpostin, koska ilmoitettu halusitte ilmoitetaan päivityksistä tämän blogin / forum."
     blog_follow_section:
-      title: Follow Blog by Email
-      description: Follow this blog and receive email notifications of new posts
-      description_private: This is a private blog - you will automatcially receive email notifications of new posts
+      title: seuraa blogia sähköpostein
+      description: seuraa blogia sähköpostein ja vastaanota sähköposti-ilmoitus uusista postauksista
+      description_private: tämä on yksityinen blogi - tulet saamaan automaattisesti sähköposti-ilmoituksen uusista postauksista
 
     contact_form:
       sent: "Kiitos, kun viestisi on lähetetty sähköpostitse meille."
