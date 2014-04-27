@@ -29,6 +29,7 @@
       <thead>
         <tr>
           <th>Title</th>
+          <th width="18"><span class='hovertip' title='Notification Email Sent'><%= icons('font-envelope') %></span></th>
           <th width="50">Status</th>
         </tr>
       </thead>
@@ -39,6 +40,11 @@
               <td>
                 <%= link_to(post.title, edit_admin_cms_post_path(post)) %>
               </td>
+              <th>
+                <% if post.notification_sent_on %>
+                  <span class='hovertip' title='<%= format_date(post.notification_sent_on) %>'><%= icons('font-envelope') %></span>
+                <% end %>
+              </th>
               <td><%= post_presenter.label_published %></td>
             </tr>
           <% end %>
@@ -64,43 +70,46 @@
 
   <% toolbar = toolbar_button(@blog.member_count(:manual), '#', :title => 'Number of users with blog access', :class => 'label label-success pull-right') %>
   <%= content_box :title => 'Users with Manual Access', :toolbar => toolbar, :class => 'span12' do %>
-    <div class="span6">
-      <div class="table-overflow">
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Country</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @blog.member_list(:manual).each do |user| %>
+    <% if !@blog.is_private? %>
+      <p>Only <em>private</em> blogs allow for user access to be managed</p>
+    <% else %>
+      <div class="span6">
+        <div class="table-overflow">
+          <table class="table table-striped table-bordered">
+            <thead>
               <tr>
-                <td><%= link_to(icons("icon-minus"), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, :user_id => user.id), :method => :delete, :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
-                <td><%= user.country.english_name %></td>
+                <th>Name</th>
+                <th>Country</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @blog.member_list(:manual).each do |user| %>
+                <tr>
+                  <td><%= link_to(icons("icon-minus"), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, :user_id => user.id), :method => :delete, :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+                  <td><%= user.country.english_name %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
 
-    <div class="span6">
-      <h5>Add Individual Users</h5>
-      <div class="table-overflow">
-        <table id="blog_user_table" class="table table-striped table-bordered" data-source="<%= dm_cms.blog_users_admin_cms_blog_url %>">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Country</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
+      <div class="span6">
+        <h5>Add Individual Users</h5>
+        <div class="table-overflow">
+          <table id="blog_user_table" class="table table-striped table-bordered" data-source="<%= dm_cms.blog_users_admin_cms_blog_url %>">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Country</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-    
+    <% end %>
   <% end %>
 
 </div>
