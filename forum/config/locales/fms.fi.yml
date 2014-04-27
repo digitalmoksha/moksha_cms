@@ -99,6 +99,6 @@ fi:
     follow: Seurata
     follow_stop: Stop Following
     topic_follow_section:
-      title: Follow Topic by Email
-      description: Follow this topic and receive email notifications of new comments
+      title: seuraa aihetta sähköpostein
+      description: seuraa aihetta ja vastaanota sähköposti-ilmoitus uusista kommenteista
     
