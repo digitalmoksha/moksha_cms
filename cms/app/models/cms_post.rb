@@ -39,13 +39,17 @@ class CmsPost < ActiveRecord::Base
     cms_blog.comments_allowed? && comments_allowed
   end
   
-  # Send an email for state notification.  if send_email is false, just return 
-  # the content of the email
+  # Send post notification to any members and followers.  Updates the 
+  # :notification_sent_on column after emails sent.
+  # Use 'sets' to only end up with a unique list of users
   #------------------------------------------------------------------------------
-  def send_notification_emails()
-    success = failed = 0
-    cms_blog.member_list(:all).each do |user|
-      email =  PostNotifyMailer.post_notify(self, user.email).deliver
+  def send_notification_emails
+    success   = failed = 0
+    user_list = cms_blog.member_list(:all).to_set
+    cms_blog.followers.each {|follower| user_list << follower.user}
+
+    user_list.each do |user|
+      email     = PostNotifyMailer.post_notify(user, self).deliver
       success  += 1 if email
       failed   += 1 if email.nil?
     end

@@ -7,7 +7,7 @@ class DmCms::BlogsController < DmCms::ApplicationController
   helper  DmCms::PostsHelper
   include DmCore::RenderHelper
 
-  before_filter   :blog_lookup, :except =>  [:index]
+  before_filter   :blog_lookup, :except =>  [:index, :toggle_follow]
 
   layout    'cms_templates/blog', :only => [:index, :show]
   
@@ -29,6 +29,14 @@ class DmCms::BlogsController < DmCms::ApplicationController
     content_for :page_title, (@blog ? @blog.title : I18n.t('cms.blog_header'))
   end
 
+  #------------------------------------------------------------------------------
+  def toggle_follow
+    @blog = CmsBlog.friendly.find(params[:cms_blog_id])
+    authorize! :read, @blog
+    @following = current_user.following.following?(@blog)
+    @following ? current_user.following.stop_following(@blog) : current_user.following.follow(@blog)
+  end
+  
 protected
 
   #------------------------------------------------------------------------------

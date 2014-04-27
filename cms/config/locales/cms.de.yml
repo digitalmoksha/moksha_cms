@@ -21,6 +21,10 @@ de:
     comment_login_required: "Bitte melde dich mit deinen Benutzerdaten an, um einen Kommentar zu veröffentlichen. Falls du noch kein Benutzerkonto hast, kannst du unter nachfolgendem Link eines anlegen."
     comment_notify:
       disclaimer: "Du erhältst diese E-Mail, weil Du diese Forums-Diskussion bzw. diesen Blog abonniert hast, um über neue Beiträge informiert zu werden."
+    blog_follow_section:
+      title: Folge dem Blog
+      description: Folge dem Blog und erhalte Email Benachrichtigungen über neue Beiträge
+      description_private: "Dies ist ein privater Blog - Du erhältst automatisch eine Email Benachrichtigung, wenn ein neuer Beitrag veröffentlicht wurde."
     
     contact_form:
       sent: "Vielen Dank, Ihre Nachricht wurde erfolgreich gesendet."

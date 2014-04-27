@@ -48,6 +48,7 @@ DmCms::Engine.routes.draw do
       get   '/:cms_blog_id/:id',                  controller: 'posts', action: :show, as: :post_show
       resources :cms_blogs do
         resources :cms_posts
+        patch    'toggle_follow',                 controller: 'blogs', action: :toggle_follow
       end
       resources :cms_posts do
         post    :ajax_add_comment,                controller: 'posts', action: :ajax_add_comment

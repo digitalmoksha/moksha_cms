@@ -8,10 +8,10 @@ class PostNotifyMailer < DmCore::SiteMailer
   layout 'email_templates/dm_cms_email_layout'
 
   #------------------------------------------------------------------------------
-  def post_notify(post, email)
+  def post_notify(user, post)
     account                     = post.account
     @subject                    = "Blog: #{post.cms_blog.title} :: #{post.title}"
-    @recipients                 = email
+    @recipients                 = user.email
     @blog_title                 = post.cms_blog.title
     @post_title                 = post.title
     @post_link                  = dm_cms.post_show_url(post.cms_blog.slug, post.slug, locale: I18n.locale)

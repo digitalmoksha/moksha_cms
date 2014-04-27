@@ -21,6 +21,10 @@ cs:
     comment_login_required: "Prosím, přihlaste se ke svému účtu, abyste mohl psát komentář. Pokud nemáte uživatelský účet, můžete si jej vytvořit."
     comment_notify:
       disclaimer: "Obdrželi jste tento e-mail, protože je uvedeno byste chtěli být informováni o změnách tohoto blogu / fóru."
+    blog_follow_section:
+      title: Follow Blog by Email
+      description: Follow this blog and receive email notifications of new posts
+      description_private: This is a private blog - you will automatcially receive email notifications of new posts
     
     contact_form:
       sent: "Děkujeme, Vaše zpráva byla e-mailem na nás."

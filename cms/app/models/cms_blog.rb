@@ -9,6 +9,8 @@ class CmsBlog < ActiveRecord::Base
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
 
+  acts_as_followable
+  
   resourcify
 
   include RankedModel
@@ -46,5 +48,18 @@ class CmsBlog < ActiveRecord::Base
   def any_readable_blogs?(user)
     CmsBlog.all.any? { |b| b.can_be_read_by?(user) }
   end
+
+  # Send new post notifications to any followers
+  # NOTE: Currently, we don't do automated notifications for new blog posts.
+  # You must click on the button in the backend to trigger it.  At the moment,
+  # we desire that extra level of control.  If we decided to enable this in the
+  # future, selecting using the notification_sent_on column, make sure that 
+  # all current posts are non-nil, so we don't trigger a much of old posts
+  # being sent
+  #------------------------------------------------------------------------------
+  # def self.notify_followers(start_time, end_time = Time.now)
+  #   posts = CmsPost.published.includes(:cms_blog).where(cms_blogs: {published: true}).where(notification_sent_on: nil)
+  #   posts.each {|post| post.send_notification_emails }
+  # end
 
 end
