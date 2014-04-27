@@ -98,3 +98,7 @@ de:
     comment_notification_inform: "Du wirst automatisch benachrichtigt, wenn ein neuer Kommentar gepostet wurde."
     follow: Abonnieren
     follow_stop: Nicht mehr folgen
+    topic_follow_section:
+      title: Folge diesem Thema
+      description: Folge diesem Thema und erhalte neue Kommentare per Email Benachrichtigung
+    

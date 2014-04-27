@@ -98,3 +98,7 @@ en:
     comment_notification_inform: You will automatically receive notification of any future comments
     follow: Follow
     follow_stop: Stop Following
+    topic_follow_section:
+      title: Follow Topic by Email
+      description: Follow this topic and receive email notifications of new comments
+    

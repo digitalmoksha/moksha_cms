@@ -98,3 +98,7 @@ ja:
     comment_notification_inform: あなたは自動的に将来のコメントの通知を受け取ります
     follow: フォロー
     follow_stop: 次のSTOP
+    topic_follow_section:
+      title: Follow Topic by Email
+      description: Follow this topic and receive email notifications of new comments
+    

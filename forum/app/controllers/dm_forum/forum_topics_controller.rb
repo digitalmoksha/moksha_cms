@@ -75,11 +75,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   def toggle_follow
     @forum_topic  = @forum.forum_topics.find(params[:forum_topic_id])
     @following    = current_user.following.following?(@forum_topic)
-    if @following
-      current_user.following.stop_following(@forum_topic)
-    else
-      current_user.following.follow(@forum_topic)
-    end
+    @following    ? current_user.following.stop_following(@forum_topic) : current_user.following.follow(@forum_topic)
   end
   
 protected

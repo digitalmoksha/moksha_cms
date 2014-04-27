@@ -29,7 +29,7 @@ DmForum::Engine.routes.draw do
       resources :forums do
         resources :forum_topics do
           resources :forum_comments
-          patch    'toggle_follow',          :action => :toggle_follow
+          patch    'toggle_follow',       :action => :toggle_follow
         end
         resources :posts
       end
