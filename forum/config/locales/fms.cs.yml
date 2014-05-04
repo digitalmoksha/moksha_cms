@@ -99,6 +99,6 @@ cs:
     follow: Sledovat
     follow_stop: Přestaňte Po
     topic_follow_section:
-      title: Follow Topic by Email
-      description: Follow this topic and receive email notifications of new comments
+      title: Sledovat téma e-mailem
+      description: Sledovat toto téma a dostávat e-mailem upozornění o nových komentářích
     
