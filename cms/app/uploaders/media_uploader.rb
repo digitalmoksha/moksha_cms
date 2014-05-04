@@ -83,7 +83,8 @@ class MediaUploader < CarrierWave::Uploader::Base
   #   Retina naming: http://blog.remarkablelabs.com/2013/01/creating-retina-images-with-carrierwave
   #------------------------------------------------------------------------------
   version :retina_lg, :if => :thumbnable_retina? do
-    process :size_image_pdf => [Account.current.preferred_image_large_width * 2]
+    # process :size_image_pdf => [Account.current.preferred_image_large_width * 2]
+    process :size_image_pdf => [900 * 2]
     process :retina_quality => 60
     def full_filename(for_file = model.media.file)
       name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
@@ -91,14 +92,16 @@ class MediaUploader < CarrierWave::Uploader::Base
     end
   end
   version :lg, :if => :thumbnable? do
-    process :size_image_pdf => [Account.current.preferred_image_large_width]
+    # process :size_image_pdf => [Account.current.preferred_image_large_width]
+    process :size_image_pdf => [900]
     def full_filename (for_file = model.file.file)
       model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
     end
   end
 
   version :retina_md, :if => :thumbnable_retina?, :from_version => :retina_lg do
-    process :size_image_pdf => [Account.current.preferred_image_medium_width * 2]
+    # process :size_image_pdf => [Account.current.preferred_image_medium_width * 2]
+    process :size_image_pdf => [600 * 2]
     process :retina_quality => 60
     def full_filename(for_file = model.media.file)
       name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
@@ -106,14 +109,16 @@ class MediaUploader < CarrierWave::Uploader::Base
     end
   end
   version :md, :if => :thumbnable?, :from_version => :lg do
-    process :size_image_pdf => [Account.current.preferred_image_medium_width]
+    # process :size_image_pdf => [Account.current.preferred_image_medium_width]
+    process :size_image_pdf => [600]
     def full_filename (for_file = model.file.file)
       model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
     end
   end
 
   version :retina_sm, :if => :thumbnable_retina?, :from_version => :retina_md do
-    process :size_image_pdf => [Account.current.preferred_image_small_width * 2]
+    # process :size_image_pdf => [Account.current.preferred_image_small_width * 2]
+    process :size_image_pdf => [300 * 2]
     process :retina_quality => 60
     def full_filename(for_file = model.media.file)
       name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
@@ -121,14 +126,16 @@ class MediaUploader < CarrierWave::Uploader::Base
     end
   end
   version :sm, :if => :thumbnable?, :from_version => :retina_md do
-    process :size_image_pdf => [Account.current.preferred_image_small_width]
+    # process :size_image_pdf => [Account.current.preferred_image_small_width]
+    process :size_image_pdf => [300]
     def full_filename (for_file = model.file.file)
       model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
     end
   end
 
   version :thumb, :if => :thumbnable?, :from_version => :retina_md do
-    process thumb_image_pdf: [Account.current.preferred_image_thumbnail_width, Account.current.preferred_image_thumbnail_width]
+    # process thumb_image_pdf: [Account.current.preferred_image_thumbnail_width, Account.current.preferred_image_thumbnail_width]
+    process thumb_image_pdf: [200, 200]
     def full_filename (for_file = model.file.file)
       model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
     end
