@@ -21,6 +21,7 @@ DmCore::Engine.routes.draw do
       match   '/account/email',            to: 'accounts#email',      via: [:get, :patch]
       match   '/account/analytics',        to: 'accounts#analytics',  via: [:get, :patch]
       match   '/account/metadata',         to: 'accounts#metadata',   via: [:get, :patch]
+      match   '/account/media',            to: 'accounts#media',   via: [:get, :patch]
 
     end
   end

@@ -16,7 +16,7 @@ class Account < ActiveRecord::Base
   
   self.table_name   = 'core_accounts'
 
-  attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation
+  attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation, :media_validation
   attr_accessor           :url_base, :url_host, :url_protocol  #--- stores the current base site url for this request. 
                                                                #    useful to mailers where request object not available
   
@@ -86,6 +86,12 @@ class Account < ActiveRecord::Base
   #--- status values (no UI)
   preference              :follower_notifications_sent_at,  :datetime # when last follower notifications were sent
   
+  #--- Media libary preferences
+  preference              :image_thumbnail_width,           :integer, default: 200
+  preference              :image_small_width,               :integer, default: 300
+  preference              :image_medium_width,              :integer, default: 600
+  preference              :image_large_width,               :integer, default: 900
+
   #--- eager load all preferences when an object is found
   after_find              :preferences
   

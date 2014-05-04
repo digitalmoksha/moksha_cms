@@ -1,0 +1,27 @@
+<% content_for :sidebar do %>
+  <%= render :partial => 'sidebar' %>
+<% end %>
+
+<%= simple_form_for(@account, :url => dm_core.admin_account_media_url) do |f| %>
+  <%= f.error_notification :message => "Please review the problems below"%>
+
+	<%= content_box :title => 'Media Library Configuration' do %>
+    <p>Several versions of an uploaded image will be created:</p>
+    <ul class="arrow-list">
+      <li>filename_thumb: A thumbnail, cropped into a square</li>
+      <li>filename_sm: A "small" version.  Will be resized to the max width, with the aspect ratio presevered.</li>
+      <li>filename_md: A "medium" version.  Will be resized to the max width, with the aspect ratio presevered.</li>
+      <li>filename_lg: A "large" version.  Will be resized to the max width, with the aspect ratio presevered.</li>
+      <li>Retina versions are created automatcially and appended with "@2x" (filename_sm@2x, filename_md@2x, filename_lg@2x)</li>
+    </ul>
+    <%= well_frame title: 'Image Sizes' do %>
+      <%= f.input :preferred_image_thumbnail_width, label: 'Thumbnail max width', as: :integer, input_html: {size: 6, maxlength: 4, style: "width:75px;"} %>
+      <%= f.input :preferred_image_small_width, label: 'Small  max width', as: :integer, input_html: {size: 6, maxlength: 4, style: "width:75px;"} %>
+      <%= f.input :preferred_image_medium_width, label: 'Medium  max width', as: :integer, input_html: {size: 6, maxlength: 4, style: "width:75px;"} %>
+      <%= f.input :preferred_image_large_width, label: 'Large  max width', as: :integer, input_html: {size: 6, maxlength: 4, style: "width:75px;"} %>
+    <% end %>
+    
+    <%= submit_or_cancel :cancel_url => dm_core.admin_account_analytics_path %>
+
+	<% end %>
+<% end %>

@@ -60,6 +60,18 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
     end
   end
 
+  #------------------------------------------------------------------------------
+  def media
+    if put_or_post?
+      @account.media_validation = true
+      if @account.update_attributes(account_params)
+        redirect_to(dm_core.admin_account_media_path, notice: "Account was successfully updated.") and return
+      else
+        render action: "media"
+      end
+    end
+  end
+
 private
 
   #------------------------------------------------------------------------------
