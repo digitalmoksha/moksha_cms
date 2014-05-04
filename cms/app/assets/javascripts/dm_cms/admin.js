@@ -18,6 +18,19 @@ $(document).ready(function() {
   });
   $("#cms_page_pagetype").change(); // initially run on page load
 
+  // When a link is selected in a bootstrap dropdown menu, set the
+  // associated text field with the text
+  //
+  // <button class="btn dropdown-toggle" data-toggle="dropdown" >Folder</button>
+  // <ul class="dropdown-menu dropdown-field" data-field="test">
+  //   <li><a href="#"><i class="font-heart"></i>Favorite it</a></li>
+  // </ul>
+  // <input id="test" type="text">
+  //----------------------------------------------------------------
+  $(".dropdown-field li a").click(function(){
+    $("#" + $(this).parent().parent().data("field")).val( $(this).text() )
+  });
+  
   //----------------------------------------------------------------
   $('#blog_user_table').dataTable( {
      bJQueryUI: false,

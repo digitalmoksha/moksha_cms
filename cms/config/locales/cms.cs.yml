@@ -22,9 +22,9 @@ cs:
     comment_notify:
       disclaimer: "Obdrželi jste tento e-mail, protože je uvedeno byste chtěli být informováni o změnách tohoto blogu / fóru."
     blog_follow_section:
-      title: Follow Blog by Email
-      description: Follow this blog and receive email notifications of new posts
-      description_private: This is a private blog - you will automatcially receive email notifications of new posts
+      title: Sledovat blog e-mailem
+      description: Sledovat tento blog a dostávat e-mailem upozornění o nových komentářích
+      description_private: Tento blog je neveřejný - automaticky budete dostávat e-mailem upozornění o nových komentářích
     
     contact_form:
       sent: "Děkujeme, Vaše zpráva byla e-mailem na nás."

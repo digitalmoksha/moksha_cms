@@ -40,6 +40,7 @@ DmCms::Engine.routes.draw do
         end
       end
       post   '/cms_blogs/sort',                    controller: 'cms_blogs', action: :sort, as: :cms_blog_sort
+      resources :media_files
     end
 
     scope 'blog' do

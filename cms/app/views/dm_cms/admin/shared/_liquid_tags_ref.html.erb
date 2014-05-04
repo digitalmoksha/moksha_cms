@@ -12,7 +12,7 @@
 <%#--- following should not be in the sidebar, but main content section %>
 <% Liquid::Template.tags.each do |tag, tag_class| %>
   <% if tag_class.respond_to?(:details) && !tag_class.details[:description].blank? %>
-    <div id="<%= "tag_example_#{tag}" %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="<%= "tag_example_#{tag}" %>" class="modal hide fade" style="height: 400px;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h5 id="myModalLabel"><%= tag %></h5>
@@ -20,9 +20,6 @@
       <div class="modal-body">
         <%= markdown tag_class.details[:description], safe: false %>
         <%= "<pre>#{tag_class.details[:example]}</pre>".html_safe if tag_class.details[:example].present? %>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal">Close</button>
       </div>
     </div>
   <% end %>

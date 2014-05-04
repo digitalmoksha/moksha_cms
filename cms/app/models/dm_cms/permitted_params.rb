@@ -25,5 +25,10 @@ module DmCms
     def cms_contentitem_params
       params.require(:cms_contentitem).permit! if current_user.try(:is_admin?)
     end
+
+    #------------------------------------------------------------------------------
+    def media_file_params
+      params.require(:media_file).permit! if current_user.try(:is_admin?)
+    end
   end
 end

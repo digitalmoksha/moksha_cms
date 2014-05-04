@@ -1,0 +1,167 @@
+# For uploading files into the media library.  Creates versions based on
+# settings in the Account.  Will also create retina versions automatically.
+# Files are stored in the theme's 'media' folder.  User can specify a single
+# subfolder to store the file, giving a little extra flexibility.
+# At the moment, files are in the public folders.  Future version will
+# allow uploading protected files.
+#
+# make sure ghostscript is installed for PDF thumbnailing
+# on OSX, `brew install ghostscript`
+#------------------------------------------------------------------------------
+class MediaUploader < CarrierWave::Uploader::Base
+  include DmCore::AccountHelper
+
+  # Include RMagick or MiniMagick support:
+  include CarrierWave::MimeTypes
+  include CarrierWave::MiniMagick
+
+  # Choose what kind of storage to use for this uploader:
+  storage :file
+  process :set_content_type
+
+  # Everything gets stored in the 'media' folder
+  #------------------------------------------------------------------------------
+  def store_dir
+    partition_dir = model.folder
+    "#{account_site_assets_media(false)}/#{partition_dir}"
+  end
+
+  #------------------------------------------------------------------------------
+  def cache_dir
+    Rails.root + '/tmp/cache'
+  end
+  
+  # We basically want the width to be the max, allowing the height to grow
+  #------------------------------------------------------------------------------
+  def resize_to_width(width)
+    manipulate! do |img|
+      img.resize "#{width}>"
+      img = yield(img) if block_given?
+      img
+    end
+  end
+
+   # If a pdf, convert to jpg and size, maintain aspect ration and pad to square
+   # If an image, resize it to a cropped square
+   #------------------------------------------------------------------------------
+   def thumb_image_pdf(width, height)
+     if pdf?(self)
+       self.convert(:jpg)
+       self.resize_and_pad(width, height)
+     else
+       self.resize_to_fill(width, height)
+     end
+   end
+   
+   # Convert to png if a pdf, then size to a specfic width
+   #------------------------------------------------------------------------------
+   def size_image_pdf(width)
+     self.convert(:jpg) if pdf?(self)
+     self.resize_to_width(width)
+   end
+   
+   # From: https://github.com/jhnvz/retina_rails
+   # Process retina quality of the image.
+   # Works with ImageMagick and MiniMagick
+   # === Parameters
+   #
+   # [percentage (Int)] quality in percentage
+   #
+   def retina_quality(percentage)
+     manipulate! do |img|
+       if defined?(Magick)
+         img.write(current_path) { self.quality = percentage } unless img.quality == percentage
+       elsif defined?(MiniMagick)
+         img.quality(percentage.to_s)
+       end
+       img = yield(img) if block_given?
+       img
+     end
+   end
+
+  # Create different versions of image files
+  #   Retina naming: http://blog.remarkablelabs.com/2013/01/creating-retina-images-with-carrierwave
+  #------------------------------------------------------------------------------
+  version :retina_lg, :if => :thumbnable_retina? do
+    process :size_image_pdf => [Account.current.preferred_image_large_width * 2]
+    process :retina_quality => 60
+    def full_filename(for_file = model.media.file)
+      name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
+      model.pdf? ? (name.chomp(File.extname(name)) + '.jpg') : name
+    end
+  end
+  version :lg, :if => :thumbnable? do
+    process :size_image_pdf => [Account.current.preferred_image_large_width]
+    def full_filename (for_file = model.file.file)
+      model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
+    end
+  end
+
+  version :retina_md, :if => :thumbnable_retina?, :from_version => :retina_lg do
+    process :size_image_pdf => [Account.current.preferred_image_medium_width * 2]
+    process :retina_quality => 60
+    def full_filename(for_file = model.media.file)
+      name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
+      model.pdf? ? (name.chomp(File.extname(name)) + '.jpg') : name
+    end
+  end
+  version :md, :if => :thumbnable?, :from_version => :lg do
+    process :size_image_pdf => [Account.current.preferred_image_medium_width]
+    def full_filename (for_file = model.file.file)
+      model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
+    end
+  end
+
+  version :retina_sm, :if => :thumbnable_retina?, :from_version => :retina_md do
+    process :size_image_pdf => [Account.current.preferred_image_small_width * 2]
+    process :retina_quality => 60
+    def full_filename(for_file = model.media.file)
+      name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
+      model.pdf? ? (name.chomp(File.extname(name)) + '.jpg') : name
+    end
+  end
+  version :sm, :if => :thumbnable?, :from_version => :retina_md do
+    process :size_image_pdf => [Account.current.preferred_image_small_width]
+    def full_filename (for_file = model.file.file)
+      model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
+    end
+  end
+
+  version :thumb, :if => :thumbnable?, :from_version => :retina_md do
+    process thumb_image_pdf: [Account.current.preferred_image_thumbnail_width, Account.current.preferred_image_thumbnail_width]
+    def full_filename (for_file = model.file.file)
+      model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
+    end
+  end
+
+
+  # Add a white list of extensions which are allowed to be uploaded.
+  # For images you might use something like this:
+  #------------------------------------------------------------------------------
+  def extension_white_list
+    %w(jpg jpeg gif png mp3 mp4 m4v ogg webm pdf css js)
+  end
+
+protected
+
+  #------------------------------------------------------------------------------
+  def thumbnable?(new_file)
+    image?(new_file) || pdf?(new_file)
+  end
+
+  #------------------------------------------------------------------------------
+  def thumbnable_retina?(new_file)
+    model.generate_retina? ? (image?(new_file) || pdf?(new_file)) : false
+  end
+
+  #------------------------------------------------------------------------------
+  def image?(new_file)
+    new_file.content_type.start_with? 'image'
+  end
+
+  #------------------------------------------------------------------------------
+  def pdf?(new_file)
+    new_file.content_type.end_with? 'pdf'
+  end
+  
+end
