@@ -65,6 +65,13 @@ module DmCore
     # Returns an image tag, where the src defaults to the site_assets image folder
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
+    def site_media_image_tag(src, options = {})
+      image_tag(site_asset_media_path(src),  options)
+    end
+
+    # Returns an image tag, where the src defaults to the site_assets image folder
+    # Supports both relative paths and explicit url
+    #------------------------------------------------------------------------------
     def site_image_tag(src, options = {})
       image_tag(site_image_path(src),  options)
     end
@@ -95,6 +102,20 @@ module DmCore
     #------------------------------------------------------------------------------
     def site_asset_url(src)
       rewrite_asset_path(src.expand_url("#{account_site_assets_url}/"))
+    end
+
+    # Returns a path to a site assets, relative to the site_assets folder
+    # Supports both relative paths and explicit url
+    #------------------------------------------------------------------------------
+    def site_asset_media_path(src)
+      rewrite_asset_path(src.expand_url("#{account_site_assets_media}/"))
+    end
+
+    # Returns a path to a site assets, relative to the site_assets folder
+    # Supports both relative paths and explicit url
+    #------------------------------------------------------------------------------
+    def site_asset_media_url(src)
+      rewrite_asset_path(src.expand_url("#{account_site_assets_media_url}/"))
     end
 
     #------------------------------------------------------------------------------

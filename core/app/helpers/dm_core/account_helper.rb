@@ -34,6 +34,13 @@ module DmCore
       Account.current.url_base + account_site_assets(true)
     end
 
+    # Returns the path (from the root of the site) to the site general asset files
+    #   Pass in false not to include leading slash
+    #------------------------------------------------------------------------------
+    def account_site_assets_media_url
+      Account.current.url_base + account_site_assets_media(true)
+    end
+
   private
   
     # setup the account scope, used for scoping models to an Account
