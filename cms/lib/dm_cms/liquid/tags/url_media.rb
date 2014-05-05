@@ -1,7 +1,5 @@
-# DEPRECATED - use url_media instead
-#------------------------------------------------------------------------------
 module Liquid
-  class UrlAsset < DmCore::LiquidTag
+  class UrlMedia < DmCore::LiquidTag
     include ActionView::Helpers::TagHelper 
     include ActionView::Helpers::AssetTagHelper
     include DmCore::UrlHelper
@@ -20,22 +18,25 @@ module Liquid
       return src.nil? ? '' : src
     end
   
-#     def self.details
-#       { name: self.tag_name,
-#         summary: 'Returns url of an asset',
-#         category: 'url',
-#         description: <<-END_OF_DESCRIPTION
-# Give the location/url of an asset file. It is relative to the site's media directory unless a full path/url is given.
-# 
-# ~~~
-# {% url_asset src: 'library/something.pdf' %}
-# ~~~
-# END_OF_DESCRIPTION
-#       }
-#     end
+    def self.details
+      { name: self.tag_name,
+        summary: 'Returns url of a media file',
+        category: 'url',
+        description: <<-END_OF_DESCRIPTION
+Give the location/url of a media file. It is relative to the site's media directory unless a full path/url is given.
+
+~~~
+{% url_media src: '2014/something.pdf' %}
+
+{% url_media src: 'course/lesson1.mp3' %}
+
+{% url_media src: 'nature/desert.jpg', version: 'retina_lg' %}
+
+~~~
+END_OF_DESCRIPTION
+      }
+    end
   end
   
-  Template.register_tag('url_asset',  UrlAsset)
-  Template.register_tag('image_path', UrlAsset)
-  Template.register_tag('url_image',  UrlAsset)
+  Template.register_tag('url_media', UrlMedia)
 end

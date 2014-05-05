@@ -2,7 +2,6 @@ module Liquid
   class UrlProtected < DmCore::LiquidTag
     include ActionView::Helpers::TagHelper 
     include ActionView::Helpers::AssetTagHelper
-    # include Sprockets::Rails::Helper
     include DmCore::UrlHelper
     include DmCore::ParamsHelper
     include DmCore::AccountHelper

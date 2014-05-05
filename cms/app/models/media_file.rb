@@ -41,11 +41,23 @@ class MediaFile < ActiveRecord::Base
   # Use 'version: :original' to allow the original version to be pulled
   #------------------------------------------------------------------------------
   def self.url_by_name(name, options = {version: :original})
-    asset       = MediaFile.find_by_name(name)
+    asset = MediaFile.find_by_name(name)
     if asset
       options[:version] == :original ? asset.media.url : asset.media.url(options[:version])
     else
       nil
+    end
+  end
+
+  # Given a name in the form 'folder/filename.ext', check if the version exists.
+  # Use 'version: :original' to allow the original version to be pulled
+  #------------------------------------------------------------------------------
+  def self.version_exists?(name, options = {version: :original})
+    asset = MediaFile.find_by_name(name)
+    if asset
+      options[:version] == :original ? true : asset.media.version_exists?(options[:version])
+    else
+      false
     end
   end
 
@@ -54,7 +66,7 @@ class MediaFile < ActiveRecord::Base
   def self.find_by_name(name)
     components  = name.split('/')
     filename    = components[-1]
-    folder      = components[-2]
+    folder      = components[-2] || ''
     asset       = MediaFile.where(folder: folder, media: filename).first
   end
   
