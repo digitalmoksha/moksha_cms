@@ -15,11 +15,11 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
         if result[:success]
           msg = I18n.t('nms.subscription_successful')
           format.html { redirect_to (request.env['HTTP_REFERER'].blank? ? main_app.index_url : :back), notice: msg }
-          format.js { render json: { success: true, msg: msg } }
+          format.json { render json: { success: true, msg: msg } }
         else
           msg = I18n.t(@newsletter.map_error_to_msg(result[:code]))
           format.html { redirect_to :back, alert: msg }
-          format.js { render json: { success: false, msg: msg } }
+          format.json { render json: { success: false, msg: msg } }
         end
       end
     end
