@@ -1,5 +1,5 @@
 class MediaInput < SimpleForm::Inputs::FileInput
-  def input
+  def input(wrapper_options)
     # :preview_version is a custom attribute from :input_html hash, so you can pick custom sizes
     version = input_html_options.delete(:preview_version)
     out = '' # the output string we're going to build
