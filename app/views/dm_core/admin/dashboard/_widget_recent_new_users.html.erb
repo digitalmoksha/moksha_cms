@@ -1,7 +1,7 @@
-<% toolbar = toolbar_button(User.current_account_users.count, dm_core.admin_users_path, :title => 'Number of registered users', :class => 'label label-success pull-right') %>
-<%= content_frame :title => 'Recent New Users', :toolbar => toolbar, :class => 'span6' do %>
+<% toolbar = toolbar_btn(User.current_account_users.count, dm_core.admin_users_path, title: 'Number of registered users', class: 'label label-success') %>
+<%= panel title: 'Recent New Users', toolbar: toolbar, body: false do %>
   <div class="table-overflow">
-    <table class="table table-bordered table-block">
+    <table class="table table-bordered table-condensed">
       <thead>
         <tr>
           <th>Name</th>

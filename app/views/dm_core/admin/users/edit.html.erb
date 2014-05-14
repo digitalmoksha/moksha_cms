@@ -7,87 +7,101 @@
   <%= link_to("Delete This User", dm_core.admin_user_path(@user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => "action-button red") if is_sysadmin? %>
 <% end %>
 
-<% @title = "#{@user.display_name} (#{@user.email})" %>
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-10">
+    <% @title = "#{@user.display_name} (#{@user.email})" %>
+    <%= render 'form' %>
 
-<% if defined?(DmEvent) && current_user.is_sysadmin? %>
-  <%= content_box :title => "Comments" do %>
-    <table class="table table-bordered table-condensed table-striped">
-      <thead>
-        <tr>
-          <th class="date">Date</th>
-          <th class="name">Domain</th>
-          <th>Text</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% Comment.unscoped.where(user_id: @user).each do |comment| -%>
-          <tr>
-            <td class="date"><%= format_date comment.created_at %></td>
-            <td class="name"><%= comment.account.domain %></td>
-            <td class="name"><%= comment.body %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-<% end %>
+    <% if defined?(DmEvent) && current_user.is_sysadmin? %>
+      <%= panel title: "Comments" do %>
+        <table class="table table-bordered table-condensed table-striped">
+          <thead>
+            <tr>
+              <th class="date">Date</th>
+              <th class="name">Domain</th>
+              <th>Text</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% Comment.unscoped.where(user_id: @user).each do |comment| -%>
+              <tr>
+                <td class="date"><%= format_date comment.created_at %></td>
+                <td class="name"><%= comment.account.domain %></td>
+                <td class="name"><%= comment.body %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
 
-<% if defined?(DmEvent) && current_user.is_sysadmin? %>
-  <%= content_box :title => "Event Registrations" do %>
-    <table class="table table-bordered table-condensed table-striped">
-      <thead>
-        <tr>
-          <th class="name">Workshop Title</th>
-          <th class="name">Domain</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% Registration.unscoped.where(user_profile_id: @user.user_profile).each do |registration| -%>
-          <tr>
-            <td class="name"><%= registration.workshop ? registration.workshop.title : 'oops' %></td>
-            <td class="name"><%= registration.account.domain %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-<% end %>
+    <% if defined?(DmEvent) && current_user.is_sysadmin? %>
+      <%= panel title: "Event Registrations" do %>
+        <table class="table table-bordered table-condensed table-striped">
+          <thead>
+            <tr>
+              <th class="name">Workshop Title</th>
+              <th class="name">Domain</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% Registration.unscoped.where(user_profile_id: @user.user_profile).each do |registration| -%>
+              <tr>
+                <td class="name"><%= registration.workshop ? registration.workshop.title : 'oops' %></td>
+                <td class="name"><%= registration.account.domain %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
 
-<% if defined?(DmSubscriptions) && current_user.is_sysadmin? %>
-  <%= content_box :title => "Subscriptions" do %>
-    <table class="table table-bordered table-condensed table-striped">
-      <thead>
-        <tr>
-          <th class="name">Subscriptions</th>
-          <th class="name">Domain</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% Subscription.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |subscription| -%>
-          <tr>
-            <td class="name"><%= subscription.subscription_plan.name %></td>
-            <td class="name"><%= subscription.account.domain %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-<br>
-    <table class="table table-bordered table-condensed table-striped">
-      <thead>
-        <tr>
-          <th class="name">Payments</th>
-          <th class="name">Domain</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% SubscriptionPayment.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |payment| -%>
-          <tr>
-            <td class="name"><%= format_date(payment.created_at) %></td>
-            <td class="name"><%= payment.amount.format %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-<% end %>
+    <% if defined?(DmSubscriptions) && current_user.is_sysadmin? %>
+      <%= panel title: "Subscriptions" do %>
+        <table class="table table-bordered table-condensed table-striped">
+          <thead>
+            <tr>
+              <th class="name">Subscriptions</th>
+              <th class="name">Domain</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% Subscription.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |subscription| -%>
+              <tr>
+                <td class="name"><%= subscription.subscription_plan.name %></td>
+                <td class="name"><%= subscription.account.domain %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+    <br>
+        <table class="table table-bordered table-condensed table-striped">
+          <thead>
+            <tr>
+              <th class="name">Payments</th>
+              <th class="name">Domain</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% SubscriptionPayment.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |payment| -%>
+              <tr>
+                <td class="name"><%= format_date(payment.created_at) %></td>
+                <td class="name"><%= payment.amount.format %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-md-2">
+    <div class='block'>
+      <% if @user.confirmation_token %>
+        <%= link_to "Confirm This User", dm_core.confirm_admin_user_path(@user.id), :class => "btn btn-block btn-success" %>
+      <% else %>
+        <%= link_to "Become This User", dm_core.masquerade_admin_user_path(@user.id), :class => "btn btn-block btn-info" %>
+      <% end %>
+      <%= link_to("Delete This User", dm_core.admin_user_path(@user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => "btn btn-block btn-danger") if is_sysadmin? %>
+    </div>
+  </div>
+</div>

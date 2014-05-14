@@ -1,7 +1,7 @@
 # Uses the Ace editor
 #------------------------------------------------------------------------------
-class EditorInput < SimpleForm::Inputs::TextInput
-  def input
+class CodeEditorInput < SimpleForm::Inputs::TextInput
+  def input(wrapper_options)
     if options[:mode]
       options[:mode] = case options[:mode].downcase
       when 'textile'

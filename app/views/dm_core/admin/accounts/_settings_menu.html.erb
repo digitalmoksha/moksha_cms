@@ -1,0 +1,22 @@
+<%= content_for :content_title_extra do %>
+  <div class="visible-xs header-element-toggle">
+    <a class="btn btn-default btn-icon" data-toggle="collapse" data-target="#header-buttons"><i class="icon-cog"></i></a>
+  </div>
+  <div class="header-buttons">
+    <div class="collapse" id="header-buttons">
+      <div class="well">
+        <%= @account.preferred_site_enabled? ? colored_label('Site Published', :success) : colored_label('Site Disabled') %>
+        <div class="btn-group">
+          <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Settings <span class="caret"></span></button>
+          <ul class="dropdown-menu dropdown-menu-right icons-right">
+            <li><%= link_to "General".html_safe, dm_core.admin_account_general_path %></li>
+            <li><%= link_to "Site Wide".html_safe, dm_core.admin_account_metadata_path %></li>
+            <li><%= link_to "Email".html_safe, dm_core.admin_account_email_path %></li>
+            <li><%= link_to "Analytics &amp; Payments".html_safe, dm_core.admin_account_analytics_path %></li>
+            <li><%= link_to "Media".html_safe, dm_core.admin_account_media_path %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,8 @@
+<% accessed_users = UserSiteProfile.access_last_30_days %>
+<div class="page-stats-showcase">
+  <span>Active Users</span>
+  <h2><%= accessed_users[:total] %></h2>
+</div>
+<div class="bar-info chart">
+  <%= accessed_users[:list] %>
+</div>

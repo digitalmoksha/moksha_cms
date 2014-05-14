@@ -22,7 +22,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'devise', '~> 3.2.4'           # Authentication
   s.add_dependency "rolify", "~> 3.4.0"           # User Roles
   s.add_dependency "cancan", "~> 1.6.10"          # Authorization
-  s.add_dependency "simple_form", "~> 3.0.1"      # Form handling
+  # s.add_dependency "simple_form", "~> 3.0.1"    # Form handling
+  s.add_dependency "simple_form", '~> 3.1.0.rc1'  # Form handling
   s.add_dependency "will_paginate", "~> 3.0.5"    # pagination
   s.add_dependency 'country_select', "~> 1.3.1"           
   s.add_dependency 'paper_trail', '~> 3.0.1'      # table versioning
