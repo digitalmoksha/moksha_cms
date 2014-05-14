@@ -82,7 +82,8 @@ private
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
   def template_setup
-    content_for :content_title, "Account Management"
+    content_for :content_title,     "Account Management"
+    content_for :content_subtitle,  "Site Configuration"
   end
 
 end

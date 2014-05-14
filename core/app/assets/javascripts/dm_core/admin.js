@@ -124,7 +124,7 @@ $(document).ready(function() {
   });
 
   //----------------------------------------------------------------
-  $(".notice").click(function() {
+  $(".notice, .alert").click(function() {
     $(this).fadeTo(200, 0.00, function(){ //fade
       $(this).slideUp(200, function() { //slide up
         $(this).remove(); //then remove from the DOM
@@ -141,7 +141,7 @@ $(document).ready(function() {
 
   // Toggle the visibility of a specific element
   //----------------------------------------------------------------
-  $(".toggle_link").live("click", function(et, e){
+  $(".toggle_link").on("click", function(et, e){
     toggle_reveal(this.getAttribute("data-toggleid"));
     return false;
   });
@@ -149,21 +149,15 @@ $(document).ready(function() {
   //----------------------------------------------------------------
   $('#user_table').dataTable( {
      bJQueryUI: false,
-     bAutoWidth: false,
      iDisplayLength: 50,
-     sPaginationType: 'full_numbers',
      bProcessing: false,
      bServerSide: true,
      bStateSave: true,
      aaSorting: [[4, 'desc']],
-     sDom: '<"datatable-header"fl>t<"datatable-footer"ip>',
      aoColumnDefs: [
        { bSortable: false, aTargets: [ 0 ] },
        { bSortable: false, aTargets: [ 5 ] }
      ],
-     oLanguage: {
-       sLengthMenu: "<span>Show entries:</span> _MENU_"
-     },
      sAjaxSource: $('#user_table').data('source')
   });
 
@@ -197,7 +191,7 @@ $(document).ready(function() {
   // Attach tooltip to any class with 'hovertip' inside the main content
   // block.  Must do this way to ensure tooltips work in new ajax content
   //----------------------------------------------------------------
-  $('.content').tooltip( {
+  $('.page-container').tooltip( {
     selector: '.hovertip',
     delay: {show: 200, hide: 0 }
   });

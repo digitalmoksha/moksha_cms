@@ -1,20 +1,30 @@
-<% content_for :sidebar do %>
-  <%= render :partial => 'sidebar' %>
-<% end %>
+<%= render :partial => 'settings_menu' %>
 
-<%= simple_form_for(@account, :url => dm_core.admin_account_media_url) do |f| %>
+<%= simple_form_for(@account, :url => dm_core.admin_account_media_url,
+    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings) do |f| %>
+
   <%= f.error_notification :message => "Please review the problems below"%>
 
-	<%= content_box :title => 'Media Library Configuration' do %>
+  <%= panel title: 'Media Library Configuration' do %>
     <p>Several versions of an uploaded image will be created:</p>
-    <ul class="arrow-list">
-      <li>filename_thumb: A thumbnail, cropped into a square</li>
-      <li>filename_sm: A "small" version.  Will be resized to the max width, with the aspect ratio presevered.</li>
-      <li>filename_md: A "medium" version.  Will be resized to the max width, with the aspect ratio presevered.</li>
-      <li>filename_lg: A "large" version.  Will be resized to the max width, with the aspect ratio presevered.</li>
-      <li>Retina versions are created automatcially and appended with "@2x" (filename_sm@2x, filename_md@2x, filename_lg@2x)</li>
-    </ul>
-    <%= well_frame title: 'Image Sizes' do %>
+    <dl>
+      <dt class="text-info">"filename"_thumb</dt>
+      <dd>A thumbnail, cropped into a square</dd>
+
+      <dt class="text-info">"filename"_sm</dt>
+      <dd>A "small" version.  Will be resized to the max width, with the aspect ratio presevered.</dd>
+
+      <dt class="text-info">"filename"_md</dt>
+      <dd>A "medium" version.  Will be resized to the max width, with the aspect ratio presevered.</dd>
+
+      <dt class="text-info">"filename"_lg</dt>
+      <dd>A "large" version.  Will be resized to the max width, with the aspect ratio presevered.</dd>
+
+      <dt class="text-info">Retina versions</dt>
+      <dd>are created automatcially and appended with "@2x" (filename_sm@2x, filename_md@2x, filename_lg@2x)</dd>
+    </dl>
+    <br>
+    <%= subsection title: 'Image Sizes' do %>
       <%= f.input :preferred_image_thumbnail_width, label: 'Thumbnail max width', as: :integer, input_html: {size: 6, maxlength: 4, style: "width:75px;"} %>
       <%= f.input :preferred_image_small_width, label: 'Small  max width', as: :integer, input_html: {size: 6, maxlength: 4, style: "width:75px;"} %>
       <%= f.input :preferred_image_medium_width, label: 'Medium  max width', as: :integer, input_html: {size: 6, maxlength: 4, style: "width:75px;"} %>
@@ -23,5 +33,5 @@
     
     <%= submit_or_cancel :cancel_url => dm_core.admin_account_analytics_path %>
 
-	<% end %>
+  <% end %>
 <% end %>

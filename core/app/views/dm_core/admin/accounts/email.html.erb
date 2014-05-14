@@ -1,11 +1,11 @@
-<% content_for :sidebar do %>
-  <%= render :partial => 'sidebar' %>
-<% end %>
+<%= render :partial => 'settings_menu' %>
 
-<%= simple_form_for(@account, :url => dm_core.admin_account_email_url) do |f| %>
+<%= simple_form_for(@account, :url => dm_core.admin_account_email_url,
+    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings) do |f| %>
+
   <%= f.error_notification :message => "Please review the problems below"%>
 
-	<%= content_box :title => 'Email and SMTP Settings' do %>
+	<%= panel :title => 'Email and SMTP Settings' do %>
 
     <%= f.input :preferred_webmaster_email, :label => 'Webmaster Email', :required => true %>
     <%= f.input :preferred_support_email, :label => 'Support Email' %>

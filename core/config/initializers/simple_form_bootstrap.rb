@@ -1,3 +1,6 @@
+# Configured for use with Bootstrap 2
+#------------------------------------------------------------------------------
+
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
   #--- Note: by default we use the 'form-horizontal' on all form fields. However,
@@ -5,7 +8,7 @@ SimpleForm.setup do |config|
   #    appear above the field, default form format), we apply the 
   #    'form-horizontal' class to each control group, not the form.  We then have a special
   #    'vertical' wrapper that removes this class, giving vertical behaviour
-  config.wrappers :bootstrap, :tag => 'div', :class => 'form-horizontal control-group', :error_class => 'error' do |b|
+  config.wrappers :bootstrap2, :tag => 'div', :class => 'form-horizontal control-group', :error_class => 'error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -16,7 +19,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :prepend, :tag => 'div', :class => "form-horizontal control-group", :error_class => 'error' do |b|
+  config.wrappers :bs2_prepend, :tag => 'div', :class => "form-horizontal control-group", :error_class => 'error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -29,7 +32,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :append, :tag => 'div', :class => "form-horizontal control-group", :error_class => 'error' do |b|
+  config.wrappers :bs2_append, :tag => 'div', :class => "form-horizontal control-group", :error_class => 'error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -42,7 +45,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :prepend_append, :tag => 'div', :class => "form-horizontal control-group", :error_class => 'error' do |b|
+  config.wrappers :bs2_prepend_append, :tag => 'div', :class => "form-horizontal control-group", :error_class => 'error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -55,7 +58,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :inline_checkbox, :tag => 'div', :class => 'form-horizontal control-group', :error_class => 'error' do |b|
+  config.wrappers :bs2_inline_checkbox, :tag => 'div', :class => 'form-horizontal control-group', :error_class => 'error' do |b|
     b.use :html5
     b.use :placeholder
     b.wrapper :tag => 'div', :class => 'controls' do |ba|
@@ -69,5 +72,5 @@ SimpleForm.setup do |config|
   # Check the Bootstrap docs (http://twitter.github.com/bootstrap)
   # to learn about the different styles for forms and inputs,
   # buttons and other elements.
-  #config.default_wrapper = :bootstrap
+  #config.default_wrapper = :bootstrap2
 end

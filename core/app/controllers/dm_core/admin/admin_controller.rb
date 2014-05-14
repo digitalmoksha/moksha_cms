@@ -6,12 +6,14 @@ class DmCore::Admin::AdminController < ApplicationController
   before_filter :authenticate_admin_user!
   before_filter :template_setup
 
-  layout 'admin/admin_page'
+  # layout 'admin/admin_page'
+  layout 'admin_theme/admin'
   
   include DmCore::AccountHelper
   include Admin::ThemeAmsterdamHelper
   include Admin::ApplicationHelper
   include DmCore::ApplicationHelper
+  helper DmAdmin::ApplicationHelper
   
   #------------------------------------------------------------------------------
   def authenticate_admin_user!
