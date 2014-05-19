@@ -1,12 +1,12 @@
 <% content_for :content_title_extra do %>
-  <div class='navbar'><ul class='nav pull-right'>
-    <li><%= link_to(icon_label('icon-plus', 'New'), new_admin_newsletter_path, :title => 'New Newsletter', :class => "nav-btn-primary") %></li>
-  </ul></div>
+  <%= page_header_buttons do %>
+    <%= link_to(icon_label('icon-plus', 'New'), new_admin_newsletter_path, title: 'New Newsletter', class: "btn btn-xs btn-default") %>
+  <% end %>
 <% end %>
 
 <% if false #using_mailchimp? %>
   <% content_for :sidebar do %>
-    <%= link_to 'Sync with Mailchimp', admin_newsletters_synchronize_lists_path, :class => "action-button greyish" %>
+    <%= link_to 'Sync with Mailchimp', admin_newsletters_synchronize_lists_path, class: "action-button greyish" %>
   <% end %>
 <% end %>
 
@@ -14,16 +14,18 @@
 <% content_for :content_title, 'Newsletter Dashboard' %>
 
 <% @newsletters.in_groups_of(2, false) do |newsletter_row| %>
-  <div class="row-fluid">
+  <div class="row">
     <% for newsletter in newsletter_row  %>
-      <% toolbar = toolbar_button(newsletter.subscribed_count, admin_newsletter_path(newsletter), :title => 'Number of subscriptions', :class => 'label label-success pull-right') %>
-      <%= content_box title: link_to(newsletter.name, admin_newsletter_path(newsletter)), toolbar: toolbar, class: 'span6' do %>
-        <ul class="text-stats-content">
-          <li style="color:green"><%= newsletter.subscribed_count %><span>subscribed</span></li>
-          <li style="color:red"><%= newsletter.unsubscribed_count %><span>unsubscribed</span></li>
-          <li style="color:grey"><%= newsletter.cleaned_count %><span>cleaned</span></li>
-        </ul>
-      <% end %>
+      <div class="col-md-6">
+        <% toolbar = toolbar_btn(newsletter.subscribed_count, admin_newsletter_path(newsletter), title: 'Number of subscriptions', class: 'label label-success pull-right') %>
+        <%= panel title: link_to(newsletter.name, admin_newsletter_path(newsletter)), toolbar: toolbar do %>
+          <ul class="text-stats">
+            <li style="color:green"><%= newsletter.subscribed_count %><span>subscribed</span></li>
+            <li style="color:red"><%= newsletter.unsubscribed_count %><span>unsubscribed</span></li>
+            <li style="color:grey"><%= newsletter.cleaned_count %><span>cleaned</span></li>
+          </ul>
+        <% end %>
+      </div>
     <% end %>
   </div>
 <% end %>

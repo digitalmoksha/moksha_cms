@@ -1,13 +1,17 @@
 <% submit_url = (@newsletter.new_record? ? admin_newsletters_path : admin_newsletter_path) %>
-<%= simple_form_for @newsletter, url: submit_url do |f| %>
-  <%= f.error_notification :message => "Please review the problems below"%>
+<%= simple_form_for @newsletter, url: submit_url,
+      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
-  <% if using_mailchimp? %>
-    <%= f.input :mc_id , label: 'List ID', hint: 'MailChimp List ID, in the "Settings -> List Name and Defatuls" setion of a list' %>
-  <% else %>
-    <%= f.input :name , label: 'Name of Newsletter' %>
-  <% end %>
+  <%= f.error_notification :message => "Please review the problems below" %>
+
+  <%= panel header: false do %>
+    <% if using_mailchimp? %>
+      <%= f.input :mc_id , label: 'List ID', hint: 'MailChimp List ID, in the "Settings -> List Name and Defatuls" setion of a list' %>
+    <% else %>
+      <%= f.input :name , label: 'Name of Newsletter' %>
+    <% end %>
   
-  <%= submit_or_cancel :cancel_url => admin_newsletters_path %>
+    <%= submit_or_cancel :cancel_url => admin_newsletters_path %>
+  <% end %>
 
 <% end %>

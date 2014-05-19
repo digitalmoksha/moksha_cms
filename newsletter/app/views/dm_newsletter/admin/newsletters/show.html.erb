@@ -1,22 +1,21 @@
 <% content_for :content_title, "#{@newsletter.name} <small>Newsletter</small>".html_safe %>
 <% content_for :content_title_extra do %>
-  <div class='navbar'><ul class='nav pull-right'>
-    <li><%= link_to(icon_label('icon-trash', 'Delete'), admin_newsletter_path(@newsletter), method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this newsletter?'}) %></li>
-  </ul></div>
+  <%= page_header_buttons do %>
+    <%= link_to(icon_label('icon-trash', 'Delete'), admin_newsletter_path(@newsletter), method: :delete, class: "btn btn-xs btn-default", data: {confirm: 'Are you sure you wish to delete this newsletter?'}) %>
+  <% end %>
 <% end %>
 
-<div class="block well body">
-  <div class="row-fluid">
-
-    <ul class="text-stats-content span6">
+<%= panel header: false do %>
+  <div class="row">
+    <ul class="text-stats col-md-6">
       <li style="color:green"><%= @newsletter.subscribed_count %><span>subscribed</span></li>
       <li style="color:red"><%= @newsletter.unsubscribed_count %><span>unsubscribed</span></li>
       <li style="color:grey"><%= @newsletter.cleaned_count %><span>cleaned</span></li>
     </ul>
 
-    <dl class="span6">
+    <dl class="col-md-6">
       <dt>Subscription Token</dt>
       <dd><%= @newsletter.token %></dd>
     </dl>
   </div>
-</div>
+<% end %>
