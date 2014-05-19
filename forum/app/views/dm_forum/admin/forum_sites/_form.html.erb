@@ -1,13 +1,15 @@
-<%= simple_form_for(@forum_site, :url => dm_forum.admin_forum_site_path) do |f| %>
-  <%= f.error_notification :message => "<p>Please review the problems below</p>"%>
+<%= simple_form_for @forum_site, url: dm_forum.admin_forum_site_path,
+      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
-	<%= content_box :title => @title do %>
+  <%= f.error_notification message: "Please review the problems below" %>
 
-    <%= f.input :enabled, :as => :toggle, :label => 'Enable Forums?' %>
-    <%= f.input :tagline, :as => :text, :label => 'Tagline', :input_html => { :rows => 4, :class => 'input-block-level' } %>
-    <%= f.input :description, :as => :text, :label => 'Description', :input_html => { :rows => 4, :class => 'input-block-level' } %>
+	<%= panel title: @title do %>
 
-    <%= submit_or_cancel :cancel_url => dm_forum.admin_forum_site_url %>
+    <%= f.input :enabled, as: :toggle, label: 'Enable Forums?' %>
+    <%= f.input :tagline, as: :text, label: 'Tagline', input_html: { rows: 4, class: 'input-block-level' } %>
+    <%= f.input :description, as: :text, label: 'Description', input_html: { rows: 4, class: 'input-block-level' } %>
+
+    <%= submit_or_cancel cancel_url: dm_forum.admin_forum_site_url %>
 
 	<% end %>
 <% end %>

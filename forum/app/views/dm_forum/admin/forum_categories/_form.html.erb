@@ -1,15 +1,17 @@
-<%= render :partial => 'dm_forum/admin/forum_categories/index_sidebar' %>
+<%= render partial: 'dm_forum/admin/forum_categories/index_sidebar' %>
 
 <% submit_url = (@forum_category.new_record? ? admin_forum_categories_path : admin_forum_category_path) %>
-<%= simple_form_for(@forum_category, :url => submit_url) do |f| %>
-  <%= f.error_notification :message => "Please review the problems below"%>
-  <%= content_box :title => @title do %>
-    <%= locale_frame :title => '' do |locale| %>
-      <%= f.input "name_#{locale}", :label => 'Category Name', :id => 'name_error', :required => true %>
-      <%#= f.input "description_#{locale}", :as => :text, :label => 'Description', :input_html => { :rows => 6, :class => 'input-block-level monospaced' } %>
+<%= simple_form_for @forum_category, url: submit_url,
+      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+
+  <%= f.error_notification message: "Please review the problems below" %>
+  <%= panel title: @title do %>
+    <%= locale_tabs do |locale| %>
+      <%= f.input "name_#{locale}", label: 'Category Name', id: 'name_error', required: true %>
+      <%#= f.input "description_#{locale}", as: :text, label: 'Description', input_html: { rows: 6, class: 'input-block-level monospaced' } %>
     <% end %>
 
-    <%= submit_or_cancel :cancel_url => [:admin, @forum_category] %>
+    <%= submit_or_cancel cancel_url: [:admin, @forum_category] %>
 
   <% end %>
 <% end %>

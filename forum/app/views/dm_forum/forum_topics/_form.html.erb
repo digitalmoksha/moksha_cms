@@ -1,6 +1,6 @@
 <%= simple_form_for [@forum, @forum_topic] do |f| %>
 
-  <%= f.error_notification :message => "Please review the problems below"%>
+  <%= f.error_notification :message => "Please review the problems below" %>
   <%= f.input :title, :label => I18n.t('fms.views_topics.topic') %>
 
   <% if @forum_topic.new_record? %>

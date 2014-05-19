@@ -1,41 +1,35 @@
 <% content_for :content_title, icon_label('font-comment', @forum.name) %>
 <% content_for :content_title_extra do %>
-  <div class='navbar'><ul class='nav pull-right'>
-    <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @forum], class: "nav-btn-primary", title: 'Edit') %></li>
-    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @forum], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this forum?  All comments will also be deleted!'}) %></li>
-  </ul></div>
+  <%= page_header_buttons do %>
+    <%= link_to(icon_label('icon-pencil3', 'Edit'), [:edit, :admin, @forum], class: "btn btn-xs btn-default", title: 'Edit') %>
+    <%= link_to(icon_label('icon-remove', 'Delete'), [:admin, @forum], method: :delete, class: "btn btn-xs btn-default", data: {confirm: 'Are you sure you wish to delete this forum?  All comments will also be deleted!'}) %>
+  <% end %>
 <% end %>
 
 <%= render partial: 'dm_forum/admin/forum_categories/index_sidebar' %>
 
-<div class="block well body">
-
-    <dl>
-      <dt>Category</dt>
-      <dd><%= link_to @forum.forum_category.name, admin_forum_category_path(@forum.forum_category) %></dd>
-      <dt>Description</dt>
-      <dd><%= @forum.description %></dd>
-    </dl>
-
-</div>
-
-<% if @forum.owner %>
-  <div class="row-fluid">
-    <% toolbar = toolbar_button(@forum.member_count(:automatic), '#', title: 'Number of users with automatic forum access', class: 'label label-success pull-right') %>
-    <%= content_frame title: 'Users with Automatic Access', toolbar: toolbar, class: 'span12' do %>
-      <div class="body">
-        <h5>Automatic Access Granted for Event</h5>
-        <p><%= @forum.owner.title %></p>
-      </div>
-    <% end %>
-  </div>
+<%= panel header: false do %>
+  <dl>
+    <dt>Category</dt>
+    <dd><%= link_to @forum.forum_category.name, admin_forum_category_path(@forum.forum_category) %></dd>
+    <dt>Description</dt>
+    <dd><%= @forum.description %></dd>
+  </dl>
 <% end %>
 
-<div class="row-fluid">
+<% if @forum.owner %>
+  <% toolbar = toolbar_button(@forum.member_count(:automatic), '#', title: 'Number of users with automatic forum access', class: 'label label-success pull-right') %>
+  <%= panel title: 'Users with Automatic Access', toolbar: toolbar do %>
+    <h5>Automatic Access Granted for Event</h5>
+    <p><%= @forum.owner.title %></p>
+  <% end %>
+<% end %>
 
-  <% toolbar = toolbar_button(@forum.member_count(:manual), '#', title: 'Number of users with forum access', class: 'label label-success pull-right') %>
-  <%= content_box title: 'Users with Manual Access', toolbar: toolbar, class: 'span12' do %>
-    <div class="span6">
+
+  <% toolbar = toolbar_btn(@forum.member_count(:manual), '#', title: 'Number of users with forum access', class: 'label label-success pull-right') %>
+  <%= panel title: 'Users with Manual Access', toolbar: toolbar do %>
+    <div class="row">
+    <div class="col-md-6">
       <div class="table-overflow">
         <table class="table table-striped table-bordered">
           <thead>
@@ -56,21 +50,22 @@
       </div>
     </div>
     
-    <div class="span6">
-      <h5>Add Individual Users</h5>
-      <div class="table-overflow">
-        <table id="forum_user_table" class="table table-striped table-bordered" data-source="<%= dm_forum.forum_users_admin_forum_url %>">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Country</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
+    <div class="col-md-6">
+      <%= subsection title: 'Add Individual Users' do %>
+        <div class="table-overflow">
+          <table id="forum_user_table" class="table table-striped table-bordered" data-source="<%= dm_forum.forum_users_admin_forum_url %>">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Country</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    <% end %>
+</div>
   <% end %>
 
-</div>
