@@ -22,7 +22,7 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
     if @cms_snippet.save
       redirect_to admin_cms_snippets_url, notice: 'Snippet successfully created.'
     else
-      render action: :new_content
+      render action: :new
     end
   end
 

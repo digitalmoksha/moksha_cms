@@ -1,20 +1,22 @@
 <% submit_url = (@cms_snippet.new_record? ? admin_cms_snippets_path : admin_cms_snippet_path) %>
-<%= simple_form_for(@cms_snippet, :url => submit_url) do |f| %>
-  <%= f.error_notification :message => "Please review the problems below" %>
-  <%= content_box do %>
+<%= simple_form_for @cms_snippet, url: submit_url,
+    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+
+  <%= f.error_notification message: "Please review the problems below" %>
+  <%= panel header: false do %>
     <%= f.input :slug, label: 'Slug', required: true %>
     <%= f.input :description, label: 'Description' %>
-    <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
-    <%= f.input :itemtype, :label => 'Item Type', :collection => CmsContentitem::CONTENT_TYPES, :include_blank => false %>
-    <%= f.input :enable_cache, :as => :toggle, :label => 'Cache Content' %>
+    <%= f.input :published, as: :toggle, label: 'Publish It?' %>
+    <%= f.input :itemtype, label: 'Item Type', collection: CmsContentitem::CONTENT_TYPES, include_blank: false %>
+    <%= f.input :enable_cache, as: :toggle, label: 'Cache Content' %>
     
-    <%= locale_frame :title => '' do |locale| %>
-      <%= f.input "content_#{locale}", :label => 'Content',    :required => true, :wrapper => :vertical, :as => :editor, input_html: {style: "height: 500px;"} %>
+    <%= locale_tabs title: '' do |locale| %>
+      <%= f.input "content_#{locale}", label: 'Content',    required: true, wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
     <% end %>
 
-    <%= submit_or_cancel :cancel_url => admin_cms_snippets_path %>
+    <%= submit_or_cancel cancel_url: admin_cms_snippets_path %>
 
   <% end %>
 <% end %>
 
-<%= render :partial => 'dm_cms/admin/shared/liquid_tags_ref' %>
+<%= render partial: 'dm_cms/admin/shared/liquid_tags_ref' %>

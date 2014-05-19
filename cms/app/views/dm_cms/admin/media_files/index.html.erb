@@ -1,6 +1,6 @@
 <% content_for :content_title, 'Media Library' %>
-<% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), new_admin_media_file_path, :title => 'New Upload', :class => "nav-btn-primary") ]) %>
-<%= content_box :title => 'Thumbnails', :toolbar => toolbar do %>
+<% toolbar = toolbar_btn(icon_label('icon-plus', 'New'), new_admin_media_file_path, title: 'New Upload', class: "btn btn-xs btn-default") %>
+<%= panel title: 'Thumbnails', toolbar: toolbar do %>
   <h6>Filter by tag:</h6>
   <div class="tagsinput block">
     <%= link_to content_tag(:span, 'all', class: "tag #{'active' if @tag_filter == 'all'}"), admin_media_files_path(filter: 'all') %>
@@ -12,11 +12,11 @@
   </div>
   
   <% @media_files.each_slice(4) do |media_chunk| %>
-    <div class="row-fluid">
-      <ul class="thumbnails">
-        <% media_chunk.each do |media_file| %>
-          <li class="span3">
-            <div class="thumbnail well">
+    <div class="row">
+      <% media_chunk.each do |media_file| %>
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div class="block">
+            <div class="thumbnailx thumbnail-boxed">
               <% if media_file.image? or media_file.pdf? %>
                 <%= link_to image_tag(media_file.media_url(:thumb), width: '100%'), media_file.media_url, class: 'thumbnail lightbox' %>
               <% else %>
@@ -34,14 +34,16 @@
                    <%= link_to 'Delete', admin_media_file_path(media_file), class: 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure you want to delte this file?'} %>
               </div>
             </div>
-          </li>
-        <% end %>
-      </ul>
+          </div>
+        </div>
+      <% end %>
     </div>
   <% end %>
-  <div class="row-fluid">
-    <div class='pagination pagination-right'>
-      <%= will_paginate(@media_files, inner_window: 10, next_label: 'Next', previous_label: 'Prev') %>
+
+  <div class="row">
+    <div class='col-md-12'>
+      <%= will_paginate(@media_files, inner_window: 10, next_label: 'Next', previous_label: 'Prev', renderer: WillPaginate::AdminThemeRenderer) %>
     </div>
   </div>
 <% end %>
+

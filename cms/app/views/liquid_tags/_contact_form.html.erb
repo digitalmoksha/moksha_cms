@@ -1,7 +1,7 @@
 <% @contact = ContactForm.new unless @contact %>
 
 <div markdown="0" id="contact_form" class='clearfix'>
-  <%= simple_form_for(@contact , :url => create_contact_form_path, :wrapper => :bootstrap, :html => { :class => 'form-inline', :remote => true }  ) do |f| %>
+  <%= simple_form_for(@contact , :url => create_contact_form_path, :wrapper => :bootstrap2, :html => { :class => 'form-inline', :remote => true }  ) do |f| %>
     <%= flash_notices %>
 
     <%= f.input :name,    :label => false, :placeholder => I18n.t('cms.contact_form.name') %>

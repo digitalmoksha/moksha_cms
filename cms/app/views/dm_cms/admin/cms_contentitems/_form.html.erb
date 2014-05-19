@@ -2,27 +2,31 @@
 <% submit_url = (new_record ? create_content_admin_cms_contentitem_path(@current_page) : admin_cms_contentitem_path(@cms_contentitem)) %>
 <% title = (new_record ? "New Content" : @cms_contentitem.container.capitalize) %>
 
+<%= simple_form_for @cms_contentitem, url: submit_url,
+    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
-<%= simple_form_for @cms_contentitem, :url => submit_url do |f| %>
-  <%= f.error_notification :message => "Please review the problems below"%>
+  <%= f.error_notification message: "Please review the problems below" %>
   <%= f.hidden_field :original_updated_on %>
-  <%= content_frame :title => title, :toolbar => :languages, :include_general => :last do %>
-    <div class="tab-content">
-      <div id="tab_general" class="tab-pane fade">
-        <%= f.input :itemtype, :label => 'Item Type', :collection => CmsContentitem::CONTENT_TYPES, :include_blank => false %>
-        <%= f.input :container, :label => 'Content Name', :hint => 'This is normally "body" or "sidebar" or something' %>
-        <%= f.input :enable_cache, :as => :toggle, :label => 'Cache Content' %>
+  <%= panel title: title do %>
+    <%= locale_tabs  do |locale| %>
+      <%= f.input "content_#{locale}", label: 'Content', wrapper: :bs3_vertical_form, as: :code_editor, mode: @cms_contentitem.itemtype, input_html: {style: "height: 400px;"} %>
+    <% end %>
+    <div class="row">
+      <div class="col-md-4">
+        <%= f.input :itemtype, label: 'Item Type', collection: CmsContentitem::CONTENT_TYPES, include_blank: false, wrapper: :bs3_vertical_form %>
       </div>
-      <% current_account.site_locales.each do |locale| %>
-        <div id="tab_<%= locale %>" class="tab-pane fade <%= 'active in' if Account.current.preferred_default_locale == locale %>">
-          <%= f.input "content_#{locale}", :label => 'Content', :wrapper => :vertical, :as => :editor, :mode => @cms_contentitem.itemtype, input_html: {style: "height: 400px;"} %>
-        </div>
-      <% end %>
+      <div class="col-md-4">
+        <%= f.input :container, label: 'Content Name', hint: 'This is normally "body" or "sidebar" or something', wrapper: :bs3_vertical_form %>
+      </div>
+      <div class="col-md-4">
+        <%= f.input :enable_cache, as: :boolean, label: 'Cache Content', wrapper: :bs3_vertical_form %>
+      </div>
     </div>
-    <%= submit_or_cancel :cancel_url => admin_cms_page_url(@current_page) %>
+      
+    <%= submit_or_cancel cancel_url: admin_cms_page_url(@current_page) %>
   <% end %>
 <% end %>
 
-<%= render :partial => 'sidebar' %>
-<%= render :partial => 'dm_cms/admin/shared/liquid_tags_ref' %>
+<%= render partial: 'sidebar' %>
+<%= render partial: 'dm_cms/admin/shared/liquid_tags_ref' %>
 

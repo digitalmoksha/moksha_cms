@@ -7,83 +7,87 @@
   end
 %>
 <% unless @media_file.new_record? %>
-  <div class="media" style="margin-bottom: 20px;">
-    <% if @media_file.image? or @media_file.pdf? %>
-      <%= link_to image_tag(@media_file.media_url(:sm), width: 200, class: 'media-object'), @media_file.media_url, class: 'pull-left' %>
-    <% else %>
-      <%= link_to @media_file.media_url, class: 'pull-left', style: "width: 200px;" do %>
-      <div class="aspect_wrapper_square">
-        <div class="thumbnail_extension_thumb">
-          <span><%= @media_file.media.file.extension %></span>
+  <%= panel header: false do %>
+    <div class="media">
+      <% if @media_file.image? or @media_file.pdf? %>
+        <%= link_to image_tag(@media_file.media_url(:sm), width: 200, class: 'media-object', style: "width: 200px;height:auto;"), @media_file.media_url, class: 'pull-left' %>
+      <% else %>
+        <%= link_to @media_file.media_url, class: 'pull-left', style: "width: 200px;" do %>
+        <div class="aspect_wrapper_square">
+          <div class="thumbnail_extension_thumb">
+            <span><%= @media_file.media.file.extension %></span>
+          </div>
         </div>
-      </div>
+        <% end %>
       <% end %>
-    <% end %>
-    <div class="media-body">
-      <table class='table table-condensed table-transparent'>
-        <tr>
-          <th>URL</th>
-          <td><%= @media_file.media.url %></td>
-        </tr>
-      </table>
-      <table class='table table-condensed table-bordered'>
-        <thead>
+      <div class="media-body">
+        <table class='table' style="border-top: none;">
           <tr>
-            <th>Name</th>
-            <th>Version</th>
-            <th>File Size</th>
+            <th>URL</th>
+            <td><%= @media_file.media.url %></td>
           </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong><%= link_to @media_file.short_location, @media_file.media.url %></strong></td>
-            <td><strong>original</strong></td>
-            <td><strong><%= number_to_human_size @media_file.media.file.size, precision: 3 %></strong></td>
-          </tr>
-          <% if @media_file.image? || @media_file.pdf? %>
-            <% @media_file.media.versions.each do |key, value| %>
-                <% if @media_file.media.version_exists?(key) %>
-                <tr>
-                  <td><%= link_to @media_file.short_location(key), value.url %></td>
-                  <td><%= key %></td>
-                  <td><%= number_to_human_size value.file.size, precision: 3 %></td>
-                </tr>
+        </table>
+        <table class='table table-condensed table-bordered'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Version</th>
+              <th>File Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><%= link_to @media_file.short_location, @media_file.media.url %></strong></td>
+              <td><strong>original</strong></td>
+              <td><strong><%= number_to_human_size @media_file.media.file.size, precision: 3 %></strong></td>
+            </tr>
+            <% if @media_file.image? || @media_file.pdf? %>
+              <% @media_file.media.versions.each do |key, value| %>
+                  <% if @media_file.media.version_exists?(key) %>
+                  <tr>
+                    <td><%= link_to @media_file.short_location(key), value.url %></td>
+                    <td><%= key %></td>
+                    <td><%= number_to_human_size value.file.size, precision: 3 %></td>
+                  </tr>
+                <% end %>
               <% end %>
             <% end %>
-          <% end %>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-  <% toolbar = nav_bar_items([ link_to(icon_label('icon-trash', 'Delete'), [:admin, @media_file], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this file from the Media Library?'})] ) %>
+  <% end %>
+  <% toolbar = toolbar_btn(icon_label('icon-remove', 'Delete'), [:admin, @media_file], method: :delete, class: "btn btn-xs btn-default", data: {confirm: 'Are you sure you wish to delete this file from the Media Library?'}) %>
 <% end %>
 
-<%= simple_form_for(@media_file, url: [:admin, @media_file]) do |f| %>
+<%= simple_form_for @media_file, url: [:admin, @media_file],
+      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+
   <%= f.error_notification message: @msg %>
   
-  <%= content_frame title: @title, toolbar: toolbar do %>
+  <%= panel title: @title, toolbar: toolbar do %>
 
   <% if @media_file.new_record? %>
     <% folders = Dir["#{Rails.root}/public/#{account_site_assets_media(false)}/*/"].map { |a| File.basename(a) } %>
-    <%= f.input :media, error: false, label: 'Media', wrapper: :prepend_append, hint: 'You can select or type a folder to save the uploaded file into.  Default will be the current year.' do %>
-      <%= content_tag :div, class: "btn-group" do %>
-        <button class="btn dropdown-toggle" data-toggle="dropdown" >Folder <span class="caret dd-caret"></span></button>
-        <ul class="dropdown-menu dropdown-field" data-field="folder_field">
-          <% folders.sort.each do |folder| %>
-            <li><a href="#"><%= folder %></a></li>
-          <% end %>
-        </ul>
-      <% end %>
-      <%= f.input_field :folder, size: 12, value: (f.object.folder || Time.now.year), id: 'folder_field', style: 'text-align:right' %>
-      <span class="add-on">/</span>
-      <%= f.input_field :media, style: 'margin-left: 10px;', multiple: true, name: 'media_list[]' %>
+    <%= f.input :media, error: false, label: 'Media Location', wrapper: :bs3_horizontal_group, hint: 'You can select or type a folder to save the uploaded file into.  Default will be the current year.' do %>
+        <%= content_tag :div, class: "input-group-btn" do %>
+          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" >Folder <span class="caret"></span></button>
+          <ul class="dropdown-menu dropdown-field" data-field="folder_field">
+            <% folders.sort.each do |folder| %>
+              <li><a href="#"><%= folder %></a></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <%= f.input_field :folder, size: 12, value: (f.object.folder || Time.now.year), id: 'folder_field', class: 'form-control', style: 'width: 30%' %>
     <% end %>
+    <%= f.input :media, style: 'margin-left: 10px;', multiple: true, name: 'media_list[]' %>
+
   <% else %>
     <%= f.input :media, input_html: {preview_version: :thumb} %>
   <% end %>
 
   <%= f.input :generate_retina, label: false, disabled: @media_file.generate_retina?, inline_label: "Generate retina versions", hint: "Make sure you upload a large version of the file." %>
-  <%= f.input :tag_list, hidden: true, input_html: {id: "tag_field", style: "width:300px", data: {tags: MediaFile.tag_list_all}},
+  <%= f.input :tag_list, hidden: true, input_html: {id: "tag_field", data: {tags: MediaFile.tag_list_all}},
                hint: 'Tags for the folder name and the file extension are added automatically' %>
   
   <% if false #--- disable this for now %>

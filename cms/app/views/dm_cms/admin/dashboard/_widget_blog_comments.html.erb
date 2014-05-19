@@ -2,42 +2,37 @@
 <% comments = Comment.where(commentable_type: CmsPost, created_at: (Date.today - comment_day.day).midnight..(Date.today - (comment_day - 1).day).midnight).order('created_at DESC') %>
 <% title = comment_day == 0 ? 'Today\'s Blog Comments' : comment_day == 1 ? 'Yesterday\'s Blog Comments' : "Blog Comments #{comment_day} days ago" %>
 <% content_for :title_toolbar do %>
-  <%= toolbar_button(comments.size, dm_core.admin_dashboard_path, :title => 'Number of comments today', :class => 'label label-success pull-right') %>
-  <ul class="icons">
-    <li><%= link_to '<i class="font-refresh"></i>'.html_safe, dm_cms.admin_widget_blog_comments_path(comment_day: comment_day), class: 'hovertip', title: 'Refresh', remote: true %></li>
-  </ul>
-  <div class="pagination pagination-small pull-right">
-    <ul>
-      <li><%= link_to 'Prev Day', dm_cms.admin_widget_blog_comments_path(comment_day: comment_day + 1), remote: true %></li>
-      <% if comment_day == 0 %>
-        <li><a href="#" class='disabled'>Next Day</a></li>
-      <% else %>
-        <li><%= link_to 'Next Day', dm_cms.admin_widget_blog_comments_path(comment_day: comment_day - 1), remote: true %></li>
-      <% end %>
-    </ul>
+  <%= toolbar_btn(comments.size, dm_core.admin_dashboard_path, title: 'Number of comments today', class: 'label label-success pull-right') %>
+  <div class="panel-icons-group">
+    <%= link_to icons('icon-arrow-left11'), dm_cms.admin_widget_blog_comments_path(comment_day: comment_day + 1), remote: true, class: 'btn btn-link btn-icon' %>
+    <% if @comment_day == 0 %>
+      <%= link_to icons('icon-arrow-right12'), '#', class: 'btn btn-link btn-icon disabled' %>
+    <% else %>
+      <%= link_to icons('icon-arrow-right12'), dm_cms.admin_widget_blog_comments_path(comment_day: comment_day - 1), remote: true, class: 'btn btn-link btn-icon' %></li>
+    <% end %>
+    <%= link_to icons('icon-spinner8'), dm_cms.admin_widget_blog_comments_path(comment_day: comment_day), class: 'btn btn-link btn-icon hovertip', title: 'Refresh', remote: true %>
   </div>
 <% end %>
 
-<%= content_box :title => title, :toolbar => content_for(:title_toolbar) do %>
-  <div class="timeline-messages">
-    <% if comments.size == 0 %>
-      <p>No comments posted yet</p>
-    <% else %>
-      <% comments.each do |comment| %>
-        <!-- Comment -->
-        <div class="message">
-          <div class="message-img"><%= avatar_for comment.user, 50 %></div>
-            <div class="message-body">
-              <div class="text">
-                <%= present(comment).formatted_comment %>
-              </div>
-              <p class="attribution">by <%= link_to present(comment).author, '#', class: 'hovertip', data: {placement: 'top'}, title: comment.user.full_name %> at <%= format_datetime comment.created_at %>
-                <%= link_to comment.commentable.title, dm_cms.post_show_path(comment.commentable.cms_blog.slug, comment.commentable.slug, anchor: "comment_#{comment.id}"), class: 'post_title', target: '_blank' %>
-              </p>
-            </div>
+<%= panel title: title, toolbar: content_for(:title_toolbar) do %>
+  <% if comments.size == 0 %>
+    <p>No comments posted yet</p>
+  <% else %>
+    <% comments.each do |comment| %>
+      <!-- Comment -->
+      <div class="media">
+        <a class="pull-left" href="#"><div class="media-object"><%= avatar_for comment.user, 50 %></div></a>
+        <div class="media-body">
+          <%= link_to "#{present(comment).author}", dm_cms.post_show_path(comment.commentable.cms_blog.slug, comment.commentable.slug, anchor: "comment_#{comment.id}"), class: 'media-heading hovertip', data: {placement: 'top'}, title: comment.user.full_name %>
+
+          <ul class="headline-info">
+            <li><%= format_datetime comment.created_at %></li>
+            <li><%= link_to comment.commentable.title, dm_cms.post_show_path(comment.commentable.cms_blog.slug, comment.commentable.slug, anchor: "comment_#{comment.id}"), class: 'post_title', target: '_blank' %></li>
+          </ul>
+          <%= present(comment).formatted_comment %>
         </div>
-        <!-- /comment -->
-      <% end %>
+      </div>
+      <!-- /comment -->
     <% end %>
-  </div>
+  <% end %>
 <% end %>

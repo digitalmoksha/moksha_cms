@@ -1,37 +1,42 @@
 <% content_for :content_title, icon_label('font-bullhorn', 'Blogs') %>
 <% content_for :content_title_extra do %>
-  <div class='navbar'><ul class='nav pull-right'>
-    <li><%= link_to(icon_label('icon-plus', 'New'), new_admin_cms_blog_path, :title => 'New Blog', :class => "nav-btn-primary") %></li>
-  </ul></div>
+  <div class="visible-xs header-element-toggle">
+    <a class="btn btn-primary btn-icon" data-toggle="collapse" data-target="#header-buttons"><i class="icon-stats2"></i></a>
+  </div>
+  <div class="header-buttons">
+    <div class="collapse" id="header-buttons">
+      <div class="well">
+        <%= link_to icon_label('icon-plus', 'New Blog'), new_admin_cms_blog_path, title: 'New Blog', class: 'btn btn-xs btn-default' %>
+      </div>
+    </div>
+  </div>
 <% end %>
 
-<%= panel  do %>
-  <div class="table-overflow">
-    <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%= dm_cms.admin_cms_blog_sort_path %>">
-      <thead>
-        <tr>
-          <th class="sort_handle"></th>
-          <th>Title</th>
-          <th>Associated Event</th>
-          <th width="50">Type</th>
-          <th width="50">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @blogs.each do |blog| %>
-          <% present blog do |blog_presenter| %>
-            <tr class="item" data-item_id="<%= blog.id %>">
-              <td class="sort_handle"></td>
-              <td>
-                <%= link_to blog.title, admin_cms_blog_path(blog) %>
-              </td>
-              <td><%= blog.owner.try(:title) %></td>
-              <td><%= blog_presenter.visibility %></td>
-              <td><%= blog_presenter.label_published %></td>
-            </tr>
-          <% end %>
+<%= panel title: 'Current Blogs', body: false do %>
+  <table id="drag_sort" class="table table-striped table-bordered table-condensed" data-update_url="<%= dm_cms.admin_cms_blog_sort_path %>">
+    <thead>
+      <tr>
+        <th class="sort_handle"></th>
+        <th>Title</th>
+        <th>Associated Event</th>
+        <th width="50">Type</th>
+        <th width="50">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @blogs.each do |blog| %>
+        <% present blog do |blog_presenter| %>
+          <tr class="item" data-item_id="<%= blog.id %>">
+            <td class="sort_handle"></td>
+            <td>
+              <%= link_to blog.title, admin_cms_blog_path(blog) %>
+            </td>
+            <td><%= blog.owner.try(:title) %></td>
+            <td><%= blog_presenter.visibility %></td>
+            <td><%= blog_presenter.label_published %></td>
+          </tr>
         <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

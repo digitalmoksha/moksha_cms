@@ -1,45 +1,50 @@
 <% unless @post.new_record? %>
   <% content_for :content_title, h(@post.title) + content_tag(:small, @blog.title) %>
   <% content_for :content_title_extra do %>
-    <div class='navbar'><ul class='nav pull-right'>
-      <li><%= present(@post).label_published %></li>
-      <li><%= link_to(icon_label('icon-search', 'View'), post_show_url(@blog, @post), :class => "nav-btn-primary", title: 'View', :target => '_blank') %></li>
-      <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @post], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this post?  All comments will also be deleted!'}) %></li>
-    </ul></div>
+    <%= page_header_buttons do %>
+      <%= present(@post).label_published %>
+      <%= link_to(icon_label('icon-search', 'View'), post_show_url(@blog, @post), :class => "btn btn-xs btn-default", title: 'View', :target => '_blank') %>
+      <%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @post], method: :delete, class: "btn btn-xs btn-default", data: {confirm: 'Are you sure you wish to delete this post?  All comments will also be deleted!'}) %>
+    <% end %>
   <% end %>
 <% else %>
   <% content_for :content_title, @blog.title %>
 <% end %>
 
 <% submit_url = (@post.new_record? ? admin_cms_blog_cms_posts_path(@blog) : admin_cms_post_path) %>
-<%= simple_form_for(@post, :url => submit_url) do |f| %>
+<%= simple_form_for @post, :url => submit_url,
+    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+
   <%= f.error_notification :message => "Please review the problems below" %>
-  <%= content_box do %>
-    <div class="form-horizontal control-group string required">
-      <label class="string required control-label" for="post_starting_on">
+  <%= panel header: false do %>
+    <div class="form-group string required">
+      <label class="string required col-sm-2 control-label" for="post_starting_on">
         <abbr title="required">*</abbr> Publish on
       </label>
-      <div class="controls">
-        <ul class="dates-range no-append">
-            <li><input name="cms_post[published_on_date]" type="text" value="<%= @post.published_on.to_date unless @post.published_on.nil? %>" placeholder="Select date..." id="date1" class="datepicker time" ></li>
-            <li class="sep">-</li>
-            <li><input name="cms_post[published_on_time]" type="text" class="time_select" value="<%= @post.published_on.strftime("%I:%M%p") unless @post.published_on.nil? %>" placeholder="Select time..." /></li>
-        </ul>
+      <div class="col-sm-10">
+        <div class="row">
+          <div class="col-sm-6">
+            <input name="cms_post[published_on_date]" type="text" value="<%= @post.published_on.to_date unless @post.published_on.nil? %>" placeholder="Select date..." id="date1" class="datepicker time" >
+          </div>
+          <div class="col-sm-6">
+            <input name="cms_post[published_on_time]" type="text" class="time_select" value="<%= @post.published_on.strftime("%I:%M%p") unless @post.published_on.nil? %>" placeholder="Select time..." />
+          </div>
+        </div>
         <div class="clearfix"></div>
         <p class="help-block">Leave blank to publish immediately</p>
       </div>
       <div class="clearfix"></div>
     </div>
 
-    <%= locale_frame :title => '' do |locale| %>
+    <%= locale_tabs do |locale| %>
       <%= f.input "title_#{locale}",   :label => 'Post Title', :required => true %>
-      <%= f.input "summary_#{locale}", :label => 'Summary',    :required => true, :wrapper => :vertical, :as => :editor, input_html: {style: "height: 100px;"} %>
-      <%= f.input "content_#{locale}", :label => 'Content',    :required => true, :wrapper => :vertical, :as => :editor, input_html: {style: "height: 500px;"} %>
+      <%= f.input "summary_#{locale}", :label => 'Summary',    :required => true, :wrapper => :bs3_vertical_form, :as => :code_editor, input_html: {style: "height: 100px;"} %>
+      <%= f.input "content_#{locale}", :label => 'Content',    :required => true, :wrapper => :bs3_vertical_form, :as => :code_editor, input_html: {style: "height: 500px;"} %>
     <% end %>
 
     <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
     <%= f.input :image, :label => 'Post Image', :id => 'image_error' %>
-    <%= f.input :comments_allowed, :as => :toggle, :label => 'Allow Comments', :hint => 'Turn on if you want commenting for this post.' %>
+    <%= f.input :comments_allowed, :as => :boolean, :label => 'Allow Comments', :hint => 'Turn on if you want commenting for this post.' %>
 
     <%= submit_or_cancel :cancel_url => admin_cms_blog_path(@blog) %>
 

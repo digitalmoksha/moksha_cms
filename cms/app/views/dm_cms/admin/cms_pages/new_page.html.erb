@@ -1,3 +1,2 @@
-<%# title = (new_record ? "New Child for: " : "Editing Page: ") %>
-<% content_for :content_title, icon_label('font-paste', 'New Child Page for: '.html_safe + present(@current_page).admin_edit_title) %>
+<% content_for :content_title, 'New Child Page for: '.html_safe + present(@current_page).admin_edit_title %>
 <%= render :partial => 'form' %>

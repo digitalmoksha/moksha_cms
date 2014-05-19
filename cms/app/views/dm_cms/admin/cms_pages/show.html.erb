@@ -1,56 +1,53 @@
-<% content_for :content_title, icon_label('font-paste', present(@current_page).admin_edit_title) %>
+<% content_for :content_title, present(@current_page).admin_edit_title %>
 <% content_for :secondary_title, "#{@current_page.slug} &mdash; #{@current_page.title}".html_safe %>
-<ul class="midnav midnav-font">
-  <li><%= link_to "#{icons('font-plus')}<span>Add Content Block</span>".html_safe, new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block' %></li>
-  <li><%= link_to "#{icons('font-search')}<span>View Page</span>".html_safe, url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', target: '_blank' %></li>
-  <% if false %><li><%= link_to "#{icons('font-copy')}<span>Duplicate Page</span>".html_safe, duplicate_page_admin_cms_page_path(@current_page), method: :put, title: 'Duplicate Page', data: {confirm: "Are you sure you wish to duplicate this page?"} %></li> <% end %>
-  <li><%= link_to "#{icons('font-trash')}<span>Delete Page</span>".html_safe, admin_cms_page_path(@current_page), method: :delete, title: 'Delete Page', data: {confirm: "Are you sure you wish to delete this page?"} %></li>
-</ul>
-
-<% @current_page.cms_contentitems.each do |item| %>
-  <% toolbar = render partial: 'content_toolbar', locals: { contentitem: item,  contentitem_list: @current_page.cms_contentitems } %>
-  <%= content_frame title: "#{item.container}", toolbar: toolbar do %>
-    <div class="table-overflow">
-      <table class="table table-bordered table-block table-gradient table-stats">
-        <tbody>
-          <tr>
-            <td width="75"><em><%= item.itemtype %></em></td>
-            <td class="monospaced"><pre><%= truncate(item.send("content_#{current_account.preferred_default_locale}"), length: 250) %></pre></td>
-          </tr>
-        </tbody>
-      </table>    
-    </div>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= link_to icon_label('icon-plus', 'Add Content'), new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block', class: 'btn btn-xs btn-default' %>
+    <%= link_to icon_label('icon-trash', 'Delete Page'), admin_cms_page_path(@current_page), method: :delete, title: 'Delete Page', class: 'btn btn-xs btn-danger', data: {confirm: "Are you sure you wish to delete this page?"} %>
+    <%= link_to icon_label('icon-search', 'View Page'), url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', class: 'btn btn-xs btn-default', target: '_blank' %>
   <% end %>
 <% end %>
 
-<% content_for :sidebar do %>
-  <ul class="side_list block">
-    <li><span class="contact-name"><strong>Slug</strong><i><%= @current_page.slug %></i></span></li>
-    <li><span class="contact-name"><strong>Title</strong><i><%= @current_page.title %></i></span></li>
-    <li>
-      <span class="contact-name"><strong>Published?</strong></span>
-      <% if @current_page.is_published? %>
-        <span class="status_available"></span>
-      <% else %>
-        <span class="status_off"></span>
+<div class="row">
+  <div class="col-md-8">
+    <% @current_page.cms_contentitems.each do |item| %>
+      <% toolbar = render partial: 'content_toolbar', locals: { contentitem: item,  contentitem_list: @current_page.cms_contentitems } %>
+      <%= panel title: "#{item.container}", body: false, toolbar: toolbar do %>
+        <pre class="prettyprint" style="border:none;border-bottom: 1px solid #eee;">
+          <%= truncate(item.send("content_#{current_account.preferred_default_locale}"), length: 250) %>
+        </pre>
+        <span class="subtitle text-muted text-center">Format: <%= item.itemtype %></span>
       <% end %>
-    </li>
-    <li>
-      <span class="contact-name"><strong>Requires Login?</strong></span>
-      <% if @current_page.requires_login? %>
-        <span class="status_available"></span>
-      <% else %>
-        <span class="status_off"></span>
-      <% end %>
-    </li>
-    <li><span class="contact-name"><strong>Type</strong><i><%= @current_page.pagetype %></i></span></li>
-    <li><span class="contact-name"><strong>Template</strong><i><%= @current_page.page_template %><%= " #{icons('font-arrow-up', color: '#aaa')}".html_safe if @current_page.template.blank? %></i></span></li>
-    <li><span class="contact-name"><strong>Link</strong> <i><%= @current_page.link %></i></span></li>
-    <li><span class="contact-name"><strong>Menu Title</strong><i><%= @current_page.menutitle %></i></span></li>
-    <li><span class="contact-name"><strong>Menu Image</strong><i><%= @current_page.menuimage %></i></span></li>
-  </ul>
+    <% end %>
+  </div>
   
-  <div class="block"><%= link_to('Edit Page Details', edit_admin_cms_page_path(@current_page), title: 'Edit Page', class: "action-button blue") %></div>
-
-<% end %>
-
+  <div class="col-md-4">
+    <% toolbar = link_to icons('icon-pencil3'), edit_admin_cms_page_path(@current_page), title: 'Edit Page Details', class: "btn btn-link btn-icon" %>
+    <%= panel title: 'Page Details', toolbar: toolbar do %>
+      <dl>
+        <dt class="text-info">Slug</dt>
+        <dd><%= @current_page.slug %></dd>
+        <dt class="text-info"></dt>
+        <dt class="text-info">Title</dt>
+        <dd><%= @current_page.title %></dd>
+        <dt class="text-info">Published?</dt>
+        <dd><%= @current_page.is_published? ? 'Yes' : 'No' %></dd>
+        <dt class="text-info">Requires Login?</dt>
+        <dd><%= @current_page.requires_login? ? 'Yes' : 'No' %></dd>
+        <dt class="text-info">Type</dt>
+        <dd><%= @current_page.pagetype %></dd>
+        <dt class="text-info">Template</dt>
+        <dd>
+          <%= @current_page.page_template %>
+          <%= " #{icons('icon-arrow-up9', color: '#aaa')}".html_safe if @current_page.template.blank? %>
+        </dd>
+        <dt class="text-info">Link</dt>
+        <dd><%= @current_page.link %></dd>
+        <dt class="text-info">Menu Title</dt>
+        <dd><%= @current_page.menutitle %></dd>
+        <dt class="text-info">Menu Image</dt>
+        <dd><%= @current_page.menuimage %></dd>
+      </dl>
+    <% end %>
+  </div>
+</div>

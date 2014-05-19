@@ -1,23 +1,26 @@
+<% content_for :content_title, @title %>
 <% submit_url = (@blog.new_record? ? admin_cms_blogs_path : admin_cms_blog_path) %>
-<%= simple_form_for(@blog, :url => submit_url) do |f| %>
-  <%= f.error_notification :message => "Please review the problems below<ul><li>one</li></ul>" %>
-  <%= content_box :title => @title do %>
-    <%= locale_frame :title => '' do |locale| %>
-      <%= f.input "title_#{locale}", :label => 'Blog Title', :id => 'name_error', :required => true %>
+<%= simple_form_for @blog, url: submit_url,
+    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+
+  <%= f.error_notification message: "Please review the problems below<ul><li>one</li></ul>" %>
+  <%= panel header: false do %>
+    <%= locale_tabs do |locale| %>
+      <%= f.input "title_#{locale}", label: 'Blog Title', id: 'name_error', required: true %>
     <% end %>
     <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
-    <%= f.input :published, :as => :toggle, :label => 'Publish It?' %>
-    <%= f.input :is_public, :as => :toggle, :label => 'Make Blog Public?', :hint => 'This will allow anyone to see the blog.  Use option below to restrict to registered users' %>
-    <%= f.input :requires_login, :as => :toggle, :label => 'Public Requires Login?', :hint => 'If this is a public blog, user must be logged in to see it.  (All private blogs automatically require login)' %>
+    <%= f.input :published, as: :toggle, label: 'Publish It?' %>
+    <%= f.input :is_public, as: :toggle, label: 'Make Blog Public?', hint: 'This will allow anyone to see the blog.  Use option below to restrict to registered users' %>
+    <%= f.input :requires_login, as: :toggle, label: 'Public Requires Login?', hint: 'If this is a public blog, user must be logged in to see it.  (All private blogs automatically require login)' %>
     <% if defined? DmSubscriptions %>
-      <%= f.input :requires_subscription, :as => :toggle, :label => 'Subscription Required?', :hint => 'User must have a paid subscription to access' %>
+      <%= f.input :requires_subscription, as: :toggle, label: 'Subscription Required?', hint: 'User must have a paid subscription to access' %>
     <% end %>
-    <%= f.input :comments_allowed, :as => :toggle, :label => 'Allow Comments', :hint => 'Controls whether commenting is allowed for this blog.  If on, then each post can decided whether to allow comments' %>
-    <%= f.input :preferred_show_social_buttons, :as => :toggle, label: 'Show social buttons', hint: 'This setting will be ignored for private blogs' %>
-    <%= f.input :image, :label => 'Header Image', hint: 'An image for the entire blog' %>
-    <%= f.input :preferred_header_accent_color, :label => 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
+    <%= f.input :comments_allowed, as: :toggle, label: 'Allow Comments', hint: 'Controls whether commenting is allowed for this blog.  If on, then each post can decided whether to allow comments' %>
+    <%= f.input :preferred_show_social_buttons, as: :toggle, label: 'Show social buttons', hint: 'This setting will be ignored for private blogs' %>
+    <%= f.input :image, label: 'Header Image', hint: 'An image for the entire blog' %>
+    <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
 
-    <%= submit_or_cancel :cancel_url => admin_cms_blogs_path %>
+    <%= submit_or_cancel cancel_url: admin_cms_blogs_path %>
 
   <% end %>
 <% end %>

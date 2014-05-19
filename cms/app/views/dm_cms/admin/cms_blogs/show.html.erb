@@ -1,14 +1,14 @@
-<% content_for :content_title, icon_label('font-bullhorn', @blog.title) %>
+<% content_for :content_title, @blog.title %>
 <% content_for :content_title_extra do %>
-  <div class='navbar'><ul class='nav pull-right'>
-    <li><%= present(@blog).label_published %></li>
-    <li><%= link_to(icon_label('icon-search', 'View'), blog_show_url(@blog), :class => "nav-btn-primary", title: 'View', :target => '_blank') %></li>
-    <li><%= link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, @blog], :class => "nav-btn-primary", title: 'Edit') %></li>
-    <li><%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @blog], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!'}) %></li>
-  </ul></div>
+  <%= page_header_buttons do %>
+    <%= present(@blog).label_published %>
+    <%= link_to icon_label('icon-search', 'View'),  blog_show_url(@blog),   class: "btn btn-xs btn-default", title: 'View', target: '_blank' %>
+    <%= link_to(icon_label('icon-edit', 'Edit'),    [:edit, :admin, @blog], class: "btn btn-xs btn-default", title: 'Edit') %>
+    <%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @blog],        class: "btn btn-xs btn-default", method: :delete, data: {confirm: 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!'}) %>
+  <% end %>
 <% end %>
 
-<div class="block well body">
+<div class="block well">
   <dl class="dl-horizontal">
     <dt>Slug</dt>
     <dd><%= @blog.slug %></dd>
@@ -22,59 +22,58 @@
 
 </div>
 
-<% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), new_admin_cms_blog_cms_post_path(@blog), :title => 'New Post', :class => "nav-btn-primary") ]) %>
-<%= content_frame :title => 'Posts', :toolbar => toolbar do %>
-  <div class="table-overflow">
-    <table class="table table-striped table-bordered table-block">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th width="18"><span class='hovertip' title='Notification Email Sent'><%= icons('font-envelope') %></span></th>
-          <th width="50">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @blog.posts.each do |post| %>
-          <% present post do |post_presenter| %>
-            <tr class="item" data-item_id="<%= post.id %>">
-              <td>
-                <%= link_to(post.title, edit_admin_cms_post_path(post)) %>
-              </td>
-              <th>
-                <% if post.notification_sent_on %>
-                  <span class='hovertip' title='<%= format_date(post.notification_sent_on) %>'><%= icons('font-envelope') %></span>
-                <% end %>
-              </th>
-              <td><%= post_presenter.label_published %></td>
-            </tr>
-          <% end %>
+<% toolbar = toolbar_btn(icons('icon-plus'), new_admin_cms_blog_cms_post_path(@blog), title: 'New Post', class: "btn btn-link btn-icon") %>
+<%= panel title: 'Posts', toolbar: toolbar, body: false do %>
+  <table class="table table-striped table-bordered table-block">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th width="18"><span class='hovertip' title='Notification Email Sent'><%= icons('icon-envelop') %></span></th>
+        <th width="50">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @blog.posts.each do |post| %>
+        <% present post do |post_presenter| %>
+          <tr class="item" data-item_id="<%= post.id %>">
+            <td>
+              <%= link_to(post.title, edit_admin_cms_post_path(post)) %>
+            </td>
+            <th>
+              <% if post.notification_sent_on %>
+                <span class='hovertip' title='<%= format_date(post.notification_sent_on) %>'><%= icons('icon-envelop') %></span>
+              <% end %>
+            </th>
+            <td><%= post_presenter.label_published %></td>
+          </tr>
         <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
 
 <% if @blog.owner %>
-  <div class="row-fluid">
-    <% toolbar = toolbar_button(@blog.member_count(:automatic), '#', :title => 'Number of users with automatic blog access', :class => 'label label-success pull-right') %>
-    <%= content_frame :title => 'Users with Automatic Access', :toolbar => toolbar, :class => 'span12' do %>
-      <div class="body">
-        <h5>Automatic Access Granted for Event</h5>
-        <p><%= @blog.owner.title %></p>
-      </div>
-    <% end %>
+  <div class="row">
+    <div class="col-md-12">
+      <% toolbar = toolbar_btn(@blog.member_count(:automatic), '#', title: 'Number of users with automatic blog access', class: 'label label-success pull-right') %>
+      <%= panel title: 'Users with Automatic Access', toolbar: toolbar do %>
+        <div class="body">
+          <h5>Automatic Access Granted for Event</h5>
+          <p><%= @blog.owner.title %></p>
+        </div>
+      <% end %>
+    </div>
   </div>
 <% end %>
 
-<div class="row-fluid">
-
-  <% toolbar = toolbar_button(@blog.member_count(:manual), '#', :title => 'Number of users with blog access', :class => 'label label-success pull-right') %>
-  <%= content_box :title => 'Users with Manual Access', :toolbar => toolbar, :class => 'span12' do %>
-    <% if !@blog.is_private? %>
-      <p>Only <em>private</em> blogs allow for user access to be managed</p>
-    <% else %>
-      <div class="span6">
-        <div class="table-overflow">
+<div class="row">
+  <div class="col-md-12">
+    <% toolbar = toolbar_btn(@blog.member_count(:manual), '#', title: 'Number of users with blog access', class: 'label label-success pull-right') %>
+    <%= panel title: 'Users with Manual Access', toolbar: toolbar do %>
+      <% if !@blog.is_private? %>
+        <p>Only <em>private</em> blogs allow for user access to be managed</p>
+      <% else %>
+        <div class="col-md-6">
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
@@ -85,31 +84,29 @@
             <tbody>
               <% @blog.member_list(:manual).each do |user| %>
                 <tr>
-                  <td><%= link_to(icons("icon-minus"), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, :user_id => user.id), :method => :delete, :title => 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+                  <td><%= link_to(icons("icon-minus"), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, user_id: user.id), method: :delete, title: 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
                   <td><%= user.country.english_name %></td>
                 </tr>
               <% end %>
             </tbody>
           </table>
         </div>
-      </div>
 
-      <div class="span6">
-        <h5>Add Individual Users</h5>
-        <div class="table-overflow">
-          <table id="blog_user_table" class="table table-striped table-bordered" data-source="<%= dm_cms.blog_users_admin_cms_blog_url %>">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Country</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-      </div>
+        <div class="col-md-6">
+          <%= subsection title: 'Add Individual Users' do %>
+            <table id="blog_user_table" class="table table-striped table-bordered" data-source="<%= dm_cms.blog_users_admin_cms_blog_url %>">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Country</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
-
+  </div>
 </div>
