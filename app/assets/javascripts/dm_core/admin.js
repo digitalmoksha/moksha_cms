@@ -118,8 +118,14 @@ $(document).ready(function() {
   
   $('.tree_expand').on('click', function() {
     $(this).parent().parent().parent().toggleClass('tree_open').toggleClass('tree_closed');
-    li = $(this).parent().parent().parent()
+    li = $(this).parent().parent().parent();
     toggle_reveal(li.children('ul'));
+    cookie_name = 'page_tree_' + li.data('item_id');
+    if ($.cookie(cookie_name) == '1') {
+      $.removeCookie(cookie_name);
+    } else {
+      $.cookie(cookie_name, '1', { expires: 365 });
+    }
     return false;
   });
 
