@@ -1,6 +1,6 @@
 /* @override 
-	http://dev.telugubasha.net:3000/assets/dm_core/admin.css?body=1
-	http://dev.srikaleshwarancientknowledgeschool.com:3000/assets/dm_core/admin.css?body=1 */
+	http://dev.telugubasha.net:3500/assets/dm_core/admin.css?body=1 */
+
 
 .tree_open > dl dt a.tree_expand, .tree_closed > dl dt a.tree_expand {
   text-indent: -6000px;
@@ -12,6 +12,10 @@
   background-repeat: no-repeat;
   position: absolute;
   left: -8px;
+-webkit-transition: none;
+   -moz-transition: none;
+     -o-transition: none;
+        transition: none;
 }
 
 .tree_closed > dl dt a.tree_expand {
@@ -51,6 +55,7 @@
 }
 #tree_sort ul {
   list-style: none;
+  padding-left: 0;
 }
 #tree_sort li {
   display: block;
@@ -62,7 +67,7 @@
   position: relative;
   display: block;
   border-left: 1px solid #ddd;
-  height: 23px;
+  height: 26px;
 }
 #tree_sort li.root > dl, #tree_sort li.root > .dropzone {
   border-left: 1px solid transparent;
@@ -76,6 +81,7 @@
 }
 #tree_sort dd {
   float: right;
+  margin-left: 10px;
 }
 
 #tree_sort dl:hover dd, #tree_sort dd:hover {

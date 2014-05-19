@@ -11,4 +11,13 @@ module Admin::ApplicationHelper
     controller.controller_name == controller_name
   end
 
+  # http://stackoverflow.com/questions/8552763/best-way-to-highlight-current-page-in-rails-3-apply-a-css-class-to-links-con
+  #------------------------------------------------------------------------------
+  def admin_path_active_class?(*paths)
+    active = false
+    # paths.each { |path| active ||= current_page?(path) }
+    paths.each { |path| active ||= request.url.include?(path) }
+    active ? 'active' : nil
+  end
+  
 end
