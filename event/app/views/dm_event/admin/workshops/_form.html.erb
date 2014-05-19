@@ -1,87 +1,81 @@
-<% content_for :sidebar do %>
-  <%= render :partial => 'configuration_sidebar' %>
-<% end %>
-<%= render :partial => 'dm_cms/admin/shared/liquid_tags_ref' %>
+<%= render partial: 'header_menu' %>
+<%= render partial: 'dm_cms/admin/shared/liquid_tags_ref' %>
 
 <% submit_url = (@workshop.new_record? ? admin_workshops_path : admin_workshop_path) %>
-<%= simple_form_for(@workshop, :url => submit_url) do |f| %>
-  <%= f.error_notification :message => "Please review the problems below"%>
-  <%= locale_frame :title => 'Translations' do |locale| %>
-    <%= f.input "title_#{locale}", :label => 'Title', :id => 'title_error', :required => true %>
-    <%= f.input "description_#{locale}", :label => 'Description', :hint => 'Markdown format', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 500px;"} %>
-    <%= f.input "sidebar_#{locale}", :label => 'Sidebar', :hint => 'Markdown format', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 200px;"} %>
-  <% end %>
+<%= simple_form_for @workshop, url: submit_url,
+      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
-  <%= well_frame do %>
-    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
-    <%= f.input :event_style, label: 'Event Style', required: true, collection: Workshop::EVENT_STYLES,
-                hint: 'Is this a workshop or a crowdfunding/donation type of event' %>
-  <% end %>
-  <%= well_frame do %>
-    <%= f.input :published, :as => :toggle_checked, label: 'Publish', hint: 'Make available for registrations' %>
-    <%= f.input :country_id, required: true, wrapper_html: { :class => 'searchDrop' }, input_html: { :class => 'chosen_select' }, 
-                collection: ut_country_select_collection, label_method: lambda {|t| t[0]}, value_method: lambda {|t| t[1]},
-                label: 'Country' %>
-    <%= f.input :base_currency, label: 'Currency', required: true, collection: Account::CURRENCY_TYPES,
-                hint: 'Currency used for this workshop',
-                disabled: !(@workshop.workshop_prices.empty?) %>
-    <div class="form-horizontal control-group string required workshop_starting_on">
-      <label class="string required control-label" for="workshop_starting_on">
-        <abbr title="required">*</abbr> Starting on
-      </label>
-      <div class="controls">
-        <ul class="dates-range no-append">
-            <li><input name="workshop[starting_on_date]" type="text" value="<%= @workshop.starting_on.to_date unless @workshop.starting_on.nil? %>" placeholder="Select date..." id="date1" class="datepicker time" ></li>
-            <li class="sep">-</li>
-            <li><input name="workshop[starting_on_time]" id="starting_time" type="text" class="time" value="<%= @workshop.starting_on.strftime("%I:%M%p") unless @workshop.starting_on.nil? %>" placeholder="Select time..." /></li>
-        </ul>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-    <div class="form-horizontal control-group string required workshop_ending_on">
-      <label class="string required control-label" for="workshop_ending_on">
-        <abbr title="required">*</abbr> Ending on
-      </label>
-      <div class="controls">
-        <ul class="dates-range no-append">
-            <li><input name="workshop[ending_on_date]" type="text" value="<%= @workshop.ending_on.to_date unless @workshop.ending_on.nil? %>" placeholder="Select date..." id="date2" class="datepicker time" ></li>
-            <li class="sep">-</li>
-            <li><input name="workshop[ending_on_time]" id="ending_time" type="text" class="time" value="<%= @workshop.ending_on.strftime("%I:%M%p") unless @workshop.ending_on.nil? %>" placeholder="Select time..." /></li>
-        </ul>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-    <div class="form-horizontal control-group string required workshop_ending_on">
-      <label class="string control-label" for="workshop_ending_on">
-        Deadline
-      </label>
-      <div class="controls">
-        <ul class="dates-range no-append">
-            <li><input name="workshop[deadline_on]" type="text" value="<%= @workshop.deadline_on.to_date unless @workshop.deadline_on.nil? %>" placeholder="Select date..." class="datepicker" ></li>
-        </ul>
-        <div class="clearfix"></div>
-        <p class="help-block">Specify last day to allow registrations.  Leave blank for no deadline.</p>
-      </div>
-      <div class="clearfix"></div>
-    </div>
+  <%= f.error_notification message: "Please review the problems below" %>
+  <%= panel title: 'Main Settings for Workshop' do %>
+    <%= locale_tabs do |locale| %>
+      <%= f.input "title_#{locale}", label: 'Title', id: 'title_error', required: true %>
+      <%= f.input "description_#{locale}", label: 'Description', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
+      <%= f.input "sidebar_#{locale}", label: 'Sidebar', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 200px;"} %>
+    <% end %>
 
-    <%= f.input :contact_email, :label => 'Contact Email' %>
-    <%= f.input :contact_phone, :label => 'Contact Phone' %>
-    <%= f.input :require_account, :as => :toggle_checked, :label => 'Require Account', :hint => 'Must have a user account to register - necessary for forum/blog access' %>
-    <%= f.input :show_address, :as => :toggle_checked, :label => 'Show Address', :hint => 'Show address fields (only if user is not logged in)' %>
-    <%= f.input :require_address, :as => :toggle_checked, :label => 'Require Address', :hint => 'Address in profile must be filled out (only if Show Address is checked)' %>
-    <%#= f.input :require_photo, :as => :toggle_checked, :label => 'Require Photo', :hint => 'A photo must be uploaded into profile' %>
-    <%= f.input :require_review, :as => :toggle_checked, :label => 'Review Registrations', :hint => 'All new registrations become "Pending", waiting for approval' %>
-    <%= f.input :payments_enabled, :as => :toggle_checked, label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>
-    <%= f.input :preferred_show_social_buttons, :as => :toggle, label: 'Show social buttons' %>
-    <%= f.input :image, :label => 'Workshop Image' %>
-    <%= f.input :preferred_header_accent_color, :label => 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
-  <% end %>
+    <%= subsection do %>
+      <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
+      <%= f.input :event_style, label: 'Event Style', required: true, collection: Workshop::EVENT_STYLES,
+                  hint: 'Is this a workshop or a crowdfunding/donation type of event' %>
+    <% end %>
+
+    <%= subsection do %>
+      <%= f.input :published, as: :toggle_checked, label: 'Publish', hint: 'Make available for registrations' %>
+      <%= f.input :country_id, required: true, wrapper_html: { class: 'searchDrop' }, input_html: { class: 'chosen_select' }, 
+                  collection: ut_country_select_collection, label_method: lambda {|t| t[0]}, value_method: lambda {|t| t[1]},
+                  label: 'Country' %>
+      <%= f.input :base_currency, label: 'Currency', required: true, collection: Account::CURRENCY_TYPES,
+                  hint: 'Currency used for this workshop',
+                  disabled: !(@workshop.workshop_prices.empty?) %>
+      <div class="form-group string required workshop_starting_on">
+        <label class="string required col-sm-2 control-label" for="workshop_starting_on">
+          <abbr title="required">*</abbr> Starting on
+        </label>
+        <div class="col-sm-10">
+          <div class="row">
+            <div class="col-md-6">
+              <input name="workshop[starting_on_date]" type="text" value="<%= @workshop.starting_on.to_date unless @workshop.starting_on.nil? %>" placeholder="Select date..." id="date1" class="datepicker time" >
+            </div>
+            <div class="col-md-6">
+              <input name="workshop[starting_on_time]" id="starting_time" type="text" class="time" value="<%= @workshop.starting_on.strftime("%I:%M%p") unless @workshop.starting_on.nil? %>" placeholder="Select time..." />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group string required workshop_ending_on">
+        <label class="string required col-sm-2 control-label" for="workshop_ending_on">
+          <abbr title="required">*</abbr> Ending on
+        </label>
+        <div class="col-sm-10">
+          <div class="row">
+            <div class="col-sm-6">
+              <input name="workshop[ending_on_date]" type="text" value="<%= @workshop.ending_on.to_date unless @workshop.ending_on.nil? %>" placeholder="Select date..." id="date2" class="datepicker time" >
+            </div>
+            <div class="col-sm-6">
+              <input name="workshop[ending_on_time]" id="ending_time" type="text" class="time" value="<%= @workshop.ending_on.strftime("%I:%M%p") unless @workshop.ending_on.nil? %>" placeholder="Select time..." />
+            </div>
+          </div>
+        </div>
+      </div>
+      <%= f.input :deadline_on, label: 'Deadline', as: :string, input_html: {class: 'datepicker', style: 'width: 150px'} %>
+
+      <%= f.input :contact_email, label: 'Contact Email' %>
+      <%= f.input :contact_phone, label: 'Contact Phone' %>
+      <%= f.input :require_account, as: :toggle_checked, label: 'Require Account', hint: 'Must have a user account to register - necessary for forum/blog access' %>
+      <%= f.input :show_address, as: :toggle_checked, label: 'Show Address', hint: 'Show address fields (only if user is not logged in)' %>
+      <%= f.input :require_address, as: :toggle_checked, label: 'Require Address', hint: 'Address in profile must be filled out (only if Show Address is checked)' %>
+      <%#= f.input :require_photo, as: :toggle_checked, label: 'Require Photo', hint: 'A photo must be uploaded into profile' %>
+      <%= f.input :require_review, as: :toggle_checked, label: 'Review Registrations', hint: 'All new registrations become "Pending", waiting for approval' %>
+      <%= f.input :payments_enabled, as: :toggle_checked, label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>
+      <%= f.input :preferred_show_social_buttons, as: :toggle, label: 'Show social buttons' %>
+      <%= f.input :image, label: 'Workshop Image' %>
+      <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
+    <% end %>
   
-  <%= well_frame do %>
-    <%= f.input :funding_goal, :label => 'Funding Goal', hint: 'Goal (in the currency above) of this funding project' %>
-  <% end %>
+    <%= subsection do %>
+      <%= f.input :funding_goal, label: 'Funding Goal', hint: 'Goal (in the currency above) of this funding project' %>
+    <% end %>
   
-  <%= submit_or_cancel :cancel_url => (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
-
+    <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
+  <% end %>
 <% end %>

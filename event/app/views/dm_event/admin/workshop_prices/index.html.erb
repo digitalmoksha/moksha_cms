@@ -4,29 +4,28 @@
     <li><%= link_to 'Back to Workshop', edit_admin_workshop_url(@workshop) %></li>
   </ul>
 <% end %>
+<%= render partial: 'dm_event/admin/workshops/header_menu' %>
 
-<% toolbar = nav_bar_items([ link_to(icon_label('icon-plus', 'New'), new_admin_workshop_workshop_price_path(@workshop), :title => 'New Forum', :class => "nav-btn-primary") ]) %>
-<%= content_frame :title => 'Workshop Prices', :toolbar => toolbar do %>
-  <div class="table-overflow">
-    <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%= dm_event.admin_workshop_price_sort_path %>">
-      <thead>
-        <tr>
-          <th class="sort_handle"></th>
-          <th>Description</th>
-          <th width="50">Price</th>
+<% toolbar = toolbar_btn(icon_label('icon-plus', 'New'), new_admin_workshop_workshop_price_path(@workshop), title: 'New Forum', class: "btn btn-xs btn-default") %>
+<%= panel title: 'Workshop Prices', toolbar: toolbar do %>
+  <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%= dm_event.admin_workshop_price_sort_path %>">
+    <thead>
+      <tr>
+        <th class="sort_handle"></th>
+        <th>Description</th>
+        <th width="50">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @workshop_prices.each do |workshop_price| %>
+        <tr class="item" data-item_id="<%= workshop_price.id %>">
+          <td class="sort_handle"></td>
+          <td>
+            <%= link_to workshop_price.price_description, [:edit, :admin, workshop_price] %>
+          </td>
+          <td><%= humanized_money_with_symbol workshop_price.price %></td>
         </tr>
-      </thead>
-      <tbody>
-        <% @workshop_prices.each do |workshop_price| %>
-          <tr class="item" data-item_id="<%= workshop_price.id %>">
-            <td class="sort_handle"></td>
-            <td>
-              <%= link_to workshop_price.price_description, [:edit, :admin, workshop_price] %>
-            </td>
-            <td><%= humanized_money_with_symbol workshop_price.price %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

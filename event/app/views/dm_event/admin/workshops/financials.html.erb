@@ -1,82 +1,89 @@
 <% content_for :content_title, "Financial Details <small>#{@workshop.title}</small>".html_safe %>
 
-<% content_for :sidebar do %>
-  <ul class="navigation-light block">
-    <li><%= link_to 'View Registrations', [:admin, @workshop] %></li>
-  </ul>
-  <%= link_to 'Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: "action-button blue", method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"} %>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= link_to 'View Registrations', [:admin, @workshop], class: 'btn btn-xs btn-default' %>
+  <% end %>
 <% end %>
   
-<div class="row-fluid">
-  <%= content_box title: 'Summary', class: 'span12' do %>
-    <div class="chart span6" style="height: 185px;margin-bottom:20px;" id="payment_outstanding_chart" 
-         data-values="<%= [ {label: "Paid: #{@financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true)}", 
-                             data: @financials[:summary][:total_paid].to_f, color: '#4DB24A' },
-                            {label: "Outstanding: #{@financials[:summary][:total_outstanding].format(no_cents_if_whole: true, symbol: true)}",
-                             data: @financials[:summary][:total_outstanding].to_f, color: '#F24E50' }
-                          ].to_json %>">
-    </div>
+<div class="row">
+  <div class="col-md-12">
+    <%= panel title: 'Summary' do %>
+      <div class="row">
+        <div class="chart col-md-6" style="height: 185px;margin-bottom:20px;" id="payment_outstanding_chart" 
+             data-values="<%= [ {label: "Paid: #{@financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true)}", 
+                                 data: @financials[:summary][:total_paid].to_f, color: '#4DB24A' },
+                                {label: "Outstanding: #{@financials[:summary][:total_outstanding].format(no_cents_if_whole: true, symbol: true)}",
+                                 data: @financials[:summary][:total_outstanding].to_f, color: '#F24E50' }
+                              ].to_json %>">
+        </div>
   
-    <div class="span6">
-      <table class="table table-bordered table-condensed" style="margin-top:10px">
-        <thead>
-          <tr>
-            <th class="name"></th>
-            <th class="cost">Best</th>
-            <th class="cost">Worst <small>(80%)</small></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th><strong>Projected Revenue</strong></th>
-            <td class="cost"><%= @financials[:summary][:total_possible].format(no_cents_if_whole: true, symbol: true) %></td>
-            <td class="cost"><%= @financials[:summary][:total_possible_worst].format(no_cents_if_whole: true, symbol: true) %></td>
-          </tr>
-          <tr>
-            <th><strong>Outstanding</strong></th>
-            <td class="cost"><%= @financials[:summary][:total_outstanding].format(no_cents_if_whole: true, symbol: true) %></td>
-            <td class="cost"><%= @financials[:summary][:total_outstanding_worst].format(no_cents_if_whole: true, symbol: true) %></td>
-          </tr>
-          <tr>
-            <th><strong>Paid</strong></th>
-            <td colspan="2" class="cost"><%= @financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true) %></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  <% end %>
+        <div class="col-md-6">
+          <table class="table table-bordered table-condensed" style="margin-top:10px">
+            <thead>
+              <tr>
+                <th class="name"></th>
+                <th class="cost">Best</th>
+                <th class="cost">Worst <small>(80%)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th><strong>Projected Revenue</strong></th>
+                <td class="cost"><%= @financials[:summary][:total_possible].format(no_cents_if_whole: true, symbol: true) %></td>
+                <td class="cost"><%= @financials[:summary][:total_possible_worst].format(no_cents_if_whole: true, symbol: true) %></td>
+              </tr>
+              <tr>
+                <th><strong>Outstanding</strong></th>
+                <td class="cost"><%= @financials[:summary][:total_outstanding].format(no_cents_if_whole: true, symbol: true) %></td>
+                <td class="cost"><%= @financials[:summary][:total_outstanding_worst].format(no_cents_if_whole: true, symbol: true) %></td>
+              </tr>
+              <tr>
+                <th><strong>Paid</strong></th>
+                <td colspan="2" class="cost"><%= @financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true) %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<div class="row-fluid">
-
-  <%= content_box title: 'Collected Payments by Month', class: 'span6' do %>
-    <div class="span7 chart" style="height: 200px" id="collected_monthly_chart" 
-         data-values="<%= financial_collected_monthly_json(@financials[:collected_monthly]) %>"
-         data-currencysymbol="<%= Money.new(0, @workshop.base_currency).symbol %>" >
-    </div>  
-    <div class="span5">
-      <table class="table table-bordered table-condensed" style="margin-top:10px">
-        <tbody>
-          <% @financials[:collected_monthly].sort.each_with_index do |item, index| -%>
-            <tr>
-              <td class="name"><%= item[0].localize("%b %Y") %></td>
-              <td class="cost" style="text-align: right;"><%= @financials[:collected_monthly][item[0]].format(no_cents_if_whole: true, symbol: true) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% end %>
-
-  <%= content_box title: 'Collected Payments by Method', class: 'span6' do %>
-    <div class="chart" style="height: 185px;" id="collected_chart" data-values="<%= financial_collected_json(@financials[:collected]) %>">
-    </div>  
-  <% end %>
-
+<div class="row">
+  <div class="col-md-6">
+    <%= panel title: 'Collected Payments by Month' do %>
+      <div class="row">
+        <div class="col-md-7 chart" style="height: 200px" id="collected_monthly_chart" 
+             data-values="<%= financial_collected_monthly_json(@financials[:collected_monthly]) %>"
+             data-currencysymbol="<%= Money.new(0, @workshop.base_currency).symbol %>" >
+        </div>  
+        <div class="col-md-5">
+          <table class="table table-bordered table-condensed" style="margin-top:10px">
+            <tbody>
+              <% @financials[:collected_monthly].sort.each_with_index do |item, index| -%>
+                <tr>
+                  <td class="name"><%= item[0].localize("%b %Y") %></td>
+                  <td class="cost" style="text-align: right;"><%= @financials[:collected_monthly][item[0]].format(no_cents_if_whole: true, symbol: true) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <%= panel title: 'Collected Payments by Method' do %>
+      <div class="chart" style="width: 100%;height: 185px;" id="collected_chart" data-values="<%= financial_collected_json(@financials[:collected]) %>">
+      </div>  
+    <% end %>
+  </div>
 </div>
 
 <% unpaid = @workshop.registrations.unpaid.order('payment_reminder_sent_on ASC') %>
-<%= content_box title: "#{unpaid.count} Unpaid Participants" do %>
+<% toolbar = toolbar_btn('Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
+<%= panel body: false, title: "#{unpaid.count} Unpaid Participants", toolbar: toolbar do %>
   <table class="table table-bordered table-condensed table-striped">
     <thead>
       <tr>
@@ -99,7 +106,7 @@
             <%= registration.payment_reminder_sent_on.nil? ? 'not yet' : distance_of_time_in_words_to_now(registration.payment_reminder_sent_on) %>
           </td>
           <td>
-            <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-small', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
+            <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-xs btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
           </td>
         </tr>
       <% end %>
@@ -107,7 +114,7 @@
   </table>
 <% end %>
 
-<%= content_box title: 'List of Payments' do %>
+<%= panel body: false, title: 'List of Payments' do %>
   <table class="table table-bordered table-condensed table-striped">
     <thead>
       <tr>

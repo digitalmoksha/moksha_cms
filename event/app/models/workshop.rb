@@ -117,7 +117,8 @@ class Workshop < ActiveRecord::Base
     #--- pick currency of first price
     financials = {:summary => { total_possible: Money.new(0, base_currency),          total_possible_worst: Money.new(0, base_currency),
                                 total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency), 
-                                total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency) },
+                                total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency),
+                                total_paid_percent: 0},
                   collected: {},
                   collected_monthly: {},
                   payment_type: {},
@@ -150,7 +151,7 @@ class Workshop < ActiveRecord::Base
     #--- give a worst case value - reduce by 20%
     financials[:summary][:total_possible_worst]               = financials[:summary][:total_possible] * 0.80
     financials[:summary][:total_outstanding_worst]            = financials[:summary][:total_outstanding] * 0.80
-
+    financials[:summary][:total_paid_percent]                 = (100 * financials[:summary][:total_paid] / financials[:summary][:total_possible]).round if financials[:summary][:total_possible] > 0
     return financials
   end
 

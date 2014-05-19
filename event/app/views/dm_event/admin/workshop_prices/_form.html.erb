@@ -1,29 +1,33 @@
-<p class="explanation">Define a price for the workshop.  When registering, the user will see a list of possible prices. 
-  The payment details field can be formatted using <a href="http://daringfireball.net/projects/markdown/basics">Markdown</a>. You can use the following variables:</p>
-<ul class="explanation">
-  <li><code>{{price}}</code> &rarr; price of the workshop</li>
-  <li><code>{{receipt_code}}</code> &rarr; receipt/ticket number</li>
-  <li><code>{{price_description}}</code> &rarr; title</li>          
-</ul>
-<p class="explanation">In your email receipts, you can use <code>{{payment_details}}</code> to include the details for the particular price that was chosen.</p>
-
 <% submit_url = (@workshop_price.new_record? ? admin_workshop_workshop_prices_path(@workshop) : admin_workshop_workshop_price_path(@workshop, @workshop_price)) %>
-<%= simple_form_for(@workshop_price, :url => submit_url) do |f| %>
-  <%= f.error_notification :message => "Please review the problems below"%>
-  <%= content_box :title => @title do %>
+<%= simple_form_for @workshop_price, url: submit_url,
+    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
-    <%= locale_frame :title => '' do |locale| %>
-      <%= f.input "price_description_#{locale}", :label => 'Title', :required => true %>
-      <%= f.input "sub_description_#{locale}",   :label => 'Sub-title' %>
-      <%= f.input "payment_details_#{locale}",   :label => 'Payment Details', :hint => 'Markdown format', :wrapper => :vertical, :as => :editor, input_html: {style: "height: 200px;"},
-                 :hint => 'Any special details/instructions for this price (Markdown)' %>
+  <%= f.error_notification message: "Please review the problems below" %>
+  <%= panel header: false do %>
+
+    <div class="callout callout-info">
+      <p class="explanation">Define a price for the workshop.  When registering, the user will see a list of possible prices. 
+        The payment details field can be formatted using <a href="http://daringfireball.net/projects/markdown/basics">Markdown</a>. You can use the following variables:</p>
+      <ul class="explanation">
+        <li><code>{{price}}</code> &rarr; price of the workshop</li>
+        <li><code>{{receipt_code}}</code> &rarr; receipt/ticket number</li>
+        <li><code>{{price_description}}</code> &rarr; title</li>          
+      </ul>
+      <p class="explanation">In your email receipts, you can use <code>{{payment_details}}</code> to include the details for the particular price that was chosen.</p>
+    </div>
+
+    <%= locale_tabs do |locale| %>
+      <%= f.input "price_description_#{locale}", label: 'Title', required: true %>
+      <%= f.input "sub_description_#{locale}",   label: 'Sub-title' %>
+      <%= f.input "payment_details_#{locale}",   label: 'Payment Details', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 200px;"},
+                 hint: 'Any special details/instructions for this price (Markdown)' %>
     <% end %>
     
     <%= f.input :price %>
-    <%= f.input :price_currency, :collection => Account::CURRENCY_TYPES, disabled: true, hint: 'This is always the primary currency of the workshop' %>
-    <%= f.input :valid_until, :as => :string, :input_html => {:class => 'datepicker'} %>
+    <%= f.input :price_currency, collection: Account::CURRENCY_TYPES, disabled: true, hint: 'This is always the primary currency of the workshop' %>
+    <%= f.input :valid_until, as: :string, input_html: {class: 'datepicker'} %>
     <%= f.input :total_available %>
-    <%= f.input :disabled, :as => :toggle_checked, :label => 'Disable?' %>
+    <%= f.input :disabled, as: :toggle_checked, label: 'Disable?' %>
 
     <% if false %>
       <div class="semi-block">
@@ -31,26 +35,22 @@
         <p class="explanation">Specify different currencies. Each currency should be unique (don't choose to Euro based countries).  Payments in a different currency will be 
           converted to the base currency.  Note that discounts are applied to the base currency value.</p>
         <div class="well">
-          <%= f.input :alt1_price, :label => 'Price 2' %>
-          <%= f.input :alt1_price_currency, :label => 'Currency 2', :collection => Account::CURRENCY_TYPES %>
-          <%= f.input :alt2_price, :label => 'Price 3' %>
-          <%= f.input :alt2_price_currency, :label => 'Currency 3', :collection => Account::CURRENCY_TYPES %>
+          <%= f.input :alt1_price, label: 'Price 2' %>
+          <%= f.input :alt1_price_currency, label: 'Currency 2', collection: Account::CURRENCY_TYPES %>
+          <%= f.input :alt2_price, label: 'Price 3' %>
+          <%= f.input :alt2_price_currency, label: 'Currency 3', collection: Account::CURRENCY_TYPES %>
         </div>
       </div>
     <% end %>
-    <div class="semi-block">
-      <h6 class="subtitle">Recurring Payments</h6>
-      <p class="explanation">This is for indicating a regularly scheduled payment, such as a monthly payment plan.</p>
-      <div class="well">
-        <%= f.input :recurring_number, :label => 'Number of Periods', :hint => 'Number of Periods (Payments)' %>
-        <%= f.input :recurring_period, :label => 'Number of Days', :hint => 'Number of Days in Period' %>
-      </div>
-    </div>
-    <div class="clearfix"></div>
     
-</div>
+    <%= subsection title: 'Recurring Payments' do %>
+      <p class="explanation">This is for indicating a regularly scheduled payment, such as a monthly payment plan.</p>
+      <%= f.input :recurring_number, label: 'Number of Periods', hint: 'Number of Periods (Payments)' %>
+      <%= f.input :recurring_period, label: 'Number of Days', hint: 'Number of Days in Period' %>
+    <% end %>
 
-    <%= submit_or_cancel :cancel_url => admin_workshop_workshop_prices_path(@workshop) %>
+    <%= submit_or_cancel cancel_url: admin_workshop_workshop_prices_path(@workshop) %>
 
   <% end %>
+
 <% end %>

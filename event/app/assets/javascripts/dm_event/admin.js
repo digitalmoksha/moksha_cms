@@ -68,7 +68,6 @@ $(document).ready(function() {
           show: true,
           barWidth: 0.5,
           align: "center",
-          show: true,
           lineWidth: 0,
           fill: true,
           fillColor: { colors: [ { opacity: 0.8 }, { opacity: 0.3 } ] },
