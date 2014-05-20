@@ -8,12 +8,12 @@
 <% end %>
 
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-9">
     <% @title = "#{@user.display_name} (#{@user.email})" %>
     <%= render 'form' %>
 
     <% if defined?(DmEvent) && current_user.is_sysadmin? %>
-      <%= panel title: "Comments" do %>
+      <%= panel body: false, title: "Comments" do %>
         <table class="table table-bordered table-condensed table-striped">
           <thead>
             <tr>
@@ -36,7 +36,7 @@
     <% end %>
 
     <% if defined?(DmEvent) && current_user.is_sysadmin? %>
-      <%= panel title: "Event Registrations" do %>
+      <%= panel body: false, title: "Event Registrations" do %>
         <table class="table table-bordered table-condensed table-striped">
           <thead>
             <tr>
@@ -58,50 +58,53 @@
 
     <% if defined?(DmSubscriptions) && current_user.is_sysadmin? %>
       <%= panel title: "Subscriptions" do %>
-        <table class="table table-bordered table-condensed table-striped">
-          <thead>
-            <tr>
-              <th class="name">Subscriptions</th>
-              <th class="name">Domain</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% Subscription.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |subscription| -%>
+        <%= subsection title: 'Subscriptions' do %>
+          <table class="table table-bordered table-condensed table-striped">
+            <thead>
               <tr>
-                <td class="name"><%= subscription.subscription_plan.name %></td>
-                <td class="name"><%= subscription.account.domain %></td>
+                <th class="name">Subscriptions</th>
+                <th class="name">Domain</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
-    <br>
-        <table class="table table-bordered table-condensed table-striped">
-          <thead>
-            <tr>
-              <th class="name">Payments</th>
-              <th class="name">Domain</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% SubscriptionPayment.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |payment| -%>
+            </thead>
+            <tbody>
+              <% Subscription.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |subscription| -%>
+                <tr>
+                  <td class="name"><%= subscription.subscription_plan.name %></td>
+                  <td class="name"><%= subscription.account.domain %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+
+        <%= subsection title: 'Payments' do %>
+          <table class="table table-bordered table-condensed table-striped">
+            <thead>
               <tr>
-                <td class="name"><%= format_date(payment.created_at) %></td>
-                <td class="name"><%= payment.amount.format %></td>
+                <th class="name">Payments</th>
+                <th class="name">Domain</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% SubscriptionPayment.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |payment| -%>
+                <tr>
+                  <td class="name"><%= format_date(payment.created_at) %></td>
+                  <td class="name"><%= payment.amount.format %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
       <% end %>
     <% end %>
   </div>
-  <div class="col-md-2">
-    <div class='block'>
-      <% if @user.confirmation_token %>
-        <%= link_to "Confirm This User", dm_core.confirm_admin_user_path(@user.id), :class => "btn btn-block btn-success" %>
-      <% else %>
-        <%= link_to "Become This User", dm_core.masquerade_admin_user_path(@user.id), :class => "btn btn-block btn-info" %>
-      <% end %>
-      <%= link_to("Delete This User", dm_core.admin_user_path(@user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => "btn btn-block btn-danger") if is_sysadmin? %>
-    </div>
+  <div class="col-md-3">
+    <% if @user.confirmation_token %>
+      <%= link_to "Confirm This User", dm_core.confirm_admin_user_path(@user.id), :class => "btn btn-block btn-success" %>
+    <% else %>
+      <%= link_to "Become This User", dm_core.masquerade_admin_user_path(@user.id), :class => "btn btn-block btn-info" %>
+    <% end %>
+    <%= link_to("Delete This User", dm_core.admin_user_path(@user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => "btn btn-block btn-danger") if is_sysadmin? %>
+
   </div>
 </div>
