@@ -129,6 +129,26 @@ $(document).ready(function() {
     return false;
   });
 
+  // https://github.com/jhfrench/bootstrap-tree
+	//------------------------------------------------------------------------------
+	$('.tree > ul').attr('role', 'tree').find('ul').attr('role', 'group');
+	$('.tree').find('li:has(ul)').addClass('parent_li').attr('role', 'treeitem').find(' > span').attr('title', 'Collapse this branch').on('click', function (e) {
+        // var children    = $(this).parent('li.parent_li').find(' > ul > li');
+        var children    = $(this).parent('li.parent_li').find(' > ul');
+        var cookie_name = $(this).parent('li.parent_li').data('save_id');
+        if (children.is(':visible')) {
+      		children.hide('fast');
+      		$(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-circle').removeClass('icon-minus-circle');
+          $.removeCookie(cookie_name, { path: '/' });
+        }
+        else {
+      		children.show('fast');
+      		$(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-circle').removeClass('icon-plus-circle');
+          $.cookie(cookie_name, '1', { expires: 365, path: '/' });
+        }
+        e.stopPropagation();
+    });
+
   //----------------------------------------------------------------
   $(".notice, .alert").click(function() {
     $(this).fadeTo(200, 0.00, function(){ //fade

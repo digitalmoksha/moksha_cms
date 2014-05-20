@@ -97,3 +97,100 @@
 div.ace_editor {
   border: 1px solid #ddd;
 }
+
+
+/*----- Simple Tree ------*/
+
+.tree {
+  margin-bottom:10px;
+  /*max-height:300px;*/
+  min-height:20px;
+  overflow-y:auto;
+  /*overflow: scroll;*/
+}
+.tree ul {
+  padding: 0 0 0 20px;
+  margin: 0;
+}
+.tree > ul { padding: 0; }
+
+.tree li {
+  list-style-type:none;
+  margin:0;
+  padding: 0px;
+  position:relative;
+  line-height: 22px;
+}
+
+.tree a {
+  display:inline;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  width:90%;
+  color: #333;
+  font-size: 13px;
+}
+
+.tree li span {
+  display:inline-block;
+  padding:1px 1px;
+  text-decoration:none;
+  -webkit-transition:color .2s ease .1s, background-color .2s ease .1s, border-color .3s ease .2s;
+  -moz-transition:color .2s ease .1s, background-color .2s ease .1s, border-color .3s ease .2s;
+  -o-transition:color .2s ease .1s, background-color .2s ease .1s, border-color .3s ease .2s;
+  transition:color .2s ease .1s, background-color .2s ease .1s, border-color .3s ease .2s;
+  width: 25px;
+}
+.tree li span i {
+  font-size: 14px;
+  display: inline-block;
+  margin-top: -6px;
+  color:#666;
+}
+.tree li.parent_li > span i {
+  color: #4c83cb;
+}
+
+.tree li.parent_li > span { cursor:pointer }
+.tree li.parent_li > span:hover {
+  color:#999;
+}
+
+/*.tree li.parent_li>span:hover + ul li span {
+  background:#fddfb3;
+  border:1px solid #faa937;
+  color:#000
+}*/
+.tree li:last-child::before { height:30px }
+.tree>ul>li::before, .tree>ul>li::after { border:0 }
+
+/*.tree li::before, .tree li::after {
+  content:'';
+  /*left: -6px;*!/
+  position:absolute;
+  right:auto
+}
+.tree li::before {
+  border-left:1px solid #ccc;
+  bottom: 50px;
+  height:100%;
+  top:0;
+  width:1px;
+  -webkit-transition:"border-color 0.1s ease 0.1s";
+  -moz-transition:"border-color 0.1s ease 0.1s";
+  -o-transition:"border-color 0.1s ease 0.1s";
+  transition:"border-color 0.1s ease 0.1s";
+  left: -13px;
+}
+.tree li::after {
+  border-top:1px solid #ccc;
+  height:20px;
+  top: 14px;
+  width: 14px;
+  left: -13px;
+  -webkit-transition:"border-color 0.1s ease 0.1s";
+  -moz-transition:"border-color 0.1s ease 0.1s";
+  -o-transition:"border-color 0.1s ease 0.1s";
+  transition:"border-color 0.1s ease 0.1s";
+  z-index: -1;
+}*/
