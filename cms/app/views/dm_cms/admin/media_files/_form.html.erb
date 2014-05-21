@@ -80,7 +80,7 @@
         <% end %>
         <%= f.input_field :folder, size: 12, value: (f.object.folder || Time.now.year), id: 'folder_field', class: 'form-control', style: 'width: 30%' %>
     <% end %>
-    <%= f.input :media, style: 'margin-left: 10px;', multiple: true, name: 'media_list[]' %>
+    <%= f.input :media, input_html: {style: 'margin-left: 10px;', multiple: true, name: 'media_list[]'} %>
 
   <% else %>
     <%= f.input :media, input_html: {preview_version: :thumb} %>
