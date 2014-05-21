@@ -1,4 +1,4 @@
-<div class="modal fade" id="<%= options[:id] %>" tabindex="-1" role="dialog">
+<%= content_tag :div, id: options[:id], class: "modal fade #{options[:class]}", style: options[:style], tabindex: '-1', role: 'dialog' do %>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -10,13 +10,13 @@
       </div>
       <div class="modal-footer">
         <% if options[:delete_url] %>
-          <%= link_to "Delete", options[:delete_url], method: :delete, data: { confirm: options[:delete_msg] }, title: 'Delete', class: "btn btn-danger", style: 'float:left' %>
+          <%= link_to "Delete", options[:delete_url], method: :delete, data: { confirm: options[:delete_msg] }, title: 'Delete', class: "btn btn-danger pull-left" %>
         <% end %>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <% if options[:include_save] %>
           <button type="submit" class="btn btn-primary">Save</button>
         <% end %>
       </div>
     </div>
   </div>
-</div>
+<% end %>
