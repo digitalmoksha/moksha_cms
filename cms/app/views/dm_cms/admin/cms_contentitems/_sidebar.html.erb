@@ -1,9 +1,0 @@
-<% content_for :sidebar do %>
-  <ul class="navigation-light block">
-    <li><%= link_to 'Show Page Details', admin_cms_page_path(@current_page) %></li>
-    <% @current_page.cms_contentitems.each do |item| %>
-      <li><%= link_to item.container.capitalize, edit_admin_cms_contentitem_path(item) %></li>
-    <% end %>
-  </ul>
-  <div class="block"><%= link_to 'View Page', showpage_url(@current_page.slug), :title => 'View Page', :class => "action-button blue", :target => '_blank' %></div>
-<% end %>

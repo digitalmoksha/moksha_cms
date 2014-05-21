@@ -7,7 +7,11 @@
 
   <%= f.error_notification message: "Please review the problems below" %>
   <%= f.hidden_field :original_updated_on %>
-  <%= panel title: title do %>
+  <% toolbar = capture do %>
+    <%= link_to icons(:help), '#', class: 'btn btn-link btn-icon', data: { toggle: 'modal', target: '#tag_reference' } %>
+    <%= link_to icons(:cancel), admin_cms_page_url(@current_page), class: 'btn btn-link btn-icon' %>
+  <% end %>
+  <%= panel title: title, toolbar: toolbar do %>
     <%= locale_tabs  do |locale| %>
       <%= f.input "content_#{locale}", label: 'Content', wrapper: :bs3_vertical_form, as: :code_editor, mode: @cms_contentitem.itemtype, input_html: {style: "height: 400px;"} %>
     <% end %>
@@ -27,6 +31,5 @@
   <% end %>
 <% end %>
 
-<%= render partial: 'sidebar' %>
 <%= render partial: 'dm_cms/admin/shared/liquid_tags_ref' %>
 

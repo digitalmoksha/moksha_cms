@@ -12,7 +12,7 @@ module Liquid
     def self.details
       { name: self.tag_name,
         summary: 'Contact form tag',
-        category: '',
+        category: 'form',
         description: <<-END_OF_DESCRIPTION
 Includes a system standard contact form.
 

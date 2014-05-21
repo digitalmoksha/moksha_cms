@@ -20,7 +20,7 @@ module Liquid
     def self.details
       { name: self.tag_name,
         summary: 'Display a snippet',
-        category: '',
+        category: 'structure',
         description: <<-END_OF_DESCRIPTION
 Output the content of a snippet specified by the slug
 

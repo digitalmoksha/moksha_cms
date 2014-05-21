@@ -30,7 +30,7 @@ module Liquid
     def self.details
       { name: self.tag_name,
         summary: 'Displays an image',
-        category: 'image',
+        category: 'media',
         description: <<-END_OF_DESCRIPTION
 Displays an image. Will pull image (with optional version) from the site's media directory unless a full path is given.
 Any normal HTML img attributes can be passed, such `alt`, `title`, `width`, etc
