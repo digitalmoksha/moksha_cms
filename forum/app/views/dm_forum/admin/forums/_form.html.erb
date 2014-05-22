@@ -3,7 +3,10 @@
       html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
   <%= f.error_notification message: "Please review the problems below" %>
-  <%= panel title: @title do %>
+  <% toolbar = capture do %>
+    <%= link_to icons(:cancel), (@forum.new_record? ? admin_forum_category_path(@forum.forum_category) : admin_forum_path(@forum)), class: 'btn btn-link btn-icon' %>
+  <% end %>
+  <%= panel title: @title, toolbar: toolbar do %>
     <%= f.input :name, required: true, autofocus: true %>  
     <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
     <%= f.input :description, as: :text, label: 'Description', input_html: { rows: 4, class: 'input-block-level' } %>
@@ -14,7 +17,8 @@
       <%= f.input :requires_subscription, as: :toggle, label: 'Subscription Required?', hint: 'User must have a paid subscription to access' %>
     <% end %>
 
-    <%= submit_or_cancel cancel_url: @forum.new_record? ? admin_forum_category_path(@forum.forum_category) : admin_forum_path(@forum) %>
+    <%= submit_or_cancel cancel_url: (@forum.new_record? ? admin_forum_category_path(@forum.forum_category) : admin_forum_path(@forum)),
+                         delete_url: ([:admin, @forum] unless @forum.new_record?), delete_confirm: 'Are you sure you wish to delete this forum?  All comments will also be deleted!' %>
 
   <% end %>
 <% end %>

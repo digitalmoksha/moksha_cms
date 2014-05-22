@@ -1,8 +1,7 @@
 <% content_for :content_title, icon_label('font-comment', @forum.name) %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%= link_to(icon_label('icon-pencil3', 'Edit'), [:edit, :admin, @forum], class: "btn btn-xs btn-default", title: 'Edit') %>
-    <%= link_to(icon_label('icon-remove', 'Delete'), [:admin, @forum], method: :delete, class: "btn btn-xs btn-default", data: {confirm: 'Are you sure you wish to delete this forum?  All comments will also be deleted!'}) %>
+    <%= link_to(icon_label(:edit, 'Edit'), [:edit, :admin, @forum], class: "btn btn-xs btn-default", title: 'Edit') %>
   <% end %>
 <% end %>
 
@@ -30,7 +29,7 @@
   <%= panel title: 'Users with Manual Access', toolbar: toolbar do %>
     <div class="row">
     <div class="col-md-6">
-      <div class="table-overflow">
+      <%= subsection title: 'Users with Access' do %>
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
@@ -47,7 +46,7 @@
             <% end %>
           </tbody>
         </table>
-      </div>
+      <% end %>
     </div>
     
     <div class="col-md-6">

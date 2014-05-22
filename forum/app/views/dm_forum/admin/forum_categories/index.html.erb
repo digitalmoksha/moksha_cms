@@ -2,8 +2,8 @@
 
 <%= render partial: 'dm_forum/admin/forum_categories/index_sidebar' %>
 
-<% toolbar = toolbar_btn(icon_label('icon-plus', 'New'), new_admin_forum_category_path, title: 'New Category', class: "btn btn-xs btn-default") %>
-<%= panel toolbar: toolbar do %>
+<% toolbar = toolbar_btn(icons(:new), new_admin_forum_category_path, title: 'New Category', class: "btn btn-link btn-icon") %>
+<%= panel body: false, toolbar: toolbar do %>
   <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%= dm_forum.admin_forum_category_sort_path %>">
     <thead>
       <tr>
