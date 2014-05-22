@@ -2,13 +2,11 @@
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
     <%= present(@registration).admin_status_label %>
-    <%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @registration], method: :delete, class: "btn btn-xs btn-danger", data: {confirm: 'Are you sure you wish to delete this registration?  Any associated payments will also be deleted!'}) %>
+    <%= link_to icon_label(:view, 'Registrations'), [:admin, @workshop], class: 'btn btn-xs btn-default' %>
   <% end %>
 <% end %>
 <% content_for :sidebar do %>
   <ul class="navigation-light block">
-    <li><%= link_to "View Registrations".html_safe, [:admin, @workshop] %></li>
-    <li><%= link_to 'Customer Payment Link', @registration.payment_url, target: '_blank' %></li>
   </ul>
 <% end %>
 
@@ -17,37 +15,36 @@
 <% else %>
   <div class="row">
     <div class="col-md-6">
-      <% toolbar = toolbar_btn(icon_label('icon-plus', 'New'), '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'New Payment', class: "btn btn-xs btn-default") %>
+      <% toolbar = toolbar_btn(icons(:new), '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'New Payment', class: "btn btn-link btn-icon") %>
       <%= panel body: false, title: 'Recorded Payments', toolbar: toolbar do %>
-        <div class="table-overflow">
-          <table class="table table-condensed table-gradient table-hover">
-            <thead>
+        <table class="table table-condensed table-gradient table-hover">
+          <thead>
+            <tr>
+              <th width="75">Date</th>
+              <th>Description</th>
+              <th width="50">Paid</th>
+              <th>Method</th>
+              <th width="18"><%= icons(:edit) %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @registration.payment_histories.order('created_on ASC').each do |payment| %>
               <tr>
-                <th width="75">Date</th>
-                <th>Description</th>
-                <th width="50">Paid</th>
-                <th>Method</th>
-                <th width="18"><%= icon_label('icon-edit', '') %></th>
+                <td><%= format_date(payment.payment_date) %></td>
+                <td><%= payment.item_ref %></td>
+                <td><%= payment.total.format(no_cents_if_whole: true, symbol: true) %></td>
+                <td><%= payment.payment_method %></td>
+                <td>
+                  <% if payment.user_profile #--- only allow editing of manual payments %>
+                    <%= link_to(icons('icon-pencil3'), '#', data: { toggle: "modal", target: "#edit_payment_#{payment.id}"}, title: 'Edit Payment') %>
+                  <% end %>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              <% @registration.payment_histories.order('created_on ASC').each do |payment| %>
-                <tr>
-                  <td><%= format_date(payment.payment_date) %></td>
-                  <td><%= payment.item_ref %></td>
-                  <td><%= payment.total.format(no_cents_if_whole: true, symbol: true) %></td>
-                  <td><%= payment.payment_method %></td>
-                  <td>
-                    <% if payment.user_profile #--- only allow editing of manual payments %>
-                      <%= link_to(icons('icon-pencil3'), '#', data: { toggle: "modal", target: "#edit_payment_#{payment.id}"}, title: 'Edit Payment') %>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+            <% end %>
+          </tbody>
+        </table>
       <% end %>
+      <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
     </div>
 
     <div class="col-md-6">
@@ -74,7 +71,7 @@
         
           <%= f.input :payment_comment, label: 'Comment', as: :text_full_width, rows: 3 %>
       
-          <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop) %>
+          <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop), delete_url: [:admin, @registration], delete_confirm: 'Are you sure you wish to delete this registration?  Any associated payments will also be deleted!' %>
         <% end %>
       <% end %>
     </div>

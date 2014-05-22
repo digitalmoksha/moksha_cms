@@ -2,13 +2,13 @@
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
     <%= present(@workshop).label_published %>
-    <%= link_to(icon_label('icon-edit', 'Edit'), edit_admin_workshop_url(@workshop), title: 'Edit Workshop', class: "btn btn-xs btn-default") %>
+    <%= link_to(icon_label(:edit, 'Edit'), edit_admin_workshop_url(@workshop), title: 'Edit Workshop', class: "btn btn-xs btn-default") %>
   <% end %>
 <% end %>
 
 <div class="row">
   <div class="col-md-9">
-    <% toolbar = toolbar_btn(icon_label('icon-plus', 'New'), register_new_url(@workshop), target: '_blank', title: 'New Registration', class: "btn btn-xs btn-default") %>
+    <% toolbar = toolbar_btn(icons(:new), register_new_url(@workshop), target: '_blank', title: 'New Registration', class: "btn btn-link btn-icon") %>
     <%= panel title: 'Registrations', toolbar: toolbar, body: false do %>
       <table id="registration_table" class="table table-striped table-bordered" data-source="<%= dm_event.admin_workshop_url(@workshop) %>">
         <thead>

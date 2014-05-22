@@ -6,8 +6,8 @@
 <% end %>
 <%= render partial: 'dm_event/admin/workshops/header_menu' %>
 
-<% toolbar = toolbar_btn(icon_label('icon-plus', 'New'), new_admin_workshop_workshop_price_path(@workshop), title: 'New Forum', class: "btn btn-xs btn-default") %>
-<%= panel title: 'Workshop Prices', toolbar: toolbar do %>
+<% toolbar = toolbar_btn(icons(:new), new_admin_workshop_workshop_price_path(@workshop), title: 'New Forum', class: "btn btn-link btn-icon") %>
+<%= panel body: false, title: 'Workshop Prices', toolbar: toolbar do %>
   <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%= dm_event.admin_workshop_price_sort_path %>">
     <thead>
       <tr>

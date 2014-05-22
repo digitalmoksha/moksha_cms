@@ -6,7 +6,11 @@
       html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
   <%= f.error_notification message: "Please review the problems below" %>
-  <%= panel title: 'Main Settings for Workshop' do %>
+  <% toolbar = capture do %>
+    <%= link_to icons(:help), '#', class: 'btn btn-link btn-icon', data: { toggle: 'modal', target: '#tag_reference' } %>
+    <%= link_to icons(:cancel), (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)), class: 'btn btn-link btn-icon' %>
+  <% end %>
+  <%= panel title: 'Main Settings for Workshop', toolbar: toolbar do %>
     <%= locale_tabs do |locale| %>
       <%= f.input "title_#{locale}", label: 'Title', id: 'title_error', required: true %>
       <%= f.input "description_#{locale}", label: 'Description', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
@@ -79,3 +83,5 @@
     <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
   <% end %>
 <% end %>
+
+<%= render partial: 'dm_cms/admin/shared/liquid_tags_ref' %>
