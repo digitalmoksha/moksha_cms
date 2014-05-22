@@ -1,5 +1,5 @@
 <% content_for :content_title, 'Media Library' %>
-<% toolbar = toolbar_btn(icon_label('icon-plus', 'New'), new_admin_media_file_path, title: 'New Upload', class: "btn btn-xs btn-default") %>
+<% toolbar = toolbar_btn(icons(:new), new_admin_media_file_path, title: 'New Upload', class: "btn btn-link btn-icon") %>
 <%= panel title: 'Thumbnails', toolbar: toolbar do %>
   <h6>Filter by tag:</h6>
   <div class="tagsinput block">
@@ -30,8 +30,7 @@
               <% end %>
               <div class="caption">
                 <h6 style="word-wrap: break-word;text-align:center;margin-top:0px;"><%= media_file.media.file.filename %></h6>
-                <p><%= link_to 'Edit', edit_admin_media_file_path(media_file), class: "btn btn-primary" %>
-                   <%= link_to 'Delete', admin_media_file_path(media_file), class: 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure you want to delte this file?'} %>
+                <%= link_to icons(:edit), edit_admin_media_file_path(media_file), class: "btn btn-link btn-icon" %>
               </div>
             </div>
           </div>

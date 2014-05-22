@@ -4,7 +4,10 @@
     html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
   <%= f.error_notification message: "Please review the problems below<ul><li>one</li></ul>" %>
-  <%= panel header: false do %>
+  <% toolbar = capture do %>
+    <%= link_to icons(:cancel), admin_cms_blogs_path, class: 'btn btn-link btn-icon' %>
+  <% end %>
+  <%= panel toolbar: toolbar do %>
     <%= locale_tabs do |locale| %>
       <%= f.input "title_#{locale}", label: 'Blog Title', id: 'name_error', required: true %>
     <% end %>
@@ -20,7 +23,7 @@
     <%= f.input :image, label: 'Header Image', hint: 'An image for the entire blog' %>
     <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
 
-    <%= submit_or_cancel cancel_url: admin_cms_blogs_path %>
+    <%= submit_or_cancel cancel_url: admin_cms_blogs_path, delete_url: ([:admin, @blog] unless @blog.new_record?), delete_confirm: 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!' %>
 
   <% end %>
 <% end %>

@@ -48,6 +48,11 @@ $(document).ready(function() {
      sAjaxSource: $('#blog_user_table').data('source')
   });
   
+  // Set the height of the tag reference modal panes, so they scroll like we want
   //----------------------------------------------------------------------
+  $('#tag_reference').on('show.bs.modal', function () {
+      $('.modal .modal-body .tag_details').css('max-height', $(window).height() * 0.7);
+      $('.modal .modal-body .tag_nav').css('max-height', $(window).height() * 0.7);
+  });
   
 });

@@ -1,10 +1,7 @@
-<% content_for :content_title_extra do %>
-  <%= page_header_buttons do %>
-    <%= link_to(icon_label('icon-plus', 'New'), new_admin_cms_snippet_path, title: 'New Snippet', class: "btn btn-xs btn-default") %>
-  <% end %>
+<% toolbar = capture do %>
+  <%= link_to icons(:new), new_admin_cms_snippet_path, title: 'New Snippet', class: 'btn btn-link btn-icon' %>
 <% end %>
-
-<%= panel title: 'List of Snippets', body: false do %>
+<%= panel title: 'List of Snippets', body: false, toolbar: toolbar do %>
   <table class="table table-striped table-bordered">
     <thead>
       <tr>

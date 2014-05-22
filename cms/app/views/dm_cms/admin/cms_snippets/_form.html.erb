@@ -3,7 +3,11 @@
     html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
   <%= f.error_notification message: "Please review the problems below" %>
-  <%= panel header: false do %>
+  <% toolbar = capture do %>
+    <%= link_to icons(:help), '#', class: 'btn btn-link btn-icon', data: { toggle: 'modal', target: '#tag_reference' } %>
+    <%= link_to icons(:cancel), admin_cms_snippets_path, class: 'btn btn-link btn-icon' %>
+  <% end %>
+  <%= panel toolbar: toolbar do %>
     <%= f.input :slug, label: 'Slug', required: true %>
     <%= f.input :description, label: 'Description' %>
     <%= f.input :published, as: :toggle, label: 'Publish It?' %>
@@ -14,7 +18,7 @@
       <%= f.input "content_#{locale}", label: 'Content',    required: true, wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
     <% end %>
 
-    <%= submit_or_cancel cancel_url: admin_cms_snippets_path %>
+    <%= submit_or_cancel cancel_url: admin_cms_snippets_path, delete_url: ([:admin, @cms_snippet] unless @cms_snippet.new_record?), delete_confirm: 'Are you sure you wish to delete this snippet?' %>
 
   <% end %>
 <% end %>

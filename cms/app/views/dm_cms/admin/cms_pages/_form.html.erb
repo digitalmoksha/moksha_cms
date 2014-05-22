@@ -6,7 +6,10 @@
       html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
   <%= f.error_notification message: "Please review the problems below" %>
-  <%= panel header: false do %>
+  <% toolbar = capture do %>
+    <%= link_to icons(:cancel), {action: :show, id: @current_page}, class: 'btn btn-link btn-icon' %>
+  <% end %>
+  <%= panel title: 'Page Details', toolbar: toolbar do %>
     <%= locale_tabs do |locale| %>
       <%= f.input "title_#{locale}", label: 'Page Title', hint: 'The title of the page, shown in the browser title' %>
       <%= f.input "menutitle_#{locale}", label: 'Menu Title', hint: 'Text shown in a menu (which might be shorter than the full title).  If blank, <br/>page will not show up in any auto-generated menus' %>
@@ -31,7 +34,7 @@
     <%= f.input :requires_login, as: :toggle, label: 'Requires Login', hint: 'Page will require user to be logged in to access' %>
     <%= f.input :preferred_show_social_buttons, as: :toggle, label: 'Show social buttons' %>
 
-    <%= submit_or_cancel cancel_url: {action: :show, id: @current_page} %>
+    <%= submit_or_cancel cancel_url: {action: :show, id: @current_page}, delete: 'Delete Page', delete_url: admin_cms_page_path(@current_page), delete_confirm: 'Are you sure you wish to delete this page?' %>
 
   <% end %>
 

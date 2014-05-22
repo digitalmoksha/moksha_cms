@@ -7,6 +7,5 @@
       <%= link_to icons('icon-arrow-down10'), move_down_admin_cms_contentitem_path(contentitem), title: "Move content down", class: "btn btn-link btn-icon", method: :patch %>
     <% end %>
   <% end %>
-  <%= link_to icons('icon-pencil3'), [:edit, :admin, contentitem], class: "btn btn-link btn-icon" %>
-  <%= link_to icons('icon-remove3'), [:admin, contentitem], method: :delete, class: "btn btn-link btn-icon", data: {confirm: 'Are you sure you wish to delete this item?'} %>
+  <%= link_to icons(:edit), [:edit, :admin, contentitem], class: "btn btn-link btn-icon" %>
 </div>

@@ -20,6 +20,7 @@
       </div>
     </div>
     <div class="col-sm-9 tag_details">
+      <h1 style="border-bottom: 2px solid #ccc;">Tag Reference</h1>
       <% tag_group.each do |category, tag_array| %>
         <h2><%= category %></h2>
         <% tag_array.each do |tag_item| %>
@@ -31,35 +32,4 @@
       <% end %>
     </div>
   </div>
-<% end %>
-
-<script type="text/javascript" charset="utf-8">
-$('#tag_reference').on('show.bs.modal', function () {
-    $('.modal .modal-body .tag_details').css('max-height', $(window).height() * 0.7);
-    $('.modal .modal-body .tag_nav').css('max-height', $(window).height() * 0.7);
-});
-</script>
-
-
-<% if false %>
-  <% content_for :sidebar do %>
-    <div class="tagsinput block">
-      <p>List of available tags<br><small><em>click for details</em></small></p>
-      <% Liquid::Template.tags.sort.each do |tag, tag_class| %>
-        <% if tag_class.respond_to?(:details) && !tag_class.details[:summary].blank? %>
-          <a href="#" title="<%= tag_class.details[:summary] %>" data-toggle="modal" data-target="<%= "#tag_example_#{tag}" %>" ><span class="tag"><%= tag %></span></a>
-        <% end %>
-      <% end %>
-    </div>
-  <% end %>
-
-  <%#--- following should not be in the sidebar, but main content section %>
-  <% Liquid::Template.tags.each do |tag, tag_class| %>
-    <% if tag_class.respond_to?(:details) && !tag_class.details[:description].blank? %>
-      <%= modal_dialog title: tag, id: "tag_example_#{tag}" do %>
-        <%= markdown tag_class.details[:description], safe: false %>
-        <%= "<pre>#{tag_class.details[:example]}</pre>".html_safe if tag_class.details[:example].present? %>
-      <% end %>
-    <% end %>
-  <% end %>
 <% end %>

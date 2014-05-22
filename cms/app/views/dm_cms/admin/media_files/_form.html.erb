@@ -57,8 +57,8 @@
       </div>
     </div>
   <% end %>
-  <% toolbar = toolbar_btn(icon_label('icon-remove', 'Delete'), [:admin, @media_file], method: :delete, class: "btn btn-xs btn-default", data: {confirm: 'Are you sure you wish to delete this file from the Media Library?'}) %>
 <% end %>
+<% toolbar = toolbar_btn(icons(:cancel), {action: :index}, class: "btn btn-link btn-icon") %>
 
 <%= simple_form_for @media_file, url: [:admin, @media_file],
       html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
@@ -97,6 +97,6 @@
     <% end %>
   <% end %>
  
-  <%= submit_or_cancel cancel_url: {action: :index} %>
+  <%= submit_or_cancel cancel_url: {action: :index}, delete_url: ([:admin, @media_file] unless @media_file.new_record?), delete_confirm: 'Are you sure you wish to delete this file from the Media Library?' %>
   <% end %>
 <% end %>

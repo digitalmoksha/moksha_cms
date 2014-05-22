@@ -2,9 +2,8 @@
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
     <%= present(@blog).label_published %>
-    <%= link_to icon_label('icon-search', 'View'),  blog_show_url(@blog),   class: "btn btn-xs btn-default", title: 'View', target: '_blank' %>
-    <%= link_to(icon_label('icon-edit', 'Edit'),    [:edit, :admin, @blog], class: "btn btn-xs btn-default", title: 'Edit') %>
-    <%= link_to(icon_label('icon-trash', 'Delete'), [:admin, @blog],        class: "btn btn-xs btn-default", method: :delete, data: {confirm: 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!'}) %>
+    <%= link_to icon_label(:view, 'View'),  blog_show_url(@blog),   class: "btn btn-xs btn-default", title: 'View', target: '_blank' %>
+    <%= link_to(icon_label(:edit, 'Edit'),    [:edit, :admin, @blog], class: "btn btn-xs btn-default", title: 'Edit') %>
   <% end %>
 <% end %>
 
