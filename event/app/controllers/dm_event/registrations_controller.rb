@@ -3,6 +3,7 @@ ActionView::Base.send(:include, ActiveMerchant::Billing::Integrations::ActionVie
 class DmEvent::RegistrationsController < DmEvent::ApplicationController
   include DmEvent::PermittedParams
   include ActiveMerchant::Billing::Integrations
+  include DmCore::UrlHelper
 
   protect_from_forgery :except => [:paypal_ipn, :sofort_ipn]
 
@@ -25,6 +26,9 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
         @registration.user_profile.address_required = true
       end
       @registration.user_profile.userless_registration = true if current_user.nil? && !@workshop.require_account
+
+      set_meta description: @workshop.summary, "og:description" => @workshop.summary
+      set_meta "og:image" => site_asset_media_url(@workshop.image) if @workshop.image.present?
     else
       render action: :closed
     end

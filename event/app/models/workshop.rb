@@ -19,7 +19,7 @@ class Workshop < ActiveRecord::Base
   has_one                 :forum, :as => :owner
   
   # --- globalize
-  translates              :title, :description, :sidebar, :fallbacks_for_empty_translations => true
+  translates              :title, :description, :summary, :sidebar, :fallbacks_for_empty_translations => true
   globalize_accessors     :locales => DmCore::Language.language_array
 
   # --- FriendlyId

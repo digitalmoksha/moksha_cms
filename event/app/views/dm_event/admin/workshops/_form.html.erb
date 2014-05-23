@@ -71,9 +71,6 @@
       <%#= f.input :require_photo, as: :toggle_checked, label: 'Require Photo', hint: 'A photo must be uploaded into profile' %>
       <%= f.input :require_review, as: :toggle_checked, label: 'Review Registrations', hint: 'All new registrations become "Pending", waiting for approval' %>
       <%= f.input :payments_enabled, as: :toggle_checked, label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>
-      <%= f.input :preferred_show_social_buttons, as: :toggle, label: 'Show social buttons' %>
-      <%= f.input :image, label: 'Workshop Image' %>
-      <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
     <% end %>
   
     <%= subsection do %>

@@ -8,10 +8,14 @@
   <%= f.error_notification message: "Please review the problems below" %>
 
   <%= panel header: false do %>
-    <%= subsection title: 'Visual Settings' do %>
-      <%= f.input :preferred_show_social_buttons, as: :toggle, label: 'Show social buttons' %>
-      <%= f.input :image, label: 'Workshop Image' %>
+    <%= subsection title: 'Visual and Social Settings' do %>
       <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
+      <%= f.input :preferred_show_social_buttons, as: :toggle, label: 'Show social buttons' %>
+      <%= f.input :image, label: 'Workshop Image', hint: 'Image used as a banner to the registration page.  Also used for Facebook.' %>
+      <%= locale_tabs do |locale| %>
+        <%= f.input "summary_#{locale}", label: 'Workshop Summary', as: :code_editor, input_html: {style: "height: 100px;"},
+               hint: 'Text used when a workshop is liked on Facebook.  This text will not be visible on the registration page.' %>
+      <% end %>
     <% end %>
 
     <%= subsection title: 'Associated Blog & Forum' do %>
@@ -26,5 +30,10 @@
     <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
 
   <% end %>
+  
+  <div class="block-inner">
+    <%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{dm_event.register_new_url(@workshop)}",
+                 target: '_blank', class: 'btn btn-xs btn-default' %>
+  </div>
 
 <% end %>
