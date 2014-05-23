@@ -12,7 +12,7 @@ class CmsPage < ActiveRecord::Base
   #--- NOTE: if you add any new fields, then update the duplicate_with_associations method
   
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
-  translates              :title, :menutitle, :fallbacks_for_empty_translations => true #, :versioning => true
+  translates              :title, :summary, :menutitle, :fallbacks_for_empty_translations => true #, :versioning => true
   globalize_accessors     :locales => DmCore::Language.language_array
     
   # --- versioning - skip anything translated

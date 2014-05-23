@@ -13,7 +13,7 @@
   <% end %>
   <%= panel title: title, toolbar: toolbar do %>
     <%= locale_tabs  do |locale| %>
-      <%= f.input "content_#{locale}", label: 'Content', wrapper: :bs3_vertical_form, as: :code_editor, mode: @cms_contentitem.itemtype, input_html: {style: "height: 400px;"} %>
+      <%= f.input "content_#{locale}", label: 'Content', wrapper: :bs3_vertical_form, as: :code_editor, mode: @cms_contentitem.itemtype, required: true, input_html: {style: "height: 400px;"} %>
     <% end %>
     <div class="row">
       <div class="col-md-4">
@@ -26,7 +26,7 @@
         <%= f.input :enable_cache, as: :boolean, label: 'Cache Content', wrapper: :bs3_vertical_form %>
       </div>
     </div>
-      
+    
     <%= submit_or_cancel cancel_url: admin_cms_page_url(@current_page), delete_url: ([:admin, @cms_contentitem] unless @cms_contentitem.new_record?), delete_confirm: 'Are you sure you wish to delete this item?' %>
   <% end %>
 <% end %>

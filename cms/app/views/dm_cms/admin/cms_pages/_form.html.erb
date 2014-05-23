@@ -15,7 +15,7 @@
       <%= f.input "menutitle_#{locale}", label: 'Menu Title', hint: 'Text shown in a menu (which might be shorter than the full title).  If blank, <br/>page will not show up in any auto-generated menus' %>
     <% end %>
 
-    <%= f.input :published, as: :toggle, label: 'Publish It?' %>
+    <%= f.input :published, label: 'Publish It?' %>
     <%= f.input :slug, label: 'Page Slug', hint: 'Leave blank to have auto-generated based on title.' %>
     <%= f.input :pagetype, label: 'Page Type', collection: CmsPage::PAGETYPE, include_blank: false %>
     <div id="pagetype_link">
@@ -31,9 +31,16 @@
     <% if false #--- disable this for now %>
       <%= f.input :menuimage, label: 'Menu Image' %>
     <% end %>
-    <%= f.input :requires_login, as: :toggle, label: 'Requires Login', hint: 'Page will require user to be logged in to access' %>
-    <%= f.input :preferred_show_social_buttons, as: :toggle, label: 'Show social buttons' %>
+    <%= f.input :requires_login, label: 'Requires Login', hint: 'Page will require user to be logged in to access' %>
 
+    <%= subsection title: 'Social Media' do %>
+      <%= f.input :preferred_show_social_buttons, as: :boolean, label: 'Show social buttons', hint: 'Show the standard Facebook/Twitter buttons on the page' %>
+      <%= f.input :image, label: 'Page Image', id: 'image_error', hint: 'Image used if page liked on facebook.  Will not display on the page', input_html: {class: 'width_50_percent'} %>
+      <%= locale_tabs do |locale| %>
+        <%= f.input "summary_#{locale}", label: 'Page Summary', as: :code_editor, input_html: {style: "height: 100px;"},
+               hint: 'Text used when a page liked on Facebook.  Is not visible on the page'%>
+      <% end %>
+    <% end %>
     <%= submit_or_cancel cancel_url: {action: :show, id: @current_page}, delete: 'Delete Page', delete_url: admin_cms_page_path(@current_page), delete_confirm: 'Are you sure you wish to delete this page?' %>
 
   <% end %>

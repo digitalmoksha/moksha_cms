@@ -21,7 +21,7 @@ class DmCms::PostsController < DmCms::ApplicationController
     #--- set title / meta data
     content_for :page_title, @post.title
     set_meta description: @post.summary, "og:description" => @post.summary
-    set_meta "og:image" => site_asset_media_path(@post.image) if @post.image.present?
+    set_meta "og:image" => site_asset_media_url(@post.image) if @post.image.present?
   end
 
   #------------------------------------------------------------------------------
