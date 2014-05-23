@@ -48,7 +48,7 @@
         <dd><%= @current_page.menuimage %></dd>
       </dl>
     <% end %>
-    <%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{dm_cms.showpage_url(@current_page.slug)}",
+    <%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.showpage_url(@current_page.slug))}",
                  target: '_blank', class: 'btn btn-xs btn-default' %>
   </div>
 </div>

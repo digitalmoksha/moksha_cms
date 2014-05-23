@@ -40,7 +40,7 @@
               <%= link_to(post.title, edit_admin_cms_post_path(post)) %>
             </td>
             <td>
-              <%= link_to icons('icon-facebook'), "https://developers.facebook.com/tools/debug/og/object?q=#{dm_cms.post_show_url(post.cms_blog.slug, post.slug)}",
+              <%= link_to icons('icon-facebook'), "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.post_show_url(post.cms_blog.slug, post.slug))}",
                  target: '_blank' %>
             </td>
             <td>
