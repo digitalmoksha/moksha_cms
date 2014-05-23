@@ -1,6 +1,5 @@
 class BlogUserDatatable
   include ActionView::Helpers::TagHelper
-  include Admin::ThemeAmsterdamHelper
   
   delegate :params, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
   delegate :url_helpers, to: 'DmCms::Engine.routes'
