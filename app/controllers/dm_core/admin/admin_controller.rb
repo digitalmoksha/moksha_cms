@@ -9,11 +9,13 @@ class DmCore::Admin::AdminController < ApplicationController
   # layout 'admin/admin_page'
   layout 'admin_theme/admin'
   
-  include DmCore::AccountHelper
-  include Admin::ThemeAmsterdamHelper
-  include Admin::ApplicationHelper
   include DmCore::ApplicationHelper
-  helper DmAdmin::ApplicationHelper
+  include DmCore::AccountHelper
+  include Admin::ApplicationHelper
+  include AdminTheme::ThemeHelper
+
+  helper  DmAdmin::ApplicationHelper
+  helper  AdminTheme::ThemeHelper
   
   #------------------------------------------------------------------------------
   def authenticate_admin_user!

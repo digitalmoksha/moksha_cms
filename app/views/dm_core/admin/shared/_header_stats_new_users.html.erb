@@ -1,8 +1,2 @@
 <% new_users = UserSiteProfile.new_last_30_days %>
-<div class="page-stats-showcase">
-  <span>New Users</span>
-  <h2><%= new_users[:total] %></h2>
-</div>
-<div class="bar-danger chart">
-  <%= new_users[:list] %>
-</div>
+<%= stat_with_graph title: 'New Users', number: new_users[:total], color_type: :danger, data_list: new_users[:list] %>
