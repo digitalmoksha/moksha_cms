@@ -1,21 +1,21 @@
-<% toolbar = toolbar_btn(User.current_account_users.count, dm_core.admin_users_path, :title => 'Number of Registered Users', :class => 'label label-success') %>
-<%= panel :title => 'Recent User Activity', :toolbar => toolbar, body: false do %>
-  <div class="table-overflow">
-    <table class="table table-bordered table-condensed">
-      <thead>
+<%= panel title: 'Recent User Activity', body: false do %>
+  <ul class="page-stats list-justified nomargin_bottom">
+    <li><%= render partial: 'dm_core/admin/shared/header_stats_user_activity' %></li>
+  </ul>
+  <table class="table table-bordered table-condensed" style="border-top: 1px solid #d5d5d5;">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th style="text-align: center">Last Login</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% User.current_account_users.order('user_site_profiles.last_access_at DESC').limit(5).each do |user| %>
         <tr>
-          <th>Name</th>
-          <th style="text-align: center">Last Login</th>
+          <td><%= user.full_name %></td>
+          <td align="center"><%= present(user).last_access %></td>
         </tr>
-      </thead>
-      <tbody>
-        <% User.current_account_users.order('user_site_profiles.last_access_at DESC').limit(5).each do |user| %>
-          <tr>
-            <td><%= user.full_name %></td>
-            <td align="center"><%= present(user).last_access %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

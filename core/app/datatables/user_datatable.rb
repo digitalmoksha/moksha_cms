@@ -1,6 +1,5 @@
 class UserDatatable
   include ActionView::Helpers::TagHelper
-  include Admin::ThemeAmsterdamHelper
   include DmCore::ApplicationHelper
   
   delegate :params, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view

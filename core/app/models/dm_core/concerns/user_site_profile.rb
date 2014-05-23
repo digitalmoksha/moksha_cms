@@ -36,7 +36,7 @@ module DmCore
 
         #------------------------------------------------------------------------------
         def new_last_30_days
-          items = 27.step(0, -3).map do |date| 
+          items = 28.step(0, -2).map do |date| 
             self.where('created_at <= ? AND created_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime, Account.current.id).count
           end
           return { :total => items.inject(:+), :list => items.join(',') }
@@ -44,7 +44,7 @@ module DmCore
 
         #------------------------------------------------------------------------------
         def access_last_30_days
-          items = 27.step(0, -3).map do |date| 
+          items = 28.step(0, -2).map do |date| 
             where('last_access_at <= ? AND last_access_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime, Account.current.id).count
           end
           return { :total => items.inject(:+), :list => items.join(',') }
