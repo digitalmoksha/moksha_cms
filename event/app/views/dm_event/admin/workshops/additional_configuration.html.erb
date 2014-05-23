@@ -32,7 +32,7 @@
   <% end %>
   
   <div class="block-inner">
-    <%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{dm_event.register_new_url(@workshop)}",
+    <%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_event.register_new_url(@workshop))}",
                  target: '_blank', class: 'btn btn-xs btn-default' %>
   </div>
 
