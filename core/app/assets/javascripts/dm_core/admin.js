@@ -4,11 +4,16 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require ace/ace.js
-//= require ace/theme-crimson_editor.js
-//= require ace/mode-markdown.js
-//= require ace/theme-textmate.js
-//= require aced-rails.js
+//= require codemirror
+//= require codemirror/addons/mode/overlay
+//= require codemirror/addons/edit/continuelist
+//= require codemirror/modes/xml
+//= require codemirror/modes/css
+//= require codemirror/modes/javascript
+//= require codemirror/modes/htmlmixed
+//- require codemirror/modes/htmlembedded
+//= require codemirror/modes/markdown
+//= require codemirror/modes/gfm
 //= require dm_core/admin_extra.js
 
 // Function for toggling the revealing of an item, through slide and fading
