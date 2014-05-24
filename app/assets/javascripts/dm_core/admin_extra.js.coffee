@@ -9,7 +9,14 @@ $(document).ready ->
       mode: {name: mode, underscoresBreakWords: false},
       theme: theme,
       indentWithTabs: false,
-      lineWrapping: true
+      lineWrapping: true,
+      extraKeys: {
+        "F11": (cm) ->
+          cm.setOption("fullScreen", !cm.getOption("fullScreen"))
+        "Esc": (cm) ->
+          if (cm.getOption("fullScreen"))
+            cm.setOption("fullScreen", false)
+      }
     })
 
   # The CodeMirror needs to be refreshed if it was initially hidden in a tab
@@ -25,3 +32,59 @@ $(document).ready ->
       tokenSeparators: [',', ' ']
       });
 
+  # Toolbar commands for the CodeMirror editor
+  #------------------------------------------------------------------------------
+  $('.cm_cmd_fullscreen').on 'click', (e) ->
+    editor_id = $(this).data('editor')
+    $(editor_id + ' .CodeMirror')[0].CodeMirror.setOption("fullScreen", true)
+    $(editor_id + ' .CodeMirror')[0].CodeMirror.focus()
+    
+  $('.cm_cmd_bold_markdown').on 'click', (e) ->
+    editor_id = $(this).data('editor')
+    editor    = $(editor_id + ' .CodeMirror')[0].CodeMirror
+    text      = editor.doc.getSelection()
+    new_text  = "**#{text}**"
+    editor.doc.replaceSelection(new_text)
+    editor.cm.focus()
+
+  $('.cm_cmd_bold_textile').on 'click', (e) ->
+    editor_id = $(this).data('editor')
+    editor    = $(editor_id + ' .CodeMirror')[0].CodeMirror
+    text      = editor.doc.getSelection()
+    new_text  = "*#{text}*"
+    editor.doc.replaceSelection(new_text)
+    editor.cm.focus()
+
+  $('.cm_cmd_italic_markdown').on 'click', (e) ->
+    editor_id = $(this).data('editor')
+    editor    = $(editor_id + ' .CodeMirror')[0].CodeMirror
+    text      = editor.doc.getSelection()
+    new_text  = "_#{text}_"
+    editor.doc.replaceSelection(new_text)
+    editor.cm.focus()
+
+  $('.cm_cmd_italic_textile').on 'click', (e) ->
+    editor_id = $(this).data('editor')
+    editor    = $(editor_id + ' .CodeMirror')[0].CodeMirror
+    text      = editor.doc.getSelection()
+    new_text  = "_#{text}_"
+    editor.doc.replaceSelection(new_text)
+    editor.cm.focus()
+
+  $('.cm_cmd_link_markdown').on 'click', (e) ->
+    editor_id = $(this).data('editor')
+    editor    = $(editor_id + ' .CodeMirror')[0].CodeMirror
+    text      = editor.doc.getSelection()
+    new_text  = "[#{text}]()"
+    editor.doc.replaceSelection(new_text)
+    editor.cm.focus()
+
+  $('.cm_cmd_link_textile').on 'click', (e) ->
+    editor_id = $(this).data('editor')
+    editor    = $(editor_id + ' .CodeMirror')[0].CodeMirror
+    text      = editor.doc.getSelection()
+    new_text  = "\"#{text}\":"
+    editor.doc.replaceSelection(new_text)
+    editor.cm.focus()
+      
+    
