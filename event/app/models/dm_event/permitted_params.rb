@@ -13,6 +13,7 @@ module DmEvent
 
     #------------------------------------------------------------------------------
     def registration_params
+      return nil if params[:registration].nil? || params[:registration].empty?
       if current_user.try(:is_admin?)
         params.require(:registration).permit!
       else

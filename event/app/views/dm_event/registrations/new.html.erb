@@ -12,11 +12,10 @@
   </div>
 
   <% unless @workshop.require_account && current_user.nil? %>
-    <%= simple_form_for(@registration, :url => register_create_url(@workshop, anchor: 'ticket_information')) do |f| %>
-      <h3><%= I18n.t "ems.ticket_information" %></h3>
-      <div id="ticket_information" class="ticket_information">
-        <%= render :partial => 'section_prices', :locals => {:f => f} %>
-      </div>
+    <%= simple_form_for @registration, :url => register_create_url(@workshop, anchor: 'ticket_information'),
+    html: { class: 'form-horizontal' }, wrapper: :bs2_horizontal_form do |f| %>
+    
+      <%= render :partial => 'section_prices', :locals => {:f => f} %>
 
       <%= render :partial => 'section_address', :locals => {:f => f} %>
 
