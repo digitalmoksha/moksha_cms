@@ -7,6 +7,7 @@
 //= require codemirror
 //= require codemirror/addons/mode/overlay
 //= require codemirror/addons/edit/continuelist
+//= require codemirror/addons/display/fullscreen
 //= require codemirror/modes/xml
 //= require codemirror/modes/css
 //= require codemirror/modes/javascript

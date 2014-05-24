@@ -12,11 +12,48 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require codemirror
+ *= require codemirror/addons/display/fullscreen
  *= require codemirror/themes/elegant
  *= require codemirror/themes/neat
  *= require codemirror/themes/midnight
  *= require_self
  */
+
+/*--- CodeMirror fullscreen, give some padding, push z-index up high ---*/
+.CodeMirror-fullscreen {
+  z-index: 9999;
+  padding-top: 40px;
+  padding-left: 30px;
+  padding-bottom: 100px;
+}
+
+.cm_toolbar {
+  background: -webkit-linear-gradient(top, #f9faf9 0%, #eeefee 100%) #eee;
+  background: -moz-linear-gradient(top, #f9faf9 0%, #eeefee 100%) #eee;
+  background: -ms-linear-gradient(top, #f9faf9 0%, #eeefee 100%) #eee;
+  background: linear-gradient(to bottom, #f9faf9 0%, #eeefee 100%) #eee;
+  border: 1px solid #dcdddc;
+  clear: both;
+  overflow: hidden;
+  border-bottom-style: none;
+}
+.cm_toolbar a {
+  padding: 0 5px;
+  float: left;
+}
+.cm_toolbar a i {
+  line-height: 23px;
+  color: #777;
+  font-size: 14px;
+  text-shadow: 1px 1px 1px #fdfdfd;
+}
+.cm_toolbar a i:hover {
+  color: #3a59e0;
+}
+.cm_toolbar a.cm_cmd_fullscreen {
+  float: right;
+  padding-right: 2px;
+}
 
 .tree_open > dl dt a.tree_expand, .tree_closed > dl dt a.tree_expand {
   text-indent: -6000px;
