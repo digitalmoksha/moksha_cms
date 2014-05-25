@@ -1,7 +1,8 @@
 <% content_for :content_title, "#{@workshop.title}" %>
+<% content_for :content_subtitle, present(@workshop).label_published %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%= present(@workshop).label_published %>
+    <%#= present(@workshop).label_published %>
     <%= link_to(icon_label(:edit, 'Edit'), edit_admin_workshop_url(@workshop), title: 'Edit Workshop', class: "btn btn-xs btn-default") %>
   <% end %>
 <% end %>

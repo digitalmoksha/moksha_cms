@@ -8,11 +8,9 @@
 <% @workshops.in_groups_of(2, false) do |workshop_row| %>
   <div class="row">
     <% for workshop in workshop_row  %>
-      <% toolbar = capture do %>
-        <% present(workshop).label_published %>
-      <% end %>
+      <% panel_class = workshop.registration_closed? ? 'panel-default' : 'panel-success' %>
       <div class="col-md-6">
-        <%= panel title: link_to(workshop.title, [:admin, workshop]), toolbar: toolbar do %>
+        <%= panel title: link_to(workshop.title, [:admin, workshop]), subtitle: present(workshop).start_end_date, class: panel_class do %>
           <% financials = workshop.financial_details(:summary) %>
           <ul class="statistics">
             <li><%= stat_block_small label: 'Best', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'icon-coin', percent: 100 %></li>
