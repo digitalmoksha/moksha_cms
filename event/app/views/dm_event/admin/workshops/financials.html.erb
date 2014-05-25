@@ -39,8 +39,12 @@
                 <td class="cost"><%= @financials[:summary][:total_outstanding_worst].format(no_cents_if_whole: true, symbol: true) %></td>
               </tr>
               <tr>
-                <th><strong>Paid</strong></th>
+                <th><strong class="text-success">Paid</strong></th>
                 <td colspan="2" class="cost"><%= @financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true) %></td>
+              </tr>
+              <tr>
+                <th><strong class="text-warning">Discounts given</strong></th>
+                <td colspan="2" class="cost"><%= @workshop.registrations.number_of :discounted %> / <%= @workshop.registrations.number_of(:discounted_total).format(no_cents_if_whole: true, symbol: true) %></td>
               </tr>
             </tbody>
           </table>

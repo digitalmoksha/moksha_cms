@@ -25,6 +25,7 @@ class Registration < ActiveRecord::Base
   scope                         :accepted,  -> { where("aasm_state = 'accepted' AND archived_on IS NULL") }
   scope                         :paid,      -> { where("aasm_state = 'paid' AND archived_on IS NULL") }
   scope                         :unpaid,    -> { where("aasm_state = 'accepted' AND archived_on IS NULL") } # same as accepted
+  scope                         :discounted,-> { where("discount_value > 0") } # use like registrations.attending.discounted
 
   before_create                 :set_currency
   after_create                  :set_receipt_code
@@ -117,6 +118,11 @@ class Registration < ActiveRecord::Base
     when :for_all_prices
       #--- array of counts per price
       query.where(archived_on: nil).where("(aasm_state = 'paid' OR aasm_state = 'accepted')").group(:workshop_price_id).count
+    when :discounted
+      attending.discounted.count
+    when :discounted_total
+      total = attending.discounted.to_a.sum(&:discount)
+      (total == 0) ? Money.new(0) : total
     when :user_updated
       #--- how many users updated their record
       query.where(archived_on: nil).where("(aasm_state = 'paid' OR aasm_state = 'accepted')").where.not(user_updated_at: nil).count
