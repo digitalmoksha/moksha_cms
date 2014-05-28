@@ -40,6 +40,7 @@ protected
   # http://tech.vg.no/2013/10/02/ios7-bug-shows-white-page-when-getting-304-not-modified-from-server/
   # So set headers so that this content will not be cahced, until there is a fix
   # http://stackoverflow.com/questions/711418/how-to-prevent-browser-page-caching-in-rails
+  # http://stackoverflow.com/questions/20154740/rails-view-turning-complete-white-after-refreshed-or-visited-several-times
   #------------------------------------------------------------------------------
   def set_cache_buster
     if !request.user_agent.blank? && !request.user_agent.scan(/Safari/).empty? && request.user_agent.scan(/Chrome/).empty? && Rails.env.development?
@@ -135,7 +136,16 @@ protected
   # Set the locale of this request.
   #------------------------------------------------------------------------------
   def set_locale
-    DmCore::Language.locale = (!params[:locale].blank? ? params[:locale] : current_account.preferred_default_locale)
+    begin
+      DmCore::Language.locale = (!params[:locale].blank? ? params[:locale] : current_account.preferred_default_locale)
+    rescue I18n::InvalidLocale
+      # if it's an invalid locale, append the default locale and try again
+      # this also fixes the case of using simple link names on a hoem page.
+      # So if home page is "http://example.com" and the link is <a href="calendar">
+      # then the link is "http://example.com/calendar", instead of "http://example.com/en/calendar"
+      # This will allow that to work.
+      redirect_to "/#{current_account.preferred_default_locale}#{request.path}"
+    end    
   end
   
   # Update the user's last_access if signed_in

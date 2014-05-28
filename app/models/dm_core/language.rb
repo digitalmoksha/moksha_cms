@@ -44,7 +44,7 @@ class DmCore::Language < ActiveRecord::Base # :nodoc:
     locale.nil? ? "dm_core/flags/#{I18n.locale}.gif" : "dm_core/flags/#{locale}.gif"
   end
   
-  # Given a url, change it to the requested locale.  Assumes that lcoale is embedded
+  # Given a url, change it to the requested locale.  Assumes that locale is embedded
   # in the url as /:locale/  (.../en/teaching, etc).  Originaly tried to use a named
   # route, like showpage_url(:locale => 'ja'), but it doesn't work in some cases
   #------------------------------------------------------------------------------
