@@ -18,18 +18,18 @@
     <% end %>
 
     <%= subsection do %>
-      <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
+      <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.', input_html: {class: 'width_50_percent'} %>
       <%= f.input :event_style, label: 'Event Style', required: true, collection: Workshop::EVENT_STYLES,
-                  hint: 'Is this a workshop or a crowdfunding/donation type of event' %>
+                  hint: 'Is this a workshop or a crowdfunding/donation type of event', input_html: {class: 'width_50_percent'} %>
     <% end %>
 
     <%= subsection do %>
       <%= f.input :published, as: :toggle_checked, label: 'Publish', hint: 'Make available for registrations' %>
-      <%= f.input :country_id, required: true, wrapper_html: { class: 'searchDrop' }, input_html: { class: 'chosen_select' }, 
+      <%= f.input :country_id, required: true, wrapper_html: { class: 'searchDrop' }, input_html: { class: 'chosen_select width_50_percent' }, 
                   collection: ut_country_select_collection, label_method: lambda {|t| t[0]}, value_method: lambda {|t| t[1]},
                   label: 'Country' %>
       <%= f.input :base_currency, label: 'Currency', required: true, collection: Account::CURRENCY_TYPES,
-                  hint: 'Currency used for this workshop',
+                  hint: 'Currency used for this workshop', input_html: {class: 'width_50_percent'},
                   disabled: !(@workshop.workshop_prices.empty?) %>
       <div class="form-group string required workshop_starting_on">
         <label class="string required col-sm-2 control-label" for="workshop_starting_on">
@@ -63,18 +63,18 @@
       </div>
       <%= f.input :deadline_on, label: 'Deadline', as: :string, input_html: {class: 'datepicker', style: 'width: 150px'} %>
 
-      <%= f.input :contact_email, label: 'Contact Email' %>
-      <%= f.input :contact_phone, label: 'Contact Phone' %>
-      <%= f.input :require_account, as: :toggle_checked, label: 'Require Account', hint: 'Must have a user account to register - necessary for forum/blog access' %>
-      <%= f.input :show_address, as: :toggle_checked, label: 'Show Address', hint: 'Show address fields (only if user is not logged in)' %>
-      <%= f.input :require_address, as: :toggle_checked, label: 'Require Address', hint: 'Address in profile must be filled out (only if Show Address is checked)' %>
-      <%#= f.input :require_photo, as: :toggle_checked, label: 'Require Photo', hint: 'A photo must be uploaded into profile' %>
-      <%= f.input :require_review, as: :toggle_checked, label: 'Review Registrations', hint: 'All new registrations become "Pending", waiting for approval' %>
-      <%= f.input :payments_enabled, as: :toggle_checked, label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>
+      <%= f.input :contact_email, label: 'Contact Email', input_html: {class: 'width_50_percent'} %>
+      <%= f.input :contact_phone, label: 'Contact Phone', input_html: {class: 'width_50_percent'} %>
+      <%= f.input :require_account, as: :boolean, label: 'Require Account', hint: 'Must have a user account to register - necessary for forum/blog access' %>
+      <%= f.input :show_address, as: :boolean, label: 'Show Address', hint: 'Show address fields (only if user is not logged in)' %>
+      <%= f.input :require_address, as: :boolean, label: 'Require Address', hint: 'Address in profile must be filled out (only if Show Address is checked)' %>
+      <%#= f.input :require_photo, as: :boolean, label: 'Require Photo', hint: 'A photo must be uploaded into profile' %>
+      <%= f.input :require_review, as: :boolean, label: 'Review Registrations', hint: 'All new registrations become "Pending", waiting for approval' %>
+      <%= f.input :payments_enabled, as: :boolean, label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>
     <% end %>
   
     <%= subsection do %>
-      <%= f.input :funding_goal, label: 'Funding Goal', hint: 'Goal (in the currency above) of this funding project' %>
+      <%= f.input :funding_goal, label: 'Funding Goal', hint: 'Goal (in the currency above) of this funding project', input_html: {class: 'width_25_percent'} %>
     <% end %>
   
     <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
