@@ -49,6 +49,18 @@ class CmsBlog < ActiveRecord::Base
     CmsBlog.all.any? { |b| b.can_be_read_by?(user) }
   end
 
+  # Grab a list of the recent posts.  Can pull from all blogs or a specific
+  # one.
+  #------------------------------------------------------------------------------
+  def self.recent_posts(options = {user: nil, limit: 5, blog: nil})
+    if options[:blog].nil?  # get all available to user
+      query_blogs = CmsBlog.available_to_user(options[:user]).map(&:id)    
+    else
+      query_blogs = CmsBlog.friendly.find(options[:blog])
+    end
+    CmsPost.where(cms_blog_id: query_blogs).includes(:cms_blog, :translations).published.order('published_on DESC').limit(options[:limit])  
+  end
+  
   # Send new post notifications to any followers
   # NOTE: Currently, we don't do automated notifications for new blog posts.
   # You must click on the button in the backend to trigger it.  At the moment,

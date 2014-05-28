@@ -13,7 +13,7 @@
       <% toolbar = render partial: 'content_toolbar', locals: { contentitem: item,  contentitem_list: @current_page.cms_contentitems } %>
       <%= panel title: "#{item.container}", body: false, toolbar: toolbar do %>
         <pre class="prettyprint" style="border:none;border-bottom: 1px solid #eee;">
-          <%= truncate(item.send("content_#{current_account.preferred_default_locale}"), length: 250) %>
+<%= truncate(item.send("content_#{current_account.preferred_default_locale}"), length: 250) %>
         </pre>
         <span class="subtitle text-muted text-center">Format: <%= item.itemtype %></span>
       <% end %>
