@@ -74,7 +74,7 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
       if confirmed_user.errors.empty?
         redirect_to dm_core.admin_users_url, notice: 'User is now confirmed and should be able to login'
       else
-        redirect_to dm_core.edit_admin_user_path(@user), alert: 'A problem occurred, unable to confirm user'
+        redirect_to dm_core.edit_admin_user_path(@user), alert: "A problem occurred, unable to confirm user. (Msg: #{confirmed_user.errors.full_messages.join(', ')})"
       end
     else
       redirect_to dm_core.edit_admin_user_path(@user), alert: 'Unable to find confirmation token for user'
