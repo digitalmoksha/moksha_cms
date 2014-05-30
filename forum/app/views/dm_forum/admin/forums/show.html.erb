@@ -17,7 +17,7 @@
 <% end %>
 
 <% if @forum.owner %>
-  <% toolbar = toolbar_button(@forum.member_count(:automatic), '#', title: 'Number of users with automatic forum access', class: 'label label-success pull-right') %>
+  <% toolbar = toolbar_btn(@forum.member_count(:automatic), '#', title: 'Number of users with automatic forum access', class: 'label label-success pull-right') %>
   <%= panel title: 'Users with Automatic Access', toolbar: toolbar do %>
     <h5>Automatic Access Granted for Event</h5>
     <p><%= @forum.owner.title %></p>
