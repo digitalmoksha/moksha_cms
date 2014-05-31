@@ -1,0 +1,3 @@
+<%= markdown(f.object.description) unless f.object.description.blank? %>
+<%= f.input :field_data, as: :text, label: field.label.blank? ? false : field.label, required: field.required? %>
+<%= f.hidden_field :custom_field_def_id %>

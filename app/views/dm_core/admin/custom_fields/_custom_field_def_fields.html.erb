@@ -1,0 +1,18 @@
+<fieldset>
+  <%= f.input :field_type, collection: CustomFieldDef::FIELD_TYPES, required: true %>
+  <%= f.input :name, label: 'Field Name', placeholder: 'field_name', required: true, hint: "Such as 'hotelname', 'travel_date', 'number_traveling', etc" %>
+  <%= locale_tabs do |locale| %>
+    <%= f.input "label_#{locale}", label: 'Label' %>
+    <%= f.input "description_#{locale}", label: 'Description', as: :text, input_html: {style: "height: 100px;"},
+           hint: 'Text shown before the field.  Markdown format' %>
+  <% end %>
+  <%= f.input :required, as: :boolean, label: 'Required' %>
+  <%= f.input :choice_list, label: 'Choice List', hint: 'Comma seperated list, used by Radio Buttons and Drop Downs' %>
+  <%= f.hidden_field :_destroy %>
+  <% if f.object.custom_fields.empty? %>
+    <%= link_to "[remove]", '#', class: 'remove_custom_fields' %>
+  <% else %>
+    <%= link_to "[remove and delete associated data]", '#', class: 'remove_custom_fields', data: {confirm: 'There is already data stored with this field.  Are you sure you want to delete it?'} %>
+  <% end %>
+  <hr>
+</fieldset>
