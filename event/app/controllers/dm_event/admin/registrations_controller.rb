@@ -40,11 +40,6 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationContr
   def edit
     @registration = Registration.find(params[:id])
     @workshop     = @registration.workshop
-
-    # #--- build up the custom field objects
-    # @workshop.custom_field_defs.each do |c|
-    #   @event_registration.custom_fields.build(:custom_field_def_id => c.id) unless @event_registration.custom_fields.detect { |f| f.custom_field_def_id == c.id }
-    # end
   end
 
   #------------------------------------------------------------------------------

@@ -1,9 +1,11 @@
 <div class="price_details">
   <dl>
     <dt>
-      <span class="price"><%= humanized_money_with_symbol workshop_price.price %></span>
+      <% if workshop_price.price %>
+        <span class="price"><%= humanized_money_with_symbol workshop_price.price %></span>&nbsp;&nbsp;&mdash;&nbsp;&nbsp;
+      <% end %>
       <% unless workshop_price.price_description.blank? %>
-        &nbsp;&nbsp;&mdash;&nbsp;&nbsp;<span class='price_description'><%= workshop_price.price_description %></span>
+        <span class='price_description'><%= workshop_price.price_description %></span>
       <% end %>
     </dt>
     <% unless workshop_price.sub_description.blank? %>
