@@ -5,10 +5,14 @@
 #      This presents a challenge I'm not willing to tackle at this moment.
 #      But it should be done so that the database isn't cluttered with needless
 #      records.
+#
+# Note: We serialize the data.  This makes it easy to store checkbox arrays, dates,
+# etc, without having to worry about munging the data first.
 #------------------------------------------------------------------------------
 class CustomField < ActiveRecord::Base
   self.table_name               = 'core_custom_fields'
-
+  serialize                     :field_data
+  
   # acts_as_reportable
 
   belongs_to                    :custom_field_def
@@ -16,9 +20,7 @@ class CustomField < ActiveRecord::Base
 
   default_scope                 { where(account_id: Account.current.id) }
   
-  #--- TODO validations are done in the EventRegistration model
-
-  before_save                   :prepare_data
+  # before_save                   :prepare_data
 
   delegate :field_type,         to: :custom_field_def
   delegate :name,               to: :custom_field_def
@@ -40,29 +42,35 @@ class CustomField < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def initialize(*options, &block)
     super(*options, &block)
-    prepare_data
+    # prepare_data
   end
   
-  # Munge the data so that it's stored correctly
-  #------------------------------------------------------------------------------
-  def prepare_data
-    # #--- an array of values is stores as a comma delimited string
-    # self.data = self.data.join(', ') if self.data.class == Array
-    # 
-    # #--- if field is a date/time field, convert the date into database format
-    # unless custom_field_def_id.nil?
-    #   field_def = CustomFieldDef.find(custom_field_def_id)
-    #   if field_def and !self.data.blank?
-    #     if field_def.fieldtype == 'date_time' or field_def.fieldtype == 'date'
-    #       self.data = Time.parse(self.data).to_s(:db)
-    #     elsif field_def.fieldtype == 'number_field'
-    #       p = NumberParser.new
-    #       self.data = p.extract(self.data.to_s)[0]
-    #     end
-    #   end
-    # end
-  end
-  
+  # # Munge the data so that it's stored correctly
+  # #------------------------------------------------------------------------------
+  # def prepare_data
+  #   #--- an array of values is stores as a comma delimited string
+  #   self.field_data = self.field_data.join(', ') if self.field_data.class == Array
+  # 
+  #   # #--- if field is a date/time field, convert the date into database format
+  #   # unless custom_field_def_id.nil?
+  #   #   field_def = CustomFieldDef.find(custom_field_def_id)
+  #   #   if field_def and !self.data.blank?
+  #   #     if field_def.fieldtype == 'date_time' or field_def.fieldtype == 'date'
+  #   #       self.data = Time.parse(self.data).to_s(:db)
+  #   #     elsif field_def.fieldtype == 'number_field'
+  #   #       p = NumberParser.new
+  #   #       self.data = p.extract(self.data.to_s)[0]
+  #   #     end
+  #   #   end
+  #   # end
+  # end
+  # 
+  # # Treat data as comma delimited, return it as an array of values
+  # #------------------------------------------------------------------------------
+  # def field_data_array
+  #   self.field_data.nil? ? [] : self.field_data.split(',').collect { |item| item.strip }
+  # end  
+  # 
   # # Returns a munged value depending on the field type.  use self.data for the 
   # # real stored value
   # #------------------------------------------------------------------------------
@@ -80,9 +88,4 @@ class CustomField < ActiveRecord::Base
   #   label.blank? ? 'Field' : "'#{nls(label, namespace: 'site_custom_field')}'"
   # end
   
-  # # Treat data as comma delimited, return it as an array of values
-  # #------------------------------------------------------------------------------
-  # def data_array
-  #   data.split(',').collect { |item| item.strip }
-  # end  
 end
