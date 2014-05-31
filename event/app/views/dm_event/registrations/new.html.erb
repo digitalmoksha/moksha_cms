@@ -7,17 +7,17 @@
     <%= render_workshop_description(@workshop) %>
     <% if @workshop.show_social_buttons? %>
       <div class="clearfix"></div>
-      <%= render(:partial => "dm_cms/shared/social_buttons") %>
+      <%= render(partial: "dm_cms/shared/social_buttons") %>
     <% end %>
   </div>
 
   <% unless @workshop.require_account && current_user.nil? %>
-    <%= simple_form_for @registration, :url => register_create_url(@workshop, anchor: 'ticket_information'),
+    <%= simple_form_for @registration, url: register_create_url(@workshop, anchor: 'ticket_information'),
     html: { class: 'form-horizontal' }, wrapper: :bs2_horizontal_form do |f| %>
     
-      <%= render :partial => 'section_prices', :locals => {:f => f} %>
+      <%= render partial: 'section_prices', locals: {f: f} %>
 
-      <%= render :partial => 'section_address', :locals => {:f => f} %>
+      <%= render partial: 'section_address', locals: {f: f} %>
 
       <% save_label = @workshop.crowdfunding? ? I18n.t('ems.donate_button') : I18n.t('ems.register_btn') %>
       <%= submit_tag save_label, class: 'btn btn-primary' %>

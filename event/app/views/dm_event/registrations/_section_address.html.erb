@@ -2,7 +2,7 @@
   <h3><%= I18n.t "ems.ticket_contact" %></h3>
   <div class="ticket_information">
     <div class="registration_section_address">
-      <%= f.fields_for :user_profile, @registration.user_profile, wrapper: :bs2_horizontal_form do |builder| %>
+      <%= f.simple_fields_for :user_profile, @registration.user_profile do |builder| %>
     
         <%= builder.input(:email,       :label => I18n.t('ems.registration_email'), :required => true) %>
         <%= builder.input :first_name,  :label => I18n.t('ems.registration_first_name'), :required => true %>

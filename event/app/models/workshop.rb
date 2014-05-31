@@ -1,26 +1,27 @@
 class Workshop < ActiveRecord::Base
+  include DmCore::Concerns::DefinesCustomFields
 
   self.table_name         = 'ems_workshops'
 
-  belongs_to              :country, :class_name => 'DmCore::Country'
-  has_many                :registrations, :dependent => :destroy
-  has_many                :workshop_prices, :dependent => :destroy
-  has_many                :system_emails,     {:as => :emailable, :dependent => :destroy}
-  has_one                 :pending_email,     -> { where("email_type LIKE 'pending'") },    :class_name => 'SystemEmail', :as => :emailable
-  has_one                 :accepted_email,    -> { where("email_type LIKE 'accepted'") },   :class_name => 'SystemEmail', :as => :emailable
-  has_one                 :rejected_email,    -> { where("email_type LIKE 'rejected'") },   :class_name => 'SystemEmail', :as => :emailable
-  has_one                 :paid_email,        -> { where("email_type LIKE 'paid'") },       :class_name => 'SystemEmail', :as => :emailable
-  has_one                 :waitlisted_email,  -> { where("email_type LIKE 'waitlisted'") }, :class_name => 'SystemEmail', :as => :emailable
-  has_one                 :reviewing_email,   -> { where("email_type LIKE 'reviewing'") },  :class_name => 'SystemEmail', :as => :emailable
-  has_one                 :canceled_email,    -> { where("email_type LIKE 'canceled'") },   :class_name => 'SystemEmail', :as => :emailable
-  has_one                 :refunded_email,    -> { where("email_type LIKE 'refunded'") },   :class_name => 'SystemEmail', :as => :emailable
-  has_one                 :noshow_email,      -> { where("email_type LIKE 'noshow'") },     :class_name => 'SystemEmail', :as => :emailable
-  has_one                 :cms_blog, :as => :owner
-  has_one                 :forum, :as => :owner
+  belongs_to              :country, class_name: 'DmCore::Country'
+  has_many                :registrations, dependent: :destroy
+  has_many                :workshop_prices, dependent: :destroy
+  has_many                :system_emails,     {as: :emailable, dependent: :destroy}
+  has_one                 :pending_email,     -> { where("email_type LIKE 'pending'") },    class_name: 'SystemEmail', as: :emailable
+  has_one                 :accepted_email,    -> { where("email_type LIKE 'accepted'") },   class_name: 'SystemEmail', as: :emailable
+  has_one                 :rejected_email,    -> { where("email_type LIKE 'rejected'") },   class_name: 'SystemEmail', as: :emailable
+  has_one                 :paid_email,        -> { where("email_type LIKE 'paid'") },       class_name: 'SystemEmail', as: :emailable
+  has_one                 :waitlisted_email,  -> { where("email_type LIKE 'waitlisted'") }, class_name: 'SystemEmail', as: :emailable
+  has_one                 :reviewing_email,   -> { where("email_type LIKE 'reviewing'") },  class_name: 'SystemEmail', as: :emailable
+  has_one                 :canceled_email,    -> { where("email_type LIKE 'canceled'") },   class_name: 'SystemEmail', as: :emailable
+  has_one                 :refunded_email,    -> { where("email_type LIKE 'refunded'") },   class_name: 'SystemEmail', as: :emailable
+  has_one                 :noshow_email,      -> { where("email_type LIKE 'noshow'") },     class_name: 'SystemEmail', as: :emailable
+  has_one                 :cms_blog, as: :owner
+  has_one                 :forum, as: :owner  
   
   # --- globalize
-  translates              :title, :description, :summary, :sidebar, :fallbacks_for_empty_translations => true
-  globalize_accessors     :locales => DmCore::Language.language_array
+  translates              :title, :description, :summary, :sidebar, fallbacks_for_empty_translations: true
+  globalize_accessors     locales: DmCore::Language.language_array
 
   # --- FriendlyId
   extend FriendlyId
@@ -28,7 +29,7 @@ class Workshop < ActiveRecord::Base
 
   resourcify
 
-  preference              :show_social_buttons,  :boolean, :default => false
+  preference              :show_social_buttons,  :boolean, default: false
   preference              :header_accent_color,  :string
 
   # --- validations
@@ -39,8 +40,8 @@ class Workshop < ActiveRecord::Base
   validates_presence_of   :contact_email
   validates_presence_of   :event_style
   validates               :title, presence_default_locale: true
-  validates               :description, liquid: { :locales => true }, presence_default_locale: true
-  validates               :sidebar, liquid: { :locales => true }
+  validates               :description, liquid: { locales: true }, presence_default_locale: true
+  validates               :sidebar, liquid: { locales: true }
   
   # validates_presence_of   :deadline_on
 
@@ -55,7 +56,7 @@ class Workshop < ActiveRecord::Base
                                       (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC') }
 
   #--- don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
-  monetize                :funding_goal_cents, :with_model_currency => :base_currency
+  monetize                :funding_goal_cents, with_model_currency: :base_currency
 
   EVENT_STYLES = [['Workshop', 'workshop'], ['Crowdfunding', 'crowdfunding']]
 
@@ -68,7 +69,7 @@ class Workshop < ActiveRecord::Base
   # Otherwise, check if we have sold out
   #------------------------------------------------------------------------------
   def price_sold_out?(workshop_price)
-    # p.sold_out?(@workshop.event_registration.number_of(:registrations_by_paymenttype, :payment_id => p.id)
+    # p.sold_out?(@workshop.event_registration.number_of(:registrations_by_paymenttype, payment_id: p.id)
     false # TODO
   end
   
@@ -115,7 +116,7 @@ class Workshop < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def financial_details(level = :detail)
     #--- pick currency of first price
-    financials = {:summary => { total_possible: Money.new(0, base_currency),          total_possible_worst: Money.new(0, base_currency),
+    financials = {summary: { total_possible: Money.new(0, base_currency),          total_possible_worst: Money.new(0, base_currency),
                                 total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency), 
                                 total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency),
                                 total_paid_percent: 0},
@@ -199,7 +200,7 @@ class Workshop < ActiveRecord::Base
   # Provide a list of users that are members (does not include userless registrations)
   #------------------------------------------------------------------------------
   def member_count
-    self.registrations.attending.joins(:user_profile => [:user]).references(:user_profile).where('user_profiles.user_id IS NOT NULL').count
+    self.registrations.attending.joins(user_profile: [:user]).references(:user_profile).where('user_profiles.user_id IS NOT NULL').count
   end
 
   # Return list of Users that are attending (does not include userless registrations)
@@ -225,9 +226,9 @@ class Workshop < ActiveRecord::Base
     end
     puts "----------------------------------------------"
     puts "Domain: #{Account.current.domain} found #{lost.count}"
-    puts "   #{(Time.now - days_ago.day).localize(:format => :mmddyy)} -- #{Time.now.localize(:format => :mmddyy)}"
+    puts "   #{(Time.now - days_ago.day).localize(format: :mmddyy)} -- #{Time.now.localize(format: :mmddyy)}"
     puts "----------------------------------------------"
-    lost.each {|user| puts "#{user.created_at.localize(:format => :mmddyy)} \t #{user.full_name}\t\t\t#{user.email}" }
+    lost.each {|user| puts "#{user.created_at.localize(format: :mmddyy)} \t #{user.full_name}\t\t\t#{user.email}" }
     return nil
   end
 

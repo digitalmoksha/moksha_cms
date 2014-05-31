@@ -16,23 +16,23 @@ class WorkshopPrice < ActiveRecord::Base
   default_scope           { where(account_id: Account.current.id).order('row_order ASC') }
 
   # --- globalize
-  translates              :price_description, :sub_description, :payment_details, :fallbacks_for_empty_translations => true
-  globalize_accessors     :locales => DmCore::Language.language_array
+  translates              :price_description, :sub_description, :payment_details, fallbacks_for_empty_translations: true
+  globalize_accessors     locales: DmCore::Language.language_array
 
-  monetize                :price_cents, :with_model_currency => :price_currency, :allow_nil => true
-  monetize                :alt1_price_cents, :with_model_currency => :alt1_price_currency, :allow_nil => true
-  monetize                :alt2_price_cents, :with_model_currency => :alt2_price_currency, :allow_nil => true
+  monetize                :price_cents, with_model_currency: :price_currency, allow_nil: true
+  monetize                :alt1_price_cents, with_model_currency: :alt1_price_currency, allow_nil: true
+  monetize                :alt2_price_cents, with_model_currency: :alt2_price_currency, allow_nil: true
 
   include RankedModel
-  ranks                   :row_order, :with_same => :workshop_id
+  ranks                   :row_order, with_same: :workshop_id
 
   validates               :price_description, presence_default_locale: true
-  validates               :payment_details, liquid: { :locales => true }
-  validates_presence_of   :price_currency,      :if => Proc.new { |w| w.price_cents }
-  validates_presence_of   :alt1_price_currency, :if => Proc.new { |w| w.alt1_price_cents }
-  validates_presence_of   :alt2_price_currency, :if => Proc.new { |w| w.alt2_price_cents }
-  validates_presence_of   :recurring_period,    :if => Proc.new { |w| w.recurring_number }
-  validates_presence_of   :recurring_number,    :if => Proc.new { |w| w.recurring_period }
+  validates               :payment_details, liquid: { locales: true }
+  validates_presence_of   :price_currency,      if: Proc.new { |w| w.price_cents }
+  validates_presence_of   :alt1_price_currency, if: Proc.new { |w| w.alt1_price_cents }
+  validates_presence_of   :alt2_price_currency, if: Proc.new { |w| w.alt2_price_cents }
+  validates_presence_of   :recurring_period,    if: Proc.new { |w| w.recurring_number }
+  validates_presence_of   :recurring_number,    if: Proc.new { |w| w.recurring_period }
 
   PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Wire Transfer']
 
@@ -64,7 +64,7 @@ class WorkshopPrice < ActiveRecord::Base
   
   #------------------------------------------------------------------------------
   def price_formatted
-    price.nil? ? '' : price.format(:no_cents_if_whole => true, :symbol => true)
+    price.nil? ? '' : price.format(no_cents_if_whole: true, symbol: true)
   end
   
   # returns the amount of a payment

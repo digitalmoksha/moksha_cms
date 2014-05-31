@@ -6,6 +6,7 @@
 class Registration < ActiveRecord::Base
   include DmEvent::Concerns::RegistrationStateMachine
   include DmEvent::Concerns::RegistrationStateEmail
+  include DmCore::Concerns::HasCustomFields
   include ActiveMerchant::Billing::Integrations
 
   self.table_name               = 'ems_registrations'
@@ -15,10 +16,10 @@ class Registration < ActiveRecord::Base
   belongs_to                    :user_profile
   belongs_to                    :account
   has_many                      :payment_histories, :as => :owner, :dependent => :destroy                              
+
+  accepts_nested_attributes_for :user_profile
   
   monetize                      :amount_paid_cents, :with_model_currency => :amount_paid_currency, :allow_nil => true
-  
-  accepts_nested_attributes_for :user_profile
   
   default_scope                 { where(account_id: Account.current.id) }
   scope                         :attending, -> { where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL") }
@@ -35,7 +36,8 @@ class Registration < ActiveRecord::Base
   validates_numericality_of     :discount_value, allow_nil: true
   validates_length_of           :payment_comment, :maximum => 255
   
-  delegate :first_name, :last_name, :full_name, :email, :address, :address2, :city, :state, :country, :zipcode, :phone, :to => :user_profile
+  delegate                      :first_name, :last_name, :full_name, :email, :address, :address2, 
+                                :city, :state, :country, :zipcode, :phone, :to => :user_profile
   
   # The amount_paid currency should match the workshop base currency
   #------------------------------------------------------------------------------

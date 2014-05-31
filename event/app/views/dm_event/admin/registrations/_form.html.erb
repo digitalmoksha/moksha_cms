@@ -5,15 +5,51 @@
     <%= link_to icon_label(:view, 'Registrations'), [:admin, @workshop], class: 'btn btn-xs btn-default' %>
   <% end %>
 <% end %>
-<% content_for :sidebar do %>
-  <ul class="navigation-light block">
-  </ul>
-<% end %>
 
 <% if @workshop.workshop_prices.empty? %>
   <h5>No workshop prices / options defined</h5>
 <% else %>
   <div class="row">
+    <div class="col-md-6">
+      <%= panel title: 'Registration Details' do %>
+        <%= simple_form_for @registration, url: admin_registration_path,
+              html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+        
+          <%= subsection title: 'Prices' do %>
+            <%= f.error_notification message: "Please review the problems below" %>
+            <div class="workshop_price_list">
+              <%= f.input :workshop_price_id, collection: @workshop.workshop_prices.map { |r| [price_details(r), r.id] }  %>
+            </div>
+
+            <% if @registration.workshop_price && @registration.workshop_price.price %>
+              <% discount_currency = @registration.workshop_price.price.currency.symbol %>
+
+              <%= f.input :discount_value, error: false, label: 'Discount' do %>
+                <%= f.input_field :discount_value %>
+                <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]], {}, {style: "width: 60px", class: "select optional"} %>
+              <% end %>
+            
+            <% end %>
+        
+            <%= f.input :payment_comment, label: 'Comment', as: :text_full_width, rows: 3 %>
+          <% end %>
+
+          <%= subsection title: 'Custom Fields' do %>
+            <% if @registration.custom_fields %>
+              <% f.object.build_missing_fields @workshop %>
+              <%= f.simple_fields_for :custom_fields do |builder| %>
+                <% field = builder.object %>
+                <%= render "dm_core/admin/custom_fields/#{field.field_type}", field: field, f: builder %>
+              <% end %>
+            <% else %>
+              No custom fields defined
+            <% end %>
+          <% end %>
+          
+          <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop), delete_url: [:admin, @registration], delete_confirm: 'Are you sure you wish to delete this registration?  Any associated payments will also be deleted!' %>
+        <% end %>
+      <% end %>
+    </div>
     <div class="col-md-6">
       <% toolbar = toolbar_btn(icons(:new), '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'New Payment', class: "btn btn-link btn-icon") %>
       <%= panel body: false, title: 'Recorded Payments', toolbar: toolbar do %>
@@ -47,34 +83,6 @@
       <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
     </div>
 
-    <div class="col-md-6">
-      <%= panel title: 'Payment Details' do %>
-        <%= simple_form_for @registration, url: admin_registration_path,
-              html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
-        
-          <%= f.error_notification message: "Please review the problems below" %>
-          <div class="workshop_price_list">
-            <%= f.input :workshop_price_id, as: :radio_buttons, collection: @workshop.workshop_prices.map { |r| [price_details(r), r.id] }  %>
-          </div>
-
-          <div class="separator"></div>
-
-          <% if @registration.workshop_price && @registration.workshop_price.price %>
-            <% discount_currency = @registration.workshop_price.price.currency.symbol %>
-
-            <%= f.input :discount_value, error: false, label: 'Discount' do %>
-              <%= f.input_field :discount_value %>
-              <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]], {}, {style: "width: 60px", class: "select optional"} %>
-            <% end %>
-            
-          <% end %>
-        
-          <%= f.input :payment_comment, label: 'Comment', as: :text_full_width, rows: 3 %>
-      
-          <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop), delete_url: [:admin, @registration], delete_confirm: 'Are you sure you wish to delete this registration?  Any associated payments will also be deleted!' %>
-        <% end %>
-      <% end %>
-    </div>
   </div>
 
   <%= simple_form_for :payment_history, url: ajax_payment_admin_registration_path(@registration),
