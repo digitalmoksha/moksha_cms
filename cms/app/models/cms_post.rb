@@ -43,17 +43,21 @@ class CmsPost < ActiveRecord::Base
   # :notification_sent_on column after emails sent.
   # Use 'sets' to only end up with a unique list of users
   #------------------------------------------------------------------------------
-  def send_notification_emails
-    success   = failed = 0
-    user_list = cms_blog.member_list(:all).to_set
-    cms_blog.followers.each {|follower| user_list << follower.user}
-
+  def send_notification_emails(test_user = nil)
+    success = failed = 0
+    if test_user
+      user_list = [test_user]
+    else
+      user_list = cms_blog.member_list(:all).to_set
+      cms_blog.followers.each {|follower| user_list << follower.user}
+    end
     user_list.each do |user|
       email     = PostNotifyMailer.post_notify(user, self).deliver
       success  += 1 if email
       failed   += 1 if email.nil?
     end
-    update_attribute(:notification_sent_on, Time.now)
+
+    update_attribute(:notification_sent_on, Time.now) unless test_user
     return {success: success, failed: failed}
   end
 

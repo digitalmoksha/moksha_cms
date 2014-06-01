@@ -58,9 +58,10 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
   
   #------------------------------------------------------------------------------
   def send_notifications_emails
-    status = @post.send_notification_emails
+    status = @post.send_notification_emails(params[:test] ? current_user : nil)
     redirect_to admin_cms_blog_url(@blog), notice: "Notification emails sent ==>  Success: #{status[:success]}  Failed: #{status[:failed]}"
   end
+
 private
 
   #------------------------------------------------------------------------------

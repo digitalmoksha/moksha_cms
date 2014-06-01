@@ -13,6 +13,7 @@
           <% else %>
             <li><%= link_to 'Re-Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), method: :put, data: {confirm: "WARNING: An email was already sent on #{format_datetime(@post.notification_sent_on)}.  Are you sure you want to send another?"} %></li>
           <% end %>
+          <li><%= link_to 'Send Test Email', send_notifications_emails_admin_cms_post_path(@post, test: true), method: :put, data: {confirm: 'This will send a test post notification email to your email account.  Are you sure?'} %></li>
           <li><%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.post_show_url(@post.cms_blog.slug, @post.slug))}", target: '_blank' %></li>            
         </ul>
       </div>
