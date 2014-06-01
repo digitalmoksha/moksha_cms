@@ -47,7 +47,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @registration.user_profile.assign_attributes(profile_params)
 
     if @registration.save
-      if @workshop.payments_enabled?
+      if @workshop.payments_enabled? && !@workshop.require_review?
         redirect_to register_choose_payment_url(@registration.receipt_code)
       else
         redirect_to register_success_url(@registration.receipt_code)
