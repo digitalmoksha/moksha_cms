@@ -240,7 +240,7 @@
                     <td class="headerContent">
                   
                       <!-- // Begin Module: Standard Header Image \\ -->
-                      <% if @header_image %>
+                      <% unless @header_image.blank? %>
                         <img src="<%= site_asset_media_url(@header_image) %>" style="max-width:650px;" id="headerImage" />
                       <% end %>
                       <!-- // End Module: Standard Header Image \\ -->
