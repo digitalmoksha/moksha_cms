@@ -1,9 +1,21 @@
 <% unless @post.new_record? %>
-  <% content_for :content_title, h(@post.title) + content_tag(:small, @blog.title) %>
+  <% content_for :content_title, @post.title %>
+  <% content_for :content_subtitle, @blog.title %>
   <% content_for :content_title_extra do %>
     <%= page_header_buttons do %>
       <%= present(@post).label_published %>
       <%= link_to(icon_label(:view, 'View'), post_show_url(@blog, @post), class: "btn btn-xs btn-default", title: 'View', target: '_blank') %>
+      <div class="btn-group">
+        <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><%= icons(:gear) %> <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right icons-right">
+          <% if @post.notification_sent_on.nil? %>
+            <li><%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), method: :put, data: {confirm: 'This will send a post notification email to each user of this blog.  Are you sure?'} %></li>
+          <% else %>
+            <li><%= link_to 'Re-Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), method: :put, data: {confirm: "WARNING: An email was already sent on #{format_datetime(@post.notification_sent_on)}.  Are you sure you want to send another?"} %></li>
+          <% end %>
+          <li><%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.post_show_url(@post.cms_blog.slug, @post.slug))}", target: '_blank' %></li>            
+        </ul>
+      </div>
     <% end %>
   <% end %>
 <% else %>
@@ -51,16 +63,6 @@
 
     <%= submit_or_cancel cancel_url: admin_cms_blog_path(@blog), delete_url: ([:admin, @post] unless @post.new_record?), delete_confirm: 'Are you sure you wish to delete this post?  All comments will also be deleted!' %>
 
-  <% end %>
-<% end %>
-
-<% unless @post.new_record? %>
-  <% content_for :sidebar do %>
-    <% if @post.notification_sent_on.nil? %>
-      <%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), class: "action-button btn-primary semi-block", method: :put, data: {confirm: 'This will send a post notification email to each user of this blog.  Are you sure?'} %>
-    <% else %>
-      <%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_post_path(@post), class: "action-button btn-warning semi-block", method: :put, data: {confirm: "WARNING: An email was already sent on #{format_datetime(@post.notification_sent_on)}.  Are you sure you want to send another?"} %>
-    <% end %>
   <% end %>
 <% end %>
 

@@ -240,7 +240,9 @@
                     <td class="headerContent">
                   
                       <!-- // Begin Module: Standard Header Image \\ -->
-                      <img src="<%= site_asset_url('newsletter/template/email_header_blog_notify.jpg') %>" style="max-width:650px;" id="headerImage" />
+                      <% if @header_image %>
+                        <img src="<%= site_asset_media_url(@header_image) %>" style="max-width:650px;" id="headerImage" />
+                      <% end %>
                       <!-- // End Module: Standard Header Image \\ -->
                   
                     </td>

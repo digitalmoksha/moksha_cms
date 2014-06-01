@@ -16,6 +16,7 @@ class PostNotifyMailer < DmCore::SiteMailer
     @post_title                 = post.title
     @post_link                  = dm_cms.post_show_url(post.cms_blog.slug, post.slug, locale: I18n.locale)
     @post                       = post
+    @header_image               = post.cms_blog.image_email_header || post.cms_blog.image
 
     headers = { "Return-Path" => account.preferred_blog_from_email || account.preferred_smtp_from_email }
     mail( from: account.preferred_blog_from_email || account.preferred_smtp_from_email,

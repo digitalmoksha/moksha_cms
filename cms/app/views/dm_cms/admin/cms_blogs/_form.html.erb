@@ -1,29 +1,34 @@
 <% content_for :content_title, @title %>
+
 <% submit_url = (@blog.new_record? ? admin_cms_blogs_path : admin_cms_blog_path) %>
 <%= simple_form_for @blog, url: submit_url,
     html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
 
   <%= f.error_notification message: "Please review the problems below<ul><li>one</li></ul>" %>
-  <% toolbar = capture do %>
-    <%= link_to icons(:cancel), admin_cms_blogs_path, class: 'btn btn-link btn-icon' %>
-  <% end %>
-  <%= panel toolbar: toolbar do %>
+  <%= panel header: false do %>
     <%= locale_tabs do |locale| %>
       <%= f.input "title_#{locale}", label: 'Blog Title', id: 'name_error', required: true %>
     <% end %>
-    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
-    <%= f.input :published, as: :toggle, label: 'Publish It?' %>
-    <%= f.input :is_public, as: :toggle, label: 'Make Blog Public?', hint: 'This will allow anyone to see the blog.  Use option below to restrict to registered users' %>
-    <%= f.input :requires_login, as: :toggle, label: 'Public Requires Login?', hint: 'If this is a public blog, user must be logged in to see it.  (All private blogs automatically require login)' %>
+    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.', input_html: {class: 'width_50_percent'} %>
+    <%= f.input :published, as: :boolean, label: 'Publish It?' %>
+    <%= f.input :is_public, as: :boolean, label: 'Make Blog Public?', hint: 'This will allow anyone to see the blog.  Use option below to restrict to registered users' %>
+    <%= f.input :requires_login, as: :boolean, label: 'Public Requires Login?', hint: 'If this is a public blog, user must be logged in to see it.  (All private blogs automatically require login)' %>
     <% if defined? DmSubscriptions %>
-      <%= f.input :requires_subscription, as: :toggle, label: 'Subscription Required?', hint: 'User must have a paid subscription to access' %>
+      <%= f.input :requires_subscription, as: :boolean, label: 'Subscription Required?', hint: 'User must have a paid subscription to access' %>
     <% end %>
-    <%= f.input :comments_allowed, as: :toggle, label: 'Allow Comments', hint: 'Controls whether commenting is allowed for this blog.  If on, then each post can decided whether to allow comments' %>
-    <%= f.input :preferred_show_social_buttons, as: :toggle, label: 'Show social buttons', hint: 'This setting will be ignored for private blogs' %>
-    <%= f.input :image, label: 'Header Image', hint: 'An image for the entire blog' %>
-    <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
-
-    <%= submit_or_cancel cancel_url: admin_cms_blogs_path, delete_url: ([:admin, @blog] unless @blog.new_record?), delete_confirm: 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!' %>
+    <%= f.input :comments_allowed, as: :boolean, label: 'Allow Comments', hint: 'Controls whether commenting is allowed for this blog.  If on, then each post can decided whether to allow comments' %>
+    <%= f.input :preferred_show_social_buttons, as: :boolean, label: 'Show social buttons', hint: 'This setting will be ignored for private blogs' %>
+    
+    <%= subsection title: 'Header Style' do %>
+      <%= f.input :image, label: 'Header Image', hint: 'An image for the entire blog', input_html: {class: 'width_50_percent'} %>
+      <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color', input_html: {class: 'width_50_percent'} %>
+    <% end %>
+    
+    <%= subsection title: 'Email Notifications' do %>
+      <%= f.input :image_email_header, label: 'Notification Image', hint: 'Image used in the header of notification emails. If blank, uses the blog\'s image', input_html: {class: 'width_50_percent'} %>
+    <% end %>
+    
+    <%= submit_or_cancel cancel_url: submit_url, delete_url: ([:admin, @blog] unless @blog.new_record?), delete_confirm: 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!' %>
 
   <% end %>
 <% end %>

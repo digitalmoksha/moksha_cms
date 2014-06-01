@@ -27,7 +27,6 @@
     <thead>
       <tr>
         <th>Title</th>
-        <th width="18"><span class='hovertip' title='Clear Facebook cache for the post'><%= icons('icon-facebook') %></span></th>
         <th width="18"><span class='hovertip' title='Notification email sent'><%= icons('icon-envelop') %></span></th>
         <th width="50">Status</th>
       </tr>
@@ -38,10 +37,6 @@
           <tr class="item" data-item_id="<%= post.id %>">
             <td>
               <%= link_to(post.title, edit_admin_cms_post_path(post)) %>
-            </td>
-            <td>
-              <%= link_to icons('icon-facebook'), "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.post_show_url(post.cms_blog.slug, post.slug))}",
-                 target: '_blank' %>
             </td>
             <td>
               <% if post.notification_sent_on %>
