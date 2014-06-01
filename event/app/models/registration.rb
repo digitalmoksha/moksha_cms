@@ -11,15 +11,15 @@ class Registration < ActiveRecord::Base
 
   self.table_name               = 'ems_registrations'
 
-  belongs_to                    :workshop, :counter_cache => true
+  belongs_to                    :workshop, counter_cache: true
   belongs_to                    :workshop_price
   belongs_to                    :user_profile
   belongs_to                    :account
-  has_many                      :payment_histories, :as => :owner, :dependent => :destroy                              
+  has_many                      :payment_histories, as: :owner, dependent: :destroy                              
 
   accepts_nested_attributes_for :user_profile
   
-  monetize                      :amount_paid_cents, :with_model_currency => :amount_paid_currency, :allow_nil => true
+  monetize                      :amount_paid_cents, with_model_currency: :amount_paid_currency, allow_nil: true
   
   default_scope                 { where(account_id: Account.current.id) }
   scope                         :attending, -> { where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL") }
@@ -31,13 +31,13 @@ class Registration < ActiveRecord::Base
   before_create                 :set_currency
   after_create                  :set_receipt_code
   
-  validates_presence_of         :workshop_price_id, :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
-  validates_presence_of         :workshop_price_id, :if => Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
+  validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
+  validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
   validates_numericality_of     :discount_value, allow_nil: true
-  validates_length_of           :payment_comment, :maximum => 255
+  validates_length_of           :payment_comment, maximum: 255
   
   delegate                      :first_name, :last_name, :full_name, :email, :address, :address2, 
-                                :city, :state, :country, :zipcode, :phone, :to => :user_profile
+                                :city, :state, :country, :zipcode, :phone, to: :user_profile
   
   # The amount_paid currency should match the workshop base currency
   #------------------------------------------------------------------------------
@@ -161,7 +161,7 @@ class Registration < ActiveRecord::Base
   
   # Setup the columns for exporting data as csv.
   #------------------------------------------------------------------------------
-  def self.csv_columns
+  def self.csv_columns(workshop)
     column_definitions = []
     column_definitions <<     ["Receipt Code",      "'R-' + item.receipt_code", 75] # 'R-' makes sure Numbers treats as a String, not a Date
     column_definitions <<     ['Process State',     'item.aasm_state', 100]
@@ -176,15 +176,25 @@ class Registration < ActiveRecord::Base
     column_definitions <<     ["Zipcode",           "item.zipcode"]
     column_definitions <<     ["Country",           "item.country.code"]
 
-    column_definitions <<     ['Registered on',     'item.created_at.to_date', 75, {:type => 'DateTime', :numberformat => 'd mmm, yyyy'}]
+    column_definitions <<     ['Registered on',     'item.created_at.to_date', 75, {type: 'DateTime', numberformat: 'd mmm, yyyy'}]
 
-    column_definitions <<     ["Price",             "item.workshop_price.price.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+    column_definitions <<     ["Price",             "item.workshop_price.price.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
     column_definitions <<     ["Price Description", "item.workshop_price.price_description"]
     column_definitions <<     ["Price Sub Descr",   "item.workshop_price.sub_description"]
-    column_definitions <<     ["Discount",          "item.discount.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
-    column_definitions <<     ["Paid",              "item.amount_paid.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
-    column_definitions <<     ["Balance",           "item.balance_owed.to_f", nil, {:type => 'Number', :numberformat => '#,##0.00'}]
+    column_definitions <<     ["Discount",          "item.discount.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
+    column_definitions <<     ["Paid",              "item.amount_paid.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
+    column_definitions <<     ["Balance",           "item.balance_owed.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
 
+    # ---- add the extra fields defined in the workshop record
+    workshop.custom_field_defs.each_with_index do | x, index |
+      case x.field_type
+      when 'check_box_collection'
+        column_definitions << [ "#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, {type: 'list', custom_field: true}]
+      when 'divider'
+      else
+        column_definitions << [ "#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, {custom_field: true}]
+      end
+    end
     return column_definitions
   end
 
@@ -199,31 +209,31 @@ class Registration < ActiveRecord::Base
     if payment_history
       new_amount_paid = self.amount_paid - self.workshop_price.to_base_currency(payment_history.total) + self.workshop_price.to_base_currency(amount)
       payment_history.update_attributes(
-        :item_ref             => options[:item_ref],
-        :cost                 => cost,
-        :total_cents          => amount.cents,
-        :total_currency       => amount.currency.iso_code,
-        :payment_method       => options[:payment_method],
-        :bill_to_name         => options[:bill_to_name],
-        :payment_date         => options[:payment_date],
-        :user_profile_id      => user_profile.id)
+        item_ref: options[:item_ref],
+        cost: cost,
+        total_cents: amount.cents,
+        total_currency: amount.currency.iso_code,
+        payment_method: options[:payment_method],
+        bill_to_name: options[:bill_to_name],
+        payment_date: options[:payment_date],
+        user_profile_id: user_profile.id)
     else
       new_amount_paid = self.amount_paid + self.workshop_price.to_base_currency(amount)
       payment_history   = self.payment_histories.create(
-          :anchor_id            => receipt_code,
-          :item_ref             => options[:item_ref],
-          :cost                 => cost,
-          :quantity             => 1,
-          :discount             => 0,
-          :total_cents          => amount.cents,
-          :total_currency       => amount.currency.iso_code,
-          :payment_method       => options[:payment_method],
-          :bill_to_name         => options[:bill_to_name],
-          :payment_date         => options[:payment_date],
-          :user_profile_id      => (user_profile ? user_profile.id : nil),
-          :notify_data          => options[:notify_data],
-          :transaction_id       => options[:transaction_id],
-          :status               => (user_profile ? "Completed" : options[:status])
+          anchor_id: receipt_code,
+          item_ref: options[:item_ref],
+          cost: cost,
+          quantity: 1,
+          discount: 0,
+          total_cents: amount.cents,
+          total_currency: amount.currency.iso_code,
+          payment_method: options[:payment_method],
+          bill_to_name: options[:bill_to_name],
+          payment_date: options[:payment_date],
+          user_profile_id: (user_profile ? user_profile.id : nil),
+          notify_data: options[:notify_data],
+          transaction_id: options[:transaction_id],
+          status: (user_profile ? "Completed" : options[:status])
       )
     end
         

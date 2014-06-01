@@ -3,7 +3,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
   include DmCore::PermittedParams
   include CsvExporter
   
-  before_filter   :workshop_lookup, :except => [:index, :new, :create]
+  before_filter   :workshop_lookup, except: [:index, :new, :create]
   
   helper DmEvent::WorkshopsHelper
 
@@ -49,8 +49,8 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: RegistrationDatatable.new(view_context) }
-      format.xls { data_export(Registration.csv_columns, @registrations, :filename => @workshop.slug, :expressions => true, :format => 'xls') }
-      format.csv { data_export(Registration.csv_columns, @registrations, :filename => @workshop.slug, :expressions => true, :format => 'csv') }
+      format.xls { data_export(Registration.csv_columns(@workshop), @registrations, filename: @workshop.slug, expressions: true, format: 'xls') }
+      format.csv { data_export(Registration.csv_columns(@workshop), @registrations, filename: @workshop.slug, expressions: true, format: 'csv') }
     end    
   end
   
@@ -66,7 +66,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
     if put_or_post?
       @system_email.attributes = system_email_params
       if @system_email.save
-        redirect_to edit_system_email_admin_workshop_path(@workshop, :email_type => @system_email.email_type), notice: 'Email was successfully updated.'
+        redirect_to edit_system_email_admin_workshop_path(@workshop, email_type: @system_email.email_type), notice: 'Email was successfully updated.'
       end
     end    
   end
