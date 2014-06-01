@@ -45,6 +45,21 @@ class CustomField < ActiveRecord::Base
     # prepare_data
   end
   
+  # Returns a munged value depending on the field type.  Used when data is exported.
+  #------------------------------------------------------------------------------
+  def value
+    #--- if field is a country field, convert the country_id into real name
+    if custom_field_def.field_type == 'country'
+      Country.find(self.field_data.to_i).english_name
+    elsif self.field_data.is_a? Array
+      # make into a comma delimited string.  remove any blank/nil entries
+      self.field_data.reject {|x| x.blank?}.join(', ')
+    else
+      self.field_data
+    end
+  end
+  
+  
   # # Munge the data so that it's stored correctly
   # #------------------------------------------------------------------------------
   # def prepare_data
@@ -71,18 +86,6 @@ class CustomField < ActiveRecord::Base
   #   self.field_data.nil? ? [] : self.field_data.split(',').collect { |item| item.strip }
   # end  
   # 
-  # # Returns a munged value depending on the field type.  use self.data for the 
-  # # real stored value
-  # #------------------------------------------------------------------------------
-  # def value
-  #   #--- if field is a country field, convert the country_id into real name
-  #   if custom_field_def.field_type == 'country'
-  #     return Country.find(self.field_data.to_i).english_name
-  #   else
-  #     return self.field_data
-  #   end
-  # end
-  
   # #------------------------------------------------------------------------------
   # def human_attribute_name(key)
   #   label.blank? ? 'Field' : "'#{nls(label, namespace: 'site_custom_field')}'"
