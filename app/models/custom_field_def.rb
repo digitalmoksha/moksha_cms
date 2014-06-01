@@ -18,19 +18,17 @@ class CustomFieldDef < ActiveRecord::Base
 
   validates_presence_of   :field_type
   validates_length_of     :field_type, maximum: 20
-  validates_presence_of   :name
-  validates_length_of     :name, maximum: 50
 
-  FIELD_TYPES = [ ['Text Field', 'text_field'], 
-                  ['Text Area', 'text_area'],
-                  ['Number Field', 'number_field'],
-                  ['Checkboxes', 'check_box_collection'], 
-                  ['Radio Buttons', 'radio_buttons'], 
-                  ['Drop Down Menu', 'select'], 
+  FIELD_TYPES = [ ['Text Field',      'text_field'], 
+                  ['Text Area',       'text_area'],
+                  ['Number Field',    'number_field'],
+                  ['Checkboxes',      'check_box_collection'], 
+                  ['Radio Buttons',   'radio_buttons'], 
+                  ['Drop Down Menu',  'select'], 
+                  ['Divider',         'divider']
                   # ['Date/Time Selection', 'date_time'],
                   # ['Date Selection', 'date'],
                   # ['Country Selection', 'country'],
-                  ['Divider', 'divider']
                 ].freeze
 
   #------------------------------------------------------------------------------
@@ -43,6 +41,12 @@ class CustomFieldDef < ActiveRecord::Base
     choice_list.split(',').collect { |item| item.strip }
   end
   
+  # Text to use for the column during export or in reports.  The label will
+  # be used if the 'name' attribute is blank
+  #------------------------------------------------------------------------------
+  def column_name
+    self.name.blank? ? self.label.to_s_default : self.name
+  end
 
 end
 
