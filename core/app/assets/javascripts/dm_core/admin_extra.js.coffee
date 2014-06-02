@@ -9,13 +9,30 @@ $(document).ready ->
       mode: {name: mode, underscoresBreakWords: false},
       theme: theme,
       indentWithTabs: false,
+      tabSize: 2,
+      indentUnit: 2,
       lineWrapping: true,
       extraKeys: {
-        "F11": (cm) ->
+        'F11': (cm) ->
           cm.setOption("fullScreen", !cm.getOption("fullScreen"))
-        "Esc": (cm) ->
+
+        'Esc': (cm) ->
           if (cm.getOption("fullScreen"))
             cm.setOption("fullScreen", false)
+
+        'Tab': (cm) ->
+          if (cm.somethingSelected())
+            cm.indentSelection("add")
+            return
+
+          if cm.getOption('indentWithTabs')
+            cm.replaceSelection("\t", "end", "+input")
+          else
+            cm.execCommand("insertSoftTab")
+
+        "Shift-Tab": (cm) ->
+          cm.indentSelection("subtract")
+        
       }
     })
 
