@@ -80,7 +80,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   #------------------------------------------------------------------------------
   def success
     @registration = Registration.find_by_receipt_code(params[:receipt_code])
-    if @registration.nil? || current_user.nil? || @registration.user_profile.user != current_user
+    if @registration.nil? || @registration.user_profile.user != current_user # TODO Fix this!! || current_user.nil?
       #--- not logged in or not the users registration
       flash[:alert] = I18n.t('core.resource_invalid')
       redirect_to main_app.root_url and return
