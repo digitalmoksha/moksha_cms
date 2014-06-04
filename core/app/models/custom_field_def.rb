@@ -1,13 +1,16 @@
 # Reference: "Handle Multiple Models in One Form" from "Advanced Rails Recipes"
 # and http://railscasts.com/episodes/403-dynamic-forms
 # and http://railscasts.com/episodes/196-nested-model-form-revised
+# Note: tried to use coder: JSON for the store, but kept getting a 
+# "A JSON text must at least contain two octets!" exception (from new fields)
+# so store in yaml format instead
 #------------------------------------------------------------------------------
 class CustomFieldDef < ActiveRecord::Base
   self.table_name         = 'core_custom_field_defs'
                           
   belongs_to              :owner, polymorphic: true
   has_many                :custom_fields, dependent: :destroy
-  store                   :properties, accessors: [:choice_list, :valid_until], coder: JSON
+  store                   :properties, accessors: [:choice_list, :valid_until]
                           
   include RankedModel
   ranks                   :row_order, with_same: [:owner_id, :owner_type]
