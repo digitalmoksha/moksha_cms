@@ -1,6 +1,7 @@
 class DmCms::PagesController < DmCms::ApplicationController
   include ApplicationHelper
   include DmCore::UrlHelper
+  include DmCore::LiquidHelper
   helper DmCms::RenderHelper
   helper DmCore::LiquidHelper
   
@@ -34,7 +35,7 @@ class DmCms::PagesController < DmCms::ApplicationController
     when 'content'
       status = (@current_page.slug == 'missing' ? 404 : 200)
       content_for :page_title, @current_page.title
-      set_meta description: @current_page.summary, "og:description" => @current_page.summary
+      set_meta description: @current_page.summary, "og:description" => sanitize_text(markdown(@current_page.summary, safe: false))
       set_meta "og:image" => site_asset_media_url(@current_page.image) if @current_page.image.present?
       #--- if body=true, then use a minimal template to render, suitable for a minimal iFrame
       if params['body'] == 'true'

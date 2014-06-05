@@ -7,6 +7,7 @@ class DmCms::PostsController < DmCms::ApplicationController
   helper  DmCms::PostsHelper
   include DmCore::RenderHelper
   include DmCore::UrlHelper
+  include DmCore::LiquidHelper
 
   before_filter   :post_lookup, except: [:ajax_add_comment, :ajax_edit_comment, :ajax_delete_comment]
 
@@ -20,7 +21,7 @@ class DmCms::PostsController < DmCms::ApplicationController
 
     #--- set title / meta data
     content_for :page_title, @post.title
-    set_meta description: @post.summary, "og:description" => @post.summary
+    set_meta description: @post.summary, "og:description" => sanitize_text(markdown(@post.summary, safe: false))
     set_meta "og:image" => site_asset_media_url(@post.image) if @post.image.present?
   end
 
