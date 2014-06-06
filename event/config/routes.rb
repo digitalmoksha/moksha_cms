@@ -27,8 +27,8 @@ DmEvent::Engine.routes.draw do
 
     get   '/event/register/:id/new',                            controller: 'registrations', action: :new,                as: :register_new
     post  '/event/register/:id/create',                         controller: 'registrations', action: :create,             as: :register_create, via: :post
-    get   '/event/register/success/(:receipt_code)',            controller: 'registrations', action: :success,            as: :register_success
-    get   '/event/register/choose_payment/(:receipt_code)',     controller: 'registrations', action: :choose_payment,     as: :register_choose_payment
+    get   '/event/register/success/(:uuid)',                    controller: 'registrations', action: :success,            as: :register_success
+    get   '/event/register/choose_payment/(:uuid)',             controller: 'registrations', action: :choose_payment,     as: :register_choose_payment
     get   '/event/register/payments_return',                    controller: 'registrations', action: :payments_return,    as: :register_payments_return
     post  '/event/payment/paypal_ipn',                          controller: 'payments',      action: :paypal_ipn,         as: :payment_paypal_ipn
     post  '/event/payment/sofort_ipn',                          controller: 'payments',      action: :sofort_ipn,         as: :payment_sofort_ipn

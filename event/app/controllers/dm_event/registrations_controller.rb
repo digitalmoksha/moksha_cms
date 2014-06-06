@@ -4,6 +4,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   include DmEvent::PermittedParams
   include ActiveMerchant::Billing::Integrations
   include DmCore::UrlHelper
+  include DmCore::LiquidHelper
 
   protect_from_forgery :except => [:paypal_ipn, :sofort_ipn]
 
@@ -27,7 +28,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
       end
       @registration.user_profile.userless_registration = true if current_user.nil? && !@workshop.require_account
 
-      set_meta description: @workshop.summary, "og:description" => @workshop.summary
+      set_meta description: @workshop.summary, "og:description" => sanitize_text(markdown(@workshop.summary, safe: false))
       set_meta "og:image" => site_asset_media_url(@workshop.image) if @workshop.image.present?
     else
       render action: :closed
@@ -48,9 +49,9 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
     if @registration.save
       if @workshop.payments_enabled? && !@workshop.require_review?
-        redirect_to register_choose_payment_url(@registration.receipt_code)
+        redirect_to register_choose_payment_url(@registration.uuid)
       else
-        redirect_to register_success_url(@registration.receipt_code)
+        redirect_to register_success_url(@registration.uuid)
       end
     else
       render action: :new
@@ -60,7 +61,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   # Only allow to proceed with payment if the registration is still in pending
   #------------------------------------------------------------------------------
   def choose_payment
-    @registration = Registration.find_by_receipt_code(params[:receipt_code])
+    @registration = Registration.find_by_uuid(params[:uuid])
     @workshop     = @registration.workshop if @registration
     flash[:alert] = I18n.t('core.resource_invalid')
     redirect_to main_app.root_url and return if @registration.nil? || !@registration.accepted?
@@ -74,14 +75,14 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     end
   end
   
-  # Success page for a registration.  Look up the receipt code and display success.
+  # Success page for a registration.  Look up the uuid and display success.
   # Can do this many times - if the user doesn't own the registration, then kick
   # them out.
   #------------------------------------------------------------------------------
   def success
-    @registration = Registration.find_by_receipt_code(params[:receipt_code])
-    if @registration.nil? || @registration.user_profile.user != current_user # TODO Fix this!! || current_user.nil?
-      #--- not logged in or not the users registration
+    @registration = Registration.find_by_uuid(params[:uuid])
+    if @registration.nil? || @registration.user_profile.user != current_user
+      #--- not logged in or not the users registration (for )
       flash[:alert] = I18n.t('core.resource_invalid')
       redirect_to main_app.root_url and return
     end

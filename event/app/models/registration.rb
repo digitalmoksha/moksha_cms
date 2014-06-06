@@ -28,9 +28,11 @@ class Registration < ActiveRecord::Base
   scope                         :unpaid,    -> { where("aasm_state = 'accepted' AND archived_on IS NULL") } # same as accepted
   scope                         :discounted,-> { where("discount_value > 0") } # use like registrations.attending.discounted
 
+  after_initialize              :create_uuid
   before_create                 :set_currency
   after_create                  :set_receipt_code
   
+  validates_uniqueness_of       :uuid
   validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
   validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
   validates_numericality_of     :discount_value, allow_nil: true
@@ -39,6 +41,17 @@ class Registration < ActiveRecord::Base
   delegate                      :first_name, :last_name, :full_name, :email, :address, :address2, 
                                 :city, :state, :country, :zipcode, :phone, to: :user_profile
   
+
+private
+
+  # the uuid is used to provide a private url to a customer so that they can access
+  # their registration if not logged in.  This is particularly important when
+  # a customer registers without having a user account.
+  #------------------------------------------------------------------------------
+  def create_uuid
+    self.uuid = SecureRandom.uuid if self.new_record?
+  end
+
   # The amount_paid currency should match the workshop base currency
   #------------------------------------------------------------------------------
   def set_currency
@@ -52,6 +65,8 @@ class Registration < ActiveRecord::Base
     update_attribute(:receipt_code, receipt_code)
   end
   
+public
+
   # receipt code is simply the record id + 1100
   #------------------------------------------------------------------------------
   def self.receiptcode_to_id(receiptcode)
@@ -264,7 +279,7 @@ class Registration < ActiveRecord::Base
   # Return the payment page url, so that it can be used in emails
   #------------------------------------------------------------------------------
   def payment_url
-    DmEvent::Engine.routes.url_helpers.register_choose_payment_url(self.receipt_code, host: Account.current.url_host, locale: I18n.locale)
+    DmEvent::Engine.routes.url_helpers.register_choose_payment_url(self.uuid, host: Account.current.url_host, locale: I18n.locale)
   end
   
 end
