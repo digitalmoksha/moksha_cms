@@ -41,6 +41,7 @@ module DmCore::LiquidHelper
   # linking, but provide safe output
   #------------------------------------------------------------------------------
   def markdown(content = '', options = {safe: true}, &block)
+    content ||= ''
     if block_given?
       html = ::Kramdown::Document.new(capture(&block)).to_html.html_safe      
     else
