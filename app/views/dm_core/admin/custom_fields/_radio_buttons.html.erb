@@ -1,3 +1,4 @@
+<% disabled ||= false %>
 <%= content_tag(:div, markdown(f.object.description), class: 'custom_field_description') unless f.object.description.blank? %>
-<%= f.input :field_data, as: :radio_buttons, collection: f.object.choice_list_array, label: field.label.blank? ? false : field.label, required: field.required? %>
-<%= f.hidden_field :custom_field_def_id %>
+<%= f.input :field_data, as: :radio_buttons, collection: f.object.choice_list_array, label: field.label.blank? ? false : field.label, required: field.required?, disabled: disabled %>
+<%= f.hidden_field(:custom_field_def_id) unless disabled %>
