@@ -90,8 +90,11 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationControlle
         new_forum_id = params[:workshop].delete(:forum).to_i
         if @workshop.forum.try(:id) != new_forum_id
           @workshop.forum = new_forum_id == 0 ? nil : Forum.find(new_forum_id)
-        end    
+        end
 
+        #--- remove any extra "custom_field" attributes left during the field definition
+        params[:workshop][:custom_field_defs_attributes].each_key {|key| params[:workshop][:custom_field_defs_attributes][key].delete(:custom_field)}
+        
         @workshop.update_attributes(workshop_params)
         redirect_to additional_configuration_admin_workshop_url(@workshop), notice: 'Workshop was successfully updated.'
       else
