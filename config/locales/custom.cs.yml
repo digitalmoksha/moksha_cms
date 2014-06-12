@@ -45,35 +45,35 @@ cs:
     profile_email: E-mail
     profile_password: Heslo
     profile_password_confirmation: Potvrzení hesla
-    profile_current_password: Proud hesla
+    profile_current_password: Současné heslo
     profile_first_name: Křestní jméno
     profile_last_name: Příjmení
-    profile_address: Ulice a číslo
-    profile_address2: Ulice a číslo
+    profile_address: Adresa
+    profile_address2: Adresa
     profile_city: Město
-    profile_state: Stát/provincie/region
+    profile_state: Stát
     profile_country: Země
     profile_zipcode: Poštovní směrovací číslo
     profile_public_name: Zveřejňované jméno
     profile_update_btn: Aktualizovat
     profile_account_settings: Nastavení účtu
-    profile_details_settings: 'Veřejné / Soukromé profil'
+    profile_details_settings: 'Veřejný / Soukromý profil'
     profile_public_title: Veřejný profil
-    profile_public_explanation: 'Následující informace bude viditelné pro ostatní lidi, jako jsou příspěvky ve fóru nebo v komentářích v blogu.'
+    profile_public_explanation: 'Tyto informace se zobrazí ostatním uživatelům (např. když přidáte komentář na fórum nebo blog).'
     profile_public_upload: Fotografie
-    profile_public_upload_help: 'Nahrajte fotografie pro použití ve vašem veřejném profilu (gif, jpg, png)'
+    profile_public_upload_help: 'Nahrát fotografii, která bude používána na Vašem veřejném profilu (gif, jpg, png)'
     profile_private_title: Soukromý profil
-    profile_private_explanation: 'Tyto informace budou drženy v tajnosti, a nesdílí ji s nikým.'
-    profile_account_title: "Aktualizace e-mail / Přihlášení"
-    profile_account_explanation: "Pamatujte si: příště přihlášení budete používat aktualizovaný e-mailovou adresu."
-    profile_account_password_title: Změnit heslo
-    profile_account_password_current_title: Proud hesla
-    profile_account_password_current_explanation: Vaše aktuální heslo je nutné provádět žádné změny.
-    profile_profile_updated: Váš profil byl aktualizován
-    profile_email_confirmation: 'E-mail byl odeslán na novou e-mailovou adresu - musíte kliknout na potvrzovací odkaz, než se můžete přihlásit pomocí nového e-mailovou adresu'
-    profile_password_updated: Vaše heslo bylo aktualizováno
-    profile_email_needs_confirmation: 'Vaše e-mailová adresa již byla změněna na'
-    profile_email_needs_confirmation_2: 'E-mail byl odeslán na zadanou emailovou adresu pro potvrzení. Pokud jste neobdrželi potvrzovací e-mail, jednoduše aktualizovat e-mail znovu odeslat znovu potvrdit.'
+    profile_private_explanation: 'Tyto informace zůstanou soukromé a nebudou s nikým sdíleny.'
+    profile_account_title: "Aktualizace e-mailu / přihlašovacích údajů"
+    profile_account_explanation: "Upozornění: až se budete přihlašovat příště, použijte nově uvedenou e-mailovou adresu."
+    profile_account_password_title: Změna hesla
+    profile_account_password_current_title: Současné heslo
+    profile_account_password_current_explanation: 'Aby mohly být provedeny změny, je třeba zadat své současné heslo.'
+    profile_profile_updated: Váš profil byl aktualizován.
+    profile_email_confirmation: 'Na Vámi uvedený nový e-mail byla odeslána zpráva, která obsahuje link. Je třeba na něj kliknout. Teprve pak se budete moci přihlásit pomocí Vámi uvedené nové e-mailové adresy.'
+    profile_password_updated: Vaše heslo bylo aktualizováno.
+    profile_email_needs_confirmation: 'Vaše e-mailová adresa byla změněna na'
+    profile_email_needs_confirmation_2: 'Na zadanou e-mailovou adresu byl zaslán potvrzující e-mail. Pokud jste jej neobdrželi, jednoduše aktualizujte svůj e-mail znovu. Potvrzení bude znovu odesláno.'
     
   email:
     salutation: 'Drahý/Drahá %{value},'
