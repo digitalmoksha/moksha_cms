@@ -13,7 +13,7 @@
 
   <% unless @workshop.require_account && current_user.nil? %>
     <%= simple_form_for @registration, url: register_create_url(@workshop, anchor: 'ticket_information'),
-    html: { class: 'form-horizontal' }, wrapper: :bs2_horizontal_form do |f| %>
+    html: { class: 'form-horizontal' }, wrapper: simple_form_theme_wrapper do |f| %>
     
       <%= render partial: 'section_prices', locals: {f: f} %>
 

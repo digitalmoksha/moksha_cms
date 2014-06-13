@@ -209,6 +209,16 @@ class Workshop < ActiveRecord::Base
     User.includes(:user_profile).references(:user_profile).where(user_profiles: { id: self.registrations.attending.map(&:user_profile_id) } )
   end
 
+  #------------------------------------------------------------------------------
+  def header_image(default = nil)
+    self.image || default
+  end
+
+  #------------------------------------------------------------------------------
+  def header_accent_color(default = '')
+    self.preferred_header_accent_color || default
+  end
+  
   # Find list of new users (within a certain date range) that have not registered
   # for any events.  Not perfect, since people can register just to access special
   # content.  But gives rough idea of people creating an account but not realizing
