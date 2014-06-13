@@ -195,6 +195,12 @@ class Account < ActiveRecord::Base
     end
   end
   
+  # Get the value of the specific theme option.  
+  #------------------------------------------------------------------------------
+  def theme_option(option_name)
+    theme_data(parent: true).merge(theme_data)[option_name.to_s]
+  end
+  
   # get the account's theme filesystem path
   #------------------------------------------------------------------------------
   def theme_path

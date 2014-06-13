@@ -89,5 +89,11 @@ module DmCore
       end
     end
     
+    # Return the name of the simple_form wrapper to use, which the theme can 
+    # specify.  Typically either :bs2_horizontal_form or :bs3_horizontal_form.
+    #------------------------------------------------------------------------------
+    def simple_form_theme_wrapper
+      Account.current.theme_option(:simple_form_wrapper) || :bs2_horizontal_form
+    end
   end
 end
