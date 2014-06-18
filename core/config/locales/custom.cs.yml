@@ -42,6 +42,7 @@ cs:
     unlock_email_3: "Pro odblokování svého účtu klikněte na níže uvedený odkaz."
     unlock_email_link: Odblokovat účet
 
+    profile_full_name: "%{firstname} %{lastname}"
     profile_email: E-mail
     profile_password: Heslo
     profile_password_confirmation: Potvrzení hesla

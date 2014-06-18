@@ -44,6 +44,7 @@ fi:
     unlock_email_3: "Klikkaa alla olevaa linkkiä avataksesi tilisi."
     unlock_email_link: Avaa tilini
 
+    profile_full_name: "%{firstname} %{lastname}"
     profile_email: Sähköposti
     profile_password: Salasana
     profile_password_confirmation: Salasanan vahvistaminen

@@ -68,7 +68,7 @@ module DmCore
         
         #------------------------------------------------------------------------------
         def full_name
-          first_name.to_s + " " + last_name.to_s
+          I18n.t('core.profile_full_name', firstname: first_name.to_s, lastname: last_name.to_s)
         end
         alias :name :full_name
 

@@ -44,6 +44,7 @@ ja:
     unlock_email_3: "ご自分のアカウントを解除するには下記のリンクをクリックして下さい。"
     unlock_email_link: アカウントを解除する
 
+    profile_full_name: "%{lastname} %{firstname}"
     profile_email: Eメール
     profile_password: パスワード
     profile_password_confirmation: パスワード（確認）
