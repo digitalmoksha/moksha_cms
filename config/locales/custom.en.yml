@@ -44,6 +44,7 @@ en:
     unlock_email_3: "Click the link below to unlock your account"
     unlock_email_link: Unlock my account
     
+    profile_full_name: "%{firstname} %{lastname}"
     profile_email: Email
     profile_password: Password
     profile_password_confirmation: Password Confirmation

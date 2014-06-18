@@ -42,6 +42,7 @@ de:
     unlock_email_3: "Klicken Sie auf den untenstehenden Link, um Ihr Konto zu entsperren"
     unlock_email_link: Schalte mein Konto
 
+    profile_full_name: "%{firstname} %{lastname}"
     profile_email: E-Mail
     profile_password: Neues Passwort
     profile_password_confirmation: Neues Passwort - wiederholen
