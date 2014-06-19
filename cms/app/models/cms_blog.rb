@@ -49,6 +49,16 @@ class CmsBlog < ActiveRecord::Base
     CmsBlog.all.any? { |b| b.can_be_read_by?(user) }
   end
 
+  #------------------------------------------------------------------------------
+  def header_image(default = nil)
+    self.image || default
+  end
+
+  #------------------------------------------------------------------------------
+  def header_accent_color(default = '')
+    self.preferred_header_accent_color || default
+  end
+  
   # Grab a list of the recent posts.  Can pull from all blogs or a specific
   # one.
   #------------------------------------------------------------------------------

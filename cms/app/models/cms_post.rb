@@ -14,7 +14,7 @@ class CmsPost < ActiveRecord::Base
   belongs_to              :account
   
   default_scope           { where(account_id: Account.current.id) }
-  scope                   :published, -> { where("published_on <= ?", Time.now ) }
+  scope                   :published, -> { where("published_on IS NOT NULL AND published_on <= ?", Time.now ) }
   
   validates               :title, presence_default_locale: true
   validates               :summary, liquid: { :locales => true }, presence_default_locale: true
@@ -30,7 +30,7 @@ class CmsPost < ActiveRecord::Base
 
   #------------------------------------------------------------------------------
   def is_published?
-    published_on <= Time.now
+    !published_on.nil? && published_on <= Time.now
   end
   
   # Allow comments if also enabled in the blog

@@ -24,8 +24,8 @@ class DmCms::BlogsController < DmCms::ApplicationController
   #------------------------------------------------------------------------------
   def show
     @blogs        = CmsBlog.available_to_user(current_user)
-    @posts        = @blog.posts.includes(:cms_blog, :translations).paginate :page => page_number
-    @recent_posts = @blog.posts.includes(:cms_blog, :translations).limit(5)
+    @posts        = @blog.posts.includes(:cms_blog, :translations).published.order('published_on DESC').paginate :page => page_number
+    @recent_posts = @blog.posts.includes(:cms_blog, :translations).published.order('published_on DESC').limit(5)
     content_for :page_title, (@blog ? @blog.title : I18n.t('cms.blog_header'))
   end
 

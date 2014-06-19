@@ -79,7 +79,7 @@ private
   def prepare_date_time_attribute
     date = params[:cms_post].delete(:published_on_date)
     time = params[:cms_post].delete(:published_on_time)
-    params[:cms_post][:published_on] = (date.blank? ? Time.now : DateTime.parse(date + " " + time))
+    params[:cms_post][:published_on] = (date.blank? ? nil : DateTime.parse(date + " " + time))
   end
   
 end
