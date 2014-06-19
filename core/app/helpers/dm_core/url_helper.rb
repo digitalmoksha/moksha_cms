@@ -17,7 +17,7 @@ module DmCore
     # will not include the protocol)
     #------------------------------------------------------------------------------
     def file_url(file_name, options = {})
-      options.reverse_merge!  default_folder: 'images', account_site_assets: account_site_assets
+      options.reverse_merge!  default_folder: 'media', account_site_assets: account_site_assets
       if file_name.blank?
         ''
       elsif file_name.start_with?('s3://', 's3s://')
