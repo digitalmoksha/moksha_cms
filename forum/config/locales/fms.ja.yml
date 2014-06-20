@@ -96,8 +96,8 @@ ja:
     no_followed_topics: There are currently no topics being followed
     no_forums: The Forum section will be available soon
     comment_notification_inform: あなたは自動的に将来のコメントの通知を受け取ります
-    follow: フォロー
-    follow_stop: 次のSTOP
+    follow: 購読する
+    follow_stop: 購読停止する
     topic_follow_section:
       title: Follow Topic by Email
       description: Follow this topic and receive email notifications of new comments
