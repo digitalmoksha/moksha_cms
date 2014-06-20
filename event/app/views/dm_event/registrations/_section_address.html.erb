@@ -5,8 +5,13 @@
       <%= f.simple_fields_for :user_profile, @registration.user_profile do |builder| %>
     
         <%= builder.input(:email,       :label => I18n.t('ems.registration_email'), :required => true) %>
-        <%= builder.input :first_name,  :label => I18n.t('ems.registration_first_name'), :required => true %>
-        <%= builder.input :last_name,   :label => I18n.t('ems.registration_last_name'), :required => true %>
+        <% if I18n.locale == :ja %>
+          <%= builder.input :last_name,   :label => I18n.t('ems.registration_last_name'), :required => true %>
+          <%= builder.input :first_name,  :label => I18n.t('ems.registration_first_name'), :required => true %>
+        <% else %>
+          <%= builder.input :first_name,  :label => I18n.t('ems.registration_first_name'), :required => true %>
+          <%= builder.input :last_name,   :label => I18n.t('ems.registration_last_name'), :required => true %>
+        <% end %>
         
         <% if @workshop.show_address %>
           <%= builder.input :address,   :label => I18n.t('ems.registration_address'), :required => @workshop.require_address %>
