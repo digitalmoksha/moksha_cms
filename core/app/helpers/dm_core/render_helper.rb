@@ -24,7 +24,7 @@ module DmCore
     #------------------------------------------------------------------------------
     def ut_country_select_tag(name, selected = nil, options = {include_blank: true}, html_options = {})
       collection = ut_country_select_collection(options)
-      select_tag(name, options_for_select(collection, selected.to_i), html_options)
+      select_tag(name, options_for_select(collection, selected), html_options)
     end
 
     # Just return the collection for the countries
