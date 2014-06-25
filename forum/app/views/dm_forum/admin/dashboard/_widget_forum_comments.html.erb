@@ -24,8 +24,7 @@
       <div class="media">
         <a class="pull-left" href="#"><div class="media-object"><%= avatar_for comment.user, 50 %></div></a>
         <div class="media-body">
-          <%= link_to "#{present(comment).author}", dm_forum.forum_forum_topic_path(comment.commentable.forum.slug, comment.commentable.slug, anchor: "forum_comment_#{comment.id}"), class: 'media-heading hovertip', data: {placement: 'top'}, title: comment.user.full_name %>
-
+          <%= link_to "<span class='hovertip' data-placement='right' title='#{comment.user.full_name}'>#{present(comment).author}</span>".html_safe, dm_forum.forum_forum_topic_path(comment.commentable.forum.slug, comment.commentable.slug, anchor: "forum_comment_#{comment.id}"), class: 'media-heading' %>
           <ul class="headline-info">
             <li><%= format_datetime comment.created_at %></li>
             <li><%= link_to comment.commentable.title, dm_forum.forum_forum_topic_path(comment.commentable.forum.slug, comment.commentable.slug, anchor: "forum_comment_#{comment.id}"), class: 'post_title', target: '_blank' %></li>
