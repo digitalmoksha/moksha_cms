@@ -34,20 +34,28 @@ module DmCore
 
       module ClassMethods
 
+        # Count the number of new users in the last 30 days.  returns a hash
+        # with the total, and a json list of 15 values indicating how many were created
+        # every 2 days
+        # eg: { total: 36, list: "0,0,0,0,0,0,0,0,0,2,13,10,6,1,4" }
         #------------------------------------------------------------------------------
         def new_last_30_days
           items = 28.step(0, -2).map do |date| 
-            self.where('created_at <= ? AND created_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime, Account.current.id).count
+            self.where('created_at <= ? AND created_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 2).days.ago.to_datetime, Account.current.id).count
           end
-          return { :total => items.inject(:+), :list => items.join(',') }
+          return { total: items.inject(:+), list: items.join(',') }
         end
 
+        # Count the number of accessing users in the last 30 days.  returns a hash
+        # with the total, and a json list of 15 values indicating how many were accessed
+        # every 2 days
+        # eg: { total: 35, list: "0,0,0,0,0,0,0,0,0,0,2,4,2,5,22" }
         #------------------------------------------------------------------------------
         def access_last_30_days
           items = 28.step(0, -2).map do |date| 
-            where('last_access_at <= ? AND last_access_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 3).days.ago.to_datetime, Account.current.id).count
+            where('last_access_at <= ? AND last_access_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 2).days.ago.to_datetime, Account.current.id).count
           end
-          return { :total => items.inject(:+), :list => items.join(',') }
+          return { total: items.inject(:+), list: items.join(',') }
         end
 
       end
