@@ -7,7 +7,10 @@
     
     <%#= f.input :first_name %>
     <%#= f.input :last_name %>
-    <%= f.input :email %>
+    <%= f.input :email, hint: 'Note: If you change the email address, a confirmation email will be sent to the new address. The email 
+    address will look unchanged until it is confirmed' %>
+    <%= f.input(:unconfirmed_email, disabled: true, hint: 'The user needs to re-confirm this email address - an email has already been sent, or 
+           you can use the Confirm This User button') if @user.unconfirmed_email %>
     <%#= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
                 :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
                 :label => "Country" %>
