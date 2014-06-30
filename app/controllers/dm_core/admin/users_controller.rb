@@ -1,4 +1,6 @@
 class DmCore::Admin::UsersController < DmCore::Admin::AdminController
+  before_filter :template_setup, except: [:edit]
+
   # GET /admin/users or GET /admin/users.json
   #------------------------------------------------------------------------------
   def index

@@ -3,7 +3,7 @@
 
   <%= f.error_notification :message => "Please review the problems below" %>
 
-	<%= panel title: @title do %>
+	<%= panel header: false do %>
     
     <%#= f.input :first_name %>
     <%#= f.input :last_name %>
@@ -25,6 +25,6 @@
 
     <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
 
-	<% end %>
+  <% end %>
 
 <% end %>
