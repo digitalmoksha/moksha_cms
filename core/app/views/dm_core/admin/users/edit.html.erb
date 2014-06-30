@@ -1,6 +1,8 @@
+<% content_for :content_title, @user.email %>
+<% content_for :content_subtitle, @user.display_name %>
+
 <div class="row">
   <div class="col-md-9">
-    <% @title = "#{@user.display_name} (#{@user.email})" %>
     <%= render 'form' %>
 
     <% if defined?(DmEvent) && current_user.is_sysadmin? %>
@@ -90,6 +92,17 @@
     <% end %>
   </div>
   <div class="col-md-3">
+    <p><%= avatar_for @user, 200 %></p>
+    <%= subsection title: 'Details' do %>
+      <dl>
+        <dt class="text-info">Last Accessed On</dt>
+        <dd><%= format_datetime(@user.last_access_at) %></dd>
+        <dt class="text-info">Confirmed On</dt>
+        <dd><%= format_datetime(@user.confirmed_at) %></dd>
+        <dt class="text-info">Created On</dt>
+        <dd><%= format_datetime(@user.created_at) %></dd>
+      </dl>
+    <% end %>
     <% if @user.confirmation_token %>
       <%= link_to "Confirm This User", dm_core.confirm_admin_user_path(@user.id), :class => "btn btn-block btn-success" %>
     <% else %>

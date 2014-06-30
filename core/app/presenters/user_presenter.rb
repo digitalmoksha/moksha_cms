@@ -12,7 +12,7 @@ class UserPresenter < BasePresenter
   def last_access
     user.last_access_at.nil? ? colored_label('n/a', :warning) : "#{time_ago_in_words(user.last_access_at)} ago"
   end
-  
+
   # gives the public avatar for a user
   #------------------------------------------------------------------------------
   def avatar_for(size = 32)
