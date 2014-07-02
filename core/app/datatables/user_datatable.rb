@@ -27,7 +27,7 @@ private
     users.map do |user|
       [
         "<div class='avatar'>#{link_to present(user).avatar_for(35), user.user_profile.public_avatar_url}</div>",
-        link_to(user.full_name, url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => "Edit #{user.full_name}"),
+        link_to(user.full_name.to_s_default, url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => "Edit #{user.full_name}"),
         user.email,
         user.country.nil? ? 'n/a' : user.country.english_name,
         "<span style='white-space:nowrap'>#{present(user).last_access}</span>",
