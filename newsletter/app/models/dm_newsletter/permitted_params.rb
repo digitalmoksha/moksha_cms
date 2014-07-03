@@ -3,17 +3,17 @@ module DmNewsletter
 
     #------------------------------------------------------------------------------
     def newsletter_params
-      params.require(:newsletter).permit! if current_user.try(:is_admin?)
+      params.require(:newsletter).permit! if can? :manage_newsletters, :all
     end
 
     #------------------------------------------------------------------------------
     def standard_newsletter_params
-      params.require(:standard_newsletter).permit! if current_user.try(:is_admin?)
+      params.require(:standard_newsletter).permit! if can? :manage_newsletters, :all
     end
 
     #------------------------------------------------------------------------------
     def mailchimp_newsletter_params
-      params.require(:mailchimp_newsletter).permit! if current_user.try(:is_admin?)
+      params.require(:mailchimp_newsletter).permit! if can? :manage_newsletters, :all
     end
 
   end

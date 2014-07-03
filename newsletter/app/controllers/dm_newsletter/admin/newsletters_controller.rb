@@ -1,4 +1,4 @@
-class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::ApplicationController
+class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminController
   include DmNewsletter::PermittedParams
 
   #before_filter   :mailchimp_guard,   only:   [:new, :edit, :create, :update]
