@@ -5,7 +5,17 @@ class UserPresenter < BasePresenter
 
   #------------------------------------------------------------------------------
   def role_label
-    user.is_admin? ? colored_label('Admin', :success) : (user.has_role?(:beta) ? colored_label('Beta', :warning) : (user.has_role?(:author) ? colored_label('Author', :info) : 'User' ))
+    if user.is_admin?
+      colored_label('Admin', :success)
+    elsif user.has_role?(:manager)
+      colored_label('Manager', :info)
+    elsif user.has_role?(:content_manager) || user.has_role?(:event_manager) || user.has_role?(:forum_manager)
+      colored_label('Submanager', :warning)
+    elsif user.has_role?(:beta)
+      colored_label('Beta', :danger)
+    else
+      'User'
+    end
   end
   
   #------------------------------------------------------------------------------

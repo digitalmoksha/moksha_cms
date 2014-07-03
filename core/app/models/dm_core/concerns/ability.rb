@@ -6,7 +6,10 @@ module DmCore
     module Ability
       def dm_core_abilities(user)
         if user
-          can :manage, :all if user.has_role? :admin
+          if user.has_role?(:admin) || user.has_role?(:manager)
+            can :manage, :all
+            can :access_admin, :all
+          end
         end
       end
     end

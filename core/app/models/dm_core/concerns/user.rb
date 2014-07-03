@@ -79,7 +79,18 @@ module DmCore
         def is_paid_subscriber?
           has_role? :paid_subscription
         end
-        
+
+        # Given a hash of roles and whether they are enabled or not, add or remove them
+        # Typically used by the UsersController when updating possible permissions
+        #------------------------------------------------------------------------------
+        def update_roles(new_roles)
+          new_roles.each do |name, value|
+            if name.to_s != 'admin' || is_admin?  # only an admin can grant admin roles
+              value.as_boolean ? add_role(name) : remove_role(name)
+            end
+          end
+        end
+
         #------------------------------------------------------------------------------
         def update_last_access
           ensure_site_profile_exists

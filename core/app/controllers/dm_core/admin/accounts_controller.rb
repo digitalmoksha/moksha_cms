@@ -1,6 +1,7 @@
 class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   include DmCore::PermittedParams
   
+  before_filter   :authorize_access
   before_filter   :account_lookup
 
   #------------------------------------------------------------------------------
@@ -69,6 +70,16 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
       else
         render action: "media"
       end
+    end
+  end
+
+protected
+
+  #------------------------------------------------------------------------------
+  def authorize_access
+    unless is_admin?
+      flash[:alert] = "Unauthorized Access!"
+      redirect_to current_account.index_path 
     end
   end
 

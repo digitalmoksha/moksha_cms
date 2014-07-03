@@ -1,4 +1,5 @@
-# scope_current_account gets called the eventual inheritacne of DmCore::ApplicationController
+# This controller is a base class for all other admin controllers
+# scope_current_account gets called through the eventual inheritacne of DmCore::ApplicationController
 #------------------------------------------------------------------------------
 class DmCore::Admin::AdminController < ApplicationController
 
@@ -6,7 +7,6 @@ class DmCore::Admin::AdminController < ApplicationController
   before_filter :authenticate_admin_user!
   before_filter :template_setup
 
-  # layout 'admin/admin_page'
   layout 'admin_theme/admin'
   
   include DmCore::ApplicationHelper
@@ -16,16 +16,17 @@ class DmCore::Admin::AdminController < ApplicationController
 
   helper  DmAdmin::ApplicationHelper
   helper  AdminTheme::ThemeHelper
-  
+
+  # Make sure some type of administrative user is logged in
   #------------------------------------------------------------------------------
   def authenticate_admin_user!
     authenticate_user! 
-    unless current_user.is_admin?
+    unless can?(:access_admin, :all)
       flash[:alert] = "Unauthorized Access!"
       redirect_to current_account.index_path 
     end
   end  
-  
+
 private
 
   # Set some values for the template based on the controller
