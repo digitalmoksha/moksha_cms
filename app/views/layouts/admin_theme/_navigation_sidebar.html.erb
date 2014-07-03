@@ -1,0 +1,54 @@
+<!-- Main navigation -->
+<ul class="navigation">
+  <%= content_tag :li, link_to(label_icon('Dashboard', 'icon-screen2'), dm_core.admin_dashboard_path), class: admin_path_active_class?(dm_core.admin_dashboard_path) %>
+
+  <% if defined?(DmCms) && can?(:manage_content, :all) %>
+    <%= content_tag :li, link_to(label_icon('Pages', 'icon-paragraph-left2'), dm_cms.admin_cms_pages_path),    class: admin_path_active_class?(dm_cms.admin_cms_pages_path, dm_cms.admin_cms_snippets_path) %>
+    <%= content_tag :li, link_to(label_icon('Blogs', 'icon-blog'), dm_cms.admin_cms_blogs_path),           class: admin_path_active_class?(dm_cms.admin_cms_blogs_path, dm_cms.admin_cms_posts_path) %>
+    <%= content_tag :li, link_to(label_icon('Media Library', 'icon-camera3'), dm_cms.admin_media_files_path), class: admin_path_active_class?(dm_cms.admin_media_files_path) %>
+  <% end %>
+
+  <% if defined?(DmEvent) && can?(:manage_events, :all) %>
+    <li>
+      <%= link_to label_icon('Events', 'icon-calendar'), '#' %>
+      <ul>
+        <%= content_tag :li, link_to('Overview', dm_event.admin_workshops_path), class: admin_path_active_class?(dm_event.admin_workshops_path) %>
+        <% Workshop.upcoming.each do |workshop| %>
+          <%= content_tag :li, link_to(content_tag(:span, workshop.title, style: 'margin-right: 40px;display:inline-block;') + "<span class='label label-primary'>#{workshop.registrations.number_of(:attending)}</span>".html_safe, dm_event.admin_workshop_path(workshop)), class: admin_path_active_class?(dm_event.admin_workshop_path(workshop)) %>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+
+  <% if defined?(DmLms) && can?(:manage_coursed, :all) %>
+    <li>
+      <%= link_to label_icon('Lexicon', 'icon-spell-check'), '#' %>
+      <ul>
+        <%= content_tag :li, link_to('Lexicon', dm_lms.admin_lexicons_path), class: admin_path_active_class?(dm_lms.admin_lexicons_path) %>
+        <%= content_tag :li, link_to('Categories', dm_lms.admin_lexicon_categories_path), class: admin_path_active_class?(dm_lms.admin_lexicon_categories_path) %>
+        <%= content_tag :li, link_to('Sub Categories', dm_lms.admin_lexicon_sub_categories_path), class: admin_path_active_class?(dm_lms.admin_lexicon_sub_categories_path) %>
+        <%= content_tag :li, link_to('Genres', dm_lms.admin_lexicon_genres_path), class: admin_path_active_class?(dm_lms.admin_lexicon_genres_path) %>
+      </ul>
+    </li>
+    <li>
+      <%= link_to label_icon('Courses', 'icon-books'), '#' %>
+      <ul>
+        <%= content_tag :li, link_to('Courses', dm_lms.admin_courses_path), class: admin_path_active_class?(dm_lms.admin_courses_path) %>
+        <%= content_tag :li, link_to('Practice Sets', dm_lms.admin_practice_sets_path), class: admin_path_active_class?(dm_lms.admin_practice_sets_path) %>
+      </ul>
+    </li>
+  <% end %>
+
+  <% if defined?(DmForum) && can?(:manage_forums, :all) %>
+    <%= content_tag :li, link_to(label_icon('Forums', 'icon-bubble4'), dm_forum.admin_forum_categories_path), class: admin_path_active_class?(dm_forum.admin_forum_categories_path, dm_forum.admin_forums_path) %>
+  <% end %>
+
+  <% if defined?(DmNewsletter) && can?(:manage_newsletters, :all) %>
+    <%= content_tag :li, link_to(label_icon('Newsletter', 'icon-envelop'), dm_newsletter.admin_newsletters_path), class: admin_path_active_class?(dm_newsletter.admin_newsletters_path) %>
+  <% end %>
+
+  <% if defined?(DmSubscriptions) && can?(:manage_subscriptions, :all) %>
+    <%= content_tag :li, link_to(label_icon('Subscriptions', 'icon-coin'), dm_subscriptions.admin_subscription_plans_path), class: admin_path_active_class?(dm_subscriptions.admin_subscription_plans_path) %>
+  <% end %>
+</ul>
+<!-- /main navigation -->
