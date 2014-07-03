@@ -14,6 +14,12 @@ module DmCms
     module Ability
       def dm_cms_abilities(user)
         if user
+          #--- Admin
+          if user.has_role?(:content_manager)
+            can :manage_content, :all
+            can :access_admin, :all
+          end
+
           #--- Blog
           can(:read, CmsBlog)   { |blog| blog.can_be_read_by?(user) }
           can(:reply, CmsBlog)  { |blog| blog.can_be_replied_by?(user) }
