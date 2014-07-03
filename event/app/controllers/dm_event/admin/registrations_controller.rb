@@ -1,4 +1,4 @@
-class DmEvent::Admin::RegistrationsController < DmEvent::Admin::ApplicationController
+class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
   include DmEvent::PermittedParams
 
   helper    DmEvent::RegistrationsHelper

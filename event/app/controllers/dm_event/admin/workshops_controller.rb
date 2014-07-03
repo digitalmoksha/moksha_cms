@@ -1,4 +1,4 @@
-class DmEvent::Admin::WorkshopsController < DmEvent::Admin::ApplicationController
+class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   include DmEvent::PermittedParams
   include DmCore::PermittedParams
   include CsvExporter

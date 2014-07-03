@@ -3,18 +3,18 @@ module DmEvent
 
     #------------------------------------------------------------------------------
     def workshop_params
-      params.require(:workshop).permit! if current_user.try(:is_admin?)
+      params.require(:workshop).permit! if can? :manage_events, :all
     end
 
     #------------------------------------------------------------------------------
     def workshop_price_params
-      params.require(:workshop_price).permit! if current_user.try(:is_admin?)
+      params.require(:workshop_price).permit! if can? :manage_events, :all
     end
 
     #------------------------------------------------------------------------------
     def registration_params
       return nil if params[:registration].nil? || params[:registration].empty?
-      if current_user.try(:is_admin?)
+      if can? :manage_events, :all
         params.require(:registration).permit!
       else
         # nested attributes: because field_data can be either a single value or an array of values,

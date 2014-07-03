@@ -1,4 +1,4 @@
-class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::ApplicationController
+class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
   include DmEvent::PermittedParams
 
   before_filter     :workshop_lookup, :only   => [:index, :new, :create]
