@@ -1,4 +1,4 @@
-class DmForum::Admin::DashboardController < DmForum::Admin::ApplicationController
+class DmForum::Admin::DashboardController < DmForum::Admin::AdminController
   
   #------------------------------------------------------------------------------
   def widget_forum_comments

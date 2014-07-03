@@ -1,4 +1,4 @@
-class DmForum::Admin::ForumsController < DmForum::Admin::ApplicationController
+class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
   include DmForum::PermittedParams
 
   before_filter   :category_lookup, :only =>    [:index, :new, :create]

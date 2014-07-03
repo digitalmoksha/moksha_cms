@@ -14,6 +14,12 @@ module DmForum
     module Ability
       def dm_forum_abilities(user)
         if user
+          #--- Admin
+          if user.has_role?(:forum_manager)
+            can :manage_forums, :all
+            can :access_admin, :all
+          end
+
           #--- Forum
           can(:read, Forum)   { |forum| forum.can_be_read_by?(user) }
           can(:reply, Forum)  { |forum| forum.can_be_replied_by?(user) }

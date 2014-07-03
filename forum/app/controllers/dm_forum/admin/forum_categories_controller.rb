@@ -1,7 +1,8 @@
-class DmForum::Admin::ForumCategoriesController < DmCore::Admin::AdminController
+class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminController
   include DmForum::PermittedParams
 
-  before_filter   :category_lookup, :except =>  [:index, :new, :create]
+  before_filter   :check_forum_site,  only:   [:index]
+  before_filter   :category_lookup,   except: [:index, :new, :create]
   
   # GET /admin/forum_categories
   #------------------------------------------------------------------------------
@@ -65,6 +66,12 @@ class DmForum::Admin::ForumCategoriesController < DmCore::Admin::AdminController
   
 private
 
+  # make sure a ForumSite singleton is created
+  #------------------------------------------------------------------------------
+  def check_forum_site
+    ForumSite.create(enabled: true) unless ForumSite.site
+  end
+  
   #------------------------------------------------------------------------------
   def category_lookup
     @forum_category = ForumCategory.find(params[:id])

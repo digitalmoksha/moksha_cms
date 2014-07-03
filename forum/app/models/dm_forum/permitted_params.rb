@@ -3,22 +3,22 @@ module DmForum
 
     #------------------------------------------------------------------------------
     def forum_site_params
-      params.require(:forum_site).permit! if current_user.try(:is_admin?)
+      params.require(:forum_site).permit! if can? :manage_forums, :all
     end
 
     #------------------------------------------------------------------------------
     def forum_category_params
-      params.require(:forum_category).permit! if current_user.try(:is_admin?)
+      params.require(:forum_category).permit! if can? :manage_forums, :all
     end
 
     #------------------------------------------------------------------------------
     def forum_params
-      params.require(:forum).permit! if current_user.try(:is_admin?)
+      params.require(:forum).permit! if can? :manage_forums, :all
     end
 
     #------------------------------------------------------------------------------
     def forum_topic_params
-      if current_user.try(:is_admin?)
+      if can? :manage_forums, :all
         params.require(:forum_topic).permit!
       else
         params.require(:forum_topic).permit(:title, :body)
@@ -27,7 +27,7 @@ module DmForum
 
     #------------------------------------------------------------------------------
     def forum_comment_params
-      if current_user.try(:is_admin?)
+      if can? :manage_forums, :all
         params.require(:forum_comment).permit!
       else
         params.require(:forum_comment).permit(:title, :body)

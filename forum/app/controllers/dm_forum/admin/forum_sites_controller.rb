@@ -1,5 +1,7 @@
+# This controller is now deprecated.  At the moment I find no use
+# for the enableg, tagline, or description.
 #------------------------------------------------------------------------------
-class DmForum::Admin::ForumSitesController < DmForum::Admin::ApplicationController
+class DmForum::Admin::ForumSitesController < DmForum::Admin::AdminController
   include DmForum::PermittedParams
 
   before_filter   :forum_site_lookup
@@ -8,7 +10,7 @@ class DmForum::Admin::ForumSitesController < DmForum::Admin::ApplicationControll
   #------------------------------------------------------------------------------
   def show
     unless @forum_site
-      @forum_site = ForumSite.create(enabled: false)
+      @forum_site = ForumSite.create(enabled: true)
     end
   end
 
