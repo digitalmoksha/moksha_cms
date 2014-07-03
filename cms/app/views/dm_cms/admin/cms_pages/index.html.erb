@@ -4,7 +4,8 @@
     <div class="collapse" id="header-buttons">
       <div class="well">
         <div class="btn-group">
-          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
+          <%= link_to('Snippets', dm_cms.admin_cms_snippets_path, class: 'btn btn-default btn-xs') %>
+          <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
           <ul class="dropdown-menu dropdown-menu-right icons-right">
             <li>
               <%= link_to icon_label('icon-redo', 'Clear Page Cache'), admin_expire_cache_path, method: :patch %>
