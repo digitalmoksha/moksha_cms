@@ -7,14 +7,16 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update_site_assets
-    #--- svn up can't follow a symlink, so resolve it first
-    path = File.readlink("#{Rails.root}/public/#{account_site_assets(false)}")
-    @results = "Updating 'site_assets'...\r\n"
-    @results += `svn up #{path}`
-    if File.exists?("#{Account.current.theme_path}/protected_assets")
-      path = File.join(File.readlink("#{Account.current.theme_path}"), "protected_assets")
-      @results += "\nUpdating 'protected_assets'...\r\n"
+    if is_sysadmin?
+      #--- svn up can't follow a symlink, so resolve it first
+      path = File.readlink("#{Rails.root}/public/#{account_site_assets(false)}")
+      @results = "Updating 'site_assets'...\r\n"
       @results += `svn up #{path}`
+      if File.exists?("#{Account.current.theme_path}/protected_assets")
+        path = File.join(File.readlink("#{Account.current.theme_path}"), "protected_assets")
+        @results += "\nUpdating 'protected_assets'...\r\n"
+        @results += `svn up #{path}`
+      end
     end
   end
   

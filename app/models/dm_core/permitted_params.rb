@@ -13,7 +13,7 @@ module DmCore
     
     #------------------------------------------------------------------------------
     def user_params
-      if current_user.try(:is_admin?)
+      if can? :manage, :all
         params.require(:user).permit!
       else
         params.require(:user).permit(:email, :password, :password_confirmation, :current_password)
@@ -22,7 +22,7 @@ module DmCore
     
     #------------------------------------------------------------------------------
     def user_profile_params
-      if current_user.try(:is_admin?)
+      if can? :manage, :all
         params.require(:user_profile).permit!
       else
         params.require(:user_profile).permit( :public_name, :first_name, :last_name, :public_avatar,

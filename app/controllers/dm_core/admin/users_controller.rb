@@ -1,4 +1,5 @@
 class DmCore::Admin::UsersController < DmCore::Admin::AdminController
+  before_filter :authorize_access
   before_filter :template_setup, except: [:edit]
 
   # GET /admin/users or GET /admin/users.json
@@ -34,7 +35,9 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
   def update
     @user             = User.find(params[:id])
     respond_to do |format|
+      roles = params[:user].delete(:roles)
       if @user.update_attributes(user_params)
+        @user.update_roles(roles)
         format.html { redirect_to dm_core.admin_users_url, notice: "'#{@user.display_name}' was successfully updated." }
         format.json { head :no_content }
       else
@@ -82,6 +85,16 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
     end
   end
   
+protected
+
+  #------------------------------------------------------------------------------
+  def authorize_access
+    unless can? :manage, :all
+      flash[:alert] = "Unauthorized Access!"
+      redirect_to current_account.index_path 
+    end
+  end
+
 private
 
   # Set some values for the template based on the controller
