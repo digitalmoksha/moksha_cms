@@ -25,11 +25,11 @@ module DmCms
           can(:reply, CmsBlog)  { |blog| blog.can_be_replied_by?(user) }
           # can :moderate, CmsBlog, :id => CmsBlog.published.with_role(:moderator, user).map(&:id)
           
-          #--- Comment
-          # can :edit, ForumComment, :user_id => user.id
+          can(:read, CmsPost)   { |post| post.is_published? || user.has_role?(:reviewer)}
         else
           #--- can only read/see public blogs when not logged in
           can(:read, CmsBlog)   { |blog| blog.can_be_read_by?(user) }
+          can(:read, CmsPost)   { |post| post.is_published? }
         end
       end
     end

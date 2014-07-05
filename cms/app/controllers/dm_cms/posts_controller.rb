@@ -65,6 +65,7 @@ protected
     
     @post = @blog.posts.friendly.find(params[:id])
     redirect_to blog_show_path(@blog) and return if @post.nil?
+    authorize! :read, @post
   end
 
 end
