@@ -11,6 +11,8 @@ class UserPresenter < BasePresenter
       colored_label('Manager', :info)
     elsif user.has_role?(:content_manager) || user.has_role?(:event_manager) || user.has_role?(:forum_manager)
       colored_label('Submanager', :warning)
+    elsif user.has_role?(:reviewer)
+      colored_label('Reviewer', :default)
     elsif user.has_role?(:beta)
       colored_label('Beta', :danger)
     else
