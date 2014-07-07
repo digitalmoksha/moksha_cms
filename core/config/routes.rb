@@ -15,6 +15,7 @@ DmCore::Engine.routes.draw do
           get  :confirm
         end
       end
+      resources :comments
 
       get     '/account/',                 to: 'accounts#show'
       match   '/account/general',          to: 'accounts#general',    via: [:get, :patch]
