@@ -2,8 +2,14 @@
 <% content_for :content_subtitle, present(@workshop).label_published %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%#= present(@workshop).label_published %>
-    <%= link_to(icon_label(:edit, 'Edit'), edit_admin_workshop_url(@workshop), title: 'Edit Workshop', class: "btn btn-xs btn-default") %>
+    <div class="btn-group">
+      <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
+      <ul class="dropdown-menu dropdown-menu-right icons-right">
+        <li><%= link_to label_icon('Edit Workshop', :edit), edit_admin_workshop_url(@workshop) %></li>
+        <li><%= link_to label_icon('Financial Details', 'icon-coin'), financials_admin_workshop_url(@workshop) %></li>
+        <li><%= link_to 'Export Registrations (.csv)', admin_workshop_url(@workshop, format: 'csv') %></li>
+      </ul>
+    </div>
   <% end %>
 <% end %>
 
@@ -31,8 +37,6 @@
   <div class="col-md-3">
     <%= panel header: false do %>
       <%= render partial: 'registration_stats', locals: {workshop: @workshop} %>
-
-      <%= link_to 'Export Registrations (.csv)', admin_workshop_url(@workshop, format: 'csv'), class: "action-button blue" %>
     <% end %>
   </div>
 </div>

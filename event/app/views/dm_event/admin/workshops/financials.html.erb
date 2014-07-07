@@ -106,8 +106,8 @@
           <td class="name"><%= registration.full_name %></td>
           <td class="cost"><%= registration.balance_owed.format %></td>
           <td class="date" style="white-space:nowrap"><%= format_date(registration.created_at) %></td>
-          <td class="date" <%= "style='background-color: #A2D8AA;'".html_safe if registration.payment_reminder_due? %>>
-            <%= registration.payment_reminder_sent_on.nil? ? 'not yet' : distance_of_time_in_words_to_now(registration.payment_reminder_sent_on) %>
+          <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if registration.payment_reminder_due? %>>
+            <%= registration.payment_reminder_sent_on.nil? ? 'not yet' : "#{distance_of_time_in_words_to_now(registration.payment_reminder_sent_on)} ago" %>
           </td>
           <td>
             <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-xs btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>

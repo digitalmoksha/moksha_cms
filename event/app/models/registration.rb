@@ -17,6 +17,8 @@ class Registration < ActiveRecord::Base
   belongs_to                    :account
   has_many                      :payment_histories, as: :owner, dependent: :destroy                              
 
+  preference                    :payment_reminder_hold_until,  :date
+
   accepts_nested_attributes_for :user_profile
   
   monetize                      :amount_paid_cents, with_model_currency: :amount_paid_currency, allow_nil: true
@@ -162,9 +164,11 @@ public
   # Due first 7 days after inital registration.  Then every 14 days after that
   #------------------------------------------------------------------------------
   def payment_reminder_due?
-    time_period = self.payment_reminder_sent_on.nil? ? (self.created_at + 7.days) : (self.payment_reminder_sent_on + 14.days)
-    self.balance_owed > Money.new(0, workshop.base_currency) && time_period < Time.now
-    
+    if preferred_payment_reminder_hold_until.nil? || preferred_payment_reminder_hold_until < Time.now
+      time_period = self.payment_reminder_sent_on.nil? ? (self.created_at + 7.days) : (self.payment_reminder_sent_on + 14.days)
+      self.balance_owed > Money.new(0, workshop.base_currency) && time_period < Time.now
+    end
+
     # if recurring_period since last paymnet
     # if 7 days after registration and no payment
     # if 14 days since last reminder and no payment
