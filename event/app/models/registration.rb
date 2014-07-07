@@ -19,10 +19,12 @@ class Registration < ActiveRecord::Base
 
   preference                    :payment_reminder_hold_until,  :date
 
+  acts_as_commentable           :private
+
   accepts_nested_attributes_for :user_profile
-  
+
   monetize                      :amount_paid_cents, with_model_currency: :amount_paid_currency, allow_nil: true
-  
+
   default_scope                 { where(account_id: Account.current.id) }
   scope                         :attending, -> { where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL") }
   scope                         :accepted,  -> { where("aasm_state = 'accepted' AND archived_on IS NULL") }
@@ -33,7 +35,7 @@ class Registration < ActiveRecord::Base
   after_initialize              :create_uuid
   before_create                 :set_currency
   after_create                  :set_receipt_code
-  
+
   validates_uniqueness_of       :uuid
   validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
   validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
@@ -42,7 +44,6 @@ class Registration < ActiveRecord::Base
   
   delegate                      :first_name, :last_name, :full_name, :email, :address, :address2, 
                                 :city, :state, :country, :zipcode, :phone, to: :user_profile
-  
 
 private
 

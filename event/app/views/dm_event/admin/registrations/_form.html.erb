@@ -6,65 +6,71 @@
   <% end %>
 <% end %>
 
-  <div class="row">
-    <div class="col-md-7">
-      <%= panel title: 'Registration Details' do %>
-        <%= simple_form_for @registration, url: admin_registration_path,
-              html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
-        
-          <%= subsection title: 'Prices' do %>
-            <%= f.error_notification message: "Please review the problems below" %>
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#update_registration_tab" data-toggle="tab">Update Registration</a></li>
+    <li><a href="#payment_tab" data-toggle="tab">Payments</a></li>
+    <li><a href="#private_comments" data-toggle="tab">Comments <%= colored_label(@registration.comments_count, :info) %></a></li>
+  </ul>
 
-            <% if @workshop.workshop_prices.empty? %>
-              <h5>No workshop prices / options defined</h5>
-            <% else %>
-              <div class="workshop_price_list">
-                <%= f.input :workshop_price_id, collection: @workshop.workshop_prices.map { |r| [price_details(r), r.id] }  %>
-              </div>
+  <div class="tab-content with-padding">
+    <div class="tab-pane fade in active" id="update_registration_tab">
+      <%= simple_form_for @registration, url: admin_registration_path,
+            html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+      
+        <%= subsection title: 'Price' do %>
+          <%= f.error_notification message: "Please review the problems below" %>
 
-              <% if @registration.workshop_price && @registration.workshop_price.price %>
-                <% discount_currency = @registration.workshop_price.price.currency.symbol %>
+          <% if @workshop.workshop_prices.empty? %>
+            <h5>No workshop prices / options defined</h5>
+          <% else %>
+            <div class="workshop_price_list">
+              <%= f.input :workshop_price_id, collection: @workshop.workshop_prices.map { |r| [price_details(r), r.id] }  %>
+            </div>
 
-                <%= f.input :discount_value, error: false, label: 'Discount' do %>
-                  <%= f.input_field :discount_value %>
-                  <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]], {}, {style: "width: 60px", class: "select optional"} %>
-                <% end %>
-            
+            <% if @registration.workshop_price && @registration.workshop_price.price %>
+              <% discount_currency = @registration.workshop_price.price.currency.symbol %>
+
+              <%= f.input :discount_value, error: false, label: 'Discount' do %>
+                <%= f.input_field :discount_value %>
+                <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]], {}, {style: "width: 60px", class: "select optional"} %>
               <% end %>
-        
-              <%= f.input :payment_comment, label: 'Comment', as: :text_full_width, rows: 3 %>
-            <% end %>
-          <% end %>
-
-          <% unless @workshop.custom_field_defs.empty? %>
-            <%= subsection title: 'Custom Fields' do %>
-              <% f.object.build_missing_fields @workshop %>
-              <%= f.simple_fields_for :custom_fields do |builder| %>
-                <% field = builder.object %>
-                <%= render "dm_core/admin/custom_fields/#{field.field_type}", field: field, f: builder %>
-              <% end %>
-            <% end %>
-          <% end %>
-
-          <%= subsection title: 'Payment Reminders' do %>
-            <%= f.input :preferred_payment_reminder_hold_until, label: 'No reminder until', as: :string, input_html: {class: 'datepicker'},
-                         hint: 'When sending reminders in batch, this persons reminder will not be sent unless after the specified date' %>
-          <% end %>
           
-          <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop), delete_url: [:admin, @registration], delete_confirm: 'Are you sure you wish to delete this registration?  Any associated payments will also be deleted!' %>
+            <% end %>
+      
+            <%= f.input :payment_comment, label: 'Reason for discount', as: :text_full_width, rows: 3 %>
+          <% end %>
         <% end %>
+
+        <% unless @workshop.custom_field_defs.empty? %>
+          <%= subsection title: 'Custom Fields' do %>
+            <% f.object.build_missing_fields @workshop %>
+            <%= f.simple_fields_for :custom_fields do |builder| %>
+              <% field = builder.object %>
+              <%= render "dm_core/admin/custom_fields/#{field.field_type}", field: field, f: builder %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <%= subsection title: 'Payment Reminders' do %>
+          <%= f.input :preferred_payment_reminder_hold_until, label: 'No reminder until', as: :string, input_html: {class: 'datepicker'},
+                       hint: 'When sending reminders in batch, this persons reminder will not be sent unless after the specified date' %>
+        <% end %>
+        
+        <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop), delete_url: [:admin, @registration], delete_confirm: 'Are you sure you wish to delete this registration?  Any associated payments will also be deleted!' %>
       <% end %>
     </div>
-    <div class="col-md-5">
+
+    <div class="tab-pane fade" id="payment_tab">
       <% toolbar = toolbar_btn(icons(:new), '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'New Payment', class: "btn btn-link btn-icon") %>
       <%= panel body: false, title: 'Recorded Payments', toolbar: toolbar do %>
         <table class="table table-condensed table-gradient table-hover">
           <thead>
             <tr>
-              <th width="75">Date</th>
+              <th width="100">Date</th>
               <th>Description</th>
-              <th width="50">Paid</th>
-              <th>Method</th>
+              <th width="75">Paid</th>
+              <th width="100">Method</th>
               <th width="18"><%= icons(:edit) %></th>
             </tr>
           </thead>
@@ -88,7 +94,15 @@
       <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
     </div>
 
+    <div class="tab-pane fade" id="private_comments">
+
+      <%= subsection title: 'Private Comments' do %>
+        <%= render partial: 'dm_core/admin/shared/comment_section', locals: {commenting_on: @registration, comments: @registration.private_comments, name: 'private'} %>
+      <% end %>
+    </div>
+
   </div>
+
 
   <%= simple_form_for :payment_history, url: ajax_payment_admin_registration_path(@registration),
         html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
