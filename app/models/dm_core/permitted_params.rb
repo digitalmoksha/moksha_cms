@@ -31,6 +31,11 @@ module DmCore
     end
     
     #------------------------------------------------------------------------------
+    def comment_params
+      params.require(:comment).permit(:title, :body, :user_id)
+    end
+
+    #------------------------------------------------------------------------------
     def devise_sign_up_params(the_params)
       the_params.permit(:email, :password, :password_confirmation, :newsletter, :plan, :affiliate, 
                         user_profile_attributes: [:public_name, :first_name, :last_name, :public_avatar,
