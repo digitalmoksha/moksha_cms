@@ -1,0 +1,7 @@
+<div id="comment_section">
+  <%= render partial: 'dm_core/admin/comments/comment_list', object: comments %>
+  <% unless comments.empty? %><hr><% end %>
+  <div id="comment_form">
+    <%= render partial: 'dm_core/admin/comments/comment_form', locals: {commenting_on: commenting_on, name: name} %>
+  </div>
+</div>

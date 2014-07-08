@@ -1,6 +1,0 @@
-<% name = '' if !defined?(name) %>
-<%= simple_form_for :comment, url: dm_core.admin_comments_path(commenter_type: commenting_on.class, commenter_id: commenting_on, name: name) ,
-                     html: { class: 'form-horizontal' }, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
-  <%= f.input :body, as: :text, label: 'Comment', input_html: {rows: 5} %>
-  <%= submit_or_cancel cancel: false %>
-<% end %>
