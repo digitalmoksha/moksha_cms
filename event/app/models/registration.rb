@@ -15,10 +15,10 @@ class Registration < ActiveRecord::Base
   belongs_to                    :workshop_price
   belongs_to                    :user_profile
   belongs_to                    :account
-  has_many                      :payment_histories, as: :owner, dependent: :destroy                              
-
+  has_many                      :payment_histories, as: :owner, dependent: :destroy
+  belongs_to                    :payment_comment, class_name: 'Comment'
   preference                    :payment_reminder_hold_until,  :date
-
+  attr_accessor                 :payment_comment_text
   acts_as_commentable           :private
 
   accepts_nested_attributes_for :user_profile

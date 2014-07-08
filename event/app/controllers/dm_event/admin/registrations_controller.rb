@@ -48,8 +48,15 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
     @workshop     = @registration.workshop
 
     #--- save without validation, so can update without having to fill in all details
-    @registration.attributes = registration_params
+    payment_comment_text      = params[:registration].delete(:payment_comment_text)
+    @registration.attributes  = registration_params
+
     if @registration.save(:validate => false)
+      if @registration.payment_comment.nil? && payment_comment_text
+        #--- save the payment text as a comment, and keep a pointer to it
+        payment_comment = @registration.private_comments.create(body: payment_comment_text, user_id: current_user.id)
+        @registration.reload.update_attribute(:payment_comment_id, payment_comment.id)
+      end
       redirect_to admin_workshop_url(@workshop), notice: 'Registration was successfully updated.'
     else
       render :action => :edit
