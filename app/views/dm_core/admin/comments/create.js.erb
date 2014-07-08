@@ -1,0 +1,4 @@
+<% if @comment.errors.empty? %>
+  $('#comment_section .comment_list').append('<%= j render partial: 'dm_core/admin/comments/comment', object: @comment %>')
+  $('#comment_section #comment_form textarea').val('')
+<% end %>

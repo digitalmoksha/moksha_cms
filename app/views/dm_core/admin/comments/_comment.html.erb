@@ -1,11 +1,14 @@
-  <div class="media">
+  <div class="media" id="<%= dom_id(comment) %>">
     <a class="pull-left" href="#"><div class="media-object"><%= avatar_for comment.user, 50 %></div></a>
     <div class="media-body">
       <%= link_to "<span class='hovertip' data-placement='right' title='#{comment.user.full_name}'>#{present(comment).author}</span>".html_safe, '#', class: 'media-heading' %>
       <ul class="headline-info">
-        <li><%= link_to('Delete', dm_core.admin_comment_path(comment), method: :delete, data: {confirm: 'Are you sure you wish to delete this comment?'}) if can?(:manage, :all) %>
+        <li><%= link_to('Edit', dm_core.edit_admin_comment_path(comment), remote: true) if can?(:manage, :all) || current_user == comment.user %>
+        <li><%= link_to('Delete', dm_core.admin_comment_path(comment), method: :delete, remote: true, data: {confirm: 'Are you sure you wish to delete this comment?'}) if can?(:manage, :all) %>
         <li><%= format_datetime comment.created_at %></li>
       </ul>
       <%= present(comment).formatted_comment %>
     </div>
   </div>
+
+

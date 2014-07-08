@@ -18,6 +18,7 @@ class Comment < ActiveRecord::Base
   belongs_to        :user #, :counter_cache => true
   belongs_to        :account
   
+  validates_presence_of   :body
   self.per_page = 10
 
 end

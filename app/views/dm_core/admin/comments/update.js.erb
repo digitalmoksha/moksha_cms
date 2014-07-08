@@ -1,0 +1,2 @@
+$('#comment_section #<%= dom_id(@comment) %>').replaceWith('<%= j render partial: 'dm_core/admin/comments/comment', object: @comment %>')
+$('#comment_section #comment_form_<%= dom_id(@comment) %>').remove()

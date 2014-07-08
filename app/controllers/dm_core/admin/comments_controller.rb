@@ -4,7 +4,7 @@
 class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
   include DmCore::PermittedParams
 
-  before_filter :find_commenter, except: [:destroy]
+  before_filter :find_commenter
 
   # Create a comment
   # :commenter_type => object name of commenting object
@@ -13,23 +13,45 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
   # :comment[:body] => text of comment
   #------------------------------------------------------------------------------
   def create
-    association = params[:name].blank? ? :comments : "#{params[:name]}_comments".to_sym
-    if @commenter.respond_to? association
-      @comment = @commenter.send(association).create(comment_params.merge(user_id: current_user.id))
-    end
-    
+    params[:name] ||= 'comments'
+    raise "Invalid Parameter" unless params[:name].end_with?('comments')
+    association     = params[:name].to_sym
+
     respond_to do |format|
-      # format.html {redirect_to :controller => @commenter.class.to_s.pluralize.downcase, :action => :show, :id => @commenter.id}
-      format.html { redirect_to :back }
+      if @commenter.respond_to? association
+        @comment = @commenter.send(association).create(comment_params.merge(user_id: current_user.id))
+        format.html { redirect_to :back }
+        format.js
+      else
+        format.html { redirect_to :back }
+      end
     end
   end
 
   #------------------------------------------------------------------------------
-  def destroy
-    comment = Comment.find(params[:id])
-    comment.destroy if can?(:manage, :all) #|| comment.user == current_user
+  def edit
     respond_to do |format|
       format.html { redirect_to :back }
+      format.js
+    end
+  end
+
+  #------------------------------------------------------------------------------
+  def update
+    respond_to do |format|
+      if @comment.update_attributes(comment_params)
+        format.html { redirect_to :back }
+        format.js
+      end
+    end
+  end
+  
+  #------------------------------------------------------------------------------
+  def destroy
+    @comment.destroy if can?(:manage, :all) #|| comment.user == current_user
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js
     end
   end
 
@@ -37,7 +59,12 @@ private
 
   #------------------------------------------------------------------------------
   def find_commenter
-    klass       = params[:commenter_type].classify.constantize
-    @commenter  = klass.find(params[:commenter_id])
+    if params[:id]
+      @comment    = Comment.find(params[:id])
+      @commenter  = @comment.commentable
+    else
+      klass       = params[:commenter_type].classify.constantize
+      @commenter  = klass.find(params[:commenter_id])
+    end
   end
 end
