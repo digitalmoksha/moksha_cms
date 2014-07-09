@@ -15,6 +15,8 @@
   </ul>
 
   <div class="tab-content with-padding">
+
+    <%#--- Overview Tab %>
     <div class="tab-pane fade in active" id="overview_tab">
       <div class="row">
         <div class="col-md-3 col-sm-3">
@@ -98,6 +100,8 @@
         </div>
       </div>
     </div>
+
+    <%#--- Update Registration Tab %>
     <div class="tab-pane fade" id="update_registration_tab">
       <%= simple_form_for @registration, url: admin_registration_path,
             html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
@@ -149,9 +153,9 @@
       <% end %>
     </div>
 
+    <%#--- Payments Tab %>
     <div class="tab-pane fade" id="payment_tab">
-      <% toolbar = toolbar_btn(icons(:new), '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'New Payment', class: "btn btn-link btn-icon") %>
-      <%= panel body: false, title: 'Recorded Payments', toolbar: toolbar do %>
+      <%= subsection title: 'Recorded Payments' do %>
         <table class="table table-condensed table-gradient table-hover">
           <thead>
             <tr>
@@ -179,11 +183,12 @@
           </tbody>
         </table>
       <% end %>
+      <%= link_to 'Add Payment', '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'Add Payment', class: "btn btn-xs btn-primary" %>
       <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
     </div>
 
+    <%#--- Comments Tab %>
     <div class="tab-pane fade" id="private_comments">
-
       <%= subsection title: 'Private Comments' do %>
         <%= render partial: 'dm_core/admin/comments/comment_section', locals: {commenting_on: @registration, comments: @registration.private_comments, name: 'private_comments'} %>
       <% end %>
