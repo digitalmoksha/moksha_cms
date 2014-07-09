@@ -28,7 +28,9 @@ class UserPresenter < BasePresenter
   # gives the public avatar for a user
   #------------------------------------------------------------------------------
   def avatar_for(size = 32)
-    case 
+    case
+    when size.class == String && size.end_with?('%')
+      avatar = user.user_profile.public_avatar_url(:sq200)
     when size <= 35
       avatar = user.user_profile.public_avatar_url(:sq35)
     when size <= 100
@@ -39,7 +41,7 @@ class UserPresenter < BasePresenter
       avatar = user.user_profile.public_avatar_url
     end
     # image_tag('dm_core/user.gif', width: size, height: size, class: 'image')
-    image_tag(avatar, width: size, height: size, class: 'image')
+    image_tag(avatar, width: size, class: 'image')
   end
 
   
