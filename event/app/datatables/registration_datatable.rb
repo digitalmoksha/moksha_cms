@@ -31,7 +31,7 @@ private
         registration_actions(registration),
         "<span style='white-space:nowrap;'>#{registration.receipt_code}</span>",
         name_and_avatar(registration),
-        workshop_price(registration),
+        present(registration).balance_or_paid,
         "<span style='white-space:nowrap;'>#{format_date(registration.created_at)}</span>",
         (registration.user_profile.user ? present(registration.user_profile.user).last_access : colored_label('no user', :gray))
       ]
@@ -85,18 +85,6 @@ private
        '</li>'
      end
     return output.html_safe
-  end
-  
-  #------------------------------------------------------------------------------
-  def workshop_price(registration)
-    if registration.workshop_price && registration.workshop_price.price
-      color = (registration.balance_owed.cents > 0) ? 'balance_owed' : 'balance_paid'
-      amount = (registration.balance_owed.cents == 0) ? 'paid' : registration.balance_owed.format(:no_cents_if_whole => true)
-      "<span data-placement='left' class='hovertip #{color}' title='#{registration.workshop_price.price.format(:no_cents_if_whole => true)} &mdash; #{registration.workshop_price.price_description}'>#{amount}</span>".html_safe
-    else
-      '-'
-    end
-
   end
   
   #------------------------------------------------------------------------------
