@@ -8,13 +8,64 @@
 
 <div class="tabbable">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#update_registration_tab" data-toggle="tab">Update Registration</a></li>
+    <li class="active"><a href="#overview_tab" data-toggle="tab">Overview</a></li>
+    <li><a href="#update_registration_tab" data-toggle="tab">Update Registration</a></li>
     <li><a href="#payment_tab" data-toggle="tab">Payments</a></li>
     <li><a href="#private_comments" data-toggle="tab">Comments <%= colored_label(@registration.comments_count, :info) %></a></li>
   </ul>
 
   <div class="tab-content with-padding">
-    <div class="tab-pane fade in active" id="update_registration_tab">
+    <div class="tab-pane fade in active" id="overview_tab">
+      <div class="row">
+        <div class="col-md-3 col-sm-3">
+          
+          <div class="thumbnail">
+            <div class="thumb">
+              <%= avatar_for(@registration.user_profile.user, '100%') %>
+            </div>
+          
+            <div class="caption text-center">
+              <h6><%= @registration.full_name %><small><%= @registration.user_profile.country.english_name %></small></h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <dl>
+            <dt class="text-info">Price</dt>
+            <dd><%= price_details(@registration.workshop_price) %></dd>
+            <% if @registration.payment_comment %>
+              <dt class="text-info">Reason for Discount</dt>
+              <dd><%= @registration.payment_comment.body %></dd>
+            <% end %>
+          </dl>
+        </div>
+        <div class="col-md-3 col-sm-3">
+          <ul class="statistics">
+            <% color = @registration.balance_owed > 0 ? :danger : :success %>
+            <li><%= stat_block_small label: 'Balance', number: @registration.balance_owed.format(no_cents_if_whole: true), color_type: color, icon: 'icon-coin', percent: 100 %></li>
+          </ul>
+          <table class="accounting" style="width: 100%">
+            <tr>
+              <th>Price</th>
+              <td><%= @registration.price.format %></td>
+            </tr>
+            <tr>
+              <th>Discount</th>
+              <td class="text-danger"> - <%= @registration.discount.format %></td>
+            </tr>
+            <tr class="section">
+              <th>Total</th>
+              <td><strong><%= @registration.discounted_price.format %></strong></td>
+            </tr>
+            <tr>
+              <th>Paid</th>
+              <td class="text-success"><%= @registration.amount_paid.format %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="update_registration_tab">
       <%= simple_form_for @registration, url: admin_registration_path,
             html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
       
