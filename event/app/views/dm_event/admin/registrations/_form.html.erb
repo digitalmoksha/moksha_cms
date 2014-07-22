@@ -50,7 +50,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% outstanding = Money.new(0) %>
+                <%# outstanding = Money.new(0) %>
                 <% Registration.where(user_profile_id: @registration.user_profile).each do |registration| %>
                   <% unless registration == @registration %>
                     <tr>
@@ -60,17 +60,19 @@
                       <td class="name"><%= link_to registration.workshop.title, edit_admin_registration_path(registration) %></td>
                       <td class="name"><%= present(registration).balance_or_paid %></td>
                     </tr>
-                    <% outstanding += registration.balance_owed %>
+                    <%# outstanding += registration.balance_owed %>
                   <% end %>
                 <% end %>
               </tbody>
-              <tfooter>
-                <tr>
-                  <td></td>
-                  <td><strong>Outstanding Balance</strong></td>
-                  <td><%= outstanding.format %></td>
-                </tr>
-              </tfooter>
+              <% if false # [todo] Unfortunately, this code did not work since each workshop could be in a different currency.  Revisit %>
+                <tfooter>
+                  <tr>
+                    <td></td>
+                    <td><strong>Outstanding Balance</strong></td>
+                    <td><%= outstanding.format %></td>
+                  </tr>
+                </tfooter>
+              <% end %>
             </table>
           <% end %>
         </div>
