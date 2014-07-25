@@ -44,14 +44,8 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
     end
   end
 
-  # Note: can't simply do a destroy - since the comments reference this object, 
-  # when they are deleted they cause the object to be stale in memory, which then
-  # raises a StaleObject exception.
-  # For reference: https://github.com/rails/rails/pull/9448
   #------------------------------------------------------------------------------
   def destroy
-    @post.comments.destroy_all
-    @post.reload
     @post.destroy
     redirect_to admin_cms_blog_url(@blog), notice: 'Post was successfully deleted.'
   end
