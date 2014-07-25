@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'friendly_id', "~> 5.0.3"
   s.add_dependency 'aasm', '~> 3.1.1'
   s.add_dependency 'money-rails', '~> 0.9.0'
-  s.add_dependency 'globalize', '~> 4.0.0'        # translations in database
+  s.add_dependency 'globalize', '4.0.1'        # translations in database. 4.0.2 introduced bug with touch: true and destroying CmsPost
   s.add_dependency 'exception_notification', '4.0.1'
   s.add_dependency 'aws-sdk', '~> 1.0'
   s.add_dependency 'biggs', "~> 0.3.3"            # address formatting
