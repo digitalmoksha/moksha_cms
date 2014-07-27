@@ -45,7 +45,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @registration                   = @workshop.registrations.new(registration_params)
     @registration.registered_locale = I18n.locale
     @registration.user_profile      = current_user ? current_user.user_profile : UserProfile.new
-    @registration.user_profile.assign_attributes(profile_params)
+    @registration.user_profile.assign_attributes(profile_params) unless profile_params.blank?
 
     if @registration.save
       if @workshop.payments_enabled? && !@workshop.require_review?
