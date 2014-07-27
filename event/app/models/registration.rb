@@ -224,7 +224,7 @@ public
   def manual_payment(payment_history, cost, total_currency, user_profile,
                      options = { item_ref: '', payment_method: 'cash', bill_to_name: '', payment_date: Time.now,
                                  notify_data: nil, transaction_id: nil, status: '' } )
-    amount            = Money.parse(cost, total_currency)
+    amount            = Monetize.parse(cost, total_currency)
     
     if payment_history
       new_amount_paid = self.amount_paid - self.workshop_price.to_base_currency(payment_history.total) + self.workshop_price.to_base_currency(amount)

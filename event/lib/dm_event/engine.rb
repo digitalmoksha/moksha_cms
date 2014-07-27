@@ -1,5 +1,3 @@
-require 'ranked-model'
-require 'money-rails'
 require 'dm_core'
 require 'activemerchant'
 require 'mini_magick'
