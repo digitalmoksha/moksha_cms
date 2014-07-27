@@ -61,7 +61,7 @@ DmCms::Engine.routes.draw do
 
     post  '/contact_form/create',                 controller: :contact_form, action: :create, as: :create_contact_form
     get   '/coming_soon',                         controller: 'pages', action: :show, slug: 'coming_soon', as: :coming_soon
-    get   '/:slug(/:xaction(/:xid))',             controller: 'pages', action: :show, as: :showpage 
+    get   '/*slug(/:xaction(/:xid))',             controller: 'pages', action: :show, as: :showpage  # use *slug to fix this https://github.com/rails/rails/issues/16058
 
   end
 end

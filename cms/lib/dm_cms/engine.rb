@@ -1,4 +1,3 @@
-require 'ancestry'
 require 'meta-tags-helpers'
 require 'mail_form'
 require 'dm_core'
