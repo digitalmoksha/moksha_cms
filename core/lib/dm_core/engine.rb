@@ -39,6 +39,5 @@ module DmCore
         include DmCore::ApplicationHelper
       end
     end
-    Money.silence_core_extensions_deprecations = true  # can remove once upgrade to Money 6.1
   end
 end
