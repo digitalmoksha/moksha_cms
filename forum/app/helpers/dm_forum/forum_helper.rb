@@ -105,52 +105,5 @@ module DmForum
         forum_comment.user.state
       end
     end
-
-=begin
-    def flash_messages
-      flash.map do |name, message|
-        content_tag :p, message, :class => [:notice, name].uniq.join(' ')
-      end.join.html_safe if flash.present?
-    end
-
-
-    def next_page(collection)
-      unless collection.page_number == collection.total_entries or collection.total_entries == 0
-        "<p style='float:right;'>" + link_to(I18n.t('fms.next_page'), { :page => collection.page_number.next }.merge(params.reject{|k,v| k=="page"})) + "</p>"
-      end
-    end
-
-    def search_posts_title
-      (@q.blank? ? I18n.t('fms.recent_posts') : I18n.t('fms.searching_for') + " '#{@q}'").tap do |title|
-        title << " " + I18n.t('fms.by_user', :user => @user.display_name) if @user
-        title << " " + I18n.t('fms.in_forum', :forum => @forum.name) if @forum
-      end
-    end
-
-
-
-    def search_path(atom = false)
-      options = @q.blank? ? {} : {:q => @q}
-      prefix = 
-        if @topic
-          options.update :topic_id => @topic, :forum_id => @forum
-          :forum_topic
-        elsif @forum
-          options.update :forum_id => @forum
-          :forum
-        elsif @user
-          options.update :user_id => @user
-          :user
-        else
-          :search
-        end
-      atom ? send("#{prefix}_posts_path", options.update(:format => :atom)) : send("#{prefix}_posts_path", options)
-    end
-
-    def ajax_spinner_for(id, spinner="spinner.gif")
-      "<img src='#{asset_path spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'/>".html_safe
-    end
-
-=end
   end
 end
