@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.0.0"
+  s.add_dependency "rails", "~> 4.0"
 
   #--- dont' forget to add 'require' statement in engine.rb
-  s.add_dependency 'gibbon', '~> 1.1.2'
+  s.add_dependency 'gibbon', '~> 1.1.3'
 
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'
