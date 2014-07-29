@@ -17,13 +17,13 @@ module Liquid
 Includes a system standard contact form.
 
 ~~~
-{% contact_form}
+{% contact_form %}
 ~~~
 
 If you have a custom form, provide it's name
 
 ~~~
-{% contact_form name: tech_support}
+{% contact_form name: tech_support %}
 ~~~
 
 END_OF_DESCRIPTION
