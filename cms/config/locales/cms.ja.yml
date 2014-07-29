@@ -18,7 +18,7 @@ ja:
     delete: 削除
     comments_stat: コメント
     blog_login_required: このブログにアクセスするにはログインが必要です
-    comment_login_required: "コメントを投稿するために、アカウントにログインしてください。 ユーザーアカウントをお持ちでない場合は、1を作成することができます。 "
+    comment_login_required: "コメントを投稿するためには、ご自分のアカウントにログインして下さい。ご自分のユーザーアカウントをお持ちではない場合は、作成して頂くことが出来ます。"
     comment_notify:
       disclaimer: "示されたこのブログ/フォーラムの最新情報を通知することがしたかったため、このメールを受け取っている。"
     blog_follow_section:
