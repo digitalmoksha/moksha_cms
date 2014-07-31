@@ -39,60 +39,15 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
     end
   end
 
-
-  # #------------------------------------------------------------------------------
-  # def show
-  #   @event_payment = EventPayment.find(params[:id])
-  # end
-  # 
-  # #------------------------------------------------------------------------------
-  # def new
-  #   unless params[:id] == nil
-  #     @event_payment = EventPayment.new
-  #     @event_payment.event_workshop_id = params[:id]
-  #     @workshop           = EventWorkshop.find_by_id(@event_payment.event_workshop_id)
-  #   else
-  #     redirect_to :controller => 'events', :action => 'list'
-  #   end
-  # 
-  # end
-  # 
-  # #------------------------------------------------------------------------------
-  # def create
-  #   @event_payment = EventPayment.new(params[:event_payment])
-  #   if @event_payment.save
-  #     flash[:notice] = 'EventPayment was successfully created.'
-  #     redirect_to :action => 'list', :id => @event_payment.event_workshop_id
-  #   else
-  #     render :action => 'new'
-  #   end
-  # end
-  # 
-  # #------------------------------------------------------------------------------
-  # def edit
-  #   @event_payment = EventPayment.find(params[:id])
-  # end
-  # 
-  # #------------------------------------------------------------------------------
-  # def update
-  #   @event_payment = EventPayment.find(params[:id])
-  #   if @event_payment.update_attributes(params[:event_payment])
-  #     flash[:notice] = 'EventPayment was successfully updated.'
-  #     redirect_to :action => 'list', :id => @event_payment.event_workshop_id
-  #   else
-  #     render :action => 'edit'
-  #   end
-  # end
-  # 
-  # #------------------------------------------------------------------------------
-  # def destroy
-  #   @event_payment = EventPayment.find(params[:id])
-  #   #--- unlink any registrations
-  #   @event_registrations = @event_payment.event_workshop.event_registration.where(:event_payment_id => @event_payment.id)
-  #   @event_registrations.each { |r| r.update_attribute(:event_payment_id, nil) }
-  #   @event_payment.destroy
-  #   redirect_to :action => :list, :id => @event_payment.event_workshop
-  # end
+  #------------------------------------------------------------------------------
+  def destroy
+    if @workshop_price.registrations.count == 0
+      @workshop_price.destroy
+      redirect_to admin_workshop_workshop_prices_url(@workshop), notice: 'Price was successfully deleted.'
+    else
+      redirect_to admin_workshop_workshop_prices_url(@workshop), error: 'Registrations are using this price - unable to delete'
+    end
+  end
 
   #------------------------------------------------------------------------------
   def sort
@@ -101,10 +56,12 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
     #--- this action will be called via ajax
     render nothing: true
   end
-  
+
+private
+
   #------------------------------------------------------------------------------
   def workshop_lookup
-    @workshop           = Workshop.friendly.find(params[:workshop_id])
+    @workshop = Workshop.friendly.find(params[:workshop_id])
   end
   
   #------------------------------------------------------------------------------
@@ -112,14 +69,5 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
     @workshop_price = WorkshopPrice.find(params[:id])
     @workshop       = @workshop_price.workshop
   end
-
-  # # preview
-  # #------------------------------------------------------------------------------
-  # def preview
-  #   #--- there is an extra &_= on the end that needs to be stripped off
-  #   @results = request.raw_post[0..(request.raw_post.length-2)]
-  # 
-  #   render :layout => false
-  # end
 
 end

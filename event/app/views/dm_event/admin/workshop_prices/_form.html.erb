@@ -49,7 +49,7 @@
       <%= f.input :recurring_period, label: 'Number of Days', hint: 'Number of Days in Period' %>
     <% end %>
 
-    <%= submit_or_cancel cancel_url: admin_workshop_workshop_prices_path(@workshop) %>
+    <%= submit_or_cancel cancel_url: admin_workshop_workshop_prices_path(@workshop), delete_url: (@workshop_price.new_record? ? nil : admin_workshop_price_path), delete_confirm: 'Delete the price?' %>
 
   <% end %>
 
