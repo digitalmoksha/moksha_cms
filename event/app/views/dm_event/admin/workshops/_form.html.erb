@@ -77,7 +77,7 @@
       <%= f.input :funding_goal, label: 'Funding Goal', hint: 'Goal (in the currency above) of this funding project', input_html: {class: 'width_25_percent'} %>
     <% end %>
   
-    <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
+    <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)), delete_url: admin_workshop_url, delete_confirm: 'Delete the workshop and ALL related registrations and payments?' %>
   <% end %>
 <% end %>
 

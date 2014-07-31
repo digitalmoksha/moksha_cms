@@ -53,6 +53,12 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
       format.csv { data_export(Registration.csv_columns(@workshop), @registrations, filename: @workshop.slug, expressions: true, format: 'csv') }
     end    
   end
+
+  #------------------------------------------------------------------------------
+  def destroy
+    @workshop.destroy
+    redirect_to admin_workshops_url, notice: 'Workshop was successfully deleted.'
+  end
   
   # Edit/create of the registration state emails.  :email_type is passed in
   # to determine which one we're editing
