@@ -1,6 +1,7 @@
 <% content_for :content_title, 'Workshop Dashboard' %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
+    <%= link_to('Outstanding Balances', admin_workshop_user_outstanding_balances_path, title: 'Outstanding Balances', class: "btn btn-xs btn-default") %>
     <%= link_to(icon_label(:new, 'New'), new_admin_workshop_path, title: 'New Workshop', class: "btn btn-xs btn-default") %>
   <% end %>
 <% end %>

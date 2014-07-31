@@ -3,7 +3,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   include DmCore::PermittedParams
   include CsvExporter
   
-  before_filter   :workshop_lookup, except: [:index, :new, :create]
+  before_filter   :workshop_lookup, except: [:index, :new, :create, :user_outstanding_balances]
   
   helper DmEvent::WorkshopsHelper
 
@@ -81,6 +81,13 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   def financials
     @financials = @workshop.financial_details
     @payments = PaymentHistory.where(owner_type: 'Registration', owner_id: @workshop.registrations.pluck(:id)).includes(:user_profile, owner: [:user_profile])
+  end
+
+  # Generate a list of all outstanding balances
+  #------------------------------------------------------------------------------
+  def user_outstanding_balances
+    @unpaid = Registration.unpaid.includes(:user_profile)
+    @unpaid = @unpaid.to_a.delete_if {|i| i.balance_owed == 0}.group_by {|i| i.full_name}.sort_by {|i| i[0].downcase}
   end
 
   # Handle any additional configuration, such as selecting the attached blog/forum

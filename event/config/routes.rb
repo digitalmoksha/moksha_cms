@@ -12,6 +12,7 @@ DmEvent::Engine.routes.draw do
           end
           resources :workshop_prices
         end
+        get   '/workshop/user_outstanding_balances',   controller: :workshops, action: 'user_outstanding_balances'
         resources :registrations do
           member do
             put    'action_state/:state_event',         action: 'action_state', as: 'action_state'
@@ -21,7 +22,7 @@ DmEvent::Engine.routes.draw do
           end
         end
         resources :workshop_prices
-        post  '/workshop_prices/sort',                controller: :workshop_prices, action: :sort, as: :workshop_price_sort
+        post  '/workshop_prices/sort',                  controller: :workshop_prices, action: :sort, as: :workshop_price_sort
       end
     end
 
