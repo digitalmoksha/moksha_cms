@@ -28,6 +28,8 @@ require 'exception_notification'
 require 'aws-sdk'
 require 'biggs'
 require 'codemirror-rails'
+require 'mini_magick'
+require 'carrierwave'
 
 module DmCore
   class Engine < ::Rails::Engine
