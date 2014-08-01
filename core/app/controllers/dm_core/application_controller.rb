@@ -17,6 +17,8 @@ class DmCore::ApplicationController < ActionController::Base
   before_filter   :set_cache_buster
   before_filter   :configure_permitted_parameters, if: :devise_controller?
 
+  add_flash_types :warning, :error, :info
+
   include DmCore::AccountHelper
 
   #------------------------------------------------------------------------------

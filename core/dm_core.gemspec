@@ -47,6 +47,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'aws-sdk', '~> 1.49'
   s.add_dependency 'biggs', "~> 0.3.3"            # address formatting
   s.add_dependency 'codemirror-rails', '~> 4.2'
+  s.add_dependency 'mini_magick', '~> 3.8.0'
+  s.add_dependency 'carrierwave', '~> 0.10.0'
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem "preferences", "~> 0.5.0", :git => "git://github.com/madebydna/preferences.git"
