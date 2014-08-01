@@ -20,8 +20,6 @@ Gem::Specification.new do |s|
 
   #--- don't forget to add 'require' statement in engine.rb
   s.add_dependency 'activemerchant', '1.43.3'
-  s.add_dependency 'mini_magick', '~> 3.8.0'
-  s.add_dependency 'carrierwave', '~> 0.10.0'
 
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'

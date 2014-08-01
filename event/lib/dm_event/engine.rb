@@ -1,7 +1,5 @@
 require 'dm_core'
 require 'activemerchant'
-require 'mini_magick'
-require 'carrierwave'
 
 module DmEvent
   class Engine < ::Rails::Engine
