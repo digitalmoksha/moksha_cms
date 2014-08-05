@@ -73,7 +73,7 @@ module DmCore
           when :manual
             ::User.with_role(:member, self).count
           when :automatic
-            self.owner.try('member_count')
+            self.owner ? self.owner.member_count : 0
           when :all
             member_count(:manual) + member_count(:automatic)
           end
