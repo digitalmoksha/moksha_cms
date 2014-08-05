@@ -20,6 +20,7 @@
         <th>Title</th>
         <th>Associated Event</th>
         <th width="50">Type</th>
+        <th width="18"><span class='hovertip' title='Followers or members'><%= icons('icon-users') %></span></th>
         <th width="50">Status</th>
       </tr>
     </thead>
@@ -33,6 +34,7 @@
             </td>
             <td><%= blog.owner.try(:title) %></td>
             <td><%= blog_presenter.visibility %></td>
+            <td><%= blog.is_private? ? content_tag(:span, blog.member_count(:all), class: 'hovertip', title: 'Members') : content_tag(:span, blog.followers.count, class: 'hovertip', title: 'Followers') %></td>
             <td><%= blog_presenter.label_published %></td>
           </tr>
         <% end %>
