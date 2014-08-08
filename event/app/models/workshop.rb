@@ -219,14 +219,15 @@ class Workshop < ActiveRecord::Base
     self.preferred_header_accent_color || default
   end
   
-  # Find list of new users (within a certain date range) that have not registered
-  # for any events.  Not perfect, since people can register just to access special
+  # Find list of newly createdusers that have not registered for any events, between 
+  # the end of the workshop and up to 60 day before the start of the workshop.
+  # Not perfect, since people can register just to access special
   # content.  But gives rough idea of people creating an account but not realizing
   # they need to register for the event they want to participate in.
   #------------------------------------------------------------------------------
-  def self.lost_sheep(days_ago = 10)
+  def lost_users(days_ago = 10)
     lost = []
-    new_users = User.where(created_at: (Time.now - days_ago.day)..Time.now, account_id: Account.current.id)
+    new_users = User.where(created_at: (self.starting_on - days_ago.day)..self.ending_on, account_id: Account.current.id)
     new_users.each do |user|
       if user.user_site_profiles.where(account_id: Account.current.id)
         if user.user_profile.registrations.count == 0
@@ -234,12 +235,6 @@ class Workshop < ActiveRecord::Base
         end
       end
     end
-    puts "----------------------------------------------"
-    puts "Domain: #{Account.current.domain} found #{lost.count}"
-    puts "   #{(Time.now - days_ago.day).localize(format: :mmddyy)} -- #{Time.now.localize(format: :mmddyy)}"
-    puts "----------------------------------------------"
-    lost.each {|user| puts "#{user.created_at.localize(format: :mmddyy)} \t #{user.full_name}\t\t\t#{user.email}" }
-    return nil
+    lost
   end
-
 end

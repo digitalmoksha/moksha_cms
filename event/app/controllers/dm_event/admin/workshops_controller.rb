@@ -46,6 +46,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def show
     @registrations  = @workshop.registrations
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: RegistrationDatatable.new(view_context) }
@@ -124,6 +125,18 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
     msg     = "Reminder emails sent ==>  Success: #{status[:success]}  Failed: #{status[:failed]}"
     status[:failed] > 0 ? (flash[:warning] = msg) : (flash[:notice] = msg)
     redirect_to financials_admin_workshop_url(@workshop)
+  end
+
+  #------------------------------------------------------------------------------
+  def lost_users
+    if put_or_post?
+      @days_ago = params[:lost_users][:days_ago].to_i
+      @days_ago = 60 if @days_ago > 60
+    else
+      @days_ago   = 10
+    end
+    # @lost_users = Workshop.lost_users(@days_ago)
+    @lost_users = @workshop.lost_users(@days_ago)
   end
 
 private

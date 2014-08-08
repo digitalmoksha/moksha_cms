@@ -53,6 +53,12 @@ private
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
     registrations = @workshop.registrations.includes(:workshop_price, :user_profile => [:user => :current_site_profile]).references(:user_profiles).order("#{sort_column} #{sort_direction}")
+    if params[:duplicates].present?
+      #--- grab only registrations that have duplicates (based on the user_profile_id)
+      grouped       = registrations.group(:user_profile_id)
+      dups          = grouped.count.reject {|x, y| y == 1}.collect {|x, y| x}
+      registrations = registrations.where(user_profile_id: dups)
+    end
     registrations = registrations.page(page).per_page(per_page)
     if params[:sSearch].present?
       registrations = registrations.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(user_profiles.email) like :search OR receipt_code like :search", search: "%#{params[:sSearch]}%")
