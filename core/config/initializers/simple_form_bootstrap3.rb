@@ -15,6 +15,19 @@ SimpleForm.setup do |config|
     end
   end
 
+  config.wrappers :bs3_vertical_group, tag: 'div', class: "form-group", error_class: 'has-error' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.use :label, class: 'col-sm-12 control-label'
+    b.wrapper tag: 'div', class: 'col-sm-12' do |input|
+      input.wrapper tag: 'div', class: 'input-group' do |append|
+        append.use :input
+      end
+      input.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+      input.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+    end
+  end
+
   config.wrappers :bs3_vertical_file_input, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
