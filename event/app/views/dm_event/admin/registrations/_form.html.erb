@@ -32,14 +32,16 @@
           </div>
         </div>
         <div class="col-md-6 col-sm-6">
-          <dl class="block">
-            <dt class="text-info">Price</dt>
-            <dd><%= price_details(@registration.workshop_price) %></dd>
-            <% if @registration.payment_comment %>
-              <dt class="text-info">Reason for Discount</dt>
-              <dd><%= @registration.payment_comment.body %></dd>
-            <% end %>
-          </dl>
+          <% if @registration.workshop_price %>
+            <dl class="block">
+              <dt class="text-info">Price</dt>
+              <dd><%= price_details(@registration.workshop_price) %></dd>
+              <% if @registration.payment_comment %>
+                <dt class="text-info">Reason for Discount</dt>
+                <dd><%= @registration.payment_comment.body %></dd>
+              <% end %>
+            </dl>
+          <% end %>
           <%= subsection title: "Previous Event Registrations" do %>
             <table class="table table-condensed table-striped">
               <thead>
