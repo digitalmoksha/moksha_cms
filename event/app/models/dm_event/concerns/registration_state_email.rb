@@ -57,7 +57,7 @@ module DmEvent
             'state'   => state.to_s,
             'event'   => self.to_liquid
           }
-          substitutions['payment_details'] = Liquid::Template.parse(workshop_price.payment_details).render(substitutions) unless workshop_price.payment_details.blank?
+          substitutions['payment_details'] = Liquid::Template.parse(workshop_price.payment_details).render(substitutions) unless workshop_price.try(:payment_details).blank?
           substitutions['subject']         = Liquid::Template.parse(system_email.subject).render(substitutions)
           
           template  = Liquid::Template.parse(system_email.body)
