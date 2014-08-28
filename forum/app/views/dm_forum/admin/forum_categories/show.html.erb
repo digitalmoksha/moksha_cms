@@ -5,8 +5,6 @@
   <% end %>
 <% end %>
 
-<%= render partial: 'dm_forum/admin/forum_categories/index_sidebar' %>
-
 <% toolbar = toolbar_btn(icons(:new), new_admin_forum_category_forum_path(@forum_category), title: 'New Forum', class: "btn btn-link btn-icon") %>
 <%= panel title: 'Forums', toolbar: toolbar, body: false do %>
   <div class="table-overflow">
