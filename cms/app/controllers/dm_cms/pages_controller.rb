@@ -19,16 +19,14 @@ class DmCms::PagesController < DmCms::ApplicationController
     DmCore::Language.locale = current_account.verify_locale(params[:locale])
     
     #--- find the requested page, and if not found try to find the 'missing' page
-    @current_page = CmsPage.friendly.find(params[:slug])
+    @current_page = CmsPage.friendly.find_by_slug(params[:slug])
     if @current_page.nil? || (!@current_page.is_published? && !is_admin?)
-      @current_page = CmsPage.find_by_slug('missing')
-      render action: :show, layout: "cms_templates/404", status: 404 && return if @current_page.nil?
+      @current_page = CmsPage.friendly.find_by_slug('missing')
+      render(file: 'public/404.html', status: :not_found, layout: false) && return if @current_page.nil? || !@current_page.is_published?
     end
 
-    if @current_page.requires_login
-      if !signed_in?
-        redirect_to(main_app.new_user_session_url, alert: 'You must be signed into your account before you can access this page') and return
-      end
+    if @current_page.requires_login && !signed_in?
+      redirect_to(main_app.new_user_session_url, alert: 'You must be signed into your account before you can access this page') and return
     end
 
     case @current_page.pagetype
