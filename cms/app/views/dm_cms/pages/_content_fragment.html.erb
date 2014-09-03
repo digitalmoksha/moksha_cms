@@ -1,5 +1,6 @@
 <%#--- leave formatting alone - prefer final html to be as natural as possible %>
-<% if is_admin? %>
+<%#--- for now, removed wrapping content in a div - caused display problems with some themes %>
+<% if false #is_admin? %>
 <div class="fragment" id="fragment_<%= content_fragment.id %>">
 <%= render_content_item(content_fragment) %>
 </div>
