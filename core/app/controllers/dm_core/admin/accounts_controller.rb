@@ -1,14 +1,36 @@
 class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   include DmCore::PermittedParams
   
-  before_filter   :authorize_access
-  before_filter   :account_lookup
-
+  skip_before_filter  :template_setup
+  before_filter       :authorize_access
+  before_filter       :account_lookup, except: [:new_account, :create_account]
+  before_filter       :template_setup
+  
   #------------------------------------------------------------------------------
   def show
-    redirect_to dm_core.admin_account_general_path
+    redirect_to dm_core.admin_account_general_path(@account)
   end
 
+  #------------------------------------------------------------------------------
+  def new_account
+    redirect_to dm_core.admin_account_general_path(current_account) unless is_sysadmin?
+    @account = Account.new
+    render action: :general
+  end
+
+  #------------------------------------------------------------------------------
+  def create_account
+    redirect_to dm_core.admin_account_general_path(current_account) unless is_sysadmin?
+
+    @account = Account.new(account_params)
+    @account.general_validation = true
+    if @account.save
+      redirect_to dm_core.admin_account_general_path(@account), notice: 'New Account/Site was successfully created.'
+    else
+      render action: :general
+    end
+  end
+  
   #------------------------------------------------------------------------------
   def general
     if put_or_post?
@@ -87,13 +109,16 @@ private
 
   #------------------------------------------------------------------------------
   def account_lookup
-    @account = current_account
+    if is_sysadmin? && params[:id]
+      @account = Account.find(params[:id])
+    end
+    @account = @account || current_account
   end
 
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
   def template_setup
-    content_for :content_title,     "Account Management"
+    content_for :content_title,     @account.nil? ? 'Create a New Site' : @account.domain
     content_for :content_subtitle,  "Site Configuration"
   end
 
