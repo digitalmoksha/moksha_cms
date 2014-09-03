@@ -17,14 +17,17 @@
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog3"></i></a>
         <ul class="dropdown-menu dropdown-menu-right icons-right">
+          <% if can? :manage_content, :all %>
+            <li><%= link_to label_icon('Clear Page Cache', 'icon-redo'), dm_cms.admin_expire_cache_path, method: :patch %></li>
+          <% end %>
           <% if is_admin? %>
-            <li><%= link_to '<i class="icon-cog"></i> Account Settings'.html_safe, dm_core.admin_account_path %></li>
+            <li><%= link_to label_icon('Site Settings', 'icon-cog'), dm_core.admin_account_path %></li>
           <% end %>
           <% if is_sysadmin? %>
-            <li><%= link_to '<i class="icon-spinner8"></i> Update Assets'.html_safe, dm_core.admin_dashboard_update_site_assets_url, method: :patch %></li>
+            <li><%= link_to label_icon('Update Assets', 'icon-spinner8'), dm_core.admin_dashboard_update_site_assets_url, method: :patch %></li>
           <% end %>
-          <% if can? :manage_content, :all %>
-            <li><%= link_to '<i class="icon-redo"></i> Clear Page Cache'.html_safe, dm_cms.admin_expire_cache_path, method: :patch %></li>
+          <% if is_sysadmin? %>
+            <li><%= link_to label_icon('System Admin', 'icon-wrench'), dm_core.admin_system_path %></li>
           <% end %>
         </ul>
       </li>
