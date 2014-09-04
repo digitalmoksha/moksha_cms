@@ -71,7 +71,8 @@ module DmCore
         # not limited to one account.
         #------------------------------------------------------------------------------
         def is_sysadmin?
-          @is_sysadmin ||= (self.roles.unscoped.where(name: 'sysadmin', account_id: 0).size > 0)
+          @is_sysadmin ||= (self.roles.where(name: 'sysadmin', account_id: 0).size > 0)
+          # @is_sysadmin ||= (self.roles.unscoped.where(name: 'sysadmin', account_id: 0).size > 0)
         end
         
         # does the user have a paid subscription
