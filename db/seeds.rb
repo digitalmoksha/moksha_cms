@@ -1,3 +1,8 @@
+class GlobalizeCountry  < ActiveRecord::Base
+end
+class GlobalizeLanguage  < ActiveRecord::Base
+end
+
 GlobalizeCountry.create(:id => 1, :code => "AD", :english_name => "Andorra", :currency_code => "EUR", :number_grouping_scheme => "western", :continent => "Europe")
 GlobalizeCountry.create(:id => 2, :code => "AE", :english_name => "United Arab Emirates", :currency_code => "AED", :thousands_sep => ",", :decimal_sep => ".", :currency_decimal_sep => ".", :number_grouping_scheme => "western", :continent => "Asia")
 GlobalizeCountry.create(:id => 3, :code => "AF", :english_name => "Afghanistan", :currency_code => "AFA", :number_grouping_scheme => "western", :continent => "Asia")
