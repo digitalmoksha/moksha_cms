@@ -12,8 +12,7 @@ class DmCms::PagesController < DmCms::ApplicationController
 
   #------------------------------------------------------------------------------
   def show
-    #--- might get missing image requests, try to weed them out
-    render(file: 'public/404.html', status: :not_found, layout: false) && return if ['png', 'gif', 'jpg', 'mp4', 'mp3', 'ogg', 'avi', 'php', 'cgi'].include? params[:format]
+    render(file: 'public/404.html', status: :not_found, layout: false) && return if invalid_slug?
 
     #--- make sure we have a valid locale for this site set
     DmCore::Language.locale = current_account.verify_locale(params[:locale])
@@ -56,5 +55,13 @@ class DmCms::PagesController < DmCms::ApplicationController
   # site is disabled
   #------------------------------------------------------------------------------
   def coming_soon
+  end
+
+private
+
+  # might get missing image requests, try to weed them out
+  #------------------------------------------------------------------------------
+  def invalid_slug?
+    params[:slug].end_with?('.png', '.gif', '.jpg', '.mp4', '.mp3', '.ogg', '.avi', '.php', '.cgi')
   end
 end
