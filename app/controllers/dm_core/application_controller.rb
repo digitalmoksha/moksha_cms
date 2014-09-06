@@ -7,6 +7,7 @@ class DmCore::ApplicationController < ActionController::Base
 
   before_filter   :log_additional_data
   # before_filter   :record_activity
+  before_filter   :check_site_assets
   before_filter   :set_locale
   before_filter   :set_mailer_url_options
   before_filter   :update_user
@@ -133,6 +134,17 @@ protected
   #------------------------------------------------------------------------------
   def default_url_options(options={})
     options.merge({ locale: I18n.locale })
+  end
+
+  # try to weed out missing asset requests - if we make it here and the path starts
+  # with 'site_assets', then missing asset was requested, 404 out quickly
+  #------------------------------------------------------------------------------
+  def check_site_assets
+    if request.path.start_with?('/site_assets')
+      render(file: 'public/404.html', status: :not_found, layout: false) && false
+    else
+      true
+    end
   end
 
   # Set the locale of this request.
