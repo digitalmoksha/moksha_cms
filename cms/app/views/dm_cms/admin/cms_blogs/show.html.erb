@@ -152,7 +152,7 @@
             <% @blog.followers.each do |follower| %>
               <tr>
                 <td><%= follower.user.full_name %></td>
-                <td><%= follower.user.country.english_name %></td>
+                <td><%= follower.user.try(:country).try(:english_name) %></td>
               </tr>
             <% end %>
           </tbody>

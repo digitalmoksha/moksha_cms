@@ -212,24 +212,4 @@ class CmsPage < ActiveRecord::Base
     return new_page
   end
 
-=begin
-  # Get the page id of the parent at item a specific level
-  #------------------------------------------------------------------------------
-  def parent_at_level(level)
-    if level >= self.level
-      return self.id
-    end
-    
-    # --- maybe the level we're looking for is one back - saves a query
-    return self.parent_id if level == self.level - 1
-
-    tempPage = CmsPage.find(self.parent_id)
-    while tempPage.level > level
-      tempPage = CmsPage.find(tempPage.parent_id)
-    end
-
-    return tempPage.id
-  end
-  
-=end
 end
