@@ -108,10 +108,12 @@ public
     discounted_price - amount_paid
   end
   
-  # suggested amount of next payment
+  # [todo] suggested amount of next payment.  Need to check if we have enabled
+  # recurring payments, then calculate the correct value
   #------------------------------------------------------------------------------
   def payment_owed
-    [workshop_price.payment_price, balance_owed].min
+    # [workshop_price.payment_price, balance_owed].min
+    balanced_owed
   end
   
   # Return the number of items specified, in particular the number of items in 
