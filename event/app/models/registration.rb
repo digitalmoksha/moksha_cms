@@ -113,7 +113,7 @@ public
   #------------------------------------------------------------------------------
   def payment_owed
     # [workshop_price.payment_price, balance_owed].min
-    balanced_owed
+    balance_owed
   end
   
   # Return the number of items specified, in particular the number of items in 
