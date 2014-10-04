@@ -20,7 +20,7 @@
     <%= f.input :preferred_show_social_buttons, as: :boolean, label: 'Show social buttons', hint: 'This setting will be ignored for private blogs' %>
     
     <%= subsection title: 'Header Style' do %>
-      <%= f.input :image, label: 'Header Image', hint: 'An image for the entire blog', input_html: {class: 'width_50_percent'} %>
+      <%= f.input :header_image, label: 'Header Image', hint: 'An image for the entire blog', input_html: {class: 'width_50_percent'} %>
       <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color', input_html: {class: 'width_50_percent'} %>
     <% end %>
     

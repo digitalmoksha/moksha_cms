@@ -22,7 +22,7 @@ class DmCms::PostsController < DmCms::ApplicationController
     #--- set title / meta data
     content_for :page_title, @post.title
     set_meta description: @post.summary, "og:description" => sanitize_text(markdown(@post.summary, safe: false))
-    set_meta "og:image" => site_asset_media_url(@post.image) if @post.image.present?
+    set_meta "og:image" => site_asset_media_url(@post.featured_image) if @post.featured_image.present?
   end
 
   #------------------------------------------------------------------------------

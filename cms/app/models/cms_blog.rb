@@ -49,9 +49,10 @@ class CmsBlog < ActiveRecord::Base
     CmsBlog.all.any? { |b| b.can_be_read_by?(user) }
   end
 
+  # Return the header image, or a default if not specified
   #------------------------------------------------------------------------------
   def header_image(default = nil)
-    self.image || default
+    self.attributes['header_image'] || default
   end
 
   #------------------------------------------------------------------------------

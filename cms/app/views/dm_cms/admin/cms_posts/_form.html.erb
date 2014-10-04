@@ -59,7 +59,7 @@
     <% end %>
 
     <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
-    <%= f.input :image, label: 'Post Image', id: 'image_error' %>
+    <%= f.input :featured_image, label: 'Featured Image', id: 'image_error' %>
     <%= f.input :comments_allowed, as: :boolean, label: 'Allow Comments', hint: 'Turn on if you want commenting for this post.' %>
 
     <%= submit_or_cancel cancel_url: admin_cms_blog_path(@blog), delete_url: ([:admin, @post] unless @post.new_record?), delete_confirm: 'Are you sure you wish to delete this post?  All comments will also be deleted!' %>
