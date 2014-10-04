@@ -43,7 +43,7 @@ module DmCore::LiquidHelper
   def markdown(content = '', options = {safe: true}, &block)
     content ||= ''
     if block_given?
-      html = ::Kramdown::Document.new(capture(&block)).to_html.html_safe      
+      html = ::Kramdown::Document.new(capture(&block)).to_html.html_safe
     else
       html = ::Kramdown::Document.new(content).to_html.html_safe
     end
