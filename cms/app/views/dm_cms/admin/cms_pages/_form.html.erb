@@ -32,10 +32,11 @@
       <%= f.input :menuimage, label: 'Menu Image' %>
     <% end %>
     <%= f.input :requires_login, label: 'Requires Login', hint: 'Page will require user to be logged in to access' %>
+    <%= f.input :header_image, label: 'Header Image', hint: 'Image used as a header/banner image, if supported by theme', input_html: {class: 'width_50_percent'} %>
 
     <%= subsection title: 'Social Media' do %>
       <%= f.input :preferred_show_social_buttons, as: :boolean, label: 'Show social buttons', hint: 'Show the standard Facebook/Twitter buttons on the page' %>
-      <%= f.input :image, label: 'Page Image', id: 'image_error', hint: 'Image used if page liked on facebook.  Will not display on the page', input_html: {class: 'width_50_percent'} %>
+      <%= f.input :featured_image, label: 'Featured Image', hint: 'Image used if page liked on facebook.  Will not display on the page', input_html: {class: 'width_50_percent'} %>
       <%= locale_tabs do |locale| %>
         <%= f.input "summary_#{locale}", label: 'Page Summary', as: :code_editor, input_html: {style: "height: 100px;"},
                hint: 'Text used when a page liked on Facebook.  Is not visible on the page'%>
