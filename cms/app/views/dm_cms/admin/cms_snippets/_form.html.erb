@@ -15,7 +15,9 @@
     <%= f.input :enable_cache, as: :toggle, label: 'Cache Content' %>
     
     <%= locale_tabs title: '' do |locale| %>
-      <%= f.input "content_#{locale}", label: 'Content',    required: true, wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
+      <div class="col-sm-12">
+        <%= f.input "content_#{locale}", label: 'Content',    required: true, wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
+      </div>
     <% end %>
 
     <%= submit_or_cancel cancel_url: admin_cms_snippets_path, delete_url: ([:admin, @cms_snippet] unless @cms_snippet.new_record?), delete_confirm: 'Are you sure you wish to delete this snippet?' %>

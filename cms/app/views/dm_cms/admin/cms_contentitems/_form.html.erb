@@ -13,17 +13,25 @@
   <% end %>
   <%= panel title: title, toolbar: toolbar do %>
     <%= locale_tabs  do |locale| %>
-      <%= f.input "content_#{locale}", label: 'Content', wrapper: :bs3_vertical_form, as: :code_editor, mode: @cms_contentitem.itemtype, required: true, input_html: {style: "height: 400px;"} %>
+      <div class="col-sm-12">
+        <%= f.input "content_#{locale}", label: 'Content', wrapper: :bs3_vertical_form, as: :code_editor, mode: @cms_contentitem.itemtype, required: true, input_html: {style: "height: 400px;"} %>
+      </div>
     <% end %>
     <div class="row">
       <div class="col-md-4">
-        <%= f.input :itemtype, label: 'Item Type', collection: CmsContentitem::CONTENT_TYPES, include_blank: false, wrapper: :bs3_vertical_form %>
+        <div class="col-sm-12">
+          <%= f.input :itemtype, label: 'Item Type', collection: CmsContentitem::CONTENT_TYPES, include_blank: false, wrapper: :bs3_vertical_form %>
+        </div>
       </div>
       <div class="col-md-4">
-        <%= f.input :container, label: 'Content Name', hint: 'This is normally "body" or "sidebar" or something', wrapper: :bs3_vertical_form %>
+        <div class="col-sm-12">
+          <%= f.input :container, label: 'Content Name', hint: 'This is normally "body" or "sidebar" or something', wrapper: :bs3_vertical_form %>
+        </div>
       </div>
       <div class="col-md-4">
-        <%= f.input :enable_cache, as: :boolean, label: 'Cache Content', wrapper: :bs3_vertical_form %>
+        <div class="col-sm-12">
+          <%= f.input :enable_cache, as: :boolean, label: 'Cache Content', wrapper: :bs3_vertical_form %>
+        </div>
       </div>
     </div>
     

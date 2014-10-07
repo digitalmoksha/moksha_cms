@@ -1,17 +1,17 @@
 <% @contact = ContactForm.new unless @contact %>
 
 <div markdown="0" id="contact_form" class='clearfix'>
-  <%= simple_form_for(@contact , :url => create_contact_form_path, :wrapper => :bootstrap2, :html => { :class => 'form-inline', :remote => true }  ) do |f| %>
+  <%= simple_form_for(@contact , url: create_contact_form_path, wrapper: simple_form_theme_wrapper, html: { remote: true }  ) do |f| %>
     <%= flash_notices %>
 
-    <%= f.input :name,    :label => false, :placeholder => I18n.t('cms.contact_form.name') %>
-    <%= f.input :email,   :label => false, :placeholder => I18n.t('cms.contact_form.email_placeholder') %>
-    <%= f.input :reason,  :label => false, :prompt => I18n.t('cms.contact_form.reason'), :collection => I18n.t('cms.contact_form.reason_list').values %>
-    <%= f.input :subject, :label => false, :placeholder => I18n.t('cms.contact_form.subject') %>
-    <%= f.input :message, :as => :text, :label => false, :placeholder => I18n.t('cms.contact_form.message'), :input_html => { :style => 'height: 150px;' } %>
+    <%= f.input :name,    label: false, placeholder: I18n.t('cms.contact_form.name') %>
+    <%= f.input :email,   label: false, placeholder: I18n.t('cms.contact_form.email_placeholder') %>
+    <%= f.input :reason,  label: false, prompt: I18n.t('cms.contact_form.reason'), collection: I18n.t('cms.contact_form.reason_list').values %>
+    <%= f.input :subject, label: false, placeholder: I18n.t('cms.contact_form.subject') %>
+    <%= f.input :message, as: :text, label: false, placeholder: I18n.t('cms.contact_form.message'), input_html: { style: 'height: 150px;' } %>
 
-    <%= f.input :nickname, :label => false, :input_html => { :style => 'display: none;' } %>
+    <%= f.input :nickname, label: false, input_html: { style: 'display: none;' } %>
 
-    <%= f.submit I18n.t('cms.contact_form.send_button'), :class => 'btn btn-primary' %>
+    <%= f.submit I18n.t('cms.contact_form.send_button'), class: 'btn btn-primary' %>
   <% end %>
 </div>

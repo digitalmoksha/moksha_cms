@@ -54,8 +54,12 @@
 
     <%= locale_tabs do |locale| %>
       <%= f.input "title_#{locale}",   label: 'Post Title', required: true %>
-      <%= f.input "summary_#{locale}", label: 'Summary',    required: true, wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 100px;"} %>
-      <%= f.input "content_#{locale}", label: 'Content',    required: true, wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
+      <div class="col-sm-12">
+        <%= f.input "summary_#{locale}", label: 'Summary',    required: true, wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 100px;"} %>
+      </div>
+      <div class="col-sm-12">
+        <%= f.input "content_#{locale}", label: 'Content',    required: true, wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
+      </div>
     <% end %>
 
     <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
