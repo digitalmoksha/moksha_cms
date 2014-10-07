@@ -19,8 +19,10 @@
     <%= locale_tabs do |locale| %>
       <%= f.input "price_description_#{locale}", label: 'Title', required: true %>
       <%= f.input "sub_description_#{locale}",   label: 'Sub-title' %>
-      <%= f.input "payment_details_#{locale}",   label: 'Payment Details', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 200px;"},
-                 hint: 'Any special details/instructions for this price (Markdown)' %>
+      <div class="col-sm-12">
+        <%= f.input "payment_details_#{locale}",   label: 'Payment Details', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 200px;"},
+                   hint: 'Any special details/instructions for this price (Markdown)' %>
+      </div>
     <% end %>
     
     <%= f.input :price %>

@@ -13,8 +13,12 @@
   <%= panel title: 'Main Settings for Workshop', toolbar: toolbar do %>
     <%= locale_tabs do |locale| %>
       <%= f.input "title_#{locale}", label: 'Title', id: 'title_error', required: true %>
-      <%= f.input "description_#{locale}", label: 'Description', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
-      <%= f.input "sidebar_#{locale}", label: 'Sidebar', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 200px;"} %>
+      <div class="col-sm-12">
+        <%= f.input "description_#{locale}", label: 'Description', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
+      </div>
+      <div class="col-sm-12">
+        <%= f.input "sidebar_#{locale}", label: 'Sidebar', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 200px;"} %>
+      </div>
     <% end %>
 
     <%= subsection do %>

@@ -53,7 +53,9 @@
     <%= f.error_notification message: "Please review the problems below" %>
     <%= locale_tabs title: '' do |locale| %>
       <%= f.input "subject_#{locale}", label: 'Email Subject', id: 'title_error', required: true %>
-      <%= f.input "body_#{locale}", label: 'Email Body', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 200px;"} %>
+      <div class="col-sm-12">
+        <%= f.input "body_#{locale}", label: 'Email Body', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 200px;"} %>
+      </div>
     <% end %>
 
     <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop) %>
