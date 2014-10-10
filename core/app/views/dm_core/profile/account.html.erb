@@ -2,7 +2,7 @@
   <%= render :partial => 'dm_core/profile/profile_sidebar' %>
 <% end %>
 
-<%= simple_form_for(@user, :url => dm_core.edit_profile_account_path, wrapper: :bootstrap2, html: {id: 'profile_form', class: 'profile_account_form'}) do |f| %>
+<%= simple_form_for(@user, :url => dm_core.edit_profile_account_path, wrapper: simple_form_theme_wrapper, html: {id: 'profile_form', class: 'profile_account_form'}) do |f| %>
   <%= flash_notices %>
   <%= f.error_notification :message => I18n.t('core.errors_below') %>
 
@@ -33,6 +33,6 @@
   </fieldset>
 
   <fieldset class="submit_form">
-    <%= f.button :submit, I18n.t('core.profile_update_btn'), class: 'btn btn-primary' %>
+    <%= f.button :submit, I18n.t('core.profile_update_btn') %>
   </fieldset>
 <% end %>
