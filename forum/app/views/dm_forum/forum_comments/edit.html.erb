@@ -8,8 +8,8 @@
   <% end %>
 </h1>
 
-<%= simple_form_for [@forum, @forum_topic, @forum_comment] do |f| %>
+<%= simple_form_for [@forum, @forum_topic, @forum_comment], wrapper: simple_form_theme_wrapper do |f| %>
   <%#= f.error_messages %>
-    <%= f.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), :input_html => {:rows => 10} %>
-  <%= submit_or_cancel :save => I18n.t('fms.views_posts.save'), :cancel => I18n.t('fms.cancel'), :cancel_url => forum_forum_topic_path(@forum_comment.forum_topic.forum, @forum_comment.forum_topic, :page => page_number) %>
+  <%= f.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), :input_html => {:rows => 10} %>
+  <%= f.submit I18n.t('fms.views_posts.save'), class: 'btn btn-primary' %>
 <% end %>

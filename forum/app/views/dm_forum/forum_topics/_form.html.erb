@@ -1,4 +1,4 @@
-<%= simple_form_for [@forum, @forum_topic] do |f| %>
+<%= simple_form_for [@forum, @forum_topic], wrapper: simple_form_theme_wrapper do |f| %>
 
   <%= f.error_notification :message => "Please review the problems below" %>
   <%= f.input :title, :label => I18n.t('fms.views_topics.topic') %>
@@ -11,13 +11,14 @@
 
   <% if can? :moderate, @forum %>
     <div class="clearfix">
-      <%= f.input :sticky, :label => "<i class='icon-pushpin'></i> #{I18n.t('fms.sticky')}".html_safe %>
+      <%= f.input :sticky, :label => "<i class='fa fa-thumb-tack'></i> #{I18n.t('fms.sticky')}".html_safe %>
     </div>
     <div class="clearfix">
-      <%= f.input :locked, :label => "<i class='icon-lock'></i> #{I18n.t('fms.views_topics.lock_topic')}".html_safe %>
+      <%= f.input :locked, :label => "<i class='fa fa-lock'></i> #{I18n.t('fms.views_topics.lock_topic')}".html_safe %>
     </div>
   <% end %>
 
-  <%= submit_or_cancel :save => I18n.t('fms.post_topic'), :cancel => I18n.t('fms.views_topics.cancel'),
+  <%= f.submit I18n.t('fms.post_topic'), class: 'btn btn-primary' %>
+  <%#= submit_or_cancel :save => I18n.t('fms.post_topic'), :cancel => I18n.t('fms.views_topics.cancel'),
             :cancel_url => (@forum_topic.new_record? ? [@forum] : [@forum, @forum_topic]) %>
 <% end %>
