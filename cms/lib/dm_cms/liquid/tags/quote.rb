@@ -3,7 +3,7 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def render(context)
-      @attributes.reverse_merge!  'class' => '', 'id' => '', 'style' => '', 'author' => '', 'dash' => true
+      @attributes.reverse_merge!  'class' => '', 'id' => '', 'style' => '', 'author' => ''
 
       output  = super
       style   = "style='#{@attributes["style"]}'" unless @attributes['style'].blank?
@@ -12,7 +12,7 @@ module Liquid
       
       out  = "<blockquote #{[id, dclass, style].join(' ')}>"
       out += output
-      out += "\r\n<footer markdown='0'>#{'&mdash; ' if @attributes['dash']}#{@attributes['author']}</footer>" unless @attributes['author'].blank?
+      out += "\r\n<footer markdown='0'><cite>#{@attributes['author']}</cite></footer>" unless @attributes['author'].blank?
       out += "</blockquote>"
     end
 
@@ -22,10 +22,9 @@ module Liquid
         category: 'structure',
         description: <<-END_OF_DESCRIPTION
 Outpus an HTML 'blockquote' with optional author.  You can specify id, class, and style.
-Specify `dash: false` to remove the dash on the authors name.
 
 ~~~
-{% quote author: 'Favorite Person', id: some_id, class: some_class, style: some_style, dash: false %}
+{% quote author: 'Favorite Person', id: some_id, class: some_class, style: some_style %}
   ...content
 {% endquote %}
 ~~~
