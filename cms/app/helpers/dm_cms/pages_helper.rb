@@ -149,6 +149,15 @@ module DmCms::PagesHelper
     (@current_page == page) ? true : false
   end
 
+  # Use the request url to determine if the current url matches any passed in paths
+  # http://stackoverflow.com/questions/8552763/best-way-to-highlight-current-page-in-rails-3-apply-a-css-class-to-links-con
+  #------------------------------------------------------------------------------
+  def current_page_path?(*paths)
+    active = false
+    paths.each { |path| active ||= request.url.include?(path) }
+    return active
+  end
+
   # Determine if the page is in this section
   # {todo} should be able to go to any depth
   #------------------------------------------------------------------------------
@@ -156,44 +165,4 @@ module DmCms::PagesHelper
     (@current_page == page or @current_page.parent_id == page.id) ? true : false
   end
 
-=begin  
-  # -- Preferred method
-  # given the accessname of a section, builds a list of links of all children of 
-  # the specific section.
-  #------------------------------------------------------------------------------
-  def build_menu_for_section(accessname, options = {})
-    temp_page   = current_account_site.cms_pages.find_by_accessname(accessname)
-    if temp_page
-      pages       = current_account_site.cms_pages.where(parent_id: temp_page.id).rank(:row_order)
-      menu_from_pages(pages, options)
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  def build_menu_for_single_page(accessname, options = {})
-    temp_page   = current_account_site.cms_pages.find_by_accessname(accessname)
-    options[:only_lineitem] = true
-    menu_from_pages([temp_page], options) if temp_page
-  end
-  
-  # -- Preferred method
-  #------------------------------------------------------------------------------
-  def build_menu_for_page(options = {})
-    return if @cms_page[:page_id].nil?
-
-    if @cms_page[:level] == 1
-      # --- at a level one, grab the children
-      queryID = @cms_page[:page_id]
-    else
-      # --- we're at second level (or greater {todo}), use the parent_id to get siblings
-      tempPage = current_account_site.cms_pages.find(@cms_page[:page_id])
-      queryID =  tempPage.parent_at_level(1)
-    end
-    pages = current_account_site.cms_pages.where(parent_id: queryID).rank(:row_order)
-    menu_from_pages(pages, options)
-  end
-  
-
-
-=end
 end
