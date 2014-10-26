@@ -25,10 +25,14 @@
       </div>
     <% end %>
     
-    <%= f.input :price %>
-    <%= f.input :price_currency, collection: Account::CURRENCY_TYPES, disabled: true, hint: 'This is always the primary currency of the workshop' %>
-    <%= f.input :valid_until, as: :string, input_html: {class: 'datepicker'} %>
-    <%= f.input :total_available %>
+    <%= f.input :price, wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
+      <%= f.input_field :price, as: :string, class: "form-control" %>
+      <span class="input-group-addon">
+        <%= @workshop_price.price_currency %>
+      </span>
+    <% end %>
+    <%= f.input :valid_until, as: :date_picker, input_wrapper_html: {class: 'col-sm-4'} %>
+    <%= f.input :total_available, input_wrapper_html: {class: 'col-sm-4'} %>
     <%= f.input :disabled, as: :toggle_checked, label: 'Disable?' %>
 
     <% if false %>
@@ -47,8 +51,8 @@
     
     <%= subsection title: 'Recurring Payments' do %>
       <p class="explanation">This is for indicating a regularly scheduled payment, such as a monthly payment plan.</p>
-      <%= f.input :recurring_number, label: 'Number of Periods', hint: 'Number of Periods (Payments)' %>
-      <%= f.input :recurring_period, label: 'Number of Days', hint: 'Number of Days in Period' %>
+      <%= f.input :recurring_number, label: 'Number of Periods', hint: 'Number of Periods (Payments)', input_wrapper_html: {class: 'col-sm-4'} %>
+      <%= f.input :recurring_period, label: 'Number of Days', hint: 'Number of Days in Period', input_wrapper_html: {class: 'col-sm-4'} %>
     <% end %>
 
     <%= submit_or_cancel cancel_url: admin_workshop_workshop_prices_path(@workshop), delete_url: (@workshop_price.new_record? ? nil : admin_workshop_price_path), delete_confirm: 'Delete the price?' %>

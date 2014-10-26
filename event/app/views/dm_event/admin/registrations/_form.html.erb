@@ -123,10 +123,13 @@
             <% if @registration.workshop_price && @registration.workshop_price.price %>
               <% discount_currency = @registration.workshop_price.price.currency.symbol %>
 
-              <%= f.input :discount_value, error: false, label: 'Discount' do %>
-                <%= f.input_field :discount_value %>
-                <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]], {}, {style: "width: 60px", class: "select optional"} %>
+              <%= f.input :discount_value, label: 'Discount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
+                <%= f.input_field :discount_value, as: :string, class: "form-control" %>
+                <span class="input-group-addon">
+                  <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]] %>
+                </span>
               <% end %>
+              
 
             <% end %>
 
@@ -149,7 +152,7 @@
         <% end %>
 
         <%= subsection title: 'Payment Reminders' do %>
-          <%= f.input :preferred_payment_reminder_hold_until, label: 'No reminder until', as: :string, input_html: {class: 'datepicker'},
+          <%= f.input :preferred_payment_reminder_hold_until, label: 'No reminder until', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'},
                        hint: 'When sending reminders in batch, this persons reminder will not be sent unless after the specified date' %>
         <% end %>
         
@@ -209,13 +212,15 @@
         <p><em>They must be registered for some type of payment first</em></p>
       <% else %>
 
-        <%= f.input :payment_date, label: 'Paid On', input_html: {class: 'datepicker', style: 'width: 150px'} %>
-        <%= f.input :cost, label: 'Amount' do %>
-          <%= f.input_field :cost, as: :string %>
-          <%= f.select :total_currency, @registration.workshop_price.currency_list, {}, {style: "width: 60px", class: "select"} %>
+        <%= f.input :payment_date, label: 'Paid On', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'} %>
+        <%= f.input :cost, label: 'Amount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
+          <%= f.input_field :cost, as: :string, class: "form-control" %>
+          <span class="input-group-addon">
+            <%= f.select :total_currency, @registration.workshop_price.currency_list, {} %>
+          </span>
         <% end %>
 
-        <%= f.input :payment_method, label: 'Method', as: 'select', collection: WorkshopPrice::PAYMENT_METHODS, include_blank: false, input_html: {style: "width: 200px"} %>
+        <%= f.input :payment_method, label: 'Method', as: 'select', collection: WorkshopPrice::PAYMENT_METHODS, include_blank: false, input_wrapper_html: {class: 'col-sm-4'} %>
         <%= f.input :item_ref, label: 'Description', required: false %>
         <%= f.input :bill_to_name, label: 'Payed By', required: false %>
         <%= f.input :receipt_requested, as: 'boolean', label: false, inline_label: 'Customer would like a receipt', required: false %>
@@ -232,10 +237,12 @@
         <%= modal_dialog title: 'Enter New Payment', id: "edit_payment_#{payment_history.id}", include_save: true,
                          delete_url: ajax_delete_payment_admin_registration_path(locale: I18n.locale, id: @registration, payment_id: payment_history.id),
                          delete_msg: 'Are you sure you want to delete this payment?' do %>
-          <%= f.input :payment_date, as: :string, label: 'Paid On', input_html: {class: 'datepicker', id: "payment_date_#{payment_history.id}", style: 'width: 150px', value: payment_history.payment_date.try(:to_date)} %>
-          <%= f.input :cost, label: 'Amount' do %>
-            <%= f.input_field :cost, as: :string %>
-            <%= f.select :total_currency, @registration.workshop_price.currency_list, {}, {style: "width: 60px", class: "select"} %>
+          <%= f.input :payment_date, label: 'Paid On', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'} %>
+          <%= f.input :cost, label: 'Amount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
+            <%= f.input_field :cost, as: :string, class: "form-control" %>
+            <span class="input-group-addon">
+              <%= f.select :total_currency, @registration.workshop_price.currency_list, {} %>
+            </span>
           <% end %>
           <%= f.input :payment_method, label: 'Method', as: 'select', collection: WorkshopPrice::PAYMENT_METHODS, include_blank: false, input_html: {style: "width: 200px"} %>
           <%= f.input :item_ref, label: 'Description', required: false %>

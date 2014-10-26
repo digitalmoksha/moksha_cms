@@ -35,37 +35,9 @@
       <%= f.input :base_currency, label: 'Currency', required: true, collection: Account::CURRENCY_TYPES,
                   hint: 'Currency used for this workshop', input_html: {class: 'width_50_percent'},
                   disabled: !(@workshop.workshop_prices.empty?) %>
-      <div class="form-group string required workshop_starting_on">
-        <label class="string required col-sm-2 control-label" for="workshop_starting_on">
-          <abbr title="required">*</abbr> Starting on
-        </label>
-        <div class="col-sm-10">
-          <div class="row">
-            <div class="col-md-6">
-              <input name="workshop[starting_on_date]" type="text" value="<%= @workshop.starting_on.to_date unless @workshop.starting_on.nil? %>" placeholder="Select date..." id="date1" class="datepicker time" >
-            </div>
-            <div class="col-md-6">
-              <input name="workshop[starting_on_time]" id="starting_time" type="text" class="time" value="<%= @workshop.starting_on.strftime("%I:%M%p") unless @workshop.starting_on.nil? %>" placeholder="Select time..." />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-group string required workshop_ending_on">
-        <label class="string required col-sm-2 control-label" for="workshop_ending_on">
-          <abbr title="required">*</abbr> Ending on
-        </label>
-        <div class="col-sm-10">
-          <div class="row">
-            <div class="col-sm-6">
-              <input name="workshop[ending_on_date]" type="text" value="<%= @workshop.ending_on.to_date unless @workshop.ending_on.nil? %>" placeholder="Select date..." id="date2" class="datepicker time" >
-            </div>
-            <div class="col-sm-6">
-              <input name="workshop[ending_on_time]" id="ending_time" type="text" class="time" value="<%= @workshop.ending_on.strftime("%I:%M%p") unless @workshop.ending_on.nil? %>" placeholder="Select time..." />
-            </div>
-          </div>
-        </div>
-      </div>
-      <%= f.input :deadline_on, label: 'Deadline', as: :string, input_html: {class: 'datepicker', style: 'width: 150px'} %>
+      <%= f.input :starting_on, label: 'Starting on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.starting_on, full_date: true) %>
+      <%= f.input :ending_on, label: 'Ending on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.ending_on, full_date: true) %>
+      <%= f.input :deadline_on, label: 'Deadline', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, hint: format_date(@workshop.deadline_on, full_date: true) %>
 
       <%= f.input :contact_email, label: 'Contact Email', input_html: {class: 'width_50_percent'} %>
       <%= f.input :contact_phone, label: 'Contact Phone', input_html: {class: 'width_50_percent'} %>
