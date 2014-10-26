@@ -24,7 +24,6 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def create
-    prepare_date_time_attribute
     @post = @blog.posts.new(cms_post_params)
 
     if @post.save
@@ -36,7 +35,6 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update
-    prepare_date_time_attribute
     if @post.update_attributes(cms_post_params)
       redirect_to admin_cms_blog_url(@blog), notice: 'Post was successfully updated.'
     else
@@ -69,11 +67,4 @@ private
     @blog = @post.cms_blog
   end
 
-  #------------------------------------------------------------------------------
-  def prepare_date_time_attribute
-    date = params[:cms_post].delete(:published_on_date)
-    time = params[:cms_post].delete(:published_on_time)
-    params[:cms_post][:published_on] = (date.blank? ? nil : DateTime.parse(date + " " + time))
-  end
-  
 end

@@ -33,24 +33,9 @@
     <%= link_to icons(:cancel), admin_cms_blog_path(@blog), class: 'btn btn-link btn-icon' %>
   <% end %>
   <%= panel toolbar: toolbar do %>
-    <div class="form-group string required">
-      <label class="string required col-sm-2 control-label" for="post_starting_on">
-        <abbr title="required">*</abbr> Publish on
-      </label>
-      <div class="col-sm-10">
-        <div class="row">
-          <div class="col-sm-6">
-            <input name="cms_post[published_on_date]" type="text" value="<%= @post.published_on.to_date unless @post.published_on.nil? %>" placeholder="Select date..." id="date1" class="datepicker time" >
-          </div>
-          <div class="col-sm-6">
-            <input name="cms_post[published_on_time]" type="text" class="time_select" value="<%= @post.published_on.strftime("%I:%M%p") unless @post.published_on.nil? %>" placeholder="Select time..." />
-          </div>
-        </div>
-        <div class="clearfix"></div>
-        <p class="help-block">Leave blank for DRAFT mode</p>
-      </div>
-      <div class="clearfix"></div>
-    </div>
+    <%= f.input :published_on, as: :datetime_picker, required: false, wrapper: :bs3_horizontal_nosize, 
+                label_html: {class: 'col-sm-2'}, input_wrapper_html: {class: 'col-sm-4'},
+                hint: 'Leave blank for DRAFT mode' %>
 
     <%= locale_tabs do |locale| %>
       <%= f.input "title_#{locale}",   label: 'Post Title', required: true %>
