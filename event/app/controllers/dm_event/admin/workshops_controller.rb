@@ -24,7 +24,6 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def create
-    prepare_date_time_attribute
     @workshop = Workshop.new(workshop_params)
     if @workshop.save
       redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully created.'
@@ -35,7 +34,6 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update
-    prepare_date_time_attribute
     if @workshop.update_attributes(workshop_params)
       redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully updated.'
     else
@@ -146,13 +144,4 @@ private
     @workshop = Workshop.friendly.find(params[:id])
   end
 
-  #------------------------------------------------------------------------------
-  def prepare_date_time_attribute
-    start_date = params[:workshop].delete(:starting_on_date) + " " + params[:workshop].delete(:starting_on_time)
-    params[:workshop][:starting_on] = DateTime.parse(start_date) unless start_date.blank?
-
-    end_date = params[:workshop].delete(:ending_on_date) + " " + params[:workshop].delete(:ending_on_time)
-    params[:workshop][:ending_on] = DateTime.parse(end_date) unless end_date.blank?
-  end
-  
 end
