@@ -60,7 +60,7 @@ module DmUtilities::DateHelper
   #  :date_only => true   only show the date
   #------------------------------------------------------------------------------
   def format_datetime(time, options = {})
-    time.nil? ? 'n/a' : (time.localize(:count => time.day, :format => :mmddyy) + (options[:date_only] ? '' : " " + time.localize(:format => :hhmmpp)) )
+    time.nil? ? 'n/a' : (format_date(time, options[:full_date], options) + (options[:date_only] ? '' : " " + time.localize(:format => :hhmmpp)) )
   end
 
   # age / date

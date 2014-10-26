@@ -193,14 +193,6 @@ $(document).ready(function() {
      sAjaxSource: $('#user_table').data('source')
   });
 
-  $( ".datepicker" ).datepicker({
-        defaultDate: +7,
-    showOtherMonths:true,
-    autoSize: true,
-    appendText: '(yyyy-mm-dd)',
-    dateFormat: 'yy-mm-dd'
-    });
-    
   //----------------------------------------------------------------
   $.fn.toolbarTabs = function(){ 
   
