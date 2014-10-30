@@ -95,10 +95,11 @@ SimpleForm.setup do |config|
   config.wrappers :bs3_horizontal_boolean, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
+    b.use :label, class: 'col-sm-2 control-label'
 
-    b.wrapper :input_wrapper, tag: 'div', class: 'col-sm-offset-2 col-sm-10' do |wr|
+    b.wrapper :input_wrapper, tag: 'div', class: 'col-sm-10' do |wr|
       wr.wrapper tag: 'div', class: 'checkbox' do |ba|
-        ba.use :label_input, class: 'col-sm-10'
+        ba.use :input
       end
 
       wr.use :error, wrap_with: { tag: 'span', class: 'help-block' }
@@ -109,7 +110,6 @@ SimpleForm.setup do |config|
   config.wrappers :bs3_horizontal_radio_and_checkboxes, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
-
     b.use :label, class: 'col-sm-2 control-label'
 
     b.wrapper :input_wrapper, tag: 'div', class: 'col-sm-10' do |ba|
@@ -123,6 +123,7 @@ SimpleForm.setup do |config|
     b.use :html5
     b.use :placeholder
     b.use :label, class: 'col-sm-2 control-label'
+    
     b.wrapper :input_wrapper, tag: 'div', class: 'col-sm-10' do |input|
       input.wrapper tag: 'div', class: 'input-group' do |append|
         append.use :input
@@ -154,12 +155,12 @@ SimpleForm.setup do |config|
   config.wrappers :bs3_horizontal_nosize_boolean, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
+    b.use :label, class: 'control-label'
 
     b.wrapper :input_wrapper, tag: 'div' do |wr|
       wr.wrapper tag: 'div', class: 'checkbox' do |ba|
-        ba.use :label_input
+        ba.use :input
       end
-
       wr.use :error, wrap_with: { tag: 'span', class: 'help-block' }
       wr.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
     end
