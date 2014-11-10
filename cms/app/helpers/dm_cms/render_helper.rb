@@ -4,10 +4,11 @@ module DmCms
     include DmCms::AnalyticsHelper
 
     # build title to use on a page
+    # note: make sure we return a properly escpaed html_safe string
     #------------------------------------------------------------------------------
     def page_title
       title = current_account.preferred_site_title
-      content_for?(:page_title) ? "#{content_for :page_title} | #{title}" : title
+      content_for?(:page_title) ? "#{h(content_for :page_title)} | #{h(title)}".html_safe : h(title)
     end
     alias :main_title :page_title  # keep old main_title around for now
 
