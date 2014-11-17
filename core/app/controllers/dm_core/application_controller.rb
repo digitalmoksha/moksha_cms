@@ -58,7 +58,7 @@ protected
   # from an email link, the url gets saved before getting redirected to the login
   #------------------------------------------------------------------------------
   def store_location
-    session[:previous_url] = request.fullpath unless request.fullpath =~ /\/users/
+    session[:previous_url] = request.original_fullpath unless request.original_fullpath =~ /\/users/
   end
 
   # override Devise method, on login go to previous url if possible

@@ -41,5 +41,11 @@ module DmCore
         include DmCore::ApplicationHelper
       end
     end
+    
+    config.before_initialize do
+      DmCore.initialize_configuration
+    end
   end
+  
+  
 end
