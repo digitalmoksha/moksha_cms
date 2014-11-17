@@ -11,7 +11,7 @@ class DmCore::Admin::AdminController < ApplicationController
   
   include DmCore::ApplicationHelper
   include DmCore::AccountHelper
-  include Admin::ApplicationHelper
+  include DmCore::Admin::ApplicationHelper
   include AdminTheme::ThemeHelper
 
   helper  DmAdmin::ApplicationHelper
@@ -49,7 +49,7 @@ private
       #--- Gear menu
       if is_admin? || can?(:manage_content, :all)
         item = { text: '', icon_class: :gear, children: [], link: '#' }
-        if can? :manage_content, :all
+        if defined?(DmCms) && can?(:manage_content, :all)
           item[:children] << {text: 'Clear Page Cache', icon_class: :undo, link: dm_cms.admin_expire_cache_path, link_options: {method: :patch} }
         end
         @admin_theme[:top_menu] << item

@@ -1,4 +1,4 @@
-module Admin::ApplicationHelper
+module DmCore::Admin::ApplicationHelper
 
   # Switch to the different user
   #------------------------------------------------------------------------------

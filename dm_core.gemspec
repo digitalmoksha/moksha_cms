@@ -14,10 +14,10 @@ Gem::Specification.new do |s|
   s.description = "Core functionality, including internationalization"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.test_files = Dir["spec/**/*"]
 
   #--- dont' forget to add 'require' statement in engine.rb
-  s.add_dependency "rails", "~> 4.0"
+  s.add_dependency "rails", "~> 4.1"
   s.add_dependency 'actionview-encoded_mail_to'
   s.add_dependency 'devise', '~> 3.2.4'           # Authentication
   s.add_dependency "rolify", "~> 3.4.0"           # User Roles
@@ -52,6 +52,4 @@ Gem::Specification.new do |s|
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem "preferences", "~> 0.5.0", :git => "git://github.com/madebydna/preferences.git"
-
-  s.add_development_dependency 'rspec-rails', '~> 3.0.2'
 end
