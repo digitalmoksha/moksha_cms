@@ -39,6 +39,7 @@ class Account < ActiveRecord::Base
   preference              :default_locale,                  :string,  :default => 'en'
   preference              :locales,                         :string,  :default => 'en, de'
   preference              :site_enabled,                    :boolean, :default => false
+  preference              :site_maintenance,                :boolean, :default => false
   preference              :google_analytics_tracker_id,     :string
   
   #--- Site wide page settings
@@ -146,6 +147,11 @@ class Account < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def site_enabled?
     preferred_site_enabled?
+  end
+
+  #------------------------------------------------------------------------------
+  def site_maintenance?
+    preferred_site_maintenance?
   end
   
   #------------------------------------------------------------------------------

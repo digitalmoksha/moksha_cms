@@ -14,6 +14,7 @@
     <%= f.input :preferred_locales, required: true, label: 'Supported Locales', hint: "Comma seperated. Ex: 'en, de'" %>  
     <%= f.input :preferred_ssl_enabled, as: :boolean, label: 'Enable SSL?' %>
     <%= f.input :preferred_site_enabled, as: :boolean, label: 'Publish Site?' %>
+    <%= f.input :preferred_site_maintenance, as: :boolean, label: 'Site Maintenance', hint: 'Put the site into maintenance mode:  normal users will see the maintenance page.  Admin users will be able to access the site.' %>
 
     <%= submit_or_cancel cancel_url: url %>
 

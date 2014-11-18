@@ -67,17 +67,25 @@ protected
     session[:previous_url] || root_path
   end
 
-  # if site is not enabled, only allow a logged in Admin user to access pages
+  # - if site is not enabled, only allow a logged in Admin user to access pages
   # otherwise, redirect to the 'coming_soon' page
+  # - if site is under maintenance, only allow a logged in Admin user to access pages
+  # otherwise, redirect to the 'maintenance' page
   #------------------------------------------------------------------------------
   def site_enabled?
     unless current_account.site_enabled? || request.params['slug'] == 'coming_soon'
-      # authenticate_user! 
       unless (user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta)))
         redirect_to "/#{current_account.preferred_default_locale}/coming_soon"
         return false
       end
-   end
+    end
+
+    if current_account.site_maintenance?
+      unless (user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta)))
+        render text: '', layout: 'dm_core/maintenance'
+        return false
+      end
+    end
   end  
 
   #------------------------------------------------------------------------------
