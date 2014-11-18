@@ -94,11 +94,7 @@ protected
   
   #------------------------------------------------------------------------------
   def current_page
-    if params[:id].to_i == 0
-      @current_page = CmsPage.friendly.find(params[:id])
-    else
-      @current_page = CmsPage.find(params[:id])
-    end
+    @current_page = CmsPage.friendly.find(params[:id])
   end
 
 end
