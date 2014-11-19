@@ -6,3 +6,6 @@ test/dummy/log/*.log
 test/dummy/tmp/
 test/dummy/.sass-cache
 Gemfile.lock
+spec/dummy/db/test.sqlite3
+spec/dummy/log/development.log
+spec/dummy/log/test.log
