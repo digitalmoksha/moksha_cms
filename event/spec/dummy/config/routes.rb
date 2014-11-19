@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
 
-  mount DmEvent::Engine => "/"
+  scope ":locale" do
+    devise_for :users, controllers: { registrations: "registrations", confirmations: 'confirmations' }
+  end
+
+  themes_for_rails
+
+  mount DmCore::Engine, :at => '/'
+    
 end
