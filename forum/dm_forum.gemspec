@@ -14,14 +14,14 @@ Gem::Specification.new do |s|
   s.description = "Forum Engine"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
-  s.test_files = Dir["test/**/*"]
+  s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.0"
+  s.add_dependency "rails", "~> 4.1"
 
   #--- dont' forget to add 'require' statement in engine.rb
 
   #--- make sure the following gems are included in your app's Gemfile
   # gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'
   # gem 'dm_core', :git => 'git://github.com/digitalmoksha/dm_core.git'
-
+  # gem 'dm_cms', :git => 'git://github.com/digitalmoksha/dm_cms.git'
 end
