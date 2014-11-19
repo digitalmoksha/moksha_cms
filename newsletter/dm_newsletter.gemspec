@@ -14,9 +14,9 @@ Gem::Specification.new do |s|
   s.description = "Newsletter Engine"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
-  s.test_files = Dir["test/**/*"]
+  s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.0"
+  s.add_dependency "rails", "~> 4.1"
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'gibbon', '~> 1.1.3'
