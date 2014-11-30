@@ -3,10 +3,10 @@
 class Ability
   include CanCan::Ability
   include DmCore::Concerns::Ability
-  include DmKnowledge::Concerns::Ability
+  include DmCms::Concerns::Ability
   
   def initialize(user)
-    dm_knowledge_abilities(user)      if respond_to? :dm_knowlege_abilities
+    dm_cms_abilities(user)            if respond_to? :dm_cms_abilities
     dm_core_abilities(user)           if respond_to? :dm_core_abilities
   end
 end

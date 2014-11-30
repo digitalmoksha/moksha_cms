@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   themes_for_rails
 
   mount DmCore::Engine, :at => '/'
-  mount DmCms::Engine => "/dm_knowledge"
+  mount DmCms::Engine => "/dm_cms"
   
   scope ":locale" do
     get   '/index',                 controller: 'dm_cms/pages', action: :show, slug: 'index', as: :index

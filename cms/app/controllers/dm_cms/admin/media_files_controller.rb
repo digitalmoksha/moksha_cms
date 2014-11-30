@@ -22,7 +22,6 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
     @media_file = MediaFile.new
   end
   
-  # GET /admin/lexicons/1/edit
   #------------------------------------------------------------------------------
   def edit
     @media_file = MediaFile.find(params[:id])

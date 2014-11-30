@@ -32,13 +32,17 @@ DmCms::Engine.routes.draw do
           match   'blog_add_member',     action: :blog_add_member, as: :blog_add_member, via: [:get, :post]
           delete  'blog_delete_member',  action: :blog_delete_member, as: :blog_delete_member
         end
-        resources :cms_posts
-      end
-      resources :cms_posts do
-        member do
-          put     'send_notifications_emails',    action: :send_notifications_emails, as: :send_notifications_emails
+        resources :cms_posts do
+          member do
+            put     'send_notifications_emails',    action: :send_notifications_emails, as: :send_notifications_emails
+          end
         end
       end
+      # resources :cms_posts do
+      #   member do
+      #     put     'send_notifications_emails',    action: :send_notifications_emails, as: :send_notifications_emails
+      #   end
+      # end
       post   '/cms_blogs/sort',                    controller: 'cms_blogs', action: :sort, as: :cms_blog_sort
       resources :media_files
     end

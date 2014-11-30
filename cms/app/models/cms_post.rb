@@ -8,6 +8,9 @@ class CmsPost < ActiveRecord::Base
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
 
+  # --- re-define so it can be scoped to the blog as well
+  friendly_id             :model_slug, use: :scoped, scope: [:account_id, :cms_blog]
+
   acts_as_commentable
   
   belongs_to              :cms_blog
@@ -19,6 +22,7 @@ class CmsPost < ActiveRecord::Base
   validates               :title, presence_default_locale: true
   validates               :summary, liquid: { :locales => true }, presence_default_locale: true
   validates               :content, liquid: { :locales => true }, presence_default_locale: true
+  validates_uniqueness_of :slug, scope: [:account_id, :cms_blog_id]
   
   self.per_page = 10
   

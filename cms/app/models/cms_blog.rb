@@ -27,7 +27,8 @@ class CmsBlog < ActiveRecord::Base
   preference                :header_accent_color,  :string
 
   validates                 :title, presence_default_locale: true
-
+  validates_uniqueness_of   :slug, scope: :account_id
+  
   #------------------------------------------------------------------------------
   def model_slug
     send("title_#{Account.current.preferred_default_locale}")

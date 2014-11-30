@@ -71,10 +71,10 @@ module DmCms::PagesHelper
     options[:ul]             = ''
     options[:ul]            += "class='#{options[:class]}' "  unless options[:class].blank?
     options[:ul]            += "id='#{options[:id]}' "        unless options[:id].blank?
-    options[:include_root]   = root                  if options[:include_home]
+    options[:include_root]   = root                           if options[:include_home]
     options[:active_class] ||= 'current'
-    children    = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
-    menu_str    = menu_from_pages(children, options)
+    children                 = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
+    menu_str, submenu_active = (options[:type] == :bs3 ? menu_from_pages_bs3(children, options) : menu_from_pages(children, options))
     return menu_str.html_safe
   end
 
@@ -82,20 +82,56 @@ module DmCms::PagesHelper
   def menu_from_pages(pages, options = {})
     options[:ul]  ||= ''
     menu_str        = ''
+    active_found    = false
     if (root = options[:include_root])
-      active = (current_page?(root) ? options[:active_class] : '')
-      menu_str += "<li class='#{active}'>#{link_to root.menutitle, dm_cms.showpage_url(root.slug)}</li>"
+      active          = (current_page?(root) ? options[:active_class] : nil)
+      active_found  ||= !active.nil?
+      menu_str       += content_tag :li, link_to(root.menutitle, dm_cms.showpage_url(root.slug)), class: active
     end
     pages.each do |page, children|
       if allow_page_in_menu?(page)
-        submenu = (children.empty? ? '' : menu_from_pages(children))
-        active = (current_page?(page) ? options[:active_class] : '')
-        menu_str += "<li>#{link_to page.menutitle, dm_cms.showpage_url(page.slug)}#{submenu}</li>"
+        submenu, submenu_active = (children.empty? ? '' : menu_from_pages(children, active_class: options[:active_class]))
+        active                  = (submenu_active || current_page?(page) ? options[:active_class] : nil)
+        active_found          ||= !active.nil?
+        menu_str += content_tag(:li, class: active) do
+          link_to(page.menutitle, dm_cms.showpage_url(page.slug)) + 
+          submenu.html_safe
+        end
       end
     end
-    return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>")
+    return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found
+  end
+
+  # Creates a standard Bootstrap 3 version of a main menu
+  #------------------------------------------------------------------------------
+  def menu_from_pages_bs3(pages, options = {})
+    options[:ul]  ||= ''
+    menu_str        = ''
+    active_found    = false
+    if (root = options[:include_root])
+      active          = (current_page?(root) ? options[:active_class] : nil)
+      active_found  ||= !active.nil?
+      menu_str       += content_tag :li, link_to(root.menutitle, dm_cms.showpage_url(root.slug)), class: active
+    end
+    pages.each do |page, children|
+      if allow_page_in_menu?(page)
+        submenu, submenu_active = (children.empty? ? '' : menu_from_pages_bs3(children, ul: 'class="dropdown-menu"', active_class: options[:active_class]))
+        active                  = (submenu_active || current_page?(page) ? options[:active_class] : nil)
+        active_found          ||= !active.nil?
+        if !submenu.blank?
+          menu_str += content_tag(:li, class: ['dropdown', active].join(' ')) do
+            link_to(''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, dm_cms.showpage_url(page.slug), class: 'dropdown-toggle', data: {toggle: 'dropdown'}) + 
+            submenu.html_safe
+          end
+        else
+          menu_str += content_tag :li, link_to(page.menutitle, dm_cms.showpage_url(page.slug)), class: active
+        end
+      end
+    end
+    return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found
   end
   
+
   # return true if the page should be allowed to be dislpayed in a menu
   #------------------------------------------------------------------------------
   def allow_page_in_menu?(page)

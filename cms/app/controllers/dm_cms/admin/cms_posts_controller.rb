@@ -1,18 +1,9 @@
 class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
 
-  before_filter   :blog_lookup, :only =>    [:index, :new, :create]
-  before_filter   :post_lookup, :except =>  [:index, :new, :create]
+  before_filter   :blog_lookup
+  before_filter   :post_lookup, :except =>  [:new, :create]
   
-  #------------------------------------------------------------------------------
-  def index
-    @posts = @blog.posts
-  end
-
-  #------------------------------------------------------------------------------
-  def show
-  end
-
   #------------------------------------------------------------------------------
   def new
     @post = @blog.posts.build(comments_allowed: @blog.comments_allowed)
@@ -56,6 +47,8 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
 
 private
 
+  # the blog needs to be specified in the url for each post.  post slugs are
+  # unique per blog
   #------------------------------------------------------------------------------
   def blog_lookup
     @blog = CmsBlog.friendly.find(params[:cms_blog_id])
@@ -63,8 +56,7 @@ private
 
   #------------------------------------------------------------------------------
   def post_lookup
-    @post = CmsPost.friendly.find(params[:id])
-    @blog = @post.cms_blog
+    @post = @blog.posts.friendly.find(params[:id])
   end
 
 end
