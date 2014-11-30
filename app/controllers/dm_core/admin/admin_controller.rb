@@ -78,7 +78,7 @@ private
 
       if defined?(DmCms) && can?(:manage_content, :all)
         @admin_theme[:main_menu] << {text: 'Pages',         icon_class: :pages,         link: dm_cms.admin_cms_pages_path,   active: admin_path_active_class?(dm_cms.admin_cms_pages_path, dm_cms.admin_cms_snippets_path) }
-        @admin_theme[:main_menu] << {text: 'Blogs',         icon_class: :blogs,         link: dm_cms.admin_cms_blogs_path,   active: admin_path_active_class?(dm_cms.admin_cms_blogs_path, dm_cms.admin_cms_posts_path) }
+        @admin_theme[:main_menu] << {text: 'Blogs',         icon_class: :blogs,         link: dm_cms.admin_cms_blogs_path,   active: admin_path_active_class?(dm_cms.admin_cms_blogs_path) }
         @admin_theme[:main_menu] << {text: 'Media Library', icon_class: :media_library, link: dm_cms.admin_media_files_path, active: admin_path_active_class?(dm_cms.admin_media_files_path) }
       end
 
