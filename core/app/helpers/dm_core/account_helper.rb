@@ -19,6 +19,13 @@ module DmCore
       leading_slash ? "/site_assets/#{account_prefix}/site" : "site_assets/#{account_prefix}/site"
     end
 
+    # Returns the path (from the root of the site) to the protected asset files
+    #   Pass in false not to include leading slash
+    #------------------------------------------------------------------------------
+    def account_protected_assets(leading_slash = true)
+      leading_slash ? "/protected_assets/#{account_prefix}" : "protected_assets/#{account_prefix}"
+    end
+
     # Returns the path (from the root of the site) to the site's uploadable asset
     # folder, which is 'media'
     #   Pass in false not to include leading slash
@@ -27,14 +34,14 @@ module DmCore
       account_site_assets(leading_slash) + '/media'
     end
 
-    # Returns the path (from the root of the site) to the site general asset files
+    # Returns the url of the site's general asset files
     #   Pass in false not to include leading slash
     #------------------------------------------------------------------------------
     def account_site_assets_url
       Account.current.url_base + account_site_assets(true)
     end
 
-    # Returns the path (from the root of the site) to the site general asset files
+    # Returns the url of the site's media asset files
     #   Pass in false not to include leading slash
     #------------------------------------------------------------------------------
     def account_site_assets_media_url
