@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <%= meta_tags title:        page_title,
+                viewport:     "width=device-width, initial-scale=1.0",
+                keywords:     page_keywords,
+                copyright:    page_copyright,
+                description:  page_description,
+                image: nil %>
+
+  <script>
+    /* for use in any scripts needing the current locale */
+    window.current_locale = "<%= I18n.locale %>";
+  </script>
+
+  <%= theme_stylesheet_link_tag 'application', theme: '_mbus' %>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <%= theme_javascript_include_tag 'application', theme: '_mbus' %>
+
+  <!-- Script to Activate the Carousel -->
+  <script>
+  $('.carousel').carousel({
+      interval: 5000 //changes the speed
+  })
+  </script>
+  <% content_for :footer_scripts do %>
+    <%= google_analytics_tag %>
+    <%= render :partial => "layouts/cms_templates/social_buttons_initialization" %>
+  <% end %>
+</head>
+

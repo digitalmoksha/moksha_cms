@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe DmCms::Admin::CmsBlogsController do
+
   routes { DmCms::Engine.routes }
   login_admin
   

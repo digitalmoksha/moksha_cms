@@ -1,0 +1,57 @@
+ja:
+  _mbus:
+    language: 言語
+    language_english: 英語
+    language_german: ドイツ語
+    language_czech: チェコ語
+    language_japanese: 日本語
+
+    #--- Login System
+    signup_title: アカウント登録
+    signup_first_name: 名
+    signup_last_name: 姓
+    signup_country: 国
+    signup_email: Eメールアドレス
+    signup_password: パスワード
+    signup_password_confirm: パスワード（確認）
+    signup_newsletter: ニュースレター
+    signup_newsletter_desc: "Yes, I would like to receive updates and news"
+    signup_register_button: 登録
+    signup_public_name: ニックネーム
+    signup_public_name_hint: ニックネームはフォーラムとコメント欄において表示されます。
+    signin_link: サインイン
+    signin_register_link: 'ユーザーアカウントをお持ちではないですか？新しいアカウントを作成して下さい'
+    signin_forgot_password_link: パスワードをお忘れですか？
+    signin_confirmation_instructions_link: "認証に関する指示を受信しませんでしたか？"
+    signin_unlock_instructions_link: "解除に関する指示を受信しませんでしたか？"
+    signin_title: サインイン
+    signin_rememberme: 自動サインインを有効にする
+    signin_button: サインイン
+    confirmation_email_4: 'Thank you'
+    forgot_title: パスワードをお忘れの場合
+    forgot_email_password_button: パスワードに関する指示を送信する
+    resend_title: 認証に関する指示を再送信する
+    change_password_title: パスワードを変更する
+    new_password: 新しいパスワード
+    new_password_confirm: 新しいパスワード（確認）
+    change_password: パスワードを変更する
+    create_account: 新しいアカウントを作成する
+      
+    #--- CMS/Site Messages
+
+    #--- Forum System
+    forum_list_title: フォーラム
+    forum_list_subtitle: in 日本語
+
+    #--- Profile
+    profile_title: アカウントとプロフィール
+    profile_subtitle: 設定
+    
+    #--- Newletter Signup
+    newsletter_choose: 選択して下さい
+
+    #--- Forum
+    forum:
+      no_public: "Here you have the opportunity to participate in online discussions via closed and open forums"
+
+    comment_extra_instruction: ""

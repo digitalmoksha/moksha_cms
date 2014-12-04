@@ -1,0 +1,58 @@
+fi:
+  _mbus:
+    language: Kieli
+    language_english: englanti
+    language_german: saksa
+    language_czech: tsekki
+    language_japanese: japani
+    language_finnish: suomi
+
+    #--- Login System
+    signup_title: Sign Up for a New Account
+    signup_first_name: Etunimi
+    signup_last_name: Sukunimi
+    signup_country: Maa
+    signup_email: Sähköposti
+    signup_password: Salasana
+    signup_password_confirm: Salasanan vahvistaminen
+    signup_newsletter: Uutiskirje
+    signup_newsletter_desc: "Yes, I would like to receive updates and news"
+    signup_register_button: Rekisteröi
+    signup_public_name: Julkinen nimi
+    signup_public_name_hint: 'Nimi, joka tulee näkyviin foorumeilla ja kommenteissa.'
+    signin_link: Kirjaudu sisään
+    signin_register_link: 'Sinulla ei ole käyttäjätiliä? Luo uusi tili'
+    signin_forgot_password_link: Unohdit salasanasi?
+    signin_confirmation_instructions_link: "Vahvistusviesti ei saapunut?"
+    signin_unlock_instructions_link: "Avaamisviesti ei saapunut?"
+    signin_title: Kirjaudu sisään
+    signin_rememberme: Muista minut
+    signin_button: Kirjaudu sisään
+    confirmation_email_4: 'Thank you'
+    forgot_title: Salasanasi on unohtunut
+    forgot_email_password_button: Salasanaohjeet sähköpostiviestinä
+    resend_title: Lähetä uudelleen vahvistusohjeet
+    change_password_title: Muuta salasana
+    new_password: Uusi salasana
+    new_password_confirm: vahvista uusi salasana
+    change_password: Muuta salasana
+    create_account: Luo uusi tili
+      
+    #--- CMS/Site Messages
+
+    #--- Forum System
+    forum_list_title: Foorumi
+    forum_list_subtitle: suomeksi
+
+    #--- Profile
+    profile_title: Tili ja profiili
+    profile_subtitle: Asetukset
+    
+    #--- Newletter Kirjaudu sisään
+    newsletter_choose: Valitse
+
+    #--- Forum
+    forum:
+      no_public: "Here you have the opportunity to participate in online discussions via closed and open forums"
+
+    comment_extra_instruction: ""

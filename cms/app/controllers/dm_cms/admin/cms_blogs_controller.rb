@@ -41,7 +41,6 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def destroy
     @blog.destroy
-
     redirect_to admin_cms_blogs_url
   end
   

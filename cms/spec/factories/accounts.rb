@@ -2,7 +2,7 @@ FactoryGirl.define do
 
   factory :account do
     domain                      'test.example.com'
-    account_prefix              'test'
+    account_prefix              'local'
     preferred_default_currency  'EUR'
     preferred_locales           'en, de'
 

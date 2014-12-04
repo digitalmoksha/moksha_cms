@@ -23,7 +23,7 @@ gem 'dm_core',              git: 'git://github.com/digitalmoksha/dm_core.git'
 gem 'admin_theme_sbadmin2', git: 'git://github.com/digitalmoksha/admin_theme_sbadmin2.git'
 gem 'dm_admin',             git: 'git://github.com/digitalmoksha/dm_admin.git'
 
-# gem 'dm_core',              path: '/Users/walkerbl/Sites/In_Development/_github/_moksha_gems/dm_core'
+# gem 'dm_core',              path: '../dm_core'
 
 group :development, :test do
   gem 'sqlite3'

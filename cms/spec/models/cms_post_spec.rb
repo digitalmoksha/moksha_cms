@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 describe CmsPost do
+  setup_account
 
+  it 'write more tests'
+  
   describe 'slug handling' do
 
     let(:blog1) { create(:blog) }

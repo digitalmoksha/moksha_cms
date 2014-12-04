@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe CmsBlog do
+  setup_account
+  
+  it 'write more tests'
 
   describe 'slug handling' do
 

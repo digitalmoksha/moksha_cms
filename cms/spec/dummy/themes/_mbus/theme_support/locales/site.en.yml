@@ -1,0 +1,57 @@
+en:
+  _mbus:
+    language: Language
+    language_english: English
+    language_german: German
+    language_czech: Czech
+    language_japanese: Japanese
+
+    #--- Login System
+    signup_title: Sign Up for a New Account
+    signup_first_name: First name
+    signup_last_name: Last name
+    signup_country: Country
+    signup_email: Email
+    signup_password: Password
+    signup_password_confirm: Password Confirmation
+    signup_newsletter: Newsletter
+    signup_newsletter_desc: "Yes, I would like to receive updates and news"
+    signup_register_button: Register
+    signup_public_name: Public Name
+    signup_public_name_hint: Name that will be displayed in forums and comments.
+    signin_link: Sign In
+    signin_register_link: 'You do not have a user account? Create new account'
+    signin_forgot_password_link: Forgot your password?
+    signin_confirmation_instructions_link: "Didn't receive confirmation instructions?"
+    signin_unlock_instructions_link: "Didn't receive unlock instructions?"
+    signin_title: Sign In
+    signin_rememberme: Remember Me
+    signin_button: Sign In
+    confirmation_email_4: 'Thank you'
+    forgot_title: Forgot Your Password
+    forgot_email_password_button: Email password instructions
+    resend_title: Resend confirmation instructions
+    change_password_title: Change your password
+    new_password: New password
+    new_password_confirm: Confirm new password
+    change_password: Change my password
+    create_account: Create new account
+      
+    #--- CMS/Site Messages
+
+    #--- Forum System
+    forum_list_title: Forum
+    forum_list_subtitle: in English
+
+    #--- Profile
+    profile_title: Account and Profile
+    profile_subtitle: Settings
+    
+    #--- Newletter Signup
+    newsletter_choose: Please Choose
+    
+    #--- Forum
+    forum:
+      no_public: "Here you have the opportunity to participate in online discussions via closed and open forums"
+
+    comment_extra_instruction: ""

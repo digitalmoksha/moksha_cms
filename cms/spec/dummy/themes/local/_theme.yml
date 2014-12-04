@@ -1,0 +1,8 @@
+# Theme file for 'localhost'
+#------------------------------------------------------------------------------
+
+local:
+  name: "Localhost Theme"
+  parent: _mbus
+  templates:
+  precompile:

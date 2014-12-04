@@ -13,4 +13,7 @@ Rails.application.routes.draw do
     get   '/index',                 controller: 'dm_cms/pages', action: :show, slug: 'index', as: :index
   end
   
+  #--- use match instead of root to fix issue where sometimes '?locale=de' is appeneded
+  get   '/(:locale)',            :controller => 'dm_cms/pages', :action => :show, :slug => 'index', :as => :root
+  
 end

@@ -1,0 +1,17 @@
+<% if !comments.empty? || commenting_on.comments_allowed? %>
+  <% if commenting_on.comments_allowed? %>
+    <div class="well">
+      <h4><%= I18n.t 'cms.add_comment' %></h4>
+
+      <%= render partial: 'layouts/cms_templates/comment_form', locals: { commenting_on: commenting_on } %>
+    </div>
+    <hr>
+  <% end %>
+
+  <section class="post-comments" id="comments">
+    <h4><i class="fa fa-comment"></i> <%= I18n.t 'cms.comments_header' %> (<%= comments.count %>)</h4>
+    <hr>
+    <%= render partial: 'layouts/cms_templates/comment_list', object: comments, locals: { commenting_on: commenting_on } %>
+  </section>
+
+<% end %>
