@@ -54,14 +54,17 @@ module DmCore
     #------------------------------------------------------------------------------
     def scope_current_account
       Account.current           = Account.find_account(request.host)
-
       #--- set the current request site url for use where request object is not avail,
       #    like in ActionMailer
       Account.current.url_base  = request.protocol + request.host_with_port
       Account.current.url_host  = request.host_with_port
       yield
     ensure
-      Account.current = nil
+      # Ensure that once this request is done, the Account.current (which 
+      # is stored in thread storage) is cleared.
+      # When testing, it's better *not* to clear it, since expectations
+      # after the controller call may need the current account
+      Account.current = nil unless Rails.env.test?
     end
 
   end
