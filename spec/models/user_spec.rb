@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe User do
+  setup_account
+
   #------------------------------------------------------------------------------
   it "creates a new instance given a valid attribute" do
     user = create(:user)
