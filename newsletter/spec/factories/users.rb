@@ -7,7 +7,9 @@ FactoryGirl.define do
     confirmed_at    Time.now
     user_profile
     
-    factory :user_admin do
+    factory :admin_user do
+      email           'admin@example.com'
+      password        'something_admin'
 
       after(:build) do |user|
         user.add_role :admin
