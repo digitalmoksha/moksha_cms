@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe DmEvent do
-
+  setup_account
+  
   describe "workshop_prices" do
     
     before :each do
