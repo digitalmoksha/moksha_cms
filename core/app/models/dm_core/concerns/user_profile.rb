@@ -99,6 +99,13 @@ module DmCore
           return !not_valid
         end
 
+        # Returns the users preferred locale, which could be different from what the site
+        # supports
+        #------------------------------------------------------------------------------
+        def locale
+          self.favored_locale
+        end
+
       end
     end
   end
