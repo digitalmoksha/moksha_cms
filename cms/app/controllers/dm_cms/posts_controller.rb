@@ -9,7 +9,7 @@ class DmCms::PostsController < DmCms::ApplicationController
   include DmCore::UrlHelper
   include DmCore::LiquidHelper
 
-  before_filter   :post_lookup, except: [:ajax_add_comment, :ajax_edit_comment, :ajax_delete_comment]
+  before_filter   :post_lookup, except: [:ajax_delete_comment]
 
   layout    'cms_templates/blog_post'
   
@@ -27,8 +27,6 @@ class DmCms::PostsController < DmCms::ApplicationController
 
   #------------------------------------------------------------------------------
   def ajax_add_comment
-    @post  = CmsPost.friendly.find(params[:cms_post_id])
-    authorize! :read, @post.cms_blog
     @post.comments.create(:body => params[:comment][:body], :user_id => current_user.id) if current_user && !params[:comment][:body].blank?
     redirect_to :back
   end
@@ -53,7 +51,7 @@ class DmCms::PostsController < DmCms::ApplicationController
     end
     redirect_to :back and return
   end
-  
+
 protected
 
   #------------------------------------------------------------------------------

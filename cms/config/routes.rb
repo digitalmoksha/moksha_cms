@@ -52,13 +52,12 @@ DmCms::Engine.routes.draw do
       get   '/:id',                               controller: 'blogs', action: :show, as: :blog_show
       get   '/:cms_blog_id/:id',                  controller: 'posts', action: :show, as: :post_show
       resources :cms_blogs do
+        post    '/cms_posts/ajax_add_comment/:id',   controller: 'posts', action: :ajax_add_comment, as: :cms_post_ajax_add_comment
+        # get  '/cms_posts/ajax_edit_comment/:id', controller: 'posts', action: :ajax_edit_comment, as: :cms_postajax_edit_comment_comment
         resources :cms_posts
         patch    'toggle_follow',                 controller: 'blogs', action: :toggle_follow
       end
       resources :cms_posts do
-        post    :ajax_add_comment,                controller: 'posts', action: :ajax_add_comment
-        # get     'ajax_edit_comment/:id',          controller: 'posts', action: :ajax_edit_comment, as: :ajax_edit_comment_comment
-        # post    'ajax_edit_comment/:id',          controller: 'posts', action: :ajax_edit_comment, as: :ajax_edit_comment_comment
         delete  'ajax_delete_comment/:id',        controller: 'posts', action: :ajax_delete_comment, as: :ajax_delete_comment_comment
       end
     end

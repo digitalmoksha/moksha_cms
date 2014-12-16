@@ -1,7 +1,8 @@
 <% if commenting_on.comments_allowed? %>
   <div id="reply" class="comment_reply_form">
     <% if current_user %>
-      <%= simple_form_for :comment, url: [commenting_on, :ajax_add_comment], wrapper: :bootstrap2 do |f| %>
+      <% url = (commenting_on.class == CmsPost ? [commenting_on.cms_blog, commenting_on, :ajax_add_comment] : [commenting_on, :ajax_add_comment] )%>
+      <%= simple_form_for :comment, url: url, wrapper: :bootstrap2 do |f| %>
         <%= f.input :body, :as => :text, :label => I18n.t('cms.comment_body'), 
                         :input_html => {:rows => 10} %>
         <%= f.submit I18n.t('cms.comment_submit'), class: 'btn btn-primary' %>
