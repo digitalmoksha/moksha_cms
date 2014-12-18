@@ -95,6 +95,7 @@ class Account < ActiveRecord::Base
 
   #--- eager load all preferences when an object is found
   after_find              :preferences
+  after_find              :set_default_values
   
   # Find the account using the specified host (usually from the request url).
   # Check for certain special subdomains before lookup:
@@ -130,14 +131,27 @@ class Account < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def self.current_by_prefix(account_prefix)
     Account.current = Account.find_by_account_prefix(account_prefix)
-
-    #--- set the current request site url for use where request object is not avail,
-    #    like in ActionMailer or from a rake task
-    Account.current.url_protocol  = Account.current.ssl_enabled? ? 'https://' : 'http://'
-    Account.current.url_host      = Account.current.domain
-    Account.current.url_base      = Account.current.url_protocol + Account.current.url_host
   end
   
+  # Once an account is found, setup the default url_ values.
+  #------------------------------------------------------------------------------
+  def set_default_values
+    set_url_parts(self.ssl_enabled? ? 'https://' : 'http://', self.domain)
+  end
+  
+  # set the protocol and host for the account's url.  During request processing,
+  # this is usually called with the request.protocol and request.host_with_port
+  #------------------------------------------------------------------------------
+  def set_url_parts(protocol, host)
+    self.url_protocol  = protocol
+    self.url_host      = host
+  end
+  
+  #------------------------------------------------------------------------------
+  def url_base
+    self.url_protocol + self.url_host
+  end
+
   #------------------------------------------------------------------------------
   def create_default_roles
     Role.unscoped.create!(name: 'admin',   account_id: self.id)
