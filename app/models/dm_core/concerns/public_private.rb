@@ -73,21 +73,28 @@ module DmCore
           when :manual
             ::User.with_role(:member, self).count
           when :automatic
-            self.owner ? self.owner.member_count : 0
+            if is_subscription_only?
+              ::User.paid_subscribers.count
+            else
+              self.owner ? self.owner.member_count : 0
+            end
           when :all
             member_count(:manual) + member_count(:automatic)
           end
         end
         
-        # Return a list of members that have *manual* access.  Does not include 
-        # members that have access through an "owner" object
+        # Return a list of users that have access
         #------------------------------------------------------------------------------
         def member_list(which_ones = :all)
           case which_ones
           when :manual
             ::User.with_role(:member, self).includes(:user_profile).sort_by {|u| u.full_name.downcase}
           when :automatic
-            self.owner ? self.owner.member_list : []
+            if is_subscription_only?
+              ::User.paid_subscribers
+            else
+              self.owner ? self.owner.member_list : []
+            end
           when :all
             member_list(:manual) + member_list(:automatic)
           end

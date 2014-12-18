@@ -132,11 +132,10 @@ module DmCore
 
       module ClassMethods
 
-        # Query for users that don't have a specific role.  Useful for getting users
-        # are not :admin
+        # List of Users who have :paid_subscription role
         #------------------------------------------------------------------------------
-        def without_role(role)
-          self.where("id NOT IN (?)", self.with_role(role))
+        def paid_subscribers
+          with_role(:paid_subscription)
         end
       end
     end
