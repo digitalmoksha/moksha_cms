@@ -9,7 +9,7 @@ class CmsBlogPresenter < BasePresenter
   
   #------------------------------------------------------------------------------
   def visibility
-    cms_blog.is_private? ? 'private' : (cms_blog.is_protected? ? 'protected' : 'public')
+    cms_blog.visibility_to_s
   end
   
 end

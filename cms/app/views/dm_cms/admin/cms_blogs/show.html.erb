@@ -41,7 +41,11 @@
     <% end %>
   </div>
   <div class="col-md-3">
-    <% if @blog.is_private? %>
+    <% if @blog.is_subscription_only? %>
+      <%= subsection title: 'Visibility: <strong>Subscription</strong>'.html_safe do %>
+        <p>Only paid subscribers can see the posts, and will receive notification emails.</p>
+      <% end %>
+    <% elsif @blog.is_private? %>
       <%= subsection title: 'Visibility: <strong>Private</strong>'.html_safe do %>
         <p>Only users who have been given access (manually or through an associated event) can see posts in this blog, and will receive notification emails.</p>
       <% end %>
@@ -50,7 +54,7 @@
         <p>All posts are available publicly for anyone to see.  Logged in users can 'Follow' the blog to receive notification emails.</p>
       <% end %>
     <% elsif @blog.is_protected? %>
-      <%= subsection title: 'Visibility: <strong>Public</strong>'.html_safe do %>
+      <%= subsection title: 'Visibility: <strong>Protected</strong>'.html_safe do %>
         <p>Only logged in users can see the posts.  Logged in users can 'Follow' the blog to receive notification emails.</p>
       <% end %>
     <% end %>
