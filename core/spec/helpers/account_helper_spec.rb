@@ -3,10 +3,7 @@ require 'rails_helper'
 include DmCore::AccountHelper
 
 describe DmCore::AccountHelper do
-
-  before :all do
-    Account.current_by_prefix('test')
-  end
+  setup_account
 
   #------------------------------------------------------------------------------
   it "returns the current account" do

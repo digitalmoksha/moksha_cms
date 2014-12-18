@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114170962) do
+ActiveRecord::Schema.define(version: 20141216094639) do
 
   create_table "core_accounts", force: true do |t|
     t.string   "company_name"
@@ -328,6 +328,7 @@ ActiveRecord::Schema.define(version: 20141114170962) do
     t.integer  "private_avatar_file_size"
     t.string   "private_avatar_content_type"
     t.boolean  "use_private_avatar_for_public",            default: false
+    t.string   "favored_locale"
   end
 
   create_table "user_site_profiles", force: true do |t|

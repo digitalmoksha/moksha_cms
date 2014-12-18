@@ -5,7 +5,8 @@ module AccountMacros
   #------------------------------------------------------------------------------
   def setup_account
     before :each do
-      Account.current = FactoryGirl.create(:account)
+      account = FactoryGirl.create(:account)
+      Account.current_by_prefix(account.account_prefix)
     end
   end
 
@@ -14,4 +15,5 @@ end
 #------------------------------------------------------------------------------
 RSpec.configure do |config|
   config.extend  AccountMacros, type: :model
+  config.extend  AccountMacros, type: :helper
 end
