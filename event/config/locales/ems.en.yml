@@ -38,6 +38,10 @@ en:
     donate_button: Donate
     project_goal: Project Goal
     amount_raised: Amount Raised
+    
+    login: Login
+    create_account: Create Account
+
   activerecord:
     errors:
       models:

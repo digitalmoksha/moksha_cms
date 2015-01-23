@@ -38,6 +38,10 @@ fi:
     donate_button: Lahjoita
     project_goal: Projektin päämäärä
     amount_raised: Määrä noussut
+
+    login: Kirjaudu sisään
+    create_account: Luo tili
+
   activerecord:
     errors:
       models:

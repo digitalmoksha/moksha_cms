@@ -38,6 +38,10 @@ de:
     donate_button: Jetzt helfen
     project_goal: Projektziel
     amount_raised: Betrag erhöht
+
+    login: Anmelden
+    create_account: Neues Benutzerkonto anlegen
+
   activerecord:
     errors:
       models:

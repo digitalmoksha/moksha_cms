@@ -38,6 +38,10 @@ ja:
     donate_button: 申し込む
     project_goal: Project Goal
     amount_raised: Amount Raised
+
+    login: ログイン
+    create_account: アカウントを作成
+
   activerecord:
     errors:
       models:

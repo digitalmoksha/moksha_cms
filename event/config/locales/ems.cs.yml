@@ -38,6 +38,10 @@ cs:
     donate_button: Darovat
     project_goal: Cíl projektu
     amount_raised: Částka Zvýšený
+
+    login: Přihlášení na účet
+    create_account: Vytvořit účet
+
   activerecord:
     errors:
       models:
