@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'acts_as_follower', '~> 0.2.1'
   s.add_dependency 'ancestry', "~> 2.1.0"
   s.add_dependency 'ranked-model', '~> 0.4.0'     # sort order for a list
-  s.add_dependency 'acts-as-taggable-on', '~> 3.3'
+  s.add_dependency 'acts-as-taggable-on', '~> 3.4.4'
   s.add_dependency 'amoeba', '~> 2.0'             # [todo] (see if still needed) for handling model duplicating
   s.add_dependency 'babosa', '~> 0.3'             # for better unicode slug handling with friendly_id
   s.add_dependency 'friendly_id', "~> 5.0.4"
