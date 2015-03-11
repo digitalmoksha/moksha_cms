@@ -38,6 +38,7 @@ class CustomField < ActiveRecord::Base
 
   validates_presence_of         :field_data, if: Proc.new {|field| field.required?}
   validates_numericality_of     :field_data, if: Proc.new {|field| field.field_type == 'number_field' && !field.field_data.blank?}
+  validate                      :checkbox_required, if: Proc.new {|field| field.field_type == 'check_box_collection' && field.required?}
 
   #------------------------------------------------------------------------------
   def initialize(*options, &block)
@@ -59,6 +60,10 @@ class CustomField < ActiveRecord::Base
     end
   end
   
+  #------------------------------------------------------------------------------
+  def checkbox_required
+    errors.add(:field_data, :blank) if self.value.blank?
+  end
   
   # # Munge the data so that it's stored correctly
   # #------------------------------------------------------------------------------
