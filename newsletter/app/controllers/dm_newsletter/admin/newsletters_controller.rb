@@ -7,6 +7,7 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
   #------------------------------------------------------------------------------
   def index
     @newsletters = using_mailchimp? ? MailchimpNewsletter.all : StandardNewsletter.all
+    @newsletters.each { |newsletter| newsletter.update_list_stats }
   end
 
   #------------------------------------------------------------------------------
@@ -47,6 +48,7 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
   #------------------------------------------------------------------------------
   def show
     # @subscriptions  = @newsletter.subscriptions
+    @folder_list = @newsletter.folder_list
   end
   
   #------------------------------------------------------------------------------

@@ -120,6 +120,37 @@ class MailchimpNewsletter < Newsletter
     end
   end
 
+  # get a list of sent campaigns. Can specify :folder_id to get only those
+  # in a specfic folder
+  #------------------------------------------------------------------------------
+  def sent_campaign_list(options = {start: 0, limit: 100})
+    api                 = MailchimpNewsletter.api
+    list_params         = {sort_field: 'send_time', sort_dir: 'DESC', 
+                          filters: {list_id: self.mc_id}}
+    list_params[:start] = options[:start] ? options[:start] : 0
+    list_params[:limit] = options[:limit] ? options[:limit] : 100
+    list_params[:filters][:folder_id] = options[:folder_id] if options[:folder_id]
+      
+    campaigns   = api.campaigns.list(list_params)
+  end
+
+  # Get simplified list of sent campaigns. Useful for showing archived
+  # campaigns on the front end
+  #------------------------------------------------------------------------------
+  def sent_campaign_list_simple(options = {start: 0, limit: 100})
+    list      = sent_campaign_list(options)
+    campaigns = list['data'].map {|item| {subject:      item['subject'], 
+                                          sent_on:      item['send_time'].to_datetime,
+                                          archive_url:  item['archive_url']} }
+  end
+
+  #------------------------------------------------------------------------------
+  def folder_list(type = 'campaign')
+    api         = MailchimpNewsletter.api
+    folder_list = api.folders.list(type: type)
+    folder_list.sort! {|x, y| x['name'] <=> y['name']}
+  end
+  
   #------------------------------------------------------------------------------
   def map_error_to_msg(code)
     return MAILCHIMP_ERRORS[code] ? "nms.#{MAILCHIMP_ERRORS[code]}" : 'nms.mc_unknown_error'

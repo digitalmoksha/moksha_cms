@@ -7,15 +7,40 @@
 
 <%= panel header: false do %>
   <div class="row">
-    <ul class="text-stats col-md-6">
-      <li style="color:green"><%= @newsletter.subscribed_count %><span>subscribed</span></li>
-      <li style="color:red"><%= @newsletter.unsubscribed_count %><span>unsubscribed</span></li>
-      <li style="color:grey"><%= @newsletter.cleaned_count %><span>cleaned</span></li>
+    <ul class="statistics">
+      <% total = @newsletter.subscribed_count + @newsletter.unsubscribed_count + @newsletter.cleaned_count %>
+      <li><%= stat_block_small label: 'subscribed', number: @newsletter.subscribed_count, color_type: :success, percent: total == 0 ? 0 : (100 * @newsletter.subscribed_count / total) %></li>
+      <li><%= stat_block_small label: 'unsubscribed', number: @newsletter.unsubscribed_count, color_type: :danger, percent: total == 0 ? 0 : (100 * @newsletter.unsubscribed_count / total) %></li>
+      <li><%= stat_block_small label: 'cleaned', number: @newsletter.cleaned_count, color_type: :info, percent: total == 0 ? 0 : (100 * @newsletter.cleaned_count / total) %></li>
     </ul>
-
-    <dl class="col-md-6">
+    <hr>
+  </div>
+  
+  <div class="row">
+    <dl class="dl-horizontal">
       <dt>Subscription Token</dt>
       <dd><%= @newsletter.token %></dd>
     </dl>
   </div>
+<% end %>
+
+<%= panel body: false, title: 'Campaign Folders' do %>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th width="50">Count</th>
+        <th width="100">Folder ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @folder_list.each do |folder| %>
+        <tr class="item">
+          <td><%= folder['name'] %></td>
+          <td><%= folder['cnt'] %></td>
+          <td><%= folder['folder_id'] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

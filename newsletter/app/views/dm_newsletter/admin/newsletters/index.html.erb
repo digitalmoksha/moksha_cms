@@ -16,13 +16,14 @@
 <% @newsletters.in_groups_of(2, false) do |newsletter_row| %>
   <div class="row">
     <% for newsletter in newsletter_row  %>
-      <div class="col-md-6">
+      <div class="col-md-12">
         <% toolbar = toolbar_btn(newsletter.subscribed_count, admin_newsletter_path(newsletter), title: 'Number of subscriptions', class: 'label label-success pull-right') %>
         <%= panel title: link_to(newsletter.name, admin_newsletter_path(newsletter)), toolbar: toolbar do %>
-          <ul class="text-stats">
-            <li style="color:green"><%= newsletter.subscribed_count %><span>subscribed</span></li>
-            <li style="color:red"><%= newsletter.unsubscribed_count %><span>unsubscribed</span></li>
-            <li style="color:grey"><%= newsletter.cleaned_count %><span>cleaned</span></li>
+          <ul class="statistics">
+            <% total = newsletter.subscribed_count + newsletter.unsubscribed_count + newsletter.cleaned_count %>
+            <li><%= stat_block_small label: 'subscribed', number: newsletter.subscribed_count, color_type: :success, percent: total == 0 ? 0 : (100 * newsletter.subscribed_count / total) %></li>
+            <li><%= stat_block_small label: 'unsubscribed', number: newsletter.unsubscribed_count, color_type: :danger, percent: total == 0 ? 0 : (100 * newsletter.unsubscribed_count / total) %></li>
+            <li><%= stat_block_small label: 'cleaned', number: newsletter.cleaned_count, color_type: :info, percent: total == 0 ? 0 : (100 * newsletter.cleaned_count / total) %></li>
           </ul>
         <% end %>
       </div>
