@@ -38,8 +38,10 @@ module DmCore
     end
 
     # Generate an AWS S3 expiring link, using a special formatted url
-    #   s3://bucket_name/object_name?expires=120    => non-SSL, expires in 120 minutes
-    #   s3s://bucket_name/object_name?expires=20    => SSL, expires in 20 minutes
+    #   s3://bucket_name/object_name?expires=120     => non-SSL, expires in 120 minutes
+    #   s3s://bucket_name/object_name?expires=20     => SSL, expires in 20 minutes
+    #   s3s://bucket_name/object_name?expires=public => links directly to file (it must
+    #      be a World readable file, and the link will never expire)
     #------------------------------------------------------------------------------
     def s3_generate_expiring_link(url)
       access_key  = Account.current.theme_data['AWS_ACCESS_KEY_ID']
@@ -50,9 +52,13 @@ module DmCore
       object_name = uri.path.gsub(/^\//, '')
       expire_mins = (uri.query.blank? ? nil : CGI::parse(uri.query)['expires'][0]) || '10'
       
-      s3 = ::AWS::S3.new(access_key_id: access_key, secret_access_key: secret_key)
-      object = s3.buckets[bucket].objects[object_name]
-      object.url_for(:get, {expires: expire_mins.to_i.minutes.from_now, secure: secure}).to_s
+      if expire_mins == "public"
+        "#{secure ? 'https' : 'http'}://#{bucket}.s3.amazonaws.com/#{object_name}"
+      else
+        s3 = ::AWS::S3.new(access_key_id: access_key, secret_access_key: secret_key)
+        object = s3.buckets[bucket].objects[object_name]
+        object.url_for(:get, {expires: expire_mins.to_i.minutes.from_now, secure: secure}).to_s
+      end
     end
 
     # if a relative url path is given, then expand it by prepending the supplied 
