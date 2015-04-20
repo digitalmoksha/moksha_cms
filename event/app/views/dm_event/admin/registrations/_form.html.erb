@@ -212,9 +212,9 @@
         <p><em>They must be registered for some type of payment first</em></p>
       <% else %>
 
-        <%= f.input :payment_date, label: 'Paid On', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'} %>
+        <%= f.input :payment_date, label: 'Paid On', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, input_html: {value: Date.today.strftime("%Y/%m/%d")} %>
         <%= f.input :cost, label: 'Amount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
-          <%= f.input_field :cost, as: :string, class: "form-control" %>
+          <%= f.input_field :cost, as: :string, class: "form-control", value: @registration.balance_owed.amount %>
           <span class="input-group-addon">
             <%= f.select :total_currency, @registration.workshop_price.currency_list, {} %>
           </span>
