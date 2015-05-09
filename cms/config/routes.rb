@@ -48,8 +48,7 @@ DmCms::Engine.routes.draw do
     end
 
     scope 'blog' do
-      get   '/',                                  controller: 'blogs', action: :index, as: :blog_root
-      get   '/recent_posts',                      controller: 'blogs', action: :index, as: :blog_root2
+      get   '/recent_posts',                      controller: 'blogs', action: :index, as: :blog_root
       get   '/:id',                               controller: 'blogs', action: :show, as: :blog_show
       get   '/:cms_blog_id/:id',                  controller: 'posts', action: :show, as: :post_show
       resources :cms_blogs do
