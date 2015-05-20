@@ -33,6 +33,7 @@ class CmsPage < ActiveRecord::Base
   default_scope           { where(account_id: Account.current.id).order("ancestry, row_order ASC") }
   
   preference              :show_social_buttons,  :boolean, :default => false
+  preference              :header_accent_color,  :string
 
   amoeba do
     enable
@@ -108,6 +109,11 @@ class CmsPage < ActiveRecord::Base
     self.attributes['header_image'] || default
   end
 
+  #------------------------------------------------------------------------------
+  def header_accent_color(default = '')
+    self.preferred_header_accent_color || default
+  end
+  
   #------------------------------------------------------------------------------
   def self.page_types
     PAGETYPE

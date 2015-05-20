@@ -33,6 +33,7 @@
     <% end %>
     <%= f.input :requires_login, label: 'Requires Login', hint: 'Page will require user to be logged in to access' %>
     <%= f.input :header_image, label: 'Header Image', hint: 'Image used as a header/banner image, if supported by theme', input_html: {class: 'width_50_percent'} %>
+    <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color', input_html: {class: 'width_50_percent'} %>
 
     <%= subsection title: 'Social Media' do %>
       <%= f.input :preferred_show_social_buttons, as: :boolean, label: 'Show social buttons', hint: 'Show the standard Facebook/Twitter buttons on the page' %>
