@@ -55,6 +55,8 @@ class Workshop < ActiveRecord::Base
   scope                   :available, -> { where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', 
                                       (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC') }
 
+  scope                   :published, -> { where(published: true).where('archived_on IS NULL') }
+  
   #--- don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
   monetize                :funding_goal_cents, with_model_currency: :base_currency
 
@@ -178,6 +180,7 @@ class Workshop < ActiveRecord::Base
         email = PaymentReminderMailer.payment_reminder(registration).deliver
         if email
           registration.update_attribute(:payment_reminder_sent_on, Time.now)
+          registration.update_attribute(:payment_reminder_history,  [Time.now] + registration.payment_reminder_history)
           success += 1
         else
           failed += 1

@@ -18,6 +18,7 @@ class Registration < ActiveRecord::Base
   has_many                      :payment_histories, as: :owner, dependent: :destroy
   belongs_to                    :payment_comment, class_name: 'Comment'
   preference                    :payment_reminder_hold_until,  :date
+  serialize                     :payment_reminder_history, Array
   attr_accessor                 :payment_comment_text
   acts_as_commentable           :private
 

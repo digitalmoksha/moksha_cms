@@ -163,7 +163,7 @@
     <%#--- Payments Tab %>
     <div class="tab-pane fade" id="payment_tab">
       <%= subsection title: 'Recorded Payments' do %>
-        <table class="table table-condensed table-gradient table-hover">
+        <table class="table table-condensed table-gradient table-hover" style="margin-bottom: 20px;">
           <thead>
             <tr>
               <th width="100">Date</th>
@@ -189,9 +189,36 @@
             <% end %>
           </tbody>
         </table>
+        <%= link_to 'Add Payment', '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'Add Payment', class: "btn btn-xs btn-primary" %>
+        <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
       <% end %>
-      <%= link_to 'Add Payment', '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'Add Payment', class: "btn btn-xs btn-primary" %>
-      <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
+      
+      <%= subsection title: 'Payment Reminders' do %>
+      
+        <table class="table table-condensed table-gradient table-hover" style="margin-bottom: 20px;">
+          <thead>
+            <tr>
+              <th width="100">Last Sent On</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @registration.payment_reminder_sent_on.nil? %>
+              <tr><td>not yet</td></tr>
+            <% else %>
+              <% @registration.payment_reminder_history.each do |date| %>
+                <tr>
+                  <td><%= format_date(date) %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        
+        <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@registration.workshop, registration_id: @registration.id), title: 'Send reminder now', class: 'btn btn-xs btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
+        <% if @registration.preferred_payment_reminder_hold_until && @registration.preferred_payment_reminder_hold_until > Time.now %>
+          <span>&nbsp;&nbsp;Requested not to send reminder until <strong><%= format_date(@registration.preferred_payment_reminder_hold_until) %></strong></span>
+        <% end %>
+      <% end %>
     </div>
 
     <%#--- Comments Tab %>

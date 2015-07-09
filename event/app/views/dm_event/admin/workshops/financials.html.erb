@@ -107,7 +107,22 @@
           <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons('icon-bubble2 inside-content', size: 12), class: 'pull-right') if registration.private_comments.count > 0 %></td>
           <td class="date" style="white-space:nowrap"><%= format_date(registration.created_at) %></td>
           <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if registration.payment_reminder_due? %>>
-            <%= registration.payment_reminder_sent_on.nil? ? 'not yet' : "#{distance_of_time_in_words_to_now(registration.payment_reminder_sent_on)} ago" %>
+            <% if registration.payment_reminder_sent_on.nil? %>
+              not yet
+            <% elsif registration.payment_reminder_history.count < 2 %>
+              <%= "#{distance_of_time_in_words_to_now(registration.payment_reminder_sent_on)} ago" %>
+            <% else %>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= "#{distance_of_time_in_words_to_now(registration.payment_reminder_sent_on)} ago" %> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <% registration.payment_reminder_history.each do |date| %>
+                    <li><a><%= "#{distance_of_time_in_words_to_now(date)} ago" %></a></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
           </td>
           <td>
             <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-xs btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
