@@ -1,25 +1,26 @@
-<%= render :partial => 'settings_menu' %>
+<%= render partial: 'settings_menu' %>
 
-<%= simple_form_for(@account, :url => dm_core.admin_account_email_url,
+<%= simple_form_for(@account, url: dm_core.admin_account_email_url,
     html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings) do |f| %>
 
-  <%= f.error_notification :message => "Please review the problems below" %>
+  <%= f.error_notification message: "Please review the problems below" %>
 
-	<%= panel :title => 'Email and SMTP Settings' do %>
+	<%= panel title: 'Email and SMTP Settings' do %>
 
-    <%= f.input :preferred_webmaster_email, :label => 'Webmaster Email', :required => true %>
-    <%= f.input :preferred_support_email, :label => 'Support Email' %>
-    <%= f.input :preferred_smtp_address, :label => 'SMTP Address', :required => true %>
-    <%= f.input :preferred_smtp_port, :label => 'SMTP Port', :required => true %>
-    <%= f.input :preferred_smtp_user_name, :label => 'SMTP Username', :required => true %>
-    <%= f.input :preferred_smtp_password, :as => :password, :label => 'SMTP Password' %>
-    <%= f.input :preferred_smtp_domain, :label => 'SMTP Domain' %>
-    <%= f.input :preferred_smtp_from_email, :label => 'SMTP From/Reply Email', :required => true, :hint => 'from/reply address set on standard system emails' %>
-    <%= f.input :preferred_blog_from_email, :label => 'Blog From/Reply Email', :hint => 'from/reply address set on blog notification emails' %>
-    <%= f.input :preferred_nms_use_mailchimp, :as => :toggle, :label => 'Newsletters with Mailchimp?', hint: 'Are you using MailChimp for your newsletter?' %>
-    <%= f.input :preferred_nms_api_key, :label => 'Newsletter API Key', hint: 'Such as the Mailchimp API Key' %>
+    <%= f.input :preferred_webmaster_email,   label: 'Webmaster Email', required: true %>
+    <%= f.input :preferred_support_email,     label: 'Support Email' %>
+    <%= f.input :preferred_archive_email,     label: 'Archive Email', hint: 'Important emails sent by the system (such as payment reminders) will be bcc to this address.' %>
+    <%= f.input :preferred_smtp_address,      label: 'SMTP Address', required: true %>
+    <%= f.input :preferred_smtp_port,         label: 'SMTP Port', required: true %>
+    <%= f.input :preferred_smtp_user_name,    label: 'SMTP Username', required: true %>
+    <%= f.input :preferred_smtp_password,     label: 'SMTP Password', as: :password %>
+    <%= f.input :preferred_smtp_domain,       label: 'SMTP Domain' %>
+    <%= f.input :preferred_smtp_from_email,   label: 'SMTP From/Reply Email', required: true, hint: 'from/reply address set on standard system emails' %>
+    <%= f.input :preferred_blog_from_email,   label: 'Blog From/Reply Email', hint: 'from/reply address set on blog notification emails' %>
+    <%= f.input :preferred_nms_use_mailchimp, label: 'Newsletters with Mailchimp?', as: :toggle, hint: 'Are you using MailChimp for your newsletter?' %>
+    <%= f.input :preferred_nms_api_key,       label: 'Newsletter API Key', hint: 'Such as the Mailchimp API Key' %>
 
-    <%= submit_or_cancel :cancel_url => dm_core.admin_account_email_path %>
+    <%= submit_or_cancel cancel_url: dm_core.admin_account_email_path %>
 
 	<% end %>
 <% end %>
