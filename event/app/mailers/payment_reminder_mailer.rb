@@ -16,7 +16,6 @@ class PaymentReminderMailer < DmCore::SiteMailer
     @payment_link               = registration.payment_url
 
     headers = { "Reply-To" => account.preferred_smtp_from_email, "Return-Path" => account.preferred_smtp_from_email }
-    byebug
     mail(to: @recipients, subject: @subject, theme: account.account_prefix,
          bcc: account.preferred_archive_email,
          template_path: 'layouts/email_templates',
