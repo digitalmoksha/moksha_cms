@@ -55,6 +55,7 @@ class Account < ActiveRecord::Base
   #--- Email / SMTP settings
   preference              :webmaster_email,                 :string
   preference              :support_email,                   :string
+  preference              :archive_email,                   :string
   preference              :mailchimp_api_key,               :string
   preference              :smtp_address,                    :string
   preference              :smtp_port,                       :string,  :default => '587'
