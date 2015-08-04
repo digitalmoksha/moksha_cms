@@ -61,7 +61,7 @@ private
     end
     registrations = registrations.page(page).per_page(per_page)
     if params[:sSearch].present?
-      registrations = registrations.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(user_profiles.email) like :search OR receipt_code like :search", search: "%#{params[:sSearch]}%")
+      registrations = registrations.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(user_profiles.email) like :search OR receipt_code like :search", search: "%#{params[:sSearch]}%".downcase)
     end
     registrations
   end
