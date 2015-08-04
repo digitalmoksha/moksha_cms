@@ -27,7 +27,11 @@
             </div>
           
             <div class="caption text-center">
-              <h6><%= @registration.full_name %><small><%= @registration.user_profile.country.english_name %></small></h6>
+              <h6>
+                <%= @registration.full_name %><small><%= @registration.user_profile.country.english_name %></small>
+                <small><%= @registration.user_profile.email %></small>
+                <%= "<small>no user account</small>".html_safe unless @registration.user_profile.user %>
+              </h6>
             </div>
           </div>
         </div>
