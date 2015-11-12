@@ -19,7 +19,7 @@ class DmCms::PagesController < DmCms::ApplicationController
     
     #--- find the requested page, and if not found try to find the 'missing' page
     @current_page = CmsPage.friendly.find_by_slug(params[:slug])
-    if @current_page.nil? || (!@current_page.is_published? && !is_admin?)
+    if @current_page.nil? || !can?(:read, @current_page)
       @current_page = CmsPage.friendly.find_by_slug('missing')
       render(file: 'public/404.html', status: :not_found, layout: false) && return if @current_page.nil? || !@current_page.is_published?
     end
