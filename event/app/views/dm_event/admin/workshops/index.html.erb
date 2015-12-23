@@ -14,9 +14,9 @@
         <%= panel title: link_to(workshop.title, [:admin, workshop]), subtitle: present(workshop).start_end_date, class: panel_class do %>
           <% financials = workshop.financial_details(:summary) %>
           <ul class="statistics">
-            <li><%= stat_block_small label: 'Best', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'icon-coin', percent: 100 %></li>
-            <li><%= stat_block_small label: 'Worst (80%)', number: financials[:summary][:total_possible_worst].format(no_cents_if_whole: true), color_type: :warning, icon: 'icon-coin', percent: 80 %></li>
+            <li><%= stat_block_small label: 'Projected', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'icon-coin', percent: 100 %></li>
             <li><%= stat_block_small label: 'Paid', number: financials[:summary][:total_paid].format(no_cents_if_whole: true), color_type: :success, icon: 'icon-coin', percent: financials[:summary][:total_paid_percent] %></li>
+            <li><%= stat_block_small label: 'Unpaid', number: financials[:summary][:total_outstanding].format(no_cents_if_whole: true), color_type: :danger, icon: 'icon-coin', percent: 80 %></li>
           </ul>
           
           <div class="separator-reflected" style="margin: 10px 0px;"></div>
@@ -68,15 +68,26 @@
       <thead>
         <tr>
           <th>Title</th>
+          <th>Projected</th>
+          <th>Paid</th>
+          <th>Unpaid</th>
           <th width="150">Date</th>
         </tr>
       </thead>
       <tbody>
         <% @workshops_past.each do |workshop| %>
+          <% financials = workshop.financial_details(:summary) %>
           <% present workshop do |workshop_presenter| %>
             <tr class="item" data-item_id="<%= workshop.id %>">
               <td>
                 <%= link_to workshop.title, [:admin, workshop] %>
+              </td>
+              <td><%= financials[:summary][:total_possible].format(no_cents_if_whole: true) %></td>
+              <td><span class="text-success"><%= financials[:summary][:total_paid].format(no_cents_if_whole: true) %></span></td>
+              <td>
+                <%= '<span class="text-danger">'.html_safe if financials[:summary][:total_outstanding] > 0 %>
+                <%= financials[:summary][:total_outstanding].format(no_cents_if_whole: true) %>
+                <%= '</span>'.html_safe if financials[:summary][:total_outstanding] > 0 %>
               </td>
               <td><%= workshop_presenter.start_end_date %></td>
             </tr>
