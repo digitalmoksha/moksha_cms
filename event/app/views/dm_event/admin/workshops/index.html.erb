@@ -76,6 +76,7 @@
       </thead>
       <tbody>
         <% @workshops_past.each do |workshop| %>
+          <% # TODO very ineffecient to do for each workshop.  look at caching values %>
           <% financials = workshop.financial_details(:summary) %>
           <% present workshop do |workshop_presenter| %>
             <tr class="item" data-item_id="<%= workshop.id %>">
