@@ -30,9 +30,9 @@ cs:
     registration_country: Země
     registration_zipcode: Poštovní směrovací číslo
     registration_account_required: 'Abyste se mohli zaregistrovat na tuto událost, musíte se přihlásit na svůj uživatelský účet.'
-    registration_closed_heading: Registrace Zavřeno
-    registration_closed_text: "Jsme již přijímá registrace na kurz '%{title}'"
-    registration_closed_email: "V případě jakýchkoliv dotazů se můžete obrátit na %{email}."
+    registration_closed_heading: Registrace zavřena
+    registration_closed_text: "Registrace na kurz '%{title}' nejsou momentálně přijímány."
+    registration_closed_email: "V případě jakýchkoli otázek se můžete obrátit na %{email}."
     registration_closed_list: Následující kurzy jsou v současné době otevřen pro registraci
     choose_payment_method: Vyberte si způsob platby
     donate_button: Darovat
