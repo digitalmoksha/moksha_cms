@@ -15,19 +15,19 @@
 # Ref: https://github.com/rspec/rspec-rails/issues/255
 #------------------------------------------------------------------------------
 
-# 1.
+# 1. (no longer needed in Rails 4.2)
 #------------------------------------------------------------------------------
-class ActionView::TestCase::TestController
-  def default_url_options(options={})
-    { locale: I18n.default_locale }
-  end
-end
-
-class ActionDispatch::Routing::RouteSet::NamedRouteCollection::UrlHelper
-  def call(t, args)
-    t.url_for(handle_positional_args(t, args, { locale: I18n.default_locale }.merge( @options ), @segment_keys))
-  end
-end
+# class ActionView::TestCase::TestController
+#   def default_url_options(options={})
+#     { locale: I18n.default_locale }
+#   end
+# end
+#
+# class ActionDispatch::Routing::RouteSet::NamedRouteCollection::UrlHelper
+#   def call(t, args)
+#     t.url_for(handle_positional_args(t, args, { locale: I18n.default_locale }.merge( @options ), @segment_keys))
+#   end
+# end
 
 # 2.
 #------------------------------------------------------------------------------
