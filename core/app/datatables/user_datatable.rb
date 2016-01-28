@@ -46,7 +46,7 @@ private
     users = User.current_account_users.includes({:user_profile => [ :country ]}).order("#{sort_column} #{sort_direction}")
     users = users.page(page).per_page(per_page)
     if params[:sSearch].present?
-      users = users.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(users.email) like :search", search: "%#{params[:sSearch]}%")
+      users = users.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(users.email) like :search", search: "%#{params[:sSearch]}%".downcase)
     end
     users
   end
