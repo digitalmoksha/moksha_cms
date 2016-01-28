@@ -9,7 +9,7 @@ class ActsAsVotableMigration < ActiveRecord::Migration
       t.string :vote_scope
       t.integer :vote_weight
 
-      t.timestamps
+      t.timestamps null: true
     end
 
     if ActiveRecord::VERSION::MAJOR < 4

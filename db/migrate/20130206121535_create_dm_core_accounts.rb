@@ -6,7 +6,7 @@ class CreateDmCoreAccounts < ActiveRecord::Migration
       t.string    :domain
       t.string    :account_prefix
       t.integer   :default_site_id
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end
