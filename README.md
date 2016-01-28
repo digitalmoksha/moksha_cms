@@ -4,10 +4,10 @@ DmCore provides the foundation for the MokshaCMS application.  This includes aut
 
 ## Version 4.2 (UNRELEASED)
 
-Will support for Rails 4.2 - previous versions of Rails will be unsupported
+Will support Rails 4.2 - previous versions of Rails will be unsupported
 
 ## Version 1.1.0
 
 Supports Rails 4.1.  Include this in your gem file:
 
-`# gem 'dm_core', git: 'https://github.com/digitalmoksha/dm_core.git', branch: '1-1-stable'`
+`gem 'dm_core', git: 'https://github.com/digitalmoksha/dm_core.git', branch: '1-1-stable'`
