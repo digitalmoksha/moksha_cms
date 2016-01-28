@@ -8,7 +8,7 @@ class CreateComments < ActiveRecord::Migration
       t.references    :user
       t.string        :role, :default => "comments"
       t.integer       :account_id
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :core_comments, :commentable_type

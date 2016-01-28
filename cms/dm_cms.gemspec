@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.1.8"
+  s.add_dependency 'rails', '> 4.2', '< 5.1'
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'meta-tags-helpers', '~> 0.2.0'

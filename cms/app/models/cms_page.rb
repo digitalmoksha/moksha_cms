@@ -193,19 +193,19 @@ class CmsPage < ActiveRecord::Base
       #--- already a duplicate page, return nil
       return nil
     else
-      CmsPage.paper_trail_off
-      CmsContentitem.paper_trail_off
-      CmsPage::Translation.paper_trail_off
-      CmsContentitem::Translation.paper_trail_off
+      CmsPage.paper_trail_off!
+      CmsContentitem.paper_trail_off!
+      CmsPage::Translation.paper_trail_off!
+      CmsContentitem::Translation.paper_trail_off!
       new_page = self.amoeba_dup
       new_page.slug = new_slug
       # new_page.without_versioning do
         new_page.save
       # end
-      CmsPage.paper_trail_on
-      CmsContentitem.paper_trail_on
-      CmsPage::Translation.paper_trail_on
-      CmsContentitem::Translation.paper_trail_on
+      CmsPage.paper_trail_on!
+      CmsContentitem.paper_trail_on!
+      CmsPage::Translation.paper_trail_on!
+      CmsContentitem::Translation.paper_trail_on!
 #       new_page      = self.initialize_dup(self)
 #       new_page.slug = new_slug
 #       
