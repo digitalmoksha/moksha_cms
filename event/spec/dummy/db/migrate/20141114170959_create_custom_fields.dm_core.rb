@@ -8,7 +8,7 @@ class CreateCustomFields < ActiveRecord::Migration
       t.integer       :row_order
       t.boolean       :required,        default: false
       t.string        :properties,      limit: 2048
-      t.timestamps
+      t.timestamps null: true
       t.integer       :account_id
     end
 
@@ -30,7 +30,7 @@ class CreateCustomFields < ActiveRecord::Migration
       t.references    :owner, polymorphic: true
       t.integer       :custom_field_def_id
       t.string        :field_data,     limit: 4096
-      t.timestamps
+      t.timestamps null: true
       t.integer       :account_id
     end
 
