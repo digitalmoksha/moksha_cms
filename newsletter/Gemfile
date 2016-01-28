@@ -13,9 +13,10 @@ gem 'jquery-ui-rails'
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-gem 'dm_core',              git: 'git://github.com/digitalmoksha/dm_core.git', branch: '1-1-stable'
+gem 'dm_core',              git: 'git://github.com/digitalmoksha/dm_core.git'
+gem 'dm_cms',               git: 'git://github.com/digitalmoksha/dm_cms.git'
 
-gem 'preferences',          git: 'git://github.com/digitalmoksha/preferences.git'
+gem 'dm_preferences',       '~> 1.0'
 gem 'themes_for_rails',     git: 'git://github.com/digitalmoksha/themes_for_rails.git'
 gem 'aced_rails',           git: 'git://github.com/digitalmoksha/aced_rails.git'
 
