@@ -5,7 +5,7 @@ class CreatePreferences < ActiveRecord::Migration
       t.references  :owner, :polymorphic => true, :null => false
       t.references  :group, :polymorphic => true
       t.string      :value
-      t.timestamps
+      t.timestamps null: true
     end
     add_index :preferences, [:owner_id, :owner_type, :name, :group_id, :group_type], :unique => true, :name => 'index_preferences_on_owner_and_name_and_preference'
   end

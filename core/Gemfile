@@ -1,5 +1,7 @@
 source "http://rubygems.org"
 
+gem 'rails', '4.2.5.1'
+
 # Declare your gem's dependencies in dm_core.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
@@ -14,11 +16,9 @@ gem 'jquery-ui-rails'
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-gem 'preferences',          git: 'git://github.com/digitalmoksha/preferences.git'
+gem 'dm_preferences',         '~> 1.0'
 gem 'themes_for_rails',     git: 'git://github.com/digitalmoksha/themes_for_rails.git'
 gem 'aced_rails',           git: 'git://github.com/digitalmoksha/aced_rails.git'
-
-gem 'dm_ruby_extensions',   git: 'git://github.com/digitalmoksha/dm_ruby_extensions.git'
 
 group :development, :test do
   gem 'sqlite3'

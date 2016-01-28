@@ -9,7 +9,7 @@ class AddCoreAddresses < ActiveRecord::Migration
       t.string    :country_code,    limit: 2
       t.integer   :addressable_id
       t.string    :addressable_type
-      t.timestamps
+      t.timestamps null: true
     end
  
     add_index :core_addresses, [:addressable_type, :addressable_id], :unique => true
