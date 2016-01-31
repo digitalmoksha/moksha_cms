@@ -203,13 +203,13 @@ class NewsletterSubscriber #< ActiveRecord::Base
 
   #------------------------------------------------------------------------------
   def send_confirmation
-    email         = NewsletterSubscriberMailer.signup(self, confirm_subscription_url, confirm_unsubscribe_url).deliver
+    email         = NewsletterSubscriberMailer.signup(self, confirm_subscription_url, confirm_unsubscribe_url).deliver_now
     update_confirmationemail(email.to_s)
   end
 
   #------------------------------------------------------------------------------
   def resend_confirmation
-    email         = NewsletterSubscriberMailer.reconfirm(self, confirm_subscription_url, confirm_unsubscribe_url).deliver
+    email         = NewsletterSubscriberMailer.reconfirm(self, confirm_subscription_url, confirm_unsubscribe_url).deliver_now
     update_confirmationemail(email.to_s)
     update_attribute(:reminded_on, Time.now)
   end
