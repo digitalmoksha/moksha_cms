@@ -42,7 +42,7 @@ module DmEvent
             if system_email
               receipt_content = compile_email(state, system_email)
               if send_email
-                return RegistrationNotifyMailer.registration_notify(self, receipt_content[:content], receipt_content[:substitutions]).deliver
+                return RegistrationNotifyMailer.registration_notify(self, receipt_content[:content], receipt_content[:substitutions]).deliver_now
               else 
                 return receipt_content[:content]
               end
