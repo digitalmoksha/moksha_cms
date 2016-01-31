@@ -56,7 +56,7 @@ class CmsPost < ActiveRecord::Base
       cms_blog.followers.each {|follower| user_list << follower.user}
     end
     user_list.each do |user|
-      email     = PostNotifyMailer.post_notify(user, self).deliver
+      email     = PostNotifyMailer.post_notify(user, self).deliver_now
       success  += 1 if email
       failed   += 1 if email.nil?
     end

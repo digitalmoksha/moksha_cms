@@ -17,7 +17,7 @@ class DmCms::ContactFormController < DmCms::ApplicationController
         object      = "#{part_class}".camelize.constantize
       end
       @contact  = object.new(params[form_key])
-      if @contact.deliver
+      if @contact.deliver_now
         flash.now[:notice] = I18n.t('cms.contact_form.sent')
         @contact = nil
       end
