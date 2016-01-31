@@ -28,7 +28,7 @@ class CmsContentitem < ActiveRecord::Base
   validates_presence_of :itemtype,          :container
   validates_length_of   :itemtype,          maximum: 30
   validates_length_of   :container,         maximum: 30
-  validate              :validate_conflict, only: :update
+  validate              :validate_conflict, on: :update
   validates             :content,           liquid: { locales: true }, presence_default_locale: true
 
   # --- content types supported
