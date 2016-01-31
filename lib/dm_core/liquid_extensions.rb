@@ -4,6 +4,11 @@
 #------------------------------------------------------------------------------
 module Liquid
   class Template
+
+    class TagRegistry
+      attr_accessor :tags
+    end
+
     class << self
       
       #------------------------------------------------------------------------------
@@ -22,10 +27,11 @@ module Liquid
       # the global tags, the current theme's tags, and the parent theme's tags.
       #------------------------------------------------------------------------------
       def tags
+        @tags ||= TagRegistry.new
         if Account.current.nil?
-          tags_namespaced('system_tags').merge(@tags)
+          tags_namespaced('system_tags').merge(@tags.tags)
         else
-          t = tags_namespaced('system_tags').merge(@tags).merge(tags_namespaced(Account.current.current_theme))
+          t = tags_namespaced('system_tags').merge(@tags.tags).merge(tags_namespaced(Account.current.current_theme))
           
           #--- if parent theme, reverse_merge tags - they should not override current theme tags
           t.reverse_merge!(tags_namespaced(Account.current.parent_theme)) if Account.current.parent_theme
