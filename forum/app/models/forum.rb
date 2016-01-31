@@ -67,7 +67,7 @@ class Forum < ActiveRecord::Base
       forum_topic = ForumTopic.find(topic_id)
       followers   = forum_topic.followers
       followers.each do |follower|
-        email =  ForumNotificationMailer.follower_notification(follower.user, forum_topic, topic_comments).deliver
+        email =  ForumNotificationMailer.follower_notification(follower.user, forum_topic, topic_comments).deliver_now
       end
     end
   end
