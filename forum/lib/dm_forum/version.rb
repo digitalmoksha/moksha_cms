@@ -1,3 +1,3 @@
 module DmForum
-  VERSION = "1.1.0"
+  VERSION = "4.2.0"
 end
