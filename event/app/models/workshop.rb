@@ -158,7 +158,7 @@ class Workshop < ActiveRecord::Base
     #--- give a worst case value - reduce by 20%
     financials[:summary][:total_possible_worst]               = financials[:summary][:total_possible] * 0.80
     financials[:summary][:total_outstanding_worst]            = financials[:summary][:total_outstanding] * 0.80
-    financials[:summary][:total_paid_percent]                 = (100 * financials[:summary][:total_paid] / financials[:summary][:total_possible]).round if financials[:summary][:total_possible] > 0
+    financials[:summary][:total_paid_percent]                 = (100 * financials[:summary][:total_paid] / financials[:summary][:total_possible]).round if financials[:summary][:total_possible].positive?
     return financials
   end
 

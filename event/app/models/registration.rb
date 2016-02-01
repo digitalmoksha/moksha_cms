@@ -278,7 +278,7 @@ public
       self.update_attribute(:amount_paid_cents, (self.amount_paid - self.workshop_price.to_base_currency(payment.total)).cents)
       payment.destroy
       suppress_transition_email
-      self.send('accept!') if balance_owed.cents > 0 && self.paid?
+      self.send('accept!') if balance_owed.positive? && self.paid?
       return true
     end
     return false

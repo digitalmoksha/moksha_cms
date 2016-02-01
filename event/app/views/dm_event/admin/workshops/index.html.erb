@@ -86,9 +86,9 @@
               <td><%= financials[:summary][:total_possible].format(no_cents_if_whole: true) %></td>
               <td><span class="text-success"><%= financials[:summary][:total_paid].format(no_cents_if_whole: true) %></span></td>
               <td>
-                <%= '<span class="text-danger">'.html_safe if financials[:summary][:total_outstanding] > 0 %>
+                <%= '<span class="text-danger">'.html_safe if financials[:summary][:total_outstanding].positive? %>
                 <%= financials[:summary][:total_outstanding].format(no_cents_if_whole: true) %>
-                <%= '</span>'.html_safe if financials[:summary][:total_outstanding] > 0 %>
+                <%= '</span>'.html_safe if financials[:summary][:total_outstanding].positive? %>
               </td>
               <td><%= workshop_presenter.start_end_date %></td>
             </tr>
