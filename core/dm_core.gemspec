@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'paper_trail', '~> 4.0.2'      # table versioning
   s.add_dependency "RedCloth", "~> 4.2.9"
   s.add_dependency 'kramdown', "~> 1.9"
-  s.add_dependency "liquid", "~> 3.0"
+  s.add_dependency "liquid", "~> 2.6"
   s.add_dependency "sanitize", "~> 4.0"
   s.add_dependency 'acts_as_commentable', "~> 4.0.2"
   s.add_dependency 'acts_as_votable', '~> 0.10.0'
