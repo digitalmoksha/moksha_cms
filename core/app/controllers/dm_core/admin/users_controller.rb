@@ -65,7 +65,7 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
     @user = User.find(params[:id])
     if @user
       switch_user(@user)
-      redirect_to root_url
+      redirect_to main_app.root_url
     else
       redirect_to :action => :list
     end
