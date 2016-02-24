@@ -74,14 +74,14 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
   #------------------------------------------------------------------------------
   def confirm
     @user = User.find(params[:id])
-    if @user && @user.confirmation_token
-      if @user.confirm!
+    if @user && !@user.confirmed?
+      if @user.confirm
         redirect_to dm_core.admin_users_url, notice: 'User is now confirmed and should be able to login'
       else
-        redirect_to dm_core.edit_admin_user_path(@user), alert: "A problem occurred, unable to confirm user."
+        redirect_to dm_core.edit_admin_user_path(@user), alert: "A problem occurred, unable to confirm user"
       end
     else
-      redirect_to dm_core.edit_admin_user_path(@user), alert: 'Unable to find confirmation token for user'
+      redirect_to dm_core.edit_admin_user_path(@user), alert: 'User is already confirmed'
     end
   end
   

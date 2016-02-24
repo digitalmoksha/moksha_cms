@@ -106,7 +106,7 @@
         <dd><%= format_datetime(@user.created_at) %></dd>
       </dl>
     <% end %>
-    <% if @user.confirmation_token %>
+    <% if !@user.confirmed? %>
       <%= link_to "Confirm This User", dm_core.confirm_admin_user_path(@user.id), :class => "btn btn-block btn-success" %>
     <% elsif is_admin? || !@user.has_role?(:admin) %>
       <%= link_to "Become This User", dm_core.masquerade_admin_user_path(@user.id), :class => "btn btn-block btn-info" %>
