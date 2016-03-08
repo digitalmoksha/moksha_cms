@@ -1,3 +1,7 @@
+CarrierWave.configure do |config|
+  config.cache_dir = Rails.root.join 'tmp/uploads'
+end
+
 #------------------------------------------------------------------------------
 # Put the version name at the end of the file, instead of beginning
 # https://github.com/carrierwaveuploader/carrierwave/wiki/How-To:-Move-version-name-to-end-of-filename,-instead-of-front
