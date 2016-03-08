@@ -26,11 +26,6 @@ class MediaUploader < CarrierWave::Uploader::Base
     "#{account_site_assets_media(false)}/#{partition_dir}"
   end
 
-  #------------------------------------------------------------------------------
-  def cache_dir
-    Rails.root + '/tmp/cache'
-  end
-  
   # We basically want the width to be the max, allowing the height to grow
   #------------------------------------------------------------------------------
   def resize_to_width(width)
