@@ -13,11 +13,15 @@ class ContactForm < ::MailForm::Base
   
   # append    :remote_ip, :user_agent, :session   # append these values to the end of all emails
 
+  # for a contact form, the "from" address should be a valid email address
+  # within the domain that is doing the actual sending, instead of the contacter's
+  # address.  This important for services like Sparkpost or Mandrill, that checks
+  # the validity of the sending domain.
   #------------------------------------------------------------------------------
   def headers
     { subject:  "#{I18n.t('cms.contact_form.subject_prefix')}: #{reason}: #{subject}" , 
       to:       Account.current.preferred_support_email,
-      from:     %("#{name}" <#{email}>),
+      from:     Account.current.preferred_support_email,
       reply_to: %("#{name}" <#{email}>)
     }
   end
