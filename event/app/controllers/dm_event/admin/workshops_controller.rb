@@ -86,7 +86,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def user_outstanding_balances
     @unpaid = Registration.unpaid.includes(:user_profile, :workshop_price)
-    @unpaid = @unpaid.to_a.delete_if {|i| i.balance_owed == 0}.group_by {|i| i.full_name}.sort_by {|i| i[0].downcase}
+    @unpaid = @unpaid.to_a.delete_if {|i| i.balance_owed.zero?}.group_by {|i| i.full_name}.sort_by {|i| i[0].downcase}
   end
 
   # Handle any additional configuration, such as selecting the attached blog/forum
