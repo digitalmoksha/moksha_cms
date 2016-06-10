@@ -9,5 +9,17 @@ FactoryGirl.define do
     starting_on     '2014-12-01'
     ending_on       '2014-12-02'
     contact_email   'email@example.com'
+
+    factory :workshop_with_price do
+      after(:create) do |workshop, evaluator|
+        create_list(:workshop_price, 1, workshop: workshop)
+      end
+    end
+
+    factory :workshop_with_recurring_price do
+      after(:create) do |workshop, evaluator|
+        create_list(:workshop_price, 1, :with_recurring, workshop: workshop)
+      end
+    end
   end
 end

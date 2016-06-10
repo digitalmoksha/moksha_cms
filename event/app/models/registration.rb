@@ -109,12 +109,12 @@ public
     discounted_price - amount_paid
   end
   
-  # [todo] suggested amount of next payment.  Need to check if we have enabled
-  # recurring payments, then calculate the correct value
+  # suggested amount of next payment.
+  # if a payment is within 20 of the balance_owed, then they should pay the balance
   #------------------------------------------------------------------------------
   def payment_owed
-    # [workshop_price.payment_price, balance_owed].min
-    balance_owed
+    amount_20 = Money.new(2000, workshop_price.price.currency)
+    (workshop_price.payment_price + amount_20) > balance_owed ? balance_owed : workshop_price.payment_price 
   end
   
   # Return the number of items specified, in particular the number of items in 

@@ -104,6 +104,16 @@
               <th>Paid</th>
               <td class="text-success"><%= @registration.amount_paid.format %></td>
             </tr>
+            <% if @registration.payment_owed.positive? %>
+              <tr class="section">
+                <th>Next Payment Amount
+                  <% if @registration.workshop_price.recurring_payments? %>
+                      <span style="font-weight: normal"></br>On a payment plan</span>
+                  <% end %>
+                </th>
+                <td class="text-info"><%= @registration.payment_owed.format %></td>
+              </tr>
+            <% end %>
           </table>
         </div>
       </div>
@@ -195,6 +205,9 @@
         </table>
         <%= link_to 'Add Payment', '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'Add Payment', class: "btn btn-xs btn-primary" %>
         <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
+        <% if @registration.payment_owed.positive? %>
+          &nbsp;&nbsp;Next payment should be: <span class="text-info"><%= @registration.payment_owed.format %></span>
+        <% end %>
       <% end %>
       
       <%= subsection title: 'Payment Reminders' do %>
@@ -245,7 +258,7 @@
 
         <%= f.input :payment_date, label: 'Paid On', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, input_html: {value: Date.today.strftime("%Y/%m/%d")} %>
         <%= f.input :cost, label: 'Amount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
-          <%= f.input_field :cost, as: :string, class: "form-control", value: @registration.balance_owed.amount %>
+          <%= f.input_field :cost, as: :string, class: "form-control", value: @registration.payment_owed.amount %>
           <span class="input-group-addon">
             <%= f.select :total_currency, @registration.workshop_price.currency_list, {} %>
           </span>
