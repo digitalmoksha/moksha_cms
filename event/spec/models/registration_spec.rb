@@ -70,5 +70,14 @@ describe Registration, :type => :model do
       registration = create :registration, workshop: workshop, amount_paid_cents: 39000
       expect(registration.payment_owed).to eq Money.new(11000, 'EUR')
     end
+    
+    #------------------------------------------------------------------------------
+    it "pay 0 if no workshop prices" do
+      workshop = create :workshop
+      registration = create :registration, workshop: workshop
+      expect(workshop.workshop_prices.empty?).to be true
+      expect(registration.payment_owed).to eq Money.new(0, 'EUR')
+    end
+    
   end
 end

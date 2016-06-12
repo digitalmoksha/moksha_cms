@@ -113,8 +113,12 @@ public
   # if a payment is within 20 of the balance_owed, then they should pay the balance
   #------------------------------------------------------------------------------
   def payment_owed
-    amount_20 = Money.new(2000, workshop_price.price.currency)
-    (workshop_price.payment_price + amount_20) > balance_owed ? balance_owed : workshop_price.payment_price 
+    if workshop_price
+      amount_20 = Money.new(2000, workshop_price.price.currency)
+      (workshop_price.payment_price + amount_20) > balance_owed ? balance_owed : workshop_price.payment_price 
+    else
+      balance_owed
+    end
   end
   
   # Return the number of items specified, in particular the number of items in 
