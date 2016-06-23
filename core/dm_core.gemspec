@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency "will_paginate", "~> 3.1"      # pagination
   s.add_dependency 'country_select', "~> 1.3.1"   # [todo] v2.x requires changes
   s.add_dependency 'paper_trail', '~> 4.0.2'      # table versioning
-  s.add_dependency "RedCloth", "~> 4.2.9"
+  s.add_dependency "RedCloth", "~> 4.3"
   s.add_dependency 'kramdown', "~> 1.9"
   s.add_dependency "liquid", "~> 2.6"
   s.add_dependency "sanitize", "~> 4.0"
