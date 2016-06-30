@@ -49,6 +49,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'codemirror-rails', '~> 5.6'
   s.add_dependency 'mini_magick', '~> 4.3.6'
   s.add_dependency 'carrierwave', '~> 0.10.0'
+  s.add_dependency 'delayed_job_active_record', '~> 4.1'
+  s.add_dependency 'daemons', '~> 1.2'
   
   #--- make sure the following gems are included in your app's Gemfile
   # gem "preferences", "~> 0.5.0", :git => "git://github.com/madebydna/preferences.git"
