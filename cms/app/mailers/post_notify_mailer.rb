@@ -9,8 +9,8 @@ class PostNotifyMailer < DmCore::SiteMailer
 
   # send notification email, using the users preferred locale if possible
   #------------------------------------------------------------------------------
-  def post_notify(user, post)
-    account                       = post.account
+  def post_notify(user, post, account)
+    Account.current               = account  # needed so this can run in a background job
     locale                        = account.verify_locale(user.locale)
     I18n.with_locale(locale) do
       @subject                    = "Blog: #{post.cms_blog.title} :: #{post.title}"
@@ -24,7 +24,7 @@ class PostNotifyMailer < DmCore::SiteMailer
       headers = { "Return-Path" => account.preferred_blog_from_email || account.preferred_smtp_from_email }
       mail( from: account.preferred_blog_from_email || account.preferred_smtp_from_email,
             reply_to: account.preferred_blog_from_email || account.preferred_smtp_from_email,
-            to: @recipients, subject: @subject, 
+            to: @recipients, subject: @subject,
             theme: account.account_prefix) do |format|
         format.text { render "layouts/email_templates/dm_cms_post_notify.text.erb" }
         format.html { render "layouts/email_templates/dm_cms_post_notify.html.erb" }

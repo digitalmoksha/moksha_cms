@@ -48,21 +48,29 @@ class CmsPost < ActiveRecord::Base
   # Use 'sets' to only end up with a unique list of users
   #------------------------------------------------------------------------------
   def send_notification_emails(test_user = nil)
-    success = failed = 0
     if test_user
-      user_list = [test_user]
+      email     = PostNotifyMailer.post_notify(test_user, self, self.account).deliver_now
+      return (email ? 1 : 0)
     else
       user_list = cms_blog.member_list(:all).to_set
       cms_blog.followers.each {|follower| user_list << follower.user}
+      async_send_notification_emails(user_list)
+      return user_list.size
     end
+
+  end
+
+  #------------------------------------------------------------------------------
+  def async_send_notification_emails(user_list)
+    success   = failed = 0
+    Rails.logger.info "=== Sending #{user_list.size} emails for blog post '#{title}'"
     user_list.each do |user|
-      email     = PostNotifyMailer.post_notify(user, self).deliver_now
+      email     = PostNotifyMailer.post_notify(user, self, self.account).deliver_later
       success  += 1 if email
       failed   += 1 if email.nil?
     end
-
-    update_attribute(:notification_sent_on, Time.now) unless test_user
-    return {success: success, failed: failed}
+    update_attribute(:notification_sent_on, Time.now)
+    Rails.logger.info "    Completed sending: successes (#{success}) -- failures (#{failed}) "
   end
-
+  
 end
