@@ -1,50 +1,56 @@
 <% content_for :content_title, "#{@system_email.email_type.capitalize} Email <small>#{@workshop.title}</small>".html_safe %>
 <%= render partial: 'header_menu' %>
 
-<% content_for :sidebar do %>
-
-  <div class="block outer" style="padding: 10px;">
-    <p class="explanation">You can place special variables in the email, such as the registrants name or the payment instructions.  The
-      variables you can use are listed below. </p>
-    <ul class="mono_spaced">
-      <li>{{event.price}}</li>
-      <li>{{event.fullname}}</li>
-      <li>{{event.title}}</li>
-      <li>{{event.receipt_code}}</li>
-      <li>{{event.price_description}}</li>
-      <li>{{event."customfieldname"}}</li>
-      <li>{{payment_details}}</li>
-    </ul>
-    <p class="explanation"><br />Available in special cases</p>
-    <ul class="mono_spaced">
-      <li>{{event.arrival_date}}</li>
-      <li>{{event.departure_date}}</li>
-    </ul>
-  </div>
-<% end %>
-
 <%= panel header: false do %>
   <div class="callout callout-info">
-  <% case @system_email.email_type %>
-    <% when 'pending' %>
-      <p>When someone registers for an event, you can decide whether they automatically get "accepted" &mdash; 
-        meaning they actually have a seat reserved &mdash; or they can be placed in "pending", which means 
-        their registration must first be reviewed and accepted.</p>
-    <% when 'accepted' %>
-      <p class="explanation">When you either accept a registration, or you did not require the registration to be reviewed, 
-        this is the state the registration will be in.  It indicates the person has a reserved seat in
-        the event/course.</p>
-      <p class="explanation">The email should include any event specific information, including any payment details, 
-        special timings, directions, special instructions, etc.</p>
-    <% when 'paid'%>
-      <p>Once the registration has been marked paid, this email will get sent to them.  If it's left empty, no email will be sent.</p>
-    <% when 'waitlisted' %>
-      <p class="explanation">If the event becomes full, you can place someone on the waitlist.</p>
-    <% when 'rejected' %>
-      <p class="explanation">If you reject the registration, this email will get sent to them.  If it's left empty, no email will be sent.
-        You should then notify as you see fit.</p>
-  <% end %>
-</div>
+    <% case @system_email.email_type %>
+      <% when 'pending' %>
+        <p>When someone registers for an event, you can decide whether they automatically get "accepted" &mdash; 
+          meaning they actually have a seat reserved &mdash; or they can be placed in "pending", which means 
+          their registration must first be reviewed and accepted.</p>
+      <% when 'accepted' %>
+        <p class="explanation">When you either accept a registration, or you did not require the registration to be reviewed, 
+          this is the state the registration will be in.  It indicates the person has a reserved seat in
+          the event/course.</p>
+        <p class="explanation">The email should include any event specific information, including any payment details, 
+          special timings, directions, special instructions, etc.</p>
+      <% when 'paid'%>
+        <p>Once the registration has been marked paid, this email will get sent to them.  If it's left empty, no email will be sent.</p>
+      <% when 'waitlisted' %>
+        <p class="explanation">If the event becomes full, you can place someone on the waitlist.</p>
+      <% when 'rejected' %>
+        <p class="explanation">If you reject the registration, this email will get sent to them.  If it's left empty, no email will be sent.
+          You should then notify as you see fit.</p>
+    <% end %>
+    
+    <div class="panel-group" id="template_variables" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Useful Template Variables
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <p>You can use special template variables in the email, such as the registrants name or the payment instructions.  The
+              variables you can use are listed below. </p>
+            <ul class="mono_spaced">
+              <li>{{event.price}}</li>
+              <li>{{event.fullname}}</li>
+              <li>{{event.title}}</li>
+              <li>{{event.receipt_code}}</li>
+              <li>{{event.price_description}}</li>
+              <li>{{event.balance}}</li>
+              <li>{{payment_details}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
 
   <% submit_url = edit_system_email_admin_workshop_path(@workshop, @system_email.email_type) %>
   <%= simple_form_for @system_email, url: submit_url,
@@ -60,4 +66,5 @@
 
     <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop) %>
   <% end %>
+
 <% end %>

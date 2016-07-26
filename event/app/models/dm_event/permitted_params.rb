@@ -26,5 +26,10 @@ module DmEvent
       end
     end
 
+    #------------------------------------------------------------------------------
+    def system_email_params
+      params.require(:system_email).permit! if can? :manage_events, :all
+    end
+    
   end
 end

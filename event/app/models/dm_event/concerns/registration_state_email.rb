@@ -19,8 +19,8 @@ module DmEvent
             'price_description'   => "#{workshop_price.price_description unless workshop_price.nil?}",
             'title'               => workshop.title,
             'fullname'            => user_profile.full_name,
-            'payment_url'         => self.payment_url
-            # 'balance'        => balance_owed(true)
+            'payment_url'         => self.payment_url,
+            'balance'             => self.balance_owed.format
           }
           # result['arrival_date'] = format_date(arrival_at, true) if event_workshop.show_arrival_departure
           # result['departure_date'] = format_date(departure_at, true) if event_workshop.show_arrival_departure
