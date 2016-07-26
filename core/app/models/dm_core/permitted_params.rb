@@ -7,11 +7,6 @@ module DmCore
     end
 
     #------------------------------------------------------------------------------
-    def system_email_params
-      params.require(:system_email).permit! if current_user.try(:is_admin?)
-    end
-    
-    #------------------------------------------------------------------------------
     def user_params
       if can? :manage, :all
         params.require(:user).permit!
