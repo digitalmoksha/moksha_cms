@@ -4,7 +4,8 @@ module DmEvent
   module Concerns
     module RegistrationStateEmail
       extend ActiveSupport::Concern
-
+      include DmUtilities::DateHelper
+      
       # 'included do' causes the included code to be evaluated in the
       # conext where it is included (post.rb), rather than be 
       # executed in the module's context (blorgh/concerns/models/post).
@@ -20,10 +21,13 @@ module DmEvent
             'title'               => workshop.title,
             'fullname'            => user_profile.full_name,
             'payment_url'         => self.payment_url,
-            'balance'             => self.balance_owed.format
+            'balance'             => self.balance_owed.format,
+            'start_date'          => format_date(workshop.starting_on, true),
+            'end_date'            => format_date(workshop.ending_on, true),
+            'start_time'          => format_time(workshop.starting_on),
+            'end_time'            => format_time(workshop.ending_on),
+            'date_range'          => format_date_range(workshop.starting_on, workshop.ending_on)
           }
-          # result['arrival_date'] = format_date(arrival_at, true) if event_workshop.show_arrival_departure
-          # result['departure_date'] = format_date(departure_at, true) if event_workshop.show_arrival_departure
     
           # TODO This is a security hole.  Any customer field data needs to be sanitized
           # custom_fields.each do | x |
