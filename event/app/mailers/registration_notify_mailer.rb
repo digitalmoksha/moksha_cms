@@ -12,7 +12,9 @@ class RegistrationNotifyMailer < DmCore::SiteMailer
     account                     = registration.account
     @subject                    = substitutions['subject']
     @recipients                 = registration.email
-    @bcc                        = account.preferred_archive_email
+    @bcc                        = []
+    @bcc                       << account.preferred_archive_email if account.preferred_archive_email
+    @bcc                       << contact_email if registration.workshop.bcc_contact_email
     @registration               = registration
     @content                    = content
     @state                      = substitutions['state']

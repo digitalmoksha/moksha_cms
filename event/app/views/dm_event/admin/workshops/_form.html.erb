@@ -40,6 +40,7 @@
       <%= f.input :deadline_on, label: 'Deadline', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, hint: format_date(@workshop.deadline_on, full_date: true) %>
 
       <%= f.input :contact_email, label: 'Contact Email', input_html: {class: 'width_50_percent'} %>
+      <%= f.input :bcc_contact_email, as: :boolean, label: 'bcc Emails', hint: 'Send copy of registration emails to the contact email address' %>
       <%= f.input :contact_phone, label: 'Contact Phone', input_html: {class: 'width_50_percent'} %>
       <%= f.input :require_account, as: :boolean, label: 'Require Account', hint: 'Must have a user account to register - necessary for forum/blog access' %>
       <%= f.input :show_address, as: :boolean, label: 'Show Address', hint: 'Show address fields (only if user is not logged in)' %>
