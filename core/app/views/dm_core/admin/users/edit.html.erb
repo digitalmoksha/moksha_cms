@@ -1,102 +1,186 @@
 <% content_for :content_title, @user.email %>
 <% content_for :content_subtitle, @user.display_name %>
+<% disable_fields = @user.has_role?(:admin) && !is_admin? %>
 
 <div class="row">
   <div class="col-md-9">
-    <%= render 'form' %>
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#summary_tab" data-toggle="tab">Summary</a></li>
+        <li><a href="#profile_tab" data-toggle="tab">Profile</a></li>
+        <li><a href="#permissions_tab" data-toggle="tab">Permissions</a></li>
+      </ul>
 
-    <% if defined?(DmEvent) && current_user.is_sysadmin? %>
-      <%= panel body: false, title: "Comments" do %>
-        <table class="table table-bordered table-condensed table-striped">
-          <thead>
-            <tr>
-              <th class="date">Date</th>
-              <th class="name">Domain</th>
-              <th>Text</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% Comment.unscoped.where(user_id: @user).each do |comment| -%>
-              <tr>
-                <td class="date"><%= format_date comment.created_at %></td>
-                <td class="name"><%= comment.account.domain %></td>
-                <td class="name"><%= comment.body %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
-    <% end %>
+      <div class="tab-content with-padding">
 
-    <% if defined?(DmEvent) %>
-      <%= panel body: false, title: "Event Registrations" do %>
-        <table class="table table-bordered table-condensed table-striped">
-          <thead>
-            <tr>
-              <th class="name">Workshop Title</th>
-              <th class="name">Domain</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% reg = (is_sysadmin? ? Registration.unscoped : Registration.all) %>
-            <% reg.where(user_profile_id: @user.user_profile).each do |registration| %>
-              <tr>
-                <td class="name"><%= registration.workshop ? registration.workshop.title : 'oops' %></td>
-                <td class="name"><%= registration.account.domain %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
-    <% end %>
+        <%#--- Summary Tab %>
+        <div class="tab-pane fade in active" id="summary_tab">
+          <div class="row">
+            <div class="col-md-12">
+              <%= subsection title: "Various Details for #{@user.display_name}" do %>
+                <% if defined?(DmEvent) %>
+                  <%= panel body: false, title: "Event Registrations" do %>
+                    <table class="table table-bordered table-condensed table-striped">
+                      <thead>
+                        <tr>
+                          <th class="name">Workshop Title</th>
+                          <th class="name">Domain</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% reg = (is_sysadmin? ? Registration.unscoped : Registration.all) %>
+                        <% reg.where(user_profile_id: @user.user_profile).includes(:workshop => [:translations]).includes(:account).each do |registration| %>
+                          <tr>
+                            <td class="name"><%= registration.workshop ? registration.workshop.title : 'oops' %></td>
+                            <td class="name"><%= registration.account.domain %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  <% end %>
+                <% end %>
 
-    <% if defined?(DmSubscriptions) %>
-      <%= panel title: "Subscriptions" do %>
-        <%= subsection title: 'Subscriptions' do %>
-          <table class="table table-bordered table-condensed table-striped">
-            <thead>
-              <tr>
-                <th class="name">Subscriptions</th>
-                <th class="name">Domain</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% sub = (is_sysadmin? ? Subscription.unscoped : Subscription.all) %>
-              <% sub.where(subscriber_id: @user, subscriber_type: 'User').each do |subscription| -%>
-                <tr>
-                  <td class="name"><%= subscription.subscription_plan.name %></td>
-                  <td class="name"><%= subscription.account.domain %></td>
-                </tr>
+                <% if defined?(DmSubscriptions) %>
+                  <%= panel title: "Subscriptions" do %>
+                    <%= subsection title: 'Subscriptions' do %>
+                      <table class="table table-bordered table-condensed table-striped">
+                        <thead>
+                          <tr>
+                            <th class="name">Subscriptions</th>
+                            <th class="name">Domain</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% sub = (is_sysadmin? ? Subscription.unscoped : Subscription.all) %>
+                          <% sub.where(subscriber_id: @user, subscriber_type: 'User').each do |subscription| -%>
+                            <tr>
+                              <td class="name"><%= subscription.subscription_plan.name %></td>
+                              <td class="name"><%= subscription.account.domain %></td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    <% end %>
+
+                    <%= subsection title: 'Payments' do %>
+                      <table class="table table-bordered table-condensed table-striped">
+                        <thead>
+                          <tr>
+                            <th class="name">Payments</th>
+                            <th class="name">Domain</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% pay = (is_sysadmin? ? SubscriptionPayment.unscoped : SubscriptionPayment.all) %>
+                          <% pay.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |payment| -%>
+                            <tr>
+                              <td class="name"><%= format_date(payment.created_at) %></td>
+                              <td class="name"><%= payment.amount.format %></td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+                <% if defined?(DmCms) && current_user.is_sysadmin? %>
+                  <%= panel body: false, title: "Comments (system admin only)" do %>
+                    <table class="table table-bordered table-condensed table-striped">
+                      <thead>
+                        <tr>
+                          <th class="date">Date</th>
+                          <th class="name">Domain</th>
+                          <th class="name">type</th>
+                          <th>Text</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% Comment.unscoped.where(user_id: @user).includes(:account).each do |comment| -%>
+                          <tr>
+                            <td class="date"><%= format_date comment.created_at %></td>
+                            <td class="name"><%= comment.account.domain %></td>
+                            <td class="name"><%= comment.commentable_type %></td>
+                            <td class="name"><%= comment.body %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  <% end %>
+                <% end %>
+
               <% end %>
-            </tbody>
-          </table>
-        <% end %>
+            </div>
+          </div>
+        </div>
 
-        <%= subsection title: 'Payments' do %>
-          <table class="table table-bordered table-condensed table-striped">
-            <thead>
-              <tr>
-                <th class="name">Payments</th>
-                <th class="name">Domain</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% pay = (is_sysadmin? ? SubscriptionPayment.unscoped : SubscriptionPayment.all) %>
-              <% pay.unscoped.where(subscriber_id: @user, subscriber_type: 'User').each do |payment| -%>
-                <tr>
-                  <td class="name"><%= format_date(payment.created_at) %></td>
-                  <td class="name"><%= payment.amount.format %></td>
-                </tr>
+        <%#--- Profile Tab %>
+        <div class="tab-pane fade in" id="profile_tab">
+          <div class="row">
+            <div class="col-md-12">
+              <%= subsection title: "Profile for #{@user.display_name}" do %>
+                <%= simple_form_for(@user, :url => dm_core.admin_user_path,
+                      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings) do |f| %>
+
+                  <%= f.error_notification :message => "Please review the problems below" %>
+                  <%#= f.input :first_name %>
+                  <%#= f.input :last_name %>
+                  <%= f.input :email, disabled: disable_fields, hint: 'Note: If you change the email address, a confirmation email will be sent to the new address. The email 
+                  address will look unchanged until it is confirmed' %>
+                  <%= f.input(:unconfirmed_email, disabled: true, hint: 'The user needs to re-confirm this email address - an email has already been sent, or 
+                         you can use the Confirm This User button') if @user.unconfirmed_email %>
+                  <%#= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
+                              :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
+                              :label => "Country" %>
+      
+                  <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
+                <% end %>
               <% end %>
-            </tbody>
-          </table>
-        <% end %>
-      <% end %>
-    <% end %>
+            </div>
+          </div>
+        </div>
+
+        <%#--- Permissions Tab %>
+        <div class="tab-pane fade" id="permissions_tab">
+          <div class="row">
+            <div class="col-md-12">
+              <%= subsection title: "Access Permissions for #{@user.display_name}" do %>
+                <p>Choose which permissions to grant to this user</p>
+                <%= simple_form_for(@user, :url => dm_core.admin_user_path,
+                    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings) do |f| %>
+
+                  <%= f.error_notification :message => "Please review the problems below" %>
+
+                  <% if disable_fields %>
+                    <%= f.input 'roles[admin]', as: :boolean, label: 'Administrator', input_html: {checked: @user.has_role?(:admin)}, disabled: true, hint: 'access to entire website' %>
+                  <% else %>
+                    <%= f.input('roles[reviewer]',              as: :boolean, label: 'Reviewer', input_html: {checked: @user.has_role?(:reviewer)}, hint: 'will be able to view draft versions of blog entries, as long as they are sent the correct link') %>
+                    <%= f.input('roles[content_manager]',       as: :boolean, label: 'Content Manager', input_html: {checked: @user.has_role?(:content_manager)}, hint: 'can manage blog and static pages') if defined?(DmCms) %>
+                    <%= f.input('roles[event_manager]',         as: :boolean, label: 'Event Manager', input_html: {checked: @user.has_role?(:event_manager)}, hint: 'can manage events and workshops') if defined?(DmEvent) %>
+                    <%= f.input('roles[forum_manager]',         as: :boolean, label: 'Forum Manager', input_html: {checked: @user.has_role?(:forum_manager)}, hint: 'can manage forums') if defined?(DmForum) %>
+                    <%= f.input('roles[course_manager]',        as: :boolean, label: 'Course Manager', input_html: {checked: @user.has_role?(:course_manager)}, hint: 'can manage courses and lessons') if defined?(DmLms) %>
+                    <%= f.input('roles[subscription_manager]',  as: :boolean, label: 'Subscription Manager', input_html: {checked: @user.has_role?(:course_manager)}, hint: 'can manage site subscriptions') if defined?(DmSubscriptions) %>
+                    <%#= f.input 'roles[newsletter_manager]',    as: :boolean, label: 'Newsletter Manager', input_html: {checked: @user.has_role?(:newsletter_manager)}, hint: 'can manage newsletters' %>
+                    <hr>
+                    <%= f.input 'roles[manager]',         as: :boolean, label: 'Manager', input_html: {checked: @user.has_role?(:manager)}, hint: 'can manage all areas except for global account settings and deleting users' %>
+                    <% if is_admin? %>
+                      <%= f.input 'roles[admin]', as: :boolean, label: 'Administrator', input_html: {checked: @user.has_role?(:admin)}, hint: 'access to entire website' %>
+                    <% end %>
+                    <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
   <div class="col-md-3">
     <p class="avatar"><%= avatar_for @user, 200 %></p>
-    <%= subsection title: 'Details' do %>
+    <%= subsection title: @user.display_name do %>
       <dl>
         <dt class="text-info">Last Accessed On</dt>
         <dd><%= format_datetime(@user.last_access_at) %></dd>
