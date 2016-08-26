@@ -48,8 +48,8 @@ class Workshop < ActiveRecord::Base
   default_scope           { where(account_id: Account.current.id) }
   
   #--- upcoming and past are used in the admin, so should be published and non-published
-  scope                   :upcoming,  -> { where('ending_on > ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC') }
-  scope                   :past,      -> { where('ending_on <= ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC') }
+  scope                   :upcoming,  -> { where('ending_on > ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC').includes(:translations) }
+  scope                   :past,      -> { where('ending_on <= ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC').includes(:translations) }
 
   #--- available is list of published and registration open and not ended
   scope                   :available, -> { where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', 
