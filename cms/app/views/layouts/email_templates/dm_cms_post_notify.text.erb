@@ -1,0 +1,9 @@
+<%= I18n.t 'cms.blog_notify_new_post' %>: '<%= @blog_title %>'
+
+<%= I18n.t 'cms.blog_notify_read_post' %>: <%= @post_link %>
+
+<%= @post_title %>
+
+<%= @post.summary %>
+
+[<%= I18n.t('cms.read_more') %>](<%= @post_link %>)

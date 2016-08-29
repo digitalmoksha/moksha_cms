@@ -1,0 +1,57 @@
+de:
+  _mbus:
+    language: Sprache
+    language_english: Englisch
+    language_german: Deutsch
+    language_czech: Tschechisch
+    language_japanese: Japanese
+    
+    #--- Login System
+    signup_title: Sign Up for a New Account
+    signup_first_name: Vorname
+    signup_last_name: Nachname
+    signup_country: Land
+    signup_email: Email
+    signup_password: Passwort
+    signup_password_confirm: Passwort Bestätigung
+    signup_newsletter: Newsletter
+    signup_newsletter_desc: "Yes, I would like to receive updates and news"
+    signup_register_button: Registrieren
+    signup_public_name: Öffentlicher Benutzername
+    signup_public_name_hint: 'Name, unter dem Du Beiträge im Forum veröffentlichst oder Blog-Beiträge kommentierst.'
+    signin_link: Anmelden
+    signin_register_link: 'Du hast noch keinen Benutzerzugang? Neues Benutzerkonto anlegen'
+    signin_forgot_password_link: Passwort vergessen?
+    signin_confirmation_instructions_link: "Keine Bestätigungs-Email erhalten?"
+    signin_unlock_instructions_link: "Keine Anweisung zum Entsperren enthalten?"
+    signin_title: Anmelden
+    signin_rememberme: Angemeldet bleiben
+    signin_button: Anmelden
+    confirmation_email_4: 'Thank you'
+    forgot_title: Passwort vergessen
+    forgot_email_password_button: E-Mail Passwort Anweisungen
+    resend_title: Bestätigungs- Anweisungen erneut versenden
+    change_password_title: Ändern Sie Ihr Passwort
+    new_password: Neues Passwort
+    new_password_confirm: Neues Passwort bestätigen
+    change_password: Mein Passwort ändern
+    create_account: Neues Benutzerkonto anlegen
+    
+    #--- CMS/Site Messages
+
+    #--- Forum System
+    forum_list_title: Forum
+    forum_list_subtitle: in deutscher Sprache
+
+    #--- Profile
+    profile_title: Benutzerkonto und Profil
+    profile_subtitle: Einstellungen
+    
+    #--- Newletter Signup
+    newsletter_choose: Bitte Newsletter auswählen
+
+    #--- Forum
+    forum:
+      no_public: "Here you have the opportunity to participate in online discussions via closed and open forums"
+
+    comment_extra_instruction: ""

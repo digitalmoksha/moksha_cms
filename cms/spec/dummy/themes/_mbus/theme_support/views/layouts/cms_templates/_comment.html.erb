@@ -1,0 +1,21 @@
+<div class="media" id="<%= dom_id(comment) %>">
+  <a class="pull-left" href="#">
+    <div class="img-thumbnail"><%= avatar_for comment.user, 64 %></div>
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading"><%= truncate(present(comment).author, :length => 30) %>
+      <small><%= present(comment).date_posted %></small>
+    </h4>
+    <% if comment.user.active? %>
+      <%= present(comment).formatted_comment %>
+    <% else %>
+      <p>(<% I18n.t 'cms.suspended_user_post' %>)</p>
+    <% end %>
+
+    <%= link_to(I18n.t('cms.reply'), '#reply', class: "btn btn-default btn-xs pull-right", style: 'margin-left: 10px;') if comment.commentable.comments_allowed? && user_signed_in? %>
+    <% if false #user_signed_in? && can?(:edit, comment) %>
+      <%= link_to I18n.t('fms.admin.edit_post'), [commenting_on, :ajax_edit_comment, comment] %>
+    <% end %>
+    <%= link_to(I18n.t('cms.delete'), dm_cms.cms_post_ajax_delete_comment_comment_url(commenting_on, comment), class: "btn btn-danger btn-xs pull-right", method: :delete, data: {confirm: 'Are you sure you wish to delete this comment?'}) if is_admin? %>
+  </div>
+</div>

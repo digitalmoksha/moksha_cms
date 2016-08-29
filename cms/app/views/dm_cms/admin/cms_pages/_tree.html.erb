@@ -1,0 +1,20 @@
+<% open_or_closed = sub_items.blank? ? '' : (cookies["page_tree_#{item.id}"] ? 'tree_open' : 'tree_closed') %>
+<li data-item_id="<%= item.id %>" class="<%= 'root' if item.is_root? %> <%= open_or_closed %>" >
+  <dl>
+    <dt>
+      <% if !item.is_root? %>
+        <a href="#" class="tree_expand"></a>
+      <% end %>
+      <% if item.divider? %>
+        <%= link_to "&mdash; #{item.menutitle} &mdash;".html_safe, :action => :show, :id => item %>
+      <% else %>
+        <%= link_to (item.title.blank? ? item.slug : item.title), :action => :show, :id => item %>
+      <% end %>
+    </dt>
+    <dd><%= present(item).label_published %></dd>
+    <dd>
+      <%= link_to "New Child", new_page_admin_cms_page_path(item) %>
+    </dd>
+  </dl>
+  <%= (sub_items.blank? ? '' : content_tag(:ul, nested_tree(sub_items), :class => 'sub_tree', :style => ((item.is_root? || open_or_closed == 'tree_open') ? '' : 'display:none'))) %>
+</li>

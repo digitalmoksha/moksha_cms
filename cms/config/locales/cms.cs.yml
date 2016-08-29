@@ -1,0 +1,42 @@
+cs:
+  cms:
+    recent_posts: Nejnovější příspěvky
+    all_recent_posts: Všechny nedávné příspěvky
+    available_blogs: Dostupné blogy
+    blog_header: Blogs
+    read_more: 'Čtěte více...'
+    blog_summary_date: Datum
+    blog_summary_comments: Komentáře
+    blog_notify_new_post: K dispozici je nový příspěvek v blogu
+    blog_notify_read_post: Přečtěte si celý příspěvek
+    reply: Odpovědět
+    suspended_user_post: Tento příspěvek byl odstraněn
+    comment_body: Text příspěvku
+    comment_submit: Odeslat komentář
+    add_comment: Přidat komentář
+    comments_header: Komentáře
+    delete: smazat
+    comments_stat: Komentáře
+    blog_login_required: Přihlášení je vyžadováno pro přístup k tomuto blogu
+    comment_login_required: "Prosím, přihlaste se ke svému účtu, abyste mohl psát komentář. Pokud nemáte uživatelský účet, můžete si jej vytvořit."
+    comment_notify:
+      disclaimer: "Obdrželi jste tento e-mail, protože je uvedeno byste chtěli být informováni o změnách tohoto blogu / fóru."
+    blog_follow_section:
+      title: Sledovat blog e-mailem
+      description: Sledovat tento blog a dostávat e-mailem upozornění o nových komentářích
+      description_private: Tento blog je neveřejný - automaticky budete dostávat e-mailem upozornění o nových komentářích
+    
+    contact_form:
+      sent: "Děkujeme, Vaše zpráva byla e-mailem na nás."
+      send_button: Poslat zprávu
+      name: 'Název'
+      email_placeholder: user@domain.com
+      reason: 'Důvod pro psaní'
+      subject: Předmět
+      subject_prefix: Contact Form
+      message: Zpráva...
+      reason_list:
+        reason_1: 'Zpětná vazba'
+        reason_2: 'Technický problém'
+        reason_3: 'Další'
+    

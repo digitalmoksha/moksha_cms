@@ -1,0 +1,22 @@
+<li class="clearfix" id="<%= dom_id(comment) %>">
+  <div class="user"><%= avatar_for comment.user, 50 %></div>
+  <p class="comment_author"><%= truncate(present(comment).author, :length => 30) %></p>
+  <p class="info">
+    <%= present(comment).date_posted %>
+    <%= ' | '.html_safe + link_to(I18n.t('cms.reply'), '#reply') if comment.commentable.comments_allowed? && user_signed_in? %>
+    <% if false #user_signed_in? && can?(:edit, comment) %>
+      | <%= link_to I18n.t('fms.admin.edit_post'), [commenting_on, :ajax_edit_comment, comment] %>
+    <% end %>
+    <%= ' | '.html_safe + link_to(I18n.t('cms.delete'), [commenting_on, :ajax_delete_comment, comment], method: :delete, data: {confirm: 'Are you sure you wish to delete this comment?'}) if is_admin? %>
+  </p>
+  <div class="clearfix"></div>
+  <div class="comment_text">
+    <% if comment.user.active? %>
+      <%= present(comment).formatted_comment %>
+    <% else %>
+      <p>(<% I18n.t 'cms.suspended_user_post' %>)</p>
+    <% end %>
+  </div>
+  <div class="comment_footer">
+  </div>
+</li>

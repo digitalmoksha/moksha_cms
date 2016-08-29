@@ -1,0 +1,167 @@
+<% content_for :content_title, @blog.title %>
+<% content_for :content_subtitle, 'Permalink: '.html_safe + link_to(blog_show_url(@blog), blog_show_url(@blog), title: 'Permalink for this blog', target: '_blank') %>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= present(@blog).label_published %>
+    <%= link_to icon_label(:view, 'View'),  blog_show_url(@blog),   class: "btn btn-xs btn-default", title: 'View', target: '_blank' %>
+    <%= link_to(icon_label(:edit, 'Edit'),    [:edit, :admin, @blog], class: "btn btn-xs btn-default", title: 'Edit') %>
+  <% end %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-9">
+    <% toolbar = toolbar_btn(icons('icon-plus'), new_admin_cms_blog_cms_post_path(@blog), title: 'New Post', class: "btn btn-link btn-icon") %>
+    <%= panel title: 'Posts', toolbar: toolbar, body: false do %>
+      <table class="table table-striped table-bordered table-block">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th width="18"><span class='hovertip' title='Notification email sent'><%= icons('icon-envelop') %></span></th>
+            <th width="50">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @blog.posts.each do |post| %>
+            <% present post do |post_presenter| %>
+              <tr class="item" data-item_id="<%= post.id %>">
+                <td>
+                  <%= link_to(post.title, edit_admin_cms_blog_cms_post_path(@blog, post)) %>
+                </td>
+                <td>
+                  <% if post.notification_sent_on %>
+                    <span class='hovertip' title='<%= format_date(post.notification_sent_on) %>'><%= icons('icon-envelop') %></span>
+                  <% end %>
+                </td>
+                <td><%= post_presenter.label_published %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+  <div class="col-md-3">
+    <% if @blog.is_subscription_only? %>
+      <%= subsection title: 'Visibility: <strong>Subscription</strong>'.html_safe do %>
+        <p>Only paid subscribers can see the posts, and will receive notification emails.</p>
+      <% end %>
+    <% elsif @blog.is_private? %>
+      <%= subsection title: 'Visibility: <strong>Private</strong>'.html_safe do %>
+        <p>Only users who have been given access (manually or through an associated event) can see posts in this blog, and will receive notification emails.</p>
+      <% end %>
+    <% elsif @blog.is_public? %>
+      <%= subsection title: 'Visibility: <strong>Public</strong>'.html_safe do %>
+        <p>All posts are available publicly for anyone to see.  Logged in users can 'Follow' the blog to receive notification emails.</p>
+      <% end %>
+    <% elsif @blog.is_protected? %>
+      <%= subsection title: 'Visibility: <strong>Protected</strong>'.html_safe do %>
+        <p>Only logged in users can see the posts.  Logged in users can 'Follow' the blog to receive notification emails.</p>
+      <% end %>
+    <% end %>
+
+    <%= subsection title: 'Attributes' do %>
+      <table class="table table-condensed table-nolines">
+        <tr>
+          <% if @blog.is_private? %>
+            <td>Members</td>
+            <td><%= @blog.member_count(:all) %></td>
+          <% else %>
+            <td>Followers</td>
+            <td><%= @blog.followers.count %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <td>Commenting?</td>
+          <td><input type="checkbox" <%= 'checked="1"' if @blog.comments_allowed %> disabled="disabled" /></td>
+        </tr>
+        <tr>
+          <td>Social Buttons?</td>
+          <td><input type="checkbox" <%= 'checked="1"' if @blog.show_social_buttons? %> disabled="disabled" /></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>
+
+<% if @blog.owner %>
+  <div class="row">
+    <div class="col-md-12">
+      <% toolbar = toolbar_btn(@blog.member_count(:automatic), '#', title: 'Number of users with automatic blog access', class: 'label label-success pull-right') %>
+      <%= panel title: 'Users with Automatic Access', toolbar: toolbar do %>
+        <div class="body">
+          <h5>Automatic Access Granted for Event</h5>
+          <p><%= @blog.owner.title %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if @blog.is_private? %>
+  <div class="row">
+    <div class="col-md-12">
+      <% toolbar = toolbar_btn(@blog.member_count(:manual), '#', title: 'Number of users with blog access', class: 'label label-success pull-right') %>
+      <%= panel title: 'Users with Manual Access', toolbar: toolbar do %>
+        <div class="col-md-6">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Country</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @blog.member_list(:manual).each do |user| %>
+                <tr>
+                  <td><%= link_to(icons("icon-minus"), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, user_id: user.id), method: :delete, title: 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+                  <td><%= user.country.english_name %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-6">
+          <%= subsection title: 'Add Individual Users' do %>
+            <table id="blog_user_table" class="table table-striped table-bordered" data-source="<%= dm_cms.blog_users_admin_cms_blog_url %>">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Country</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% unless @blog.is_private? %>
+  <div class="row">
+    <div class="col-md-6">
+      <% toolbar = toolbar_btn(@blog.followers.count, '#', title: 'Number of users following this blog', class: 'label label-success pull-right') %>
+      <%= panel title: 'Users Following this Blog', toolbar: toolbar, body: false do %>
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Country</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @blog.followers.each do |follower| %>
+              <tr>
+                <td><%= follower.user.full_name %></td>
+                <td><%= follower.user.try(:country).try(:english_name) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+<% end %>

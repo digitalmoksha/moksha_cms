@@ -1,0 +1,29 @@
+<% toolbar = capture do %>
+  <%= link_to icons(:new), new_admin_cms_snippet_path, title: 'New Snippet', class: 'btn btn-link btn-icon' %>
+<% end %>
+<%= panel title: 'List of Snippets', body: false, toolbar: toolbar do %>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th width="50">Type</th>
+        <th width="50">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cms_snippets.each do |cms_snippet| %>
+        <% present cms_snippet do |snippet_presenter| %>
+          <tr class="item">
+            <td>
+              <%= link_to cms_snippet.slug, edit_admin_cms_snippet_path(cms_snippet) %>
+            </td>
+            <td><%= cms_snippet.description %></td>
+            <td><%= cms_snippet.itemtype %></td>
+            <td><%= snippet_presenter.label_published %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

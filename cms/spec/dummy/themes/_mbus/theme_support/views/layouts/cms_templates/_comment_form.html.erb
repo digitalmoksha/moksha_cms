@@ -1,0 +1,16 @@
+<% if commenting_on.comments_allowed? %>
+  <section id="reply" class="post-comment-form comment_reply_form">
+    <% if current_user %>
+      <%= form_for :comment, url: [commenting_on, :ajax_add_comment] do |f| %>
+        <div class="form-group">
+          <%= f.text_area :body, rows: 3, class: 'form-control' %>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      <% end %>
+    <% else %>
+      <p><%= I18n.t 'cms.comment_login_required' %></p>
+      <%= link_to I18n.t('core.login'), main_app.new_user_session_path, class: 'btn btn-primary' %>
+      <%= link_to I18n.t('core.create_account'), main_app.new_user_registration_path, class: 'btn'  %>
+    <% end %>
+  </section>
+<% end %>

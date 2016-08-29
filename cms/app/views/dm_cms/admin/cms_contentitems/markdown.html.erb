@@ -1,0 +1,21 @@
+<h6 class="subtitle">Enter Markdown / Liquid you wish to process</h6>
+<div class="">
+  <%= simple_form_for :sample_text, :url => markdown_admin_cms_contentitem_url do |f| %>
+    <%= f.input :markdown, :label => false, :wrapper => :vertical, :as => :editor, input_html: {style: "height: 200px;", value: @text} %>
+    <%= submit_or_cancel cancel: false %>
+  <% end %>
+</div>
+
+<% unless @text.blank? %>
+  <div class="semi-block">
+   	<h6 class="subtitle">Markdown / Liquid Output</h6>
+    <div class="well-white body">
+      <pre>
+<%= liquidize_markdown(@text, {}).to_str %>
+      </pre>
+    </div>
+  </div>
+<% end %>
+
+<%= render :partial => 'dm_cms/admin/shared/liquid_tags_ref' %>
+

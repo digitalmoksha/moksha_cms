@@ -1,0 +1,50 @@
+<% new_record = @cms_page.new_record? %>
+<% submit_url = (new_record ? create_page_admin_cms_page_path(@current_page) : admin_cms_page_path(@cms_page)) %>
+<% title = (new_record ? "New Child Page " : "Editing Page Details ") %>
+
+<%= simple_form_for @cms_page, url: submit_url,
+      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+
+  <%= f.error_notification message: "Please review the problems below" %>
+  <% toolbar = capture do %>
+    <%= link_to icons(:cancel), {action: :show, id: @current_page}, class: 'btn btn-link btn-icon' %>
+  <% end %>
+  <%= panel title: 'Page Details', toolbar: toolbar do %>
+    <%= locale_tabs do |locale| %>
+      <%= f.input "title_#{locale}", label: 'Page Title', hint: 'The title of the page, shown in the browser title' %>
+      <%= f.input "menutitle_#{locale}", label: 'Menu Title', hint: 'Text shown in a menu (which might be shorter than the full title).  If blank, page will not show up in any auto-generated menus' %>
+    <% end %>
+
+    <%= f.input :published, label: 'Publish It?' %>
+    <%= f.input :slug, label: 'Page Slug', hint: 'Leave blank to have auto-generated based on title.' %>
+    <%= f.input :pagetype, label: 'Page Type', collection: CmsPage::PAGETYPE, include_blank: false %>
+    <div id="pagetype_link">
+      <%= f.input :link %>
+    </div>
+    <% templates = template_menu_list %>
+    <% if templates %>
+      <%= f.input :template, label: 'Template to Use', collection: templates, include_blank: false,
+              hint: 'Template to use for this page. Child pages can inherit this template' %>
+    <% else %>
+      <%= f.input :template, label: 'Template to Use', hint: "Leave blank to inherit the parent's template" %>
+    <% end %>
+    <% if false #--- disable this for now %>
+      <%= f.input :menuimage, label: 'Menu Image' %>
+    <% end %>
+    <%= f.input :requires_login, label: 'Requires Login', hint: 'Page will require user to be logged in to access' %>
+    <%= f.input :header_image, label: 'Header Image', hint: 'Image used as a header/banner image, if supported by theme', input_html: {class: 'width_50_percent'} %>
+    <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color', input_html: {class: 'width_50_percent'} %>
+
+    <%= subsection title: 'Social Media' do %>
+      <%= f.input :preferred_show_social_buttons, as: :boolean, label: 'Show social buttons', hint: 'Show the standard Facebook/Twitter buttons on the page' %>
+      <%= f.input :featured_image, label: 'Featured Image', hint: 'Image used if page liked on facebook.  Will not display on the page', input_html: {class: 'width_50_percent'} %>
+      <%= locale_tabs do |locale| %>
+        <%= f.input "summary_#{locale}", label: 'Page Summary', as: :code_editor, input_html: {style: "height: 100px;"},
+               hint: 'Text used when a page liked on Facebook.  Is not visible on the page'%>
+      <% end %>
+    <% end %>
+    <%= submit_or_cancel cancel_url: {action: :show, id: @current_page}, delete: 'Delete Page', delete_url: admin_cms_page_path(@current_page), delete_confirm: 'Are you sure you wish to delete this page?' %>
+
+  <% end %>
+
+<% end %>

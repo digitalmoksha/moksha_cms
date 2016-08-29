@@ -1,0 +1,54 @@
+<% content_for :content_title, present(@current_page).admin_edit_title %>
+<% content_for :secondary_title, "#{@current_page.slug} &mdash; #{@current_page.title}".html_safe %>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= link_to icon_label(:new, 'Add Content'), new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block', class: 'btn btn-xs btn-default' %>
+    <%= link_to icon_label(:view, 'View Page'), url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', class: 'btn btn-xs btn-default', target: '_blank' %>
+  <% end %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-8">
+    <% @current_page.cms_contentitems.each do |item| %>
+      <% toolbar = render partial: 'content_toolbar', locals: { contentitem: item,  contentitem_list: @current_page.cms_contentitems } %>
+      <%= panel title: "#{item.container}", body: false, toolbar: toolbar do %>
+        <pre class="prettyprint" style="border:none;border-bottom: 1px solid #eee;">
+<%= truncate(item.send("content_#{current_account.preferred_default_locale}"), length: 250) %>
+        </pre>
+        <span class="subtitle text-muted text-center">Format: <%= item.itemtype %></span>
+      <% end %>
+    <% end %>
+  </div>
+  
+  <div class="col-md-4">
+    <% toolbar = link_to icons(:edit), edit_admin_cms_page_path(@current_page), title: 'Edit Page Details', class: "btn btn-link btn-icon" %>
+    <%= panel title: 'Page Details', toolbar: toolbar do %>
+      <dl>
+        <dt class="text-info">Slug</dt>
+        <dd><%= @current_page.slug %></dd>
+        <dt class="text-info"></dt>
+        <dt class="text-info">Title</dt>
+        <dd><%= @current_page.title %></dd>
+        <dt class="text-info">Published?</dt>
+        <dd><%= @current_page.is_published? ? 'Yes' : 'No' %></dd>
+        <dt class="text-info">Requires Login?</dt>
+        <dd><%= @current_page.requires_login? ? 'Yes' : 'No' %></dd>
+        <dt class="text-info">Type</dt>
+        <dd><%= @current_page.pagetype %></dd>
+        <dt class="text-info">Template</dt>
+        <dd>
+          <%= @current_page.page_template %>
+          <%= " #{icons('icon-arrow-up9', color: '#aaa')}".html_safe if @current_page.template.blank? %>
+        </dd>
+        <dt class="text-info">Link</dt>
+        <dd><%= @current_page.link %></dd>
+        <dt class="text-info">Menu Title</dt>
+        <dd><%= @current_page.menutitle %></dd>
+        <dt class="text-info">Menu Image</dt>
+        <dd><%= @current_page.menuimage %></dd>
+      </dl>
+    <% end %>
+    <%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.showpage_url(@current_page.slug))}",
+                 target: '_blank', class: 'btn btn-xs btn-default' %>
+  </div>
+</div>

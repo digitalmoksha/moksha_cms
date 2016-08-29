@@ -1,0 +1,32 @@
+<% content_for :content_title, icon_label('font-paste', 'Pages') %>
+<% content_for :content_title_extra do %>
+  <div class="header-buttons">
+    <div class="collapse" id="header-buttons">
+      <div class="well">
+        <div class="btn-group">
+          <%= link_to('Snippets', dm_cms.admin_cms_snippets_path, class: 'btn btn-default btn-xs') %>
+          <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
+          <ul class="dropdown-menu dropdown-menu-right icons-right">
+            <li>
+              <%= link_to icon_label('icon-redo', 'Clear Page Cache'), admin_expire_cache_path, method: :patch %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<% if !current_account.preferred_site_enabled? %>
+  <div class="alert alert-warning">
+    Site is currently disabled - all requests will be sent to &#x27;Coming Soon&#x27; page unless logged in
+  </div>
+<% end %>
+
+<%= panel header: false do %>
+  <ul id="tree_sort" data-update_url="<%= dm_cms.admin_cms_page_sort_path %>">
+    <%= nested_tree(@tree) %>
+  </ul>
+<% end %>
+

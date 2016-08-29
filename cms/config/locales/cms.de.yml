@@ -1,0 +1,42 @@
+de:
+  cms:
+    recent_posts: Aktuelle Beiträge
+    all_recent_posts: Zurück zur Übersicht
+    available_blogs: Verfügbare Blogs
+    blog_header: Blogs
+    read_more: 'Weiterlesen...'
+    blog_summary_date: Datum
+    blog_summary_comments: Kommentare
+    blog_notify_new_post: Es gibt einen neuen Beitrag im Blog
+    blog_notify_read_post: Lies hier den kompletten Beitrag
+    reply: Antworten
+    suspended_user_post: Dieser Beitrag wurde bereits entfernt
+    comment_body: Inhalt
+    comment_submit: Absenden
+    add_comment: Dein Kommentar
+    comments_header: Kommentare
+    delete: löschen
+    comments_stat: Kommentare
+    blog_login_required: 'Um diesen Blog zu sehen, melde Dich bitte an.'
+    comment_login_required: "Bitte melde dich mit deinen Benutzerdaten an, um einen Kommentar zu veröffentlichen. Falls du noch kein Benutzerkonto hast, kannst du unter nachfolgendem Link eines anlegen."
+    comment_notify:
+      disclaimer: "Du erhältst diese E-Mail, weil Du diese Forums-Diskussion bzw. diesen Blog abonniert hast, um über neue Beiträge informiert zu werden."
+    blog_follow_section:
+      title: Folge dem Blog
+      description: Folge dem Blog und erhalte Email Benachrichtigungen über neue Beiträge
+      description_private: "Dies ist ein privater Blog - Du erhältst automatisch eine Email Benachrichtigung, wenn ein neuer Beitrag veröffentlicht wurde."
+    
+    contact_form:
+      sent: "Vielen Dank, Ihre Nachricht wurde erfolgreich gesendet."
+      send_button: Nachricht senden
+      name: 'Name'
+      email_placeholder: user@domain.com
+      reason: 'Bereich: Bitte auswählen'
+      subject: Thema
+      subject_prefix: Kontaktformular
+      message: Nachricht...
+      reason_list:
+        reason_1: 'Feedback'
+        reason_2: 'Technisches Problem'
+        reason_3: 'Andere'
+    

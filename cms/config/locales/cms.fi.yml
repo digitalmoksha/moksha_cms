@@ -1,0 +1,42 @@
+fi:
+  cms:
+    recent_posts: Uusimmat viestit
+    all_recent_posts: Kaikki uusimmat viestit
+    available_blogs: Saatavilla olevat blogit
+    blog_header: Blogit
+    read_more: 'Lue lisää...'
+    blog_summary_date: Päivä
+    blog_summary_comments: Kommentit
+    blog_notify_new_post: Blogissa on uusi viesti
+    blog_notify_read_post: Lue koko viesti
+    reply: Vastaa
+    suspended_user_post: Tämä viesti onn poistettu
+    comment_body: Body
+    comment_submit: Kommentoi
+    add_comment: Lisää kommentti
+    comments_header: Kommentit
+    delete: poista
+    comments_stat: Kommentit
+    blog_login_required: Thän blogiin pääsyyn vaaditaan sisään kirjautuminen
+    comment_login_required: "Ole hyvä ja kirjaudu sisään tilillesi kommentoidaksesi. Jos sinulla ei ole käyttäjätiliä, voit luoda sellaisen."
+    comment_notify:
+      disclaimer: "Sait tämän sähköpostin, koska ilmoitettu halusitte ilmoitetaan päivityksistä tämän blogin / forum."
+    blog_follow_section:
+      title: seuraa blogia sähköpostein
+      description: seuraa blogia sähköpostein ja vastaanota sähköposti-ilmoitus uusista postauksista
+      description_private: tämä on yksityinen blogi - tulet saamaan automaattisesti sähköposti-ilmoituksen uusista postauksista
+
+    contact_form:
+      sent: "Kiitos, kun viestisi on lähetetty sähköpostitse meille."
+      send_button: Lähetä viesti
+      name: 'Nimi'
+      email_placeholder: user@domain.com
+      reason: 'Syynä kirjallisesti'
+      subject: Aihe
+      subject_prefix: Contact Form
+      message: Viesti...
+      reason_list:
+        reason_1: 'Palaute'
+        reason_2: 'Tekninen ongelma'
+        reason_3: 'Muut'
+    

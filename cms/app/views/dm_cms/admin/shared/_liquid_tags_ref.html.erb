@@ -1,0 +1,35 @@
+<%#--- following should not be in the sidebar, but main content section %>
+<%= modal_dialog title: 'Tag Reference', id: "tag_reference" do %>
+  <%  tag_group = Liquid::Template.tags.sort.find_all {|x| x[1].respond_to?(:details) && !x[1].details[:description].blank?} %>
+  <%  tag_group = tag_group.group_by {|x| (x[1].details[:category].blank? ? 'uncategorized' : x[1].details[:category]) }.sort %>
+  <div class="row" data-spy="scroll" data-target=".tag_details">
+    <div class="col-sm-3">
+      <div class="tag_nav" id="tag_accordion">
+        <ul class="nav nav-stacked">
+          <% tag_group.each do |category, tag_array| %>
+            <li>
+              <%= link_to category, "\#__#{category}", data: {toggle: 'collapse', parent: '#tag_accordion'} %>
+              <ul id="__<%= category %>" class="collapse">
+                <% tag_array.each do |tag_item| %>
+                  <li><%= link_to tag_item[0], "\##{tag_item[0]}"%></li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-9 tag_details">
+      <h1 style="border-bottom: 2px solid #ccc;">Tag Reference</h1>
+      <% tag_group.each do |category, tag_array| %>
+        <h2><%= category %></h2>
+        <% tag_array.each do |tag_item| %>
+          <%= subsection title: tag_item[0], id: tag_item[0] do %>
+            <%= markdown tag_item[1].details[:description], safe: false %>
+            <%= "<pre>#{tag_item[1].details[:example]}</pre>".html_safe if tag_item[1].details[:example].present? %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

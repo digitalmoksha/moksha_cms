@@ -1,0 +1,13 @@
+<br />
+
+<p><%= I18n.t 'cms.blog_notify_new_post' %>: '<strong><%= @blog_title %></strong>'</p>
+<a href="<%= @post_link %>"><%= I18n.t 'cms.blog_notify_read_post' %></a>
+
+<br /><br />
+<hr />
+
+<h1><%= @post_title %></h1>
+
+<%= display_post_summary(@post) %>
+
+<p><%= link_to I18n.t('cms.read_more'), @post_link %></p>
