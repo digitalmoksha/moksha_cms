@@ -1,0 +1,15 @@
+ja:
+  nms:
+    subscribe_button: 購読
+    unsubscribe_button: 購読解除
+    update_subscription_button: 購読情報を更新する
+    subscription_successful: "あなたの購読申し込みを受理しました。ニュースレターの配信を始めるために、登録されたメールアドレスに認証メールをお送りしました。ニュースレターを受け取るためにはそのメールの中の認証リンクをクリックしなければなりません。"
+    subscription_updated: あなたの購読情報は更新されました
+    unsubscribe_successful: あなたのeメールアドレスは購読解除されています
+    already_subscribed: すでにサブスクライブ
+    
+    #--- Mailchimp specific errors
+    List_DoesNotExist: このリストは存在しません
+    List_AlreadySubscribed: このeメールアドレスは既に購読登録されています
+    Email_NotExists: このeメールアドレスは存在しません
+    mc_unknown_error: 不明なMailchimpのエラーが起こりました
