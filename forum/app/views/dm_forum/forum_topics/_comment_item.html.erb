@@ -1,0 +1,26 @@
+<li class="clearfix" id="<%= dom_id(comment_item) %>">
+  <div class="user"><%= avatar_for comment_item.user, 48 %></div>
+  <p class="comment_author"><%= truncate(comment_item.user.display_name, :length => 30) %>
+    <% if false #can?(:moderate, comment_item.forum_topic.forum) || !comment_item.user.active? %>
+      <span class="admin">(<%= forum_comment_user_state(comment_item) %>)</span>
+    <% end %>
+  </p>
+  <p class="info">
+    <%= present(comment_item).date_posted %>
+    <% edited = edited_on_tag(comment_item) %>
+    <%= " | #{edited}".html_safe if edited %>
+    <%= ' | '.html_safe + link_to(I18n.t('fms.reply'), '#reply') unless @forum_topic.locked? || !user_signed_in? %>
+    <% if user_signed_in? && can?(:edit, comment_item) %>
+    | 
+      <%= link_to I18n.t('fms.admin.edit_post'), edit_forum_forum_topic_forum_comment_path(@forum, @forum_topic, comment_item), :class => 'utility' %>
+    <% end %>
+  </p>
+  <div class="clearfix"></div>
+  <div class="comment_text">
+    <% if comment_item.user.active? %>
+      <%= present(comment_item).formatted_comment %>
+    <% else %>
+      <p>(<% I18n.t 'fms.suspended_user_post' %>)</p>
+    <% end %>
+  </div>
+</li>

@@ -1,0 +1,32 @@
+<% content_for :page_title, I18n.t('fms.forums') %>
+<%= render :partial => 'category_side_list' %>
+
+<% forum_displayed = false %>
+<ul class="forum_category_list">
+  <% @forum_categories.each do |forum_category| %>
+    <% if forum_category.any_readable_forums?(current_user) %>
+      <% forum_displayed = true %>
+      <li>
+        <span class="name"><%= forum_category.name %></span>
+        <ul class="forum_list clearfix">
+          <% forum_category.forums.each do |forum| %>
+            <% if can?(:read, forum) %>
+              <li>
+                <%= render(:partial => 'forum_header', :object => forum, :as => :forum) %>
+                <% if forum.description.present? %>
+                  <p class="forum_description"><%= forum.description %></p>
+                <% end %>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+
+<% if forum_displayed == false %>
+  <div id="topics_list">
+    <%= render :partial => 'dm_forum/forums/no_forums' %>
+  </div>
+<% end %>

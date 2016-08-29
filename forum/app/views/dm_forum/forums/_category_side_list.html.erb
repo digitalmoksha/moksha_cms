@@ -1,0 +1,28 @@
+<% content_for :sidebar do %>
+
+  <div id="forum_sidebar_categories">
+    <ul>
+      <% ForumCategory.ordered.each do |forum_category| %>
+        <% if forum_category.any_readable_forums?(current_user) %>
+          <li>
+            <span class="category_name"><%= forum_category.name.to_s_default %></span>
+            <% unless forum_category.forums.empty? %>
+              <ul>
+                <% forum_category.forums.each do |forum| %>
+                  <% if can?(:read, forum) %>
+                    <li>
+                      <%= link_to forum_show_path(forum) do %>
+                        <%= truncate(forum.name, :length => 30) %>
+                        <span class="num_of_comments"><%= number_with_delimiter(forum.comments_count) %></span>
+                      <% end %>
+                    </li>
+                  <% end %>
+                <% end %>
+              </ul>
+            <% end %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

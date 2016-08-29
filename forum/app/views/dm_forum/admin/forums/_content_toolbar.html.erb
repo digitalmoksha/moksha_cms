@@ -1,0 +1,5 @@
+<%= nav_bar_items([
+      link_to(icon_label('icon-edit', 'Edit'), [:edit, :admin, item], class: "nav-btn-primary"),
+      link_to(icon_label('icon-trash', 'Delete'), [:admin, item], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this forum?  All comments will also be deleted!'})
+    ])
+%>

@@ -1,0 +1,24 @@
+<%= simple_form_for [@forum, @forum_topic], wrapper: simple_form_theme_wrapper do |f| %>
+
+  <%= f.error_notification :message => "Please review the problems below" %>
+  <%= f.input :title, :label => I18n.t('fms.views_topics.topic') %>
+
+  <% if @forum_topic.new_record? %>
+    <%= f.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), :input_html => {:rows => 10} %>
+  <% elsif is_admin? %>
+    <%= f.input :forum_id, collection: ForumSite.site.all_forums, label_method: :name, value_method: :id %>
+  <% end %>
+
+  <% if can? :moderate, @forum %>
+    <div class="clearfix">
+      <%= f.input :sticky, :label => "<i class='fa fa-thumb-tack'></i> #{I18n.t('fms.sticky')}".html_safe %>
+    </div>
+    <div class="clearfix">
+      <%= f.input :locked, :label => "<i class='fa fa-lock'></i> #{I18n.t('fms.views_topics.lock_topic')}".html_safe %>
+    </div>
+  <% end %>
+
+  <%= f.submit I18n.t('fms.post_topic'), class: 'btn btn-primary' %>
+  <%#= submit_or_cancel :save => I18n.t('fms.post_topic'), :cancel => I18n.t('fms.views_topics.cancel'),
+            :cancel_url => (@forum_topic.new_record? ? [@forum] : [@forum, @forum_topic]) %>
+<% end %>

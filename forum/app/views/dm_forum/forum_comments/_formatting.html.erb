@@ -1,0 +1,12 @@
+<div id="markup_help">
+  <h3><%= I18n.t 'fms.views_posts.formatting_help' %></h3>
+  <p><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a> <%= I18n.t 'fms.views_posts.formatting_desc' %></p>
+  <ul class="list">
+    <li><%= t 'fms.views_posts.formatting_bold' %></li>
+    <li><%= t 'fms.views_posts.formatting_italics' %></li>
+    <li><%= (t 'fms.views_posts.formatting_blockquote').html_safe %></li>
+    <li><%= t 'fms.views_posts.formatting_icode' %></li>
+    <li><%= (t 'fms.views_posts.formatting_horizontal_rule').html_safe %></li>
+    <li><%= (t 'fms.views_posts.formatting_list').html_safe %></li>
+  </ul>
+</div>

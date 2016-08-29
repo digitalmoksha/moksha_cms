@@ -1,0 +1,49 @@
+<% content_for :page_title, @forum_topic.title %>
+
+<% content_for :sidebar do %>
+
+  <%= render(partial: 'dm_forum/forum_topics/follow_button', locals: {following: @following} ) if current_user %>
+  <div class="clear"></div>
+  <div class="forum_sidebar_voices">
+    <h5><%= I18n.t 'fms.voices' %></h5>
+    <ul>
+      <% @forum_topic.voices.each do |user| %>
+        <li><%= user.display_name %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% content_for :crumbs, forum_crumbs(@forum_topic.forum) %>
+
+<div class="comment_section" id="comment_section">
+
+  <%= render(partial: 'dm_forum/forums/forum_header', object: @forum_topic.forum, as: :forum) %>
+
+  <h1 id="topic_title">
+    <%= @forum_topic.title %>
+    <% if @forum_topic.locked? %>
+      <span>(<%= I18n.t 'fms.topic' %> <%= I18n.t 'fms.locked' %>)</span>
+    <% end %>
+    <% if user_signed_in? %>
+      <% if can? :edit, @forum_topic %>
+        <span id="topic_mod">
+          <%= link_to(I18n.t('fms.edit'), edit_forum_forum_topic_path(@forum, @forum_topic), class: "utility") %>
+          <% if is_admin? %>
+            | <%= link_to(I18n.t('fms.delete'), forum_forum_topic_path(@forum, @forum_topic), class: "utility", method: :delete, data: {confirm: I18n.t('fms.views_topics.delete_sure')}) %>
+          <% end %>
+        </span>
+      <% end %>
+    <% end %>
+  </h1>
+
+  <p class="subtitle">
+    <%= I18n.t 'fms.count_comments', count: @forum_topic.forum_comments.size - 1, 
+              num: number_with_delimiter(@forum_topic.forum_comments.size - 1) %>,
+    <%= I18n.t 'fms.count_voices', count: @forum_topic.voices.size, 
+              num: number_with_delimiter(@forum_topic.voices.size) %>
+  </p>
+
+  <%= render(partial: 'comments_list') unless @forum_comments.empty?%>
+
+</div>

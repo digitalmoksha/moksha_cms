@@ -1,0 +1,104 @@
+de:
+  fms:
+    count_forums:
+      zero: "kein Forum"
+      one: "1 Forum"
+      other: "%{num} Foren"
+    count_users:
+      zero: "kein Benutzer"
+      one: "1 Benutzer"
+      other: "%{num} Benutzer"
+    count_users_active:
+      zero: "kein aktiver Benutzer"
+      one: "1 aktiver Benutzer"
+      other: "%{num} aktive Benutzer"
+    count_users_lurking:
+      zero: "kein nur-lesender Benutzer"
+      one: "1 nur-lesender Benutzer"
+      other: "%{num} nur-lesende Benutzer"
+    count_voices:
+      zero: "kein Teilnehmer"
+      one: "1 Teilnehmer"
+      other: "%{num} Teilnehmer"
+    count_topics:
+      zero: "kein Thema"
+      one: "1 Thema"
+      other: "%{num} Themen"
+    count_comments:
+      zero: "kein Kommentar"
+      one: "1 Kommentar"
+      other: "%{num} Kommentare"
+    count_comments_found:
+      zero: "kein Kommentar gefunden"
+      one: "1 Kommentar gefunden"
+      other: "%{count} Kommentare gefunden"
+    comment_age: "vor %{when}"
+    user_is_administrator: Administrator
+    user_is_moderator: Moderator
+    suspended_user_comment: Dieser Kommentar wurde entfernt
+    post_edited: 'edited %{when} ago'
+    forums: Forums
+    page_nr: 'page %{nr}'
+    views_forums:
+      recent_activity: Neueste Aktivität
+      no_recent_activity: Keine neuen Aktivitäten
+      comma_locked_topic: "Dieses Thema ist gesperrt."
+      unmoderated_html: 'Dieses Forum ist derzeit nicht moderiert.<br />Bitte immer höflich sein.'
+    recent_posts: Aktuelle Beiträge
+    searching_for: Auf der Suche nach
+    by_user: 'von %{user}'
+    in_forum: 'in %{forum}'
+    views_posts:
+      formatting_help: Formatieren Hilfe
+      formatting_desc: wird zum Formatieren von Text verwendet.
+      formatting_bold: '**bold**'
+      formatting_italics: '*italics*, _italics_'
+      formatting_blockquote: '&gt; <span>(quotes)</span>'
+      formatting_icode: '`code`'
+      formatting_horizontal_rule: '*** <span>(horizontal rule)</span>'
+      formatting_list: '* <span>or</span> 1. <span>(lists)</span>'
+      save: 'Save post'
+    topic: Topic
+    locked: Verschlossen
+    or: oder
+    cancel: stornieren
+    reply: Antworten
+    admin:
+      edit_post: Beitrag editieren
+    suspended_user_post: Dieser Beitrag wurde bereits entfernt
+    reply_to_topic: Dein Kommentar
+    views_topics:
+      topic: Titel
+      body: Inhalt
+      delete_sure: 'Lösche dieses Thema immer?'
+      locked_topic: 'Dieses Thema ist gesperrt.'
+      save_reply: Antworten
+      cancel: Abbrechen
+      lock_topic: Thema schließen
+    sticky: Sticky
+    edit_topic: Thema bearbeiten
+    post_topic: Thema veröffentlichen
+    new_topic: Neues Thema
+    voices: Voices
+    edit: bearbeiten
+    delete: löschen
+    all: Alle Themen
+    followed: Bereits besuchte Themen
+    started: Begonnen von
+    comment_age: "%{when} vor"
+    by_user_html: "von %{user}"
+    moderator: Moderator
+    replies: Beiträge
+    views: Aufrufe
+    last_post_on: "Letzter Eintrag von %{user} :: %{date}"
+    comments_header: Kommentare
+    no_topics: 'Sei der Erste, der ein Thema erstellt'
+    no_followed_topics: 'Es liegen noch keine Themen zu überwachenden'
+    no_forums: Das Forum Abschnitt wird in Kürze verfügbar
+    comment_notification_inform: "Du wirst automatisch benachrichtigt, wenn ein neuer Kommentar gepostet wurde."
+    follow: Abonnieren
+    follow_stop: Nicht mehr folgen
+    topic_follow_section:
+      title: Folge diesem Thema
+      description: Folge diesem Thema und erhalte neue Kommentare per Email Benachrichtigung
+    

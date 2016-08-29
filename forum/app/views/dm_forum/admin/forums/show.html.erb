@@ -1,0 +1,68 @@
+<% content_for :content_title, icon_label('font-comment', @forum.name) %>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= link_to(icon_label(:edit, 'Edit'), [:edit, :admin, @forum], class: "btn btn-xs btn-default", title: 'Edit') %>
+  <% end %>
+<% end %>
+
+<%= panel header: false do %>
+  <dl>
+    <dt>Category</dt>
+    <dd><%= link_to @forum.forum_category.name, admin_forum_category_path(@forum.forum_category) %></dd>
+    <dt>Description</dt>
+    <dd><%= @forum.description %></dd>
+  </dl>
+<% end %>
+
+<% if @forum.owner %>
+  <% toolbar = toolbar_btn(@forum.member_count(:automatic), '#', title: 'Number of users with automatic forum access', class: 'label label-success pull-right') %>
+  <%= panel title: 'Users with Automatic Access', toolbar: toolbar do %>
+    <h5>Automatic Access Granted for Event</h5>
+    <p><%= @forum.owner.title %></p>
+  <% end %>
+<% end %>
+
+
+  <% toolbar = toolbar_btn(@forum.member_count(:manual), '#', title: 'Number of users with forum access', class: 'label label-success pull-right') %>
+  <%= panel title: 'Users with Manual Access', toolbar: toolbar do %>
+    <div class="row">
+    <div class="col-md-6">
+      <%= subsection title: 'Users with Access' do %>
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Country</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @forum.member_list(:manual).each do |user| %>
+              <tr>
+                <td><%= link_to(icons("icon-minus"), dm_forum.forum_delete_member_admin_forum_path(@forum, user_id: user.id), method: :delete, title: 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+                <td><%= user.country.english_name %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+    
+    <div class="col-md-6">
+      <%= subsection title: 'Add Individual Users' do %>
+        <div class="table-overflow">
+          <table id="forum_user_table" class="table table-striped table-bordered" data-source="<%= dm_forum.forum_users_admin_forum_url %>">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Country</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+</div>
+  <% end %>
+

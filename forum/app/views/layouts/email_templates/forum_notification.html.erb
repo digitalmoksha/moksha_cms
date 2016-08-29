@@ -1,0 +1,15 @@
+<h1><%= link_to @topic.title, @topic_link %>
+  <br><small><%= link_to @topic.forum.name, @forum_link %></small>
+</h1>
+
+<% @comment_list.each do |comment| %>
+  <div class="comment" style="padding-bottom: 20px;margin-bottom:20px;border-bottom:1px solid #ddd;">
+    <div class="comment_author_date" style="color:#999;font-size:80%">
+      <em><%= comment.created_at.to_formatted_s(:long) %>: <%= comment.user.display_name %></em>
+    </div>
+    <%= markdown(comment.body, safe: true) %>
+
+  </div>
+<% end %>
+<p style="magin-bottom: 40px;"><%= link_to I18n.t('cms.read_more'), @topic_link %></p>
+<p style="border-top: 1px solid #eee;font-size: 11px;"><%= I18n.t('cms.comment_notify.disclaimer') %></p>

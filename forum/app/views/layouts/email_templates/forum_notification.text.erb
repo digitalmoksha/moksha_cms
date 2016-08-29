@@ -1,0 +1,16 @@
+<%= @topic.title %>
+<%= I18n.t('fms.in_forum', @topic.forum.name) %>
+
+---
+<% @comment_list.each do |comment| %>
+<%= comment.created_at.to_formatted_s(:long) %>: <%= comment.user.display_name %>
+
+<%= markdown(comment.body, safe: true) %>
+
+---
+<% end %>
+
+<%= I18n.t('cms.read_more') %>
+<%= @topic_link %>
+
+<%= I18n.t('cms.comment_notify.disclaimer') %>

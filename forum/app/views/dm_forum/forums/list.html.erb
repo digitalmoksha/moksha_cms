@@ -1,0 +1,10 @@
+<ul class="forum_list">
+  <% @forums.each do |forum| %>
+    <li>
+      <%= render :partial => 'forum_header', :object => forum, :as => :forum %>
+
+      <p class="forum_description"><%= forum.description %></p>
+    </li>
+  <% end %>
+</ul>
+<div class="no_items"><%= I18n.t "fms.no_followed_topics" %></div>

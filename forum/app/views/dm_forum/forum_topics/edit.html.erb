@@ -1,0 +1,13 @@
+<% content_for :page_title, @forum.forum_category.name %>
+<% content_for :sidebar do %>
+  <%= render :partial => "dm_forum/forum_comments/formatting" %>
+<% end %>
+
+<% content_for :crumbs, forum_crumbs(@forum_topic.forum) %>
+
+<%= render(:partial => 'dm_forum/forums/forum_header', :object => @forum, :as => :forum) %>
+
+<h1 id="new_topic"><%= I18n.t 'fms.edit_topic' %></h1>
+<p class="subtitle"><%= I18n.t 'fms.by_user', :user => current_user.display_name %></p>
+
+<%= render :partial => "form" %>

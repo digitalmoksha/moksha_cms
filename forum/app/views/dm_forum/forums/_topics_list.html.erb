@@ -1,0 +1,86 @@
+<% if forum_topics.total_entries %>
+  <%= will_paginate forum_topics %>
+<% end %>
+
+<% if user_signed_in? %>
+  <span class="follow_filter">
+  <% if @followed %>
+    <span class='filter'>
+      <i class="icon-th"></i>
+      <%= link_to((I18n.t 'fms.all'), forum_show_path(@forum), :id => 'filter_link') %>
+    </span>
+    &nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-th-large"></i>
+    <%= I18n.t 'fms.followed' %>
+  <% else %>
+    <i class="icon-th"></i>
+    <%= I18n.t 'fms.all' %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span class='filter'>
+      <i class="icon-th-large"></i>
+      <%= link_to((I18n.t 'fms.followed'), forum_show_path(@forum)+"?followed=true", :id => 'filter_link') %> 
+    </span>
+  <% end %>
+  </span>
+<% end %>
+
+<% unless forum_topics.empty? %>
+  <ul class="topic_list">
+    <% for forum_topic in forum_topics %>
+    <% recent_comment_dom_id = (forum_topic.recent_comment ? dom_id(forum_topic.recent_comment) : '') %>
+      <li class="clearfix <%= 'sticky' if forum_topic.sticky %>">
+        <span class="topic">
+          <%= forum_topic_icon(forum_topic) %>
+          <%= topic_title_link forum_topic, :rel => "bookmark" %>
+        </span>
+        <span class="num_comments" title="Number of replies">
+            <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
+            <%= number_with_delimiter(forum_topic.num_replies) %>
+            <span><%= I18n.t 'fms.replies' %></span>
+          <% end %>
+        </span>
+        <span class="num_views" title="Number of views">
+          <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
+            <%= number_with_delimiter(forum_topic.hits) %>
+            <span><%= I18n.t 'fms.views' %></span>
+          <% end %>
+        </span>
+        <div class="topic_info">
+          <span class="started_by"><%= I18n.t 'fms.started' %>:  
+            <span class="author"><%= forum_topic.user.display_name %></span>
+          </span>
+          <% if forum_topic.recent_comment %>
+            <span class="when">
+              <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
+                <i class="icon-comment-alt"></i>
+                <%= I18n.t 'fms.last_post_on', :user => h(forum_topic.recent_comment.user.display_name), :date => format_date(forum_topic.recent_comment.created_at) %>
+              <% end %>
+            </span>
+            <% end %>
+        </div>
+      </span></li>
+    <% end %>
+  </ul>
+<% else %>
+  <% if @followed %>
+    <div class="no_items"><%= I18n.t "fms.no_followed_topics" %></div>
+  <% else %>
+    <div class="no_items"><%= I18n.t "fms.no_topics" %></div>
+  <% end %>
+<% end %>
+
+<%= will_paginate forum_topics %>
+
+<script type='text/javascript'><!--//--><![CDATA[//><!--
+if (history && history.replaceState) {
+  if ($('filter_link')) $('filter_link').writeAttribute('data-remote');
+  if ($$('.pagination')) {
+    $$('.pagination a').invoke('writeAttribute','data-remote'); 
+    $$('.pagination a').invoke('observe', 'click', function(){
+      <%= p = Hash.new
+       p.update('page' => params[:page].to_i) if params[:page]
+       p.update('followed' => 'true') if @followed
+       modify_history('pushState', @forum.name, "#{@forum.slug}.html", p) %>
+    });
+  }
+};
+//--><!]]></script>

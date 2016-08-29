@@ -1,0 +1,39 @@
+<% content_for :page_title, @forum.forum_category.name %>
+<% content_for :sidebar do %>
+
+  <% unless @forum.description.blank? %>
+    <div class="sidebar_forum_description">
+      <%= @forum.description %>
+    </div>
+  <% end %>
+
+  <% if false %>
+    <h5 style="margin-bottom:1.0em;"><%= I18n.t 'fms.moderator', :count => @forum.moderators.size %></h5>
+
+    <% unless @forum.moderators.empty? %>
+      <ul class="flat" style="margin-top:1em;">
+        <% @forum.moderators.each do |user| %>
+          <li><%= link_to user.display_name || user.login, user %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p><%= I18n.t 'fms.views_forums.unmoderated_html'.html_safe %></p>
+    <% end %>
+  <% end %>
+  
+<% end %>
+
+<%= render :partial => 'category_side_list' %>
+
+
+<% content_for :crumbs, forum_crumbs %>
+
+<div id="topics_list">
+  <%= render(:partial => 'forum_header', :object => @forum, :as => :forum) %>
+  <%= if @followed        
+        render(:partial => 'topics_list', :object => @followed_topics, :as => :forum_topics)
+      else
+        render(:partial => 'topics_list', :object => @forum_topics, :as => :forum_topics)
+     end
+  %>
+</div>

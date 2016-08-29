@@ -1,0 +1,15 @@
+<% content_for :page_title, @forum_topic.title %>
+<%= render(:partial => 'dm_forum/forums/forum_header', :object => @forum_topic.forum, :as => :forum) %>
+
+<h1 id="topic_title">
+  <%= @forum_topic.title %>
+  <% if @forum_topic.locked? %>
+    <span>(<%= I18n.t 'fms.topic' %> <%= I18n.t 'fms.locked' %>)</span>
+  <% end %>
+</h1>
+
+<%= simple_form_for [@forum, @forum_topic, @forum_comment], wrapper: simple_form_theme_wrapper do |f| %>
+  <%#= f.error_messages %>
+  <%= f.input :body, :as => :text, :label => I18n.t('fms.views_topics.body'), :input_html => {:rows => 10} %>
+  <%= f.submit I18n.t('fms.views_posts.save'), class: 'btn btn-primary' %>
+<% end %>
