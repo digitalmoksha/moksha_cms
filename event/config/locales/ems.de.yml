@@ -1,0 +1,51 @@
+de:
+  ems:
+    registration_subtitle: Anmeldung
+    register_btn: Registrieren
+    cancel_btn: Stornieren
+    ticket_receipt_arrival: Ankunft
+    ticket_receipt_attendee: Teilnehmer
+    ticket_receipt_departure: Abfahrt
+    ticket_receipt_event: Veranstaltung
+    ticket_receipt_questions: "Auch bei weiteren Fragen maile uns bitte unter %{value}"
+    ticket_receipt_questions_telephone: "oder Telefon %{value}"
+    ticket_receipt_ticket_number: Ticketnummer
+    ticket_receipt_price: Preis
+    ticket_information: Ticket-Informationen
+    ticket_contact: Kontakt-Informationen
+    ticket_registered_following_event: laut unserem Registrierungssystem bist bzw. warst Du Teilnehmer an der folgenden Veranstaltung
+    ticket_outstanding_balance: "Gemäß unserer Buchhaltung ist noch folgender Betrag offen"
+    ticket_payment_link_leadin: Du kannst über folgenden Link eine der Zahlungsmethoden auswählen
+    ticket_payment_link_text: Jetzt bezahlen
+    ticket_payment_reminder_subject: "Zahlungserinnerung: %{value}"
+    ticket_if_already_paid: "Diese Email wird automatisch von unserem Buchungssystem generiert und versendet. Falls Du den Betrag bereits überwiesen hast, oder der Meinung bist, dass die Zahlungserinnerung unbegründet ist, setze Dich bitte per Email an %{value} mit uns in Verbindung. Sollte sich diese Erinnerung mit einer Zahlung in den letzten drei Tagen überschnitten haben, ignoriere sie bitte."
+    registration_receipt_title: Anmeldebestätigung
+    registration_email: E-Mail
+    registration_first_name: Vorname
+    registration_last_name: Nachname
+    registration_address: Adresse
+    registration_address2: Adresse
+    registration_city: Ort
+    registration_state: Bundesland
+    registration_country: Land
+    registration_zipcode: Postleitzahl
+    registration_account_required: 'Um für diese Veranstaltung zu registrieren, müssen Sie in Ihrem Benutzerkonto angemeldet sein.'
+    registration_closed_heading: Anmeldung geschlossen
+    registration_closed_text: "Eine Registrierung zum Programm '%{title}' ist leider nicht mehr möglich."
+    registration_closed_email: "Bei Fragen wende dich bitte an %{email}."
+    registration_closed_list: Die folgenden Programme sind derzeit für die Anmeldung geöffnet
+    choose_payment_method: Wählen Sie Ihre Zahlungsmethode
+    donate_button: Jetzt helfen
+    project_goal: Projektziel
+    amount_raised: Betrag erhöht
+
+    login: Anmelden
+    create_account: Neues Benutzerkonto anlegen
+
+  activerecord:
+    errors:
+      models:
+        registration:
+          attributes:
+            workshop_price_id:
+              blank: Bitte wählen Sie eine Zahlungsmethod

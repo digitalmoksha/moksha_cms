@@ -1,0 +1,100 @@
+<% content_for :content_title, 'Workshop Dashboard' %>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= link_to('Outstanding Balances', admin_workshop_user_outstanding_balances_path, title: 'Outstanding Balances', class: "btn btn-xs btn-default") %>
+    <%= link_to(icon_label(:new, 'New'), new_admin_workshop_path, title: 'New Workshop', class: "btn btn-xs btn-default") %>
+  <% end %>
+<% end %>
+
+<% @workshops.in_groups_of(2, false) do |workshop_row| %>
+  <div class="row">
+    <% for workshop in workshop_row  %>
+      <% panel_class = workshop.registration_closed? ? 'panel-default' : 'panel-success' %>
+      <div class="col-md-6">
+        <%= panel title: link_to(workshop.title, [:admin, workshop]), subtitle: present(workshop).start_end_date, class: panel_class do %>
+          <% financials = workshop.financial_details(:summary) %>
+          <ul class="statistics">
+            <li><%= stat_block_small label: 'Projected', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'icon-coin', percent: 100 %></li>
+            <li><%= stat_block_small label: 'Paid', number: financials[:summary][:total_paid].format(no_cents_if_whole: true), color_type: :success, icon: 'icon-coin', percent: financials[:summary][:total_paid_percent] %></li>
+            <li><%= stat_block_small label: 'Unpaid', number: financials[:summary][:total_outstanding].format(no_cents_if_whole: true), color_type: :danger, icon: 'icon-coin', percent: 80 %></li>
+          </ul>
+          
+          <div class="separator-reflected" style="margin: 10px 0px;"></div>
+          <% num_registrations = workshop.registrations.count %>
+          <div class="block progress-statistics">
+            <% num = workshop.registrations.number_of(:attending) %>
+            <%= slim_progress_bar(label: 'Attending', value: "#{num} / #{num.percent_of(num_registrations).to_s}%", color: 'success', percentage: num.percent_of(num_registrations)) %>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="block well progress-statistics">
+                <div class="body">
+                  <% num = workshop.registrations.number_of(:accepted) %>
+                  <%= slim_progress_bar(label: 'Accepted', value: "#{num}", color: 'accepted', percentage: num.percent_of(num_registrations)) %>
+                  <% num = workshop.registrations.number_of(:paid) %>
+                  <div class="semi-block">
+                    <%= slim_progress_bar(label: 'Paid', value: "#{num}", color: 'paid', percentage: num.percent_of(num_registrations)) %>
+                  </div>
+                  <% num = workshop.registrations.number_of(:pending) %>
+                  <div class="semi-block">
+                    <%= slim_progress_bar(label: 'Pending', value: "#{num}", color: 'pending', percentage: num.percent_of(num_registrations)) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="block well progress-statistics">
+                <div class="body">
+                  <% num = workshop.registrations.number_of(:waitlisted) %>
+                  <%= slim_progress_bar(label: 'Waitlisted', value: "#{num}", color: 'waitlisted', percentage: num.percent_of(num_registrations)) %>
+                  <% num = workshop.registrations.number_of(:reviewing) %>
+                  <div class="semi-block">
+                    <%= slim_progress_bar(label: 'Reviewing', value: "#{num}", color: 'reviewing', percentage: num.percent_of(num_registrations)) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% unless @workshops_past.empty? %>
+  <%= panel body: false, title: 'Past Workshops' do %>
+    <table class="table table-striped table-bordered table-block">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Projected</th>
+          <th>Paid</th>
+          <th>Unpaid</th>
+          <th width="150">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @workshops_past.each do |workshop| %>
+          <% # TODO very ineffecient to do for each workshop.  look at caching values %>
+          <% financials = workshop.financial_details(:summary) %>
+          <% present workshop do |workshop_presenter| %>
+            <tr class="item" data-item_id="<%= workshop.id %>">
+              <td>
+                <%= link_to workshop.title, [:admin, workshop] %>
+              </td>
+              <td><%= financials[:summary][:total_possible].format(no_cents_if_whole: true) %></td>
+              <td><span class="text-success"><%= financials[:summary][:total_paid].format(no_cents_if_whole: true) %></span></td>
+              <td>
+                <%= '<span class="text-danger">'.html_safe if financials[:summary][:total_outstanding].positive? %>
+                <%= financials[:summary][:total_outstanding].format(no_cents_if_whole: true) %>
+                <%= '</span>'.html_safe if financials[:summary][:total_outstanding].positive? %>
+              </td>
+              <td><%= workshop_presenter.start_end_date %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>

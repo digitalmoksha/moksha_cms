@@ -1,0 +1,179 @@
+<% content_for :content_title, "Financial Details <small>#{@workshop.title}</small>".html_safe %>
+
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= link_to 'View Registrations', [:admin, @workshop], class: 'btn btn-xs btn-default' %>
+  <% end %>
+<% end %>
+  
+<div class="row">
+  <div class="col-md-12">
+    <%= panel title: 'Summary' do %>
+      <div class="row">
+        <div class="chart col-md-6" style="height: 185px;margin-bottom:20px;" id="payment_outstanding_chart" 
+             data-values="<%= [ {label: "Paid: #{@financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true)}", 
+                                 data: @financials[:summary][:total_paid].to_f, color: '#4DB24A' },
+                                {label: "Outstanding: #{@financials[:summary][:total_outstanding].format(no_cents_if_whole: true, symbol: true)}",
+                                 data: @financials[:summary][:total_outstanding].to_f, color: '#F24E50' }
+                              ].to_json %>">
+        </div>
+  
+        <div class="col-md-6">
+          <table class="table table-bordered table-condensed" style="margin-top:10px">
+            <thead>
+              <tr>
+                <th class="name"></th>
+                <th class="cost">Best</th>
+                <th class="cost">Worst <small>(80%)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th><strong>Projected Revenue</strong></th>
+                <td class="cost"><%= @financials[:summary][:total_possible].format(no_cents_if_whole: true, symbol: true) %></td>
+                <td class="cost"><%= @financials[:summary][:total_possible_worst].format(no_cents_if_whole: true, symbol: true) %></td>
+              </tr>
+              <tr>
+                <th><strong>Outstanding</strong></th>
+                <td class="cost"><%= @financials[:summary][:total_outstanding].format(no_cents_if_whole: true, symbol: true) %></td>
+                <td class="cost"><%= @financials[:summary][:total_outstanding_worst].format(no_cents_if_whole: true, symbol: true) %></td>
+              </tr>
+              <tr>
+                <th><strong class="text-success">Paid</strong></th>
+                <td colspan="2" class="cost"><%= @financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true) %></td>
+              </tr>
+              <tr>
+                <th><strong class="text-warning">Discounts given</strong></th>
+                <td colspan="2" class="cost"><%= @workshop.registrations.number_of :discounted %> / <%= @workshop.registrations.number_of(:discounted_total).format(no_cents_if_whole: true, symbol: true) %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= panel title: 'Collected Payments by Month' do %>
+      <div class="row">
+        <div class="col-md-7 chart" style="height: 200px" id="collected_monthly_chart" 
+             data-values="<%= financial_collected_monthly_json(@financials[:collected_monthly]) %>"
+             data-currencysymbol="<%= Money.new(0, @workshop.base_currency).symbol %>" >
+        </div>  
+        <div class="col-md-5">
+          <table class="table table-bordered table-condensed" style="margin-top:10px">
+            <tbody>
+              <% @financials[:collected_monthly].sort.each_with_index do |item, index| -%>
+                <tr>
+                  <td class="name"><%= item[0].localize("%b %Y") %></td>
+                  <td class="cost" style="text-align: right;"><%= @financials[:collected_monthly][item[0]].format(no_cents_if_whole: true, symbol: true) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <%= panel title: 'Collected Payments by Method' do %>
+      <div class="chart" style="width: 100%;height: 185px;" id="collected_chart" data-values="<%= financial_collected_json(@financials[:collected]) %>">
+      </div>  
+    <% end %>
+  </div>
+</div>
+
+<% unpaid = @workshop.registrations.unpaid.order('payment_reminder_sent_on ASC') %>
+<% toolbar = toolbar_btn('Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
+<%= panel body: false, title: "#{unpaid.count} Unpaid Participants", toolbar: toolbar do %>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th class="receipt_code">Receipt</th>
+        <th class="name">Name</th>
+        <th class="cost">Balance</th>
+        <th class="date">Registered</th>
+        <th class="date">Reminded</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% unpaid.each do |registration| -%>
+        <tr>
+          <td class="receipt_code" style="white-space:nowrap"><%= registration.receipt_code %></td>
+          <td class="name"><%= link_to registration.full_name, dm_event.edit_admin_registration_path(registration) %> </td>
+          <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons('icon-bubble2 inside-content', size: 12), class: 'pull-right') if registration.private_comments.count > 0 %></td>
+          <td class="date" style="white-space:nowrap"><%= format_date(registration.created_at) %></td>
+          <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if registration.payment_reminder_due? %>>
+            <% if registration.payment_reminder_sent_on.nil? %>
+              not yet
+            <% elsif registration.payment_reminder_history.count < 2 %>
+              <%= "#{distance_of_time_in_words_to_now(registration.payment_reminder_sent_on)} ago" %>
+            <% else %>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= "#{distance_of_time_in_words_to_now(registration.payment_reminder_sent_on)} ago" %> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <% registration.payment_reminder_history.each do |date| %>
+                    <li><a><%= "#{distance_of_time_in_words_to_now(date)} ago" %></a></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-xs btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<%= panel body: false, title: 'List of Payments' do %>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th class="date">Date</th>
+        <th class="name">Name</th>
+        <th class="item_id">Item ID / Description</th>
+        <th class="cost">Paid</th>
+        <th class="payment_method">Payment Method</th>
+        <th class="type">Recorded By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @payments.sort { |x, y| x.payment_date <=> y.payment_date }.each_with_index do |payment, index| -%>
+        <tr>
+          <td class="date" style="white-space:nowrap"><%= format_date(payment.payment_date) %></td>
+          <td class="name"><%= link_to payment.owner.full_name, dm_event.edit_admin_registration_path(payment.owner) %></td>
+          <td class="item_id"><%= payment.item_ref %></td>
+          <td class="cost"><%= payment.total.format(no_cents_if_whole: true, symbol: true) %></td>
+          <td class="payment_method" style="white-space:nowrap"><%= payment.payment_method.titleize %></td>
+          <td class="type"><%= payment.user_profile.nil? ? 'Automated' : payment.user_profile.public_name %></td>
+        </tr>
+        <% if !payment.bill_to_name.blank? || payment.discount.to_i > 0 || (!payment.order_details.nil? && !payment.order_details['coupon'].nil?) %>
+          <tr>
+            <td></td>
+            <td colspan="5">
+              <ul class="row_detail">
+                <% unless payment.bill_to_name.blank? %>
+                  <li><strong>Payed by:</strong> <%=h payment.bill_to_name %></li>
+                <% end %>
+                <% if payment.discount.to_i > 0 %>
+                  <li><strong>Discount:</strong> <%=h payment.discount %></li>
+                <% end %>
+                <% unless payment.order_details.nil? || payment.order_details['coupon'].nil? %>
+                  <li><strong>Coupon Code:</strong> <%=h payment.order_details['coupon']['coupon_code'] %></li>
+                <% end %>
+              </ul>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

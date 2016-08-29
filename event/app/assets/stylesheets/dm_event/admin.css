@@ -1,0 +1,152 @@
+/* @override 
+	http://dev.kaleshwar.de:3000/assets/dm_event/admin.css?body=1
+	http://dev.kaleshwar.de:3200/assets/dm_event/admin.css?body=1 */
+
+/*=== color for various state labels/status boxes ===*/
+
+.submitted_color { color: #c0c700;}
+.label-submitted, .badge-submitted { background-color: #c0c700; }
+.label-submitted[href], .badge-submitted[href] { background-color: #c0c700;}
+
+.drafted_color, .bounced_color { color: #8b8b89;}
+.label-drafted, .badge-drafted { background-color: #8b8b89; }
+.label-drafted[href], .badge-drafted[href] { background-color: #8b8b89;}
+.label-bounced, .badge-bounced { background-color: #8b8b89; }
+.label-bounced[href], .badge-bounced[href] { background-color: #8b8b89;}
+
+.pending_color, .unconfirmed_color, .suspended_color { color: #c0c700;}
+.label-pending, .badge-pending { background-color: #c0c700; }
+.label-pending[href], .badge-pending[href] { background-color: #c0c700;}
+.label-unconfirmed, .badge-unconfirmed { background-color: #c0c700; }
+.label-unconfirmed[href], .badge-unconfirmed[href] { background-color: #c0c700;}
+.label-suspended, .badge-suspended { background-color: #c0c700; }
+.label-suspended[href], .badge-suspended[href] { background-color: #c0c700;}
+.btn-pending, .progress-bar-pending {
+  background-color: #c0c700 !important;
+}
+.btn-pending .caret { border-top-color: #fff; border-bottom-color: #fff; }
+.btn-pending:active, .btn-pending.active, .btn-group.open .btn-pending.dropdown-toggle {
+  border-color: #adb401;
+  background-color: #c7ce37;
+}
+
+.reviewing_color { color: #838200;}
+.label-reviewing, .badge-reviewing { background-color: #838200; }
+.label-reviewing[href], .badge-reviewing[href] { background-color: #838200;}
+.btn-reviewing, .progress-bar-reviewing {
+  background-color: #838200 !important;
+}
+.btn-reviewing .caret { border-top-color: #fff; border-bottom-color: #fff; }
+.btn-reviewing:active, .btn-reviewing.active, .btn-group.open .btn-reviewing.dropdown-toggle {
+  border-color: #838200;
+  background-color: #838200;
+}
+
+.accepted_color, .approved_color, .subscribed_color { color: #4a48ff;}
+.label-accepted, .badge-accepted { background-color: #4a48ff; }
+.label-accepted[href], .badge-accepted[href] { background-color: #4a48ff;}
+.label-approved, .badge-approved { background-color: #4a48ff; }
+.label-approved[href], .badge-approved[href] { background-color: #4a48ff;}
+.label-subscribed, .badge-subscribed { background-color: #4a48ff; }
+.label-subscribed[href], .badge-subscribed[href] { background-color: #4a48ff;}
+.btn-accepted, .progress-bar-accepted { 
+  background-color: #4a48ff !important;
+}
+.btn-accepted .caret { border-top-color: #fff; border-bottom-color: #fff; }
+.btn-accepted:active, .btn-accepted.active, .btn-group.open .btn-accepted.dropdown-toggle {
+  border-color: #4a48ff;
+  background-color: #4a48ff;
+}
+
+.paid_color, .certified_color { color: #049727;}
+.label-paid, .badge-paid { background-color: #049727; }
+.label-paid[href], .badge-paid[href] { background-color: #049727;}
+.label-certified, .badge-certified { background-color: #049727; }
+.label-certified[href], .badge-certified[href] { background-color: #049727;}
+.btn-paid, .progress-bar-paid {
+  background-color: #049727 !important;
+}
+.btn-paid .caret { border-top-color: #fff; border-bottom-color: #fff; }
+.btn-paid:active, .btn-paid.active, .btn-group.open .btn-paid.dropdown-toggle {
+  border-color: #199526;
+  background-color: #199526;
+}
+
+.waitlisted_color { color: #d38100;}
+.label-waitlisted, .badge-waitlisted { background-color: #d38100; }
+.label-waitlisted[href], .badge-waitlisted[href] { background-color: #d38100;}
+.btn-waitlisted, .progress-bar-waitlisted {
+  background-color: #d38100 !important;
+}
+.btn-waitlisted .caret { border-top-color: #fff; border-bottom-color: #fff; }
+.btn-waitlisted:active, .btn-waitlisted.active, .btn-group.open .btn-waitlisted.dropdown-toggle {
+  border-color: #d38100;
+  background-color: #d38100;
+}
+
+.canceled_color { color: #8d248f;}
+.label-canceled, .badge-canceled { background-color: #8d248f; }
+.label-canceled[href], .badge-canceled[href] { background-color: #8d248f;}
+.btn-canceled, .progress-bar-canceled {
+  background-color: #8d248f !important;
+}
+.btn-canceled .caret { border-top-color: #fff; border-bottom-color: #fff; }
+.btn-canceled:active, .btn-canceled.active, .btn-group.open .btn-canceled.dropdown-toggle {
+  border-color: #8d248f;
+  background-color: #8d248f;
+}
+
+.rejected_color, .unsubscribed_color { color: #d10029;}
+.label-rejected, .badge-rejected { background-color: #d10029; }
+.label-rejected[href], .badge-rejected[href] { background-color: #d10029;}
+.label-unsubscribed, .badge-unsubscribed { background-color: #d10029; }
+.label-unsubscribed[href], .badge-unsubscribed[href] { background-color: #d10029;}
+.btn-rejected, .progress-bar-rejected {
+  background-color: #d10029 !important;
+}
+.btn-rejected .caret { border-top-color: #fff; border-bottom-color: #fff; }
+.btn-rejected:active, .btn-rejected.active, .btn-group.open .btn-rejected.dropdown-toggle {
+  border-color: #d10029;
+  background-color: #d10029;
+}
+
+.refunded_color { color: #b89ebc;}
+.label-refunded, .badge-refunded { background-color: #b89ebc; }
+.label-refunded[href], .badge-refunded[href] { background-color: #b89ebc;}
+.btn-refunded, .progress-bar-refunded {
+  background-color: #b89ebc !important;
+}
+.btn-refunded .caret { border-top-color: #fff; border-bottom-color: #fff; }
+.btn-refunded:active, .btn-refunded.active, .btn-group.open .btn-refunded.dropdown-toggle {
+  border-color: #b89ebc;
+  background-color: #b89ebc;
+}
+
+.noshow_color { color: #444;}
+.label-noshow, .badge-noshow { background-color: #444; }
+.label-noshow[href], .badge-noshow[href] { background-color: #444;}
+.btn-noshow, .progress-bar-noshow {
+  background-color: #444 !important;
+}
+.btn-noshow .caret { border-top-color: #fff; border-bottom-color: #fff; }
+.btn-noshow:active, .btn-noshow.active, .btn-group.open .btn-noshow.dropdown-toggle {
+  border-color: #444;
+  background-color: #444;
+}
+
+.workshop_price_list li { margin-bottom: 15px; list-style-type: none;}
+.workshop_price_list input { float: left; }
+.workshop_price_list .price_details { margin-left: 30px; }
+
+.price_details .price { font-weight: bold; }
+.price_details .sub_description {
+  margin-left: 0px;
+  font-style: italic;
+}
+.price_details .expires { margin-left: 20px; }
+
+.balance_paid {color: green;}
+.balance_owed {color: red;}
+
+
+

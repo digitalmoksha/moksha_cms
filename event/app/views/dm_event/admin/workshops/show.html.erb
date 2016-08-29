@@ -1,0 +1,47 @@
+<% content_for :content_title, "#{@workshop.title}" %>
+<% content_for :content_subtitle, present(@workshop).label_published %>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <div class="btn-group">
+      <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
+      <ul class="dropdown-menu dropdown-menu-right icons-right">
+        <li><%= link_to label_icon('Edit Workshop', :edit), edit_admin_workshop_url(@workshop) %></li>
+        <li><%= link_to label_icon('Financial Details', 'icon-coin'), financials_admin_workshop_url(@workshop) %></li>
+        <li><%= link_to label_icon('Show Duplicates', 'icon-copy'), admin_workshop_url(@workshop, duplicates: '1') %></li>
+        <li><%= link_to label_icon('Lost Users', 'icon-users'), lost_users_admin_workshop_url(@workshop) %></li>
+        <li><%= link_to 'Export Registrations (.csv)', admin_workshop_url(@workshop, format: 'csv') %></li>
+        
+      </ul>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-9">
+    <% toolbar  = toolbar_btn(icons(:new), register_new_url(@workshop), target: '_blank', title: 'New Registration', class: "btn btn-link btn-icon") %>
+    <% title    = params[:duplicates].nil? ? 'Registrations' : 'Registrations (Duplicates)'%>
+    <%= panel title: title, toolbar: toolbar, body: false do %>
+      <table id="registration_table" class="table table-striped table-bordered" data-source="<%= dm_event.admin_workshop_url(@workshop, duplicates: params[:duplicates]) %>">
+        <thead>
+          <tr>
+            <th width=20></th>
+            <th width=50>Receipt</th>
+            <th>Name</th>
+            <th width=25>Balance</th>
+            <th width=85>Registered</th>
+            <th width=85>Last Login</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+
+  <div class="col-md-3">
+    <%= panel header: false do %>
+      <%= render partial: 'registration_stats', locals: {workshop: @workshop} %>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,29 @@
+<% content_for :content_title, "Outstanding Payments<small>by user</small>".html_safe %>
+  
+<%= panel body: false, title: "#{@unpaid.count} Unpaid Participants" do %>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>&nbsp;&nbsp;</th>
+        <th>Workshop</th>
+        <th class="receipt_code">Receipt</th>
+        <th class="cost">Balance</th>
+        <th class="date">Registered</th>
+      </tr>
+    </thead>
+    <% @unpaid.each do |item| -%>
+      <tbody>
+        <tr><th scope="rowgroup" colspan="5"><strong><%= item[0] %></strong></th></tr>
+        <% item[1].each do |registration| %>
+          <tr>
+            <td>&nbsp;&nbsp;</td>
+            <td><%= link_to registration.workshop.title, edit_admin_registration_path(registration) %></td>
+            <td class="receipt_code" style="white-space:nowrap"><%= registration.receipt_code %></td>
+            <td class="cost"><%= registration.balance_owed.format %></td>
+            <td class="date" style="white-space:nowrap"><%= format_date(registration.created_at) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    <% end %>
+  </table>
+<% end %>

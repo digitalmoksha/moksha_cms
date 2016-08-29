@@ -1,0 +1,13 @@
+<%= I18n.t('ems.ticket_receipt_event') %>: <%=h @registration.workshop.title %>
+<%= I18n.t('ems.ticket_receipt_attendee') %>: <%=h @registration.full_name %>
+<%= I18n.t('ems.ticket_receipt_ticket_number') %>: <%=h @registration.receipt_code %>
+
+<%= I18n.t('email.salutation', :value => h(@registration.full_name)) %>
+
+<%= @content %>
+
+<% if @state != 'rejected' -%>
+<%= I18n.t('ems.ticket_receipt_questions', :value => h(@registration.workshop.contact_email)) %><% unless @registration.workshop.contact_phone.blank? -%> <%= I18n.t('ems.ticket_receipt_questions_telephone', h(@registration.workshop.contact_phone)) %><% end -%>.
+
+<%= I18n.t('email.thank_you') %>
+<% end -%>

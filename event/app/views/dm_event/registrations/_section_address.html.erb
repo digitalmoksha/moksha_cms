@@ -1,0 +1,30 @@
+<% if current_user.nil? %>
+  <h3><%= I18n.t "ems.ticket_contact" %></h3>
+  <div class="ticket_information">
+    <div class="registration_section_address">
+      <%= f.simple_fields_for :user_profile, @registration.user_profile do |builder| %>
+    
+        <%= builder.input(:email,       :label => I18n.t('ems.registration_email'), :required => true) %>
+        <% if I18n.locale == :ja %>
+          <%= builder.input :last_name,   :label => I18n.t('ems.registration_last_name'), :required => true %>
+          <%= builder.input :first_name,  :label => I18n.t('ems.registration_first_name'), :required => true %>
+        <% else %>
+          <%= builder.input :first_name,  :label => I18n.t('ems.registration_first_name'), :required => true %>
+          <%= builder.input :last_name,   :label => I18n.t('ems.registration_last_name'), :required => true %>
+        <% end %>
+        
+        <% if @workshop.show_address %>
+          <%= builder.input :address,   :label => I18n.t('ems.registration_address'), :required => @workshop.require_address %>
+          <%= builder.input :address2,  :label => I18n.t('ems.registration_address2') %>
+          <%= builder.input :city,      :label => I18n.t('ems.registration_city'), :required => @workshop.require_address %>
+          <%= builder.input :state,     :label => I18n.t('ems.registration_state') %>
+          <%= builder.input :zipcode,   :label => I18n.t('ems.registration_zipcode'), :required => @workshop.require_address %>
+        <% end %>
+        
+        <%= builder.input :country_id, :collection => ut_country_select_collection(false), :label => I18n.t('ems.registration_country'), :required => true %>
+        <%= builder.input :address_required, :as => :hidden %>
+        <%= builder.input :userless_registration, :as => :hidden %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

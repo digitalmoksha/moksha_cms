@@ -1,0 +1,51 @@
+cs:
+  ems:
+    registration_subtitle: Registrace
+    register_btn: Registrovat
+    cancel_btn: Zrušit
+    ticket_receipt_arrival: Příjezd
+    ticket_receipt_attendee: Účastník
+    ticket_receipt_departure: Odjezd
+    ticket_receipt_event: Událost
+    ticket_receipt_questions: "V případě dalších otázek nás, prosím, kontaktujte na %{value}"
+    ticket_receipt_questions_telephone: "nebo zatelefonujte %{value}"
+    ticket_receipt_ticket_number: Číslo lístku
+    ticket_receipt_price: Cena
+    ticket_information: Informace o lístku
+    ticket_contact: Kontaktní informace
+    ticket_registered_following_event: "byl/a jste přihlášen/a na program:"
+    ticket_outstanding_balance: "Podle naší evidence Vám z kurzovného zbývá zaplatit:"
+    ticket_payment_link_leadin: "Tuto částku můžete uhradit některým ze způsobů uvedených na následujícím linku"
+    ticket_payment_link_text: Způsoby platby
+    ticket_payment_reminder_subject: "Připomínka úhrady kurzovného: %{value}"
+    ticket_if_already_paid: "Tento e-mail byl automaticky generovaný a odeslaný naším systémem. Pokud jste výše uvedenou částku již dříve zaplatil/a, nebo se domníváte, že tato připomínka není oprávněná, zašlete prosím e-mail na %{value}. Pokud jste platbu provedli v posledních třech dnech, můžete tuto připomínku ignorovat."
+    registration_receipt_title: Potvrzení o rezervaci
+    registration_email: E-mail
+    registration_first_name: Křestní jméno
+    registration_last_name: Příjmení
+    registration_address: Ulice a číslo
+    registration_address2: Ulice a číslo
+    registration_city: Město
+    registration_state: Stát/provincie/region
+    registration_country: Země
+    registration_zipcode: Poštovní směrovací číslo
+    registration_account_required: 'Abyste se mohli zaregistrovat na tuto událost, musíte se přihlásit na svůj uživatelský účet.'
+    registration_closed_heading: Registrace zavřena
+    registration_closed_text: "Registrace na kurz '%{title}' nejsou momentálně přijímány."
+    registration_closed_email: "V případě jakýchkoli otázek se můžete obrátit na %{email}."
+    registration_closed_list: Následující kurzy jsou v současné době otevřen pro registraci
+    choose_payment_method: Vyberte si způsob platby
+    donate_button: Darovat
+    project_goal: Cíl projektu
+    amount_raised: Částka Zvýšený
+
+    login: Přihlášení na účet
+    create_account: Vytvořit účet
+
+  activerecord:
+    errors:
+      models:
+        registration:
+          attributes:
+            workshop_price_id:
+              blank: Vyberte prosím způsob platby

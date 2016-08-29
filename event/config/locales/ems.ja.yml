@@ -1,0 +1,51 @@
+ja:
+  ems:
+    registration_subtitle: 登録
+    register_btn: 申し込む
+    cancel_btn: キャンセル
+    ticket_receipt_arrival: 到着
+    ticket_receipt_attendee: 出席者
+    ticket_receipt_departure: 出発
+    ticket_receipt_event: イベント
+    ticket_receipt_questions: "ご不明な点がございましたら、メールでお問い合わせください %{value}"
+    ticket_receipt_questions_telephone: "もしくは、お電話下さい。 %{value}"
+    ticket_receipt_ticket_number: チケット番号
+    ticket_receipt_price: 料金
+    ticket_information: チケット情報
+    ticket_contact: 連絡先情報
+    ticket_registered_following_event: "According to our registration system, you are or were a participant in the following event"
+    ticket_outstanding_balance: "According to our accounting, the following amount still needs to be paid"
+    ticket_payment_link_leadin: You can make a payment with the following link
+    ticket_payment_link_text: Make Payment
+    ticket_payment_reminder_subject: "Payment Reminder: %{value}"
+    ticket_if_already_paid: "This email is automatically generated and sent by our system. If you have already paid the amount, or believe that the reminder is incorrect, please send an email to %{value}. If you have made a payment in the last three days, please ignore this reminder."
+    registration_receipt_title: 予約受理
+    registration_email: Eメール
+    registration_first_name: 名
+    registration_last_name: 姓
+    registration_address: 住所
+    registration_address2: 住所2
+    registration_city: 市
+    registration_state: 都道府県
+    registration_country: 国
+    registration_zipcode: 郵便番号
+    registration_account_required: 'このイベントに登録するためには、あなたはご自分のユーザーアカウントにログインしなければなりません。'
+    registration_closed_heading: 登録は締め切られました
+    registration_closed_text: "下記の講座への登録はもう受け付けていません '%{title}'"
+    registration_closed_email: "ご不明な点がある場合は、下記にご連絡下さい %{email}."
+    registration_closed_list: 現在、登録して頂けるのは下記の講座です
+    choose_payment_method: お支払い方法を選択して下さい
+    donate_button: 申し込む
+    project_goal: Project Goal
+    amount_raised: Amount Raised
+
+    login: ログイン
+    create_account: アカウントを作成
+
+  activerecord:
+    errors:
+      models:
+        registration:
+          attributes:
+            workshop_price_id:
+              blank: お支払い方法を選択して下さい。

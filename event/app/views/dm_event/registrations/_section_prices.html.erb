@@ -1,0 +1,33 @@
+<% unless @workshop.workshop_prices.empty? && @workshop.custom_field_defs.empty? %>
+  <h3><%= I18n.t "ems.ticket_information" %></h3>
+  <div id="ticket_information" class="ticket_information">
+    <% unless @workshop.custom_field_defs.empty? %>
+      <div class="registration_custom_fields">
+        <%= render partial: 'section_custom_fields', locals: {f: f, workshop: @workshop} %>
+      </div>
+    <% end %>
+    <% unless @workshop.workshop_prices.empty? %>
+      <div class="registration_section_prices">
+        <%= f.error :workshop_price_id, id: 'workshop_price_error', class: 'error' %>
+        <ul class="workshop_price_list">
+          <% if @registration.new_record? %>            
+            <% @workshop.workshop_prices.each do |p| %>
+              <% if p.visible? and !@workshop.price_sold_out?(p) %>
+                <li>
+                  <% if @workshop.workshop_prices.size == 1 # if only one price, pre-select it %>
+                    <label><%= radio_button 'registration', 'workshop_price_id', p.id, checked: true %><%= price_details(p) %></label>
+                  <% else %>
+                    <label><%= radio_button 'registration', 'workshop_price_id', p.id %><%= price_details(p) %></label>
+                  <% end %>
+                </li>
+              <% end %>
+            <% end %>
+          <% else %>
+            <li><label><%= price_details(@registration.workshop_price) %></label></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+  

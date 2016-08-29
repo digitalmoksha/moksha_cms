@@ -1,0 +1,297 @@
+<% content_for :content_title, "#{h(@registration.full_name)} <small>#{h(@workshop.title)}</small>".html_safe %>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= present(@registration).admin_status_label %>
+    <%= link_to icon_label(:view, 'Registrations'), [:admin, @workshop], class: 'btn btn-xs btn-default' %>
+  <% end %>
+<% end %>
+
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#overview_tab" data-toggle="tab">Overview</a></li>
+    <li><a href="#update_registration_tab" data-toggle="tab">Update Registration</a></li>
+    <li><a href="#payment_tab" data-toggle="tab">Payments</a></li>
+    <li><a href="#private_comments" data-toggle="tab">Comments <%= colored_label(@registration.comments_count, :info) %></a></li>
+  </ul>
+
+  <div class="tab-content with-padding">
+
+    <%#--- Overview Tab %>
+    <div class="tab-pane fade in active" id="overview_tab">
+      <div class="row">
+        <div class="col-md-3 col-sm-3">
+          
+          <div class="thumbnail">
+            <div class="thumb">
+              <%= avatar_for(@registration.user_profile.user, '100%') %>
+            </div>
+          
+            <div class="caption text-center">
+              <h6>
+                <%= @registration.full_name %><small><%= @registration.user_profile.country.english_name %></small>
+                <small><%= @registration.user_profile.email %></small>
+                <%= "<small>no user account</small>".html_safe unless @registration.user_profile.user %>
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <% if @registration.workshop_price %>
+            <dl class="block">
+              <dt class="text-info">Price</dt>
+              <dd><%= price_details(@registration.workshop_price) %></dd>
+              <% if @registration.payment_comment %>
+                <dt class="text-info">Reason for Discount</dt>
+                <dd><%= @registration.payment_comment.body %></dd>
+              <% end %>
+            </dl>
+          <% end %>
+          <%= subsection title: "Previous Event Registrations" do %>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th width=20></th>
+                  <th class="name">Workshop Title</th>
+                  <th class="name">Paid</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%# outstanding = Money.new(0) %>
+                <% Registration.where(user_profile_id: @registration.user_profile).each do |registration| %>
+                  <% unless registration == @registration %>
+                    <tr>
+                      <td>
+                        <button class='btn btn-xs btn-<%= registration.current_state %> hovertip' data-placement='right' title='<%= "#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}" %>'></button>
+                      </td>
+                      <td class="name"><%= link_to registration.workshop.title, edit_admin_registration_path(registration) %></td>
+                      <td class="name"><%= present(registration).balance_or_paid %></td>
+                    </tr>
+                    <%# outstanding += registration.balance_owed %>
+                  <% end %>
+                <% end %>
+              </tbody>
+              <% if false # [todo] Unfortunately, this code did not work since each workshop could be in a different currency.  Revisit %>
+                <tfooter>
+                  <tr>
+                    <td></td>
+                    <td><strong>Outstanding Balance</strong></td>
+                    <td><%= outstanding.format %></td>
+                  </tr>
+                </tfooter>
+              <% end %>
+            </table>
+          <% end %>
+        </div>
+        <div class="col-md-3 col-sm-3">
+          <ul class="statistics">
+            <% color = @registration.balance_owed.positive? ? :danger : :success %>
+            <li><%= stat_block_small label: 'Balance', number: @registration.balance_owed.format(no_cents_if_whole: true), color_type: color, icon: 'icon-coin', percent: 100 %></li>
+          </ul>
+          <table class="accounting" style="width: 100%">
+            <tr>
+              <th>Price</th>
+              <td><%= @registration.price.format %></td>
+            </tr>
+            <tr>
+              <th>Discount</th>
+              <td class="text-danger"> - <%= @registration.discount.format %></td>
+            </tr>
+            <tr class="section">
+              <th>Total</th>
+              <td><strong><%= @registration.discounted_price.format %></strong></td>
+            </tr>
+            <tr>
+              <th>Paid</th>
+              <td class="text-success"><%= @registration.amount_paid.format %></td>
+            </tr>
+            <% if @registration.payment_owed.positive? %>
+              <tr class="section">
+                <th>Next Payment Amount
+                  <% if @registration.workshop_price.recurring_payments? %>
+                      <span style="font-weight: normal"></br>On a payment plan</span>
+                  <% end %>
+                </th>
+                <td class="text-info"><%= @registration.payment_owed.format %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <%#--- Update Registration Tab %>
+    <div class="tab-pane fade" id="update_registration_tab">
+      <%= simple_form_for @registration, url: admin_registration_path,
+            html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+      
+        <%= subsection title: 'Price' do %>
+          <%= f.error_notification message: "Please review the problems below" %>
+
+          <% if @workshop.workshop_prices.empty? %>
+            <h5>No workshop prices / options defined</h5>
+          <% else %>
+            <div class="workshop_price_list">
+              <%= f.input :workshop_price_id, collection: @workshop.workshop_prices.map { |r| [price_details(r), r.id] }  %>
+            </div>
+
+            <% if @registration.workshop_price && @registration.workshop_price.price %>
+              <% discount_currency = @registration.workshop_price.price.currency.symbol %>
+
+              <%= f.input :discount_value, label: 'Discount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
+                <%= f.input_field :discount_value, as: :string, class: "form-control" %>
+                <span class="input-group-addon">
+                  <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]] %>
+                </span>
+              <% end %>
+              
+
+            <% end %>
+
+            <% if @registration.payment_comment %>
+              <%= f.input :payment_comment_text, label: 'Reason for discount', as: :text_full_width, rows: 3, hint: 'Used for justifcation of discount. Will then be available in comment section.', disabled: true, input_html: {value: @registration.payment_comment.body} %>
+            <% else %>
+              <%= f.input 'payment_comment_text', label: 'Reason for discount', as: :text_full_width, rows: 3, hint: 'Used for justifcation of discount. Will then be available in comment section.' %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <% unless @workshop.custom_field_defs.empty? %>
+          <%= subsection title: 'Custom Fields' do %>
+            <% f.object.build_missing_fields @workshop %>
+            <%= f.simple_fields_for :custom_fields do |builder| %>
+              <% field = builder.object %>
+              <%= render "dm_core/admin/custom_fields/#{field.field_type}", field: field, f: builder %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <%= subsection title: 'Payment Reminders' do %>
+          <%= f.input :preferred_payment_reminder_hold_until, label: 'No reminder until', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'},
+                       hint: 'When sending reminders in batch, this persons reminder will not be sent unless after the specified date' %>
+        <% end %>
+        
+        <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop), delete_url: [:admin, @registration], delete_confirm: 'Are you sure you wish to delete this registration?  Any associated payments will also be deleted!' %>
+      <% end %>
+    </div>
+
+    <%#--- Payments Tab %>
+    <div class="tab-pane fade" id="payment_tab">
+      <%= subsection title: 'Recorded Payments' do %>
+        <table class="table table-condensed table-gradient table-hover" style="margin-bottom: 20px;">
+          <thead>
+            <tr>
+              <th width="100">Date</th>
+              <th>Description</th>
+              <th width="75">Paid</th>
+              <th width="100">Method</th>
+              <th width="18"><%= icons(:edit) %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @registration.payment_histories.order('created_on ASC').each do |payment| %>
+              <tr>
+                <td><%= format_date(payment.payment_date) %></td>
+                <td><%= payment.item_ref %></td>
+                <td><%= payment.total.format(no_cents_if_whole: true, symbol: true) %></td>
+                <td><%= payment.payment_method %></td>
+                <td>
+                  <% if payment.user_profile #--- only allow editing of manual payments %>
+                    <%= link_to(icons('icon-pencil3'), '#', data: { toggle: "modal", target: "#edit_payment_#{payment.id}"}, title: 'Edit Payment') %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to 'Add Payment', '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'Add Payment', class: "btn btn-xs btn-primary" %>
+        <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
+        <% if @registration.payment_owed.positive? %>
+          &nbsp;&nbsp;Next payment should be: <span class="text-info"><%= @registration.payment_owed.format %></span>
+        <% end %>
+      <% end %>
+      
+      <%= subsection title: 'Payment Reminders' do %>
+      
+        <table class="table table-condensed table-gradient table-hover" style="margin-bottom: 20px;">
+          <thead>
+            <tr>
+              <th width="100">Last Sent On</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @registration.payment_reminder_sent_on.nil? %>
+              <tr><td>not yet</td></tr>
+            <% else %>
+              <% @registration.payment_reminder_history.each do |date| %>
+                <tr>
+                  <td><%= format_date(date) %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        
+        <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@registration.workshop, registration_id: @registration.id), title: 'Send reminder now', class: 'btn btn-xs btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
+        <% if @registration.preferred_payment_reminder_hold_until && @registration.preferred_payment_reminder_hold_until > Time.now %>
+          <span>&nbsp;&nbsp;Requested not to send reminder until <strong><%= format_date(@registration.preferred_payment_reminder_hold_until) %></strong></span>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%#--- Comments Tab %>
+    <div class="tab-pane fade" id="private_comments">
+      <%= subsection title: 'Private Comments' do %>
+        <%= render partial: 'dm_core/admin/comments/comment_section', locals: {commenting_on: @registration, comments: @registration.private_comments, name: 'private_comments'} %>
+      <% end %>
+    </div>
+
+  </div>
+
+
+  <%= simple_form_for :payment_history, url: ajax_payment_admin_registration_path(@registration),
+        html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+  
+    <%= modal_dialog title: 'Enter New Payment', id: 'enter_new_payment', include_save: true do %>
+      <% if @registration.workshop_price.nil? %>
+        <p><em>They must be registered for some type of payment first</em></p>
+      <% else %>
+
+        <%= f.input :payment_date, label: 'Paid On', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, input_html: {value: Date.today.strftime("%Y/%m/%d")} %>
+        <%= f.input :cost, label: 'Amount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
+          <%= f.input_field :cost, as: :string, class: "form-control", value: @registration.payment_owed.amount %>
+          <span class="input-group-addon">
+            <%= f.select :total_currency, @registration.workshop_price.currency_list, {} %>
+          </span>
+        <% end %>
+
+        <%= f.input :payment_method, label: 'Method', as: 'select', collection: WorkshopPrice::PAYMENT_METHODS, include_blank: false, input_wrapper_html: {class: 'col-sm-4'} %>
+        <%= f.input :item_ref, label: 'Description', required: false %>
+        <%= f.input :bill_to_name, label: 'Payed By', required: false %>
+        <%= f.input :receipt_requested, as: 'boolean', label: false, inline_label: 'Customer would like a receipt', required: false %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% @registration.payment_histories.order('created_on ASC').each do |payment_history| %>
+    <% #--- only allow editing of manual payments %>
+    <% if payment_history.user_profile %>
+      <%= simple_form_for payment_history, url: ajax_edit_payment_admin_registration_path(locale: I18n.locale, id: @registration, payment_id: payment_history.id),
+            html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+
+        <%= modal_dialog title: 'Enter New Payment', id: "edit_payment_#{payment_history.id}", include_save: true,
+                         delete_url: ajax_delete_payment_admin_registration_path(locale: I18n.locale, id: @registration, payment_id: payment_history.id),
+                         delete_msg: 'Are you sure you want to delete this payment?' do %>
+          <%= f.input :payment_date, label: 'Paid On', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'} %>
+          <%= f.input :cost, label: 'Amount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
+            <%= f.input_field :cost, as: :string, class: "form-control" %>
+            <span class="input-group-addon">
+              <%= f.select :total_currency, @registration.workshop_price.currency_list, {} %>
+            </span>
+          <% end %>
+          <%= f.input :payment_method, label: 'Method', as: 'select', collection: WorkshopPrice::PAYMENT_METHODS, include_blank: false, input_html: {style: "width: 200px"} %>
+          <%= f.input :item_ref, label: 'Description', required: false %>
+          <%= f.input :bill_to_name, label: 'Payed By', required: false %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>

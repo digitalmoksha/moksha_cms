@@ -1,0 +1,7 @@
+<% f.object.build_missing_fields workshop %>
+<%= f.simple_fields_for :custom_fields do |builder| %>
+  <% field = builder.object %>
+  <div class="custom_field_group">
+    <%= render "dm_core/admin/custom_fields/#{field.field_type}", field: field, f: builder %>
+  </div>
+<% end %>
