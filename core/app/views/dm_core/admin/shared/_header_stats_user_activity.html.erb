@@ -1,0 +1,2 @@
+<% accessed_users = UserSiteProfile.access_last_30_days %>
+<%= stat_with_graph title: 'Active Users', number: accessed_users[:total], color_type: :info, data_list: accessed_users[:list] %>

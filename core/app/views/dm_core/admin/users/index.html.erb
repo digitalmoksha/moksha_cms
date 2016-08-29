@@ -1,0 +1,30 @@
+<% content_for :content_title_extra do %>
+  <div class="header-bar-stats">
+    <div class="collapse" id="header-bar-stats">
+      <div class="well">
+        <ul class="page-stats">
+          <li><%= render partial: 'dm_core/admin/shared/header_stats_new_users' %></li>
+          <li><%= render partial: 'dm_core/admin/shared/header_stats_user_activity' %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= panel title: 'Users', body: false do %>
+  <div class="datatable">
+    <table id="user_table" class="table table-striped table-condensed table-bordered" data-source="<%= dm_core.admin_users_url %>">
+      <thead>
+        <tr>
+          <th width="40"></th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Country</th>
+          <th>Last Access</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+<% end %>

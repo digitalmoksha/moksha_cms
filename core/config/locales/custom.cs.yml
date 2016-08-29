@@ -1,0 +1,82 @@
+cs:
+  date:
+    formats:
+      ddyy: "%d, %Y"
+      mmdd: "%b %d"
+      mmddyy: "%b %d, %Y"
+      wwmmdd: "%a, %b %d"
+      wwmmddyy: "%a, %b %d, %Y"
+      yymm: "%Y-%m"
+
+  time:
+    formats:
+      ddyy: "%d, %Y"
+      mmdd: "%b %d"
+      mmddyy: "%b %d, %Y"
+      wwmmdd: "%a, %b %d"
+      wwmmddyy: "%a, %b %d, %Y"
+      hhmmpp: "%I:%M %p"
+
+  core:
+    next_page: "Další <i class='icon-angle-right'></i>"
+    prev_page: "<i class='icon-angle-left'></i> Předchozí"
+    login: Přihlášení
+    logout: Odhlášení
+    account: Účet
+    errors_below: Přečtěte si prosím níže uvedené problémy,
+    login_required: "Prosím, přihlaste se ke svému účtu první"
+    resource_invalid: Požadovaná stránka není k dispozici ve vašem účtu
+    create_account: Vytvořit účet
+
+    confirmation_email_1: 'Děkujeme za Vaši registraci na %{value}'
+    confirmation_email_2: 'Pro dokončení registrace klikněte, prosím, na následující odkaz:'
+    confirmation_email_3: 'Děkujeme!'
+    confirmation_email_link: Potvrdit můj účet
+    reset_password_email_1: 'Dobrý den %{value}'
+    reset_password_email_2: 'Bylo zažádáno o změnu Vašeho hesla, což můžete učinit přes níže uvedený odkaz.'
+    reset_password_email_3: "Pokud jste o to nezažádali Vy, tento e-mail prosím ignorujte."
+    reset_password_email_4: "Vaše heslo se nezmění, dokud se nezobrazí na výše uvedený odkaz a vytvořit novou."
+    reset_password_email_link: Změnit mé heslo
+    unlock_email_1: 'Dobrý den %{value}'
+    unlock_email_2: 'Váš účet byl zablokován kvůli opakovaným neúspěšným pokusům o přihlášení.'
+    unlock_email_3: "Pro odblokování svého účtu klikněte na níže uvedený odkaz."
+    unlock_email_link: Odblokovat účet
+
+    profile_full_name: "%{firstname} %{lastname}"
+    profile_email: E-mail
+    profile_password: Heslo
+    profile_password_confirmation: Potvrzení hesla
+    profile_current_password: Současné heslo
+    profile_first_name: Křestní jméno
+    profile_last_name: Příjmení
+    profile_address: Adresa
+    profile_address2: Adresa
+    profile_city: Město
+    profile_state: Stát
+    profile_country: Země
+    profile_zipcode: Poštovní směrovací číslo
+    profile_public_name: Zveřejňované jméno
+    profile_update_btn: Aktualizovat
+    profile_account_settings: Nastavení účtu
+    profile_details_settings: 'Veřejný / Soukromý profil'
+    profile_public_title: Veřejný profil
+    profile_public_explanation: 'Tyto informace se zobrazí ostatním uživatelům (např. když přidáte komentář na fórum nebo blog).'
+    profile_public_upload: Fotografie
+    profile_public_upload_help: 'Nahrát fotografii, která bude používána na Vašem veřejném profilu (gif, jpg, png)'
+    profile_private_title: Soukromý profil
+    profile_private_explanation: 'Tyto informace zůstanou soukromé a nebudou s nikým sdíleny.'
+    profile_account_title: "Aktualizace e-mailu / přihlašovacích údajů"
+    profile_account_explanation: "Upozornění: až se budete přihlašovat příště, použijte nově uvedenou e-mailovou adresu."
+    profile_account_password_title: Změna hesla
+    profile_account_password_current_title: Současné heslo
+    profile_account_password_current_explanation: 'Aby mohly být provedeny změny, je třeba zadat své současné heslo.'
+    profile_profile_updated: Váš profil byl aktualizován.
+    profile_email_confirmation: 'Na Vámi uvedený nový e-mail byla odeslána zpráva, která obsahuje link. Je třeba na něj kliknout. Teprve pak se budete moci přihlásit pomocí Vámi uvedené nové e-mailové adresy.'
+    profile_password_updated: Vaše heslo bylo aktualizováno.
+    profile_email_needs_confirmation: 'Vaše e-mailová adresa byla změněna na'
+    profile_email_needs_confirmation_2: 'Na zadanou e-mailovou adresu byl zaslán potvrzující e-mail. Pokud jste jej neobdrželi, jednoduše aktualizujte svůj e-mail znovu. Potvrzení bude znovu odesláno.'
+    
+  email:
+    salutation: 'Drahý/Drahá %{value},'
+    thank_you: Děkujeme
+    

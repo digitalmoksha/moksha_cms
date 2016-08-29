@@ -1,0 +1,84 @@
+fi:
+  date:
+    formats:
+      ddyy: "%d, %Y"
+      mmdd: "%b %d"
+      mmddyy: "%b %d, %Y"
+      wwmmdd: "%a, %b %d"
+      wwmmddyy: "%a, %b %d, %Y"
+      yymm: "%Y-%m"
+
+  time:
+    formats:
+      ddyy: "%d, %Y"
+      mmdd: "%b %d"
+      mmddyy: "%b %d, %Y"
+      wwmmdd: "%a, %b %d"
+      wwmmddyy: "%a, %b %d, %Y"
+      hhmmpp: "%I:%M %p"
+
+  english: "suomi"
+  
+  core:
+    next_page: "Seuraava <i class='icon-angle-right'></i>"
+    prev_page: "<i class='icon-angle-left'></i> Edellinen"
+    login: Kirjaudu sisään
+    logout: Kirjaudu ulos
+    account: Oma tili
+    errors_below: Tarkista ongelmat alla
+    login_required: Ole hyvä ja kirjaudu tilillesi ensin
+    resource_invalid: Sivu ei ole käytettävissä tililläsi
+    create_account: Luo tili
+
+    confirmation_email_1: 'Kiitos rekisteröitymisestäsi %{value} käyttäjätilille'
+    confirmation_email_2: 'Klikkaa seuraavaa linkkiä päättääksesi rekisteröitymisesi:'
+    confirmation_email_3: 'Kiitos!'
+    confirmation_email_link: Vahvista tilini
+    reset_password_email_1: 'Hei %{value}'
+    reset_password_email_2: 'Joku on pyytänyt linkkiä vaihtaakseen salasanasi, voit tehdä sen alla olevan linkin kautta.'
+    reset_password_email_3: "Ellet olet pyytänyt tätä, voit jättää tämän viestin huomiotta."
+    reset_password_email_4: "Salasana ei muutu, ennen kuin käyttää yllä olevaa linkkiä ja luo uusi."
+    reset_password_email_link: Muuta salasana
+    unlock_email_1: 'Hei %{value}'
+    unlock_email_2: 'Käyttäjätilisi on lukittu liiallisista epäonnistuneista kirjautumisyrityksistä johtuen.'
+    unlock_email_3: "Klikkaa alla olevaa linkkiä avataksesi tilisi."
+    unlock_email_link: Avaa tilini
+
+    profile_full_name: "%{firstname} %{lastname}"
+    profile_email: Sähköposti
+    profile_password: Salasana
+    profile_password_confirmation: Salasanan vahvistaminen
+    profile_current_password: Nykyinen salasana
+    profile_first_name: Etunimi
+    profile_last_name: Sukunimi
+    profile_address: Osoite
+    profile_address2: Osoite
+    profile_city: Kaupunki
+    profile_state: Alue
+    profile_country: Maa
+    profile_zipcode: Postinumero
+    profile_public_name: Julkinen nimi
+    profile_update_btn: Päivitä
+    profile_account_settings: Tilin asetukset
+    profile_details_settings: 'Julkinen / Henkilökohtainen profiili'
+    profile_public_title: Julkinen profiili
+    profile_public_explanation: 'Sellaiset tiedot, kuten viestit foorumilla ja blogin kommentit, tulevat näkymään muille.'
+    profile_public_upload: Kuva
+    profile_public_upload_help: 'Lataa kuva julkiseen profiiliisi (gif, jpg, png)'
+    profile_private_title: Henkilökohtainen Profiili
+    profile_private_explanation: 'Nämä tiedot pysyvät henkilökohtaisina eikä niihin ole kenelläkään pääsyä.'
+    profile_account_title: "Päivitä sähköposti / Tiliin kirjautuminen"
+    profile_account_explanation: "Muista: ensikerralla kirjautuessasi käytä uutta sähköpostiosoitettasi."
+    profile_account_password_title: Muuta salasana
+    profile_account_password_current_title: Nykyinen salasana
+    profile_account_password_current_explanation: Salasanasi vaaditaan kaikkiin muutoksiin.
+    profile_profile_updated: Profiilisi on päivitetty
+    profile_email_confirmation: Uuteen sähköpostiosoitteeseesi on lähetetty viesti - sinun tulee klikata vahvistuslinkkiä ennen kuin voit kirjautua sisään käyttäen uutta sähköpostiosoitettasi
+    profile_password_updated: Salasanasi on päivitetty
+    profile_email_needs_confirmation: 'Sähköpostiosoitteesi on jo muutettu'
+    profile_email_needs_confirmation_2: 'Vahvistusviesti on lähetetty tähän sähköpostiosoitteeseen.  Jos et ole saanut vahvistusviestiä, päivitä sähköpostiosoitteesi uudelleen vahvistuksen uudelleen lähettämiseksi.'
+
+  email:
+    salutation: "Hei %{value},"
+    thank_you: Kiitos
+    

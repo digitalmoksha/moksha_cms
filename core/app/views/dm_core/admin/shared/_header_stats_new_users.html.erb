@@ -1,0 +1,2 @@
+<% new_users = UserSiteProfile.new_last_30_days %>
+<%= stat_with_graph title: 'New Users', number: new_users[:total], color_type: :danger, data_list: new_users[:list] %>

@@ -1,0 +1,22 @@
+<%= render partial: 'settings_menu' %>
+<% url = @account.new_record? ? dm_core.admin_account_create_path : dm_core.admin_account_general_path %>
+<%= simple_form_for(@account, url: url, 
+  html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings) do |f| %>
+  <%= f.error_notification message: "Please review the problems below" %>
+
+  <%= panel title: 'General Settings' do %>
+
+    <%= f.input :domain, required: true, hint: "Do not include 'www', 'staging', or 'dev' - they are handled automatically" %>
+    <%= f.input :account_prefix, label: 'Site prefix', required: true %>
+    <%= f.input :company_name %>
+    <%= f.input :contact_email %>
+    <%= f.input :preferred_default_locale, required: true, label: 'Default Locale'%>  
+    <%= f.input :preferred_locales, required: true, label: 'Supported Locales', hint: "Comma seperated. Ex: 'en, de'" %>  
+    <%= f.input :preferred_ssl_enabled, as: :boolean, label: 'Enable SSL?' %>
+    <%= f.input :preferred_site_enabled, as: :boolean, label: 'Publish Site?' %>
+    <%= f.input :preferred_site_maintenance, as: :boolean, label: 'Site Maintenance', hint: 'Put the site into maintenance mode:  normal users will see the maintenance page.  Admin users will be able to access the site.' %>
+
+    <%= submit_or_cancel cancel_url: url %>
+
+  <% end %>
+<% end %>

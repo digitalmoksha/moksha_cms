@@ -1,0 +1,23 @@
+<% toolbar = toolbar_btn(icons(:new), dm_core.admin_account_new_path, title: 'New Site', class: "btn btn-link btn-icon") %>
+<%= panel body: false, title: 'Account List', toolbar: toolbar do %>
+  <table class="table table-striped table-bordered table-block">
+    <thead>
+      <tr>
+        <th>Domain</th>
+        <th style="width: 50px;">Prefix</th>
+        <th style="width: 100px;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @accounts.each do |account| %>
+        <tr>
+          <td>
+            <%= link_to account.domain, dm_core.admin_account_general_path(id: account) %>
+          </td>
+          <td><%= account.account_prefix %></td>
+          <td><%= account.preferred_site_enabled? ? colored_label('Site Published', :success) : colored_label('Site Disabled') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

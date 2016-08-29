@@ -1,0 +1,23 @@
+<%= panel title: 'Recent New Users', body: false do %>
+  <ul class="page-stats list-justified nomargin_bottom">
+    <li><%= render partial: 'dm_core/admin/shared/header_stats_new_users' %></li>
+  </ul>
+  <table class="table table-bordered table-condensed" style="border-top: 1px solid #d5d5d5;">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Registered On</th>
+        <th>Last Login</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% User.current_account_users.order('user_site_profiles.created_at DESC').limit(5).each do |user| %>
+        <tr>
+          <td><%= user.full_name %></td>
+          <td align="center"><%= "#{time_ago_in_words(user.created_at)} ago" %></td>
+          <td align="center"><%= present(user).last_access %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

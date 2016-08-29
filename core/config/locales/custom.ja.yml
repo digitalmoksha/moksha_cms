@@ -1,0 +1,84 @@
+ja:
+  date:
+    formats:
+      ddyy: "%d, %Y"
+      mmdd: "%b %d"
+      mmddyy: "%b %d, %Y"
+      wwmmdd: "%a, %b %d"
+      wwmmddyy: "%a, %b %d, %Y"
+      yymm: "%Y-%m"
+
+  time:
+    formats:
+      ddyy: "%d, %Y"
+      mmdd: "%b %d"
+      mmddyy: "%b %d, %Y"
+      wwmmdd: "%a, %b %d"
+      wwmmddyy: "%a, %b %d, %Y"
+      hhmmpp: "%I:%M %p"
+
+  english: "English"
+  
+  core:
+    next_page: "次のページ <i class='icon-angle-right'></i>"
+    prev_page: "<i class='icon-angle-left'></i> 前のページ"
+    login: ログイン
+    logout: ログアウト
+    account: 自分のアカウント
+    errors_below: 下記の問題を再検討して下さい
+    login_required: 最初のアカウントにログインしてください
+    resource_invalid: 要求されたページには、アカウントで利用できない
+    create_account: アカウントを作成
+
+    confirmation_email_1: '%{value} 上のアカウントを登録して頂き有り難うございました。'
+    confirmation_email_2: '登録手続きを完了させるには次のリンクをクリックして下さい:'
+    confirmation_email_3: '宜しくお願い致します。'
+    confirmation_email_link: アカウントを認証する
+    reset_password_email_1: 'こんにちは %{value}'
+    reset_password_email_2: 'どなたかがあなたのパスワードを変更するためのリンクを送るように依頼されました。下記のリンクから変更して頂けます。'
+    reset_password_email_3: "あなたがこれを依頼していない場合は、このメールを無視して下さい。"
+    reset_password_email_4: "あなたのパスワードは、上記のリンクにアクセスするまで、変更し、新しいものを作成しません。"
+    reset_password_email_link: パスワードを変更する
+    unlock_email_1: 'こんにちは %{value}'
+    unlock_email_2: 'あなたのアカウントは、サインインに何度も失敗したためにロックされています。'
+    unlock_email_3: "ご自分のアカウントを解除するには下記のリンクをクリックして下さい。"
+    unlock_email_link: アカウントを解除する
+
+    profile_full_name: "%{lastname} %{firstname}"
+    profile_email: Eメール
+    profile_password: パスワード
+    profile_password_confirmation: パスワード（確認）
+    profile_current_password: 現在のパスワード
+    profile_first_name: 名
+    profile_last_name: 姓
+    profile_address: 住所
+    profile_address2: 住所2
+    profile_city: 市
+    profile_state: 都道府県
+    profile_country: 国
+    profile_zipcode: 郵便番号
+    profile_public_name: ニックネーム
+    profile_update_btn: 更新
+    profile_account_settings: アカウント設定
+    profile_details_settings: '公開 / 非公開 プロフィール'
+    profile_public_title: 公開プロフィール
+    profile_public_explanation: '下記の情報はフォーラムの投稿メッセージやブログのコメント欄などにおいて他の方々に表示されます。'
+    profile_public_upload: 写真
+    profile_public_upload_help: '公開プロフィール用の写真をアップロードする (gif, jpg, png)'
+    profile_private_title: 非公開プロフィール
+    profile_private_explanation: 'この情報は非公開に保たれ、どなたとも共有されません。'
+    profile_account_title: "Eメールアドレス / アカウントのログイン情報 を更新する"
+    profile_account_explanation: "注意: 次回ログイン時は、更新されたeメールアドレスを使用して下さい。"
+    profile_account_password_title: パスワードを変更する
+    profile_account_password_current_title: 現在のパスワード
+    profile_account_password_current_explanation: 変更を行うためには、あなたの現在のパスワードの入力が必要です。
+    profile_profile_updated: あなたのプロフィールは更新されました
+    profile_email_confirmation: 新しいeメールアドレスにメールが送られました - 新しいeメールアドレスを用いてログインするためには、メール中の認証リンクをクリックしなければなりません。
+    profile_password_updated: あなたのパスワードは更新されました
+    profile_email_needs_confirmation: 'あなたのeメールアドレスは次のように変更されています'
+    profile_email_needs_confirmation_2: '確認のために、そのアドレスにメールが送られました。確認メールが届かなかった場合は、eメールアドレスをもう一度更新して頂くと再送信されます。'
+
+  email:
+    salutation: "%{value} 様"
+    thank_you: 宜しくお願い致します
+    

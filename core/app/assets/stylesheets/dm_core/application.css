@@ -1,0 +1,31 @@
+/* @override 
+	http://dev.telugubasha.net:3500/assets/dm_core/application.css?body=1 */
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require dm_core/font-awesome
+ */
+
+/*--- might be deinfed elsewhere, but make sure.  Does not support IE7 */
+.clearfix:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+/*--- default style for menus under construction / draft ---*/
+.draft_menu_right {
+  background: url(/assets/dm_core/draft_menu_bg.png) right repeat-y !important;
+}
+.draft_menu_left {
+  background: url(/assets/dm_core/draft_menu_bg.png) left repeat-y !important;
+}
