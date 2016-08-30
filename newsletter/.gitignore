@@ -1,4 +1,0 @@
-spec/dummy/db/test.sqlite3
-spec/dummy/log/test.log
-spec/dummy/log/development.log
-Gemfile.lock

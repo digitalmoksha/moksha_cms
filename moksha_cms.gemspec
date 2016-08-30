@@ -18,6 +18,9 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
 
-  s.add_dependency 'dm_core', s.version
-  s.add_dependency 'dm_cms',  s.version
+  s.add_dependency 'dm_core',       s.version
+  s.add_dependency 'dm_cms',        s.version
+  s.add_dependency 'dm_event',      s.version
+  s.add_dependency 'dm_forum',      s.version
+  s.add_dependency 'dm_newsletter', s.version
 end
