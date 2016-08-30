@@ -20,6 +20,7 @@ class Registration < ActiveRecord::Base
   preference                    :payment_reminder_hold_until,  :date
   serialize                     :payment_reminder_history, Array
   attr_accessor                 :payment_comment_text
+  has_one                       :billing_address, class_name: Address, as: :addressable, dependent: :destroy
   acts_as_commentable           :private
 
   accepts_nested_attributes_for :user_profile
