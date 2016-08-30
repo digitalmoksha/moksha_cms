@@ -73,6 +73,10 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
         redirect_to main_app.root_url and return
       end
     end
+    
+    if !@registration.payment_owed.positive?
+      render(:action => :paid) and return
+    end
   end
   
   # Success page for a registration.  Look up the uuid and display success.
