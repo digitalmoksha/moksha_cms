@@ -1,29 +1,24 @@
-$:.push File.expand_path("../lib", __FILE__)
-
-#--- Maintain your gem's version:
-require "dm_cms/version"
+require_relative '../core/lib/dm_core/version.rb'
 
 #--- Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "dm_cms"
-  s.version     = DmCms::VERSION
+  s.version     = DmCore::VERSION
   s.authors     = ["Brett Walker"]
   s.email       = ["github@digitalmoksha.com"]
-  s.homepage    = ""
-  s.summary     = "Content Management Engine"
-  s.description = "Content Management Engine"
+  s.homepage    = "https://github.com/digitalmoksha/moksha_cms"
+  s.licenses    = ['MIT']
+  s.summary     = "Part of MokshaCms, Content Management Engine"
+  s.description = "Part of MokshaCms, Content/Blog Management Engine"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["spec/**/*"]
+  s.files       = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
+  s.test_files  = Dir["spec/**/*"]
 
   s.add_dependency 'rails', '> 4.2', '< 5.1'
+
+  s.add_dependency 'dm_core', s.version
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'meta-tags-helpers', '~> 0.2.0'
   s.add_dependency 'mail_form', '~> 1.5.0'
-  
-  #--- make sure the following gems are included in your app's Gemfile
-  # gem 'dm_ruby_extensions', :git => 'git://github.com/digitalmoksha/dm_ruby_extensions.git'
-  # gem 'dm_core', :git => 'git://github.com/digitalmoksha/dm_core.git'
-
 end

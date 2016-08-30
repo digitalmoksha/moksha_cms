@@ -1,7 +1,7 @@
 require 'rake'
 require 'rubygems/package_task'
 
-MOKSHA_GEMS = %w(core).freeze
+MOKSHA_GEMS = %w(core cms).freeze
 
 task default: :test
 

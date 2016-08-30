@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
 
 
   s.add_dependency 'dm_core', s.version
+  s.add_dependency 'dm_cms',  s.version
 end

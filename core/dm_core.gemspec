@@ -1,7 +1,4 @@
-$:.push File.expand_path("../lib", __FILE__)
-
-#--- Maintain your gem's version:
-require "dm_core/version"
+require_relative 'lib/dm_core/version.rb'
 
 #--- Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
@@ -14,12 +11,13 @@ Gem::Specification.new do |s|
   s.summary     = "Part of MokshaCms, providing core functionality"
   s.description = "Part of MokshaCms, providing core functionality, including internationalization"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
-  s.test_files = Dir["spec/**/*"]
+  s.files       = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
+  s.test_files  = Dir["spec/**/*"]
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'rails', '>= 4.2', '< 5.1'
   s.add_dependency 'dm_ruby_extensions', '~> 1.0'
+  s.add_dependency 'dm_preferences', '~> 1.0'
   s.add_dependency 'actionview-encoded_mail_to', '~> 1.0'
   s.add_dependency 'devise', '~> 3.5'           # Authentication
   s.add_dependency "rolify", "~> 5.0"           # User Roles
@@ -53,7 +51,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'delayed_job_active_record', '~> 4.1'
   s.add_dependency 'delayed_job', '~> 4.1'
   s.add_dependency 'daemons', '~> 1.2'
-  
-  #--- make sure the following gems are included in your app's Gemfile
-  # gem "preferences", "~> 0.5.0", :git => "git://github.com/madebydna/preferences.git"
 end
