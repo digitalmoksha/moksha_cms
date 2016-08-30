@@ -9,23 +9,24 @@ Gem::Specification.new do |s|
   s.version     = DmCore::VERSION
   s.authors     = ["Brett Walker"]
   s.email       = ["github@digitalmoksha.com"]
-  s.homepage    = ""
-  s.summary     = "Core functionality, including internationalization"
-  s.description = "Core functionality, including internationalization"
+  s.homepage    = "https://github.com/digitalmoksha/moksha_cms"
+  s.licenses    = ['MIT']
+  s.summary     = "Part of MokshaCms, providing core functionality"
+  s.description = "Part of MokshaCms, providing core functionality, including internationalization"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'rails', '>= 4.2', '< 5.1'
   s.add_dependency 'dm_ruby_extensions', '~> 1.0'
-  s.add_dependency 'actionview-encoded_mail_to'
+  s.add_dependency 'actionview-encoded_mail_to', '~> 0'
   s.add_dependency 'devise', '~> 3.5'           # Authentication
   s.add_dependency "rolify", "~> 5.0"           # User Roles
   s.add_dependency "cancancan", "~> 1.13"         # Authorization
   s.add_dependency "simple_form", '~> 3.2'        # Form handling
   s.add_dependency "will_paginate", "~> 3.1"      # pagination
-  s.add_dependency 'country_select', "~> 1.3.1"   # [todo] v2.x requires changes
+  s.add_dependency 'country_select', "~> 1.3"     # [todo] v2.x requires changes
   s.add_dependency 'paper_trail', '~> 4.0.2'      # table versioning
   s.add_dependency "RedCloth", "~> 4.3"
   s.add_dependency 'kramdown', "~> 1.9"

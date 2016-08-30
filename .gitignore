@@ -1,0 +1,9 @@
+.DS_Store
+.bundle
+**/*.log
+*.sqlite3
+pkg
+tmp
+Gemfile.lock
+sandbox/*
+*/.sass-cache
