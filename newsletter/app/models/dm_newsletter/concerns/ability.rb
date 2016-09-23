@@ -19,6 +19,9 @@ module DmNewsletter
           can :access_admin, :all
         end
       end
+
+      ::Ability.register_abilities(:dm_newsletter_abilities)
+
     end
   end
 end

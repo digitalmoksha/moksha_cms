@@ -8,6 +8,8 @@ DmEvent::Engine.routes.draw do
             match 'edit_system_email/:email_type',      action: 'edit_system_email', as: 'edit_system_email', via: [:get, :post, :patch]
             get   'financials',                         action: 'financials'
             match 'lost_users',                         action: 'lost_users', via: [:get, :post, :patch]
+            match 'permissions',                        action: 'permissions', via: [:get, :post, :patch]
+            patch 'ajax_toggle_permission/:user_id/:role', action: 'ajax_toggle_permission', as: 'ajax_toggle_permission'
             patch 'send_payment_reminder_emails',       action: 'send_payment_reminder_emails'
             match 'additional_configuration',           action: 'additional_configuration', via: [:get, :patch]
           end

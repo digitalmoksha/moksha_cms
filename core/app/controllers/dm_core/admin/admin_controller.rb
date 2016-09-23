@@ -21,7 +21,7 @@ class DmCore::Admin::AdminController < ApplicationController
   #------------------------------------------------------------------------------
   def authenticate_admin_user!
     authenticate_user! 
-    unless can?(:access_admin, :all)
+    unless can?(:access_event_section, :all) || can?(:access_admin, :all)
       flash[:alert] = "Unauthorized Access!"
       redirect_to current_account.index_path 
     end
@@ -72,21 +72,27 @@ private
       item[:children] << {text: 'My profile', icon_class: :user, link: dm_core.edit_profile_account_path }
       item[:children] << {text: 'Logout', icon_class: :exit, link: main_app.destroy_user_session_path, link_options: {method: :delete} }
       @admin_theme[:top_menu] << item
-      
+       
       #=== Main Menu
       @admin_theme[:main_menu] << {text: 'Dashboard', icon_class: :dashboard, link: dm_core.admin_dashboard_path, active: admin_path_active_class?(dm_core.admin_dashboard_path) }
 
-      if defined?(DmCms) && can?(:manage_content, :all)
-        @admin_theme[:main_menu] << {text: 'Pages',         icon_class: :pages,         link: dm_cms.admin_cms_pages_path,   active: admin_path_active_class?(dm_cms.admin_cms_pages_path, dm_cms.admin_cms_snippets_path) }
-        @admin_theme[:main_menu] << {text: 'Blogs',         icon_class: :blogs,         link: dm_cms.admin_cms_blogs_path,   active: admin_path_active_class?(dm_cms.admin_cms_blogs_path) }
-        @admin_theme[:main_menu] << {text: 'Media Library', icon_class: :media_library, link: dm_cms.admin_media_files_path, active: admin_path_active_class?(dm_cms.admin_media_files_path) }
+      if defined?(DmCms)
+        if can?(:manage_content, :all)
+          @admin_theme[:main_menu] << {text: 'Pages',         icon_class: :pages,         link: dm_cms.admin_cms_pages_path,   active: admin_path_active_class?(dm_cms.admin_cms_pages_path, dm_cms.admin_cms_snippets_path) }
+          @admin_theme[:main_menu] << {text: 'Blogs',         icon_class: :blogs,         link: dm_cms.admin_cms_blogs_path,   active: admin_path_active_class?(dm_cms.admin_cms_blogs_path) }
+        end
+        if can?(:access_media_library, :all)
+          @admin_theme[:main_menu] << {text: 'Media Library', icon_class: :media_library, link: dm_cms.admin_media_files_path, active: admin_path_active_class?(dm_cms.admin_media_files_path) }
+        end
       end
 
-      if defined?(DmEvent) && can?(:manage_events, :all)
+      if defined?(DmEvent) && can?(:access_event_section, :all)
         item = { text: 'Events', icon_class: :events, children: [], link: '#' }
         item[:children] << {text: 'Overview', link: dm_event.admin_workshops_path,   active: admin_path_active_class?(dm_event.admin_workshops_path) }
         Workshop.upcoming.each do |workshop|
-          item[:children] << {text: workshop.title, badge: workshop.registrations.number_of(:attending), link: dm_event.admin_workshop_path(workshop),   active: admin_path_active_class?(dm_event.admin_workshop_path(workshop)) }
+          if can?(:list_events, workshop)
+            item[:children] << {text: workshop.title, badge: workshop.registrations.number_of(:attending), link: dm_event.admin_workshop_path(workshop),   active: admin_path_active_class?(dm_event.admin_workshop_path(workshop)) }
+          end
         end
         @admin_theme[:main_menu] << item
       end

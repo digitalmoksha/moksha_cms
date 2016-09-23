@@ -32,6 +32,9 @@ module DmForum
           can(:read, Forum)   { |forum| forum.can_be_read_by?(user) }
         end
       end
+
+      ::Ability.register_abilities(:dm_forum_abilities)
+
     end
   end
 end

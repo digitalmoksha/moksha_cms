@@ -42,7 +42,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     profile_params                  = params[:registration].delete("user_profile_attributes") if params[:registration]
     profile_params.delete(:id)      if profile_params
     
-    @registration                   = @workshop.registrations.new(registration_params)
+    @registration                   = @workshop.registrations.new(registration_params(@workshop))
     @registration.registered_locale = I18n.locale
     @registration.user_profile      = current_user ? current_user.user_profile : UserProfile.new
     @registration.user_profile.assign_attributes(user_profile_direct_params(profile_params)) unless profile_params.blank?

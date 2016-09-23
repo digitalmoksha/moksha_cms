@@ -6,6 +6,8 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def action_state
     @registration = Registration.find(params[:id])
+    authorize! :manage_event_registrations, @registration.workshop
+
     @state_event  = params[:state_event].downcase
     case @state_event
     # when 'verify payment'
@@ -32,6 +34,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def destroy
     registration = Registration.find(params[:id])
+    authorize! :manage_event_registrations, registration.workshop
     registration.destroy
     redirect_to admin_workshop_url(registration.workshop), notice: 'Registration was successfully deleted.'
   end
@@ -40,16 +43,18 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
   def edit
     @registration = Registration.find(params[:id])
     @workshop     = @registration.workshop
+    authorize! :manage_event_registrations, @registration.workshop
   end
 
   #------------------------------------------------------------------------------
   def update
     @registration = Registration.find(params[:id])
     @workshop     = @registration.workshop
+    authorize! :manage_event_registrations, @registration.workshop
 
     #--- save without validation, so can update without having to fill in all details
     payment_comment_text      = params[:registration].delete(:payment_comment_text)
-    @registration.attributes  = registration_params
+    @registration.attributes  = registration_params(@workshop)
 
     if @registration.save(:validate => false)
       if @registration.payment_comment.nil? && payment_comment_text
@@ -70,6 +75,8 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
   def ajax_payment
     @registration     = Registration.find(params[:id])
     @workshop         = @registration.workshop
+    authorize! :manage_event_registrations, @registration.workshop
+
     previous_payment  = params[:payment_id] ? PaymentHistory.find(params[:payment_id]) : nil
     @payment_history  = @registration.manual_payment(previous_payment,
                               params[:payment_history][:cost],
@@ -98,6 +105,8 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def ajax_delete_payment
     @registration     = Registration.find(params[:id])
+    authorize! :manage_event_registrations, @registration.workshop
+
     if @registration.delete_payment(params[:payment_id])
       redirect_to edit_admin_registration_path(@registration), notice: 'Payment was deleted'
     else

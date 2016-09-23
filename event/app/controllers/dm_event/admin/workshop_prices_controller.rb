@@ -6,20 +6,24 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
   
   #------------------------------------------------------------------------------
   def index
+    authorize! :manage_events, @workshop
     @workshop_prices  = @workshop.workshop_prices
   end
 
   #------------------------------------------------------------------------------
   def new
+    authorize! :manage_events, @workshop
     @workshop_price = @workshop.workshop_prices.build(price_currency: @workshop.base_currency)
   end
 
   #------------------------------------------------------------------------------
   def edit
+    authorize! :manage_events, @workshop
   end
 
   #------------------------------------------------------------------------------
   def create
+    authorize! :manage_events, @workshop
     attributes = WorkshopPrice.prepare_prices(workshop_price_params.merge(price_currency: @workshop.base_currency))
     @workshop_price = @workshop.workshop_prices.new(attributes)
     if @workshop_price.save
@@ -31,6 +35,7 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update
+    authorize! :manage_events, @workshop
     attributes = WorkshopPrice.prepare_prices(workshop_price_params.merge(price_currency: @workshop.base_currency))
     if @workshop_price.update_attributes(attributes)
       redirect_to admin_workshop_workshop_prices_url(@workshop), notice: 'Price was successfully updated.'
@@ -41,6 +46,7 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def destroy
+    authorize! :manage_events, @workshop
     if @workshop_price.registrations.count == 0
       @workshop_price.destroy
       redirect_to admin_workshop_workshop_prices_url(@workshop), notice: 'Price was successfully deleted.'

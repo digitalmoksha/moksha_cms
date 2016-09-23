@@ -17,6 +17,7 @@ module DmCms
           #--- Admin
           if user.has_role?(:content_manager)
             can :manage_content, :all
+            can :access_media_library, :all
             can :access_admin, :all
           end
 
@@ -36,6 +37,9 @@ module DmCms
           can(:read, CmsPage)   { |page| page.is_published? }
         end
       end
+      
+      ::Ability.register_abilities(:dm_cms_abilities)
+      
     end
   end
 end

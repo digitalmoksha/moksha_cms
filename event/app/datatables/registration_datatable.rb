@@ -8,8 +8,10 @@ class RegistrationDatatable
   delegate :url_helpers, to: 'DmEvent::Engine.routes'
   
   #------------------------------------------------------------------------------
-  def initialize(view)
+  def initialize(view, user, permissions)
     @view = view
+    @user = user
+    @permissions = permissions
   end
 
   #------------------------------------------------------------------------------
@@ -32,8 +34,8 @@ private
         "<span style='white-space:nowrap;'>#{registration.receipt_code}</span>",
         name_and_avatar(registration),
         present(registration).balance_or_paid,
-        "<span style='white-space:nowrap;'>#{format_date(registration.created_at)}</span>",
-        (registration.user_profile.user ? present(registration.user_profile.user).last_access : colored_label('no user', :gray))
+        "<span class='date'>#{format_date(registration.created_at)}</span>",
+        "<span class='date'>#{(registration.user_profile.user ? present(registration.user_profile.user).last_access : colored_label('no user', :gray))}</span>"
       ]
     end
   end
@@ -46,13 +48,22 @@ private
   #------------------------------------------------------------------------------
   def name_and_avatar(registration)
     # image_tag(registration.user_profile.public_avatar_url(:sq35), width: 25, height: 25) + link_to(registration.full_name, url_helpers.edit_admin_registration_path(I18n.locale, registration))
-    link_to(registration.full_name, url_helpers.edit_admin_registration_path(I18n.locale, registration))
+    if @permissions[:manage_event_registrations]
+      link_to(registration.full_name, url_helpers.edit_admin_registration_path(I18n.locale, registration))
+    else
+      registration.full_name
+    end
   end
   
   #------------------------------------------------------------------------------
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
     registrations = @workshop.registrations.includes(:workshop_price, :user_profile => [:user => :current_site_profile]).references(:user_profiles).order("#{sort_column} #{sort_direction}")
+
+    if !@permissions[:manage_event_registrations] && !@permissions[:manage_event_finances]
+      # limit to your own registration if can only edit the workshop
+      registrations = registrations.where(user_profile_id: @user.user_profile.id)
+    end
     if params[:duplicates].present?
       #--- grab only registrations that have duplicates (based on the user_profile_id)
       grouped       = registrations.group(:user_profile_id)
@@ -70,10 +81,14 @@ private
   def registration_actions(registration)
     actions = ''
     actions += '<div class="btn-group">'
-      actions += "<button class='btn btn-xs dropdown-toggle btn-#{registration.current_state} hovertip' data-placement='right' data-toggle='dropdown' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'><i class='caret'></i></button>"
-      actions += '<ul class="dropdown-menu">'
-        actions += action_list(registration)
-      actions += '</ul>'
+      if @permissions[:manage_event_registrations]
+        actions += "<button class='btn btn-xs dropdown-toggle btn-#{registration.current_state} hovertip' data-placement='right' data-toggle='dropdown' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'><i class='caret'></i></button>"
+        actions += '<ul class="dropdown-menu">'
+          actions += action_list(registration)
+        actions += '</ul>'
+      else
+        actions += "<button class='btn btn-xs btn-#{registration.current_state} hovertip' data-placement='right' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'></button>"
+      end
     actions += '</div>'
   end
   

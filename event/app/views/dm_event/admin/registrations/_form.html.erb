@@ -165,11 +165,6 @@
           <% end %>
         <% end %>
 
-        <%= subsection title: 'Payment Reminders' do %>
-          <%= f.input :preferred_payment_reminder_hold_until, label: 'No reminder until', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'},
-                       hint: 'When sending reminders in batch, this persons reminder will not be sent unless after the specified date' %>
-        <% end %>
-        
         <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop), delete_url: [:admin, @registration], delete_confirm: 'Are you sure you wish to delete this registration?  Any associated payments will also be deleted!' %>
       <% end %>
     </div>
@@ -211,7 +206,15 @@
       <% end %>
       
       <%= subsection title: 'Payment Reminders' do %>
+        <%= simple_form_for @registration, url: admin_registration_path,
+              html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+          <%= f.input :preferred_payment_reminder_hold_until, label: 'No reminder until', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'},
+                       hint: 'When sending reminders in batch, this persons reminder will not be sent unless after the specified date' %>
       
+          <%= submit_or_cancel cancel: false %>
+        <% end %>
+        <hr/>
+
         <table class="table table-condensed table-gradient table-hover" style="margin-bottom: 20px;">
           <thead>
             <tr>

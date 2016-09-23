@@ -3,5 +3,4 @@
 # eager-loading it.  Prefer to keep the logic in the model folder.
 #------------------------------------------------------------------------------
 
-UserProfile.send(:include, DmEvent::Concerns::UserProfile)
-Ability.send(:include, DmEvent::Concerns::Ability)
+Ability.send(:include, DmNewsletter::Concerns::Ability)

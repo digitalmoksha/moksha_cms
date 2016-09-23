@@ -1,20 +1,22 @@
 module DmEvent
   module PermittedParams
 
+    # access to this is protected before the call
     #------------------------------------------------------------------------------
     def workshop_params
-      params.require(:workshop).permit! if can? :manage_events, :all
+      params.require(:workshop).permit!
     end
 
+    # access to this is protected before the call
     #------------------------------------------------------------------------------
     def workshop_price_params
-      params.require(:workshop_price).permit! if can? :manage_events, :all
+      params.require(:workshop_price).permit!
     end
 
     #------------------------------------------------------------------------------
-    def registration_params
+    def registration_params(workshop)
       return nil if params[:registration].nil? || params[:registration].empty?
-      if can? :manage_events, :all
+      if can?(:manage_event_registrations, @workshop)
         params.require(:registration).permit!
       else
         # nested attributes: because field_data can be either a single value or an array of values,
@@ -26,9 +28,10 @@ module DmEvent
       end
     end
 
+    # access to this is protected before the call
     #------------------------------------------------------------------------------
     def system_email_params
-      params.require(:system_email).permit! if can? :manage_events, :all
+      params.require(:system_email).permit!
     end
     
   end

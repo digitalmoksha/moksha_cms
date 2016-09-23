@@ -1,58 +1,62 @@
-<%= subsection title: 'Registration Statistics' do %>
-  <% num_registrations = workshop.registrations.count %>
-  <div class="block progress-statistics">
-    <% num = workshop.registrations.number_of(:attending) %>
-    <%= slim_progress_bar(label: 'Attending', value: "#{num} / #{num.percent_of(num_registrations).to_s}%", color: 'success', percentage: num.percent_of(num_registrations)) %>
-    <% if (num = workshop.registrations.number_of(:pending)) > 0 %>
-      <%= slim_progress_bar(label: 'Pending', value: "#{num}", color: 'pending', percentage: num.percent_of(num_registrations)) %>
-    <% end %>
-    <% num = workshop.registrations.number_of(:accepted) %>
-    <%= slim_progress_bar(label: 'Accepted', value: "#{num}", color: 'accepted', percentage: num.percent_of(num_registrations)) %>
-    <% num = workshop.registrations.number_of(:paid) %>
-    <%= slim_progress_bar(label: 'Paid', value: "#{num}", color: 'paid', percentage: num.percent_of(num_registrations)) %>
-    <% if (num = workshop.registrations.number_of(:waitlisted)) > 0 %>
-      <%= slim_progress_bar(label: 'Waitlisted', value: "#{num}", color: 'waitlisted', percentage: num.percent_of(num_registrations)) %>
-    <% end %>
-    <% if (num = workshop.registrations.number_of(:reviewing)) > 0 %>
-      <%= slim_progress_bar(label: 'Reviewing', value: "#{num}", color: 'reviewing', percentage: num.percent_of(num_registrations)) %>
-    <% end %>
-    <% if (num = workshop.registrations.number_of(:rejected)) > 0 %>
-      <%= slim_progress_bar(label: 'Rejected', value: "#{num}", color: 'rejected', percentage: num.percent_of(num_registrations)) %>
-    <% end %>
-    <% if (num = workshop.registrations.number_of(:canceled)) > 0 %>
-      <%= slim_progress_bar(label: 'Canceled', value: "#{num}", color: 'canceled', percentage: num.percent_of(num_registrations)) %>
-    <% end %>
-    <% if (num = workshop.registrations.number_of(:refunded)) > 0 %>
-      <%= slim_progress_bar(label: 'Refunded', value: "#{num}", color: 'refunded', percentage: num.percent_of(num_registrations)) %>
-    <% end %>
-    <% if (num = workshop.registrations.number_of(:noshow)) > 0 %>
-      <%= slim_progress_bar(label: 'No Show', value: "#{num}", color: 'noshow', percentage: num.percent_of(num_registrations)) %>
-    <% end %>
-  </div>
-<% end %>
-
-<% unless @workshop.workshop_prices.empty? %>
-  <%= subsection title: 'Price Distribution' do %>
-    <% financials = @workshop.financial_details(:summary) %>
-    <ul class="statistics statistics-small statistics-linear">
-      <li><%= stat_block_small label: 'Best', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'icon-coin', percent: 100 %></li>
-      <li><%= stat_block_small label: 'Worst (80%)', number: financials[:summary][:total_possible_worst].format(no_cents_if_whole: true), color_type: :warning, icon: 'icon-coin', percent: 80 %></li>
-      <li><%= stat_block_small label: 'Paid', number: financials[:summary][:total_paid].format(no_cents_if_whole: true), color_type: :success, icon: 'icon-coin', percent: financials[:summary][:total_paid_percent] %></li>
-    </ul>
-    <%= link_to 'Financial Details', financials_admin_workshop_url(@workshop) %>
-    <hr>
+<% if can?(:manage_event_registrations, @workshop) || can?(:manage_event_finances, @workshop) %>
+  <%= subsection title: 'Registration Statistics' do %>
+    <% num_registrations = workshop.registrations.count %>
     <div class="block progress-statistics">
-      <% num_attending = workshop.registrations.number_of(:attending) %>
-      <% workshop.registrations.number_of(:for_all_prices).each do |price_id, registration_count| %>
-        <% if price_id %>
-          <% price = WorkshopPrice.find_by_id(price_id ) %>
-          <%= slim_progress_bar(label: price.price_formatted, value: registration_count, color: 'success', 
-                  percentage: registration_count.percent_of(num_attending), bottom_label: price.price_description) %>
-        <% else %>
-          <%= slim_progress_bar(label: 'no pricing selected', value: registration_count, color: 'noshow', 
-                  percentage: registration_count.percent_of(num_attending), bottom_label: '') %>
-        <% end %>
+      <% num = workshop.registrations.number_of(:attending) %>
+      <%= slim_progress_bar(label: 'Attending', value: "#{num} / #{num.percent_of(num_registrations).to_s}%", color: 'success', percentage: num.percent_of(num_registrations)) %>
+      <% if (num = workshop.registrations.number_of(:pending)) > 0 %>
+        <%= slim_progress_bar(label: 'Pending', value: "#{num}", color: 'pending', percentage: num.percent_of(num_registrations)) %>
+      <% end %>
+      <% num = workshop.registrations.number_of(:accepted) %>
+      <%= slim_progress_bar(label: 'Accepted', value: "#{num}", color: 'accepted', percentage: num.percent_of(num_registrations)) %>
+      <% num = workshop.registrations.number_of(:paid) %>
+      <%= slim_progress_bar(label: 'Paid', value: "#{num}", color: 'paid', percentage: num.percent_of(num_registrations)) %>
+      <% if (num = workshop.registrations.number_of(:waitlisted)) > 0 %>
+        <%= slim_progress_bar(label: 'Waitlisted', value: "#{num}", color: 'waitlisted', percentage: num.percent_of(num_registrations)) %>
+      <% end %>
+      <% if (num = workshop.registrations.number_of(:reviewing)) > 0 %>
+        <%= slim_progress_bar(label: 'Reviewing', value: "#{num}", color: 'reviewing', percentage: num.percent_of(num_registrations)) %>
+      <% end %>
+      <% if (num = workshop.registrations.number_of(:rejected)) > 0 %>
+        <%= slim_progress_bar(label: 'Rejected', value: "#{num}", color: 'rejected', percentage: num.percent_of(num_registrations)) %>
+      <% end %>
+      <% if (num = workshop.registrations.number_of(:canceled)) > 0 %>
+        <%= slim_progress_bar(label: 'Canceled', value: "#{num}", color: 'canceled', percentage: num.percent_of(num_registrations)) %>
+      <% end %>
+      <% if (num = workshop.registrations.number_of(:refunded)) > 0 %>
+        <%= slim_progress_bar(label: 'Refunded', value: "#{num}", color: 'refunded', percentage: num.percent_of(num_registrations)) %>
+      <% end %>
+      <% if (num = workshop.registrations.number_of(:noshow)) > 0 %>
+        <%= slim_progress_bar(label: 'No Show', value: "#{num}", color: 'noshow', percentage: num.percent_of(num_registrations)) %>
       <% end %>
     </div>
+  <% end %>
+<% end %>
+
+<% if can?(:manage_event_finances, @workshop) %>
+  <% unless @workshop.workshop_prices.empty? %>
+    <%= subsection title: 'Price Distribution' do %>
+      <% financials = @workshop.financial_details(:summary) %>
+      <ul class="statistics statistics-small statistics-linear">
+        <li><%= stat_block_small label: 'Best', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'icon-coin', percent: 100 %></li>
+        <li><%= stat_block_small label: 'Worst (80%)', number: financials[:summary][:total_possible_worst].format(no_cents_if_whole: true), color_type: :warning, icon: 'icon-coin', percent: 80 %></li>
+        <li><%= stat_block_small label: 'Paid', number: financials[:summary][:total_paid].format(no_cents_if_whole: true), color_type: :success, icon: 'icon-coin', percent: financials[:summary][:total_paid_percent] %></li>
+      </ul>
+      <%= link_to 'Financial Details', financials_admin_workshop_url(@workshop) %>
+      <hr>
+      <div class="block progress-statistics">
+        <% num_attending = workshop.registrations.number_of(:attending) %>
+        <% workshop.registrations.number_of(:for_all_prices).each do |price_id, registration_count| %>
+          <% if price_id %>
+            <% price = WorkshopPrice.find_by_id(price_id ) %>
+            <%= slim_progress_bar(label: price.price_formatted, value: registration_count, color: 'success', 
+                    percentage: registration_count.percent_of(num_attending), bottom_label: price.price_description) %>
+          <% else %>
+            <%= slim_progress_bar(label: 'no pricing selected', value: registration_count, color: 'noshow', 
+                    percentage: registration_count.percent_of(num_attending), bottom_label: '') %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
