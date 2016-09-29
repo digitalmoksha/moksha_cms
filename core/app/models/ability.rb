@@ -8,7 +8,7 @@ class Ability
 
   #------------------------------------------------------------------------------
   def initialize(user)
-    @user_roles = user.roles.all
+    @user_roles = user.roles.all if user
     @@registered_abilities.each {|method| self.send method, user}
     
     dm_core_abilities(user)
