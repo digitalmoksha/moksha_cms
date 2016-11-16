@@ -5,6 +5,14 @@
     <%= present(@blog).label_published %>
     <%= link_to icon_label(:view, 'View'),  blog_show_url(@blog),   class: "btn btn-xs btn-default", title: 'View', target: '_blank' %>
     <%= link_to(icon_label(:edit, 'Edit'),    [:edit, :admin, @blog], class: "btn btn-xs btn-default", title: 'Edit') %>
+    <% if can?(:manage_content, :all) %>
+      <div class="btn-group">
+        <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right icons-right">
+          <li><%= link_to label_icon('Permissions', 'icon-lock'), permissions_admin_cms_blog_path(@blog) %></li>
+        </ul>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
 

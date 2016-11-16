@@ -43,7 +43,11 @@
                hint: 'Text used when a page liked on Facebook.  Is not visible on the page'%>
       <% end %>
     <% end %>
-    <%= submit_or_cancel cancel_url: {action: :show, id: @current_page}, delete: 'Delete Page', delete_url: admin_cms_page_path(@current_page), delete_confirm: 'Are you sure you wish to delete this page?' %>
+    <% if can? :manage_content, :all %>
+      <%= submit_or_cancel cancel_url: {action: :show, id: @current_page}, delete: 'Delete Page', delete_url: admin_cms_page_path(@current_page), delete_confirm: 'Are you sure you wish to delete this page?' %>
+    <% else %>
+      <%= submit_or_cancel cancel_url: {action: :show, id: @current_page} %>
+    <% end %>
 
   <% end %>
 

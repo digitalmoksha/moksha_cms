@@ -6,15 +6,18 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
   
   #------------------------------------------------------------------------------
   def new
+    authorize! :manage_content, @blog
     @post = @blog.posts.build(comments_allowed: @blog.comments_allowed)
   end
 
   #------------------------------------------------------------------------------
   def edit
+    authorize! :manage_content, @blog
   end
 
   #------------------------------------------------------------------------------
   def create
+    authorize! :manage_content, @blog
     @post = @blog.posts.new(cms_post_params)
 
     if @post.save
@@ -26,6 +29,7 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update
+    authorize! :manage_content, @blog
     if @post.update_attributes(cms_post_params)
       redirect_to admin_cms_blog_url(@blog), notice: 'Post was successfully updated.'
     else
@@ -35,12 +39,14 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def destroy
+    authorize! :manage_content, @blog
     @post.destroy
     redirect_to admin_cms_blog_url(@blog), notice: 'Post was successfully deleted.'
   end
   
   #------------------------------------------------------------------------------
   def send_notifications_emails
+    authorize! :manage_content, @blog
     status = @post.send_notification_emails(params[:test] ? current_user : nil)
     if params[:test] && status == 0
       redirect_to admin_cms_blog_url(@blog), error: "Unable to send test email"

@@ -16,13 +16,29 @@ module DmCms
         if user
           #--- Admin
           if user.has_role?(:content_manager)
+            can :access_content_section, :all
             can :manage_content, :all
             can :access_media_library, :all
             can :access_admin, :all
+          elsif user.has_role?(:content_manager_alacarte)
+            # allowed to access the backend content section
+            can :access_content_section, :all
+            can :access_admin, :all
+
+            # can edit a page
+            manage_page_ids = @user_roles.select {|r| r.name == 'manage_content' && r.resource_type == 'CmsPage'}.map(&:resource_id)
+            can :manage_content, CmsPage, id: manage_page_ids
+            can(:access_media_library, :all) unless manage_page_ids.empty?
+            
+            # can edit a blog
+            manage_blog_ids = @user_roles.select {|r| r.name == 'manage_content' && r.resource_type == 'CmsBlog'}.map(&:resource_id)
+            can :manage_content, CmsBlog, id: manage_blog_ids
+            can :read, CmsBlog, id: manage_blog_ids
+            can(:access_media_library, :all) unless manage_blog_ids.empty?
           end
 
           #--- Blog
-          can(:read, CmsBlog)   { |blog| blog.can_be_read_by?(user) }
+          can(:read,  CmsBlog)  { |blog| blog.can_be_read_by?(user) }
           can(:reply, CmsBlog)  { |blog| blog.can_be_replied_by?(user) }
           # can :moderate, CmsBlog, :id => CmsBlog.published.with_role(:moderator, user).map(&:id)
           

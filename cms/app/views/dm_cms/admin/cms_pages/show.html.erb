@@ -4,6 +4,14 @@
   <%= page_header_buttons do %>
     <%= link_to icon_label(:new, 'Add Content'), new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block', class: 'btn btn-xs btn-default' %>
     <%= link_to icon_label(:view, 'View Page'), url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', class: 'btn btn-xs btn-default', target: '_blank' %>
+    <% if can?(:manage_content, :all) %>
+      <div class="btn-group">
+        <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right icons-right">
+          <li><%= link_to label_icon('Permissions', 'icon-lock'), permissions_admin_cms_page_path(@current_page) %></li>
+        </ul>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
 

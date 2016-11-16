@@ -5,7 +5,7 @@ protected
 
   #------------------------------------------------------------------------------
   def authorize_access
-    unless can?(:manage_content, :all)
+    unless can?(:access_content_section, :all)
       flash[:alert] = "Unauthorized Access!"
       redirect_to current_account.index_path 
     end

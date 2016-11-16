@@ -21,7 +21,7 @@ class DmCore::Admin::AdminController < ApplicationController
   #------------------------------------------------------------------------------
   def authenticate_admin_user!
     authenticate_user! 
-    unless can?(:access_event_section, :all) || can?(:access_admin, :all)
+    unless can?(:access_admin, :all)
       flash[:alert] = "Unauthorized Access!"
       redirect_to current_account.index_path 
     end
@@ -77,7 +77,7 @@ private
       @admin_theme[:main_menu] << {text: 'Dashboard', icon_class: :dashboard, link: dm_core.admin_dashboard_path, active: admin_path_active_class?(dm_core.admin_dashboard_path) }
 
       if defined?(DmCms)
-        if can?(:manage_content, :all)
+        if can?(:access_content_section, :all)
           @admin_theme[:main_menu] << {text: 'Pages',         icon_class: :pages,         link: dm_cms.admin_cms_pages_path,   active: admin_path_active_class?(dm_cms.admin_cms_pages_path, dm_cms.admin_cms_snippets_path) }
           @admin_theme[:main_menu] << {text: 'Blogs',         icon_class: :blogs,         link: dm_cms.admin_cms_blogs_path,   active: admin_path_active_class?(dm_cms.admin_cms_blogs_path) }
         end

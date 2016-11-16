@@ -1,0 +1,54 @@
+<% content_for :content_title, "Permissions" %>
+<% content_for :content_subtitle, "#{@blog.title}" %>
+
+<div class="row">
+  <div class="col-md-8">
+    <%= panel body: false, title: "Permissions" do %>
+      <div class="panel-body">
+        <p>The users below can be granted access to this particular blog.</p>
+  
+        <% @content_managers_alacarte.each do |user| %>
+          <div class="row">
+            <div class="col-md-12">
+              <%= subsection title: user.full_name do %>
+                <% manage_content_state = user.has_role?(:manage_content, @blog) ? 'btn-success active' : 'btn-default' %>
+                <%= link_to 'Manage Blog', dm_cms.ajax_toggle_permission_admin_cms_blog_path(@blog, user.id, :manage_content), class: "permission_btn btn btn-xs #{manage_content_state}", role: 'button', remote: true, method: :patch %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <%= panel body: false, title: "Conent Managers" do %>
+      <div class="panel-body">
+        <p>Current users that can fully manage blogs</p>
+      </div>
+  
+      <table class="table table-bordered table-condensed table-striped">
+        <tbody>
+          <% @content_managers.each do |user| %>
+            <tr>
+              <td><%= user.full_name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
+<script>
+$(document).ready(function() {
+  $('.permission_btn').on("ajax:success", function(e, content) {
+    if ($(this).is(".active")) {
+      $(this).addClass("btn-default");
+      $(this).removeClass("active").removeClass("btn-success");
+    } else {
+      $(this).addClass("active").addClass("btn-success");
+      $(this).removeClass("btn-default");
+    }
+  });
+});
+</script

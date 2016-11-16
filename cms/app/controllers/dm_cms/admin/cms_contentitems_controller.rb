@@ -8,12 +8,14 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def new_content
+    authorize! :manage_content, @current_page
     @cms_contentitem        = CmsContentitem.new
     @cms_contentitem.container  = 'body'
   end
 
   #------------------------------------------------------------------------------
   def create_content
+    authorize! :manage_content, @current_page
     @cms_contentitem = @current_page.cms_contentitems.new(cms_contentitem_params)
     if @cms_contentitem.save
       redirect_to admin_cms_page_url(@current_page), notice: 'Content successfully created.'
@@ -24,10 +26,12 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def edit
+    authorize! :manage_content, @current_page
   end
 
   #------------------------------------------------------------------------------
   def update
+    authorize! :manage_content, @current_page
     if @cms_contentitem.update_attributes(cms_contentitem_params)
       redirect_to edit_admin_cms_contentitem_url(@cms_contentitem), notice: 'Content updated'
      else
@@ -37,12 +41,14 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def destroy
+    authorize! :manage_content, @current_page
     @cms_contentitem.destroy
     redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
   end
 
   #------------------------------------------------------------------------------
   def update_fragment
+    authorize! :manage_content, @current_page
     if @cms_contentitem.update_attributes(cms_contentitem_params)
       #@cms_page.merge!(@item.cms_page.get_page_render_values)
       #respond_to do |format| 
@@ -53,12 +59,14 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def move_up
+    authorize! :manage_content, @current_page
     @cms_contentitem.update_attributes(row_order_position: :up)
     redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
   end
 
   #------------------------------------------------------------------------------
   def move_down
+    authorize! :manage_content, @current_page
     @cms_contentitem.update_attributes(row_order_position: :down)
     redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
   end

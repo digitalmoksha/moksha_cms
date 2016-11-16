@@ -6,14 +6,16 @@
         <a href="#" class="tree_expand"></a>
       <% end %>
       <% if item.divider? %>
-        <%= link_to "&mdash; #{item.menutitle} &mdash;".html_safe, :action => :show, :id => item %>
+        <% item_title = "&mdash; #{item.menutitle} &mdash;".html_safe %>
+        <%= can?(:manage_content, item) ? link_to(item_title, :action => :show, :id => item) : item_title %>
       <% else %>
-        <%= link_to (item.title.blank? ? item.slug : item.title), :action => :show, :id => item %>
+        <% item_title = (item.title.blank? ? item.slug : item.title) %>
+        <%= can?(:manage_content, item) ? link_to(item_title, :action => :show, :id => item) : item_title %>
       <% end %>
     </dt>
     <dd><%= present(item).label_published %></dd>
     <dd>
-      <%= link_to "New Child", new_page_admin_cms_page_path(item) %>
+      <%= link_to "New Child", new_page_admin_cms_page_path(item) if can? :manage_content, :all %>
     </dd>
   </dl>
   <%= (sub_items.blank? ? '' : content_tag(:ul, nested_tree(sub_items), :class => 'sub_tree', :style => ((item.is_root? || open_or_closed == 'tree_open') ? '' : 'display:none'))) %>
