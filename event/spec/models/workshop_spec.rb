@@ -10,10 +10,6 @@ describe Workshop, :type => :model do
 
     #------------------------------------------------------------------------------
     it "sets price correctly" do
-      # demonstrate that WorkshopPrice initializes with incorrect currency by default
-      workshop_price = workshop.workshop_prices.new('price' => '11000', 'price_currency' => 'JPY')
-      expect(workshop_price.price).not_to eq(Money.new(11000, 'JPY'))
-
       attributes = WorkshopPrice.prepare_prices('price' => '11000', 'price_currency' => 'JPY',
                                                 'alt1_price' => '500', 'alt1_price_currency' => 'EUR',
                                                 'alt2_price' => '30000', 'alt2_price_currency' => 'USD')
