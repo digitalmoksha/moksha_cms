@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128154136) do
+ActiveRecord::Schema.define(version: 20160821150124) do
 
   create_table "cms_blog_translations", force: :cascade do |t|
     t.integer  "cms_blog_id"
@@ -385,8 +385,13 @@ ActiveRecord::Schema.define(version: 20160128154136) do
     t.text     "payment_reminder_history"
   end
 
+  add_index "ems_registrations", ["account_id"], name: "index_ems_registrations_on_account_id"
+  add_index "ems_registrations", ["payment_comment_id"], name: "index_ems_registrations_on_payment_comment_id"
   add_index "ems_registrations", ["receipt_code"], name: "receipt_code_key"
+  add_index "ems_registrations", ["user_profile_id"], name: "index_ems_registrations_on_user_profile_id"
   add_index "ems_registrations", ["uuid"], name: "index_ems_registrations_on_uuid"
+  add_index "ems_registrations", ["workshop_id"], name: "index_ems_registrations_on_workshop_id"
+  add_index "ems_registrations", ["workshop_price_id"], name: "index_ems_registrations_on_workshop_price_id"
 
   create_table "ems_workshop_price_translations", force: :cascade do |t|
     t.integer  "ems_workshop_price_id"
@@ -397,6 +402,8 @@ ActiveRecord::Schema.define(version: 20160128154136) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "ems_workshop_price_translations", ["ems_workshop_price_id"], name: "index_ems_workshop_price_translations_on_ems_workshop_price_id"
 
   create_table "ems_workshop_prices", force: :cascade do |t|
     t.integer  "workshop_id"
@@ -419,6 +426,9 @@ ActiveRecord::Schema.define(version: 20160128154136) do
     t.datetime "updated_at"
   end
 
+  add_index "ems_workshop_prices", ["account_id"], name: "index_ems_workshop_prices_on_account_id"
+  add_index "ems_workshop_prices", ["workshop_id"], name: "index_ems_workshop_prices_on_workshop_id"
+
   create_table "ems_workshop_translations", force: :cascade do |t|
     t.integer  "ems_workshop_id"
     t.string   "locale"
@@ -429,6 +439,8 @@ ActiveRecord::Schema.define(version: 20160128154136) do
     t.text     "sidebar"
     t.text     "summary"
   end
+
+  add_index "ems_workshop_translations", ["ems_workshop_id"], name: "index_ems_workshop_translations_on_ems_workshop_id"
 
   create_table "ems_workshops", force: :cascade do |t|
     t.string   "slug"
@@ -457,8 +469,11 @@ ActiveRecord::Schema.define(version: 20160128154136) do
     t.boolean  "payments_enabled"
     t.boolean  "show_address"
     t.string   "image"
+    t.boolean  "bcc_contact_email",              default: false
   end
 
+  add_index "ems_workshops", ["account_id"], name: "index_ems_workshops_on_account_id"
+  add_index "ems_workshops", ["country_id"], name: "index_ems_workshops_on_country_id"
   add_index "ems_workshops", ["slug"], name: "workshopname_key"
 
   create_table "follows", force: :cascade do |t|

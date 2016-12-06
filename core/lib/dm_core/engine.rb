@@ -43,6 +43,8 @@ module DmCore
     end
     
     config.before_initialize do
+      # make sure the ability.rb file is loaded initially - this was a problem when running specs
+      require File.expand_path("../../../app/models/ability.rb", __FILE__)
       DmCore.initialize_configuration
     end
   end

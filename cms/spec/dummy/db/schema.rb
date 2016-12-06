@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128134523) do
+ActiveRecord::Schema.define(version: 20160821150110) do
 
   create_table "cms_blog_translations", force: :cascade do |t|
     t.integer  "cms_blog_id"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20160128134523) do
     t.string   "image_email_header"
   end
 
+  add_index "cms_blogs", ["account_id"], name: "index_cms_blogs_on_account_id"
+  add_index "cms_blogs", ["owner_id"], name: "index_cms_blogs_on_owner_id"
   add_index "cms_blogs", ["published"], name: "cms_blogs_published_index"
   add_index "cms_blogs", ["slug"], name: "blogname_key"
 
@@ -92,7 +94,9 @@ ActiveRecord::Schema.define(version: 20160128134523) do
     t.integer  "account_id"
   end
 
+  add_index "cms_media_files", ["account_id"], name: "index_cms_media_files_on_account_id"
   add_index "cms_media_files", ["media", "folder", "account_id"], name: "index_media_folder_account_id", unique: true
+  add_index "cms_media_files", ["user_id"], name: "index_cms_media_files_on_user_id"
 
   create_table "cms_page_translations", force: :cascade do |t|
     t.integer  "cms_page_id"
@@ -159,6 +163,8 @@ ActiveRecord::Schema.define(version: 20160128134523) do
     t.boolean  "comments_allowed"
   end
 
+  add_index "cms_posts", ["account_id"], name: "index_cms_posts_on_account_id"
+  add_index "cms_posts", ["cms_blog_id"], name: "index_cms_posts_on_cms_blog_id"
   add_index "cms_posts", ["published_on"], name: "cms_posts_published_index"
   add_index "cms_posts", ["slug"], name: "postname_key"
 

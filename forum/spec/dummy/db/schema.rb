@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128144313) do
+ActiveRecord::Schema.define(version: 20160821150127) do
 
   create_table "cms_blog_translations", force: :cascade do |t|
     t.integer  "cms_blog_id"
@@ -369,6 +369,8 @@ ActiveRecord::Schema.define(version: 20160128144313) do
     t.text     "tagline"
   end
 
+  add_index "fms_forum_sites", ["account_id"], name: "index_fms_forum_sites_on_account_id"
+
   create_table "fms_forum_topics", force: :cascade do |t|
     t.integer  "account_id"
     t.integer  "forum_id"
@@ -390,6 +392,11 @@ ActiveRecord::Schema.define(version: 20160128144313) do
   add_index "fms_forum_topics", ["account_id", "forum_id", "slug"], name: "index_fms_forum_topics_on_account_id_and_forum_id_and_slug"
   add_index "fms_forum_topics", ["account_id", "last_updated_at", "forum_id"], name: "index_forum_topics_last_updated_at_forum_id"
   add_index "fms_forum_topics", ["account_id", "sticky", "last_updated_at", "forum_id"], name: "index_forum_topics_sticky_last_updated_at_forum_id"
+  add_index "fms_forum_topics", ["forum_id"], name: "index_fms_forum_topics_on_forum_id"
+  add_index "fms_forum_topics", ["forum_site_id"], name: "index_fms_forum_topics_on_forum_site_id"
+  add_index "fms_forum_topics", ["last_forum_comment_id"], name: "index_fms_forum_topics_on_last_forum_comment_id"
+  add_index "fms_forum_topics", ["last_user_id"], name: "index_fms_forum_topics_on_last_user_id"
+  add_index "fms_forum_topics", ["user_id"], name: "index_fms_forum_topics_on_user_id"
 
   create_table "fms_forums", force: :cascade do |t|
     t.integer "account_id"
@@ -411,6 +418,9 @@ ActiveRecord::Schema.define(version: 20160128144313) do
   end
 
   add_index "fms_forums", ["account_id", "slug"], name: "index_fms_forums_on_account_id_and_slug"
+  add_index "fms_forums", ["forum_category_id"], name: "index_fms_forums_on_forum_category_id"
+  add_index "fms_forums", ["forum_site_id"], name: "index_fms_forums_on_forum_site_id"
+  add_index "fms_forums", ["owner_id"], name: "index_fms_forums_on_owner_id"
 
   create_table "follows", force: :cascade do |t|
     t.integer  "followable_id",                   null: false
