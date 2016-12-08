@@ -78,6 +78,28 @@ describe Registration, :type => :model do
       expect(workshop.workshop_prices.empty?).to be true
       expect(registration.payment_owed).to eq Money.new(0, 'EUR')
     end
+  end
+  
+  #------------------------------------------------------------------------------
+  it 'knows if a non-recurring payment is past due' do
+    workshop      = create :workshop_with_price
+    registration  = create :registration, workshop: workshop, created_at: 3.days.ago
+    expect(registration.past_due?).to eq false
+
+    registration  = create :registration, workshop: workshop, created_at: 8.days.ago
+    expect(registration.past_due?).to eq true
+
+    registration  = create :registration, workshop: workshop, created_at: Time.now
+    expect(registration.past_due?).to eq false
     
+    registration  = create :registration, workshop: workshop, created_at: 8.days.ago, amount_paid_cents: 10000
+    expect(registration.past_due?).to eq true
+  end
+
+  #------------------------------------------------------------------------------
+  it 'knows if a recurring payment is past due' do
+    workshop      = create :workshop_with_recurring_price
+    registration  = create :registration, workshop: workshop, created_at: 3.days.ago
+    expect(registration.past_due?).to eq true
   end
 end

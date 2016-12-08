@@ -185,7 +185,17 @@ public
     # if workshop_price.recurring?
     #   if 
   end
-  
+
+  #------------------------------------------------------------------------------
+  def past_due?
+    return false if !balance_owed.positive?
+    if workshop_price.recurring_payments?
+      # if amount paid > what should be payed by now
+    else
+      return Date.today > (self.created_at + 7.days)
+    end
+  end
+
   # Setup the columns for exporting data as csv.
   #------------------------------------------------------------------------------
   def self.csv_columns(workshop)
@@ -202,9 +212,7 @@ public
     column_definitions <<     ["State",             "item.state.capitalize"]
     column_definitions <<     ["Zipcode",           "item.zipcode"]
     column_definitions <<     ["Country",           "item.country.code"]
-
     column_definitions <<     ['Registered on',     'item.created_at.to_date', 75, {type: 'DateTime', numberformat: 'd mmm, yyyy'}]
-
     column_definitions <<     ["Price",             "item.workshop_price.price.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
     column_definitions <<     ["Price Description", "item.workshop_price.price_description"]
     column_definitions <<     ["Price Sub Descr",   "item.workshop_price.sub_description"]
