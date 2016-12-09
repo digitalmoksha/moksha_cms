@@ -29,7 +29,7 @@ module DeviseHelper
     return '' unless Rails.application.secrets[:recaptcha_site_key]
     error = flash[:recaptcha_error] ? "<span class='help-inline'>#{flash[:recaptcha_error]}</span>" : ''
     html  = <<-HTML
-    <div class="control-group #{'error' if flash[:recaptcha_error]}">
+    <div class="form-horizontal control-group #{'error' if flash[:recaptcha_error]}">
       <div class="controls">
         #{recaptcha_tags(site_key: Rails.application.secrets[:recaptcha_site_key], hl: I18n.locale)}
         #{error}
