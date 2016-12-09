@@ -1,6 +1,7 @@
 require 'csv'
 
 require 'devise'
+require 'recaptcha/rails'
 require 'rolify'
 require 'cancan'
 require 'globalize'
