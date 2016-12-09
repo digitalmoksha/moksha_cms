@@ -100,3 +100,9 @@ ja:
 #        one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} つのエラーにより %{resource} は保存されませんでした:"
 #        other: "%{count} errors prohibited this %{resource} from being saved:"
+  recaptcha:
+    errors:
+#      verification_failed: 'Human verification failed, please try again'
+      verification_failed: '人間の確認に失敗しました。もう一度お試しください'
+#      recaptcha_unreachable: 'Human verification timed out'
+      recaptcha_unreachable: '人間の検証がタイムアウトしました'

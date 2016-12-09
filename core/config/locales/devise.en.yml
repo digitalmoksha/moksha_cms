@@ -57,3 +57,7 @@ en:
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} errors prohibited this %{resource} from being saved:"
+  recaptcha:
+    errors:
+      verification_failed: 'Human verification failed, please try again'
+      recaptcha_unreachable: 'Human verification timed out'

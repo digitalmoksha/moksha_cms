@@ -58,3 +58,7 @@ de:
       not_saved:
         one: "Konnte %{resource} nicht speichern: ein Fehler."
         other: "Konnte %{resource} nicht speichern: %{count} Fehler."
+  recaptcha:
+    errors:
+      verification_failed: 'Menschliche Überprüfung fehlgeschlagen. Bitte versuche es erneut'
+      recaptcha_unreachable: 'Menschliche Überprüfung zeitlich begrenzt'

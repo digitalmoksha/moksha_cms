@@ -3,20 +3,19 @@
 class DmCore::ApplicationController < ActionController::Base
   include DmCore::PermittedParams
   
-  around_filter   :scope_current_account
-
   before_filter   :log_additional_data
   # before_filter   :record_activity
   before_filter   :check_site_assets
-  before_filter   :set_locale
+  before_filter   :site_enabled?, :unless => :devise_controller?
   before_filter   :set_mailer_url_options
   before_filter   :update_user
-  before_filter   :theme_resolver
-  before_filter   :site_enabled?, :unless => :devise_controller?
-  before_filter   :ssl_redirect
   before_filter   :store_location
   before_filter   :set_cache_buster
-  before_filter   :configure_permitted_parameters, if: :devise_controller?
+
+  prepend_before_filter   :ssl_redirect
+  prepend_before_filter   :theme_resolver
+  prepend_before_filter   :set_locale
+  prepend_around_filter   :scope_current_account
 
   add_flash_types :warning, :error, :info
 
@@ -29,15 +28,6 @@ class DmCore::ApplicationController < ActionController::Base
 
 protected
 
-  # hook into devise to permit our special parameters
-  #------------------------------------------------------------------------------
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u|
-      devise_sign_up_params(u)
-    }
-  end
-
-  
   # Nov 27, 2013: There seems to be a nasty Safari 7 bug (and in iOS7).  If a 304 is returned,
   # an empty page can be cached, resulting in a blank page.
   # http://tech.vg.no/2013/10/02/ios7-bug-shows-white-page-when-getting-304-not-modified-from-server/

@@ -68,3 +68,7 @@ cs:
         subject: 'Instrukce k nastavení nového hesla'
       unlock_instructions:
         subject: 'Instrukce k odemknutí účtu'
+  recaptcha:
+    errors:
+      verification_failed: 'Human verification se nezdařilo, zkuste to znovu'
+      recaptcha_unreachable: 'Human verification vypršel'

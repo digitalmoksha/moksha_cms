@@ -55,3 +55,7 @@ fi:
       not_saved:
         one: "1 virhe esti %{resource} tallentamisen:"
         other: "%{count} virhettä esti %{resource} tallentamisen:"
+  recaptcha:
+    errors:
+      verification_failed: 'Ihmisen todentaminen epäonnistui, yritä uudelleen'
+      recaptcha_unreachable: 'Ihmisen todentaminen aikakatkaistiin'
