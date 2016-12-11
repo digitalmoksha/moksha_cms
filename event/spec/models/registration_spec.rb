@@ -100,6 +100,18 @@ describe Registration, :type => :model do
   it 'knows if a recurring payment is past due' do
     workshop      = create :workshop_with_recurring_price
     registration  = create :registration, workshop: workshop, created_at: 3.days.ago
+    expect(registration.past_due?).to eq false
+
+    registration  = create :registration, workshop: workshop, created_at: 8.days.ago
     expect(registration.past_due?).to eq true
+
+    registration  = create :registration, workshop: workshop, created_at: 25.days.ago, amount_paid_cents: 10000
+    expect(registration.past_due?).to eq false
   end
+  
+  #------------------------------------------------------------------------------
+  it 'non-recurring payment reminder due'
+  
+  #------------------------------------------------------------------------------
+  it 'recurring payment reminder due'
 end

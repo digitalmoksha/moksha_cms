@@ -53,7 +53,7 @@ class WorkshopPrice < ActiveRecord::Base
   
   #------------------------------------------------------------------------------
   def visible?
-    !(disabled? || (!valid_starting_on.nil? && valid_starting_on > Time.now.to_date) || (!valid_until.nil? && valid_until < Time.now.to_date))
+    !(disabled? || (!valid_starting_on.nil? && valid_starting_on > Date.today) || (!valid_until.nil? && valid_until < Date.today))
   end
  
   # If the total_available is nil, then there are unlimited tickets to be sold.  
@@ -87,12 +87,23 @@ class WorkshopPrice < ActiveRecord::Base
     if recurring_payments?
       (0...recurring_number).each do |period|
         xdays = period * recurring_period
-        schedule << (from_date ? from_date + xdays.days : xdays)
+        schedule << {due_on: (from_date ? from_date + xdays.days : xdays),
+                     period_payment: payment_price,
+                     total_due: (period + 1) * payment_price}
       end
+      # adjust the last entry
+      schedule.last[:total_due] = price
+      schedule.last[:period_payment] = price - (recurring_number - 1) * payment_price
     else
-      schedule << (from_date ? from_date : 0)
+      schedule << {due_on: (from_date ? from_date : 0), period_payment: payment_price, total_due: payment_price}
     end
     schedule
+  end
+
+  # return the payment schedule entry that is before the specified date
+  #------------------------------------------------------------------------------
+  def specific_payment_schedule(from_date, on_date = Date.today)
+    payment_schedule(from_date).reverse.detect {|item| item[:due_on] <= on_date}
   end
 
   # return list of currencies used, in a format for a dropdown list

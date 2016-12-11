@@ -186,14 +186,21 @@ public
     #   if 
   end
 
+  # past due means they haven't paid what they should have paid by now
   #------------------------------------------------------------------------------
   def past_due?
     return false if !balance_owed.positive?
     if workshop_price.recurring_payments?
-      # if amount paid > what should be payed by now
+      return amount_paid < recurring_what_should_be_paid_by_now(7)
     else
       return Date.today > (self.created_at + 7.days)
     end
+  end
+
+  #------------------------------------------------------------------------------
+  def recurring_what_should_be_paid_by_now(grace_period_in_days = 7)
+    entry = workshop_price.specific_payment_schedule(self.created_at + grace_period_in_days.days, Date.today)
+    entry ? entry[:total_due] : 0
   end
 
   # Setup the columns for exporting data as csv.

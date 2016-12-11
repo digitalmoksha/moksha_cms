@@ -109,13 +109,28 @@ describe WorkshopPrice, :type => :model do
     it 'has a one day payment schedule for non-recurring' do
       workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'))
       start_day       = 3.days.ago.to_date
-      expect(workshop_price.payment_schedule).to eq [0]
-      expect(workshop_price.payment_schedule(start_day)).to eq [start_day]
+      expect(workshop_price.payment_schedule).to eq [{due_on: 0, period_payment: Money.new(500, 'USD'), total_due: Money.new(500, 'USD')}]
+      expect(workshop_price.payment_schedule(start_day)).to eq [{due_on: start_day, period_payment: Money.new(500, 'USD'), total_due: Money.new(500, 'USD')}]
 
       workshop_price.recurring_number = 3
       workshop_price.recurring_period = 30
-      expect(workshop_price.payment_schedule).to eq [0, 30, 60]
-      expect(workshop_price.payment_schedule(start_day)).to eq [start_day, start_day + 30.days, start_day + 60.days]
+      expect(workshop_price.payment_schedule).to eq [
+        {due_on: 0,  period_payment: Money.new(167, 'USD'), total_due: Money.new(167, 'USD')},
+        {due_on: 30, period_payment: Money.new(167, 'USD'), total_due: Money.new(334, 'USD')},
+        {due_on: 60, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')}]
+
+      expect(workshop_price.payment_schedule(start_day)).to eq [
+        {due_on: start_day,           period_payment: Money.new(167, 'USD'), total_due: Money.new(167, 'USD')},
+        {due_on: start_day + 30.days, period_payment: Money.new(167, 'USD'), total_due: Money.new(334, 'USD')},
+        {due_on: start_day + 60.days, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')}]
+    end
+    
+    #------------------------------------------------------------------------------
+    it 'returns the scheudled payment entry for a date' do
+      workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'), recurring_number: 3, recurring_period: 30)
+      start_day       = 3.days.ago.to_date
+      expect(workshop_price.specific_payment_schedule(start_day, 5.days.from_now)).to eq({due_on: start_day, period_payment: Money.new(167, 'USD'), total_due: Money.new(167, 'USD')})
+      expect(workshop_price.specific_payment_schedule(start_day, 95.days.from_now)).to eq({due_on: start_day + 60.days, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')})
     end
   end
 end
