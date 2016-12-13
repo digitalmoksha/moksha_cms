@@ -85,27 +85,34 @@
   </div>
 </div>
 
-<% unpaid = @workshop.registrations.unpaid.order('payment_reminder_sent_on ASC') %>
 <% toolbar = toolbar_btn('Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
-<%= panel body: false, title: "#{unpaid.count} Unpaid Participants", toolbar: toolbar do %>
+<%= panel body: false, title: "#{@unpaid.count} Unpaid Participants", toolbar: toolbar do %>
+  <div class="panel-body">
+    <p>Shows those that have missed their payment (either a full payment, or a recurring payment).  If they have made all the payments 
+    up to this point in time, they are not listed.</p>
+    <p>You can send them a payment reminder email at any time using the <em>Send</em> button.  A line is marked in blue if we have detected that
+      they should be sent a payment reminder. <em>Send Payment Reminders</em> will send the email to all persons marked in blue.</p>
+  </div>
   <table class="table table-bordered table-condensed table-striped">
     <thead>
       <tr>
         <th class="receipt_code">Receipt</th>
         <th class="name">Name</th>
-        <th class="cost">Balance</th>
-        <th class="date">Registered</th>
+        <th class="cost">Balance Owed</th>
+        <th class="cost">Payment Due</th>
+        <th class="date">Payment Was Due On</th>
         <th class="date">Reminded</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <% unpaid.each do |registration| -%>
+      <% @unpaid.each do |registration| -%>
         <tr>
           <td class="receipt_code" style="white-space:nowrap"><%= registration.receipt_code %></td>
           <td class="name"><%= link_to registration.full_name, dm_event.edit_admin_registration_path(registration) %> </td>
           <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons('icon-bubble2 inside-content', size: 12), class: 'pull-right') if registration.private_comments.count > 0 %></td>
-          <td class="date" style="white-space:nowrap"><%= format_date(registration.created_at) %></td>
+          <td class="cost"><%= registration.payment_owed.format %><%= " <sup>R</sup>".html_safe if registration.try(:workshop_price).try(:recurring_payments?) %></td>
+          <td class="date" style="white-space:nowrap"><%= format_date(registration.last_payment_due_on) %></td>
           <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if registration.payment_reminder_due? %>>
             <% if registration.payment_reminder_sent_on.nil? %>
               not yet

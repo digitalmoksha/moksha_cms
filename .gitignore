@@ -8,3 +8,4 @@ Gemfile.lock
 sandbox/*
 */.sass-cache
 .ruby-version
+.byebug_history

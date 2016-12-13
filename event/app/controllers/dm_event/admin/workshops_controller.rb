@@ -93,7 +93,9 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   def financials
     authorize! :manage_event_finances, @workshop
     @financials = @workshop.financial_details
-    @payments = PaymentHistory.where(owner_type: 'Registration', owner_id: @workshop.registrations.pluck(:id)).includes(:user_profile, owner: [:user_profile])
+    @payments   = PaymentHistory.where(owner_type: 'Registration', owner_id: @workshop.registrations.pluck(:id)).includes(:user_profile, owner: [:user_profile])
+    @unpaid     = @workshop.registrations.unpaid.includes(:user_profile, :workshop_price)
+    @unpaid     = @unpaid.to_a.delete_if {|i| i.payment_owed.zero?}.sort_by {|i| i.full_name.downcase}
   end
 
   # Generate a list of all outstanding balances across all workshops
