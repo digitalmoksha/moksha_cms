@@ -36,6 +36,7 @@ class Registration < ActiveRecord::Base
   after_initialize              :create_uuid
   before_create                 :set_currency
   after_create                  :set_receipt_code
+  before_save                    :clear_reminder_sent_on, if: :amount_paid_cents_changed?
 
   validates_uniqueness_of       :uuid
   validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
@@ -47,6 +48,12 @@ class Registration < ActiveRecord::Base
                                 :city, :state, :country, :zipcode, :phone, to: :user_profile
 
 private
+
+  # when a payment is made, we want reset whether a payment reminder has been sent
+  #------------------------------------------------------------------------------
+  def clear_reminder_sent_on
+    self.payment_reminder_sent_on = nil
+  end
 
   # the uuid is used to provide a private url to a customer so that they can access
   # their registration if not logged in.  This is particularly important when
@@ -110,12 +117,13 @@ public
   end
   
   # suggested amount of next payment.
-  # if a payment is within 20 of the balance_owed, then they should pay the balance
+  # when it's recurring, they payment should be whatever is needed to bring their
+  # payment plan up to date
   #------------------------------------------------------------------------------
   def payment_owed
-    if workshop_price
-      amount_20 = Money.new(2000, workshop_price.price.currency)
-      (workshop_price.payment_price + amount_20) > balance_owed ? balance_owed : workshop_price.payment_price 
+    if workshop_price && workshop_price.recurring_payments?
+      to_pay = recurring_what_should_be_paid_by_now(0) - amount_paid
+      to_pay.negative? ? Money.new(0, workshop_price.price.currency) : to_pay
     else
       balance_owed
     end
@@ -167,33 +175,27 @@ public
   def unpaid?
     self.accepted? && self.archived_on == nil
   end
-  
+
   # Is it time to send a payment reminder?
-  # Due first 7 days after inital registration.  Then every 14 days after that
+  # Due first 7 days after inital registration (or a payment period).  Then every 14 days after that
   #------------------------------------------------------------------------------
   def payment_reminder_due?
     if preferred_payment_reminder_hold_until.nil? || preferred_payment_reminder_hold_until < Time.now
       time_period = self.payment_reminder_sent_on.nil? ? (self.created_at + 7.days) : (self.payment_reminder_sent_on + 14.days)
-      self.balance_owed > Money.new(0, workshop.base_currency) && time_period < Time.now
+      past_due?(7) ? time_period < Time.now : false
+    else
+      false
     end
-
-    # if recurring_period since last paymnet
-    # if 7 days after registration and no payment
-    # if 14 days since last reminder and no payment
-    # if resume_reminders is past
-    # last_payment = payment_histories.order('created_on').last
-    # if workshop_price.recurring?
-    #   if 
   end
 
   # past due means they haven't paid what they should have paid by now
   #------------------------------------------------------------------------------
-  def past_due?
+  def past_due?(grace_period_in_days = 7)
     return false if !balance_owed.positive?
     if workshop_price.recurring_payments?
-      return amount_paid < recurring_what_should_be_paid_by_now(7)
+      return amount_paid < recurring_what_should_be_paid_by_now(grace_period_in_days)
     else
-      return Date.today > (self.created_at + 7.days)
+      return Date.today > (self.created_at + grace_period_in_days.days)
     end
   end
 
