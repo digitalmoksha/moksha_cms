@@ -38,6 +38,8 @@
         <div class="col-md-6 col-sm-6">
           <% if @registration.workshop_price %>
             <dl class="block">
+              <dt class="text-info">Registered On</dt>
+              <dd><%= format_date(@registration.created_at) %></dd>
               <dt class="text-info">Price</dt>
               <dd><%= price_details(@registration.workshop_price) %></dd>
               <% if @registration.payment_comment %>
@@ -106,12 +108,16 @@
             </tr>
             <% if @registration.payment_owed.positive? %>
               <tr class="section">
-                <th>Next Payment Amount
+                <th>Payment Owed
                   <% if @registration.workshop_price.recurring_payments? %>
                       <span style="font-weight: normal"></br>On a payment plan</span>
                   <% end %>
                 </th>
                 <td class="text-info"><%= @registration.payment_owed.format %></td>
+              </tr>
+              <tr>
+                <th>Payment Due On</th>
+                <td class="text-info"><%= format_date(@registration.last_payment_due_on) %></td>
               </tr>
             <% end %>
           </table>
@@ -171,39 +177,77 @@
 
     <%#--- Payments Tab %>
     <div class="tab-pane fade" id="payment_tab">
-      <%= subsection title: 'Recorded Payments' do %>
-        <table class="table table-condensed table-gradient table-hover" style="margin-bottom: 20px;">
-          <thead>
+      <div class="row">
+        <div class="col-md-9 col-sm-9">
+          <%= subsection title: 'Recorded Payments' do %>
+            <table class="table table-condensed table-gradient table-hover" style="margin-bottom: 20px;">
+              <thead>
+                <tr>
+                  <th width="100">Date</th>
+                  <th>Description</th>
+                  <th width="75">Paid</th>
+                  <th width="100">Method</th>
+                  <th width="18"><%= icons(:edit) %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @registration.payment_histories.order('created_on ASC').each do |payment| %>
+                  <tr>
+                    <td><%= format_date(payment.payment_date) %></td>
+                    <td><%= payment.item_ref %></td>
+                    <td><%= payment.total.format(no_cents_if_whole: true, symbol: true) %></td>
+                    <td><%= payment.payment_method %></td>
+                    <td>
+                      <% if payment.user_profile #--- only allow editing of manual payments %>
+                        <%= link_to(icons('icon-pencil3'), '#', data: { toggle: "modal", target: "#edit_payment_#{payment.id}"}, title: 'Edit Payment') %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <%= link_to 'Add Payment', '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'Add Payment', class: "btn btn-xs btn-primary" %>
+            <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
+            <% if @registration.payment_owed.positive? %>
+              &nbsp;&nbsp;Next payment should be: <span class="text-info"><%= @registration.payment_owed.format %></span>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="col-md-3 col-sm-3">
+          <table class="accounting" style="width: 100%">
             <tr>
-              <th width="100">Date</th>
-              <th>Description</th>
-              <th width="75">Paid</th>
-              <th width="100">Method</th>
-              <th width="18"><%= icons(:edit) %></th>
+              <th>Price</th>
+              <td><%= @registration.price.format %></td>
             </tr>
-          </thead>
-          <tbody>
-            <% @registration.payment_histories.order('created_on ASC').each do |payment| %>
-              <tr>
-                <td><%= format_date(payment.payment_date) %></td>
-                <td><%= payment.item_ref %></td>
-                <td><%= payment.total.format(no_cents_if_whole: true, symbol: true) %></td>
-                <td><%= payment.payment_method %></td>
-                <td>
-                  <% if payment.user_profile #--- only allow editing of manual payments %>
-                    <%= link_to(icons('icon-pencil3'), '#', data: { toggle: "modal", target: "#edit_payment_#{payment.id}"}, title: 'Edit Payment') %>
+            <tr>
+              <th>Discount</th>
+              <td class="text-danger"> - <%= @registration.discount.format %></td>
+            </tr>
+            <tr class="section">
+              <th>Total</th>
+              <td><strong><%= @registration.discounted_price.format %></strong></td>
+            </tr>
+            <tr>
+              <th>Paid</th>
+              <td class="text-success"><%= @registration.amount_paid.format %></td>
+            </tr>
+            <% if @registration.payment_owed.positive? %>
+              <tr class="section">
+                <th>Payment Owed
+                  <% if @registration.workshop_price.recurring_payments? %>
+                      <span style="font-weight: normal"></br>On a payment plan</span>
                   <% end %>
-                </td>
+                </th>
+                <td class="text-info"><%= @registration.payment_owed.format %></td>
+              </tr>
+              <tr>
+                <th>Payment Due On</th>
+                <td class="text-info"><%= format_date(@registration.last_payment_due_on) %></td>
               </tr>
             <% end %>
-          </tbody>
-        </table>
-        <%= link_to 'Add Payment', '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'Add Payment', class: "btn btn-xs btn-primary" %>
-        <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
-        <% if @registration.payment_owed.positive? %>
-          &nbsp;&nbsp;Next payment should be: <span class="text-info"><%= @registration.payment_owed.format %></span>
-        <% end %>
-      <% end %>
+          </table>
+        </div>
+      </div>
       
       <%= subsection title: 'Payment Reminders' do %>
         <%= simple_form_for @registration, url: admin_registration_path,

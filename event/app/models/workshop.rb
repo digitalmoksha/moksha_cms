@@ -180,7 +180,7 @@ class Workshop < ActiveRecord::Base
     success     = failed = 0
     unpaid_list = ( registration_id == 'all' ? registrations.unpaid : registrations.unpaid.where(id: registration_id) )
     unpaid_list.each do |registration|
-      if registration.payment_reminder_due? || registration_id != 'all'
+      if (registration.payment_reminder_due? && registration.payment_owed.positive?) || registration_id != 'all'
         email = PaymentReminderMailer.payment_reminder(registration).deliver_now
         if email
           registration.update_attribute(:payment_reminder_sent_on, Time.now)

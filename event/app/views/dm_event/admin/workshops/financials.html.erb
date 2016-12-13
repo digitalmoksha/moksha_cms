@@ -100,7 +100,7 @@
         <th class="name">Name</th>
         <th class="cost">Balance Owed</th>
         <th class="cost">Payment Due</th>
-        <th class="date">Registered</th>
+        <th class="date">Payment Was Due On</th>
         <th class="date">Reminded</th>
         <th></th>
       </tr>
@@ -111,8 +111,8 @@
           <td class="receipt_code" style="white-space:nowrap"><%= registration.receipt_code %></td>
           <td class="name"><%= link_to registration.full_name, dm_event.edit_admin_registration_path(registration) %> </td>
           <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons('icon-bubble2 inside-content', size: 12), class: 'pull-right') if registration.private_comments.count > 0 %></td>
-          <td class="cost"><%= registration.payment_owed.format %></td>
-          <td class="date" style="white-space:nowrap"><%= format_date(registration.created_at) %></td>
+          <td class="cost"><%= registration.payment_owed.format %><%= " <sup>R</sup>".html_safe if registration.try(:workshop_price).try(:recurring_payments?) %></td>
+          <td class="date" style="white-space:nowrap"><%= format_date(registration.last_payment_due_on) %></td>
           <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if registration.payment_reminder_due? %>>
             <% if registration.payment_reminder_sent_on.nil? %>
               not yet

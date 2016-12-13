@@ -205,6 +205,13 @@ public
     entry ? entry[:total_due] : 0
   end
 
+  # date when the most recent payment was due
+  #------------------------------------------------------------------------------
+  def last_payment_due_on
+    entry = workshop_price.specific_payment_schedule(self.created_at, Date.today)
+    entry ? entry[:due_on] : self.created_at.to_date
+  end
+
   # Setup the columns for exporting data as csv.
   #------------------------------------------------------------------------------
   def self.csv_columns(workshop)
