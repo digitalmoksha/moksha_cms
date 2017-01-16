@@ -129,6 +129,20 @@ public
     end
   end
   
+  # when a customer wants to make a payment, they should either charged the amount
+  # for this month (which could be less than the normal monthly amount), or the
+  # standard monthly amount, or whatever the balance_owed is
+  #------------------------------------------------------------------------------
+  def make_payment_now_amount
+    if payment_owed.positive?
+      payment_owed
+    elsif workshop_price.payment_price < balance_owed
+      workshop_price.payment_price
+    else
+      balance_owed
+    end
+  end
+  
   # Return the number of items specified, in particular the number of items in 
   # a particular state
   #------------------------------------------------------------------------------

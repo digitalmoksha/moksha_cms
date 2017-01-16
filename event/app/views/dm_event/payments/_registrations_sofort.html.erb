@@ -2,7 +2,7 @@
         credential2:  current_account.preferred_sofort_project_id,
         credential3:  current_account.preferred_sofort_project_password,
         credential4:  '',  #--- notification password
-        amount:       @registration.payment_owed,
+        amount:       @registration.make_payment_now_amount,
         currency:     @registration.payment_owed.currency.iso_code,
         service: :directebanking do |service|
           service.item_name         @registration.workshop.title

@@ -91,7 +91,11 @@
           </ul>
           <table class="accounting" style="width: 100%">
             <tr>
-              <th>Price</th>
+              <th>Price
+                <% if @registration.workshop_price.recurring_payments? %>
+                    <span style="font-weight: normal"></br>On a payment plan</span>
+                <% end %>
+              </th>
               <td><%= @registration.price.format %></td>
             </tr>
             <tr>
@@ -108,11 +112,7 @@
             </tr>
             <% if @registration.payment_owed.positive? %>
               <tr class="section">
-                <th>Payment Owed
-                  <% if @registration.workshop_price.recurring_payments? %>
-                      <span style="font-weight: normal"></br>On a payment plan</span>
-                  <% end %>
-                </th>
+                <th>Payment Owed</th>
                 <td class="text-info"><%= @registration.payment_owed.format %></td>
               </tr>
               <tr>
@@ -214,9 +214,17 @@
           <% end %>
         </div>
         <div class="col-md-3 col-sm-3">
+          <ul class="statistics">
+            <% color = @registration.balance_owed.positive? ? :danger : :success %>
+            <li><%= stat_block_small label: 'Balance', number: @registration.balance_owed.format(no_cents_if_whole: true), color_type: color, icon: 'icon-coin', percent: 100 %></li>
+          </ul>
           <table class="accounting" style="width: 100%">
             <tr>
-              <th>Price</th>
+              <th>Price
+                <% if @registration.workshop_price.recurring_payments? %>
+                    <span style="font-weight: normal"></br>On a payment plan</span>
+                <% end %>
+              </th>
               <td><%= @registration.price.format %></td>
             </tr>
             <tr>
@@ -233,11 +241,7 @@
             </tr>
             <% if @registration.payment_owed.positive? %>
               <tr class="section">
-                <th>Payment Owed
-                  <% if @registration.workshop_price.recurring_payments? %>
-                      <span style="font-weight: normal"></br>On a payment plan</span>
-                  <% end %>
-                </th>
+                <th>Payment Owed</th>
                 <td class="text-info"><%= @registration.payment_owed.format %></td>
               </tr>
               <tr>
