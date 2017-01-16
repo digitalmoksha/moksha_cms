@@ -92,7 +92,7 @@
           <table class="accounting" style="width: 100%">
             <tr>
               <th>Price
-                <% if @registration.workshop_price.recurring_payments? %>
+                <% if @registration.workshop_price.try(:recurring_payments?) %>
                     <span style="font-weight: normal"></br>On a payment plan</span>
                 <% end %>
               </th>
@@ -221,7 +221,7 @@
           <table class="accounting" style="width: 100%">
             <tr>
               <th>Price
-                <% if @registration.workshop_price.recurring_payments? %>
+                <% if @registration.workshop_price.try(:recurring_payments?) %>
                     <span style="font-weight: normal"></br>On a payment plan</span>
                 <% end %>
               </th>
