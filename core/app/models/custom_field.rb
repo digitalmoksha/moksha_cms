@@ -38,6 +38,7 @@ class CustomField < ActiveRecord::Base
 
   validates_presence_of         :field_data, if: Proc.new {|field| field.required?}
   validates_numericality_of     :field_data, if: Proc.new {|field| field.field_type == 'number_field' && !field.field_data.blank?}
+  validates_length_of           :field_data, maximum: 4096, if: Proc.new {|field| !field.field_data.blank?}
   validate                      :checkbox_required, if: Proc.new {|field| field.field_type == 'check_box_collection' && field.required?}
 
   #------------------------------------------------------------------------------

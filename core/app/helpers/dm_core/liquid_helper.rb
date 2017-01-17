@@ -47,7 +47,8 @@ module DmCore::LiquidHelper
     else
       html = ::Kramdown::Document.new(content).to_html.html_safe
     end
-    return options[:safe] ? sanitize_text(html, level: :relaxed).html_safe : html
+    # for safety, use :basic or lower
+    return options[:safe] ? sanitize_text(html, level: :basic).html_safe : html
   end
   
   # Uses Sanitize gem to fully sanitize any text.  
@@ -63,7 +64,7 @@ module DmCore::LiquidHelper
       # Allows only very simple inline formatting markup. No links, images, or block elements.
       Sanitize.clean(content, Sanitize::Config::RESTRICTED)
     when :basic
-      #Allows a variety of markup including formatting tags, links, and lists. 
+      # Allows a variety of markup including formatting tags, links, and lists. 
       # Images and tables are not allowed, links are limited to FTP, HTTP, HTTPS, and 
       # mailto protocols, and a rel="nofollow" attribute is added to all links to
       # mitigate SEO spam.
