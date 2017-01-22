@@ -1,8 +1,8 @@
-ActionView::Base.send(:include, ActiveMerchant::Billing::Integrations::ActionViewHelper)
+ActionView::Base.send(:include, OffsitePayments::ActionViewHelper)
 
 class DmEvent::RegistrationsController < DmEvent::ApplicationController
   include DmEvent::PermittedParams
-  include ActiveMerchant::Billing::Integrations
+  include OffsitePayments::Integrations
   include DmCore::UrlHelper
   include DmCore::LiquidHelper
 

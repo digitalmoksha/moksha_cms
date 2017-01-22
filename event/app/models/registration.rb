@@ -7,7 +7,7 @@ class Registration < ActiveRecord::Base
   include DmEvent::Concerns::RegistrationStateMachine
   include DmEvent::Concerns::RegistrationStateEmail
   include DmCore::Concerns::HasCustomFields
-  include ActiveMerchant::Billing::Integrations
+  include OffsitePayments::Integrations
 
   self.table_name               = 'ems_registrations'
 

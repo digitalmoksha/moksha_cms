@@ -18,5 +18,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'dm_cms', s.version
 
   #--- don't forget to add 'require' statement in engine.rb
-  s.add_dependency 'activemerchant', '1.43.3'
+  s.add_dependency 'activemerchant', '~> 1.62.0'
+  s.add_dependency 'offsite_payments', '~> 2.2'
 end

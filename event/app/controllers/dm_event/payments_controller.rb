@@ -1,7 +1,7 @@
-ActionView::Base.send(:include, ActiveMerchant::Billing::Integrations::ActionViewHelper)
+ActionView::Base.send(:include, OffsitePayments::ActionViewHelper)
 
 class DmEvent::PaymentsController < DmEvent::ApplicationController
-  include ActiveMerchant::Billing::Integrations
+  include OffsitePayments::Integrations
 
   protect_from_forgery :except => [:paypal_ipn, :sofort_ipn]
 

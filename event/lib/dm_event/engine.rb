@@ -1,5 +1,6 @@
 require 'dm_core'
 require 'activemerchant'
+require 'offsite_payments'
 
 module DmEvent
   class Engine < ::Rails::Engine

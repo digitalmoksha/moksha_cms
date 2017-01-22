@@ -1,7 +1,7 @@
 # Handle payment related logic
 #------------------------------------------------------------------------------
 class Payment
-  include ActiveMerchant::Billing::Integrations
+  include OffsitePayments::Integrations
 
   # Handle Payment notification logic
   #------------------------------------------------------------------------------
