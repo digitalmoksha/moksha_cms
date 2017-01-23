@@ -1,4 +1,3 @@
-<% byebug %>
 <% payment_service_for @registration.receipt_code, current_account.preferred_paypal_merchant_id,
         amount:   @registration.make_payment_now_amount.to_f,
         currency: @registration.make_payment_now_amount.currency.iso_code,
