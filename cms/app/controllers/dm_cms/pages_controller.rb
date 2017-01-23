@@ -24,9 +24,7 @@ class DmCms::PagesController < DmCms::ApplicationController
       render(file: 'public/404.html', status: :not_found, layout: false) && return if @current_page.nil? || !@current_page.is_published?
     end
 
-    if @current_page.requires_login && !signed_in?
-      redirect_to(main_app.new_user_session_url, alert: 'You must be signed into your account before you can access this page') and return
-    end
+    raise Account::LoginRequired.new(I18n.t('cms.page_login_required')) if @current_page.requires_login && !signed_in?
 
     case @current_page.pagetype
     when 'content'

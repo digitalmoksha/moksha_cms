@@ -24,7 +24,7 @@
       <%= link_to I18n.t('ems.cancel_btn'), main_app.index_url, class: 'btn' %>
     <% end %>
   <% else %>
-    <%= link_to I18n.t('ems.login'), main_app.new_user_session_path, class: 'btn btn-primary', style: 'margin-bottom: 20px' %>
+    <%= link_to I18n.t('ems.login'), main_app.new_user_session_path(redirect_to: request.url), class: 'btn btn-primary', style: 'margin-bottom: 20px' %>
     <%= link_to I18n.t('ems.create_account'), main_app.new_user_registration_path, class: 'btn'  %>
   <% end %>
 </div>

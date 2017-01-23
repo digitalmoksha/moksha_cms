@@ -60,7 +60,7 @@
         <% follow_class = following ? 'btn btn-default btn-small follow_active' : 'btn btn-default btn-small' %>
         <%= button_to button_title, dm_cms.cms_blog_toggle_follow_path(@blog.id), remote: true, method: :patch, id: "follow_button", class: follow_class %>
       <% else %>
-        <%= link_to I18n.t('core.login'), main_app.new_user_session_path, class: 'btn btn-default btn-small' %>
+        <%= link_to I18n.t('core.login'), main_app.new_user_session_path(redirect_to: request.url), class: 'btn btn-default btn-small' %>
       <% end %>
     <% end %>
   </div>

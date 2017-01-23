@@ -17,6 +17,7 @@ ja:
     comments_header: コメント
     delete: 削除
     comments_stat: コメント
+    page_login_required: Login is required to access this page
     blog_login_required: このブログにアクセスするにはログインが必要です
     comment_login_required: "コメントを投稿するためには、ご自分のアカウントにログインして下さい。ご自分のユーザーアカウントをお持ちではない場合は、作成して頂くことが出来ます。"
     comment_notify:

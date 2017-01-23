@@ -17,6 +17,7 @@ cs:
     comments_header: Komentáře
     delete: smazat
     comments_stat: Komentáře
+    page_login_required: Login is required to access this page
     blog_login_required: Přihlášení je vyžadováno pro přístup k tomuto blogu
     comment_login_required: "Prosím, přihlaste se ke svému účtu, abyste mohl psát komentář. Pokud nemáte uživatelský účet, můžete si jej vytvořit."
     comment_notify:

@@ -48,13 +48,29 @@ protected
   # from an email link, the url gets saved before getting redirected to the login
   #------------------------------------------------------------------------------
   def store_location
-    session[:previous_url] = request.original_fullpath unless request.original_fullpath =~ /\/users/
+    if params[:redirect_to].present?
+      store_location_for(:user, params[:redirect_to])    
+    end
+
+    # note: don't store the previous url on each call.  this led to an issue where
+    # missing asset might get run through this code, causing the user to be redirected
+    # to the missing asset during a login
+    # session[:previous_url] = request.url if request.url != new_user_session_url
   end
 
   # override Devise method, on login go to previous url if possible
   #------------------------------------------------------------------------------
   def after_sign_in_path_for(resource)
-    session[:previous_url] || root_path
+    stored = stored_location_for(resource)  # this also delete the cookie
+    if stored
+      stored
+    elsif false
+      # if there is a welcome page set
+    elsif request.referer && request.referer != new_user_session_url
+      request.referer
+    else
+      root_path
+    end
   end
 
   # - if site is not enabled, only allow a logged in Admin user to access pages
@@ -229,6 +245,7 @@ protected
   end
   rescue_from Account::LoginRequired do |exception|
     #--- Redirect to the login page
+    store_location_for(:user, request.url) # so we get returned here after login
     redirect_to main_app.new_user_session_path, :alert => exception.message
   end
   rescue_from Account::DomainNotFound do |exception|

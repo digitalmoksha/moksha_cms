@@ -17,6 +17,7 @@ de:
     comments_header: Kommentare
     delete: löschen
     comments_stat: Kommentare
+    page_login_required: Login is required to access this page
     blog_login_required: 'Um diesen Blog zu sehen, melde Dich bitte an.'
     comment_login_required: "Bitte melde dich mit deinen Benutzerdaten an, um einen Kommentar zu veröffentlichen. Falls du noch kein Benutzerkonto hast, kannst du unter nachfolgendem Link eines anlegen."
     comment_notify:
