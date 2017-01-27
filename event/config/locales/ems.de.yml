@@ -19,6 +19,7 @@ de:
     ticket_payment_link_text: Jetzt bezahlen
     ticket_payment_reminder_subject: "Zahlungserinnerung: %{value}"
     ticket_if_already_paid: "Diese Email wird automatisch von unserem Buchungssystem generiert und versendet. Falls Du den Betrag bereits überwiesen hast, oder der Meinung bist, dass die Zahlungserinnerung unbegründet ist, setze Dich bitte per Email an %{value} mit uns in Verbindung. Sollte sich diese Erinnerung mit einer Zahlung in den letzten drei Tagen überschnitten haben, ignoriere sie bitte."
+    ticket_payment_complete: Ihre Zahlung ist komplett!
     registration_receipt_title: Anmeldebestätigung
     registration_email: E-Mail
     registration_first_name: Vorname

@@ -19,6 +19,7 @@ cs:
     ticket_payment_link_text: Způsoby platby
     ticket_payment_reminder_subject: "Připomínka úhrady kurzovného: %{value}"
     ticket_if_already_paid: "Tento e-mail byl automaticky generovaný a odeslaný naším systémem. Pokud jste výše uvedenou částku již dříve zaplatil/a, nebo se domníváte, že tato připomínka není oprávněná, zašlete prosím e-mail na %{value}. Pokud jste platbu provedli v posledních třech dnech, můžete tuto připomínku ignorovat."
+    ticket_payment_complete: Vaše platba byla dokončena!
     registration_receipt_title: Potvrzení o rezervaci
     registration_email: E-mail
     registration_first_name: Křestní jméno
