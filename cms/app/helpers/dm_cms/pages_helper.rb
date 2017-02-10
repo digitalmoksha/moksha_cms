@@ -86,7 +86,7 @@ module DmCms::PagesHelper
     if (root = options[:include_root])
       active          = (current_page?(root) ? options[:active_class] : nil)
       active_found  ||= !active.nil?
-      menu_str       += content_tag :li, link_to(root.menutitle, dm_cms.showpage_url(root.slug)), class: active
+      menu_str       += content_tag :li, page_link(root), class: active
     end
     pages.each do |page, children|
       if allow_page_in_menu?(page)
@@ -94,7 +94,7 @@ module DmCms::PagesHelper
         active                  = (submenu_active || current_page?(page) ? options[:active_class] : nil)
         active_found          ||= !active.nil?
         menu_str += content_tag(:li, class: active) do
-          link_to(page.menutitle, dm_cms.showpage_url(page.slug)) + 
+          page_link(page) + 
           submenu.html_safe
         end
       end
@@ -111,7 +111,7 @@ module DmCms::PagesHelper
     if (root = options[:include_root])
       active          = (current_page?(root) ? options[:active_class] : nil)
       active_found  ||= !active.nil?
-      menu_str       += content_tag :li, link_to(root.menutitle, dm_cms.showpage_url(root.slug)), class: active
+      menu_str       += content_tag :li, page_link(root), class: active
     end
     pages.each do |page, children|
       if allow_page_in_menu?(page)
@@ -120,11 +120,11 @@ module DmCms::PagesHelper
         active_found          ||= !active.nil?
         if !submenu.blank?
           menu_str += content_tag(:li, class: ['dropdown', active].join(' ')) do
-            link_to(''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, dm_cms.showpage_url(page.slug), class: 'dropdown-toggle', data: {toggle: 'dropdown'}) + 
+            page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'dropdown-toggle', data: {toggle: 'dropdown'}) +
             submenu.html_safe
           end
         else
-          menu_str += content_tag :li, link_to(page.menutitle, dm_cms.showpage_url(page.slug)), class: active
+          menu_str += content_tag :li, page_link(page), class: active
         end
       end
     end
@@ -161,9 +161,16 @@ module DmCms::PagesHelper
   
   # return a link to the page's slug, with the passed in link text
   #------------------------------------------------------------------------------
-  def page_link(page, text = nil)
+  def page_link(page, text = nil, options = {})
     text ||= page.menutitle
-    link_to text, dm_cms.showpage_url(page.slug)
+    case page.pagetype
+    when 'link'
+      link_to text, page.link || dm_cms.showpage_url(page.slug), options
+    when 'link-new-window'
+      link_to text, page.link || dm_cms.showpage_url(page.slug), options.merge(target: '_blank')
+    else
+      link_to text, dm_cms.showpage_url(page.slug), options
+    end
   end
   
   private

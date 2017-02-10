@@ -48,7 +48,7 @@ class CmsPage < ActiveRecord::Base
   validates_length_of     :template, :maximum => 50
   
   # --- list of pagetypes
-  PAGETYPE = ['content', 'pagelink', 'controller/action', 'link', 'divider']
+  PAGETYPE = [['Regular content', 'content'], ["Link to interior page using it's slug", 'pagelink'], ['Link to external page with url', 'link'], ['Link to external page with url (open in new window)', 'link-new-window'], ['Menu divider (no content)', 'divider'], ['Controller/Action (rarely used)', 'controller/action']]
 
   # Base the slug on the default locale
   #------------------------------------------------------------------------------

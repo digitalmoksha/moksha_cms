@@ -46,6 +46,8 @@ class DmCms::PagesController < DmCms::ApplicationController
       redirect_to "/#{DmCore::Language.locale}/#{@current_page.link}"
     when 'link'
       redirect_to @current_page.link
+    when 'link-new-window'
+      redirect_to @current_page.link
     when 'divider'
       render text: 'Not a real page'
     end
