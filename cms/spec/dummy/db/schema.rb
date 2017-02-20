@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821150110) do
+ActiveRecord::Schema.define(version: 20170220100817) do
 
   create_table "cms_blog_translations", force: :cascade do |t|
     t.integer  "cms_blog_id"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.integer  "row_order"
     t.string   "featured_image"
     t.string   "header_image"
+    t.boolean  "welcome_page",                     default: false
   end
 
   add_index "cms_pages", ["account_id"], name: "index_cms_pages_on_account_id"
@@ -204,6 +205,8 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.integer  "next_invoice_num", default: 1000
   end
 
+  add_index "core_accounts", ["default_site_id"], name: "index_core_accounts_on_default_site_id"
+
   create_table "core_activities", force: :cascade do |t|
     t.integer  "account_id"
     t.integer  "user_id"
@@ -234,6 +237,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.datetime "updated_at"
   end
 
+  add_index "core_addresses", ["addressable_id"], name: "index_core_addresses_on_addressable_id"
   add_index "core_addresses", ["addressable_type", "addressable_id"], name: "index_core_addresses_on_addressable_type_and_addressable_id", unique: true
 
   create_table "core_categories", force: :cascade do |t|
@@ -243,6 +247,8 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.datetime "created_on"
     t.datetime "updated_on"
   end
+
+  add_index "core_categories", ["account_id"], name: "index_core_categories_on_account_id"
 
   create_table "core_category_translations", force: :cascade do |t|
     t.integer  "core_category_id"
@@ -270,6 +276,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.integer  "ancestry_depth",              default: 0
   end
 
+  add_index "core_comments", ["account_id"], name: "index_core_comments_on_account_id"
   add_index "core_comments", ["commentable_id"], name: "index_core_comments_on_commentable_id"
   add_index "core_comments", ["commentable_type"], name: "index_core_comments_on_commentable_type"
   add_index "core_comments", ["user_id"], name: "index_core_comments_on_user_id"
@@ -312,6 +319,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
   end
 
   add_index "core_custom_fields", ["account_id"], name: "index_core_custom_fields_on_account_id"
+  add_index "core_custom_fields", ["custom_field_def_id"], name: "index_core_custom_fields_on_custom_field_def_id"
   add_index "core_custom_fields", ["owner_id", "owner_type"], name: "index_core_custom_fields_on_owner_id_and_owner_type"
 
   create_table "core_payment_histories", force: :cascade do |t|
@@ -339,11 +347,14 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.string   "transaction_id"
   end
 
+  add_index "core_payment_histories", ["account_id"], name: "index_core_payment_histories_on_account_id"
   add_index "core_payment_histories", ["anchor_id"], name: "index_payment_histories_on_anchor_id"
   add_index "core_payment_histories", ["item_ref"], name: "index_payment_histories_on_item_ref"
   add_index "core_payment_histories", ["order_ref"], name: "index_payment_histories_on_order_ref"
   add_index "core_payment_histories", ["owner_id"], name: "index_payment_histories_on_owner_id"
   add_index "core_payment_histories", ["owner_type"], name: "index_payment_histories_on_owner_type"
+  add_index "core_payment_histories", ["transaction_id"], name: "index_core_payment_histories_on_transaction_id"
+  add_index "core_payment_histories", ["user_profile_id"], name: "index_core_payment_histories_on_user_profile_id"
 
   create_table "core_system_email_translations", force: :cascade do |t|
     t.integer  "core_system_email_id"
@@ -354,6 +365,8 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.datetime "updated_at"
   end
 
+  add_index "core_system_email_translations", ["core_system_email_id"], name: "index_core_system_email_translations_on_core_system_email_id"
+
   create_table "core_system_emails", force: :cascade do |t|
     t.string   "email_type"
     t.integer  "emailable_id"
@@ -362,6 +375,25 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.datetime "updated_at"
     t.integer  "account_id"
   end
+
+  add_index "core_system_emails", ["account_id"], name: "index_core_system_emails_on_account_id"
+  add_index "core_system_emails", ["emailable_id"], name: "index_core_system_emails_on_emailable_id"
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "follows", force: :cascade do |t|
     t.integer  "followable_id",                   null: false
@@ -443,6 +475,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.datetime "updated_at"
   end
 
+  add_index "preferences", ["group_id"], name: "index_preferences_on_group_id"
   add_index "preferences", ["owner_id", "owner_type", "name", "group_id", "group_type"], name: "index_preferences_on_owner_and_name_and_preference", unique: true
 
   create_table "roles", force: :cascade do |t|
@@ -457,6 +490,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
   add_index "roles", ["account_id"], name: "index_roles_on_account_id"
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
+  add_index "roles", ["resource_id"], name: "index_roles_on_resource_id"
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -470,6 +504,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
 
   add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+  add_index "taggings", ["tagger_id"], name: "index_taggings_on_tagger_id"
 
   create_table "tags", force: :cascade do |t|
     t.string  "name"
@@ -511,6 +546,10 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.string   "favored_locale"
   end
 
+  add_index "user_profiles", ["account_id"], name: "index_user_profiles_on_account_id"
+  add_index "user_profiles", ["country_id"], name: "index_user_profiles_on_country_id"
+  add_index "user_profiles", ["user_id"], name: "index_user_profiles_on_user_id"
+
   create_table "user_site_profiles", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "last_access_at"
@@ -520,6 +559,8 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.string   "uuid",           limit: 40
   end
 
+  add_index "user_site_profiles", ["account_id"], name: "index_user_site_profiles_on_account_id"
+  add_index "user_site_profiles", ["user_id"], name: "index_user_site_profiles_on_user_id"
   add_index "user_site_profiles", ["uuid"], name: "index_user_site_profiles_on_uuid"
 
   create_table "users", force: :cascade do |t|
@@ -552,6 +593,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.integer "role_id"
   end
 
+  add_index "users_roles", ["role_id"], name: "index_users_roles_on_role_id"
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
 
   create_table "version_associations", force: :cascade do |t|
@@ -560,6 +602,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.integer "foreign_key_id"
   end
 
+  add_index "version_associations", ["foreign_key_id"], name: "index_version_associations_on_foreign_key_id"
   add_index "version_associations", ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key"
   add_index "version_associations", ["version_id"], name: "index_version_associations_on_version_id"
 
@@ -575,6 +618,7 @@ ActiveRecord::Schema.define(version: 20160821150110) do
     t.integer  "transaction_id"
   end
 
+  add_index "versions", ["item_id"], name: "index_versions_on_item_id"
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id"
 
