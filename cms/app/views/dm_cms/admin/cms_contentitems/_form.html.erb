@@ -1,6 +1,12 @@
 <% new_record = @cms_contentitem.new_record? %>
 <% submit_url = (new_record ? create_content_admin_cms_contentitem_path(@current_page) : admin_cms_contentitem_path(@cms_contentitem)) %>
-<% title = (new_record ? "New Content" : @cms_contentitem.container.capitalize) %>
+<% title      = (new_record ? "New Content" : @cms_contentitem.container.capitalize) %>
+
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= link_to icon_label(:view, 'View Page'), url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', class: 'btn btn-xs btn-default', target: '_blank' %>
+  <% end %>
+<% end %>
 
 <%= simple_form_for @cms_contentitem, url: submit_url,
     html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
