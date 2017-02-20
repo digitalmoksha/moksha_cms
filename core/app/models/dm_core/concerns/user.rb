@@ -103,11 +103,43 @@ module DmCore
         def to_liquid
           { 'user' => { 'first_name'          => h(first_name),
                         'last_name'           => h(last_name),
+                        'full_name'           => h(full_name),
+                        'email'               => h(email),
                         'paid_subscription?'  => is_paid_subscriber?
                       }
           }
         end
         
+        #------------------------------------------------------------------------------
+        def self.liquid_help
+          [
+            { name: 'user.full_name',
+              summary: "User's full name",
+              category: 'variables',
+              example: '{{ user.full_name }}',
+              description: "Display the user's full name"
+            },
+            { name: 'user.first_name',
+              summary: "User's first name",
+              category: 'variables',
+              example: '{{ user.first_name }}',
+              description: "Display the user's first name"
+            },
+            { name: 'user.last_name',
+              summary: "User's last name",
+              category: 'variables',
+              example: '{{ user.last_name }}',
+              description: "Display the user's last name"
+            },
+            { name: 'user.email',
+              summary: "User's email address",
+              category: 'variables',
+              example: '{{ user.email }}',
+              description: "Display the user's email address"
+            },
+          ]
+        end
+
         # check if a user is active
         # {todo} add in attribute or state machine for the users state
         #------------------------------------------------------------------------------

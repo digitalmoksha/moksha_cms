@@ -13,6 +13,7 @@ DmCms::Engine.routes.draw do
           post  :file_tree
           get   :file_tree
           match 'permissions',                           action: 'permissions', via: [:get, :post, :patch]
+          match 'mark_welcome_page',                     action: 'mark_welcome_page', via: [:patch]
           patch 'ajax_toggle_permission/:user_id/:role', action: 'ajax_toggle_permission', as: 'ajax_toggle_permission'
         end
       end

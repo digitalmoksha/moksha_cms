@@ -31,6 +31,7 @@ class CmsPage < ActiveRecord::Base
   ranks                   :row_order, :with_same => [:account_id, :ancestry]
 
   default_scope           { where(account_id: Account.current.id).order("ancestry, row_order ASC") }
+  scope                   :welcome_pages, -> { where(welcome_page: true) }
   
   preference              :show_social_buttons,  :boolean, :default => false
   preference              :header_accent_color,  :string
@@ -135,7 +136,31 @@ class CmsPage < ActiveRecord::Base
       }
     }
   end
-  
+
+  #------------------------------------------------------------------------------
+  def self.liquid_help
+    [
+      { name: 'page.title',
+        summary: "Page title",
+        category: 'variables',
+        example: '{{ page.title }}',
+        description: "Display the page's title"
+      },
+      { name: 'page.menutitle',
+        summary: "Page menutitle",
+        category: 'variables',
+        example: '{{ page.menutitle }}',
+        description: "Display the page's menutitle"
+      },
+      { name: 'page.slug',
+        summary: "Page slug",
+        category: 'variables',
+        example: '{{ page.slug }}',
+        description: "Display the page's slug"
+      }
+    ]
+  end  
+
   # Check if this page has been cookied.  If needed, we will set a cookie, using
   # the page's slug, to a value of 1.  This indicates that the page has
   # been visited.  This is only needed in cases where we want to ensure a page
@@ -147,7 +172,19 @@ class CmsPage < ActiveRecord::Base
   def visited?(cookie_hash)
     return ((cookie_hash.empty? || cookie_hash[slug] == "1") ? true : false)
   end
-  
+
+  #------------------------------------------------------------------------------
+  def mark_as_welcome_page
+    prev_page = CmsPage.welcome_page
+    prev_page.update_attribute(:welcome_page, false) if prev_page
+    update_attribute(:welcome_page, true)
+  end
+
+  #------------------------------------------------------------------------------
+  def self.welcome_page
+    self.welcome_pages.first
+  end
+
   # Create a default site.  Check if pages exists first, so we can add missing
   # pages to already created sites.
   #------------------------------------------------------------------------------

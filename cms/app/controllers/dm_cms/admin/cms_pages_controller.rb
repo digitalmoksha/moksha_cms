@@ -54,7 +54,14 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   def show
     authorize! :manage_content, @current_page
   end
-  
+
+  #------------------------------------------------------------------------------
+  def mark_welcome_page
+    authorize! :manage_content, :all
+    @current_page.mark_as_welcome_page
+    redirect_to action: :show, id: @current_page
+  end
+
   #------------------------------------------------------------------------------
   def duplicate_page
     authorize! :manage_content, :all
