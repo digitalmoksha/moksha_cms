@@ -50,7 +50,7 @@
 <% elsif !current_user %>
   <p><%= I18n.t 'cms.comment_login_required' %></p>
   <div class="login_required_buttons">
-    <%= link_to I18n.t('core.login'), main_app.new_user_session_path, class: 'btn btn-primary' %>
+    <%= link_to I18n.t('core.login'), main_app.new_user_session_path(redirect_to: request.url), class: 'btn btn-primary' %>
     <%= link_to I18n.t('core.create_account'), main_app.new_user_registration_path, class: 'btn'  %>
   </div>
 <% end %>

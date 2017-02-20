@@ -11,6 +11,7 @@
       <% else %>
         <% item_title = (item.title.blank? ? item.slug : item.title) %>
         <%= can?(:manage_content, item) ? link_to(item_title, :action => :show, :id => item) : item_title %>
+        <%= "  <span class='icon-globe'></span>".html_safe if item.welcome_page? %>
       <% end %>
     </dt>
     <dd><%= present(item).label_published %></dd>

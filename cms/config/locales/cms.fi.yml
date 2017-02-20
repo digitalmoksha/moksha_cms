@@ -17,6 +17,7 @@ fi:
     comments_header: Kommentit
     delete: poista
     comments_stat: Kommentit
+    page_login_required: Login is required to access this page
     blog_login_required: Thän blogiin pääsyyn vaaditaan sisään kirjautuminen
     comment_login_required: "Ole hyvä ja kirjaudu sisään tilillesi kommentoidaksesi. Jos sinulla ei ole käyttäjätiliä, voit luoda sellaisen."
     comment_notify:

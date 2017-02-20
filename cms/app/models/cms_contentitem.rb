@@ -73,4 +73,8 @@ class CmsContentitem < ActiveRecord::Base
     new_cms_contentitem.save
   end
 
+  #------------------------------------------------------------------------------
+  def self.liquid_help
+    CmsPage.liquid_help + User.liquid_help
+  end
 end

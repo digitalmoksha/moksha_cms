@@ -17,6 +17,7 @@ en:
     comments_header: Comments
     delete: delete
     comments_stat: Comments
+    page_login_required: Login is required to access this page
     blog_login_required: Login is required to access this blog
     comment_login_required: "Please log in to your account to post a comment. If you do not have a user account, you can create one." 
     comment_notify:

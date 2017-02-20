@@ -16,6 +16,7 @@ class CmsPagePresenter < BasePresenter
     #--- make sure it's built safely...
     html = "".html_safe
     html << main_title
+    html << "&nbsp;<span class='icon-globe'></span>".html_safe if cms_page.welcome_page?
     html << "<small>".html_safe
     html << sub_title
     html << "</small>".html_safe

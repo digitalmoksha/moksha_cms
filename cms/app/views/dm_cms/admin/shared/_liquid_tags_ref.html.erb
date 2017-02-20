@@ -16,6 +16,14 @@
               </ul>
             </li>
           <% end %>
+          <li>
+            <%= link_to 'variables', "\#__variables", data: {toggle: 'collapse', parent: '#tag_accordion'} %>
+              <ul id="__variables" class="collapse">
+                <% CmsContentitem.liquid_help.each do |item| %>
+                  <li><%= link_to item[:name], "\##{item[:name]}"%></li>
+                <% end %>
+              </ul>
+          </li>
         </ul>
       </div>
     </div>
@@ -28,6 +36,13 @@
             <%= markdown tag_item[1].details[:description], safe: false %>
             <%= "<pre>#{tag_item[1].details[:example]}</pre>".html_safe if tag_item[1].details[:example].present? %>
           <% end %>
+        <% end %>
+      <% end %>
+      <h2>variables</h2>
+      <% CmsContentitem.liquid_help.each do |item| %>
+        <%= subsection title: item[:name], id: item[:name] do %>
+          <%= markdown item[:description], safe: false %>
+          <%= "<pre>#{item[:example]}</pre>".html_safe if item[:example].present? %>
         <% end %>
       <% end %>
     </div>
