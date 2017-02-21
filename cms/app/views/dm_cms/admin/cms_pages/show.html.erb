@@ -9,7 +9,7 @@
         <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right icons-right">
           <li><%= link_to label_icon('Permissions', 'icon-lock'), permissions_admin_cms_page_path(@current_page) %></li>
-          <li><%= link_to 'Mark Welcome Page', mark_welcome_page_admin_cms_page_path(@current_page), method: :patch %></li>
+          <li><%= link_to "#{'Un-' if @current_page.welcome_page?}Mark Welcome Page", mark_welcome_page_admin_cms_page_path(@current_page), method: :patch %></li>
         </ul>
       </div>
     <% end %>

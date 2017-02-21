@@ -175,9 +175,13 @@ class CmsPage < ActiveRecord::Base
 
   #------------------------------------------------------------------------------
   def mark_as_welcome_page
-    prev_page = CmsPage.welcome_page
-    prev_page.update_attribute(:welcome_page, false) if prev_page
-    update_attribute(:welcome_page, true)
+    if self.welcome_page?
+      update_attribute(:welcome_page, false)
+    else
+      prev_page = CmsPage.welcome_page
+      prev_page.update_attribute(:welcome_page, false) if prev_page
+      update_attribute(:welcome_page, true)
+    end
   end
 
   #------------------------------------------------------------------------------
