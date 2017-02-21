@@ -1,6 +1,6 @@
 # dm_core
 
-**dm_core** provides the foundation of ommon services and features for the MokshaCMS collection of gems.  It includes authentication (Devise), role authorization, user profiles, etc.
+**dm_core** provides the foundation of common services and features for the MokshaCMS collection of gems.  It includes authentication (Devise), role authorization, user profiles, etc.
 
 _The MokshaCMS collection of gems provides an integrated system of services for content, event, forum, learning, and newsletter management.  It supports sites with multiple languages and mutliple distinct sites per installation.  Administration is built in.  Additional services/engines can be written to provide additional functionality._
 
