@@ -3,7 +3,8 @@ class CmsPost < ActiveRecord::Base
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates              :title, :summary, :content, :fallbacks_for_empty_translations => true #, :versioning => true
   globalize_accessors     :locales => DmCore::Language.language_array
-    
+  acts_as_taggable
+
   # --- FriendlyId
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
