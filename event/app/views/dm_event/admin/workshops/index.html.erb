@@ -1,8 +1,8 @@
 <% content_for :content_title, 'Workshop Dashboard' %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%= link_to('Outstanding Balances', admin_workshop_user_outstanding_balances_path, title: 'Outstanding Balances', class: "btn btn-xs btn-default") if can?(:manage_events, :all) %>
-    <%= link_to(icon_label(:new, 'New'), new_admin_workshop_path, title: 'New Workshop', class: "btn btn-xs btn-default") if can?(:manage_events, :all) %>
+    <%= link_to(icon_label(:money, 'Outstanding Balances'), admin_workshop_user_outstanding_balances_path, title: 'Outstanding Balances', class: "btn btn-sm btn-default") if can?(:manage_events, :all) %>
+    <%= link_to(icon_label(:new, 'New'), new_admin_workshop_path, title: 'New Workshop', class: "btn btn-sm btn-default") if can?(:manage_events, :all) %>
   <% end %>
 <% end %>
 
@@ -15,9 +15,9 @@
           <% if can? :manage_event_finances, workshop %>
             <% financials = workshop.financial_details(:summary) %>
             <ul class="statistics">
-              <li><%= stat_block_small label: 'Projected', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'icon-coin', percent: 100 %></li>
-              <li><%= stat_block_small label: 'Paid', number: financials[:summary][:total_paid].format(no_cents_if_whole: true), color_type: :success, icon: 'icon-coin', percent: financials[:summary][:total_paid_percent] %></li>
-              <li><%= stat_block_small label: 'Unpaid', number: financials[:summary][:total_outstanding].format(no_cents_if_whole: true), color_type: :danger, icon: 'icon-coin', percent: 80 %></li>
+              <li><%= stat_block_small label: 'Projected', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'fa fa-money', percent: 100 %></li>
+              <li><%= stat_block_small label: 'Paid', number: financials[:summary][:total_paid].format(no_cents_if_whole: true), color_type: :success, icon: 'fa fa-money', percent: financials[:summary][:total_paid_percent] %></li>
+              <li><%= stat_block_small label: 'Unpaid', number: financials[:summary][:total_outstanding].format(no_cents_if_whole: true), color_type: :danger, icon: 'fa fa-money', percent: 80 %></li>
             </ul>
           <% end %>
 

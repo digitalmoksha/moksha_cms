@@ -2,7 +2,7 @@
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
     <%= present(@registration).admin_status_label %>
-    <%= link_to icon_label(:view, 'Registrations'), [:admin, @workshop], class: 'btn btn-xs btn-default' %>
+    <%= link_to icon_label(:view, 'Registrations'), [:admin, @workshop], class: 'btn btn-sm btn-default' %>
   <% end %>
 <% end %>
 
@@ -20,19 +20,14 @@
     <div class="tab-pane fade in active" id="overview_tab">
       <div class="row">
         <div class="col-md-3 col-sm-3">
-          
-          <div class="thumbnail">
-            <div class="thumb">
-              <%= avatar_for(@registration.user_profile.user, '100%') %>
-            </div>
-          
-            <div class="caption text-center">
-              <h6>
-                <%= @registration.full_name %><small><%= @registration.user_profile.country.english_name %></small>
-                <small><%= @registration.user_profile.email %></small>
-                <%= "<small>no user account</small>".html_safe unless @registration.user_profile.user %>
-              </h6>
-            </div>
+          <%= avatar_for(@registration.user_profile.user, '100%', class: 'img-circle') %>
+        
+          <div class="caption text-center">
+            <h5>
+              <%= @registration.full_name %><small><%= @registration.user_profile.country.english_name %></small>
+              <small><%= @registration.user_profile.email %></small>
+              <%= "<small>no user account</small>".html_safe unless @registration.user_profile.user %>
+            </h5>
           </div>
         </div>
         <div class="col-md-6 col-sm-6">
@@ -63,7 +58,7 @@
                   <% unless registration == @registration %>
                     <tr>
                       <td>
-                        <button class='btn btn-xs btn-<%= registration.current_state %> hovertip' data-placement='right' title='<%= "#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}" %>'></button>
+                        <button class='btn btn-sm btn-<%= registration.current_state %> hovertip' data-placement='right' title='<%= "#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}" %>'></button>
                       </td>
                       <td class="name"><%= link_to registration.workshop.title, edit_admin_registration_path(registration) %></td>
                       <td class="name"><%= present(registration).balance_or_paid %></td>
@@ -87,7 +82,7 @@
         <div class="col-md-3 col-sm-3">
           <ul class="statistics">
             <% color = @registration.balance_owed.positive? ? :danger : :success %>
-            <li><%= stat_block_small label: 'Balance', number: @registration.balance_owed.format(no_cents_if_whole: true), color_type: color, icon: 'icon-coin', percent: 100 %></li>
+            <li><%= stat_block_small label: 'Balance', number: @registration.balance_owed.format(no_cents_if_whole: true), color_type: color, icon: 'fa fa-money', percent: 100 %></li>
           </ul>
           <table class="accounting" style="width: 100%">
             <tr>
@@ -206,8 +201,8 @@
                 <% end %>
               </tbody>
             </table>
-            <%= link_to 'Add Payment', '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'Add Payment', class: "btn btn-xs btn-primary" %>
-            <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-xs btn-default' %>
+            <%= link_to 'Add Payment', '#', data: { toggle: "modal", target: "#enter_new_payment"}, title: 'Add Payment', class: "btn btn-sm btn-primary" %>
+            <%= link_to 'Customer Payment Page', @registration.payment_url, target: '_blank', class: 'btn btn-sm btn-default' %>
             <% if @registration.payment_owed.positive? %>
               &nbsp;&nbsp;Next payment should be: <span class="text-info"><%= @registration.payment_owed.format %></span>
             <% end %>
@@ -216,7 +211,7 @@
         <div class="col-md-3 col-sm-3">
           <ul class="statistics">
             <% color = @registration.balance_owed.positive? ? :danger : :success %>
-            <li><%= stat_block_small label: 'Balance', number: @registration.balance_owed.format(no_cents_if_whole: true), color_type: color, icon: 'icon-coin', percent: 100 %></li>
+            <li><%= stat_block_small label: 'Balance', number: @registration.balance_owed.format(no_cents_if_whole: true), color_type: color, icon: 'fa fa-money', percent: 100 %></li>
           </ul>
           <table class="accounting" style="width: 100%">
             <tr>
@@ -282,7 +277,7 @@
           </tbody>
         </table>
         
-        <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@registration.workshop, registration_id: @registration.id), title: 'Send reminder now', class: 'btn btn-xs btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
+        <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@registration.workshop, registration_id: @registration.id), title: 'Send reminder now', class: 'btn btn-sm btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
         <% if @registration.preferred_payment_reminder_hold_until && @registration.preferred_payment_reminder_hold_until > Time.now %>
           <span>&nbsp;&nbsp;Requested not to send reminder until <strong><%= format_date(@registration.preferred_payment_reminder_hold_until) %></strong></span>
         <% end %>

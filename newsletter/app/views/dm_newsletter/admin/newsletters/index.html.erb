@@ -1,6 +1,6 @@
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%= link_to(icon_label(:new, 'New'), new_admin_newsletter_path, title: 'New Newsletter', class: "btn btn-xs btn-default") %>
+    <%= link_to(icon_label(:new, 'New'), new_admin_newsletter_path, title: 'New Newsletter', class: "btn btn-sm btn-default") %>
   <% end %>
 <% end %>
 
@@ -21,9 +21,9 @@
         <%= panel title: link_to(newsletter.name, admin_newsletter_path(newsletter)), toolbar: toolbar do %>
           <ul class="statistics">
             <% total = newsletter.subscribed_count + newsletter.unsubscribed_count + newsletter.cleaned_count %>
-            <li><%= stat_block_small label: 'subscribed', number: newsletter.subscribed_count, color_type: :success, percent: total == 0 ? 0 : (100 * newsletter.subscribed_count / total) %></li>
-            <li><%= stat_block_small label: 'unsubscribed', number: newsletter.unsubscribed_count, color_type: :danger, percent: total == 0 ? 0 : (100 * newsletter.unsubscribed_count / total) %></li>
-            <li><%= stat_block_small label: 'cleaned', number: newsletter.cleaned_count, color_type: :info, percent: total == 0 ? 0 : (100 * newsletter.cleaned_count / total) %></li>
+            <li><%= stat_block_small label: 'subscribed', number: newsletter.subscribed_count, icon: 'fa fa-info fa-fw', color_type: :success, percent: total == 0 ? 0 : (100 * newsletter.subscribed_count / total) %></li>
+            <li><%= stat_block_small label: 'unsubscribed', number: newsletter.unsubscribed_count, icon: 'fa fa-info fa-fw', color_type: :danger, percent: total == 0 ? 0 : (100 * newsletter.unsubscribed_count / total) %></li>
+            <li><%= stat_block_small label: 'cleaned', number: newsletter.cleaned_count, icon: 'fa fa-info fa-fw', color_type: :info, percent: total == 0 ? 0 : (100 * newsletter.cleaned_count / total) %></li>
           </ul>
         <% end %>
       </div>

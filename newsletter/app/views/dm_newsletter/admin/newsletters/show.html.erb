@@ -1,7 +1,7 @@
 <% content_for :content_title, "#{@newsletter.name} <small>Newsletter</small>".html_safe %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%= link_to(icon_label(:trash, 'Delete'), admin_newsletter_path(@newsletter), method: :delete, class: "btn btn-xs btn-default", data: {confirm: 'Are you sure you wish to delete this newsletter?'}) %>
+    <%= link_to(icon_label(:trash, 'Delete'), admin_newsletter_path(@newsletter), method: :delete, class: "btn btn-sm btn-default", data: {confirm: 'Are you sure you wish to delete this newsletter?'}) %>
   <% end %>
 <% end %>
 

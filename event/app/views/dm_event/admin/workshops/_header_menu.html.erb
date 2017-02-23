@@ -1,13 +1,14 @@
 <% unless @workshop.new_record? %>
   <%= content_for :content_title_extra do %>
     <%= page_header_buttons do %>
-        <%= link_to "View Registrations", [:admin, @workshop], class: 'btn btn-xs btn-default' %>
+        <%= link_to icon_label(:view, "View Registrations"), [:admin, @workshop], class: 'btn btn-sm btn-default' %>
         <div class="btn-group">
-          <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Configuration <span class="caret"></span></button>
+          <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><%= icon_label(:gear, 'Configuration') %> <span class="caret"></span></button>
           <ul class="dropdown-menu dropdown-menu-right icons-right">
             <li><%= link_to 'Main Configuration', edit_admin_workshop_url(@workshop) %></li>
             <li><%= link_to "Additional Configuration", additional_configuration_admin_workshop_path(@workshop) %></li>
             <li><%= link_to "Workshop Prices", admin_workshop_workshop_prices_path(@workshop) %></li>
+            <li class="divider"></li>
             <li class="dropdown-header">Email Notifications</li>
             <li><%= link_to "Pending Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'pending') %></li>
             <li><%= link_to "Accepted Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'accepted') %></li>

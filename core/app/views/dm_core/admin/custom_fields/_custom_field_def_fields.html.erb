@@ -8,7 +8,7 @@
     <% end %>
   <% end %>
   <%= f.hidden_field :_destroy, class: '_destroy' %>
-  <%= panel toolbar: toolbar, title: f.object.new_record? ? 'New Field' : link_to(icon_label('icon-arrow-right3', f.object.field_type), "\##{collapse_id}", title: 'Show/Hide Detail', data: {toggle: 'collapse'} ) do %>
+  <%= panel toolbar: toolbar, title: f.object.new_record? ? 'New Field' : link_to(icon_label('fa fa-arrow-right fa-fw', f.object.field_type), "\##{collapse_id}", title: 'Show/Hide Detail', data: {toggle: 'collapse'} ) do %>
     <% unless f.object.new_record? %>
       <% sample = CustomField.new %>
       <% sample.custom_field_def = f.object %>

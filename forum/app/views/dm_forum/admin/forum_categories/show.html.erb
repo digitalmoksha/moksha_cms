@@ -1,13 +1,12 @@
 <% content_for :content_title, icon_label('font-comments', @forum_category.name) %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%= link_to(icon_label(:edit, 'Edit'), [:edit, :admin, @forum_category], class: "btn btn-xs btn-default", title: 'Edit') %>
+    <%= link_to(icon_label(:edit, 'Edit'), [:edit, :admin, @forum_category], class: "btn btn-sm btn-default", title: 'Edit') %>
   <% end %>
 <% end %>
 
 <% toolbar = toolbar_btn(icons(:new), new_admin_forum_category_forum_path(@forum_category), title: 'New Forum', class: "btn btn-xs btn-default") %>
 <%= panel title: 'Forums', toolbar: toolbar, body: false do %>
-  <div class="table-overflow">
     <table id="drag_sort" class="table table-striped table-bordered table-block" data-update_url="<%= dm_forum.admin_forum_sort_path %>">
       <thead>
         <tr>
@@ -37,5 +36,4 @@
         <% end %>
       </tbody>
     </table>
-  </div>
 <% end %>
