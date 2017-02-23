@@ -64,7 +64,7 @@ protected
     stored = stored_location_for(resource)  # this also delete the cookie
     if stored
       stored
-    elsif defined?(CmsPage) && (welcome_page = CmsPage.welcome_page)
+    elsif Account.current && defined?(CmsPage) && (welcome_page = CmsPage.welcome_page)
       welcome_page.is_published? ? dm_cms.showpage_url(welcome_page.slug) : main_app.root_path
     elsif request.referer && request.referer != new_user_session_url
       request.referer
