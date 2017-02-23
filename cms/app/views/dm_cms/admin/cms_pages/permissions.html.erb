@@ -12,7 +12,7 @@
             <div class="col-md-12">
               <%= subsection title: user.full_name do %>
                 <% manage_content_state = user.has_role?(:manage_content, @current_page) ? 'btn-success active' : 'btn-default' %>
-                <%= link_to 'Page Editing',     dm_cms.ajax_toggle_permission_admin_cms_page_path(@current_page, user.id, :manage_content), class: "permission_btn btn btn-xs #{manage_content_state}", role: 'button', remote: true, method: :patch %>
+                <%= link_to 'Page Editing',     dm_cms.ajax_toggle_permission_admin_cms_page_path(@current_page, user.id, :manage_content), class: "permission_btn btn btn-sm #{manage_content_state}", role: 'button', remote: true, method: :patch %>
               <% end %>
             </div>
           </div>
@@ -22,10 +22,8 @@
     <% end %>
   </div>
   <div class="col-md-4">
-    <%= panel body: false, title: "Conent Managers" do %>
-      <div class="panel-body">
-        <p>Current users that can fully manage pages</p>
-      </div>
+    <%= subsection title: "Content Managers" do %>
+      <p>Current users that can fully manage pages</p>
   
       <table class="table table-bordered table-condensed table-striped">
         <tbody>

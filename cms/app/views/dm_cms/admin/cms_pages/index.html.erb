@@ -1,20 +1,14 @@
-<% content_for :content_title, icon_label('font-paste', 'Pages') %>
+<% content_for :content_title, icon_label(:pages, 'Pages') %>
 <% content_for :content_title_extra do %>
-  <div class="header-buttons">
-    <div class="collapse" id="header-buttons">
-      <div class="well">
-        <div class="btn-group">
-          <%= link_to('Snippets', dm_cms.admin_cms_snippets_path, class: 'btn btn-default btn-xs') if can? :manage_content, :all %>
-          <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
-          <ul class="dropdown-menu dropdown-menu-right icons-right">
-            <li>
-              <%= link_to icon_label('icon-redo', 'Clear Page Cache'), admin_expire_cache_path, method: :patch %>
-            </li>
-          </ul>
-        </div>
-      </div>
+  <%= page_header_buttons do %>
+    <%= link_to('Snippets', dm_cms.admin_cms_snippets_path, class: 'btn btn-default btn-sm') if can? :manage_content, :all %>
+    <div class="btn-group">
+      <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><%= icons(:cog) %> <span class="caret"></span></button>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><%= link_to icon_label(:refresh, 'Clear Page Cache'), admin_expire_cache_path, method: :patch %></li>
+      </ul>
     </div>
-  </div>
+  <% end %>
 
 <% end %>
 

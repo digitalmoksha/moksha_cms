@@ -44,10 +44,9 @@ $(document).ready ->
     $(target + ' .CodeMirror').each (i, el) ->
       el.CodeMirror.refresh()
     
-  $("#tag_field").select2({
-      tags: $("#tag_field").data('tags'),
-      tokenSeparators: [',', ' ']
-      });
+  $(".tag_field").select2({
+    tags: true
+  })
 
   # Toolbar commands for the CodeMirror editor
   #------------------------------------------------------------------------------

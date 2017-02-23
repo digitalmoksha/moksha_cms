@@ -2,13 +2,13 @@
 <% content_for :secondary_title, "#{@current_page.slug} &mdash; #{@current_page.title}".html_safe %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%= link_to icon_label(:new, 'Add Content'), new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block', class: 'btn btn-xs btn-default' %>
-    <%= link_to icon_label(:view, 'View Page'), url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', class: 'btn btn-xs btn-default', target: '_blank' %>
+    <%= link_to icon_label(:new, 'Add Content'), new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block', class: 'btn btn-sm btn-default' %>
+    <%= link_to icons(:view), url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', class: 'btn btn-sm btn-default', target: '_blank' %>
     <% if can?(:manage_content, :all) %>
       <div class="btn-group">
-        <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
+        <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><%= icons(:cog) %> <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right icons-right">
-          <li><%= link_to label_icon('Permissions', 'icon-lock'), permissions_admin_cms_page_path(@current_page) %></li>
+          <li><%= link_to icon_label(:lock, 'Permissions'), permissions_admin_cms_page_path(@current_page) %></li>
           <li><%= link_to "#{'Un-' if @current_page.welcome_page?}Mark Welcome Page", mark_welcome_page_admin_cms_page_path(@current_page), method: :patch %></li>
         </ul>
       </div>
@@ -30,7 +30,7 @@
   </div>
   
   <div class="col-md-4">
-    <% toolbar = link_to icons(:edit), edit_admin_cms_page_path(@current_page), title: 'Edit Page Details', class: "btn btn-link btn-icon" %>
+    <% toolbar = link_to icons(:edit), edit_admin_cms_page_path(@current_page), title: 'Edit Page Details', class: "btn btn-xs btn-default" %>
     <%= panel title: 'Page Details', toolbar: toolbar do %>
       <dl>
         <dt class="text-info">Slug</dt>
@@ -58,6 +58,6 @@
       </dl>
     <% end %>
     <%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.showpage_url(@current_page.slug))}",
-                 target: '_blank', class: 'btn btn-xs btn-default' %>
+                 target: '_blank', class: 'btn btn-sm btn-default' %>
   </div>
 </div>

@@ -1,8 +1,8 @@
-<% content_for :content_title, icon_label('font-bullhorn', 'Blogs') %>
+<% content_for :content_title, icon_label(:blogs, 'Blogs') %>
 <% content_for :content_title_extra do %>
   <% if can? :manage_content, :all %>
     <%= page_header_buttons do %>
-      <%= link_to icon_label(:new, 'New Blog'), new_admin_cms_blog_path, title: 'New Blog', class: 'btn btn-xs btn-default' %>
+      <%= link_to icon_label(:new, 'New Blog'), new_admin_cms_blog_path, title: 'New Blog', class: 'btn btn-sm btn-default' %>
     <% end %>
   <% end %>
 <% end %>
@@ -17,7 +17,7 @@
         <th>Title</th>
         <th>Associated Event</th>
         <th width="50">Type</th>
-        <th width="18"><span class='hovertip' title='Followers or members'><%= icons('icon-users') %></span></th>
+        <th width="18"><span class='hovertip' title='Followers or members'><%= icons('fa fa-users') %></span></th>
         <th width="50">Status</th>
       </tr>
     </thead>

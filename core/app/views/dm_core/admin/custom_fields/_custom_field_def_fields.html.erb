@@ -2,9 +2,9 @@
 <div class="custom_field_definition_box">
   <% toolbar = capture do %>
     <% if f.object.custom_fields.empty? %>
-      <%= link_to icons(:delete), '#', title: 'Remove Field', class: 'remove_custom_fields btn btn-link btn-icon text-danger' %>
+      <%= link_to icons(:delete), '#', title: 'Remove Field', class: 'remove_custom_fields btn btn-xs btn-default text-danger' %>
     <% else %>
-      <%= link_to icons(:delete), '#', title: 'Remove field and associated data', class: 'remove_custom_fields btn btn-link btn-icon text-danger', data: {confirm: 'There is already data stored with this field.  Are you sure you want to delete it?'} %>
+      <%= link_to icons(:delete), '#', title: 'Remove field and associated data', class: 'remove_custom_fields btn btn-xs btn-default text-danger', data: {confirm: 'There is already data stored with this field.  Are you sure you want to delete it?'} %>
     <% end %>
   <% end %>
   <%= f.hidden_field :_destroy, class: '_destroy' %>
