@@ -144,12 +144,12 @@ $(document).ready(function() {
         var cookie_name = $(this).parent('li.parent_li').data('save_id');
         if (children.is(':visible')) {
       		children.hide('fast');
-      		$(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-circle').removeClass('icon-minus-circle');
+      		$(this).attr('title', 'Expand this branch').find(' > i').addClass('fa-plus-square-o').removeClass('fa-minus-square-o');
           $.removeCookie(cookie_name, { path: '/' });
         }
         else {
       		children.show('fast');
-      		$(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-circle').removeClass('icon-plus-circle');
+      		$(this).attr('title', 'Collapse this branch').find(' > i').addClass('fa-minus-square-o').removeClass('fa-plus-square-o');
           $.cookie(cookie_name, '1', { expires: 365, path: '/' });
         }
         e.stopPropagation();

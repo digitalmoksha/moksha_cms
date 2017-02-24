@@ -1,12 +1,12 @@
 <% content_for :content_title_extra do %>
-    <%= page_header_buttons do %>
+  <%= page_header_buttons do %>
     <div class="header-bar-stats">
       <ul class="page-stats">
         <li><%= render partial: 'dm_core/admin/shared/header_stats_new_users' %></li>
         <li><%= render partial: 'dm_core/admin/shared/header_stats_user_activity' %></li>
       </ul>
     </div>
-    <% end %>
+  <% end %>
 <% end %>
 <%= panel title: icon_label(:users, 'Users'), body: true do %>
   <div class="datatable">
