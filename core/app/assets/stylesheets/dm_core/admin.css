@@ -121,6 +121,7 @@
   display: block;
   border-left: 1px solid #ddd;
   height: 26px;
+  margin-bottom: 0;
 }
 #tree_sort li.root > dl, #tree_sort li.root > .dropzone {
   border-left: 1px solid transparent;

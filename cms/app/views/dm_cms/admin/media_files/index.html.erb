@@ -1,8 +1,8 @@
 <% content_for :content_title, 'Media Library' %>
-<% toolbar = toolbar_btn(icons(:new), new_admin_media_file_path, title: 'New Upload', class: "btn btn-link btn-icon") %>
+<% toolbar = toolbar_btn(icons(:new), new_admin_media_file_path, title: 'New Upload', class: "btn btn-xs btn-default") %>
 <%= panel title: 'Thumbnails', toolbar: toolbar do %>
-  <h6>Filter by tag:</h6>
-  <div class="tagsinput block">
+  <h5>Filter by tag:</h5>
+  <div class="tagsinput">
     <%= link_to content_tag(:span, 'all', class: "tag #{'active' if @tag_filter == 'all'}"), admin_media_files_path(filter: 'all') %>
     <%= link_to content_tag(:span, '/', class: "tag #{'active' if @tag_filter == 'top'}"), admin_media_files_path(filter: 'top') %>
     <% MediaFile.tag_list_all.each do |tag| %>
@@ -76,7 +76,7 @@
                     <% end %>
                     <div class="caption">
                       <h6 style="word-wrap: break-word;text-align:center;margin-top:0px;"><%= media_file.media.file.filename %></h6>
-                      <%= link_to icons(:edit), edit_admin_media_file_path(media_file), class: "btn btn-link btn-icon" %>
+                      <%= link_to icons(:edit), edit_admin_media_file_path(media_file), class: "btn btn-xs btn-default" %>
                     </div>
                   </div>
                 </div>

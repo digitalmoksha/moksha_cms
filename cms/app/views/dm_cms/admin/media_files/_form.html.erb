@@ -58,7 +58,7 @@
     </div>
   <% end %>
 <% end %>
-<% toolbar = toolbar_btn(icons(:cancel), {action: :index}, class: "btn btn-link btn-icon") %>
+<% toolbar = toolbar_btn(icons(:cancel), {action: :index}, class: "btn btn-xs btn-default") %>
 
 <%= simple_form_for @media_file, url: [:admin, @media_file],
       html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
@@ -86,9 +86,8 @@
     <%= f.input :media, input_html: {preview_version: :thumb} %>
   <% end %>
 
-  <%= f.input :generate_retina, label: false, disabled: @media_file.generate_retina?, inline_label: "Generate retina versions", hint: "Make sure you upload a large version of the file." %>
-  <%= f.input :tag_list, hidden: true, input_html: {id: "tag_field", data: {tags: MediaFile.tag_list_all}},
-               hint: 'Tags for the folder name and the file extension are added automatically' %>
+  <%= f.input :generate_retina, label: 'Retina', disabled: @media_file.generate_retina?, inline_label: "Generate retina versions", hint: "Make sure you upload a large version of the file." %>
+  <%= f.input :tag_list, collection: MediaFile.tag_list_all, input_html: {multiple: '1', class: 'tag_field', } %>
   
   <% if false #--- disable this for now %>
     <%= locale_frame :title => '' do |locale| %>
@@ -96,7 +95,9 @@
       <%= f.input "description_#{locale}",  label: 'Description' %>
     <% end %>
   <% end %>
- 
+
+
   <%= submit_or_cancel cancel_url: {action: :index}, delete_url: ([:admin, @media_file] unless @media_file.new_record?), delete_confirm: 'Are you sure you wish to delete this file from the Media Library?' %>
   <% end %>
 <% end %>
+

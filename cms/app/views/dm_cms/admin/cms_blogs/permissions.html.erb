@@ -12,7 +12,7 @@
             <div class="col-md-12">
               <%= subsection title: user.full_name do %>
                 <% manage_content_state = user.has_role?(:manage_content, @blog) ? 'btn-success active' : 'btn-default' %>
-                <%= link_to 'Manage Blog', dm_cms.ajax_toggle_permission_admin_cms_blog_path(@blog, user.id, :manage_content), class: "permission_btn btn btn-xs #{manage_content_state}", role: 'button', remote: true, method: :patch %>
+                <%= link_to 'Manage Blog', dm_cms.ajax_toggle_permission_admin_cms_blog_path(@blog, user.id, :manage_content), class: "permission_btn btn btn-sm #{manage_content_state}", role: 'button', remote: true, method: :patch %>
               <% end %>
             </div>
           </div>
@@ -22,10 +22,8 @@
     <% end %>
   </div>
   <div class="col-md-4">
-    <%= panel body: false, title: "Content Managers" do %>
-      <div class="panel-body">
+    <%= subsection title: 'Content Managers' do %>
         <p>Current users that can fully manage blogs</p>
-      </div>
   
       <table class="table table-bordered table-condensed table-striped">
         <tbody>

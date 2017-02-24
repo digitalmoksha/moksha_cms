@@ -1,6 +1,6 @@
   <% toolbar = capture do %>
     <%= @forum_site.enabled? ? colored_label('Forums Enabled', :success) : colored_label('Forums Disabled') %>
-    <%= link_to(icons(:edit), dm_forum.edit_admin_forum_site_path, class: "btn btn-link btn-icon") %>
+    <%= link_to(icons(:edit), dm_forum.edit_admin_forum_site_path, class: "btn btn-xs btn-default") %>
   <% end %>
   <%= panel title: "Forum Settings", toolbar: toolbar do %>
     <dl class="dl-horizontal">

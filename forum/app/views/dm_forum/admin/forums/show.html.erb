@@ -1,7 +1,7 @@
 <% content_for :content_title, icon_label('font-comment', @forum.name) %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%= link_to(icon_label(:edit, 'Edit'), [:edit, :admin, @forum], class: "btn btn-xs btn-default", title: 'Edit') %>
+    <%= link_to(icon_label(:edit, 'Edit'), [:edit, :admin, @forum], class: "btn btn-sm btn-default", title: 'Edit') %>
   <% end %>
 <% end %>
 
@@ -38,7 +38,7 @@
           <tbody>
             <% @forum.member_list(:manual).each do |user| %>
               <tr>
-                <td><%= link_to(icons("icon-minus"), dm_forum.forum_delete_member_admin_forum_path(@forum, user_id: user.id), method: :delete, title: 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+                <td><%= link_to(icons(:delete), dm_forum.forum_delete_member_admin_forum_path(@forum, user_id: user.id), method: :delete, title: 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
                 <td><%= user.country.english_name %></td>
               </tr>
             <% end %>

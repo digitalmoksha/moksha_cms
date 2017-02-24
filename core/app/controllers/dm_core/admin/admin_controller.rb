@@ -91,7 +91,11 @@ private
         item[:children] << {text: 'Overview', link: dm_event.admin_workshops_path,   active: admin_path_active_class?(dm_event.admin_workshops_path) }
         Workshop.upcoming.each do |workshop|
           if can?(:list_events, workshop)
-            item[:children] << {text: workshop.title, badge: workshop.registrations.number_of(:attending), link: dm_event.admin_workshop_path(workshop),   active: admin_path_active_class?(dm_event.admin_workshop_path(workshop)) }
+            item[:children] << {text: workshop.title, 
+                                badge: workshop.registrations.number_of(:attending), 
+                                badge_class: 'badge-gray',
+                                link: dm_event.admin_workshop_path(workshop),
+                                active: admin_path_active_class?(dm_event.admin_workshop_path(workshop)) }
           end
         end
         @admin_theme[:main_menu] << item

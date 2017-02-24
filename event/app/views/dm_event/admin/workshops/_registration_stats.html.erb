@@ -1,7 +1,7 @@
 <% if can?(:manage_event_registrations, @workshop) || can?(:manage_event_finances, @workshop) %>
   <%= subsection title: 'Registration Statistics' do %>
     <% num_registrations = workshop.registrations.count %>
-    <div class="block progress-statistics">
+    <div class="progress-statistics">
       <% num = workshop.registrations.number_of(:attending) %>
       <%= slim_progress_bar(label: 'Attending', value: "#{num} / #{num.percent_of(num_registrations).to_s}%", color: 'success', percentage: num.percent_of(num_registrations)) %>
       <% if (num = workshop.registrations.number_of(:pending)) > 0 %>
@@ -38,9 +38,9 @@
     <%= subsection title: 'Price Distribution' do %>
       <% financials = @workshop.financial_details(:summary) %>
       <ul class="statistics statistics-small statistics-linear">
-        <li><%= stat_block_small label: 'Best', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'icon-coin', percent: 100 %></li>
-        <li><%= stat_block_small label: 'Worst (80%)', number: financials[:summary][:total_possible_worst].format(no_cents_if_whole: true), color_type: :warning, icon: 'icon-coin', percent: 80 %></li>
-        <li><%= stat_block_small label: 'Paid', number: financials[:summary][:total_paid].format(no_cents_if_whole: true), color_type: :success, icon: 'icon-coin', percent: financials[:summary][:total_paid_percent] %></li>
+        <li><%= stat_block_small label: 'Best', number: financials[:summary][:total_possible].format(no_cents_if_whole: true), color_type: :info, icon: 'fa fa-money', percent: 100 %></li>
+        <li><%= stat_block_small label: 'Worst (80%)', number: financials[:summary][:total_possible_worst].format(no_cents_if_whole: true), color_type: :warning, icon: 'fa fa-money', percent: 80 %></li>
+        <li><%= stat_block_small label: 'Paid', number: financials[:summary][:total_paid].format(no_cents_if_whole: true), color_type: :success, icon: 'fa fa-money', percent: financials[:summary][:total_paid_percent] %></li>
       </ul>
       <%= link_to 'Financial Details', financials_admin_workshop_url(@workshop) %>
       <hr>

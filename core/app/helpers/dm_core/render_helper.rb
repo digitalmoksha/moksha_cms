@@ -3,9 +3,9 @@ module DmCore
     
     # gives the public avatar for a user
     #------------------------------------------------------------------------------
-    def avatar_for(user, size=32)
+    def avatar_for(user, size=32, options = {})
       user = User.new(user_profile: UserProfile.new) if user.nil? # avatar comes from the user profile
-      present(user).avatar_for(size)
+      present(user).avatar_for(size, options)
     end
 
     # Used in pagination - get the current page number being displayed

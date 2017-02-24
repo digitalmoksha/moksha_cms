@@ -4,7 +4,7 @@
 
   <%= f.error_notification message: "Please review the problems below" %>
   <% toolbar = capture do %>
-    <%= link_to icons(:cancel), (@forum.new_record? ? admin_forum_category_path(@forum.forum_category) : admin_forum_path(@forum)), class: 'btn btn-link btn-icon' %>
+    <%= link_to icons(:cancel), (@forum.new_record? ? admin_forum_category_path(@forum.forum_category) : admin_forum_path(@forum)), class: 'btn btn-xs btn-default' %>
   <% end %>
   <%= panel title: @title, toolbar: toolbar do %>
     <%= f.input :name, required: true, autofocus: true %>  

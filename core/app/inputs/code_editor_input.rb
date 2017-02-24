@@ -22,10 +22,10 @@ class CodeEditorInput < SimpleForm::Inputs::TextInput
     editor_id = "codemirror_container_#{rand(1000)}"
     out  = ''
     out << "<div class='cm_toolbar'>"
-    out << "  <a class='cm_cmd_bold_#{options[:mode]}' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='icon-bold'></i></a>"
-    out << "  <a class='cm_cmd_italic_#{options[:mode]}' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='icon-italic'></i></a>"
-    out << "  <a class='cm_cmd_link_#{options[:mode]}' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='icon-link5'></i></a>"
-    out << "  <a class='cm_cmd_fullscreen' title='Fullscreen (Esc exits)' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='icon-expand'></i></a>"
+    out << "  <a class='cm_cmd_bold_#{options[:mode]}' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='fa fa-bold'></i></a>"
+    out << "  <a class='cm_cmd_italic_#{options[:mode]}' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='fa fa-italic'></i></a>"
+    out << "  <a class='cm_cmd_link_#{options[:mode]}' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='fa fa-link'></i></a>"
+    out << "  <a class='cm_cmd_fullscreen' title='Fullscreen (Esc exits)' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='fa fa-expand'></i></a>"
     out << "</div>"
     out << "<div id='#{editor_id}'>"
     (out << @builder.text_area(attribute_name, input_html_options)).html_safe

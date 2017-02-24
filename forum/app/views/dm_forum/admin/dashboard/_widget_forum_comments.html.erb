@@ -3,36 +3,40 @@
 <% comments     = Comment.where(commentable_type: ForumTopic, created_at: date_range).order('created_at DESC') %>
 <% title = comment_day == 0 ? 'Today\'s Forum Comments' : comment_day == 1 ? 'Yesterday\'s Forum Comments' : "Forum Comments #{comment_day} days ago" %>
 <% content_for :forum_title_toolbar do %>
-  <%= toolbar_btn(comments.size, dm_core.admin_dashboard_path, title: 'Number of comments today', class: 'label label-success pull-right') %>
-  <div class="panel-icons-group">
-    <%= link_to icons('icon-arrow-left11'), dm_forum.admin_widget_forum_comments_path(comment_day: comment_day + 1), remote: true, class: 'btn btn-link btn-icon' %>
-    <% if @comment_day == 0 %>
-      <%= link_to icons('icon-arrow-right12'), '#', class: 'btn btn-link btn-icon disabled' %>
-    <% else %>
-      <%= link_to icons('icon-arrow-right12'), dm_forum.admin_widget_forum_comments_path(comment_day: comment_day - 1), remote: true, class: 'btn btn-link btn-icon' %></li>
-    <% end %>
-    <%= link_to icons('icon-spinner8'), dm_forum.admin_widget_forum_comments_path(comment_day: comment_day), class: 'btn btn-link btn-icon hovertip', title: 'Refresh', remote: true %>
-  </div>
+  <%= link_to icons('fa fa-arrow-left'), dm_forum.admin_widget_forum_comments_path(comment_day: comment_day + 1), remote: true, class: 'btn btn-xs btn-default' %>
+  <% if @comment_day == 0 %>
+    <%= link_to icons('fa fa-arrow-right'), '#', class: 'btn btn-xs btn-default disabled' %>
+  <% else %>
+    <%= link_to icons('fa fa-arrow-right'), dm_forum.admin_widget_forum_comments_path(comment_day: comment_day - 1), remote: true, class: 'btn btn-xs btn-default' %></li>
+  <% end %>
+  <%= link_to icons(:refresh), dm_forum.admin_widget_forum_comments_path(comment_day: comment_day), class: 'btn btn-xs btn-default hovertip', title: 'Refresh', remote: true %>
+  <%= toolbar_btn(comments.size, dm_core.admin_dashboard_path, title: 'Number of comments today', class: 'label label-success') %>
 <% end %>
 
-<%= panel title: title, toolbar: content_for(:forum_title_toolbar) do %>
+<%= panel title: icon_label(:chat, title), toolbar: content_for(:forum_title_toolbar) do %>
   <% if comments.size == 0 %>
     <p>No comments posted yet</p>
   <% else %>
-    <% comments.each do |comment| %>
-      <!-- Comment -->
-      <div class="media">
-        <a class="pull-left" href="#"><div class="media-object"><%= avatar_for comment.user, 50 %></div></a>
-        <div class="media-body">
-          <%= link_to "<span class='hovertip' data-placement='right' title='#{comment.user.full_name}'>#{present(comment).author}</span>".html_safe, dm_forum.forum_forum_topic_path(comment.commentable.forum.slug, comment.commentable.slug, anchor: "forum_comment_#{comment.id}"), class: 'media-heading' %>
-          <ul class="headline-info">
-            <li><%= format_datetime comment.created_at %></li>
-            <li><%= link_to comment.commentable.title, dm_forum.forum_forum_topic_path(comment.commentable.forum.slug, comment.commentable.slug, anchor: "forum_comment_#{comment.id}"), class: 'post_title', target: '_blank' %></li>
-          </ul>
-          <%= present(comment).formatted_comment %>
-        </div>
-      </div>
-      <!-- /comment -->
-    <% end %>
+    <ul class="chat">
+      <% comments.each do |comment| %>
+        <li class="left clearfix">
+          <span class="chat-img pull-left">
+            <%= avatar_for comment.user, 50, class: 'img-circle' %>
+          </span>
+          <div class="chat-body clearfix">
+            <div class="header">
+              <%= link_to "<span class='hovertip' data-placement='right' title='#{comment.user.full_name}'>#{present(comment).author}</span>".html_safe, dm_forum.forum_forum_topic_path(comment.commentable.forum.slug, comment.commentable.slug, anchor: "forum_comment_#{comment.id}") %>
+              <div class="pull-right text-muted">
+                <ul class="headline-info">
+                  <li><%= format_datetime comment.created_at %></li>
+                  <li><%= link_to comment.commentable.title, dm_forum.forum_forum_topic_path(comment.commentable.forum.slug, comment.commentable.slug, anchor: "forum_comment_#{comment.id}"), class: 'post_title', target: '_blank' %></li>
+                </ul>
+              </div>
+            </div>
+            <%= present(comment).formatted_comment %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
 <% end %>

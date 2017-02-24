@@ -3,13 +3,13 @@
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
     <%= present(@blog).label_published %>
-    <%= link_to icon_label(:view, 'View'),  blog_show_url(@blog),   class: "btn btn-xs btn-default", title: 'View', target: '_blank' %>
-    <%= link_to(icon_label(:edit, 'Edit'),    [:edit, :admin, @blog], class: "btn btn-xs btn-default", title: 'Edit') %>
+    <%= link_to icons(:view),  blog_show_url(@blog),   class: "btn btn-sm btn-default", title: 'View', target: '_blank' %>
+    <%= link_to(icons(:edit),  [:edit, :admin, @blog], class: "btn btn-sm btn-default", title: 'Edit') %>
     <% if can?(:manage_content, :all) %>
       <div class="btn-group">
-        <button class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <span class="caret"></span></button>
-        <ul class="dropdown-menu dropdown-menu-right icons-right">
-          <li><%= link_to label_icon('Permissions', 'icon-lock'), permissions_admin_cms_blog_path(@blog) %></li>
+        <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown"><%= icons(:cog) %> <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><%= link_to icon_label(:lock, 'Permissions'), permissions_admin_cms_blog_path(@blog) %></li>
         </ul>
       </div>
     <% end %>
@@ -18,13 +18,13 @@
 
 <div class="row">
   <div class="col-md-9">
-    <% toolbar = toolbar_btn(icons('icon-plus'), new_admin_cms_blog_cms_post_path(@blog), title: 'New Post', class: "btn btn-link btn-icon") %>
+    <% toolbar = toolbar_btn(icons(:new), new_admin_cms_blog_cms_post_path(@blog), title: 'New Post', class: "btn btn-xs btn-default") %>
     <%= panel title: 'Posts', toolbar: toolbar, body: false do %>
-      <table class="table table-striped table-bordered table-block">
+      <table class="table table-striped table-bordered">
         <thead>
           <tr>
             <th>Title</th>
-            <th width="18"><span class='hovertip' title='Notification email sent'><%= icons('icon-envelop') %></span></th>
+            <th width="18"><span class='hovertip' title='Notification email sent'><%= icons(:mail) %></span></th>
             <th width="50">Status</th>
           </tr>
         </thead>
@@ -37,10 +37,10 @@
                 </td>
                 <td>
                   <% if post.notification_sent_on %>
-                    <span class='hovertip' title='<%= format_date(post.notification_sent_on) %>'><%= icons('icon-envelop') %></span>
+                    <span class='hovertip' title='<%= format_date(post.notification_sent_on) %>'><%= icons(:mail) %></span>
                   <% end %>
                 </td>
-                <td><%= post_presenter.label_published %></td>
+                <td class="label-column"><%= post_presenter.label_published %></td>
               </tr>
             <% end %>
           <% end %>
@@ -50,19 +50,19 @@
   </div>
   <div class="col-md-3">
     <% if @blog.is_subscription_only? %>
-      <%= subsection title: 'Visibility: <strong>Subscription</strong>'.html_safe do %>
+      <%= subsection title: 'Visibility: <span class="text-success">Subscription</span>'.html_safe do %>
         <p>Only paid subscribers can see the posts, and will receive notification emails.</p>
       <% end %>
     <% elsif @blog.is_private? %>
-      <%= subsection title: 'Visibility: <strong>Private</strong>'.html_safe do %>
+      <%= subsection title: 'Visibility: <span class="text-success">Private</span>'.html_safe do %>
         <p>Only users who have been given access (manually or through an associated event) can see posts in this blog, and will receive notification emails.</p>
       <% end %>
     <% elsif @blog.is_public? %>
-      <%= subsection title: 'Visibility: <strong>Public</strong>'.html_safe do %>
+      <%= subsection title: 'Visibility: <span class="text-success">Public</span>'.html_safe do %>
         <p>All posts are available publicly for anyone to see.  Logged in users can 'Follow' the blog to receive notification emails.</p>
       <% end %>
     <% elsif @blog.is_protected? %>
-      <%= subsection title: 'Visibility: <strong>Protected</strong>'.html_safe do %>
+      <%= subsection title: 'Visibility: <span class="text-success">Protected</span>'.html_safe do %>
         <p>Only logged in users can see the posts.  Logged in users can 'Follow' the blog to receive notification emails.</p>
       <% end %>
     <% end %>
@@ -121,7 +121,7 @@
             <tbody>
               <% @blog.member_list(:manual).each do |user| %>
                 <tr>
-                  <td><%= link_to(icons("icon-minus"), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, user_id: user.id), method: :delete, title: 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
+                  <td><%= link_to(icons(:delete), dm_cms.blog_delete_member_admin_cms_blog_path(@blog, user_id: user.id), method: :delete, title: 'Remove Access') + "&nbsp;&nbsp;".html_safe + user.full_name %></td>
                   <td><%= user.country.english_name %></td>
                 </tr>
               <% end %>
@@ -150,7 +150,7 @@
 
 <% unless @blog.is_private? %>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-9">
       <% toolbar = toolbar_btn(@blog.followers.count, '#', title: 'Number of users following this blog', class: 'label label-success pull-right') %>
       <%= panel title: 'Users Following this Blog', toolbar: toolbar, body: false do %>
         <table class="table table-striped table-bordered">
