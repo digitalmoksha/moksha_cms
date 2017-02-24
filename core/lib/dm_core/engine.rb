@@ -1,5 +1,6 @@
 require 'csv'
 
+require 'preferences'
 require 'devise'
 require 'recaptcha/rails'
 require 'rolify'
