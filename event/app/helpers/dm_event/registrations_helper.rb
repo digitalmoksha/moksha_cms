@@ -7,7 +7,7 @@ module DmEvent::RegistrationsHelper
 
   #------------------------------------------------------------------------------
   def status_label(text, state = :plain, with_icon = true)
-    icons = { acceptedx: 'icon-thumbs-up' }.freeze
+    icons = { acceptedx: 'fa fa-thumbs-up' }.freeze
     icon = icons[state.to_sym]
     colored_label(icon_label(icon, text, :color => '#fff'), state)
   end

@@ -100,7 +100,7 @@ private
     output = ''
     actions.each do |action|
       output << '<li>' +
-      link_to('<i class="icon-chevron-right"></i>'.html_safe + action.to_s.titlecase, 
+      link_to('<i class="fa fa-chevron-right"></i>'.html_safe + action.to_s.titlecase, 
               url_helpers.action_state_admin_registration_path(I18n.locale, registration, :state_event => action),
               {:remote => true, :method => :put}) +
        '</li>'

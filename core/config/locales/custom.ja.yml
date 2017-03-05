@@ -20,8 +20,8 @@ ja:
   english: "English"
   
   core:
-    next_page: "次のページ <i class='icon-angle-right'></i>"
-    prev_page: "<i class='icon-angle-left'></i> 前のページ"
+    next_page: "次のページ <i class='fa fa-angle-right'></i>"
+    prev_page: "<i class='fa fa-angle-left'></i> 前のページ"
     login: ログイン
     logout: ログアウト
     account: 自分のアカウント

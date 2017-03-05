@@ -22,8 +22,8 @@ module WillPaginate
         options[:class]         ||= 'tPages'
       end
       
-      options[:previous_label]  ||= '<span class="icon-arrow-14"></span>'
-      options[:next_label]      ||= '<span class="icon-arrow-17"></span>'
+      options[:previous_label]  ||= '<i class="fa fa-arrow-left"></i>'
+      options[:next_label]      ||= '<i class="fa fa-arrow-right"></i>'
       super.try :html_safe
     end
 

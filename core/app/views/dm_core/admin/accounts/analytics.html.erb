@@ -7,23 +7,23 @@
 
   <%= panel title: 'Analytics and Payment Configuration' do %>
 
-    <%= subsection title: 'Google Analytics', icon: 'icon-stack' do %>
+    <%= subsection title: 'Google Analytics', icon: 'fa fa-gear' do %>
       <%= f.input :preferred_google_analytics_tracker_id, :label => 'Tracker ID' %>
     <% end %>
     
-    <%= subsection title: 'PayPal', icon: 'icon-stack' do %>
+    <%= subsection title: 'PayPal', icon: 'fa fa-gear' do %>
       <%= f.input :preferred_paypal_merchant_id, :label => 'Merchant ID' %>
       <%= f.input :preferred_paypal_cert_id, :label => 'Cert ID' %>
     <% end %>
 
-    <%= subsection title: 'Sofort (sofort.com)', icon: 'icon-stack' do %>
+    <%= subsection title: 'Sofort (sofort.com)', icon: 'fa fa-gear' do %>
       <%= f.input :preferred_sofort_user_id, :label => 'User ID' %>
       <%= f.input :preferred_sofort_project_id, :label => 'Project ID' %>
       <%= f.input :preferred_sofort_project_password, :label => 'Project Password' %>
       <%= f.input :preferred_sofort_notification_password, :label => 'Notification Password' %>
     <% end %>
 
-    <%= subsection title: 'Subscription Processor', icon: 'icon-stack' do %>
+    <%= subsection title: 'Subscription Processor', icon: 'fa fa-gear' do %>
       <%= f.input :preferred_subscription_processor, label: 'Use', collection: ['paymill', 'stripe'], include_blank: true,
                   hint: 'Used only for subscriber content. DO NOT set or change this unless you know what you are doing' %>
       <%= f.input :preferred_subscription_bcc_email, label: 'Email bcc', include_blank: true,

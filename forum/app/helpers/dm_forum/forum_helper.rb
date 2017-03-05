@@ -63,7 +63,7 @@ module DmForum
 
     #------------------------------------------------------------------------------
     def forum_crumbs(forum = nil)
-      seperator  = "<span class='arrow'><i class='icon-angle-right'></i></span>".html_safe
+      seperator  = "<span class='arrow'><i class='fa fa-angle-right'></i></span>".html_safe
       out        = "".html_safe
       out       += link_to(I18n.t('fms.forums'), forum_root_path) + seperator
       if forum
@@ -89,9 +89,9 @@ module DmForum
         recent_txt  = I18n.t('fms.views_forums.no_recent_activity')
       end
       if forum_topic.locked?
-        "<i class='icon-lock icon-large' #{style} title='#{I18n.t('fms.views_forums.comma_locked_topic')}'></i>".html_safe
+        "<i class='fa fa-lock fa-lg' #{style} title='#{I18n.t('fms.views_forums.comma_locked_topic')}'></i>".html_safe
       else
-        "<i class='icon-comments icon-large' #{style} title='#{recent_txt}'></i>".html_safe
+        "<i class='fa fa-comments fa-lg' #{style} title='#{recent_txt}'></i>".html_safe
       end
     end
 

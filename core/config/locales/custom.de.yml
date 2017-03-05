@@ -18,8 +18,8 @@ de:
       hhmmpp: "%H:%M"
 
   core:
-    next_page: "Weiter <i class='icon-angle-right'></i>"
-    prev_page: "<i class='icon-angle-left'></i> Früher"
+    next_page: "Weiter <i class='fa fa-angle-right'></i>"
+    prev_page: "<i class='fa fa-angle-left'></i> Früher"
     login: Anmelden
     logout: Abmelden
     account: Mein Benutzerkonto

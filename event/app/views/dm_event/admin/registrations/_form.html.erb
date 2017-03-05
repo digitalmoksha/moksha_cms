@@ -194,7 +194,7 @@
                     <td><%= payment.payment_method %></td>
                     <td>
                       <% if payment.user_profile #--- only allow editing of manual payments %>
-                        <%= link_to(icons('icon-pencil3'), '#', data: { toggle: "modal", target: "#edit_payment_#{payment.id}"}, title: 'Edit Payment') %>
+                        <%= link_to(icons(:edit), '#', data: { toggle: "modal", target: "#edit_payment_#{payment.id}"}, title: 'Edit Payment') %>
                       <% end %>
                     </td>
                   </tr>

@@ -47,7 +47,7 @@
         <dt class="text-info">Template</dt>
         <dd>
           <%= @current_page.page_template %>
-          <%= " #{icons('icon-arrow-up9', color: '#aaa')}".html_safe if @current_page.template.blank? %>
+          <%= " #{icons('fa fa-arrow-up', color: '#aaa')}".html_safe if @current_page.template.blank? %>
         </dd>
         <dt class="text-info">Link</dt>
         <dd><%= @current_page.link %></dd>

@@ -6,17 +6,17 @@
   <span class="follow_filter">
   <% if @followed %>
     <span class='filter'>
-      <i class="icon-th"></i>
+      <i class="fa fa-th"></i>
       <%= link_to((I18n.t 'fms.all'), forum_show_path(@forum), :id => 'filter_link') %>
     </span>
-    &nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-th-large"></i>
+    &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-th-large"></i>
     <%= I18n.t 'fms.followed' %>
   <% else %>
-    <i class="icon-th"></i>
+    <i class="fa fa-th"></i>
     <%= I18n.t 'fms.all' %>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <span class='filter'>
-      <i class="icon-th-large"></i>
+      <i class="fa fa-th-large"></i>
       <%= link_to((I18n.t 'fms.followed'), forum_show_path(@forum)+"?followed=true", :id => 'filter_link') %> 
     </span>
   <% end %>
@@ -51,7 +51,7 @@
           <% if forum_topic.recent_comment %>
             <span class="when">
               <%= link_to(forum_forum_topic_path(@forum, forum_topic, :page => forum_topic.last_page, :anchor => recent_comment_dom_id)) do %>
-                <i class="icon-comment-alt"></i>
+                <i class="fa fa-comment-o"></i>
                 <%= I18n.t 'fms.last_post_on', :user => h(forum_topic.recent_comment.user.display_name), :date => format_date(forum_topic.recent_comment.created_at) %>
               <% end %>
             </span>

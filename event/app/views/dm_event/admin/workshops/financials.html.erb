@@ -110,7 +110,7 @@
         <tr>
           <td class="receipt_code" style="white-space:nowrap"><%= registration.receipt_code %></td>
           <td class="name"><%= link_to registration.full_name, dm_event.edit_admin_registration_path(registration) %> </td>
-          <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons('icon-bubble2 inside-content', size: 12), class: 'pull-right') if registration.private_comments.count > 0 %></td>
+          <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons(:comments), class: 'pull-right') if registration.private_comments.count > 0 %></td>
           <td class="cost"><%= registration.payment_owed.format %><%= " <sup>R</sup>".html_safe if registration.try(:workshop_price).try(:recurring_payments?) %></td>
           <td class="date" style="white-space:nowrap"><%= format_date(registration.last_payment_due_on) %></td>
           <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if registration.payment_reminder_due? %>>

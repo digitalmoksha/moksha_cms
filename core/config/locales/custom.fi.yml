@@ -20,8 +20,8 @@ fi:
   english: "suomi"
   
   core:
-    next_page: "Seuraava <i class='icon-angle-right'></i>"
-    prev_page: "<i class='icon-angle-left'></i> Edellinen"
+    next_page: "Seuraava <i class='fa fa-angle-right'></i>"
+    prev_page: "<i class='fa fa-angle-left'></i> Edellinen"
     login: Kirjaudu sisään
     logout: Kirjaudu ulos
     account: Oma tili
