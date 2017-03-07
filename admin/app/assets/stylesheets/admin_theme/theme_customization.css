@@ -1,8 +1,3 @@
-/* @override 
-	http://dev.kaleshwar.de:3200/assets/admin_theme/custom.css?body=1
-	http://dev.telugubasha.net:3500/assets/admin_theme/custom.css?body=1
-	http://dev.goldenstatements.com:4500/assets/admin_theme/custom.css?body=1 */
-
 h1, h2, h3, h5, h6 { font-weight: 400; }
 
 .nav > li > a {
@@ -167,7 +162,6 @@ h3.panel-title { font-weight: 400; }
 }
 
 .tab-content {
-  /*background-color: #f9f9f9;*/
   -moz-box-shadow: 0 0 0;
   box-shadow: 0 0 0;
   border: 1px solid #ddd;
@@ -197,8 +191,14 @@ h3.panel-title { font-weight: 400; }
 .locale_tabs > .nav-tabs > li > a  { min-width: 30px; }
 .locale_tabs { margin-bottom: 20px; }
 .locale_tabs .tab-content {
-  border: 1px solid #ddd;
-  padding: 10px 0 0;
+  padding: 10px 10px 0 0;
+  background-color: rgba(155, 200, 235, 0) !important;
+  border-top: 1px solid #e2e1e1;
+  border-bottom: 1px solid #e2e1e1;
+  border-radius: 0px;
+}
+.tabs-right.locale_tabs .tab-content {
+  border-right: 1px solid #e2e1e1;
 }
 
 /*--- tweak form fields ---*/
@@ -208,6 +208,16 @@ h3.panel-title { font-weight: 400; }
 .form-group input.check_boxes {
   width: auto;
   height: auto;
+}
+
+/* for inline labels on boolean checkboxes */
+.form-group input.boolean {
+  display: inline;
+  margin-right: 5px;
+}
+.form-group.boolean > div > label {
+  font-weight: normal;
+  font-style: normal;
 }
 
 .required > abbr { display: none; }
@@ -223,6 +233,8 @@ h3.panel-title { font-weight: 400; }
 .form-horizontal .control-label {
   font-weight: 500;
 }
+
+.help-block { font-size: 12px; }
 
 /*--- monospaced style ---*/
 
@@ -748,12 +760,20 @@ dl .icon_link_right i {
 
 /*--- Select2 ---*/
 
-.media_file_tag_list .select2-container--default .select2-selection--multiple .select2-selection__choice {
+.media_file_tag_list .select2-container--default .select2-selection--multiple .select2-selection__choice,
+.cms_post_tag_list .select2-container--default .select2-selection--multiple .select2-selection__choice {
   font-size: 12px;
   color: black;
   background-color: #cddcf6;
   border-radius: 18px;
   border: 1px solid #adc4ef;
+}
+
+.select2-container--default .select2-selection--multiple {
+  border: 1px solid #ccc;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border: solid #ccc 1px;
 }
 
 /*--- Sidebar text stats ---*/

@@ -27,7 +27,7 @@ class CodeEditorInput < SimpleForm::Inputs::TextInput
     out << "  <a class='cm_cmd_link_#{options[:mode]}' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='fa fa-link'></i></a>"
     out << "  <a class='cm_cmd_fullscreen' title='Fullscreen (Esc exits)' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='fa fa-expand'></i></a>"
     out << "</div>"
-    out << "<div id='#{editor_id}'>"
+    out << "<div id='#{editor_id}' #{"class='CodeMirror-autoheight'" if options[:autoheight]}>"
     (out << @builder.text_area(attribute_name, input_html_options)).html_safe
     out << "</div>"
   end

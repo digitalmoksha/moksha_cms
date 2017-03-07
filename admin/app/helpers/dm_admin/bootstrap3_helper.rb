@@ -151,7 +151,8 @@ module DmAdmin::Bootstrap3Helper
   #   anything else gets passed as html options to the tag
   #------------------------------------------------------------------------------
   def icons(icon_class, options = {})
-    options[:class] = ::CommonIcons[icon_class] || icon_class
+    options[:class] = (::CommonIcons[icon_class] || icon_class)
+    options[:class] +=  " #{options[:icon_class]}" if options[:icon_class]
     options[:style] ||= ''
     options[:style] += " font-size:#{options[:size]}px;" if !options[:size].blank?
     options[:style] += " color:#{options[:color]}" if !options[:color].blank?
@@ -163,14 +164,14 @@ module DmAdmin::Bootstrap3Helper
   # Note: span around text is needed for some css
   #------------------------------------------------------------------------------
   def icon_label(icon_type, text, options = {})
-    icons(icon_type, options) + ' ' + content_tag(:span, text)
+    icons(icon_type, options) + ' ' + content_tag(:span, text, class: options[:label_class])
   end
 
   # Generate label text followed by an icon
   # Note: span around text is needed for some css
   #------------------------------------------------------------------------------
   def label_icon(text, icon_type, options = {})
-    content_tag(:span, text) + ' ' + icons(icon_type, options)
+    content_tag(:span, text, class: options[:label_class]) + ' ' + icons(icon_type, options)
   end
 
   # A tabbed frame with locales as the tabs

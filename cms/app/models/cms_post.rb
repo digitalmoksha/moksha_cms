@@ -44,6 +44,12 @@ class CmsPost < ActiveRecord::Base
     cms_blog.comments_allowed? && comments_allowed
   end
   
+  # return a list of tags for all media objects
+  #------------------------------------------------------------------------------
+  def self.tag_list_all
+    CmsPost.tag_counts_on(:tags).map(&:name).sort
+  end
+  
   # Send post notification to any members and followers.  Updates the 
   # :notification_sent_on column after emails sent.
   # Use 'sets' to only end up with a unique list of users

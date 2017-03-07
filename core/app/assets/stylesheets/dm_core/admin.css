@@ -1,6 +1,3 @@
-/* @override 
-	http://dev.telugubasha.net:3500/assets/dm_core/admin.css?body=1 */
-
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -22,10 +19,10 @@
 /*--- CodeMirror fullscreen, give some padding, push z-index up high ---*/
 .CodeMirror-fullscreen {
   z-index: 9999;
-  padding-top: 40px;
-  padding-left: 30px;
-  padding-bottom: 100px;
+  padding: 30px 30px 15px;
 }
+
+.CodeMirror-autoheight .CodeMirror { height: auto;}
 
 .cm_toolbar {
   background: -webkit-linear-gradient(top, #f9faf9 0%, #eeefee 100%) #eee;
