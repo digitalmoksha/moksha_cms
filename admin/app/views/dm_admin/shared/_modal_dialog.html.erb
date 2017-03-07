@@ -1,0 +1,22 @@
+<%= content_tag :div, id: options[:id], class: "modal fade #{options[:class]}", style: options[:style], tabindex: '-1', role: 'dialog' do %>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="<% "#{options[:id]}_title" %>"><%= options[:title] %></h4>
+      </div>
+      <div class="modal-body with-padding">
+        <%= content %>
+      </div>
+      <div class="modal-footer">
+        <% if options[:delete_url] %>
+          <%= link_to "Delete", options[:delete_url], method: :delete, data: { confirm: options[:delete_msg] }, title: 'Delete', class: "btn btn-danger pull-left" %>
+        <% end %>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <% if options[:include_save] %>
+          <button type="submit" class="btn btn-primary">Save</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

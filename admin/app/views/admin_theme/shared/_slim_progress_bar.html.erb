@@ -1,0 +1,16 @@
+<div class="slim-progress">
+<% unless label.blank? %>
+  <span clas="label"><%= label %></span>
+<% end %>
+<% unless value.blank? %>
+  <span class="pull-right value"><%= value %></span>
+<% end %>
+<div class="progress progress-thin">
+  <div class="progress-bar progress-bar-<%= color %>" role="progressbar" aria-valuenow="<%= percentage %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= percentage %>%;">
+    <span class="sr-only"><%= percentage %>% Complete</span>
+  </div>
+</div>
+<% unless bottom_label.blank? %>
+  <span class="bottom_label"><%= bottom_label %></span>
+<% end %>
+</div>

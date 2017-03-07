@@ -1,0 +1,31 @@
+<%= render partial: 'layouts/admin_theme/header' %>
+
+<body class="<%= cookies[:admin_sidebar_narrow] ? 'sidebar-narrow' : '' %>"> 
+  <div id="wrapper">
+    <%= render partial: 'layouts/admin_theme/sidebar' %>
+
+    <!-- Page content -->
+    <div id="page-wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <% if current_account.preferred_site_maintenance? %>
+            <div class="alert alert-warning">
+              Site is currently in "maintenance mode" - all non-admin users will see the maintenance page
+            </div>
+          <% end %>
+          
+          <%= page_header title: content_for(:content_title), subtitle: content_for(:content_subtitle) do %>
+            <%= content_for :content_title_extra %>
+          <% end %>
+        </div>
+      </div>
+
+      <%= flash_admin %>
+      <%= yield %>
+
+      <%= render partial: 'layouts/admin_theme/footer' %>
+
+    </div> <!-- /page wrapper -->
+  </div> <!-- /wrapper -->
+</body>
+</html>

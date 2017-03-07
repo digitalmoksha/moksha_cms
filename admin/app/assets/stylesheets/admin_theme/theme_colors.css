@@ -1,0 +1,160 @@
+/*--- color customization ---*/
+
+body {
+  background-color: #09344d;
+}
+
+.sidebar {
+  background-color: #0d4262;
+}
+
+.sidebar a {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.sidebar ul li, .sidebar ul li.active a, .sidebar ul li ul li a {
+  border-bottom: 1px solid #175c84;
+}
+.sidebar ul li ul li a {
+  padding-right: 35px;
+}
+.sidebar .badge {
+  position: relative;
+  left: 25px;
+}
+.sidebar ul li a.active {
+  background-color: #0f5d88;
+}
+.sidebar ul li a:hover {
+  background-color: #09334c;
+}
+
+.navbar-inverse {
+  background-color: #09344d;
+  border-color: #a3950a;
+}
+
+.navbar-top-links > li > a {
+  color: #ffffff;
+}
+.navbar-top-links li a:hover, .navbar-top-links li.open a.dropdown-toggle {
+  background-color: #e3cd3c;
+  color: black;
+}
+
+
+
+/*--- reset panel colors back to original boostrap, or close ---*/
+
+.panel-default > .panel-heading {
+  color: #333;
+  background: -webkit-linear-gradient(top, white 0%, #f4f5f4 100%) #f5f5f5;
+  background: -moz-linear-gradient(top, white 0%, #f4f5f4 100%) #f5f5f5;
+  background: -ms-linear-gradient(top, white 0%, #f4f5f4 100%) #f5f5f5;
+  background: linear-gradient(to bottom, white 0%, #f4f5f4 100%) #f5f5f5;
+  border-color: #ddd;
+}
+
+/* Primary */
+
+.panel-primary {
+  border-color: #b5cadb;
+}
+.panel-primary > .panel-heading {
+  color: #000;
+  background: linear-gradient(to bottom, #d3dfe9 0%, #b4c9da 100%) #b5cadb;
+  border-color: #b5cadb;
+}
+.panel-primary > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #b5cadb;
+}
+.panel-primary > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #b5cadb;
+}
+
+
+/* Success */
+
+.panel-success {
+  border-color: #d6e9c6;
+}
+.panel-success > .panel-heading {
+  color: #3c763d;
+  background: -webkit-linear-gradient(top, #ecf5e8 0%, #cee7c4 100%) #dff0d8;
+  background: -moz-linear-gradient(top, #ecf5e8 0%, #cee7c4 100%) #dff0d8;
+  background: -ms-linear-gradient(top, #ecf5e8 0%, #cee7c4 100%) #dff0d8;
+  background: linear-gradient(to bottom, #ecf5e8 0%, #cee7c4 100%) #dff0d8;
+  border-color: #d6e9c6;
+}
+.panel-success > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #d6e9c6;
+}
+.panel-success > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #d6e9c6;
+}
+
+
+/* Warning */
+
+.panel-warning {
+  border-color: #faebcc;
+}
+.panel-warning > .panel-heading {
+  color: #8a6d3b;
+  background: -webkit-linear-gradient(top, #fdfaed 0%, #faf2cd 100%) #fcf8e3;
+  background: -moz-linear-gradient(top, #fdfaed 0%, #faf2cd 100%) #fcf8e3;
+  background: -ms-linear-gradient(top, #fdfaed 0%, #faf2cd 100%) #fcf8e3;
+  background: linear-gradient(to bottom, #fdfaed 0%, #faf2cd 100%) #fcf8e3;
+  border-color: #faebcc;
+}
+.panel-warning > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #faebcc;
+}
+.panel-warning > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #faebcc;
+}
+
+
+/* Danger */
+
+.panel-danger {
+  border-color: #ebccd1;
+}
+.panel-danger > .panel-heading {
+  color: #a94442;
+  background: -webkit-linear-gradient(top, #f6ebeb 0%, #ebcdcd 100%) #f2dede;
+  background: -moz-linear-gradient(top, #f6ebeb 0%, #ebcdcd 100%) #f2dede;
+  background: -ms-linear-gradient(top, #f6ebeb 0%, #ebcdcd 100%) #f2dede;
+  background: linear-gradient(to bottom, #f6ebeb 0%, #ebcdcd 100%) #f2dede;
+  border-color: #ebccd1;
+}
+.panel-danger > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #ebccd1;
+}
+.panel-danger > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #ebccd1;
+}
+
+
+/* Info */
+
+.panel-info {
+  border-color: #bce8f1;
+}
+.panel-info > .panel-heading {
+  color: #31708f;
+  background: -webkit-linear-gradient(top, #d6ebf1 0%, #b6dde7 100%) #c9e6ed;
+  background: -moz-linear-gradient(top, #d6ebf1 0%, #b6dde7 100%) #c9e6ed;
+  background: -ms-linear-gradient(top, #d6ebf1 0%, #b6dde7 100%) #c9e6ed;
+  background: linear-gradient(to bottom, #d6ebf1 0%, #b6dde7 100%) #c9e6ed;
+  border-bottom: 0;
+}
+.panel-info > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #bce8f1;
+}
+.panel-info > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #bce8f1;
+}

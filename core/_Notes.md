@@ -54,7 +54,7 @@ Typically, these assets are stored in a repository, such as subversion or git, t
             - javascripts             : javascripts for the theme
             - stylesheets             : stylesheets for the theme
         - theme_support
-          - locales                   : internationlization files
+          - locales                   : internationalization files
           - tags                      : liquid tags specific for this theme
           - views                     : custom views for this theme
       - site

@@ -1,0 +1,28 @@
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation" style="margin-bottom: 0">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <%= link_to @admin_theme[:brand_link], class: 'navbar-brand' do %>
+          <%= @admin_theme[:brand] %>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-icons"><span class="sr-only">Toggle navbar</span> <i class="icon-grid3"></i></button> 
+          <button type="button" class="navbar-toggle offcanvas"><span class="sr-only">Toggle navigation</span> <i class="icon-paragraph-justify2"></i></button>
+        <% end %>
+      </div>
+
+      <ul class="nav navbar-top-links navbar-right">
+        <%= admin_top_menu %>
+      </ul>
+
+      <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+          <ul class="nav" id="side-menu">
+            <%= admin_main_menu %>
+          </ul>
+        </div>
+      </div>
+    </nav>
