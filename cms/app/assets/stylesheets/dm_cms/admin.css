@@ -1,3 +1,47 @@
-/* @override 
-	http://dev.telugubasha.net:3000/assets/dm_cms/admin.css?body=1 */
+.admin_blog_post_list .media {
+  margin-bottom: 20px;
+}
 
+.admin_blog_post_list .media-left {
+  position: relative;
+}
+.admin_blog_post_list .media-left i {
+  opacity: 0.0;
+  position: absolute;
+  top: 24px;
+  left: 21px;
+  color: white;
+  text-shadow: 0 0 1px #000000;
+  /*z-index: 100;*/
+  transition: all 0.5s ease;
+}
+.admin_blog_post_list .media-left:hover i {
+  opacity: 1.0;
+}
+
+.admin_blog_post_list .media-left img {
+  transition: all 0.5s ease;
+  background: -webkit-linear-gradient(top, white 0%, #d1cfcf 100%), -webkit-radial-gradient(ellipse farthest-corner, #93b9f0 0%, #0151cf 0%, #ffffff 100%) #b02f2f;
+  background: -moz-linear-gradient(top, white 0%, #d1cfcf 100%), -moz-radial-gradient(ellipse farthest-corner, #93b9f0 0%, #0151cf 0%, #ffffff 100%) #b02f2f;
+  background: -ms-linear-gradient(top, white 0%, #d1cfcf 100%), -ms-radial-gradient(ellipse farthest-corner, #93b9f0 0%, #0151cf 0%, #ffffff 100%) #b02f2f;
+  background: linear-gradient(to bottom, white 0%, #d1cfcf 100%), radial-gradient(ellipse farthest-corner, #93b9f0 0%, #0151cf 0%, #ffffff 100%) #b02f2f;
+  border: 1px solid #dbdada;
+}
+.admin_blog_post_list .media-left:hover img {
+  opacity: 0.7;
+}
+
+
+.admin_blog_post_list .media-heading {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.admin_blog_post_list .media-body p {
+  font-size: 13px;
+}
+
+.admin_blog_post_list .tag_list .tag {
+  font-size: 11px;
+  padding: 2px 5px;
+}

@@ -19,33 +19,37 @@
 <div class="row">
   <div class="col-md-9">
     <% toolbar = toolbar_btn(icons(:new), new_admin_cms_blog_cms_post_path(@blog), title: 'New Post', class: "btn btn-xs btn-default") %>
-    <%= panel title: 'Posts', toolbar: toolbar, body: false do %>
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th width="18"><span class='hovertip' title='Notification email sent'><%= icons(:mail) %></span></th>
-            <th width="50">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @blog.posts.each do |post| %>
-            <% present post do |post_presenter| %>
-              <tr class="item" data-item_id="<%= post.id %>">
-                <td>
-                  <%= link_to(post.title, edit_admin_cms_blog_cms_post_path(@blog, post)) %>
-                </td>
-                <td>
+    <%= panel title: 'Posts', toolbar: toolbar do %>
+      <div class="admin_blog_post_list">
+        <% @blog.posts.each do |post| %>
+          <% present post do |post_presenter| %>
+            <div class="media">
+              <div class="media-left">
+                <%= link_to post_show_url(@blog, post), target: '_blank' do %>
+                  <img class="media-object img-circle" src="<%= MediaFile.url_by_name(post.featured_image, version: 'thumb') %>" width=64 height=64>
+                  <%= icons(:view, icon_class: 'fa-lg') %>
+                <% end %>
+              </div>
+              <div class="media-body">
+                <div class="pull-right">
                   <% if post.notification_sent_on %>
                     <span class='hovertip' title='<%= format_date(post.notification_sent_on) %>'><%= icons(:mail) %></span>
                   <% end %>
-                </td>
-                <td class="label-column"><%= post_presenter.label_published %></td>
-              </tr>
-            <% end %>
+                  <%= post_presenter.label_published %>
+                </div>
+                <h4 class="media-heading"><%= link_to post.title, edit_admin_cms_blog_cms_post_path(@blog, post) %></h4>
+                <p><%= truncate(post.summary, length: 200, separator: ' ') %></p>
+                <div class="tag_list">
+                  <% post.tag_list.each do |tag| %>
+                    <% active_tag = (@tag_filter == tag ? 'active' : '') %>
+                    <%= link_to content_tag(:span, tag, class: "tag #{active_tag}"), edit_admin_cms_blog_cms_post_path(@blog, post) %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
           <% end %>
-        </tbody>
-      </table>
+        <% end %>
+      </div>
     <% end %>
   </div>
   <div class="col-md-3">
