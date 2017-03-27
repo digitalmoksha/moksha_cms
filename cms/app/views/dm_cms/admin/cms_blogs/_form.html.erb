@@ -1,34 +1,68 @@
 <% content_for :content_title, @title %>
+<% unless @blog.new_record? %>
+  <% content_for :content_title_extra do %>
+    <%= page_header_buttons do %>
+      <%= present(@blog).label_published %>
+      <%= link_to(icons(:view), blog_show_url(@blog), class: "btn btn-sm btn-default", title: 'View', target: '_blank') %>
+      <div class="btn-group">
+        <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><%= icons(:gear) %> <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right icons-right">
+          <li class="text-danger"><%= link_to icon_label(:delete, 'Delete Blog', icon_class: 'text-danger', label_class: 'text-danger'), ([:admin, @blog] unless @blog.new_record?), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!'} %></li>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
 
 <% submit_url = (@blog.new_record? ? admin_cms_blogs_path : admin_cms_blog_path) %>
-<%= simple_form_for @blog, url: submit_url,
-    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+<%= simple_form_for @blog, url: submit_url, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
 
-  <%= f.error_notification message: "Please review the problems below" %>
-  <%= panel header: false do %>
-    <%= locale_tabs do |locale| %>
-      <%= f.input "title_#{locale}", label: 'Blog Title', id: 'name_error', required: true %>
-    <% end %>
-    <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.', input_html: {class: 'width_50_percent'} %>
-    <%= f.input :published, as: :boolean, label: 'Publish It?' %>
-    <%= f.input :is_public, as: :boolean, label: 'Make Blog Public?', hint: 'This will allow anyone to see the blog.  Use option below to restrict to registered users' %>
-    <%= f.input :requires_login, as: :boolean, label: 'Public Requires Login?', hint: 'If this is a public blog, user must be logged in to see it.  (All private blogs automatically require login)' %>
-    <% if defined? DmSubscriptions %>
-      <%= f.input :requires_subscription, as: :boolean, label: 'Subscription Required?', hint: 'User must have a paid subscription to access' %>
-    <% end %>
-    <%= f.input :comments_allowed, as: :boolean, label: 'Allow Comments', hint: 'Controls whether commenting is allowed for this blog.  If on, then each post can decided whether to allow comments' %>
-    <%= f.input :preferred_show_social_buttons, as: :boolean, label: 'Show social buttons', hint: 'This setting will be ignored for private blogs' %>
-    
-    <%= subsection title: 'Header Style' do %>
-      <%= f.input :header_image, label: 'Header Image', hint: 'An image for the entire blog', input_html: {class: 'width_50_percent'} %>
-      <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color', input_html: {class: 'width_50_percent'} %>
-    <% end %>
-    
-    <%= subsection title: 'Email Notifications' do %>
-      <%= f.input :image_email_header, label: 'Notification Image', hint: 'Image used in the header of notification emails. If blank, uses the blog\'s image', input_html: {class: 'width_50_percent'} %>
-    <% end %>
-    
-    <%= submit_or_cancel cancel_url: submit_url, delete_url: ([:admin, @blog] unless @blog.new_record?), delete_confirm: 'Are you sure you wish to delete this blog?  All posts/comments will also be deleted!' %>
+  <div class="row">
+    <div class="col-md-8">
+      <%= f.error_notification message: "Please review the problems below" %>
+      <%= panel header: false do %>
+        <%= locale_tabs do |locale| %>
+          <%= f.input "title_#{locale}", label: 'Blog Title', id: 'name_error', required: true %>
+        <% end %>
+        <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
+        <% if defined? DmSubscriptions %>
+          <%= f.input :requires_subscription, inline_label: 'Subscription Required?', hint: 'User must have a paid subscription to access' %>
+        <% end %>
+        <%= f.input :comments_allowed, inline_label: 'Allow Comments', hint: 'Controls whether commenting is allowed for this blog.  If on, then each post can decided whether to allow comments' %>
+        <%= f.input :preferred_show_social_buttons, as: :boolean, inline_label: 'Show social buttons', hint: 'This setting will be ignored for private blogs' %>
+      <% end %>
+    </div>
 
-  <% end %>
+    <div class="col-md-4">
+      <%= panel title: icon_label(:calendar, 'Publish') do %>
+        <%= f.input :published, inline_label: 'Publish It?' %>
+        <%= f.input :is_public, inline_label: 'Make Blog Public?', hint: 'Allow anyone to see this blog' %>
+        <%= f.input :requires_login, inline_label: 'Public Requires Login?', hint: 'If a public blog, user must be logged in to see it.  (All private blogs automatically require login)' %>
+      <% end %>
+
+      <%= submit_or_cancel save: @blog.new_record? ? 'Create' : 'Update', cancel_url: submit_url %>
+      <hr>
+
+      <%= panel title: icon_label(:tags, 'Tags') do %>
+        <%= f.input :tag_list, collection: CmsBlog.tag_list_all, input_html: {multiple: '1', class: 'tag_field', } %>
+      <% end %>
+
+      <%= panel title: icon_label(:image, 'Header Image') do %>
+        <% if @blog.header_image.present? %>
+          <img src="<%= site_asset_media_url(@blog.header_image) %>" class="img-thumbnail img-responsive">
+          <hr>
+        <% end %>
+        <%= f.input :header_image, label: 'Header Image', id: 'image_error', hint: 'An image for the entire blog' %>
+        <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color', input_html: {class: 'width_50_percent'} %>
+      <% end %>
+
+      <%= panel title: icon_label(:image, 'Email Notifications') do %>
+        <% if @blog.image_email_header.present? %>
+          <img src="<%= site_asset_media_url(@blog.image_email_header) %>" class="img-thumbnail img-responsive">
+          <hr>
+        <% end %>
+        <%= f.input :image_email_header, label: 'Notification Image', hint: 'Image used in the header of notification emails. If blank, uses the blog\'s image' %>
+      <% end %>
+    </div>
+  </div>
 <% end %>

@@ -41,4 +41,27 @@ describe CmsPost do
 
   end
 
+  describe 'tag handling' do
+
+    let(:blog1) { create(:blog) }
+
+    #------------------------------------------------------------------------------
+    it 'creates a tag' do
+      post1 = blog1.posts.create(attributes_for(:post, slug: 'test-slug'))
+      expect(post1.tag_list).to eq []
+      post1.update_attribute(:tag_list, 'one, two')
+      expect(post1.tag_list).to eq ['one', 'two']
+    end
+    
+    #------------------------------------------------------------------------------
+    it 'all tags across blogs' do
+      post1 = blog1.posts.create(attributes_for(:post, slug: 'test-slug'))
+      post2 = blog1.posts.create(attributes_for(:post, slug: 'test-slug2'))
+      post1.update_attribute(:tag_list, 'one, two')
+      post2.update_attribute(:tag_list, 'one, three')
+      expect(CmsPost.tag_list_all).to eq ['one', 'three', 'two']
+    end
+
+  end
+
 end

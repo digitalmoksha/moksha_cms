@@ -53,6 +53,20 @@
     <% end %>
   </div>
   <div class="col-md-3">
+    <% if @blog.header_image.present? || @blog.tag_list.count > 0 %>
+      <% if @blog.header_image.present? %>
+        <img src="<%= site_asset_media_url(@blog.header_image) %>" class="img-thumbnail img-responsive">
+      <% end %>
+      <% if @blog.tag_list.count > 0 %>
+        <div class="tag_list" style="margin-top: 10px;">
+          <% @blog.tag_list.each do |tag| %>
+            <% active_tag = (@tag_filter == tag ? 'active' : '') %>
+            <%= link_to content_tag(:span, tag, class: "tag #{active_tag}"), edit_admin_cms_blog_path(@blog) %>
+          <% end %>
+        </div>
+        <% end %>
+      <hr>
+    <% end %>
     <% if @blog.is_subscription_only? %>
       <%= subsection title: 'Visibility: <span class="text-success">Subscription</span>'.html_safe do %>
         <p>Only paid subscribers can see the posts, and will receive notification emails.</p>
@@ -92,6 +106,28 @@
         </tr>
       </table>
     <% end %>
+
+    <% unless @blog.is_private? %>
+      <%= subsection title: 'Followers' do %>
+        <table class="table table-striped table-condensed table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Country</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @blog.followers.each do |follower| %>
+              <tr>
+                <td><%= follower.user.full_name %></td>
+                <td><%= follower.user.try(:country).try(:english_name) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+
   </div>
 </div>
 
@@ -147,32 +183,6 @@
             </table>
           <% end %>
         </div>
-      <% end %>
-    </div>
-  </div>
-<% end %>
-
-<% unless @blog.is_private? %>
-  <div class="row">
-    <div class="col-md-9">
-      <% toolbar = toolbar_btn(@blog.followers.count, '#', title: 'Number of users following this blog', class: 'label label-success pull-right') %>
-      <%= panel title: 'Users Following this Blog', toolbar: toolbar, body: false do %>
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Country</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @blog.followers.each do |follower| %>
-              <tr>
-                <td><%= follower.user.full_name %></td>
-                <td><%= follower.user.try(:country).try(:english_name) %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
       <% end %>
     </div>
   </div>

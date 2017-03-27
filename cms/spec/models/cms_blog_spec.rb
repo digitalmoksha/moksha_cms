@@ -34,4 +34,24 @@ describe CmsBlog do
 
   end
 
+  describe 'tag handling' do
+
+    let(:blog1) { create(:blog) }
+
+    #------------------------------------------------------------------------------
+    it 'creates a tag' do
+      expect(blog1.tag_list).to eq []
+      blog1.update_attribute(:tag_list, 'one, two')
+      expect(blog1.tag_list).to eq ['one', 'two']
+    end
+    
+    #------------------------------------------------------------------------------
+    it 'all tags across blogs' do
+      blog1.update_attribute(:tag_list, 'one, two')
+      blog2 = create(:blog, slug: nil)
+      blog2.update_attribute(:tag_list, 'one, three')
+      expect(CmsBlog.tag_list_all).to eq ['one', 'three', 'two']
+    end
+
+  end
 end

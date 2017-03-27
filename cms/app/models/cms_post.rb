@@ -3,16 +3,14 @@ class CmsPost < ActiveRecord::Base
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates              :title, :summary, :content, :fallbacks_for_empty_translations => true #, :versioning => true
   globalize_accessors     :locales => DmCore::Language.language_array
-  acts_as_taggable
 
   # --- FriendlyId
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
-
-  # --- re-define so it can be scoped to the blog as well
-  friendly_id             :model_slug, use: :scoped, scope: [:account_id, :cms_blog]
+  friendly_id             :model_slug, use: :scoped, scope: [:account_id, :cms_blog] # re-define so is scoped to the blog as well
 
   acts_as_commentable
+  acts_as_taggable
   
   belongs_to              :cms_blog
   belongs_to              :account
@@ -44,7 +42,7 @@ class CmsPost < ActiveRecord::Base
     cms_blog.comments_allowed? && comments_allowed
   end
   
-  # return a list of tags for all media objects
+  # return a list of tags for all Blog post objects
   #------------------------------------------------------------------------------
   def self.tag_list_all
     CmsPost.tag_counts_on(:tags).map(&:name).sort

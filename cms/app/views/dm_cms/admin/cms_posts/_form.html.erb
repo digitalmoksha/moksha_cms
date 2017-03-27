@@ -26,7 +26,7 @@
 <% end %>
 
 <% submit_url = (@post.new_record? ? admin_cms_blog_cms_posts_path(@blog) : admin_cms_blog_cms_post_path(@blog, @post)) %>
-<%= simple_form_for @post, url: submit_url, wrapper: :bs3_vertical_form do |f| %>
+<%= simple_form_for @post, url: submit_url, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
 
   <div class="row">
     <div class="col-md-8">

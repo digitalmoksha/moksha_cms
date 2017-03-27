@@ -10,6 +10,7 @@ class CmsBlog < ActiveRecord::Base
   include DmCore::Concerns::FriendlyId
 
   acts_as_followable
+  acts_as_taggable
   
   resourcify
 
@@ -59,6 +60,12 @@ class CmsBlog < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def header_accent_color(default = '')
     self.preferred_header_accent_color || default
+  end
+  
+  # return a list of tags for all Blog post objects
+  #------------------------------------------------------------------------------
+  def self.tag_list_all
+    CmsBlog.tag_counts_on(:tags).map(&:name).sort
   end
   
   # Grab a list of the recent posts.  Can pull from all blogs or a specific
