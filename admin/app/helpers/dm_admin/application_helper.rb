@@ -3,6 +3,13 @@ include AdminTheme::MenuHelper
 include AdminTheme::ThemeHelper
 module DmAdmin
 
+  VerticalFormWrapperMappings = {
+    check_boxes:    :bs3_vertical_radio_and_checkboxes,
+    radio_buttons:  :bs3_vertical_radio_and_checkboxes,
+    file:           :bs3_vertical_file_input,
+    boolean:        :bs3_vertical_boolean
+  }.freeze
+
   FormWrapperMappings = {
     check_boxes:    :bs3_horizontal_radio_and_checkboxes,
     radio_buttons:  :bs3_horizontal_radio_and_checkboxes,
