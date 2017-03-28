@@ -2,6 +2,7 @@
 <% content_for :content_subtitle, 'Permalink: '.html_safe + link_to(blog_show_url(@blog), blog_show_url(@blog), title: 'Permalink for this blog', target: '_blank') %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
+    <%= present(@blog).visibility %>
     <%= present(@blog).label_published %>
     <%= link_to icons(:view),  blog_show_url(@blog),   class: "btn btn-sm btn-default", title: 'View', target: '_blank' %>
     <%= link_to(icons(:edit),  [:edit, :admin, @blog], class: "btn btn-sm btn-default", title: 'Edit') %>

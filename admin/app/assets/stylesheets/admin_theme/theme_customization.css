@@ -666,27 +666,29 @@ table.accounting tr.section { border-top: 1px solid #666; }
 
 /*--- Drag/Sort ---*/
 
-.table th.sort_handle {
-  padding: 0;
-}
-.table td.sort_handle { 
+.sort_handle { 
   width: 20px;
   padding: 0;
   opacity: 0.4;
   color: black;
   cursor: row-resize;
 }
-.table td.sort_handle:before { 
+.sort_handle:before { 
   content: '\f0c9';
   font-family: FontAwesome;
   z-index: 2;
   cursor: pointer;
+}
+.sort_handle:hover { opacity: .75; }
+
+.table th.sort_handle { padding: 0; }
+.table td.sort_handle { padding: 0; }
+.table td.sort_handle:before { 
   padding: 0;
   display: inline-block;
   margin-left: 4px;
   margin-top: 6px;
 }
-.table td.sort_handle:hover { opacity: .75; }
 
 /*--- Thumbnails ---*/
 

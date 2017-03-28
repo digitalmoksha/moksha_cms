@@ -152,10 +152,9 @@ module DmAdmin::Bootstrap3Helper
   #------------------------------------------------------------------------------
   def icons(icon_class, options = {})
     options[:class] = (::CommonIcons[icon_class] || icon_class)
-    options[:class] +=  " #{options[:icon_class]}" if options[:icon_class]
-    options[:style] ||= ''
-    options[:style] += " font-size:#{options[:size]}px;" if !options[:size].blank?
-    options[:style] += " color:#{options[:color]}" if !options[:color].blank?
+    options[:class] = "#{options[:class]} #{options[:icon_class]}" if options[:icon_class]
+    options[:style] = "#{options[:style]} font-size:#{options[:size]}px;" if !options[:size].blank?
+    options[:style] = "#{options[:style]} color:#{options[:color]}" if !options[:color].blank?
     
     content_tag(:i, '', options )
   end

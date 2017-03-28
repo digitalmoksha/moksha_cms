@@ -7,37 +7,48 @@
   <% end %>
 <% end %>
 
-<%= panel title: 'Current Blogs', body: false do %>
-  <table id="drag_sort" class="table table-striped table-bordered table-condensed" data-update_url="<%= dm_cms.admin_cms_blog_sort_path %>">
-    <thead>
-      <tr>
-        <% if can?(:manage_content, :all) %>
-          <th class="sort_handle"></th>
-        <% end %>
-        <th>Title</th>
-        <th>Associated Event</th>
-        <th width="50">Type</th>
-        <th width="18"><span class='hovertip' title='Followers or members'><%= icons('fa fa-users') %></span></th>
-        <th width="50">Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @blogs.each do |blog| %>
-        <% present blog do |blog_presenter| %>
-          <tr class="item" data-item_id="<%= blog.id %>">
-            <% if can?(:manage_content, :all) %>
-              <td class="sort_handle"></td>
+<%= panel title: 'Current Blogs', body: true do %>
+  <div id="drag_sort" class="admin_blog_list" data-update_url="<%= dm_cms.admin_cms_blog_sort_path %>">
+    <% @blogs.each do |blog| %>
+      <% present blog do |blog_presenter| %>
+        <div class="media item" data-item_id="<%= blog.id %>">
+          <div class="media-left">
+            <%= link_to blog_show_url(blog), target: '_blank' do %>
+              <img class="media-object img-circle" src="<%= MediaFile.url_by_name(blog.header_image, version: 'thumb') %>" width=64 height=64>
+              <%= icons(:view, icon_class: 'fa-lg') %>
             <% end %>
-            <td>
-              <%= link_to blog.title, admin_cms_blog_path(blog) %>
-            </td>
-            <td><%= blog.owner.try(:title) %></td>
-            <td><%= blog_presenter.visibility %></td>
-            <td><%= blog.is_private? ? content_tag(:span, blog.member_count(:all), class: 'hovertip', title: 'Members') : content_tag(:span, blog.followers.count, class: 'hovertip', title: 'Followers') %></td>
-            <td><%= blog_presenter.label_published %></td>
-          </tr>
-        <% end %>
+          </div>
+          <div class="media-body">
+            <div class="pull-right">
+              <% if false #post.notification_sent_on %>
+                <span class='hovertip' title='<%= format_date(post.notification_sent_on) %>'><%= icons(:mail) %></span>
+              <% end %>
+              <span class="info_stat">
+                <%= blog_presenter.visibility %>
+              </span>
+              <span class="info_stat">
+                <%= blog.is_private? ? content_tag(:span, "(#{blog.member_count(:all)} Members)") : content_tag(:span, "#{blog.followers.count} Followers", class: 'text-info') %>
+                <%#= blog.is_private? ? colored_label("Members: #{blog.member_count(:all)}", :info) : colored_label("Followers: #{blog.followers.count}", :info) %>
+              </span>
+              <%= blog_presenter.label_published %>
+              <% if can?(:manage_content, :all) %>
+                <span class="sort_handle"></span>
+              <% end %>
+            </div>
+            <h4 class="media-heading"><%= link_to blog.title, admin_cms_blog_path(blog) %></h4>
+            <% if blog.owner && blog.owner.title %>
+              <p>Event: <em><%= link_to blog.owner.title, dm_event.admin_workshop_path(blog.owner) %></em></p>
+            <% end %>
+            <div class="tag_list">
+              <% blog.tag_list.each do |tag| %>
+                <% active_tag = (@tag_filter == tag ? 'active' : '') %>
+                <%= link_to content_tag(:span, tag, class: "tag #{active_tag}"), edit_admin_cms_blog_path(blog) %>
+              <% end %>
+            </div>
+          </div>
+        </div>
       <% end %>
-    </tbody>
-  </table>
+    <% end %>
+  </div>
+  
 <% end %>
