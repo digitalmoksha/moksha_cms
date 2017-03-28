@@ -1,11 +1,6 @@
 <div class="pull-right">
   <% if contentitem_list.count > 1 %>
-    <% unless contentitem == contentitem_list.first %>
-      <%= link_to icons('fa fa-arrow-up'), move_up_admin_cms_contentitem_path(contentitem), title: "Move content up", class: "btn btn-xs btn-default", method: :patch %>
-    <% end %>
-    <% unless contentitem == contentitem_list.last %>
-      <%= link_to icons('fa fa-arrow-down'), move_down_admin_cms_contentitem_path(contentitem), title: "Move content down", class: "btn btn-xs btn-default", method: :patch %>
-    <% end %>
+    <span class="sort_handle" style="margin-right: 10px;"></span>
   <% end %>
   <%= link_to icons(:edit), [:edit, :admin, contentitem], class: "btn btn-xs btn-default" %>
 </div>

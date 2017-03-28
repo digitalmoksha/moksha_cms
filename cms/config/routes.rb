@@ -22,12 +22,11 @@ DmCms::Engine.routes.draw do
         member do
           get    :new_content
           post   :create_content
-          patch  :move_up
-          patch  :move_down
           get    :markdown
           post   :markdown
         end
       end
+      post   '/cms_contentitems/sort',                    controller: 'cms_contentitems', action: :sort, as: :cms_contentitem_sort
       resources :cms_snippets
       resources :cms_blogs do
         member do

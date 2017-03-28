@@ -4,7 +4,6 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   before_filter   :current_page,    :only =>    [:new_content, :create_content]
   before_filter   :current_content, :except =>  [:new_content, :create_content]
-  before_filter   :set_title
 
   #------------------------------------------------------------------------------
   def new_content
@@ -58,19 +57,14 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   end
 
   #------------------------------------------------------------------------------
-  def move_up
+  def sort
     authorize! :manage_content, @current_page
-    @cms_contentitem.update_attributes(row_order_position: :up)
-    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
+    @cms_contentitem.update_attribute(:row_order_position, params[:item][:row_order_position])
+
+    #--- this action will be called via ajax
+    render nothing: true
   end
 
-  #------------------------------------------------------------------------------
-  def move_down
-    authorize! :manage_content, @current_page
-    @cms_contentitem.update_attributes(row_order_position: :down)
-    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
-  end
-  
   #------------------------------------------------------------------------------
   def markdown
     @text = ''
@@ -90,15 +84,6 @@ protected
   def current_content
     @cms_contentitem  = CmsContentitem.find(params[:id]) unless params[:id].to_i == 0
     @current_page     = @cms_contentitem.cms_page
-  end
-
-private
-
-  # Set some values for the template based on the controller
-  #------------------------------------------------------------------------------
-  def set_title
-    text = @current_page.nil? ? 'Pages' : present(@current_page).admin_edit_title
-    content_for :content_title, text
   end
 
 end

@@ -545,6 +545,11 @@ fieldset[disabled] .btn-info.active {
   border-color: #4DA2B8;
 }
 
+/*--- information list ---*/
+
+dl.infolist dt {
+  margin-top: 10px;
+}
 
 /*--- Tag Refrence modal ---*/
 

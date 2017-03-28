@@ -1,15 +1,25 @@
 <% content_for :content_title, present(@current_page).admin_edit_title %>
-<% content_for :secondary_title, "#{@current_page.slug} &mdash; #{@current_page.title}".html_safe %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
-    <%= link_to icon_label(:new, 'Add Content'), new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block', class: 'btn btn-sm btn-default' %>
+    <%= present(@current_page).visibility %>
+    <%= present(@current_page).label_published %>
+    <% if @current_page.pagetype == 'content' %>
+      <%= link_to icon_label(:new, 'Add Content'), new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block', class: 'btn btn-sm btn-default' %>
+    <% end %>
     <%= link_to icons(:view), url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', class: 'btn btn-sm btn-default', target: '_blank' %>
+    <%= link_to(icons(:edit),  [:edit, :admin, @current_page], class: "btn btn-sm btn-default", title: 'Edit') %>
     <% if can?(:manage_content, :all) %>
       <div class="btn-group">
         <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><%= icons(:cog) %> <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right icons-right">
           <li><%= link_to icon_label(:lock, 'Permissions'), permissions_admin_cms_page_path(@current_page) %></li>
-          <li><%= link_to "#{'Un-' if @current_page.welcome_page?}Mark Welcome Page", mark_welcome_page_admin_cms_page_path(@current_page), method: :patch %></li>
+          <li><%= link_to icon_label(:globe, "#{'Un-' if @current_page.welcome_page?}Mark Welcome Page"), mark_welcome_page_admin_cms_page_path(@current_page), method: :patch %></li>
+          <li><%= link_to icon_label(:facebook, 'Clear Facebook Cache'), "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.showpage_url(@current_page.slug))}",
+                 target: '_blank' %></li>
+          <% if can?(:manage_content, :all) && !@current_page.new_record? %>
+            <li class="divider"></li>
+            <li class="text-danger"><%= link_to icon_label(:delete, 'Delete Page', icon_class: 'text-danger', label_class: 'text-danger'), [:admin, @current_page], method: :delete, class: 'text-danger', data: {confirm: 'Are you sure you wish to delete this page?'} %></li>
+          <% end %>
         </ul>
       </div>
     <% end %>
@@ -17,47 +27,83 @@
 <% end %>
 
 <div class="row">
-  <div class="col-md-8">
-    <% @current_page.cms_contentitems.each do |item| %>
-      <% toolbar = render partial: 'content_toolbar', locals: { contentitem: item,  contentitem_list: @current_page.cms_contentitems } %>
-      <%= panel title: "#{item.container}", body: false, toolbar: toolbar do %>
-        <pre class="prettyprint" style="border:none;border-bottom: 1px solid #eee;">
-<%= truncate(item.send("content_#{current_account.preferred_default_locale}"), length: 250) %>
-        </pre>
-        <span class="subtitle text-muted text-center">Format: <%= item.itemtype %></span>
+  <div class="col-md-9">
+    <% if @current_page.pagetype == 'content' %>    
+      <div id="drag_sort" class="admin_blog_list" data-update_url="<%= dm_cms.admin_cms_contentitem_sort_path %>">
+        <% @current_page.cms_contentitems.each do |item| %>
+          <% toolbar = render partial: 'content_toolbar', locals: { contentitem: item,  contentitem_list: @current_page.cms_contentitems } %>
+          <div class="item" data-item_id="<%= item.id %>">
+            <%= panel title: "#{item.container}", body: false, toolbar: toolbar do %>
+              <pre class="prettyprint" style="border:none;border-bottom: 1px solid #eee;">
+    <%= truncate(item.send("content_#{current_account.preferred_default_locale}"), length: 250) %>
+              </pre>
+              <span class="subtitle text-muted text-center">Format: <%= item.itemtype %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% elsif @current_page.pagetype == 'pagelink' %>
+      <%= panel title: @current_page.pagetype_name, body: true do %>
+        <p>This page will automatically re-direct to an internal page with the following slug:</p>
+        <p><%= link_to @current_page.link, showpage_url(slug: @current_page.link) %></p>
+      <% end %>
+    <% elsif @current_page.pagetype == 'link' %>
+      <%= panel title: @current_page.pagetype_name, body: true do %>
+        <p>This page will automatically re-direct to the following link, which is usually external:</p>
+        <p><%= link_to @current_page.link, @current_page.link %></p>
+      <% end %>
+    <% elsif @current_page.pagetype == 'link-new-window' %>
+      <%= panel title: @current_page.pagetype_name, body: true do %>
+        <p>This page will automatically re-direct to the following link, and open in a new tab/window:</p>
+        <p><%= link_to @current_page.link, @current_page.link %></p>
+      <% end %>
+    <% elsif @current_page.pagetype == 'divider' %>
+      <%= panel title: @current_page.pagetype_name, body: true do %>
+        <p>This is used simply as a placeholder page that will generate a "divider" item in the menu.  Does not have any real content.</p>
+      <% end %>
+    <% elsif @current_page.pagetype == 'controller/action' %>
+      <%= panel title: @current_page.pagetype_name, body: true do %>
+        <p>You should no longer be using this page type.  Please contact the system administrator.</p>
       <% end %>
     <% end %>
   </div>
   
-  <div class="col-md-4">
-    <% toolbar = link_to icons(:edit), edit_admin_cms_page_path(@current_page), title: 'Edit Page Details', class: "btn btn-xs btn-default" %>
-    <%= panel title: 'Page Details', toolbar: toolbar do %>
-      <dl>
+  <div class="col-md-3">
+    <% if @current_page.header_image.present? || @current_page.tag_list.count > 0 %>
+      <% if @current_page.header_image.present? %>
+        <img src="<%= site_asset_media_url(@current_page.header_image) %>" class="img-thumbnail img-responsive">
+      <% end %>
+      <% if @current_page.tag_list.count > 0 %>
+        <div class="tag_list" style="margin-top: 10px;">
+          <% @current_page.tag_list.each do |tag| %>
+            <% active_tag = (@tag_filter == tag ? 'active' : '') %>
+            <%= link_to content_tag(:span, tag, class: "tag #{active_tag}"), edit_admin_cms_page_path(@current_page) %>
+          <% end %>
+        </div>
+        <% end %>
+      <hr>
+    <% end %>
+
+    <%= subsection title: 'Attributes' do %>
+      <dl class="infolist">
         <dt class="text-info">Slug</dt>
         <dd><%= @current_page.slug %></dd>
         <dt class="text-info"></dt>
-        <dt class="text-info">Title</dt>
-        <dd><%= @current_page.title %></dd>
-        <dt class="text-info">Published?</dt>
-        <dd><%= @current_page.is_published? ? 'Yes' : 'No' %></dd>
-        <dt class="text-info">Requires Login?</dt>
-        <dd><%= @current_page.requires_login? ? 'Yes' : 'No' %></dd>
         <dt class="text-info">Type</dt>
-        <dd><%= @current_page.pagetype %></dd>
+        <dd>
+          <%= @current_page.pagetype_name %>
+        </dd>
         <dt class="text-info">Template</dt>
         <dd>
-          <%= @current_page.page_template %>
-          <%= " #{icons('fa fa-arrow-up', color: '#aaa')}".html_safe if @current_page.template.blank? %>
+          <% if @current_page.template.blank? %>
+            <%= label_icon(template_name(@current_page.page_template), 'fa fa-arrow-up') %> <small>(inherited)</small>
+          <% else %>
+            <%= template_name(@current_page.page_template) %>
+          <% end %>
         </dd>
-        <dt class="text-info">Link</dt>
-        <dd><%= @current_page.link %></dd>
         <dt class="text-info">Menu Title</dt>
         <dd><%= @current_page.menutitle %></dd>
-        <dt class="text-info">Menu Image</dt>
-        <dd><%= @current_page.menuimage %></dd>
       </dl>
     <% end %>
-    <%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.showpage_url(@current_page.slug))}",
-                 target: '_blank', class: 'btn btn-sm btn-default' %>
   </div>
 </div>

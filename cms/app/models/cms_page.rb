@@ -22,6 +22,8 @@ class CmsPage < ActiveRecord::Base
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
 
+  acts_as_taggable
+
   # --- associations
   has_many                :cms_contentitems, -> { order(:row_order) }, :dependent => :destroy
   has_ancestry            :cache_depth => true
@@ -49,7 +51,13 @@ class CmsPage < ActiveRecord::Base
   validates_length_of     :template, :maximum => 50
   
   # --- list of pagetypes
-  PAGETYPE = [['Regular content', 'content'], ["Link to interior page using it's slug", 'pagelink'], ['Link to external page with url', 'link'], ['Link to external page with url (open in new window)', 'link-new-window'], ['Menu divider (no content)', 'divider'], ['Controller/Action (rarely used)', 'controller/action']]
+  PAGETYPE = [['Regular content', 'content'],
+              ["Link to interior page using it's slug", 'pagelink'],
+              ['Link to external page with url', 'link'],
+              ['Link to external page with url (open in new window)', 'link-new-window'],
+              ['Menu divider (no content)', 'divider'],
+              ['Controller/Action (rarely used)', 'controller/action']
+            ]
 
   # Base the slug on the default locale
   #------------------------------------------------------------------------------
@@ -113,6 +121,18 @@ class CmsPage < ActiveRecord::Base
   #------------------------------------------------------------------------------
   def header_accent_color(default = '')
     self.preferred_header_accent_color || default
+  end
+  
+  #------------------------------------------------------------------------------
+  def pagetype_name
+    pagetype_item = CmsPage::PAGETYPE.detect {|x| x[1] == pagetype}
+    pagetype_item ? pagetype_item[0] : ''
+  end
+
+  # return a list of tags for all Page objects
+  #------------------------------------------------------------------------------
+  def self.tag_list_all
+    CmsPage.tag_counts_on(:tags).map(&:name).sort
   end
   
   #------------------------------------------------------------------------------

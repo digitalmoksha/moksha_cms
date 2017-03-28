@@ -27,4 +27,11 @@ module DmCms::CmsPagesHelper
     end
   end
   
+  #------------------------------------------------------------------------------
+  def template_name(search_for)
+    template_item = template_menu_list.detect {|x| x[1] == search_for}
+    template_item ? template_item[0] : ''
+  end
+
+  
 end
