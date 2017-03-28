@@ -19,6 +19,7 @@
  *= require 'admin_theme/bootstrap3-datetimepicker-rails/bootstrap-datetimepicker.css'
  *= require 'admin_theme/select2/css/select2.css'
  *= require 'admin_theme/select2-bootstrap-theme/select2-bootstrap.css'
+ *= require 'admin_theme/bootstrap-colorpicker/css/bootstrap-colorpicker.css'
  *= require 'admin_theme/theme_customization.css'
  *= require 'admin_theme/theme_colors.css'
  */

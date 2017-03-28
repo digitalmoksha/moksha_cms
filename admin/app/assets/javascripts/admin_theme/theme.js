@@ -33,6 +33,7 @@
   
 //= require 'admin_theme/moment.js'
 //= require 'admin_theme/bootstrap3-datetimepicker-rails/bootstrap-datetimepicker.js'
+//= require 'admin_theme/bootstrap-colorpicker/js/bootstrap-colorpicker.js'
 
 //= require 'admin_theme/sbadmin2/dist/js/sb-admin-2.js'
 //= require 'admin_theme/select2/js/select2.full.js'

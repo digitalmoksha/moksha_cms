@@ -54,7 +54,7 @@
           <hr>
         <% end %>
         <%= f.input :header_image, label: 'Header Image', id: 'image_error', hint: 'An image for the entire blog' %>
-        <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color', input_html: {class: 'width_50_percent'} %>
+        <%= f.input :preferred_header_accent_color, as: :color_picker, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color', input_html: {class: 'width_50_percent'} %>
       <% end %>
 
       <%= panel title: icon_label(:image, 'Email Notifications') do %>
