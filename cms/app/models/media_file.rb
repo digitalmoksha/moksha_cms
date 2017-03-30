@@ -41,8 +41,7 @@ class MediaFile < ActiveRecord::Base
   # Use 'version: :original' to allow the original version to be pulled
   #------------------------------------------------------------------------------
   def self.url_by_name(name, options = {version: :original})
-    asset = MediaFile.find_by_name(name)
-    if asset
+    if name && (asset = MediaFile.find_by_name(name))
       options[:version] == :original ? asset.media.url : asset.media.url(options[:version])
     else
       nil
