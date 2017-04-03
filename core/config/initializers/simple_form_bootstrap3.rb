@@ -68,6 +68,18 @@ SimpleForm.setup do |config|
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
 
+  config.wrappers :bs3_vertical_group, tag: 'div', class: "form-group", error_class: 'has-error' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.use :label, class: 'control-label'
+    
+    b.wrapper tag: 'div', class: 'input-group' do |ba|
+      ba.use :input
+    end
+    b.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+    b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+  end
+
   #------------------------------------------------------------------------------
   # Bootstrap 3 horizontal form style
   #------------------------------------------------------------------------------

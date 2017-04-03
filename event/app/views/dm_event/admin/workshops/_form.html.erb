@@ -2,60 +2,84 @@
 <%= render partial: 'dm_cms/admin/shared/liquid_tags_ref' %>
 
 <% submit_url = (@workshop.new_record? ? admin_workshops_path : admin_workshop_path) %>
-<%= simple_form_for @workshop, url: submit_url,
-      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+<%= simple_form_for @workshop, url: submit_url, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
 
-  <%= f.error_notification message: "Please review the problems below" %>
-  <% toolbar = capture do %>
-    <%= link_to icons(:help), '#', class: 'btn btn-xs btn-default', data: { toggle: 'modal', target: '#tag_reference' } %>
-    <%= link_to icons(:cancel), (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)), class: 'btn btn-xs btn-default' %>
-  <% end %>
-  <%= panel title: 'Main Settings for Workshop', toolbar: toolbar do %>
-    <%= locale_tabs do |locale| %>
-      <%= f.input "title_#{locale}", label: 'Title', id: 'title_error', required: true %>
-      <div class="col-sm-12">
-        <%= f.input "description_#{locale}", label: 'Description', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 500px;"} %>
-      </div>
-      <div class="col-sm-12">
-        <%= f.input "sidebar_#{locale}", label: 'Sidebar', hint: 'Markdown format', wrapper: :bs3_vertical_form, as: :code_editor, input_html: {style: "height: 200px;"} %>
-      </div>
-    <% end %>
+  <div class="row">
+    <div class="col-md-8">
+      <%= f.error_notification message: "Please review the problems below" %>
+      <% toolbar = capture do %>
+        <%= link_to icons(:help), '#', class: 'btn btn-xs btn-default', data: { toggle: 'modal', target: '#tag_reference' } %>
+      <% end %>
+      <%= panel title: 'Main Settings for Workshop', toolbar: toolbar do %>
+        <%= locale_tabs do |locale| %>
+          <%= f.input "title_#{locale}", label: 'Title', id: 'title_error', required: true %>
+          <%= f.input "description_#{locale}", label: 'Description', hint: 'Markdown format', as: :code_editor %>
+          <%= f.input "sidebar_#{locale}", label: 'Sidebar', hint: 'Markdown format', as: :code_editor %>
+        <% end %>
 
-    <%= subsection do %>
-      <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.', input_html: {class: 'width_50_percent'} %>
-      <%= f.input :event_style, label: 'Event Style', required: true, collection: Workshop::EVENT_STYLES,
-                  hint: 'Is this a workshop or a crowdfunding/donation type of event', input_html: {class: 'width_50_percent'} %>
-    <% end %>
+        <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
+        <%= f.input :event_style, label: 'Event Style', required: true, collection: Workshop::EVENT_STYLES,
+                    hint: 'Is this a workshop or a crowdfunding/donation type of event' %>
 
-    <%= subsection do %>
-      <%= f.input :published, as: :toggle_checked, label: 'Publish', hint: 'Make available for registrations' %>
-      <%= f.input :country_id, required: true, wrapper_html: { class: 'searchDrop' }, input_html: { class: 'chosen_select width_50_percent' }, 
-                  collection: ut_country_select_collection, label_method: lambda {|t| t[0]}, value_method: lambda {|t| t[1]},
-                  label: 'Country' %>
-      <%= f.input :base_currency, label: 'Currency', required: true, collection: Account::CURRENCY_TYPES,
-                  hint: 'Currency used for this workshop', input_html: {class: 'width_50_percent'},
-                  disabled: !(@workshop.workshop_prices.empty?) %>
-      <%= f.input :starting_on, label: 'Starting on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.starting_on, full_date: true) %>
-      <%= f.input :ending_on, label: 'Ending on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.ending_on, full_date: true) %>
-      <%= f.input :deadline_on, label: 'Deadline', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, hint: format_date(@workshop.deadline_on, full_date: true) %>
-
-      <%= f.input :contact_email, label: 'Contact Email', input_html: {class: 'width_50_percent'} %>
-      <%= f.input :bcc_contact_email, as: :boolean, label: 'bcc Emails', hint: 'Send copy of registration emails to the contact email address' %>
-      <%= f.input :contact_phone, label: 'Contact Phone', input_html: {class: 'width_50_percent'} %>
-      <%= f.input :require_account, as: :boolean, label: 'Require Account', hint: 'Must have a user account to register - necessary for forum/blog access' %>
-      <%= f.input :show_address, as: :boolean, label: 'Show Address', hint: 'Show address fields (only if user is not logged in)' %>
-      <%= f.input :require_address, as: :boolean, label: 'Require Address', hint: 'Address in profile must be filled out (only if Show Address is checked)' %>
-      <%#= f.input :require_photo, as: :boolean, label: 'Require Photo', hint: 'A photo must be uploaded into profile' %>
-      <%= f.input :require_review, as: :boolean, label: 'Review Registrations', hint: 'All new registrations become "Pending", waiting for approval' %>
-      <%= f.input :payments_enabled, as: :boolean, label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>
-    <% end %>
+        <%= subsection do %>
+          <div class="row">
+            <div class="col-md-6">
+              <%= f.input :country_id, required: true, wrapper_html: { class: 'searchDrop' }, 
+                          collection: ut_country_select_collection, label_method: lambda {|t| t[0]}, value_method: lambda {|t| t[1]},
+                          label: 'Country' %>
+            </div>
+            <div class="col-md-6">
+              <%= f.input :base_currency, label: 'Currency', required: true, collection: Account::CURRENCY_TYPES,
+                          hint: 'Currency used for this workshop', disabled: !(@workshop.workshop_prices.empty?) %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <%= f.input :contact_email, label: 'Contact Email' %>
+            </div>
+            <div class="col-md-6">
+              <%= f.input :bcc_contact_email, as: :boolean, inline_label: 'bcc Emails', hint: 'Send copy of registration emails to the contact email address' %>
+            </div>
+          </div>
+          <%= f.input :contact_phone, label: 'Contact Phone' %>
+          <%= f.input :require_account, as: :boolean, inline_label: 'Require Account', hint: 'Must have a user account to register - necessary for forum/blog access' %>
+          <%= f.input :show_address, as: :boolean, inline_label: 'Show Address', hint: 'Show address fields (only if user is not logged in)' %>
+          <%= f.input :require_address, as: :boolean, inline_label: 'Require Address', hint: 'Address in profile must be filled out (only if Show Address is checked)' %>
+          <%#= f.input :require_photo, as: :boolean, label: 'Require Photo', hint: 'A photo must be uploaded into profile' %>
+          <%= f.input :require_review, as: :boolean, inline_label: 'Review Registrations', hint: 'All new registrations become "Pending", waiting for approval' %>
+          <%= f.input :payments_enabled, as: :boolean, inline_label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>
+        <% end %>
   
-    <%= subsection do %>
-      <%= f.input :funding_goal, label: 'Funding Goal', hint: 'Goal (in the currency above) of this funding project', input_html: {class: 'width_25_percent'} %>
-    <% end %>
-  
-    <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)), delete_url: (@workshop.new_record? ? nil : admin_workshop_url), delete_confirm: 'Delete the workshop and ALL related registrations and payments?' %>
-  <% end %>
+        <%= subsection do %>
+          <%= f.input :funding_goal, label: 'Funding Goal', hint: 'Goal (in the currency above) of this funding project', input_html: {class: 'width_25_percent'} %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <%= panel title: icon_label(:calendar, 'Publish') do %>
+        <%= f.input :published, as: :boolean, inline_label: 'Publish It?', hint: 'Make available for registrations' %>
+        <%= f.input :starting_on, label: 'Starting on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.starting_on, full_date: true) %>
+        <%= f.input :ending_on, label: 'Ending on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.ending_on, full_date: true) %>
+        <%= f.input :deadline_on, label: 'Deadline', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, hint: format_date(@workshop.deadline_on, full_date: true) %>
+      <% end %>
+
+      <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
+      <hr>
+
+      <%= panel title: icon_label(:tags, 'Tags') do %>
+        <%= f.input :tag_list, collection: Workshop.tag_list_all, input_html: {multiple: '1', class: 'tag_field' } %>
+      <% end %>
+
+      <%= panel title: icon_label(:image, 'Header Image') do %>
+        <% if @workshop.image.present? %>
+          <img src="<%= site_asset_media_url(@workshop.image) %>" class="img-thumbnail img-responsive">
+          <hr>
+        <% end %>
+        <%= f.input :image, label: 'Workshop Image', id: 'image_error', hint: 'Image used as a banner to the registration page.  Also used for Facebook.' %>
+        <%= f.input :preferred_header_accent_color, as: :color_picker, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
+      <% end %>
+    </div>
+  </div>
 <% end %>
 
 <%= render partial: 'dm_cms/admin/shared/liquid_tags_ref' %>

@@ -8,7 +8,7 @@
     <% end %>
   <% end %>
   <%= f.hidden_field :_destroy, class: '_destroy' %>
-  <%= panel toolbar: toolbar, title: f.object.new_record? ? 'New Field' : link_to(icon_label('fa fa-arrow-right fa-fw', f.object.field_type), "\##{collapse_id}", title: 'Show/Hide Detail', data: {toggle: 'collapse'} ) do %>
+  <%= panel toolbar: toolbar, title: f.object.new_record? ? 'New Field' : link_to(icon_label('fa fa-caret-right fa-fw', f.object.field_type), "\##{collapse_id}", title: 'Show/Hide Detail', data: {toggle: 'collapse'} ) do %>
     <% unless f.object.new_record? %>
       <% sample = CustomField.new %>
       <% sample.custom_field_def = f.object %>
@@ -20,14 +20,14 @@
     <div id="<%= collapse_id %>" class="panel-collapse collapse<%= ' in' if f.object.new_record? %>">
       <fieldset class="custom_field_editor">
         <%= f.input :field_type, collection: CustomFieldDef::FIELD_TYPES, required: true, input_html: {class: 'width_50_percent'} %>
+        <%= f.input :required, as: :boolean, inline_label: 'Required' %>
         <%= locale_tabs do |locale| %>
           <%= f.input "label_#{locale}", label: 'Label', hint: 'Text used to label the field' %>
           <%= f.input "description_#{locale}", label: 'Description', as: :text, input_html: {style: "height: 100px;"},
                  hint: 'Text shown above the field, such as an introductory paragraph.  Markdown format' %>
         <% end %>
-        <%= f.input :required, as: :boolean, label: 'Required' %>
-        <%= f.input :choice_list, label: 'Choice List', hint: 'Comma seperated list, used by Checboxes, Radio Buttons and Drop Downs', input_html: {class: 'width_50_percent'} %>
-        <%= f.input :name, label: 'Export Name', hint: "Name of the column in exported data and reports. The label will be used if blank", input_html: {class: 'width_50_percent'} %>
+        <%= f.input :choice_list, label: 'Choice List', hint: 'Comma separated list, used by Checkboxes, Radio Buttons and Drop Downs' %>
+        <%= f.input :name, label: 'Export Name', hint: "Name of the column in exported data and reports. The label will be used if blank" %>
       </fieldset>
     </div>
   <% end %>

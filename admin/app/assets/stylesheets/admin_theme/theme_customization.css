@@ -5,6 +5,7 @@ h1, h2, h3, h5, h6 { font-weight: 400; }
 }
 
 .footer {
+  margin-top: 40px;
   border-top: 1px solid #ddd;
   padding-bottom: 10px;
   padding-top: 10px;
@@ -22,6 +23,7 @@ h1, h2, h3, h5, h6 { font-weight: 400; }
 }
 
 h3.panel-title { font-weight: 400; }
+h6.panel-title { font-weight: 300; font-size: 1em;}
 
 .page-header { margin-top: 25px;
   padding-bottom: 10px;
@@ -287,9 +289,13 @@ h3.panel-title { font-weight: 400; }
   background-color: #D65C4F;
 }
 
-.label-gray, .badge-gray { background-color: #999;
-}
+.label-gray, .badge-gray { background-color: #999; }
 .label-gray[href], .badge-gray[href] { background-color: #1a1a1a; }
+
+.badge-menu {
+  background-color: #08334C;
+  color: #ddd;
+}
 
 /*--- Buttons ---*/
 

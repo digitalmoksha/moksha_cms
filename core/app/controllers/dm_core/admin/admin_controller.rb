@@ -93,7 +93,7 @@ private
           if can?(:list_events, workshop)
             item[:children] << {text: workshop.title, 
                                 badge: workshop.registrations.number_of(:attending), 
-                                badge_class: 'badge-gray',
+                                badge_class: 'badge-menu',
                                 link: dm_event.admin_workshop_path(workshop),
                                 active: admin_path_active_class?(dm_event.admin_workshop_path(workshop)) }
           end
