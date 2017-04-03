@@ -5,16 +5,21 @@
         <div class="btn-group">
           <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><%= icon_label(:gear, 'Configuration') %> <span class="caret"></span></button>
           <ul class="dropdown-menu dropdown-menu-right icons-right">
-            <li><%= link_to 'Main Configuration', edit_admin_workshop_url(@workshop) %></li>
-            <li><%= link_to "Additional Configuration", additional_configuration_admin_workshop_path(@workshop) %></li>
-            <li><%= link_to "Workshop Prices", admin_workshop_workshop_prices_path(@workshop) %></li>
+            <li><%= link_to icon_label(:gear, 'Main Configuration'), edit_admin_workshop_url(@workshop) %></li>
+            <li><%= link_to icon_label(:gears, 'Additional Configuration'), additional_configuration_admin_workshop_path(@workshop) %></li>
+            <li><%= link_to icon_label(:money, 'Workshop Prices'), admin_workshop_workshop_prices_path(@workshop) %></li>
             <li class="divider"></li>
             <li class="dropdown-header">Email Notifications</li>
-            <li><%= link_to "Pending Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'pending') %></li>
-            <li><%= link_to "Accepted Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'accepted') %></li>
-            <li><%= link_to "Paid Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'paid') %></li>
-            <li><%= link_to "Waitlisted Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'waitlisted') %></li>
-            <li><%= link_to "Rejected Email", edit_system_email_admin_workshop_path(@workshop, :email_type => 'rejected') %></li>
+            <li><%= link_to icon_label(:mail, 'Pending Email', icon_class: 'pending_color', label_class: 'pending_color'), edit_system_email_admin_workshop_path(@workshop, :email_type => 'pending') %></li>
+            <li><%= link_to icon_label(:mail, 'Accepted Email', icon_class: 'accepted_color', label_class: 'accepted_color'), edit_system_email_admin_workshop_path(@workshop, :email_type => 'accepted') %></li>
+            <li><%= link_to icon_label(:mail, 'Paid Email', icon_class: 'paid_color', label_class: 'paid_color'), edit_system_email_admin_workshop_path(@workshop, :email_type => 'paid') %></li>
+            <li><%= link_to icon_label(:mail, 'Waitlisted Email', icon_class: 'waitlisted_color', label_class: 'waitlisted_color'), edit_system_email_admin_workshop_path(@workshop, :email_type => 'waitlisted') %></li>
+            <li><%= link_to icon_label(:mail, 'Rejected Email', icon_class: 'rejected_color', label_class: 'rejected_color'), edit_system_email_admin_workshop_path(@workshop, :email_type => 'rejected') %></li>
+            <li class="divider"></li>
+            <li><%= link_to icon_label(:facebook, 'Clear Facebook Cache'), "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_event.register_new_url(@workshop))}",
+                 target: '_blank' %></li>
+            <li class="divider"></li>
+            <li><%= link_to icon_label(:delete, 'Delete Workshop', icon_class: 'text-danger', label_class: 'text-danger'), ([:admin, @workshop] unless @workshop.new_record?), method: :delete, class: 'text-danger', data: {confirm: 'Delete the workshop and ALL related registrations and payments?'} %></li>
           </ul>
         </div>
     <% end %>

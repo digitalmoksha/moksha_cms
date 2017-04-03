@@ -21,6 +21,7 @@
 .label-unconfirmed[href], .badge-unconfirmed[href] { background-color: #c0c700;}
 .label-suspended, .badge-suspended { background-color: #c0c700; }
 .label-suspended[href], .badge-suspended[href] { background-color: #c0c700;}
+
 .btn-pending, .progress-bar-pending {
   background-color: #c0c700 !important;
 }
@@ -28,6 +29,10 @@
 .btn-pending:active, .btn-pending.active, .btn-group.open .btn-pending.dropdown-toggle {
   border-color: #adb401;
   background-color: #c7ce37;
+}
+.callout.callout-pending {
+  background-color: rgba(198, 206, 54, 0.3);
+  border-left: 2px solid #c0c700;
 }
 
 .reviewing_color { color: #838200;}
@@ -40,6 +45,10 @@
 .btn-reviewing:active, .btn-reviewing.active, .btn-group.open .btn-reviewing.dropdown-toggle {
   border-color: #838200;
   background-color: #838200;
+}
+.callout.callout-reviewing {
+  background-color: rgba(131, 130, 0, 0.2);
+  border-left: 2px solid #838200;
 }
 
 .accepted_color, .approved_color, .subscribed_color { color: #4a48ff;}
@@ -57,6 +66,10 @@
   border-color: #4a48ff;
   background-color: #4a48ff;
 }
+.callout.callout-accepted {
+  background-color: rgba(74, 72, 255, 0.2);
+  border-left: 2px solid #4a48ff;
+}
 
 .paid_color, .certified_color { color: #049727;}
 .label-paid, .badge-paid { background-color: #049727; }
@@ -71,6 +84,10 @@
   border-color: #199526;
   background-color: #199526;
 }
+.callout.callout-paid {
+  background-color: rgba(6, 151, 39, 0.2);
+  border-left: 2px solid #049727;
+}
 
 .waitlisted_color { color: #d38100;}
 .label-waitlisted, .badge-waitlisted { background-color: #d38100; }
@@ -83,6 +100,10 @@
   border-color: #d38100;
   background-color: #d38100;
 }
+.callout.callout-waitlisted {
+  background-color: rgba(211, 129, 0, 0.2);
+  border-left: 2px solid #d38100;
+}
 
 .canceled_color { color: #8d248f;}
 .label-canceled, .badge-canceled { background-color: #8d248f; }
@@ -94,6 +115,10 @@
 .btn-canceled:active, .btn-canceled.active, .btn-group.open .btn-canceled.dropdown-toggle {
   border-color: #8d248f;
   background-color: #8d248f;
+}
+.callout.callout-canceled {
+  background-color: rgba(141, 36, 143, 0.2);
+  border-left: 2px solid #8d248f;
 }
 
 .rejected_color, .unsubscribed_color { color: #d10029;}
@@ -109,6 +134,10 @@
   border-color: #d10029;
   background-color: #d10029;
 }
+.callout.callout-rejected {
+  background-color: rgba(209, 0, 41, 0.2);
+  border-left: 2px solid #d10029;
+}
 
 .refunded_color { color: #b89ebc;}
 .label-refunded, .badge-refunded { background-color: #b89ebc; }
@@ -121,6 +150,10 @@
   border-color: #b89ebc;
   background-color: #b89ebc;
 }
+.callout.callout-refunded {
+  background-color: rgba(184, 158, 188, 0.2);
+  border-left: 2px solid #b89ebc;
+}
 
 .noshow_color { color: #444;}
 .label-noshow, .badge-noshow { background-color: #444; }
@@ -132,6 +165,10 @@
 .btn-noshow:active, .btn-noshow.active, .btn-group.open .btn-noshow.dropdown-toggle {
   border-color: #444;
   background-color: #444;
+}
+.callout.callout-noshow {
+  background-color: rgba(68, 68, 68, 0.2);
+  border-left: 2px solid #444;
 }
 
 .workshop_price_list li { margin-bottom: 15px; list-style-type: none;}

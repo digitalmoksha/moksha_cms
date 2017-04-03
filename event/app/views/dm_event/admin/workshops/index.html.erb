@@ -59,6 +59,12 @@
               </div>
             </div>
           <% end %>
+          <div class="tag_list">
+            <% workshop.tag_list.each do |tag| %>
+              <% active_tag = (@tag_filter == tag ? 'active' : '') %>
+              <%= link_to content_tag(:span, tag, class: "tag #{active_tag}"), [:admin, workshop] %>
+            <% end %>
+          </div>
         
         <% end %>
       </div>

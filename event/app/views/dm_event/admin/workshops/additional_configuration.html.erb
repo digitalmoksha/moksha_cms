@@ -2,46 +2,35 @@
 <% content_for :content_title, "Additional Configuration <small>#{@workshop.title}</small>".html_safe %>
 
 <% submit_url = additional_configuration_admin_workshop_path %>
-<%= simple_form_for @workshop, url: submit_url,
-      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+<%= simple_form_for @workshop, url: submit_url, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
 
   <%= f.error_notification message: "Please review the problems below" %>
 
-  <%= panel header: false do %>
-    <%= subsection title: 'Visual and Social Settings' do %>
-      <%= f.input :preferred_header_accent_color, label: 'Accent Color', hint: 'Accent color used in header (if supported by theme). Any valid CSS color' %>
-      <%= f.input :preferred_show_social_buttons, as: :boolean, label: 'Show social buttons' %>
-      <%= f.input :image, label: 'Workshop Image', hint: 'Image used as a banner to the registration page.  Also used for Facebook.' %>
-      <%= locale_tabs do |locale| %>
-        <%= f.input "summary_#{locale}", label: 'Workshop Summary', as: :code_editor, input_html: {style: "height: 100px;"},
-               hint: 'Text used when a workshop is liked on Facebook.  This text will not be visible on the registration page.' %>
-      <% end %>
+  <%= panel title: icon_label(:social_media, 'Social Media') do %>
+    <%= f.input :preferred_show_social_buttons, as: :boolean, inline_label: 'Show social buttons' %>
+    <%= locale_tabs do |locale| %>
+      <%= f.input "summary_#{locale}", label: 'Workshop Summary', as: :code_editor, autoheight: true, input_html: {class: "CodeMirror-autoheight"},
+             hint: 'Text used when a workshop is liked on Facebook.  This text will not be visible on the registration page.' %>
     <% end %>
-
-    <%= subsection title: 'Associated Blog & Forum' do %>
-      <p style="margin:10px;">
-        Select a blog and forum to be associated with this event.  Any paid or accepted registrations will automatically be granted access
-        to them.
-      </p>
-
-      <%= f.input :cms_blog, label: 'Blog',  collection: CmsBlog.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]), selected: @workshop.cms_blog.try(:id), include_blank: true %>
-      <%= f.input :forum,    label: 'Forum', collection: Forum.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]),   selected: @workshop.forum.try(:id), include_blank: true %>
-    <% end %>
-    
-    <%= subsection title: 'Custom Fields' do %>
-      <%= f.simple_fields_for :custom_field_defs do |builder| %>
-        <%= render 'dm_core/admin/custom_fields/custom_field_def_fields', f: builder %>
-      <% end %>
-      <%= link_to_add_custom_fields 'Add Field', f, :custom_field_defs %>      
-    <% end %>
-    
-    <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
-
   <% end %>
-  
-  <div class="block-inner">
-    <%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_event.register_new_url(@workshop))}",
-                 target: '_blank', class: 'btn btn-sm btn-default' %>
-  </div>
+
+  <%= panel title: icon_label(:blogs, 'Associated Blog & Forum') do %>
+    <p style="margin:10px;">
+      Select a blog and forum to be associated with this event.  Any paid or accepted registrations will automatically be granted access
+      to them.
+    </p>
+
+    <%= f.input :cms_blog, label: 'Blog',  collection: CmsBlog.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]), selected: @workshop.cms_blog.try(:id), include_blank: true %>
+    <%= f.input :forum,    label: 'Forum', collection: Forum.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]),   selected: @workshop.forum.try(:id), include_blank: true %>
+  <% end %>
+    
+  <%= panel title: icon_label('fa fa-list-alt fa-fw', 'Custom Fields') do %>
+    <%= f.simple_fields_for :custom_field_defs do |builder| %>
+      <%= render 'dm_core/admin/custom_fields/custom_field_def_fields', f: builder %>
+    <% end %>
+    <%= link_to_add_custom_fields 'Add Field', f, :custom_field_defs %>      
+  <% end %>
+    
+  <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
 
 <% end %>

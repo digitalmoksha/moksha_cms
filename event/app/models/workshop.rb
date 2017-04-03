@@ -27,6 +27,7 @@ class Workshop < ActiveRecord::Base
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
 
+  acts_as_taggable
   resourcify
 
   preference              :show_social_buttons,  :boolean, default: false
@@ -244,4 +245,11 @@ class Workshop < ActiveRecord::Base
     end
     lost
   end
+
+  # return a list of tags for all Blog post objects
+  #------------------------------------------------------------------------------
+  def self.tag_list_all
+    Workshop.tag_counts_on(:tags).map(&:name).sort
+  end
+  
 end
