@@ -8,7 +8,7 @@
         <% if can?(:manage_event_registrations, @workshop) %>
           <li><%= link_to icon_label('fa fa-clone fa-fw', 'Show Duplicates'), admin_workshop_url(@workshop, duplicates: '1') %></li>
           <li><%= link_to icon_label(:users, 'Lost Users', ), lost_users_admin_workshop_url(@workshop) %></li>
-          <li><%= link_to 'Export Registrations (.csv)', admin_workshop_url(@workshop, format: 'csv') %></li>
+          <li><%= link_to icon_label('fa fa-download fa-fw', 'Export Registrations (.csv)'), admin_workshop_url(@workshop, format: 'csv') %></li>
           <li class="divider"></li>
         <% end %>
         <% if can?(:manage_events, @workshop) %>
