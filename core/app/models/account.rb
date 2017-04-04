@@ -3,6 +3,8 @@ class Account < ActiveRecord::Base
 
   class DomainNotFound < StandardError
   end
+  class NotSetup < StandardError
+  end
   class LoginRequired < StandardError
   end
   
@@ -110,7 +112,14 @@ class Account < ActiveRecord::Base
     separated   = host.downcase.split('.')
     separated   = separated[0..-7] if host.end_with?('xip.io') # strip off xip.io and ip address
     separated   = separated.delete_if { |x| x == 'dev' || x == 'www' || x == 'backoffice' || x =~ /stg-/ || x == 'staging' }
-    self.find_by_domain(separated.join('.')) or raise Account::DomainNotFound.new("Invalid domain: #{host}")
+    domain      = self.find_by_domain(separated.join('.'))
+    return domain if domain
+    
+    if Account.count == 0
+      raise Account::NotSetup.new
+    else
+      raise Account::DomainNotFound.new("Invalid domain: #{host}")
+    end
   end
 
   # Since we need the current account for the default scope in models, we need 

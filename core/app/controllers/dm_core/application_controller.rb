@@ -253,6 +253,10 @@ protected
     logger.error "=====> #{exception.message}  URL: #{request.url}  REMOTE_ADDR: #{request.remote_addr}"
     render :nothing => true
   end
+  rescue_from Account::NotSetup do |exception|
+    #--- Accounts not setup yet
+    redirect_to dm_core.admin_setup_initial_setup_path
+  end
   rescue_from I18n::InvalidLocale do |exception|
     #--- an invalid locale was specified - raise error to show 404 page
     raise ActionController::RoutingError.new('Not Found')

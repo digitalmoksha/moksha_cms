@@ -1,0 +1,20 @@
+<% content_for :content_title, 'Initial Setup' %>
+<h4>Step 2: Create the System Administrator</h4>
+<% @user.user_profile || @user.build_user_profile %>
+<%= simple_form_for(@user, url: dm_core.admin_setup_step2_path, html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings) do |f| %>
+  <%= field_set_tag  do %>
+    <%#= devise_error_messages! %>
+
+    <%= f.input :email,                 label: 'Email',            required: true %>
+    <%= f.input :password,              label: 'Password',         required: true %>
+    <%= f.input :password_confirmation, label: 'Confirm Password', required: true %>
+
+    <hr />
+    <%= f.fields_for :user_profile, @user.user_profile, wrapper: :bs3_horizontal_form do |builder| %>
+      <%= builder.input :first_name, label: 'First Name', required: true %>
+      <%= builder.input :last_name,  label: 'Last Name',  required: true %>
+    <% end %>
+
+    <%= submit_or_cancel cancel: false %>
+  <% end %>
+<% end %>

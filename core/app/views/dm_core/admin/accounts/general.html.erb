@@ -16,7 +16,7 @@
     <%= f.input :preferred_site_enabled, as: :boolean, label: 'Publish Site?' %>
     <%= f.input :preferred_site_maintenance, as: :boolean, label: 'Site Maintenance', hint: 'Put the site into maintenance mode:  normal users will see the maintenance page.  Admin users will be able to access the site.' %>
 
-    <%= submit_or_cancel cancel_url: url %>
+    <%= submit_or_cancel cancel_url: dm_core.admin_system_path %>
 
   <% end %>
 <% end %>

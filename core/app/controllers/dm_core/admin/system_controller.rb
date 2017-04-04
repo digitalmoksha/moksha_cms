@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 class DmCore::Admin::SystemController < DmCore::Admin::AdminController
   include DmCore::PermittedParams
-  
+
   before_filter   :authorize_access
 
   #------------------------------------------------------------------------------
