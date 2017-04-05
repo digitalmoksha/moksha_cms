@@ -17,6 +17,7 @@
 # notify_data      =>  data from the notification object, in case it's needed
 #------------------------------------------------------------------------------
 class PaymentHistory < ActiveRecord::Base
+  include OffsitePayments::Integrations
 
   self.table_name         = 'core_payment_histories'
 
@@ -53,5 +54,22 @@ class PaymentHistory < ActiveRecord::Base
     #    embedded dashes
     values = anchor_id.split('-')
     return values.slice(2, 10).join('-')
+  end
+  
+  # return the country that the payment came from, if it exists
+  #------------------------------------------------------------------------------
+  def country_of_payment
+    case payment_method.downcase
+    when 'paypal'
+      notify_data && notify_data.params ? notify_data.params['residence_country'] : ''
+    when 'sofort'
+      notify_data && notify_data.params ? notify_data.params['sender_country_id'] : ''
+    when 'cash'
+      ''
+    when 'wire transfer'
+      ''
+    else
+      ''
+    end
   end
 end

@@ -35,7 +35,7 @@ class WorkshopPrice < ActiveRecord::Base
   validates_presence_of   :recurring_period,    if: Proc.new { |w| w.recurring_number }
   validates_presence_of   :recurring_number,    if: Proc.new { |w| w.recurring_period }
 
-  PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Wire Transfer']
+  PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Sofort', 'Wire Transfer']
 
   # For some reason, the initial monetized price gets created with the default
   # Money currency.  Need to use the current currency, as the internal fractional

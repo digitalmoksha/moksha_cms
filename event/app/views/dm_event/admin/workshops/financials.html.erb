@@ -148,6 +148,8 @@
         <th class="name">Name</th>
         <th class="item_id">Item ID / Description</th>
         <th class="cost">Paid</th>
+        <th class="receipt_code">Receipt</th>
+        <th class="from">From</th>
         <th class="payment_method">Payment Method</th>
         <th class="type">Recorded By</th>
       </tr>
@@ -159,13 +161,15 @@
           <td class="name"><%= link_to payment.owner.full_name, dm_event.edit_admin_registration_path(payment.owner) %></td>
           <td class="item_id"><%= payment.item_ref %></td>
           <td class="cost"><%= payment.total.format(no_cents_if_whole: true, symbol: true) %></td>
+          <td class="receipt_code" style="white-space:nowrap"><%= payment.owner.receipt_code %></td>
+          <td class="from"><%= payment.country_of_payment %></td>
           <td class="payment_method" style="white-space:nowrap"><%= payment.payment_method.titleize %></td>
           <td class="type"><%= payment.user_profile.nil? ? 'Automated' : payment.user_profile.public_name %></td>
         </tr>
         <% if !payment.bill_to_name.blank? || payment.discount.to_i > 0 || (!payment.order_details.nil? && !payment.order_details['coupon'].nil?) %>
           <tr>
             <td></td>
-            <td colspan="5">
+            <td colspan="7">
               <ul class="row_detail">
                 <% unless payment.bill_to_name.blank? %>
                   <li><strong>Payed by:</strong> <%=h payment.bill_to_name %></li>
