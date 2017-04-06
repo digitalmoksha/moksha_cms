@@ -1,6 +1,6 @@
 # Generated from acts_as_commentable
 #------------------------------------------------------------------------------
-class Comment < ActiveRecord::Base
+class Comment < ApplicationRecord
   include           ActsAsCommentable::Comment
 
   self.table_name   = 'core_comments'

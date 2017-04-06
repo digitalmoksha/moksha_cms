@@ -1,6 +1,6 @@
 class DmCore::Admin::UsersController < DmCore::Admin::AdminController
-  before_filter :authorize_access
-  before_filter :template_setup, except: [:edit]
+  before_action :authorize_access
+  before_action :template_setup, except: [:edit]
 
   # GET /admin/users or GET /admin/users.json
   #------------------------------------------------------------------------------

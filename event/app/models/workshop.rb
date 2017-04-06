@@ -1,4 +1,4 @@
-class Workshop < ActiveRecord::Base
+class Workshop < ApplicationRecord
   include DmCore::Concerns::DefinesCustomFields
 
   self.table_name         = 'ems_workshops'

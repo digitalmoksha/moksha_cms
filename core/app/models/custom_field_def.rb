@@ -5,7 +5,7 @@
 # "A JSON text must at least contain two octets!" exception (from new fields)
 # so store in yaml format instead
 #------------------------------------------------------------------------------
-class CustomFieldDef < ActiveRecord::Base
+class CustomFieldDef < ApplicationRecord
   self.table_name         = 'core_custom_field_defs'
                           
   belongs_to              :owner, polymorphic: true

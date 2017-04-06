@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-class Account < ActiveRecord::Base
+class Account < ApplicationRecord
 
   class DomainNotFound < StandardError
   end

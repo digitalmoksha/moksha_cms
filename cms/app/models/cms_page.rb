@@ -4,7 +4,7 @@
 # to have many pages in a section, with some of them 'hidden' from the main menu
 # lists, but can still be linked to and shown.
 #------------------------------------------------------------------------------
-class CmsPage < ActiveRecord::Base
+class CmsPage < ApplicationRecord
   class Translation < ::Globalize::ActiveRecord::Translation
     has_paper_trail
   end

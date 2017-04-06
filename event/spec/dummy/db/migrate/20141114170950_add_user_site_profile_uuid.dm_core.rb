@@ -1,5 +1,5 @@
 # This migration comes from dm_core (originally 20140107112418)
-class UserSiteProfile < ActiveRecord::Base
+class UserSiteProfile < ApplicationRecord
 end
 
 class AddUserSiteProfileUuid < ActiveRecord::Migration

@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-class DmCore::Language < ActiveRecord::Base # :nodoc:
+class DmCore::Language < ApplicationRecord # :nodoc:
 
   self.table_name = "globalize_languages"
 

@@ -12,7 +12,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   helper          DmEvent::RegistrationsHelper
   layout          'layouts/event_templates/register'
 
-  before_filter   :workshop_lookup, except: [:success]
+  before_action   :workshop_lookup, except: [:success]
   
   #------------------------------------------------------------------------------
   def new
@@ -107,8 +107,8 @@ end
   helper          'dm_event/event_registrations'
   helper          'dm_event/custom_fields'
 
-  before_filter   :login_required, :only => [:show_registrations]
-  before_filter   :ssl_required
+  before_action   :login_required, :only => [:show_registrations]
+  before_action   :ssl_required
 
   layout          :use_layout
   

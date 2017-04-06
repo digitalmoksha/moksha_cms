@@ -3,18 +3,18 @@
 class DmCore::ApplicationController < ActionController::Base
   include DmCore::PermittedParams
   
-  before_filter   :log_additional_data
-  # before_filter   :record_activity
-  before_filter   :check_site_assets
-  before_filter   :site_enabled?, :unless => :devise_controller?
-  before_filter   :set_mailer_url_options
-  before_filter   :update_user
-  before_filter   :store_location
-  before_filter   :set_cache_buster
+  before_action   :log_additional_data
+  # before_action   :record_activity
+  before_action   :check_site_assets
+  before_action   :site_enabled?, :unless => :devise_controller?
+  before_action   :set_mailer_url_options
+  before_action   :update_user
+  before_action   :store_location
+  before_action   :set_cache_buster
 
-  prepend_before_filter   :ssl_redirect
-  prepend_before_filter   :theme_resolver
-  prepend_before_filter   :set_locale
+  prepend_before_action   :ssl_redirect
+  prepend_before_action   :theme_resolver
+  prepend_before_action   :set_locale
   prepend_around_filter   :scope_current_account
 
   add_flash_types :warning, :error, :info
@@ -44,7 +44,7 @@ protected
   end
 
   # Store last url as long as it isn't a /users path
-  # Call from a before_filter - this ensures that if you're coming to a page
+  # Call from a before_action - this ensures that if you're coming to a page
   # from an email link, the url gets saved before getting redirected to the login
   #------------------------------------------------------------------------------
   def store_location
@@ -219,7 +219,7 @@ protected
     all_filters.map(&:filter)
   end
 
-  def self.before_filters
+  def self.before_actions
     filters(:before)
   end
 

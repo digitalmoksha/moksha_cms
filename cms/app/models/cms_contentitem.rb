@@ -3,7 +3,7 @@
 # multiple translations).  The cache will be busted automatically since
 # the updated_at attribute will be updated on save.
 #------------------------------------------------------------------------------
-class CmsContentitem < ActiveRecord::Base
+class CmsContentitem < ApplicationRecord
   class Translation < ::Globalize::ActiveRecord::Translation
     has_paper_trail
   end

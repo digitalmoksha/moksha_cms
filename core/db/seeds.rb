@@ -1,6 +1,6 @@
-class GlobalizeCountry  < ActiveRecord::Base
+class GlobalizeCountry  < ApplicationRecord
 end
-class GlobalizeLanguage  < ActiveRecord::Base
+class GlobalizeLanguage  < ApplicationRecord
 end
 
 GlobalizeCountry.create(:id => 1, :code => "AD", :english_name => "Andorra", :currency_code => "EUR", :number_grouping_scheme => "western", :continent => "Europe")

@@ -9,7 +9,7 @@
 # Note: We serialize the data.  This makes it easy to store checkbox arrays, dates,
 # etc, without having to worry about munging the data first.
 #------------------------------------------------------------------------------
-class CustomField < ActiveRecord::Base
+class CustomField < ApplicationRecord
   self.table_name               = 'core_custom_fields'
   serialize                     :field_data
   

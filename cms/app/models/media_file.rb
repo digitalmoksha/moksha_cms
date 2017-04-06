@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-class MediaFile < ActiveRecord::Base
+class MediaFile < ApplicationRecord
 
   self.table_name = 'cms_media_files'
   

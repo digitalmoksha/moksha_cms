@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'dm_ruby_extensions', '~> 1.0'
   s.add_dependency 'dm_preferences', '~> 1.0'
   s.add_dependency 'actionview-encoded_mail_to', '~> 1.0'
-  s.add_dependency 'devise', '~> 3.5'           # Authentication
+  s.add_dependency 'devise', '~> 4.2'           # Authentication
   s.add_dependency "cancancan", "~> 1.13"         # Authorization
   s.add_dependency "simple_form", '~> 3.2'        # Form handling
   s.add_dependency "will_paginate", "~> 3.1"      # pagination
@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'babosa', '~> 1.0'             # for better unicode slug handling with friendly_id
   s.add_dependency 'aasm', '~> 3.3.1'          # [todo] v4.x requires changes
   s.add_dependency 'money-rails', '~> 1.6'
-  s.add_dependency 'globalize', '~> 5.0.1'        # translations in database
+  s.add_dependency 'globalize', '~> 5.1.0.beta1'        # translations in database
   s.add_dependency 'exception_notification', '~> 4.1'
   s.add_dependency 'aws-sdk', '~> 1.49'
   s.add_dependency 'biggs', "~> 0.3.3"            # address formatting

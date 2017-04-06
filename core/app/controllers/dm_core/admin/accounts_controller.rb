@@ -1,10 +1,10 @@
 class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   include DmCore::PermittedParams
   
-  skip_before_filter  :template_setup
-  before_filter       :authorize_access
-  before_filter       :account_lookup, except: [:new_account, :create_account]
-  before_filter       :template_setup
+  skip_before_action  :template_setup
+  before_action       :authorize_access
+  before_action       :account_lookup, except: [:new_account, :create_account]
+  before_action       :template_setup
   
   #------------------------------------------------------------------------------
   def show

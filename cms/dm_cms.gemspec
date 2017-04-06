@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'meta-tags-helpers', '~> 0.2.0'
-  s.add_dependency 'mail_form', '~> 1.5.0'
+  s.add_dependency 'mail_form', '~> 1.6.0'
 end

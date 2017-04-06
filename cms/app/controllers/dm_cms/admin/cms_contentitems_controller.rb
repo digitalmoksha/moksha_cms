@@ -2,8 +2,8 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
   include DmCore::LiquidHelper
 
-  before_filter   :current_page,    :only =>    [:new_content, :create_content]
-  before_filter   :current_content, :except =>  [:new_content, :create_content]
+  before_action   :current_page,    :only =>    [:new_content, :create_content]
+  before_action   :current_content, :except =>  [:new_content, :create_content]
 
   #------------------------------------------------------------------------------
   def new_content

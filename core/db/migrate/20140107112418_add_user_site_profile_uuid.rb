@@ -1,4 +1,4 @@
-class UserSiteProfile < ActiveRecord::Base
+class UserSiteProfile < ApplicationRecord
 end
 
 class AddUserSiteProfileUuid < ActiveRecord::Migration

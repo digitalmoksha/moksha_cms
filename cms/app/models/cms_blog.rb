@@ -1,4 +1,4 @@
-class CmsBlog < ActiveRecord::Base
+class CmsBlog < ApplicationRecord
   include DmCore::Concerns::PublicPrivate
 
   # --- globalize

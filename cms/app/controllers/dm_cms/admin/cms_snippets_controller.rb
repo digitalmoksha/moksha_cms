@@ -1,8 +1,8 @@
 class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
   
-  before_filter   :find_snippet, except: [:index, :new, :create]
-  before_filter   :set_title
+  before_action   :find_snippet, except: [:index, :new, :create]
+  before_action   :set_title
 
   include DmCore::LiquidHelper
 

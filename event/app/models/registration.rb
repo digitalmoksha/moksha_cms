@@ -3,7 +3,7 @@
 # We can create a "userless" profile, that has all the necessary information.
 # This is instead of duplicating all those fields in the registration table.
 #------------------------------------------------------------------------------
-class Registration < ActiveRecord::Base
+class Registration < ApplicationRecord
   include DmEvent::Concerns::RegistrationStateMachine
   include DmEvent::Concerns::RegistrationStateEmail
   include DmCore::Concerns::HasCustomFields

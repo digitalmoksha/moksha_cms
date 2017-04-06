@@ -1,4 +1,4 @@
-class ForumSite < ActiveRecord::Base
+class ForumSite < ApplicationRecord
   class UndefinedError < StandardError; end
 
   self.table_name           = 'fms_forum_sites'

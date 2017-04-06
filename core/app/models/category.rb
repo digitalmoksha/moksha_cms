@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
 
   self.table_name       = 'core_categories'
 

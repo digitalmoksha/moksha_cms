@@ -1,8 +1,8 @@
 class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminController
   include DmForum::PermittedParams
 
-  before_filter   :check_forum_site,  only:   [:index]
-  before_filter   :category_lookup,   except: [:index, :new, :create]
+  before_action   :check_forum_site,  only:   [:index]
+  before_action   :category_lookup,   except: [:index, :new, :create]
   
   # GET /admin/forum_categories
   #------------------------------------------------------------------------------

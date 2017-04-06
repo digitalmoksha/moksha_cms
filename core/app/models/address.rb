@@ -1,4 +1,4 @@
-class Address < ActiveRecord::Base
+class Address < ApplicationRecord
 
   self.table_name   = 'core_addresses'
   belongs_to        :addressable, :polymorphic => true

@@ -4,7 +4,7 @@
 class DmForum::Admin::ForumSitesController < DmForum::Admin::AdminController
   include DmForum::PermittedParams
 
-  before_filter   :forum_site_lookup
+  before_action   :forum_site_lookup
 
   # GET /admin/fms/forum_site
   #------------------------------------------------------------------------------

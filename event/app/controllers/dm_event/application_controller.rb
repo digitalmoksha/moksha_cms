@@ -9,7 +9,7 @@ class DmEvent::ApplicationController < ::ApplicationController
   helper    DmCms::PagesHelper
   include   DmCore::RenderHelper
 
-  #before_filter :authenticate_user!
+  #before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   

@@ -3,9 +3,9 @@
 #------------------------------------------------------------------------------
 class DmCore::Admin::AdminController < ApplicationController
 
-  before_filter :authenticate_admin_user!
-  before_filter :setup_admin_data
-  before_filter :template_setup
+  before_action :authenticate_admin_user!
+  before_action :setup_admin_data
+  before_action :template_setup
 
   layout 'admin_theme/admin'
   

@@ -1,8 +1,8 @@
 class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
 
-  before_filter   :blog_lookup
-  before_filter   :post_lookup, :except =>  [:new, :create]
+  before_action   :blog_lookup
+  before_action   :post_lookup, :except =>  [:new, :create]
   
   #------------------------------------------------------------------------------
   def new
