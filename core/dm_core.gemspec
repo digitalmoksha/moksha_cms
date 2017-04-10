@@ -17,9 +17,10 @@ Gem::Specification.new do |s|
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'rails', '>= 4.2', '< 5.1'
   s.add_dependency 'dm_ruby_extensions', '~> 1.0'
-  s.add_dependency 'dm_preferences', '~> 1.0'
+  s.add_dependency 'dm_preferences', '~> 1.5'
   s.add_dependency 'actionview-encoded_mail_to', '~> 1.0'
   s.add_dependency 'devise', '~> 4.2'           # Authentication
+  s.add_dependency 'validates_email_format_of'
   s.add_dependency "cancancan", "~> 1.13"         # Authorization
   s.add_dependency "simple_form", '~> 3.2'        # Form handling
   s.add_dependency "will_paginate", "~> 3.1"      # pagination
@@ -47,6 +48,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'delayed_job', '~> 4.1'
   s.add_dependency 'daemons', '~> 1.2'
   s.add_dependency 'recaptcha', '~> 4.0'
+  s.add_dependency 'highline', '~> 1.6.18' # Necessary for the install generator
   
   #--- Rails 5 compatible
   s.add_dependency 'acts-as-taggable-on', '~> 4.0'

@@ -168,7 +168,7 @@ protected
       DmCore::Language.locale = (!params[:locale].blank? ? params[:locale] : current_account.preferred_default_locale)
     rescue I18n::InvalidLocale
       # if it's an invalid locale, append the default locale and try again
-      # this also fixes the case of using simple link names on a hoem page.
+      # this also fixes the case of using simple link names on a home page.
       # So if home page is "http://example.com" and the link is <a href="calendar">
       # then the link is "http://example.com/calendar", instead of "http://example.com/en/calendar"
       # This will allow that to work.
