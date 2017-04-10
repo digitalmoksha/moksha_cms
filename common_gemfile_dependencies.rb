@@ -3,27 +3,34 @@
 # the one component of MokshaCms.
 source 'https://rubygems.org'
 
-gem 'dm_preferences',         '~> 1.0'
-gem 'themes_for_rails',     git: 'git://github.com/digitalmoksha/themes_for_rails.git'
-gem 'aced_rails',           git: 'git://github.com/digitalmoksha/aced_rails.git'
-gem 'dm_admin',             git: 'git://github.com/digitalmoksha/dm_admin.git', branch: '4-2-stable'
+gem 'rails', '5.0.2'
+
+gem 'dm_preferences',         '~> 1.5'
+gem 'themes_for_rails',       git: 'https://github.com/digitalmoksha/themes_for_rails.git'
+gem 'aced_rails',             git: 'https://github.com/digitalmoksha/aced_rails.git'
+gem 'dm_admin',               path: '../admin', require: 'dm_admin'
+
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.2'
+gem 'therubyracer', platforms: :ruby
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'byebug'
+  gem 'pry-byebug'
   gem 'thin'  # use the Thin webserver during development
 
-  gem 'mocha', '~> 1.1.0', :require => false
-  gem 'rspec-rails', '~> 3.5.0'
-  gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'mocha', '~> 1.2', :require => false
+  gem 'rspec-rails', '~> 3.5'
+  gem 'factory_girl_rails', '~> 4.8'
 end
 
 group :test do
-  gem 'faker', '~> 1.4.3'
-  gem 'capybara', '~> 2.4.3'
-  gem 'database_cleaner', '~> 1.3.0'
-  gem 'launchy', '~> 2.4.2'
-  gem 'selenium-webdriver', '~> 2.43.0'
+  gem 'faker', '~> 1.7'
+  gem 'capybara', '~> 2.13'
+  gem 'database_cleaner', '~> 1.5'
+  gem 'launchy', '~> 2.4'
+  gem 'selenium-webdriver', '~> 3.3'
   gem 'rspec-formatter-webkit'
   gem 'syntax'
 end
