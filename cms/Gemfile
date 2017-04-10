@@ -4,3 +4,5 @@ gem 'dm_core',            path: '../core', require: 'dm_core'
 
 gemspec
 
+gem 'jquery-rails'
+gem 'jquery-ui-rails'

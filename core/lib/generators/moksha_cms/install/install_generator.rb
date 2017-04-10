@@ -34,9 +34,9 @@ module MokshaCms
       end
     end
 
-    # def add_files
-    #   template 'config/initializers/moksha_cms.rb', 'config/initializers/moksha_cms.rb'
-    # end
+    def add_files
+      template 'config/initializers/dm_core.rb', 'config/initializers/dm_core.rb'
+    end
 
     def additional_tweaks
       return unless File.exists? 'public/robots.txt'
@@ -101,8 +101,8 @@ Disallow: /password
 #     def include_seed_data
 #       append_file "db/seeds.rb", <<-SEEDS
 # \n
-# Spree::Core::Engine.load_seed if defined?(Spree::Core)
-# Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+# DmCore::Engine.load_seed if defined?(DmCore)
+# DmCms::Engine.load_seed if defined?(DmCms)
 #       SEEDS
 #     end
 
@@ -171,34 +171,33 @@ Disallow: /password
     #   end
     # end
 
-  #   def notify_about_routes
-  #     insert_into_file File.join('config', 'routes.rb'), after: "Rails.application.routes.draw do\n" do
-  #       %Q{
-  # # This line mounts Spree's routes at the root of your application.
-  # # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
-  # # If you would like to change where this engine is mounted, simply change the :at option to something different.
-  # #
-  # # We ask that you don't use the :as option here, as Spree relies on it being the default of "spree"
-  # mount Spree::Core::Engine, at: '/'
-  #       }
-  #     end
-  #
-  #     unless options[:quiet]
-  #       puts "*" * 50
-  #       puts "We added the following line to your application's config/routes.rb file:"
-  #       puts " "
-  #       puts "    mount Spree::Core::Engine, at: '/'"
-  #     end
-  #   end
-  #
-  #   def complete
-  #     unless options[:quiet]
-  #       puts "*" * 50
-  #       puts "Spree has been installed successfully. You're all ready to go!"
-  #       puts " "
-  #       puts "Enjoy!"
-  #     end
-  #   end
+    def notify_about_routes
+      if options[:lib_name] == 'dm_cms'
+        insert_into_file File.join('config', 'routes.rb'), after: "Rails.application.routes.draw do\n" do
+          dm_cms_routes
+        end
+      end
+
+      insert_into_file File.join('config', 'routes.rb'), after: "Rails.application.routes.draw do\n" do
+        dm_core_routes
+      end
+
+      unless options[:quiet]
+        puts "*" * 50
+        puts "We added the following line to your application's config/routes.rb file:"
+        puts " "
+        puts "    mount Spree::Core::Engine, at: '/'"
+      end
+    end
+
+    def complete
+      unless options[:quiet]
+        puts "*" * 50
+        puts "Spree has been installed successfully. You're all ready to go!"
+        puts " "
+        puts "Enjoy!"
+      end
+    end
 
     protected
 
@@ -216,6 +215,28 @@ Disallow: /password
       extensions.detect do |extension|
         File.exists?("#{filename}#{extension}")
       end
+    end
+    
+    def dm_core_routes
+      <<-ROUTES
+  scope ":locale" do
+    devise_for :users, controllers: { registrations: "registrations", confirmations: 'confirmations' }
+  end
+  themes_for_rails
+  mount DmCore::Engine, :at => '/'
+ROUTES
+    end
+
+    def dm_cms_routes
+      <<-ROUTES
+  mount DmCms::Engine => "/dm_cms"
+  scope ":locale" do
+    get   '/index',                 controller: 'dm_cms/pages', action: :show, slug: 'index', as: :index
+  end
+
+  #--- use match instead of root to fix issue where sometimes '?locale=de' is appeneded
+  get   '/(:locale)',            :controller => 'dm_cms/pages', :action => :show, :slug => 'index', :as => :root
+ROUTES
     end
 
     private

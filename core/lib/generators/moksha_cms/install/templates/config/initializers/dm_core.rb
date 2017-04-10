@@ -1,3 +1,4 @@
+# Configure DmCore Preferences
 DmCore.configure do |config|
   config.default_locale = :en
   config.locales        = [:en, :de, :ja, :cs, :fi, :at, :fr]

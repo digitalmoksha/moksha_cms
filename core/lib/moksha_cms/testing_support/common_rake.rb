@@ -5,7 +5,6 @@ desc "Generates a dummy app for testing"
 namespace :common do
   task :test_app, :user_class do |_t, args|
     args.with_defaults(user_class: "User")
-    # require ENV['LIB_NAME'].to_s
 
     ENV['RAILS_ENV'] = 'test'
 

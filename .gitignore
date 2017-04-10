@@ -11,3 +11,4 @@ sandbox/*
 .byebug_history
 .idea
 core/spec/dummy
+cms/spec/dummy

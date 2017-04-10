@@ -32,5 +32,6 @@ group :test do
   gem 'launchy', '~> 2.4'
   gem 'selenium-webdriver', '~> 3.3'
   gem 'rspec-formatter-webkit'
+  gem 'rails-controller-testing'
   gem 'syntax'
 end
