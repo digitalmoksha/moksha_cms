@@ -13,3 +13,4 @@ sandbox/*
 admin/spec/dummy
 core/spec/dummy
 cms/spec/dummy
+event/spec/dummy
