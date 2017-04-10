@@ -32,6 +32,7 @@ require 'biggs'
 require 'codemirror-rails'
 require 'mini_magick'
 require 'carrierwave'
+require 'validates_email_format_of'
 
 module DmCore
   class Engine < ::Rails::Engine
