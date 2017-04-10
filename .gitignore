@@ -10,5 +10,6 @@ sandbox/*
 .ruby-version
 .byebug_history
 .idea
+admin/spec/dummy
 core/spec/dummy
 cms/spec/dummy

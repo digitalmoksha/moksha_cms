@@ -8,7 +8,6 @@ gem 'rails', '5.0.2'
 gem 'dm_preferences',         '~> 1.5'
 gem 'themes_for_rails',       git: 'https://github.com/digitalmoksha/themes_for_rails.git'
 gem 'aced_rails',             git: 'https://github.com/digitalmoksha/aced_rails.git'
-gem 'dm_admin',               path: '../admin', require: 'dm_admin'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
