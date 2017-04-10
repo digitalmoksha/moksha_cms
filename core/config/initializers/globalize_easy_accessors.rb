@@ -64,4 +64,4 @@ private
 
 end
 
-ApplicationRecord.extend EasyGlobalizeAccessors
+ActiveRecord::Base.extend EasyGlobalizeAccessors
