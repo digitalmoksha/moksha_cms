@@ -1,0 +1,7 @@
+  <div class="comments comment_list">
+    <% for comment in comment_list do %>
+      <%= render partial: 'layouts/cms_templates/comment', object: comment, locals: { commenting_on: commenting_on } %>
+    <% end %>
+  </div>
+
+  <%= pagination(comment_list, class: 'pagination', version: :bootstrap3) %>

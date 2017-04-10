@@ -48,6 +48,7 @@ module MokshaCms
       template "rails/script/rails", "#{dummy_path}/spec/dummy/script/rails", force: true
       template "models/ability.rb", "#{dummy_path}/app/models/ability.rb", force: true
       template "models/user.rb", "#{dummy_path}/app/models/user.rb", force: true
+      # directory "themes", "#{dummy_path}/themes", force: true
     end
 
     def test_dummy_clean
