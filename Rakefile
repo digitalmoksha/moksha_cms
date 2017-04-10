@@ -1,27 +1,27 @@
 require 'rake'
 require 'rubygems/package_task'
 
-MOKSHA_GEMS = %w(core cms event forum newsletter).freeze
+MOKSHA_GEMS = %w(admin core cms event forum newsletter).freeze
 
 task default: :test
 
-# desc "Runs all tests in all MokshaCms engines"
-# task test: :test_app do
-#   MOKSHA_GEMS.each do |gem_name|
-#     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
-#       sh 'rspec'
-#     end
-#   end
-# end
+desc "Runs all tests in all MokshaCms engines"
+task test: :test_app do
+  MOKSHA_GEMS.each do |gem_name|
+    Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
+      sh 'rspec'
+    end
+  end
+end
 
-# desc "Generates a dummy app for testing for every MokshaCms engine"
-# task :test_app do
-#   MOKSHA_GEMS.each do |gem_name|
-#     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
-#       sh 'rake test_app'
-#     end
-#   end
-# end
+desc "Generates a dummy app for testing for every MokshaCms engine"
+task :test_app do
+  MOKSHA_GEMS.each do |gem_name|
+    Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
+      sh 'rake test_app'
+    end
+  end
+end
 
 desc "clean the whole repository by removing all the generated files"
 task :clean do
@@ -32,7 +32,7 @@ task :clean do
   MOKSHA_GEMS.each do |gem_name|
     rm_f  "#{gem_name}/Gemfile.lock"
     rm_rf "#{gem_name}/pkg"
-    # rm_rf "#{gem_name}/spec/dummy"
+    rm_rf "#{gem_name}/spec/dummy"
   end
 end
 
