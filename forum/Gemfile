@@ -5,3 +5,5 @@ gem 'dm_cms',             path: '../cms',  require: 'dm_cms'
 
 gemspec
 
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
