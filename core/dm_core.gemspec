@@ -25,10 +25,10 @@ Gem::Specification.new do |s|
   s.add_dependency "simple_form", '~> 3.2'        # Form handling
   s.add_dependency "will_paginate", "~> 3.1"      # pagination
   s.add_dependency 'country_select', "~> 1.3"     # [todo] v2.x requires changes
-  s.add_dependency 'paper_trail', '~> 4.0.2'      # table versioning
+  s.add_dependency 'paper_trail', '~> 7.0'      # table versioning
   s.add_dependency "liquid", "~> 2.6"
   s.add_dependency "sanitize", "~> 4.0"
-  s.add_dependency 'acts_as_commentable', "~> 4.0.2"
+  s.add_dependency 'acts_as_commentable', "~> 4.0.2" # we customize our usage, so can't use the 'with_threading' version
   s.add_dependency 'acts_as_votable', '~> 0.10.0'
   s.add_dependency 'acts_as_follower', '~> 0.2.1'
   s.add_dependency 'ancestry', "~> 2.1.0"

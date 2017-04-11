@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.test_files  = Dir["spec/**/*"]
 
   s.add_dependency 'dm_core', s.version
+  s.add_dependency 'dm_admin', s.version
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'meta-tags-helpers', '~> 0.2.0'

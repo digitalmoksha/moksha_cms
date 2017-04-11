@@ -1,4 +1,4 @@
-class AddProfileEmail < ActiveRecord::Migration
+class AddProfileEmail < ActiveRecord::Migration[4.2]
   def up
     add_column    :user_profiles,   :email,   :string
     User.all.find_each do |user|

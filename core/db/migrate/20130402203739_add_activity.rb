@@ -1,4 +1,4 @@
-class AddActivity < ActiveRecord::Migration
+class AddActivity < ActiveRecord::Migration[4.2]
   def change
     create_table :core_activities do |t|
       t.integer       :account_id

@@ -1,4 +1,4 @@
-class CreateSubscribers < ActiveRecord::Migration
+class CreateSubscribers < ActiveRecord::Migration[4.2]
   def change
     create_table 'email_subscriptions', :force => true do |t|
       t.string    'token'               # url friendly unique subscriber id, similar to mc_id

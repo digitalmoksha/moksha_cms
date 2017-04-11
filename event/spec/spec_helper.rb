@@ -56,8 +56,8 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning(&example)
   end
 
-  config.around do |example|
-    Timeout.timeout(30, &example)
-  end
+  # config.around do |example|
+  #   Timeout.timeout(30, &example)
+  # end
 end
 

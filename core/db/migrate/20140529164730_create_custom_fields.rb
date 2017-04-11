@@ -1,4 +1,4 @@
-class CreateCustomFields < ActiveRecord::Migration
+class CreateCustomFields < ActiveRecord::Migration[4.2]
   def change
     create_table :core_custom_field_defs do |t|
       t.references    :owner, polymorphic: true

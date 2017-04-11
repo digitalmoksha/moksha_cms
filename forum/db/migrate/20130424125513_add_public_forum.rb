@@ -1,4 +1,4 @@
-class AddPublicForum < ActiveRecord::Migration
+class AddPublicForum < ActiveRecord::Migration[4.2]
   def up
     add_column    :fms_forums,     :is_public, :boolean, :default => false
     add_column    :fms_forums,     :requires_login, :boolean, :default => false

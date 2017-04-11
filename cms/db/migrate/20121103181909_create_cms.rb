@@ -1,4 +1,4 @@
-class CreateCms < ActiveRecord::Migration
+class CreateCms < ActiveRecord::Migration[4.2]
   def up
     create_table "cms_contentitem_translations", :force => true do |t|
       t.integer  "cms_contentitem_id"

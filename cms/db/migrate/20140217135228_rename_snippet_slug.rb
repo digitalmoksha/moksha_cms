@@ -1,4 +1,4 @@
-class RenameSnippetSlug < ActiveRecord::Migration
+class RenameSnippetSlug < ActiveRecord::Migration[4.2]
   def up
     change_column :cms_snippets, :itemtype, :string, :default => 'markdown'
     rename_column :cms_snippets, :container, :slug

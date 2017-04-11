@@ -1,4 +1,4 @@
-class CreateUserSiteProfile < ActiveRecord::Migration
+class CreateUserSiteProfile < ActiveRecord::Migration[4.2]
   def up
     create_table :user_site_profiles, :force => true do |t|
       t.integer     :user_id

@@ -18,6 +18,7 @@ desc "Generates a dummy app for testing for every MokshaCms engine"
 task :test_app do
   MOKSHA_GEMS.each do |gem_name|
     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
+      sh 'bundle install'
       sh 'rake test_app'
     end
   end

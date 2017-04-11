@@ -1,4 +1,4 @@
-class AddUserProfileToRegistration < ActiveRecord::Migration
+class AddUserProfileToRegistration < ActiveRecord::Migration[4.2]
   def up
     add_column      :ems_registrations, :user_profile_id, :integer
     remove_column   :ems_registrations, :user_id

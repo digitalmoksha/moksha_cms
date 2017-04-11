@@ -1,4 +1,4 @@
-class AddFavoredLocale < ActiveRecord::Migration
+class AddFavoredLocale < ActiveRecord::Migration[4.2]
   def up
     add_column :user_profiles, :favored_locale, :string
 

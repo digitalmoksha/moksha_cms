@@ -1,4 +1,4 @@
-class AddPaymentComment < ActiveRecord::Migration
+class AddPaymentComment < ActiveRecord::Migration[4.2]
   def up
     add_column      :ems_registrations, :payment_comment_id,    :integer
     rename_column   :ems_registrations, :payment_comment,       :payment_comment_old

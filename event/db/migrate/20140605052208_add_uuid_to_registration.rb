@@ -1,4 +1,4 @@
-class AddUuidToRegistration < ActiveRecord::Migration
+class AddUuidToRegistration < ActiveRecord::Migration[4.2]
   def up
     add_column  :ems_registrations,   :uuid, :string,  limit: 36
     add_index   :ems_registrations,   :uuid

@@ -1,4 +1,4 @@
-class CreateDmCoreAccounts < ActiveRecord::Migration
+class CreateDmCoreAccounts < ActiveRecord::Migration[4.2]
   def change
     create_table :core_accounts do |t|
       t.string    :company_name

@@ -15,7 +15,7 @@ class DmCore::ApplicationController < ActionController::Base
   prepend_before_action   :ssl_redirect
   prepend_before_action   :theme_resolver
   prepend_before_action   :set_locale
-  prepend_around_filter   :scope_current_account
+  prepend_around_action   :scope_current_account
 
   add_flash_types :warning, :error, :info
 

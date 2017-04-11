@@ -1,4 +1,4 @@
-class CreateComments < ActiveRecord::Migration
+class CreateComments < ActiveRecord::Migration[4.2]
   def self.up
     create_table :core_comments do |t|
       t.string        :title, :limit => 50, :default => "" 

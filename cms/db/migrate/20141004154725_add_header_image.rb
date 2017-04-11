@@ -1,4 +1,4 @@
-class AddHeaderImage < ActiveRecord::Migration
+class AddHeaderImage < ActiveRecord::Migration[4.2]
   def change
     rename_column     :cms_pages, :image, :featured_image
     add_column        :cms_pages, :header_image, :string

@@ -3,7 +3,7 @@ module OffsitePayments
   end
 end
 
-class FixPaymentHistorySerialization < ActiveRecord::Migration
+class FixPaymentHistorySerialization < ActiveRecord::Migration[4.2]
   def up
     PaymentHistory.unscoped.ids.each do |id|
       data = PaymentHistory.unscoped.find(id).attributes_before_type_cast["notify_data"]

@@ -1,4 +1,4 @@
-class AddAccountToCms < ActiveRecord::Migration
+class AddAccountToCms < ActiveRecord::Migration[4.2]
   def change
     add_column  :cms_pages,         :account_id, :integer
     add_index   :cms_pages,         :account_id

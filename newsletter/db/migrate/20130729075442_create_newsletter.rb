@@ -1,4 +1,4 @@
-class CreateNewsletter < ActiveRecord::Migration
+class CreateNewsletter < ActiveRecord::Migration[4.2]
   def change
     create_table 'email_newsletters', :force => true do |t|
       t.string    'token'                 # url friendly unique list id, similar to mc_id

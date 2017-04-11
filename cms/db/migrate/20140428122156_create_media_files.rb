@@ -1,4 +1,4 @@
-class CreateMediaFiles < ActiveRecord::Migration
+class CreateMediaFiles < ActiveRecord::Migration[4.2]
   def change
     create_table :cms_media_files do |t|
       t.string    :media
