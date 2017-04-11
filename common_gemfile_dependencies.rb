@@ -6,7 +6,6 @@ source 'https://rubygems.org'
 gem 'dm_preferences',         '~> 1.0'
 gem 'themes_for_rails',     git: 'git://github.com/digitalmoksha/themes_for_rails.git'
 gem 'aced_rails',           git: 'git://github.com/digitalmoksha/aced_rails.git'
-gem 'dm_admin',             git: 'git://github.com/digitalmoksha/dm_admin.git', branch: '4-2-stable'
 
 group :development, :test do
   gem 'sqlite3'
