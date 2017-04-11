@@ -27,8 +27,7 @@ describe CmsPost do
     #------------------------------------------------------------------------------
     it 'raises an error when same slug is specified for posts in the same blog' do
       post1 = blog1.posts.create(attributes_for(:post, slug: 'test-slug'))
-      post2 = blog1.posts.create(attributes_for(:post, slug: 'test-slug'))
-      byebug
+      post2 = blog1.posts.build(attributes_for(:post, slug: 'test-slug'))
       expect(post2).not_to be_valid
       expect(post2.errors[:slug]).to include("has already been taken")
     end
