@@ -6,7 +6,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   include DmCore::UrlHelper
   include DmCore::LiquidHelper
 
-  protect_from_forgery :except => [:paypal_ipn, :sofort_ipn]
+  protect_from_forgery except: [:paypal_ipn, :sofort_ipn], prepend: true
 
   helper          DmEvent::WorkshopsHelper
   helper          DmEvent::RegistrationsHelper
