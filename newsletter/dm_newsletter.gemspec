@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'gibbon', '~> 1.2.0'
+  # TODO s.add_dependency 'gibbon', '~> 3.0'
 end
