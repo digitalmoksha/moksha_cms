@@ -12,12 +12,10 @@ class MediaUploader < CarrierWave::Uploader::Base
   include DmCore::AccountHelper
 
   # Include RMagick or MiniMagick support:
-  include CarrierWave::MimeTypes
   include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
-  process :set_content_type
 
   # Everything gets stored in the 'media' folder
   #------------------------------------------------------------------------------
@@ -83,14 +81,14 @@ class MediaUploader < CarrierWave::Uploader::Base
     process :retina_quality => 60
     def full_filename(for_file = model.media.file)
       name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
-      model.pdf? ? (name.chomp(File.extname(name)) + '.jpg') : name
+      pdf?(self) ? (name.chomp(File.extname(name)) + '.jpg') : name
     end
   end
   version :lg, :if => :thumbnable? do
     # process :size_image_pdf => [Account.current.preferred_image_large_width]
     process :size_image_pdf => [900]
     def full_filename (for_file = model.file.file)
-      model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
+      pdf?(self) ? (super.chomp(File.extname(super)) + '.jpg') : super
     end
   end
 
@@ -100,14 +98,14 @@ class MediaUploader < CarrierWave::Uploader::Base
     process :retina_quality => 60
     def full_filename(for_file = model.media.file)
       name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
-      model.pdf? ? (name.chomp(File.extname(name)) + '.jpg') : name
+      pdf?(self) ? (name.chomp(File.extname(name)) + '.jpg') : name
     end
   end
   version :md, :if => :thumbnable?, :from_version => :lg do
     # process :size_image_pdf => [Account.current.preferred_image_medium_width]
     process :size_image_pdf => [600]
     def full_filename (for_file = model.file.file)
-      model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
+      pdf?(self) ? (super.chomp(File.extname(super)) + '.jpg') : super
     end
   end
 
@@ -117,28 +115,27 @@ class MediaUploader < CarrierWave::Uploader::Base
     process :retina_quality => 60
     def full_filename(for_file = model.media.file)
       name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
-      model.pdf? ? (name.chomp(File.extname(name)) + '.jpg') : name
+      pdf?(self) ? (name.chomp(File.extname(name)) + '.jpg') : name
     end
   end
-  version :sm, :if => :thumbnable?, :from_version => :retina_md do
+  version :sm, :if => :thumbnable?, :from_version => :md do
     # process :size_image_pdf => [Account.current.preferred_image_small_width]
     process :size_image_pdf => [300]
     def full_filename (for_file = model.file.file)
-      model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
+      pdf?(self) ? (super.chomp(File.extname(super)) + '.jpg') : super
     end
   end
 
-  version :thumb, :if => :thumbnable?, :from_version => :retina_md do
+  version :thumb, :if => :thumbnable?, :from_version => :md do
     # process thumb_image_pdf: [Account.current.preferred_image_thumbnail_width, Account.current.preferred_image_thumbnail_width]
     process thumb_image_pdf: [200, 200]
     def full_filename (for_file = model.file.file)
-      model.pdf? ? (super.chomp(File.extname(super)) + '.jpg') : super
+      pdf?(self) ? (super.chomp(File.extname(super)) + '.jpg') : super
     end
   end
 
 
   # Add a white list of extensions which are allowed to be uploaded.
-  # For images you might use something like this:
   #------------------------------------------------------------------------------
   def extension_whitelist
     %w(jpg jpeg gif png mp3 mp4 m4v ogg webm pdf css js)
@@ -158,12 +155,20 @@ protected
 
   #------------------------------------------------------------------------------
   def image?(new_file)
-    new_file.content_type.start_with? 'image'
+    if new_file.content_type
+      new_file.content_type.start_with? 'image'
+    else
+      new_file.model.image?
+    end
   end
 
   #------------------------------------------------------------------------------
   def pdf?(new_file)
-    new_file.content_type.end_with? 'pdf'
+    if new_file.content_type
+      new_file.content_type.end_with? 'pdf'
+    else
+      new_file.model.pdf?
+    end
   end
   
 end
