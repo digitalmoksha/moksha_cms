@@ -33,6 +33,8 @@ require 'codemirror-rails'
 require 'mini_magick'
 require 'carrierwave'
 require 'validates_email_format_of'
+require 'activemerchant'
+require 'offsite_payments'
 
 module DmCore
   class Engine < ::Rails::Engine

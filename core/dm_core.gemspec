@@ -53,8 +53,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'daemons', '~> 1.2'
   s.add_dependency 'recaptcha', '~> 4.1'
   s.add_dependency 'highline', '~> 1.7' # Necessary for the install generator
+  s.add_dependency 'activemerchant', '~> 1.63.0'  #--| here (instead of dm_event) because
+  s.add_dependency 'offsite_payments', '~> 2.2'   #--| of PaymentHistory model
   
-  #--- Rails 5 compatible
   s.add_dependency 'acts-as-taggable-on', '~> 4.0'
   s.add_dependency 'kramdown', "~> 1.9"
   s.add_dependency "RedCloth", "~> 4.3"
