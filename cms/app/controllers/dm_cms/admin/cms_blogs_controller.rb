@@ -62,7 +62,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
     end
 
     #--- this action will be called via ajax
-    render nothing: true
+    head :ok
   end
 
   #------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
       user.has_role?(role, @blog) ? user.remove_role(role, @blog) : user.add_role(role, @blog)
       user.save!
     end
-    render nothing: true
+    head :ok
   end
 
 private

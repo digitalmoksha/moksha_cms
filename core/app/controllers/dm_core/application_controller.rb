@@ -66,7 +66,7 @@ protected
       stored
     elsif Account.current && defined?(CmsPage) && (welcome_page = CmsPage.welcome_page)
       welcome_page.is_published? ? dm_cms.showpage_url(welcome_page.slug) : main_app.root_path
-    elsif request.referer && request.referer != new_user_session_url
+    elsif request.referer && request.referer != new_user_session_url && !request.referer.start_with?(edit_user_password_url)
       request.referer
     else
       main_app.root_path
@@ -251,7 +251,7 @@ protected
   rescue_from Account::DomainNotFound do |exception|
     #--- log the invalid domain and render nothing.
     logger.error "=====> #{exception.message}  URL: #{request.url}  REMOTE_ADDR: #{request.remote_addr}"
-    render :nothing => true
+    head :not_found
   end
   rescue_from Account::NotSetup do |exception|
     #--- Accounts not setup yet

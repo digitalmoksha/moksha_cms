@@ -12,7 +12,7 @@ class DmEvent::PaymentsController < DmEvent::ApplicationController
     notify = Paypal::Notification.new(request.raw_post)
     Payment.event_payment_ipn(notify, 'paypal')
 
-    render :nothing => true
+    head :ok
   end
   
   # TODO Not fully working yet
@@ -22,7 +22,7 @@ class DmEvent::PaymentsController < DmEvent::ApplicationController
     notify = Directebanking::Notification.new(request.raw_post, credential4: current_account.preferred_sofort_notification_password)
     Payment.event_payment_ipn(notify, 'sofort')
 
-    render :nothing => true
+    head :ok
   end
 
 end
@@ -52,7 +52,7 @@ end
       end
     end
 
-    render :nothing => true, :status => 200
+    head :ok
   end
 
   #------------------------------------------------------------------------------

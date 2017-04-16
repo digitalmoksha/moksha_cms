@@ -124,7 +124,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
 
         #--- remove any extra "custom_field" attributes left during the field definition
         if params[:workshop][:custom_field_defs_attributes]
-          params[:workshop][:custom_field_defs_attributes].each_key {|key| params[:workshop][:custom_field_defs_attributes][key].delete(:custom_field)}
+          params[:workshop][:custom_field_defs_attributes].each_pair {|key, value| params[:workshop][:custom_field_defs_attributes][key].delete(:custom_field)}
         end
         
         @workshop.update_attributes(workshop_params)
@@ -185,7 +185,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
       user.has_role?(role, @workshop) ? user.remove_role(role, @workshop) : user.add_role(role, @workshop)
       user.save!
     end
-    render nothing: true
+    head :ok
   end
 
 private

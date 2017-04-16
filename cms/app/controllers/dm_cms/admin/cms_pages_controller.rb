@@ -82,7 +82,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     end
 
     #--- this action will be called via ajax
-    render nothing: true
+    head :ok
   end
   
   #------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
 
     respond_to do |format| 
       format.html { redirect_to({:action => :index}, :notice => 'Page Cache was cleared') } 
-      format.js { render :nothing => true }
+      format.js { head :ok }
     end
   end
 
@@ -135,7 +135,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
       user.has_role?(role, @current_page) ? user.remove_role(role, @current_page) : user.add_role(role, @current_page)
       user.save!
     end
-    render nothing: true
+    head :ok
   end
 
 protected

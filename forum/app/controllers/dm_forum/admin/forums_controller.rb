@@ -67,7 +67,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
     @forum.update_attribute(:row_order_position, params[:item][:row_order_position])
 
     #--- this action will be called via ajax
-    render nothing: true
+    head :ok
   end
   
   #------------------------------------------------------------------------------

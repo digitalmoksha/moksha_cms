@@ -60,7 +60,7 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
     @workshop_price.update_attribute(:row_order_position, params[:item][:row_order_position])
 
     #--- this action will be called via ajax
-    render nothing: true
+    head :ok
   end
 
 private

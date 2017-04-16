@@ -62,7 +62,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
     @cms_contentitem.update_attribute(:row_order_position, params[:item][:row_order_position])
 
     #--- this action will be called via ajax
-    render nothing: true
+    head :ok
   end
 
   #------------------------------------------------------------------------------
