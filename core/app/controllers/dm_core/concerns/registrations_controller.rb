@@ -5,7 +5,7 @@ module DmCore
       include DmCore::PermittedParams
       
       included do
-        before_action :configure_sign_up_params
+        before_action :configure_permitted_parameters, if: :devise_controller?
         before_action :check_captcha, only: [:create]
       end
 
@@ -22,8 +22,11 @@ module DmCore
 
         # hook into devise to permit our special parameters
         #------------------------------------------------------------------------------
-        def configure_sign_up_params
-          devise_parameter_sanitizer.for(:sign_up) { |user| devise_sign_up_params(user) }
+        def configure_permitted_parameters
+          devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+            devise_sign_up_params(user_params)
+          end
+          
         end
 
       module ClassMethods
