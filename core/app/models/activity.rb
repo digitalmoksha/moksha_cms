@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-class Activity < ActiveRecord::Base
+class Activity < ApplicationRecord
 
   self.table_name   = 'core_activities'
 

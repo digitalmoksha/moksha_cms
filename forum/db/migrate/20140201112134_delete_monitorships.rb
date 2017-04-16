@@ -1,4 +1,4 @@
-class DeleteMonitorships < ActiveRecord::Migration
+class DeleteMonitorships < ActiveRecord::Migration[4.2]
   def up
     drop_table :fms_monitorships
   end

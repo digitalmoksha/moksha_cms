@@ -1,7 +1,7 @@
 # Uses an interceptor hook to set the smtp_settings to values from the account
 # All mailers should inherit from this class
 #------------------------------------------------------------------------------
-class DmCore::SiteMailer < ActionMailer::Base
+class DmCore::SiteMailer < ApplicationMailer
 
   layout 'email_templates/default_email_layout'
   

@@ -1,4 +1,4 @@
-class AddCoreAddresses < ActiveRecord::Migration
+class AddCoreAddresses < ActiveRecord::Migration[4.2]
   def change
     create_table :core_addresses do |t|
       t.string    :line1

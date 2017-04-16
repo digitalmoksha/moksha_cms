@@ -10,3 +10,9 @@ sandbox/*
 .ruby-version
 .byebug_history
 .idea
+admin/spec/dummy
+core/spec/dummy
+cms/spec/dummy
+event/spec/dummy
+forum/spec/dummy
+newsletter/spec/dummy

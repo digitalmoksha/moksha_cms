@@ -28,7 +28,8 @@ module DmCore
 
         accepts_nested_attributes_for :user_profile
 
-        validates_presence_of   :email
+        validates_presence_of     :email
+        validates_email_format_of :email, :message => 'does seem to be valid'
 
         after_create            :add_account
         after_update            :update_profile_email

@@ -1,8 +1,8 @@
 class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminController
   include DmNewsletter::PermittedParams
 
-  #before_filter   :mailchimp_guard,   only:   [:new, :edit, :create, :update]
-  before_filter   :newsletter_lookup, except: [:index, :new, :create, :synchronize_lists]
+  #before_action   :mailchimp_guard,   only:   [:new, :edit, :create, :update]
+  before_action   :newsletter_lookup, except: [:index, :new, :create, :synchronize_lists]
 
   #------------------------------------------------------------------------------
   def index

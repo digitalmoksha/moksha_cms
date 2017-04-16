@@ -3,7 +3,7 @@ ActionView::Base.send(:include, OffsitePayments::ActionViewHelper)
 class DmEvent::PaymentsController < DmEvent::ApplicationController
   include OffsitePayments::Integrations
 
-  protect_from_forgery :except => [:paypal_ipn, :sofort_ipn]
+  protect_from_forgery except: [:paypal_ipn, :sofort_ipn], prepend: true
 
   # TODO Not fully working yet
   #------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-class AddPagesRankedModel < ActiveRecord::Migration
+class AddPagesRankedModel < ActiveRecord::Migration[4.2]
   def up
     add_column    :cms_pages,         :row_order,   :integer
     rename_column :cms_contentitems,  :position,  :row_order

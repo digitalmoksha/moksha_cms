@@ -1,5 +1,5 @@
 class DmEvent::Admin::AdminController < DmCore::Admin::AdminController
-  before_filter   :authorize_access
+  before_action   :authorize_access
   
 protected
 

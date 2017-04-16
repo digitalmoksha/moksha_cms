@@ -1,5 +1,5 @@
 <% comment_day = params[:comment_day].to_i %>
-<% comments = Comment.where(commentable_type: CmsPost, created_at: (Date.today - comment_day.day).midnight..(Date.today - (comment_day - 1).day).midnight).order('created_at DESC') %>
+<% comments = Comment.where(commentable_type: 'CmsPost', created_at: (Date.today - comment_day.day).midnight..(Date.today - (comment_day - 1).day).midnight).order('created_at DESC') %>
 <% title = comment_day == 0 ? 'Today\'s Blog Comments' : comment_day == 1 ? 'Yesterday\'s Blog Comments' : "Blog Comments #{comment_day} days ago" %>
 <% content_for :title_toolbar do %>
   <%= link_to icons('fa fa-arrow-left'), dm_cms.admin_widget_blog_comments_path(comment_day: comment_day + 1), remote: true, class: 'btn btn-xs btn-default' %>

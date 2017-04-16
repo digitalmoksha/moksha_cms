@@ -1,4 +1,4 @@
-class ForumTopic < ActiveRecord::Base
+class ForumTopic < ApplicationRecord
 
   self.table_name         = 'fms_forum_topics'
 

@@ -1,4 +1,4 @@
-class Forum < ActiveRecord::Base
+class Forum < ApplicationRecord
   include DmCore::Concerns::PublicPrivate
 
   self.table_name             = 'fms_forums'

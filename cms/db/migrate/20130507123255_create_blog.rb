@@ -1,4 +1,4 @@
-class CreateBlog < ActiveRecord::Migration
+class CreateBlog < ActiveRecord::Migration[4.2]
   def up
     create_table :cms_blog_translations, :force => true do |t|
       t.integer     :cms_blog_id

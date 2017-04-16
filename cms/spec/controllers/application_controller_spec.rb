@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe DmCore::ApplicationController do
   # routes { DmCms::Engine.routes }

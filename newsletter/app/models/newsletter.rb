@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-class Newsletter < ActiveRecord::Base
+class Newsletter < ApplicationRecord
 
   self.table_name         = 'email_newsletters'
 

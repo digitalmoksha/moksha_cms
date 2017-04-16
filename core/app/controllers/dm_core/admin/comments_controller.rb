@@ -4,7 +4,7 @@
 class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
   include DmCore::PermittedParams
 
-  before_filter :find_commenter
+  before_action :find_commenter
 
   # Create a comment
   # :commenter_type => object name of commenting object

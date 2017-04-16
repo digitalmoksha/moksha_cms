@@ -1,6 +1,6 @@
 # Migration for upgrading PaperTrail from V3 to V4
 #------------------------------------------------------------------------------
-class UpdatePapertrailV4 < ActiveRecord::Migration
+class UpdatePapertrailV4 < ActiveRecord::Migration[4.2]
   # Class names of MySQL adapters.
   # - `MysqlAdapter` - Used by gems: `mysql`, `activerecord-jdbcmysql-adapter`.
   # - `Mysql2Adapter` - Used by `mysql2` gem.

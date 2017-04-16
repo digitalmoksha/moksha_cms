@@ -15,43 +15,39 @@
 # Ref: https://github.com/rspec/rspec-rails/issues/255
 #------------------------------------------------------------------------------
 
-# 1. (no longer needed in Rails 4.2)
+# 1.
 #------------------------------------------------------------------------------
-# class ActionView::TestCase::TestController
-#   def default_url_options(options={})
-#     { locale: I18n.default_locale }
-#   end
-# end
-#
-# class ActionDispatch::Routing::RouteSet::NamedRouteCollection::UrlHelper
-#   def call(t, args)
-#     t.url_for(handle_positional_args(t, args, { locale: I18n.default_locale }.merge( @options ), @segment_keys))
-#   end
-# end
+[ApplicationController, ActionController::Base].each do |klass|
+  klass.class_eval do
+    def default_url_options(options = {})
+      { :locale => "en" }.merge(options)
+    end
+  end
+end
 
 # 2.
 #------------------------------------------------------------------------------
-require 'active_support/concern'
- 
-module DefaultParams
-  extend ActiveSupport::Concern
- 
-  included do
-    let(:default_params) { {locale: I18n.locale} }
- 
-    def process_with_default_params(action, http_method = 'GET', *args)
-      parameters = args.shift
- 
-      parameters = default_params.merge(parameters || {})
-      args.unshift(parameters)
- 
-      process_without_default_params(action, http_method, *args)
-    end
- 
-    alias_method_chain :process, :default_params
-  end
-end
- 
-RSpec.configure do |config|
-  config.include(DefaultParams, :type => :controller)
-end
+# require 'active_support/concern'
+#
+# module DefaultParams
+#   extend ActiveSupport::Concern
+#
+#   included do
+#     let(:default_params) { {locale: I18n.locale} }
+#
+#     def process_with_default_params(action, http_method = 'GET', *args)
+#       parameters = args.shift
+#
+#       parameters = default_params.merge(parameters || {})
+#       args.unshift(parameters)
+#
+#       process_without_default_params(action, http_method, *args)
+#     end
+#
+#     alias_method_chain :process, :default_params
+#   end
+# end
+#
+# RSpec.configure do |config|
+#   config.include(DefaultParams, :type => :controller)
+# end

@@ -1,4 +1,4 @@
-class CreateEvents < ActiveRecord::Migration
+class CreateEvents < ActiveRecord::Migration[4.2]
   def up
     create_table :ems_workshop_translations, :force => true do |t|
       t.integer     :ems_workshop_id

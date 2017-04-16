@@ -1,4 +1,4 @@
-class AddAmountCurrency < ActiveRecord::Migration
+class AddAmountCurrency < ActiveRecord::Migration[4.2]
   def up
     rename_column   :ems_registrations, :amount, :amount_paid_cents
     add_column      :ems_registrations, :amount_paid_currency, :string

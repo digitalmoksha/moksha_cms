@@ -1,4 +1,4 @@
-class ChangeAnchorField < ActiveRecord::Migration
+class ChangeAnchorField < ActiveRecord::Migration[4.2]
   def up
     change_column  :core_payment_histories, :anchor_id, :string, :limit => 20
   end

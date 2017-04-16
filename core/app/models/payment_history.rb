@@ -16,7 +16,7 @@
 # user_profile_id  =>  user_profile if payment was enetered manually
 # notify_data      =>  data from the notification object, in case it's needed
 #------------------------------------------------------------------------------
-class PaymentHistory < ActiveRecord::Base
+class PaymentHistory < ApplicationRecord
   include OffsitePayments::Integrations
 
   self.table_name         = 'core_payment_histories'

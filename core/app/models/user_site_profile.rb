@@ -4,7 +4,7 @@
 #   Note: don't use a default account scope as it makes some of the User 
 #   associations a little more difficult
 #------------------------------------------------------------------------------
-class UserSiteProfile < ActiveRecord::Base
+class UserSiteProfile < ApplicationRecord
 
   include DmCore::Concerns::UserSiteProfile
 

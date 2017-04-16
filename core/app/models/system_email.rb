@@ -1,6 +1,6 @@
 # Generated from acts_as_commentable
 #------------------------------------------------------------------------------
-class SystemEmail < ActiveRecord::Base
+class SystemEmail < ApplicationRecord
 
   self.table_name       = 'core_system_emails'
 

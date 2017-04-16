@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #------------------------------------------------------------------------------
-class AddGlobalizeCountries < ActiveRecord::Migration
+class AddGlobalizeCountries < ActiveRecord::Migration[4.2]
   def up
     create_table "globalize_countries", :force => true do |t|
       t.string "code",                   :limit => 2

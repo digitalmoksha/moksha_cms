@@ -1,4 +1,4 @@
-class AddAvatar < ActiveRecord::Migration
+class AddAvatar < ActiveRecord::Migration[4.2]
   def change
     add_column    :user_profiles, :public_avatar,                 :string
     add_column    :user_profiles, :public_avatar_file_size,       :integer

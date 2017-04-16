@@ -1,4 +1,4 @@
-class AddPaymentReminderHistory < ActiveRecord::Migration
+class AddPaymentReminderHistory < ActiveRecord::Migration[4.2]
   def up
     add_column :ems_registrations, :payment_reminder_history, :text
 

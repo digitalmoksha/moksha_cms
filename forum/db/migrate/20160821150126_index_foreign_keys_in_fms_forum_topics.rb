@@ -1,4 +1,4 @@
-class IndexForeignKeysInFmsForumTopics < ActiveRecord::Migration
+class IndexForeignKeysInFmsForumTopics < ActiveRecord::Migration[4.2]
   def change
     add_index :fms_forum_topics, :forum_id
     add_index :fms_forum_topics, :forum_site_id

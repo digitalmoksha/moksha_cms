@@ -2,6 +2,9 @@ eval(File.read(File.dirname(__FILE__) + '/../common_gemfile_dependencies.rb'))
 
 gem 'dm_core',            path: '../core', require: 'dm_core'
 gem 'dm_cms',             path: '../cms',  require: 'dm_cms'
+gem 'dm_admin',           path: '../admin', require: 'dm_admin'
 
 gemspec
 
+gem 'jquery-rails'
+gem 'jquery-ui-rails'

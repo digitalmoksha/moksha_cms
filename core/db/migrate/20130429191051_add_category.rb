@@ -1,4 +1,4 @@
-class AddCategory < ActiveRecord::Migration
+class AddCategory < ActiveRecord::Migration[4.2]
   def up
     create_table "core_category_translations", :force => true do |t|
       t.integer     :core_category_id

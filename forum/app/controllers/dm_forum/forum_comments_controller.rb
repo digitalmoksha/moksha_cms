@@ -2,8 +2,8 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
   include DmForum::PermittedParams
   include ActionView::RecordIdentifier        # for the dom_id method
   
-  before_filter :find_parents
-  before_filter :find_post, :only => [:edit, :update, :destroy]
+  before_action :find_parents
+  before_action :find_post, :only => [:edit, :update, :destroy]
 
   # {todo} look into caching and sweepers - most of our stuff is not directly public
   #cache_sweeper :forum_comments_sweeper, :only => [:create, :update, :destroy]

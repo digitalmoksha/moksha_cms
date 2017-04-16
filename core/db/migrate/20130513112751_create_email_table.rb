@@ -1,4 +1,4 @@
-class CreateEmailTable < ActiveRecord::Migration
+class CreateEmailTable < ActiveRecord::Migration[4.2]
   def up
     create_table :core_system_email_translations, :force => true do |t|
       t.integer     :core_system_email_id

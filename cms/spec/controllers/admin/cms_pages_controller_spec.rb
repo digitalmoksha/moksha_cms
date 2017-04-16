@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe DmCms::Admin::CmsPagesController do
   routes { DmCms::Engine.routes }

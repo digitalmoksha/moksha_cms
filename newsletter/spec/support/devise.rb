@@ -38,7 +38,7 @@ end
 
 #------------------------------------------------------------------------------
 RSpec.configure do |config|
-  config.include  Devise::TestHelpers,  type: :controller
+  config.include  Devise::Test::ControllerHelpers,  type: :controller
   config.extend   LoginMacros,          type: :controller
   config.include  LoginMacros,          type: :feature
 end

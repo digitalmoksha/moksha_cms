@@ -1,7 +1,7 @@
 # [todo] currently not saving subscriber info in database, only working with a 
 # temporary object.  Look at caching/syncing subscriber info for performance
 #------------------------------------------------------------------------------
-class NewsletterSubscriber #< ActiveRecord::Base
+class NewsletterSubscriber #< ApplicationRecord
 
 =begin
   belongs_to              :newsletter

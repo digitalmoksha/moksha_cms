@@ -15,7 +15,7 @@
 # any site specific information, like the last_access_at field, etc.  Also 
 # allows us to know if someone has ever logged into a specific site.
 #------------------------------------------------------------------------------
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   include DmCore::Concerns::User
   

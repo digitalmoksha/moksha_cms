@@ -1,9 +1,9 @@
 class DmForum::ForumTopicsController < DmForum::ApplicationController
   include DmForum::PermittedParams
 
-  before_filter :find_forum
-  before_filter :find_topic, :only => [:show, :edit, :update, :destroy]
-  # before_filter :admin_required, :only => [:edit, :update, :destroy]
+  before_action :find_forum
+  before_action :find_topic, :only => [:show, :edit, :update, :destroy]
+  # before_action :admin_required, :only => [:edit, :update, :destroy]
   # 
 
   layout    'forum_templates/forum_list'

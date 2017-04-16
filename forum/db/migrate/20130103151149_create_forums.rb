@@ -1,4 +1,4 @@
-class CreateForums < ActiveRecord::Migration
+class CreateForums < ActiveRecord::Migration[4.2]
   def up
 
     create_table :fms_forums, :force => true do |t|
