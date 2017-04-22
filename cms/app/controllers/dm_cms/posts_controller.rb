@@ -28,7 +28,11 @@ class DmCms::PostsController < DmCms::ApplicationController
   #------------------------------------------------------------------------------
   def ajax_add_comment
     @post.comments.create(:body => params[:comment][:body], :user_id => current_user.id) if current_user && !params[:comment][:body].blank?
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: post_show_url(@post)) }
+      format.json { head :ok }
+    end
+    
   end
   
   # #------------------------------------------------------------------------------
@@ -41,15 +45,22 @@ class DmCms::PostsController < DmCms::ApplicationController
   #   end
   #   
   #   @post.comments.create(:body => params[:comment][:body], :user_id => current_user.id)
-  #   redirect_to :back
+  #   respond_to do |format|
+  #     format.html { redirect_back(fallback_location: post_show_url(@post)) }
+  #     format.json { head :ok }
+  #   end
   # end
   
   #------------------------------------------------------------------------------
   def ajax_delete_comment
     if is_admin?
-      Comment.find(params[:id]).destroy
+      comment = Comment.find(params[:id]).destroy
+      post    = comment.commentable
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: post_show_url(post)) }
+        format.json { head :ok }
+      end
     end
-    redirect_to :back and return
   end
 
 protected

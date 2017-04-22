@@ -25,7 +25,7 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
   #------------------------------------------------------------------------------
   def change_theme
     cookies[:theme] = {:value => params[:id].replace_non_alphanumeric, :expires => Time.now + 1825.days}
-    redirect_to :back
+    redirect_back(fallback_location: index)
   end
 
 private

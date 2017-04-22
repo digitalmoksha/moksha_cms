@@ -20,10 +20,10 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
     respond_to do |format|
       if @commenter.respond_to? association
         @comment = @commenter.send(association).create(comment_params.merge(user_id: current_user.id))
-        format.html { redirect_to :back }
+        format.html { redirect_back fallback_location: main_app.index_url }
         format.js
       else
-        format.html { redirect_to :back }
+        format.html { redirect_back fallback_location: main_app.index_url }
       end
     end
   end
@@ -31,7 +31,7 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
   #------------------------------------------------------------------------------
   def edit
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_back fallback_location: main_app.index_url }
       format.js
     end
   end
@@ -40,7 +40,7 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
   def update
     respond_to do |format|
       if @comment.update_attributes(comment_params)
-        format.html { redirect_to :back }
+        format.html { redirect_back fallback_location: main_app.index_url }
         format.js
       end
     end
@@ -50,7 +50,7 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
   def destroy
     @comment.destroy if can?(:manage, :all) #|| comment.user == current_user
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_back fallback_location: main_app.index_url }
       format.js
     end
   end

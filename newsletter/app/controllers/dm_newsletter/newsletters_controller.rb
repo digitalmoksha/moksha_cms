@@ -14,11 +14,11 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
       respond_to do |format|
         if result[:success]
           msg = I18n.t('nms.subscription_successful')
-          format.html { redirect_to (request.env['HTTP_REFERER'].blank? ? main_app.index_url : :back), notice: msg }
+          format.html { redirect_back fallback_location: main_app.index_url, notice: msg }
           format.json { render json: { success: true, msg: msg } }
         else
           msg = I18n.t(@newsletter.map_error_to_msg(result[:code]))
-          format.html { redirect_to :back, alert: msg }
+          format.html { redirect_back fallback_location: main_app.index_url, alert: msg }
           format.json { render json: { success: false, msg: msg } }
         end
       end
@@ -37,12 +37,12 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
       respond_to do |format|
         if result
           msg = I18n.t('nms.unsubscribe_successuful')
-          format.html { redirect_to (request.env['HTTP_REFERER'].blank? ? main_app.index_url : :back), notice: msg }
-          format.js { render json: { success: true, msg: msg } }
+          format.html { redirect_back fallback_location: main_app.index_url, notice: msg }
+          format.json { render json: { success: true, msg: msg } }
         else
           msg = I18n.t('nms.Email_NotExists')
-          format.html { redirect_to :back, alert: msg }
-          format.js { render json: { success: false, msg: msg } }
+          format.html { redirect_back fallback_location: main_app.index_url, alert: msg }
+          format.json { render json: { success: false, msg: msg } }
         end
       end
     end
