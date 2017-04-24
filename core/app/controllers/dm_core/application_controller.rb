@@ -240,8 +240,14 @@ protected
   # Note: rescue_from should be listed from generic exception to most specific
   #------------------------------------------------------------------------------
   rescue_from CanCan::AccessDenied do |exception|
-    #--- Redirect to the index page if we get an access denied
-    redirect_to main_app.root_url, :alert => exception.message
+    if current_user
+      #--- Redirect to the index page if we get an access denied
+      redirect_to main_app.root_url, :alert => exception.message
+    else
+      #--- Redirect to the login page
+      store_location_for(:user, request.url) # so we get returned here after login
+      redirect_to main_app.new_user_session_path, :alert => exception.message
+    end
   end
   rescue_from Account::LoginRequired do |exception|
     #--- Redirect to the login page
