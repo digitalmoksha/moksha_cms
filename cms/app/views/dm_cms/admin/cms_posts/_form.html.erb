@@ -9,12 +9,12 @@
         <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><%= icons(:gear) %> <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right icons-right">
           <% if @post.notification_sent_on.nil? %>
-            <li><%= link_to 'Send Notification Emails', send_notifications_emails_admin_cms_blog_cms_post_path(@blog, @post), method: :put, data: {confirm: 'This will send a post notification email to each user of this blog.  Are you sure?'} %></li>
+            <li><%= link_to icon_label(:mail, 'Send Notification Emails'), send_notifications_emails_admin_cms_blog_cms_post_path(@blog, @post), method: :put, data: {confirm: 'This will send a post notification email to each user of this blog.  Are you sure?'} %></li>
           <% else %>
-            <li><%= link_to 'Re-Send Notification Emails', send_notifications_emails_admin_cms_blog_cms_post_path(@blog, @post), method: :put, data: {confirm: "WARNING: An email was already sent on #{format_datetime(@post.notification_sent_on)}.  Are you sure you want to send another?"} %></li>
+            <li><%= link_to icon_label(:mail_open, 'Re-Send Notification Emails'), send_notifications_emails_admin_cms_blog_cms_post_path(@blog, @post), method: :put, data: {confirm: "WARNING: An email was already sent on #{format_datetime(@post.notification_sent_on)}.  Are you sure you want to send another?"} %></li>
           <% end %>
-          <li><%= link_to 'Send Test Email', send_notifications_emails_admin_cms_blog_cms_post_path(@blog, @post, test: true), method: :put, data: {confirm: 'This will send a test post notification email to your email account.  Are you sure?'} %></li>
-          <li><%= link_to 'Clear Facebook Cache', "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.post_show_url(@post.cms_blog.slug, @post.slug))}", target: '_blank' %></li>            
+          <li><%= link_to icon_label(:mail, 'Send Test Email'), send_notifications_emails_admin_cms_blog_cms_post_path(@blog, @post, test: true), method: :put, data: {confirm: 'This will send a test post notification email to your email account.  Are you sure?'} %></li>
+          <li><%= link_to icon_label(:facebook, 'Clear Facebook Cache'), "https://developers.facebook.com/tools/debug/og/object?q=#{ERB::Util.url_encode(dm_cms.post_show_url(@post.cms_blog.slug, @post.slug))}", target: '_blank' %></li>            
           <li class="divider"></li>
           <li class="text-danger"><%= link_to icon_label(:delete, 'Delete Post', icon_class: 'text-danger', label_class: 'text-danger'), ([:admin, @blog, @post] unless @post.new_record?), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure you wish to delete this post?  All comments will also be deleted!'} %></li>
         </ul>

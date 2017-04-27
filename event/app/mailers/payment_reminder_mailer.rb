@@ -15,8 +15,9 @@ class PaymentReminderMailer < DmCore::SiteMailer
     @payment_owed               = registration.payment_owed.format
     @payment_link               = registration.payment_url
 
+    theme(account.account_prefix)
     headers = { "Reply-To" => account.preferred_smtp_from_email, "Return-Path" => account.preferred_smtp_from_email }
-    mail(to: @recipients, subject: @subject, theme: account.account_prefix,
+    mail(to: @recipients, subject: @subject,
          bcc: account.preferred_archive_email,
          template_path: 'layouts/email_templates',
          template_name: 'dm_event_payment_reminder')

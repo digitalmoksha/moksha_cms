@@ -31,6 +31,7 @@ CommonIcons = {
   lexicon:          'fa fa-briefcase fa-fw',
   lock:             'fa fa-lock fa-fw',
   mail:             'fa fa-envelope-o fa-fw',
+  mail_open:        'fa fa-envelope-open-o fa-fw',
   media_library:    'fa fa-camera fa-fw',
   money:            'fa fa-money fa-fw',
   new:              'fa fa-plus fa-fw',

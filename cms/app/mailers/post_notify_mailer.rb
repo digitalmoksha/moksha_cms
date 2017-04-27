@@ -22,11 +22,11 @@ class PostNotifyMailer < DmCore::SiteMailer
       @post                       = post
       @header_image               = post.cms_blog.image_email_header || post.cms_blog.header_image
 
+      theme(account.account_prefix)
       headers = { "Return-Path" => account.preferred_blog_from_email || account.preferred_smtp_from_email }
       mail( from: account.preferred_blog_from_email || account.preferred_smtp_from_email,
             reply_to: account.preferred_blog_from_email || account.preferred_smtp_from_email,
-            to: @recipients, subject: @subject,
-            theme: account.account_prefix) do |format|
+            to: @recipients, subject: @subject) do |format|
         format.text { render "layouts/email_templates/dm_cms_post_notify.text.erb" }
         format.html { render "layouts/email_templates/dm_cms_post_notify.html.erb" }
       end

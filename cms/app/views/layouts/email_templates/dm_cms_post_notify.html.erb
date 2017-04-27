@@ -6,6 +6,10 @@
 <br /><br />
 <hr />
 
+<% if @post.featured_image.present? %>
+  <p><img src="<%= site_asset_media_url(@post.featured_image) %>" style="max-width:600px;" class="img_full"></p>
+<% end %>
+
 <h1><%= @post_title %></h1>
 
 <%= display_post_summary(@post) %>
