@@ -5,6 +5,7 @@ module AccountMacros
   #------------------------------------------------------------------------------
   def setup_account
     before :each do
+      @request.host = 'test.example.com' if @request   # domain must match the account being used
       account = FactoryGirl.create(:account)
       Account.current_by_prefix(account.account_prefix)
     end

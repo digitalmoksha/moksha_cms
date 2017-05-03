@@ -35,8 +35,10 @@ class CmsPage < ApplicationRecord
   default_scope           { where(account_id: Account.current.id).order("ancestry, row_order ASC") }
   scope                   :welcome_pages, -> { where(welcome_page: true) }
   
-  preference              :show_social_buttons,  :boolean, :default => false
+  preference              :show_social_buttons,  :boolean, default: false
   preference              :header_accent_color,  :string
+  preference              :open_in_new_window,   :boolean, default: false
+  preference              :divider,              :boolean, default: false
 
   amoeba do
     enable
@@ -46,19 +48,8 @@ class CmsPage < ApplicationRecord
   validates_length_of     :slug, :maximum => 50
   validates_presence_of   :slug
   validates_uniqueness_of :slug, :scope => :account_id
-  validates_length_of     :pagetype, :maximum => 20
-  validates_presence_of   :pagetype
   validates_length_of     :template, :maximum => 50
   
-  # --- list of pagetypes
-  PAGETYPE = [['Regular content', 'content'],
-              ["Link to interior page using it's slug", 'pagelink'],
-              ['Link to external page with url', 'link'],
-              ['Link to external page with url (open in new window)', 'link-new-window'],
-              ['Menu divider (no content)', 'divider'],
-              ['Controller/Action (rarely used)', 'controller/action']
-            ]
-
   # Base the slug on the default locale
   #------------------------------------------------------------------------------
   def model_slug
@@ -81,9 +72,24 @@ class CmsPage < ApplicationRecord
   # categories in a sub menu
   #------------------------------------------------------------------------------
   def divider?
-    pagetype == 'divider'
+    preferred_divider?
   end
   
+  #------------------------------------------------------------------------------
+  def content_page?
+    !divider? && link.blank?
+  end
+
+  #------------------------------------------------------------------------------
+  def redirect_page?
+    !divider? && !link.blank?
+  end
+  
+  #------------------------------------------------------------------------------
+  def pagetype_name
+    content_page? ? 'Content' : (redirect_page? ? 'Redirect' : 'Divider')
+  end
+
   # Return the template name. If it's empty, the go to each parent until one
   # is found.
   # raise an exception if there is no page template - otherwise error is hidden
@@ -123,23 +129,12 @@ class CmsPage < ApplicationRecord
     self.preferred_header_accent_color || default
   end
   
-  #------------------------------------------------------------------------------
-  def pagetype_name
-    pagetype_item = CmsPage::PAGETYPE.detect {|x| x[1] == pagetype}
-    pagetype_item ? pagetype_item[0] : ''
-  end
-
   # return a list of tags for all Page objects
   #------------------------------------------------------------------------------
   def self.tag_list_all
     CmsPage.tag_counts_on(:tags).map(&:name).sort
   end
   
-  #------------------------------------------------------------------------------
-  def self.page_types
-    PAGETYPE
-  end
-
   # Generate any data to pass when rendering with Liquid
   #------------------------------------------------------------------------------
   def to_liquid
@@ -215,31 +210,25 @@ class CmsPage < ApplicationRecord
   def self.create_default_site
     #--- index page
     unless (site = CmsPage.find_by_slug('index'))
-      site = CmsPage.create(:slug => 'index', :pagetype => 'content', :template => 'index', 
-                            :published => true, :title => 'Front Page')
+      site = CmsPage.create(slug: 'index', template: 'index', published: true, title: 'Front Page')
     end
 
     unless (standard = CmsPage.find_by_slug('standard_pages'))
-      standard = site.children.create(slug: 'standard_pages', pagetype: 'pagelink',
-                                      published: false, title: 'Standard Pages')
+      standard = site.children.create(slug: 'standard_pages', published: false, title: 'Standard Pages')
     end
     
     unless CmsPage.find_by_slug('missing')
-      standard.children.create( :slug => 'missing', :pagetype => 'content', :template => '404',
-                                :published => true, :title => 'Page Missing')
+      standard.children.create( slug: 'missing', template: '404', published: true, title: 'Page Missing')
     end
     
     unless CmsPage.find_by_slug('coming_soon')
-      standard.children.create( :slug => 'coming_soon', :pagetype => 'content', :template => 'coming_soon',
-                                :published => true, :title => 'Coming Soon')
+      standard.children.create( slug: 'coming_soon', template: 'coming_soon', published: true, title: 'Coming Soon')
     end
     unless CmsPage.find_by_slug('signup_success')
-      standard.children.create( :slug => 'signup_success', :pagetype => 'pagelink',
-                                :link => 'index', :published => true, :title => 'Signup Success')
+      standard.children.create( slug: 'signup_success', link: 'index', published: true, title: 'Signup Success')
     end
     unless CmsPage.find_by_slug('confirmation_success')
-      standard.children.create( :slug => 'confirmation_success', :pagetype => 'pagelink',
-                                :link => 'index', :published => true, :title => 'Confirmaton Success')
+      standard.children.create( slug: 'confirmation_success', link: 'index', published: true, title: 'Confirmaton Success')
     end
   end
 

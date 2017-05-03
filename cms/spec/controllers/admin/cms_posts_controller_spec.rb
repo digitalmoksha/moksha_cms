@@ -113,7 +113,7 @@ describe DmCms::Admin::CmsPostsController do
       #------------------------------------------------------------------------------
       it "redirects to the blog" do
         patch :update, params: {cms_blog_id: blog, id: post, cms_post: attributes_for(:post), locale: :en}
-        expect(response).to redirect_to admin_cms_blog_url(blog)
+        expect(response).to redirect_to edit_admin_cms_blog_cms_post_url(blog)
       end
     end
 

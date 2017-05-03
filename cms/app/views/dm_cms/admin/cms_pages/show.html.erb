@@ -3,7 +3,7 @@
   <%= page_header_buttons do %>
     <%= present(@current_page).visibility %>
     <%= present(@current_page).label_published %>
-    <% if @current_page.pagetype == 'content' %>
+    <% if @current_page.content_page? %>
       <%= link_to icon_label(:new, 'Add Content'), new_content_admin_cms_contentitem_path(@current_page), title: 'Add Content Block', class: 'btn btn-sm btn-default' %>
     <% end %>
     <%= link_to icons(:view), url_for("/#{current_account.preferred_default_locale}/#{@current_page.slug}"), title: 'View Page', class: 'btn btn-sm btn-default', target: '_blank' %>
@@ -28,7 +28,7 @@
 
 <div class="row">
   <div class="col-md-9">
-    <% if @current_page.pagetype == 'content' %>    
+    <% if @current_page.content_page? %>    
       <div id="drag_sort" class="admin_blog_list" data-update_url="<%= dm_cms.admin_cms_contentitem_sort_path %>">
         <% @current_page.cms_contentitems.each do |item| %>
           <% toolbar = render partial: 'content_toolbar', locals: { contentitem: item,  contentitem_list: @current_page.cms_contentitems } %>
@@ -42,28 +42,31 @@
           </div>
         <% end %>
       </div>
-    <% elsif @current_page.pagetype == 'pagelink' %>
-      <%= panel title: @current_page.pagetype_name, body: true do %>
-        <p>This page will automatically re-direct to an internal page with the following slug:</p>
-        <p><%= link_to @current_page.link, showpage_url(slug: @current_page.link) %></p>
+    <% else %>
+      <% if @current_page.redirect_page? %>
+        <%= panel title: @current_page.pagetype_name, body: true do %>
+          <p>This page will automatically re-direct to another internal/external page.</p>
+          <dl class="dl-horizontal">
+            <dt>Specified Link</dt>
+            <dd><%= @current_page.link %></dd>
+            <dt>Will Redirect To</dt>
+            <dd>
+              <%= link_to redirect_link(@current_page.link), redirect_link(@current_page.link), target: '_blank' %>
+              <% if @current_page.preferred_open_in_new_window? %>
+                (will open in new window)
+              <% end %>
+            </dd>
+          </dl>
+        <% end %>
+      <% elsif @current_page.divider? %>
+        <%= panel title: @current_page.pagetype_name, body: true do %>
+          <p>This is used simply as a placeholder page that will generate a "divider" item in the menu.  It does not have any real content.</p>
+        <% end %>
       <% end %>
-    <% elsif @current_page.pagetype == 'link' %>
-      <%= panel title: @current_page.pagetype_name, body: true do %>
-        <p>This page will automatically re-direct to the following link, which is usually external:</p>
-        <p><%= link_to @current_page.link, @current_page.link %></p>
-      <% end %>
-    <% elsif @current_page.pagetype == 'link-new-window' %>
-      <%= panel title: @current_page.pagetype_name, body: true do %>
-        <p>This page will automatically re-direct to the following link, and open in a new tab/window:</p>
-        <p><%= link_to @current_page.link, @current_page.link %></p>
-      <% end %>
-    <% elsif @current_page.pagetype == 'divider' %>
-      <%= panel title: @current_page.pagetype_name, body: true do %>
-        <p>This is used simply as a placeholder page that will generate a "divider" item in the menu.  Does not have any real content.</p>
-      <% end %>
-    <% elsif @current_page.pagetype == 'controller/action' %>
-      <%= panel title: @current_page.pagetype_name, body: true do %>
-        <p>You should no longer be using this page type.  Please contact the system administrator.</p>
+      <% unless @current_page.cms_contentitems.empty? %>
+        <div class="alert alert-warning">
+          <p>This page contains <%= @current_page.cms_contentitems.count %> content blocks that will not be shown.</p>
+        </div>
       <% end %>
     <% end %>
   </div>
@@ -102,7 +105,7 @@
           <% end %>
         </dd>
         <dt class="text-info">Menu Title</dt>
-        <dd><%= @current_page.menutitle %></dd>
+        <dd><%= !@current_page.menutitle.blank? ? @current_page.menutitle : '<em>Will not be shown in menus</em>'.html_safe %></dd>
       </dl>
     <% end %>
   </div>

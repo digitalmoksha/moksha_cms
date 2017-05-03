@@ -27,9 +27,9 @@ module MokshaCms
       # calling slice on a Thor::CoreExtensions::HashWithIndifferentAccess
       # object has been known to return nil
       opts = {}.merge(options).slice(*PASSTHROUGH_OPTIONS)
-      opts[:database] = 'sqlite3' if opts[:database].blank?
-      opts[:force] = true
-      opts[:skip_bundle] = true
+      opts[:database]       = 'sqlite3' if opts[:database].blank?
+      opts[:force]          = true
+      opts[:skip_bundle]    = true
       opts[:old_style_hash] = true
 
       puts "Generating dummy Rails application..."
@@ -40,14 +40,15 @@ module MokshaCms
       @lib_name = options[:lib_name]
       @database = options[:database]
 
-      template "rails/database.yml", "#{dummy_path}/config/database.yml", force: true
-      template "rails/boot.rb", "#{dummy_path}/config/boot.rb", force: true
-      template "rails/application.rb", "#{dummy_path}/config/application.rb", force: true
-      template "rails/routes.rb", "#{dummy_path}/config/routes.rb", force: true
-      template "rails/test.rb", "#{dummy_path}/config/environments/test.rb", force: true
-      template "rails/script/rails", "#{dummy_path}/spec/dummy/script/rails", force: true
-      template "models/ability.rb", "#{dummy_path}/app/models/ability.rb", force: true
-      template "models/user.rb", "#{dummy_path}/app/models/user.rb", force: true
+      template "rails/database.yml",    "#{dummy_path}/config/database.yml", force: true
+      template "rails/boot.rb",         "#{dummy_path}/config/boot.rb", force: true
+      template "rails/application.rb",  "#{dummy_path}/config/application.rb", force: true
+      template "rails/routes.rb",       "#{dummy_path}/config/routes.rb", force: true
+      template "rails/test.rb",         "#{dummy_path}/config/environments/test.rb", force: true
+      template "rails/script/rails",    "#{dummy_path}/spec/dummy/script/rails", force: true
+      template "models/ability.rb",     "#{dummy_path}/app/models/ability.rb", force: true
+      template "models/user.rb",        "#{dummy_path}/app/models/user.rb", force: true
+      template "controllers/application_controller.rb", "#{dummy_path}/app/controllers/application_controller.rb", force: true
       # directory "themes", "#{dummy_path}/themes", force: true
     end
 

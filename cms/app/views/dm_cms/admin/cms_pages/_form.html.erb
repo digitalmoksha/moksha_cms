@@ -22,11 +22,13 @@
           <%= f.input "menutitle_#{locale}", label: 'Menu Title', hint: 'Text shown in a menu (which might be shorter than the full title).  If blank, page will not show up in any auto-generated menus' %>
         <% end %>
 
-        <%= f.input :slug, label: 'Page Slug', hint: 'Leave blank to have auto-generated based on title.' %>
-        <%= f.input :pagetype, label: 'Page Type', collection: CmsPage::PAGETYPE, include_blank: false %>
-        <div id="pagetype_link">
-          <%= f.input :link %>
-        </div>
+        <%= f.input :slug, label: 'Page Slug', hint: 'Leave blank to have auto-generated based on title' %>
+      <% end %>
+
+      <%= panel title: icon_label(:text, 'Content/Redirect') do %>
+        <p>For displaying blocks of content, you can choose a template to use.</p>
+        <p>If you wish to redirect to another page/link, then fill in the <em>Link</em> field.</p>
+        <hr>
         <% templates = template_menu_list %>
         <% if templates %>
           <%= f.input :template, label: 'Template to Use', collection: templates, include_blank: false,
@@ -34,6 +36,17 @@
         <% else %>
           <%= f.input :template, label: 'Template to Use', hint: "Leave blank to inherit the parent's template" %>
         <% end %>
+        <hr>
+        <%= f.input :link, label: 'Redirect To Link', hint: "Setting this field will <strong>always</strong> redirect to another page. Examples:<br>
+        Slug: <em>my-other-page</em><br>
+        Relative link: <em>blog/recent_posts</em><br>
+        External link: <em>http://www.apple.com</em>".html_safe %>
+        <hr>
+        <%= f.input :preferred_open_in_new_window, as: :boolean, inline_label: 'Open page/link in a new window' %>
+        <%= f.input :preferred_divider, as: :boolean, inline_label: 'Show as a divider in menu', 
+                hint: 'Only use this when you need a divider shown in the auto-generated menus - no content will be displayed. 
+                <em>This option may not be supported by your theme</em>'.html_safe %>
+        
         <% if false #--- disable this for now %>
           <%= f.input :menuimage, label: 'Menu Image' %>
         <% end %>
@@ -45,7 +58,7 @@
         <%= f.input :preferred_show_social_buttons, as: :boolean, inline_label: 'Show social buttons', hint: 'Show the standard Facebook/Twitter buttons on the page' %>
         <div class="row">
           <div class="col-md-6">
-            <%= f.input :featured_image, label: 'Featured Image', hint: 'Image used if page liked on facebook.  Will not display on the page' %>
+            <%= f.input :featured_image, label: 'Featured Image', hint: 'Image used if page is liked on facebook.  Will not display on the page' %>
           </div>
           <div class="col-md-6">
             <% if @current_page.featured_image.present? %>
@@ -55,7 +68,7 @@
         </div>
         <%= locale_tabs do |locale| %>
           <%= f.input "summary_#{locale}", label: 'Page Summary', as: :code_editor, autoheight: true, input_html: {class: "CodeMirror-autoheight"},
-                 hint: 'Text used when a page liked on Facebook.  Is not visible on the page'%>
+                 hint: 'Text used when a page is liked on Facebook.  Is not visible on the page'%>
         <% end %>
       <% end %>
     </div>

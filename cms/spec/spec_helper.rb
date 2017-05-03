@@ -42,7 +42,7 @@ RSpec.configure do |config|
   config.before :each do
     Rails.cache.clear
   end
-
+  
   config.include FactoryGirl::Syntax::Methods
 
   # Clean out the database state before the tests run
@@ -60,4 +60,3 @@ RSpec.configure do |config|
   #   Timeout.timeout(30, &example)
   # end
 end
-

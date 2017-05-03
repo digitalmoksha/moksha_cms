@@ -162,18 +162,33 @@ module DmCms::PagesHelper
   # return a link to the page's slug, with the passed in link text
   #------------------------------------------------------------------------------
   def page_link(page, text = nil, options = {})
-    text ||= page.menutitle
-    case page.pagetype
-    when 'link'
-      link_to text, page.link || dm_cms.showpage_url(page.slug), options
-    when 'link-new-window'
-      link_to text, page.link || dm_cms.showpage_url(page.slug), options.merge(target: '_blank')
-    else
-      link_to text, dm_cms.showpage_url(page.slug), options
-    end
+    text    ||= page.menutitle
+    options   = options.merge(target: '_blank') if page.preferred_open_in_new_window?
+    link_to(text, redirect_link(page.link) || redirect_link(page.slug), options)
   end
   
-  private
+  # determine where to redirect based on the style of the link
+  # always ensure there is a locale on the front unless it's a fully
+  # qualified link
+  #------------------------------------------------------------------------------
+  def redirect_link(link)
+    return nil if link.blank?
+    begin
+      uri = URI.parse(link)
+    rescue URI::InvalidURIError
+    end
+    if uri && uri.host
+      link # fully qualified url
+    else
+      if link.start_with?('/')
+        dm_cms.showpage_url(slug: link[1..-1]) # absolute link to this site, with no host/scheme
+      else
+        dm_cms.showpage_url(slug: link)  # relative link/slug
+      end
+    end    
+  end
+
+private
 
   # Currently check is page requires a login and if user is logged in.  
   # {todo} add additional authorization checks

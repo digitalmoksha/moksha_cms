@@ -5,6 +5,7 @@ FactoryGirl.define do
     account_prefix              'local'
     preferred_default_currency  'EUR'
     preferred_locales           'en, de'
+    preferred_site_enabled      true
 
     factory :second_account do
       domain                      'second.example.com'

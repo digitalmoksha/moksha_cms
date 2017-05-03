@@ -45,6 +45,7 @@ CommonIcons = {
   subscriptions:    'fa fa-money fa-fw',
   tag:              'fa fa-tag fa-fw',
   tags:             'fa fa-tags fa-fw',
+  text:             'fa fa-align-left fa-fw',
   trash:            'fa fa-trash-o fa-fw',
   undo:             'fa fa-undo fa-fw',
   user:             'fa fa-user fa-fw',

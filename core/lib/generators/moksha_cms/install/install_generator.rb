@@ -229,7 +229,7 @@ ROUTES
 
     def dm_cms_routes
       <<-ROUTES
-  mount DmCms::Engine => "/dm_cms"
+  mount DmCms::Engine => '/'
   scope ":locale" do
     get   '/index',                 controller: 'dm_cms/pages', action: :show, slug: 'index', as: :index
   end
