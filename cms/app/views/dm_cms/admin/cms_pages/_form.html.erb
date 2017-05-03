@@ -37,12 +37,13 @@
           <%= f.input :template, label: 'Template to Use', hint: "Leave blank to inherit the parent's template" %>
         <% end %>
         <hr>
-        <%= f.input :link, label: 'Redirect To Link', hint: "Setting this field will <strong>always</strong> redirect to another page. Examples:<br>
+        <%= f.input :link, label: 'Redirect To', hint: "Setting this field will <strong>always</strong> redirect to another page. Examples:<br>
         Slug: <em>my-other-page</em><br>
-        Relative link: <em>blog/recent_posts</em><br>
-        External link: <em>http://www.apple.com</em>".html_safe %>
+        Relative url: <em>blog/recent_posts</em><br>
+        External url: <em>http://www.apple.com</em><br>
+        Note: it's better to use a <em>slug</em> or <em>relative url</em> when possible".html_safe %>
         <hr>
-        <%= f.input :preferred_open_in_new_window, as: :boolean, inline_label: 'Open page/link in a new window' %>
+        <%= f.input :preferred_open_in_new_window, as: :boolean, inline_label: 'Open page/url in a new window' %>
         <%= f.input :preferred_divider, as: :boolean, inline_label: 'Show as a divider in menu', 
                 hint: 'Only use this when you need a divider shown in the auto-generated menus - no content will be displayed. 
                 <em>This option may not be supported by your theme</em>'.html_safe %>
