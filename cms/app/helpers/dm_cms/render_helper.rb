@@ -37,6 +37,8 @@ module DmCms
         current_account.preferred_facebook_url
       when :youtube
         current_account.preferred_youtube_url
+      when :vimeo
+        current_account.preferred_vimeo_url
       when :twitter
         current_account.preferred_twitter_url
       when :linkedin

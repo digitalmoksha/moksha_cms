@@ -50,6 +50,7 @@ class Account < ApplicationRecord
   preference              :site_copyright,                  :string
   preference              :site_description,                :string
   preference              :youtube_url,                     :string
+  preference              :vimeo_url,                       :string
   preference              :facebook_url,                    :string
   preference              :twitter_url,                     :string
   preference              :linkedin_url,                    :string
