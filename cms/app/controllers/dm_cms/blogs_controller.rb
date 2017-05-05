@@ -14,7 +14,7 @@ class DmCms::BlogsController < DmCms::ApplicationController
   #------------------------------------------------------------------------------
   def index
     redirect_to(index_url) and return if CmsBlog.count == 0
-    @blogs        = CmsBlog.available_to_user(current_user).includes(:translations)
+    @blogs        = CmsBlog.available_to_user(current_user)
     @posts        = CmsPost.where(cms_blog_id: @blogs.map(&:id)).includes(:cms_blog, :translations).published.order('published_on DESC').paginate page: page_number
     @recent_posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).includes(:cms_blog, :translations).published.order('published_on DESC').limit(5)
     content_for :page_title, I18n.t('cms.blog_header')
