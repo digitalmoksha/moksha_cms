@@ -88,7 +88,7 @@ module DmCore
         def member_list(which_ones = :all)
           case which_ones
           when :manual
-            ::User.with_role(:member, self).includes(:user_profile).sort_by {|u| u.full_name.downcase}
+            ::User.with_role(:member, self).includes(user_profile: [:country]).sort_by {|u| u.full_name.downcase}
           when :automatic
             if is_subscription_only?
               ::User.paid_subscribers

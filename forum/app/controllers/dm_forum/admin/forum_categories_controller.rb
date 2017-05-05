@@ -7,7 +7,7 @@ class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminControlle
   # GET /admin/forum_categories
   #------------------------------------------------------------------------------
   def index
-    @forum_categories = ForumCategory.ordered
+    @forum_categories = ForumCategory.includes(:translations).ordered
   end
 
   # GET /admin/forum_categories/1

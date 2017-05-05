@@ -2,7 +2,7 @@
 
   <div id="forum_sidebar_categories">
     <ul>
-      <% ForumCategory.ordered.each do |forum_category| %>
+      <% ForumCategory.includes(:forums, :translations).ordered.each do |forum_category| %>
         <% if forum_category.any_readable_forums?(current_user) %>
           <li>
             <span class="category_name"><%= forum_category.name.to_s_default %></span>

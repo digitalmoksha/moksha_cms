@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @forum_category.forums.each do |forum| %>
+        <% @forum_category.forums.includes(:owner).each do |forum| %>
           <% present forum do |forum_presenter| %>
             <tr class="item" data-item_id="<%= forum.id %>">
               <td class="sort_handle"></td>

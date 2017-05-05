@@ -9,7 +9,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     authorize! :access_content_section, :all
     CmsPage.create_default_site if CmsPage.roots.empty?
     # @tree = CmsPage.arrange(order: :position)
-    @tree = CmsPage.arrange(order: :row_order)
+    @tree = CmsPage.includes(:translations).arrange(order: :row_order)
   end
   
   #------------------------------------------------------------------------------

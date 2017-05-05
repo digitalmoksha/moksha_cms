@@ -10,7 +10,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def index
     authorize! :access_event_section, :all
-    @workshops      = Workshop.upcoming.select {|w| can?(:list_events, w)}
+    @workshops      = Workshop.upcoming.includes(:taggings).select {|w| can?(:list_events, w)}
     @workshops_past = Workshop.past.select {|w| can?(:list_events, w)}
   end
 

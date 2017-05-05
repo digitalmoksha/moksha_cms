@@ -7,7 +7,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def index
     authorize! :access_content_section, :all
-    @blogs = can?(:manage_content, :all) ? CmsBlog.all : CmsBlog.with_role(:manage_content, current_user)
+    @blogs = can?(:manage_content, :all) ? CmsBlog.includes(:translations, :taggings, owner: [:translations]).all : CmsBlog.with_role(:manage_content, current_user)
   end
 
   #------------------------------------------------------------------------------

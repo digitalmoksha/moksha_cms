@@ -37,7 +37,7 @@ module DmCore
         delegate                :first_name, :last_name, :full_name, :display_name, :name, :country, :locale, :to => :user_profile
         delegate                :last_access_at, :to => :current_site_profile
 
-        scope                   :current_account_users, -> { includes(:user_site_profiles).references(:user_site_profiles).where("user_site_profiles.account_id = #{Account.current.id}") }
+        scope                   :current_account_users, -> { includes(:user_site_profiles, :user_profile, :current_site_profile).references(:user_site_profiles).where("user_site_profiles.account_id = #{Account.current.id}") }
         scope                   :online, -> { includes(:user_site_profiles).where('user_site_profiles.last_access_at >= ?', 10.minutes.ago.utc) }
 
         # Keep the profile email in sync with the user's email

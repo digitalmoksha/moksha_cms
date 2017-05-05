@@ -22,7 +22,7 @@
     <% toolbar = toolbar_btn(icons(:new), new_admin_cms_blog_cms_post_path(@blog), title: 'New Post', class: "btn btn-xs btn-default") %>
     <%= panel title: 'Posts', toolbar: toolbar do %>
       <div class="admin_blog_post_list">
-        <% @blog.posts.each do |post| %>
+        <% @blog.posts.includes(:translations, :taggings).each do |post| %>
           <% present post do |post_presenter| %>
             <div class="media">
               <div class="media-left">
