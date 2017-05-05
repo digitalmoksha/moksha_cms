@@ -73,7 +73,7 @@ class CmsBlog < ApplicationRecord
   #------------------------------------------------------------------------------
   def self.recent_posts(options = {user: nil, limit: 5, blog: nil})
     if options[:blog].nil?  # get all available to user
-      query_blogs = CmsBlog.available_to_user(options[:user]).includes(:translations).map(&:id)    
+      query_blogs = CmsBlog.available_to_user(options[:user]).map(&:id)    
     else
       query_blogs = CmsBlog.friendly.find(options[:blog])
     end

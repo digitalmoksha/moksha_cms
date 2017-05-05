@@ -130,17 +130,17 @@ module DmCore
         def available_to_user(user)
           if user.nil?
             #--- not logged in, only public
-            objects = self.by_public.published
+            objects = self.by_public.published.includes(:translations)
           elsif user.is_admin?
-            objects = self.all
+            objects = self.all.includes(:translations)
           else
             #--- all public/protected, as well as private that they are a member and subscriptions
-            objects  = self.all_public.published
-            objects += self.by_private.published.with_role(:member, user)
-            self.by_private.published.where('owner_id IS NOT NULL').each do |item|
+            objects  = self.all_public.published.includes(:translations)
+            objects += self.by_private.published.includes(:translations).with_role(:member, user)
+            self.by_private.published.includes(:translations).where('owner_id IS NOT NULL').each do |item|
               objects << item if item.owner.member?(user)
             end
-            objects += self.by_subscription.published if user.is_paid_subscriber?
+            objects += self.by_subscription.published.includes(:translations) if user.is_paid_subscriber?
             return objects
           end
         end
