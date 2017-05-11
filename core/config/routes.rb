@@ -11,8 +11,10 @@ DmCore::Engine.routes.draw do
       patch '/dashboard/change_theme/:id', controller: 'dashboard', action: :change_theme, as: :change_theme
       resources :users do
         member do
-          get  :masquerade
-          get  :confirm
+          patch :masquerade
+          patch :confirm
+          patch :resend_confirmation_email
+          patch :cancel_change_of_email
         end
       end
       resources :comments

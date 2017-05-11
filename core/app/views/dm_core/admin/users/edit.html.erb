@@ -127,8 +127,9 @@
                   <%#= f.input :last_name %>
                   <%= f.input :email, disabled: disable_fields, hint: 'Note: If you change the email address, a confirmation email will be sent to the new address. The email 
                   address will look unchanged until it is confirmed' %>
-                  <%= f.input(:unconfirmed_email, disabled: true, hint: 'The user needs to re-confirm this email address - an email has already been sent, or 
-                         you can use the Confirm This User button') if @user.unconfirmed_email %>
+                  <%= f.input(:unconfirmed_email, disabled: true, 
+                       hint: "The user needs to re-confirm this email address - an email has already been sent.<br> 
+                        #{link_to 'Resend Confirmation Email', dm_core.resend_confirmation_email_admin_user_path(@user.id), method: :patch} or #{link_to 'Cancel Change of Email', dm_core.cancel_change_of_email_admin_user_path(@user.id), method: :patch}".html_safe) if @user.pending_reconfirmation? %>
                   <%#= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
                               :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
                               :label => "Country" %>
@@ -145,28 +146,27 @@
           <div class="row">
             <div class="col-md-12">
               <%= subsection title: "Access Permissions for #{@user.display_name}" do %>
-                <p>Choose which permissions to grant to this user</p>
-                <%= simple_form_for(@user, :url => dm_core.admin_user_path,
-                    html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings) do |f| %>
+                <p><strong>Choose which permissions to grant to this user</strong></p>
+                <%= simple_form_for(@user, :url => dm_core.admin_user_path, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings) do |f| %>
 
                   <%= f.error_notification :message => "Please review the problems below" %>
 
                   <% if disable_fields %>
-                    <%= f.input 'roles[admin]', as: :boolean, label: 'Administrator', input_html: {checked: @user.has_role?(:admin)}, disabled: true, hint: 'access to entire website' %>
+                    <%= f.input 'roles[admin]', as: :boolean, inline_label: 'Administrator', input_html: {checked: @user.has_role?(:admin)}, disabled: true, hint: 'access to entire website' %>
                   <% else %>
-                    <%= f.input('roles[reviewer]',                as: :boolean, label: 'Reviewer', input_html: {checked: @user.has_role?(:reviewer)}, hint: 'will be able to view draft versions of blog entries, as long as they are sent the correct link') %>
-                    <%= f.input('roles[content_manager]',         as: :boolean, label: 'Content Manager', input_html: {checked: @user.has_role?(:content_manager)}, hint: 'can manage blog and static pages') if defined?(DmCms) %>
-                    <%= f.input('roles[content_manager_alacarte]',as: :boolean, label: 'Individual Content Management', input_html: {checked: @user.has_role?(:content_manager_alacarte)}, hint: 'grant access to specific pages/blogs only') if defined?(DmCms) %>
-                    <%= f.input('roles[event_manager]',           as: :boolean, label: 'Event Manager', input_html: {checked: @user.has_role?(:event_manager)}, hint: 'can manage events and workshops') if defined?(DmEvent) %>
-                    <%= f.input('roles[event_manager_alacarte]',  as: :boolean, label: 'Individual Event Management', input_html: {checked: @user.has_role?(:event_manager_alacarte)}, hint: 'grant access to specific events only') if defined?(DmEvent) %>
-                    <%= f.input('roles[forum_manager]',           as: :boolean, label: 'Forum Manager', input_html: {checked: @user.has_role?(:forum_manager)}, hint: 'can manage forums') if defined?(DmForum) %>
-                    <%= f.input('roles[course_manager]',          as: :boolean, label: 'Course Manager', input_html: {checked: @user.has_role?(:course_manager)}, hint: 'can manage courses and lessons') if defined?(DmLms) %>
-                    <%= f.input('roles[subscription_manager]',    as: :boolean, label: 'Subscription Manager', input_html: {checked: @user.has_role?(:course_manager)}, hint: 'can manage site subscriptions') if defined?(DmSubscriptions) %>
-                    <%#= f.input 'roles[newsletter_manager]',     as: :boolean, label: 'Newsletter Manager', input_html: {checked: @user.has_role?(:newsletter_manager)}, hint: 'can manage newsletters' %>
+                    <%= f.input('roles[reviewer]',                as: :boolean, inline_label: 'Reviewer', input_html: {checked: @user.has_role?(:reviewer)}, hint: 'will be able to view draft versions of blog entries, as long as they are sent the correct link') %>
+                    <%= f.input('roles[content_manager]',         as: :boolean, inline_label: 'Content Manager', input_html: {checked: @user.has_role?(:content_manager)}, hint: 'can manage blog and static pages') if defined?(DmCms) %>
+                    <%= f.input('roles[content_manager_alacarte]',as: :boolean, inline_label: 'Individual Content Management', input_html: {checked: @user.has_role?(:content_manager_alacarte)}, hint: 'grant access to specific pages/blogs only') if defined?(DmCms) %>
+                    <%= f.input('roles[event_manager]',           as: :boolean, inline_label: 'Event Manager', input_html: {checked: @user.has_role?(:event_manager)}, hint: 'can manage events and workshops') if defined?(DmEvent) %>
+                    <%= f.input('roles[event_manager_alacarte]',  as: :boolean, inline_label: 'Individual Event Management', input_html: {checked: @user.has_role?(:event_manager_alacarte)}, hint: 'grant access to specific events only') if defined?(DmEvent) %>
+                    <%= f.input('roles[forum_manager]',           as: :boolean, inline_label: 'Forum Manager', input_html: {checked: @user.has_role?(:forum_manager)}, hint: 'can manage forums') if defined?(DmForum) %>
+                    <%= f.input('roles[course_manager]',          as: :boolean, inline_label: 'Course Manager', input_html: {checked: @user.has_role?(:course_manager)}, hint: 'can manage courses and lessons') if defined?(DmLms) %>
+                    <%= f.input('roles[subscription_manager]',    as: :boolean, inline_label: 'Subscription Manager', input_html: {checked: @user.has_role?(:course_manager)}, hint: 'can manage site subscriptions') if defined?(DmSubscriptions) %>
+                    <%#= f.input 'roles[newsletter_manager]',     as: :boolean, inline_label:: 'Newsletter Manager', input_html: {checked: @user.has_role?(:newsletter_manager)}, hint: 'can manage newsletters' %>
                     <hr>
-                    <%= f.input 'roles[manager]',         as: :boolean, label: 'Manager', input_html: {checked: @user.has_role?(:manager)}, hint: 'can manage all areas except for global account settings and deleting users' %>
+                    <%= f.input 'roles[manager]',         as: :boolean, inline_label: 'Manager', input_html: {checked: @user.has_role?(:manager)}, hint: 'can manage all areas except for global account settings and deleting users' %>
                     <% if is_admin? %>
-                      <%= f.input 'roles[admin]', as: :boolean, label: 'Administrator', input_html: {checked: @user.has_role?(:admin)}, hint: 'access to entire website' %>
+                      <%= f.input 'roles[admin]', as: :boolean, inline_label: 'Administrator', input_html: {checked: @user.has_role?(:admin)}, hint: 'access to entire website' %>
                     <% end %>
                     <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
                   <% end %>
@@ -208,12 +208,12 @@
         <dd><%= format_datetime(@user.created_at) %></dd>
       </dl>
     <% end %>
-    <% if !@user.confirmed? %>
-      <%= link_to "Confirm This User", dm_core.confirm_admin_user_path(@user.id), :class => "btn btn-block btn-success" %>
+    <% if !@user.confirmed? || @user.pending_reconfirmation? %>
+      <%= link_to "Confirm This User", dm_core.confirm_admin_user_path(@user.id), class: "btn btn-block btn-success", method: :patch %>
     <% elsif is_admin? || !@user.has_role?(:admin) %>
-      <%= link_to "Become This User", dm_core.masquerade_admin_user_path(@user.id), :class => "btn btn-block btn-info" %>
+      <%= link_to "Become This User", dm_core.masquerade_admin_user_path(@user.id), class: "btn btn-block btn-info", method: :patch %>
     <% end %>
-    <%= link_to("Delete This User", dm_core.admin_user_path(@user, :locale => DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, :title => 'Remove', :class => "btn btn-block btn-danger") if is_sysadmin? %>
+    <%= link_to("Delete This User", dm_core.admin_user_path(@user, locale: DmCore::Language.locale), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Remove', class: "btn btn-block btn-danger") if is_sysadmin? %>
 
   </div>
 </div>
