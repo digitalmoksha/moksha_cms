@@ -28,7 +28,7 @@ cs:
       description_private: Tento blog je neveřejný - automaticky budete dostávat e-mailem upozornění o nových komentářích
     
     contact_form:
-      sent: "Děkujeme, Vaše zpráva byla e-mailem na nás."
+      sent: "Děkujeme, Vaše zpráva byla odeslána."
       send_button: Poslat zprávu
       name: 'Jméno'
       email_placeholder: 'Vaše e-mailová adresa'
