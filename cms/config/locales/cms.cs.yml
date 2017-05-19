@@ -30,12 +30,12 @@ cs:
     contact_form:
       sent: "Děkujeme, Vaše zpráva byla e-mailem na nás."
       send_button: Poslat zprávu
-      name: 'Název'
-      email_placeholder: user@domain.com
-      reason: 'Důvod pro psaní'
+      name: 'Jméno'
+      email_placeholder: 'Vaše e-mailová adresa'
+      reason: 'Účel zprávy: zvolte prosím'
       subject: Předmět
       subject_prefix: Contact Form
-      message: Zpráva...
+      message: Zpráva
       reason_list:
         reason_1: 'Zpětná vazba'
         reason_2: 'Technický problém'
