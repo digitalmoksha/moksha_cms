@@ -49,7 +49,7 @@ class MediaUploader < CarrierWave::Uploader::Base
    # Convert to png if a pdf, then size to a specfic width
    #------------------------------------------------------------------------------
    def size_image_pdf(width)
-     self.convert(:jpg) if pdf?(self)
+     self.convert(:jpg, 0) if pdf?(self)
      self.resize_to_width(width)
    end
    
