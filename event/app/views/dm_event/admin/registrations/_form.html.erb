@@ -186,7 +186,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% @registration.payment_histories.order('created_on ASC').each do |payment| %>
+                <% @registration.payment_histories.each do |payment| %>
                   <tr>
                     <td><%= format_date(payment.payment_date) %></td>
                     <td><%= payment.item_ref %></td>
@@ -318,7 +318,7 @@
     <% end %>
   <% end %>
 
-  <% @registration.payment_histories.order('created_on ASC').each do |payment_history| %>
+  <% @registration.payment_histories.each do |payment_history| %>
     <% #--- only allow editing of manual payments %>
     <% if payment_history.user_profile %>
       <%= simple_form_for payment_history, url: ajax_edit_payment_admin_registration_path(locale: I18n.locale, id: @registration, payment_id: payment_history.id),

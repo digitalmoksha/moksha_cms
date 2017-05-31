@@ -15,7 +15,7 @@ class Registration < ApplicationRecord
   belongs_to                    :workshop_price
   belongs_to                    :user_profile
   belongs_to                    :account
-  has_many                      :payment_histories, as: :owner, dependent: :destroy
+  has_many                      :payment_histories, -> { order(payment_date: :asc) }, as: :owner, dependent: :destroy
   belongs_to                    :payment_comment, class_name: 'Comment'
   preference                    :payment_reminder_hold_until,  :date
   serialize                     :payment_reminder_history, Array
@@ -122,7 +122,7 @@ public
   #------------------------------------------------------------------------------
   def payment_owed
     if workshop_price && workshop_price.recurring_payments?
-      to_pay = recurring_what_should_be_paid_by_now(0) - amount_paid
+      to_pay = recurring_what_should_be_paid_by_now - amount_paid
       to_pay.negative? ? Money.new(0, workshop_price.price.currency) : to_pay
     else
       balance_owed
@@ -190,40 +190,31 @@ public
     self.accepted? && self.archived_on == nil
   end
 
-  # Is it time to send a payment reminder?
-  # Due first 7 days after inital registration (or a payment period).  Then every 14 days after that
+  # calculate what the actual date the initial payment should be.  Usually it's
+  # date of registration.  However, we may wish for payments not to be required
+  # until a certain date, either at the workshop or individual registration level
   #------------------------------------------------------------------------------
-  def payment_reminder_due?
-    if preferred_payment_reminder_hold_until.nil? || preferred_payment_reminder_hold_until < Time.now
-      time_period = self.payment_reminder_sent_on.nil? ? (self.created_at + 7.days) : (self.payment_reminder_sent_on + 14.days)
-      past_due?(7) ? time_period < Time.now : false
-    else
-      false
-    end
-  end
-
-  # past due means they haven't paid what they should have paid by now
-  #------------------------------------------------------------------------------
-  def past_due?(grace_period_in_days = 7)
-    return false if !balance_owed.positive?
-    if workshop_price.recurring_payments?
-      return amount_paid < recurring_what_should_be_paid_by_now(grace_period_in_days)
-    else
-      return Date.today > (self.created_at + grace_period_in_days.days)
-    end
+  def initial_payments_should_start_on
+    preferred_payment_reminder_hold_until.nil? ? self.created_at : preferred_payment_reminder_hold_until
   end
 
   #------------------------------------------------------------------------------
-  def recurring_what_should_be_paid_by_now(grace_period_in_days = 7)
-    entry = workshop_price.specific_payment_schedule(self.created_at + grace_period_in_days.days, Date.today)
+  def recurring_what_should_be_paid_by_now
+    entry = workshop_price.specific_payment_schedule(initial_payments_should_start_on, Date.today)
     entry ? entry[:total_due] : 0
   end
 
   # date when the most recent payment was due
   #------------------------------------------------------------------------------
   def last_payment_due_on
-    entry = workshop_price.specific_payment_schedule(self.created_at, Date.today)
-    entry ? entry[:due_on] : self.created_at.to_date
+    entry = workshop_price.specific_payment_schedule(initial_payments_should_start_on, Date.today)
+    entry ? entry[:due_on] : initial_payments_should_start_on.to_date
+  end
+
+  # date when the most recent payment was made, or nil if no payments yet
+  #------------------------------------------------------------------------------
+  def last_payment_on
+    payment_histories.try(:last).try(:payment_date)
   end
 
   # Setup the columns for exporting data as csv.

@@ -113,7 +113,7 @@
           <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons(:comments), class: 'pull-right') if registration.private_comments.count > 0 %></td>
           <td class="cost"><%= registration.payment_owed.format %><%= " <sup>R</sup>".html_safe if registration.try(:workshop_price).try(:recurring_payments?) %></td>
           <td class="date" style="white-space:nowrap"><%= format_date(registration.last_payment_due_on) %></td>
-          <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if registration.payment_reminder_due? %>>
+          <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if PaymentReminderService.payment_reminder_due?(registration) %>>
             <% if registration.payment_reminder_sent_on.nil? %>
               not yet
             <% elsif registration.payment_reminder_history.count < 2 %>

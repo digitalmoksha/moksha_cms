@@ -138,7 +138,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def send_payment_reminder_emails
     authorize! :manage_event_finances, @workshop
-    status  = @workshop.send_payment_reminder_emails(params[:registration_id])
+    status  = PaymentReminderService.send_payment_reminder_emails(@workshop, params[:registration_id])
     msg     = "Reminder emails sent ==>  Success: #{status[:success]}  Failed: #{status[:failed]}"
     status[:failed] > 0 ? (flash[:warning] = msg) : (flash[:notice] = msg)
     redirect_to financials_admin_workshop_url(@workshop)

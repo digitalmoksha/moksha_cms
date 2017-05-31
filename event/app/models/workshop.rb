@@ -174,28 +174,6 @@ class Workshop < ApplicationRecord
     return total_paid
   end
   
-  # Send out payment reminder emails to unpaid attendees, or to a specific one.
-  # if a specific registration, then always send out the email
-  #------------------------------------------------------------------------------
-  def send_payment_reminder_emails(registration_id = 'all')
-    success     = failed = 0
-    unpaid_list = ( registration_id == 'all' ? registrations.unpaid : registrations.unpaid.where(id: registration_id) )
-    unpaid_list.each do |registration|
-      if (registration.payment_reminder_due? && registration.payment_owed.positive?) || registration_id != 'all'
-        email = PaymentReminderMailer.payment_reminder(registration).deliver_now
-        if email
-          registration.update_attribute(:payment_reminder_sent_on, Time.now)
-          registration.update_attribute(:payment_reminder_history,  [Time.now] + registration.payment_reminder_history)
-          success += 1
-        else
-          failed += 1
-        end
-      end
-    end
-    return {success: success, failed: failed}
-  end
-
-
   # is the passed in user attending?  Used in some deep level authorization checks,
   # which rely on the "member?" method.
   # This does not consider a userless registration as a "member", since there is 
