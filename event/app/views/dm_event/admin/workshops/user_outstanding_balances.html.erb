@@ -11,7 +11,7 @@
         <th class="date">Registered</th>
       </tr>
     </thead>
-    <% @unpaid.each do |item| -%>
+    <% @unpaid.group_by {|i| i.full_name}.sort_by {|i| i[0].downcase}.each do |item| %>
       <tbody>
         <tr><th scope="rowgroup" colspan="5"><strong><%= item[0] %></strong></th></tr>
         <% item[1].each do |registration| %>
@@ -25,5 +25,87 @@
         <% end %>
       </tbody>
     <% end %>
+  </table>
+<% end %>
+
+
+<%# toolbar = toolbar_btn('Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
+<% toolbar = toolbar_btn('Send Payment Reminders', admin_workshop_send_payment_reminder_emails_path, class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
+<%= panel body: false, title: "#{@unpaid.count} Unpaid Participants", toolbar: toolbar do %>
+  <div class="panel-body">
+    <p>Shows those that have missed their payment (either a full payment, or a recurring payment).  If they have made all the payments 
+    up to this point in time, they are not listed.</p>
+    <p>You can send them a payment reminder email at any time using the <em>Send</em> button.  A line is marked in blue if we have detected that
+      they should be sent a payment reminder. <em>Send Payment Reminders</em> will send the email to all persons marked in blue.</p>
+  </div>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th class="receipt_code">Receipt</th>
+        <th class="name">Name</th>
+        <th class="cost">Balance Owed</th>
+        <th class="cost">Payment Due</th>
+        <th class="date">Payment Was Due On</th>
+        <th class="date">Reminded</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @unpaid.sort_by {|i| i.full_name.downcase}.each do |registration| -%>
+        <tr>
+          <td class="receipt_code" style="white-space:nowrap"><%= registration.receipt_code %></td>
+          <td class="name"><%= link_to registration.full_name, dm_event.edit_admin_registration_path(registration) %> </td>
+          <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons(:comments), class: 'pull-right') if registration.private_comments.count > 0 %></td>
+          <td class="cost"><%= registration.payment_owed.format %><%= " <sup>R</sup>".html_safe if registration.try(:workshop_price).try(:recurring_payments?) %></td>
+          <td class="date" style="white-space:nowrap"><%= format_date(registration.last_payment_due_on) %></td>
+          <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if PaymentReminderService.payment_reminder_due?(registration) %>>
+            <% if registration.payment_reminder_sent_on.nil? %>
+              not yet
+            <% elsif registration.payment_reminder_history.count < 2 %>
+              <%= "#{distance_of_time_in_words_to_now(registration.payment_reminder_sent_on)} ago" %>
+            <% else %>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= "#{distance_of_time_in_words_to_now(registration.payment_reminder_sent_on)} ago" %> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <% registration.payment_reminder_history.each do |date| %>
+                    <li><a><%= "#{distance_of_time_in_words_to_now(date)} ago" %></a></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </td>
+          <td>
+            <%#= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-xs btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<%= panel body: false, title: "#{@writeoffs.count} Writeoffs" do %>
+  <table class="table table-bordered table-condensed table-striped">
+    <thead>
+      <tr>
+        <th class="receipt_code">Receipt</th>
+        <th class="name">Name</th>
+        <th>Workshop</th>
+        <th class="cost">Balance</th>
+        <th class="date">Registered</th>
+      </tr>
+    </thead>
+      <tbody>
+        <% @writeoffs.each do |registration| -%>
+          <tr>
+            <td class="receipt_code" style="white-space:nowrap"><%= registration.receipt_code %></td>
+            <td class="name"><%= link_to registration.full_name, dm_event.edit_admin_registration_path(registration) %> </td>
+            <td><%= link_to registration.workshop.title, edit_admin_registration_path(registration) %></td>
+            <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons(:comments), class: 'pull-right') if registration.private_comments.count > 0 %><%= " <sup>R</sup>".html_safe if registration.try(:workshop_price).try(:recurring_payments?) %></td>
+            <td class="date" style="white-space:nowrap"><%= format_date(registration.created_at) %></td>
+          </tr>
+        <% end %>
+      </tbody>
   </table>
 <% end %>

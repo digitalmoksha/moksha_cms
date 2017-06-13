@@ -85,13 +85,10 @@
   </div>
 </div>
 
-<% toolbar = toolbar_btn('Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
-<%= panel body: false, title: "#{@unpaid.count} Unpaid Participants", toolbar: toolbar do %>
+<%= panel body: false, title: "#{@unpaid.count} Unpaid Participants" do %>
   <div class="panel-body">
     <p>Shows those that have missed their payment (either a full payment, or a recurring payment).  If they have made all the payments 
     up to this point in time, they are not listed.</p>
-    <p>You can send them a payment reminder email at any time using the <em>Send</em> button.  A line is marked in blue if we have detected that
-      they should be sent a payment reminder. <em>Send Payment Reminders</em> will send the email to all persons marked in blue.</p>
   </div>
   <table class="table table-bordered table-condensed table-striped">
     <thead>
@@ -102,7 +99,6 @@
         <th class="cost">Payment Due</th>
         <th class="date">Payment Was Due On</th>
         <th class="date">Reminded</th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -130,9 +126,6 @@
                 </ul>
               </div>
             <% end %>
-          </td>
-          <td>
-            <%= link_to 'Send', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: registration.id), title: 'Send reminder now', class: 'btn btn-xs btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
           </td>
         </tr>
       <% end %>

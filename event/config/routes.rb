@@ -10,12 +10,12 @@ DmEvent::Engine.routes.draw do
             match 'lost_users',                         action: 'lost_users', via: [:get, :post, :patch]
             match 'permissions',                        action: 'permissions', via: [:get, :post, :patch]
             patch 'ajax_toggle_permission/:user_id/:role', action: 'ajax_toggle_permission', as: 'ajax_toggle_permission'
-            patch 'send_payment_reminder_emails',       action: 'send_payment_reminder_emails'
             match 'additional_configuration',           action: 'additional_configuration', via: [:get, :patch]
           end
           resources :workshop_prices
         end
         get   '/workshop/user_outstanding_balances',    controller: :workshops, action: 'user_outstanding_balances'
+        patch '/workshop/send_payment_reminder_emails', controller: :workshops, action: 'send_payment_reminder_emails'
         resources :registrations do
           member do
             put    'action_state/:state_event',         action: 'action_state', as: 'action_state'
