@@ -171,8 +171,7 @@ module DmEvent
         # writeoff the registration if it needs to
         #------------------------------------------------------------------------------
         def check_if_writeoff!
-          puts workshop_price.last_scheduled_payment_date(initial_payments_should_start_on).to_date
-          if !writeoff && (workshop_price.last_scheduled_payment_date(initial_payments_should_start_on).to_date + WRITE_OFF_DAYS.days) < Time.now
+          if !writeoff && workshop_price && (workshop_price.last_scheduled_payment_date(initial_payments_should_start_on).to_date + WRITE_OFF_DAYS.days) < Time.now
             self.update_attribute(:writeoff, true)
           end
         end

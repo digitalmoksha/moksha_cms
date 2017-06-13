@@ -11,23 +11,23 @@ class PaymentReminderService
 
   REMINDER_SCHEDULE = [2, 14, 30, 60]
 
-  # Send out payment reminder emails to unpaid attendees, or to a specific one.
-  # if a specific registration, then always send out the email
+  # Send out payment reminder emails to unpaid attendees
   #------------------------------------------------------------------------------
-  def self.send_payment_reminder_emails(workshop, registration_id = 'all')
+  def self.send_payment_reminder_emails
     success     = failed = 0
-    unpaid_list = workshop.registrations.unpaid.nowriteoff
-    unpaid_list = unpaid_list.where(id: registration_id) unless registration_id == 'all'
+    unpaid_list = Registration.unpaid.nowriteoff
     unpaid_list.each do |registration|
-      registration.check_if_writeoff!
-      if (self.payment_reminder_due?(registration) && registration.payment_owed.positive?) || registration_id != 'all'
-        email = PaymentReminderMailer.payment_reminder(registration).deliver_now
-        if email
-          registration.update_attribute(:payment_reminder_sent_on, Time.now)
-          registration.update_attribute(:payment_reminder_history,  [Time.now] + registration.payment_reminder_history)
-          success += 1
-        else
-          failed += 1
+      if registration.payment_owed.positive?
+        registration.check_if_writeoff!
+        if self.payment_reminder_due?(registration)
+          email = PaymentReminderMailer.payment_reminder(registration).deliver_now
+          if email
+            registration.update_attribute(:payment_reminder_sent_on, Time.now)
+            registration.update_attribute(:payment_reminder_history,  [Time.now] + registration.payment_reminder_history)
+            success += 1
+          else
+            failed += 1
+          end
         end
       end
     end

@@ -3,7 +3,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   include DmCore::PermittedParams
   include CsvExporter
   
-  before_action   :workshop_lookup, except: [:index, :new, :create, :user_outstanding_balances]
+  before_action   :workshop_lookup, except: [:index, :new, :create, :user_outstanding_balances, :send_payment_reminder_emails]
   
   helper DmEvent::WorkshopsHelper
 
@@ -102,8 +102,10 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def user_outstanding_balances
     authorize! :manage_events, :all
-    @unpaid = Registration.unpaid.includes(:user_profile, :workshop_price)
-    @unpaid = @unpaid.to_a.delete_if {|i| i.balance_owed.zero?}.group_by {|i| i.full_name}.sort_by {|i| i[0].downcase}
+    @unpaid = Registration.unpaid.nowriteoff.includes(:user_profile, :workshop_price)
+    @unpaid = @unpaid.to_a.delete_if {|i| i.balance_owed.zero?}
+
+    @writeoffs = Registration.attending.writeoffs.includes(:user_profile, :workshop_price)
   end
 
   # Handle any additional configuration, such as selecting the attached blog/forum
@@ -137,11 +139,11 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   
   #------------------------------------------------------------------------------
   def send_payment_reminder_emails
-    authorize! :manage_event_finances, @workshop
-    status  = PaymentReminderService.send_payment_reminder_emails(@workshop, params[:registration_id])
+    authorize! :manage_events, :all
+    status  = PaymentReminderService.send_payment_reminder_emails
     msg     = "Reminder emails sent ==>  Success: #{status[:success]}  Failed: #{status[:failed]}"
     status[:failed] > 0 ? (flash[:warning] = msg) : (flash[:notice] = msg)
-    redirect_to financials_admin_workshop_url(@workshop)
+    redirect_to admin_workshop_user_outstanding_balances_url
   end
 
   #------------------------------------------------------------------------------
