@@ -40,13 +40,20 @@ class PaymentReminderService
   #    from the date when the payment was due
   # 3. It doesn't matter if payment was made recently - if the next payment is due, 
   #    then we will follow the reminder schedule
-  # 4. the entire payment schedule starts based on initial_payments_should_start_on
+  # 4. the entire payment schedule (re)starts based on when the last payment was due.
+  # Note: The reminder schedule must be based off of when the last payment was due.
+  # Suppose it was 12 monthly payments.  Just because they haven't paid in 6 months,
+  # they should continue to be reminded until the last payment was due, and for the
+  # entire reminder period after that.
+  # Since theorectically the payment periods could be of any length, then we will
+  # execute the reminder schedule as faithfully as possible until the next payment
+  # is due.
   #------------------------------------------------------------------------------
   def self.payment_reminder_due?(registration)
     return false if !self.past_due?(registration)
     now         = Time.now
     result      = false
-    start_date  = registration.initial_payments_should_start_on
+    start_date  = registration.last_payment_due_on
     if start_date < now
       index = REMINDER_SCHEDULE.rindex {|x| start_date + x.days <= now}
       if index

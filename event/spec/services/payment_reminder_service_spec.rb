@@ -6,31 +6,98 @@ describe PaymentReminderService, type: :service do
 
   # tests assume   REMINDER_SCHEDULE = [2, 14, 30, 60]
   describe '#payment_reminder_due?' do
-    #------------------------------------------------------------------------------
-    it 'non-recurring payment reminder due after 14 days' do
-      workshop      = create :workshop_with_price
-      registration  = create :registration, workshop: workshop, created_at: 1.days.ago
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
+    
+    describe 'non-recurring' do
+      #------------------------------------------------------------------------------
+      it 'reminder due after 2 days' do
+        workshop      = create :workshop_with_price
+        registration  = create :registration, workshop: workshop, created_at: 1.days.ago
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
-      registration  = create :registration, workshop: workshop, created_at: 15.days.ago
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+        registration  = create :registration, workshop: workshop, created_at: 4.days.ago
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+      end
+
+      #------------------------------------------------------------------------------
+      it 'reminder due after 14 days' do
+        workshop      = create :workshop_with_price
+        registration  = create :registration, workshop: workshop, created_at: 14.days.ago
+        registration.payment_reminder_sent_on = registration.created_at + 2.days
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+
+        # registration  = create :registration, workshop: workshop, created_at: 15.days.ago
+        # expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+      end
+
+      #------------------------------------------------------------------------------
+      it 'reminder due after 14 days last reminder sent' do
+        workshop      = create :workshop_with_price
+        registration  = create :registration, workshop: workshop, created_at: 13.days.ago
+        registration.payment_reminder_sent_on = registration.created_at + 2.days
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
+
+        registration  = create :registration, workshop: workshop, created_at: 14.days.ago
+        registration.payment_reminder_sent_on = registration.created_at + 2.days
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+
+        registration  = create :registration, workshop: workshop, created_at: 20.days.ago
+        registration.payment_reminder_sent_on = registration.created_at + 14.days
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
+      end
     end
 
-    #------------------------------------------------------------------------------
-    it 'non-recurring payment reminder due after 14 days last reminder sent' do
-      workshop      = create :workshop_with_price
-      registration  = create :registration, workshop: workshop, created_at: 14.days.ago
-      registration.payment_reminder_sent_on = nil
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+    describe 'recurring' do
+    
+      #------------------------------------------------------------------------------
+      it 'reminder due 2 days after a payment is due' do
+        workshop      = create :workshop_with_recurring_price
+        registration  = create :registration, workshop: workshop, created_at: 1.days.ago
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
-      registration  = create :registration, workshop: workshop, created_at: 20.days.ago
-      registration.payment_reminder_sent_on = registration.created_at + 10.days
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+        registration  = create :registration, workshop: workshop, created_at: 2.days.ago
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
 
-      registration.payment_reminder_sent_on = registration.created_at + 15.days
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
+        registration  = create :registration, workshop: workshop, created_at: 28.days.ago
+        registration.payment_reminder_sent_on = registration.created_at + 14.days
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
+        
+        registration  = create :registration, workshop: workshop, created_at: 31.days.ago
+        registration.payment_reminder_sent_on = registration.created_at + 14.days
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
+
+        registration  = create :registration, workshop: workshop, created_at: 32.days.ago
+        registration.payment_reminder_sent_on = registration.created_at + 14.days
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+      end
+
+      #------------------------------------------------------------------------------
+      it 'reminder due when partial payment made' do
+        workshop      = create :workshop_with_recurring_price
+        registration  = create :registration, workshop: workshop, created_at: 15.days.ago, amount_paid_cents: 5000
+        allow(registration).to receive(:last_payment_on).and_return(15.days.ago)
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+      end
+      
+      #------------------------------------------------------------------------------
+      it 'reminder not due when full monthly payment made' do
+        workshop      = create :workshop_with_recurring_price
+        registration  = create :registration, workshop: workshop, created_at: 15.days.ago, amount_paid_cents: 10000
+        allow(registration).to receive(:last_payment_on).and_return(15.days.ago)
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
+      end
+
+      #------------------------------------------------------------------------------
+      it 'reminder due at 3rd payment' do
+        workshop      = create :workshop_with_recurring_price
+        registration  = create :registration, workshop: workshop, created_at: 65.days.ago, amount_paid_cents: 20000
+        allow(registration).to receive(:last_payment_on).and_return(registration.created_at + 60.days)
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+
+        allow(registration).to receive(:last_payment_on).and_return(registration.created_at + 50.days)
+        expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+      end
     end
-
+    
     #------------------------------------------------------------------------------
     it 'payment reminder respects preferred_payment_reminder_hold_until' do
       workshop      = create :workshop_with_price
@@ -43,32 +110,6 @@ describe PaymentReminderService, type: :service do
       expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
     end
 
-    #------------------------------------------------------------------------------
-    it 'recurring payment reminder due after 14 day' do
-      workshop      = create :workshop_with_recurring_price
-      registration  = create :registration, workshop: workshop, created_at: 1.days.ago
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
-
-      registration  = create :registration, workshop: workshop, created_at: 10.days.ago
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
-
-      registration  = create :registration, workshop: workshop, created_at: 15.days.ago, amount_paid_cents: 5000
-      allow(registration).to receive(:last_payment_on).and_return(15.days.ago)
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
-    end
-
-    #------------------------------------------------------------------------------
-    it 'recurring payment reminder due at 3rd payment' do
-      workshop      = create :workshop_with_recurring_price
-      registration  = create :registration, workshop: workshop, created_at: 65.days.ago, amount_paid_cents: 20000
-      allow(registration).to receive(:last_payment_on).and_return(registration.created_at + 60.days)
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
-
-      # registration  = create :registration, workshop: workshop, created_at: 70.days.ago, amount_paid_cents: 20000
-      allow(registration).to receive(:last_payment_on).and_return(registration.created_at + 50.days)
-      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
-    end
-    
     #------------------------------------------------------------------------------
     it 'handles time before or after' do
       workshop      = create :workshop_with_price
