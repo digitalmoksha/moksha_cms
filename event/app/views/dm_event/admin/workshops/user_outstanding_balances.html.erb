@@ -28,7 +28,7 @@
   </table>
 <% end %>
 
-
+<% if false %>
 <%# toolbar = toolbar_btn('Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
 <% toolbar = toolbar_btn('Send Payment Reminders', admin_workshop_send_payment_reminder_emails_path, class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
 <%= panel body: false, title: "#{@unpaid.count} Unpaid Participants", toolbar: toolbar do %>
@@ -108,4 +108,6 @@
         <% end %>
       </tbody>
   </table>
+<% end %>
+
 <% end %>
