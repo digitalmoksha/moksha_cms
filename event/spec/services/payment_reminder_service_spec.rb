@@ -120,6 +120,14 @@ describe PaymentReminderService, type: :service do
       expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
     end
 
+    #------------------------------------------------------------------------------
+    it 'no reminder after last one is sent' do
+      workshop      = create :workshop_with_price
+      registration  = create :registration, workshop: workshop, created_at: 120.days.ago
+      registration.payment_reminder_sent_on = registration.created_at + 60.days
+      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
+    end
+
     it 'marks a registration as a loss if beyond end of period'
   end
   

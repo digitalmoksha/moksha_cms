@@ -6,8 +6,6 @@ describe WorkshopPrice, :type => :model do
   
   describe "workshop_prices" do
     
-    # let(:workshop) { create(:workshop) }
-
     #------------------------------------------------------------------------------
     it "creates price correctly" do
       attributes = WorkshopPrice.prepare_prices('price' => '11000', 'price_currency' => 'JPY',
@@ -133,5 +131,16 @@ describe WorkshopPrice, :type => :model do
       expect(workshop_price.specific_payment_schedule(start_day, 5.days.from_now)).to eq({due_on: start_day, period_payment: Money.new(167, 'USD'), total_due: Money.new(167, 'USD')})
       expect(workshop_price.specific_payment_schedule(start_day, 95.days.from_now)).to eq({due_on: start_day + 60.days, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')})
     end
+    
+    #------------------------------------------------------------------------------
+    it 'return the last scheduled payment date' do
+      workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'), recurring_number: 3, recurring_period: 30)
+      start_day       = Time.now.to_date
+      expect(workshop_price.last_scheduled_payment_date(start_day)).to eq (start_day + 60.days)
+      
+      workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'))
+      expect(workshop_price.last_scheduled_payment_date(start_day)).to eq start_day
+    end
+
   end
 end

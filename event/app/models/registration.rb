@@ -32,6 +32,7 @@ class Registration < ApplicationRecord
   scope                         :accepted,  -> { where("aasm_state = 'accepted' AND archived_on IS NULL") }
   scope                         :paid,      -> { where("aasm_state = 'paid' AND archived_on IS NULL") }
   scope                         :unpaid,    -> { where("aasm_state = 'accepted' AND archived_on IS NULL") } # same as accepted
+  scope                         :nowriteoff,-> { where(writeoff: false) }
   scope                         :discounted,-> { where("discount_value > 0") } # use like registrations.attending.discounted
 
   after_initialize              :create_uuid

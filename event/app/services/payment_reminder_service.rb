@@ -10,15 +10,16 @@ class PaymentReminderService
   #
 
   REMINDER_SCHEDULE = [2, 14, 30, 60]
-  WRITE_OFF_DAYS    = 90
 
   # Send out payment reminder emails to unpaid attendees, or to a specific one.
   # if a specific registration, then always send out the email
   #------------------------------------------------------------------------------
   def self.send_payment_reminder_emails(workshop, registration_id = 'all')
     success     = failed = 0
-    unpaid_list = ( registration_id == 'all' ? workshop.registrations.unpaid : workshop.registrations.unpaid.where(id: registration_id) )
+    unpaid_list = workshop.registrations.unpaid.nowriteoff
+    unpaid_list = unpaid_list.where(id: registration_id) unless registration_id == 'all'
     unpaid_list.each do |registration|
+      registration.check_if_writeoff!
       if (self.payment_reminder_due?(registration) && registration.payment_owed.positive?) || registration_id != 'all'
         email = PaymentReminderMailer.payment_reminder(registration).deliver_now
         if email

@@ -106,6 +106,12 @@ class WorkshopPrice < ApplicationRecord
     payment_schedule(from_date).reverse.detect {|item| item[:due_on] <= on_date}
   end
 
+  # date of last scheduled payment, or the onlye 
+  #------------------------------------------------------------------------------
+  def last_scheduled_payment_date(from_date)
+    payment_schedule(from_date).last[:due_on]
+  end
+
   # return list of currencies used, in a format for a dropdown list
   # ex: [['USD', 'USD'], ['EUR', 'EUR']]
   #------------------------------------------------------------------------------
