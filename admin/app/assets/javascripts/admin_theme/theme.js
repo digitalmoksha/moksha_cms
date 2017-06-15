@@ -27,9 +27,11 @@
 //= require 'admin_theme/sbadmin2/flot/jquery.flot.categories.js'
 //= require 'admin_theme/sbadmin2/flot/jquery.flot.resize.js'
 
-//= require 'admin_theme/sbadmin2/datatables/js/jquery.dataTables.js'
-//= require 'admin_theme/sbadmin2/datatables-plugins/dataTables.bootstrap.js'
-//= require 'admin_theme/sbadmin2/datatables-responsive/dataTables.responsive.js'
+//= require 'admin_theme/DataTables-1.10.15/media/js/jquery.dataTables.js'
+//= require 'admin_theme/DataTables-1.10.15/media/js/dataTables.bootstrap.js'
+//= require 'admin_theme/DataTables-1.10.15/extensions/Responsive/js/dataTables.responsive.js'
+//= require 'admin_theme/DataTables-1.10.15/extensions/Responsive/js/responsive.bootstrap.js'
+//= require 'admin_theme/DataTables-1.10.15/extensions/RowGroup/js/dataTables.rowGroup.js'
   
 //= require 'admin_theme/moment.js'
 //= require 'admin_theme/bootstrap3-datetimepicker-rails/bootstrap-datetimepicker.js'
