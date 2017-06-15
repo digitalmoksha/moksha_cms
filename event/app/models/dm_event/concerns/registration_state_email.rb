@@ -1,4 +1,4 @@
-# Extends the Registration model with a state machine
+# Extends the Registration model with email notifications
 #------------------------------------------------------------------------------
 module DmEvent
   module Concerns
@@ -6,10 +6,6 @@ module DmEvent
       extend ActiveSupport::Concern
       include DmUtilities::DateHelper
       
-      # 'included do' causes the included code to be evaluated in the
-      # conext where it is included (post.rb), rather than be 
-      # executed in the module's context (blorgh/concerns/models/post).
-      #------------------------------------------------------------------------------
       included do
 
         #------------------------------------------------------------------------------
@@ -18,21 +14,19 @@ module DmEvent
             'price'               => (workshop_price.nil? ? '' : workshop_price.price_formatted),
             'receipt_code'        => receipt_code.to_s,
             'price_description'   => "#{workshop_price.price_description unless workshop_price.nil?}",
+            'discount'            => discount.format(no_cents_if_whole: true, symbol: true),
+            'discounted_price'    => discounted_price.format(no_cents_if_whole: true, symbol: true),
             'title'               => workshop.title,
             'fullname'            => user_profile.full_name,
             'payment_url'         => self.payment_url,
             'balance'             => self.balance_owed.format,
+            'payment_owed'        => self.payment_owed.format,
             'start_date'          => format_date(workshop.starting_on, true),
             'end_date'            => format_date(workshop.ending_on, true),
             'start_time'          => format_time(workshop.starting_on),
             'end_time'            => format_time(workshop.ending_on),
             'date_range'          => format_date_range(workshop.starting_on, workshop.ending_on)
           }
-    
-          # TODO This is a security hole.  Any customer field data needs to be sanitized
-          # custom_fields.each do | x |
-          #   result[x.column_name] = x.data
-          # end
     
           return result
         end

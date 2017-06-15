@@ -41,6 +41,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def edit
     authorize! :manage_event_registrations, @workshop
+    @payment_histories = @registration.payment_histories.includes(:user_profile)
   end
 
   #------------------------------------------------------------------------------

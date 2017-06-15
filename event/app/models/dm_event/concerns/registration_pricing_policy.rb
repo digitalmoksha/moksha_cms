@@ -99,6 +99,11 @@ module DmEvent
           payment_histories.try(:last).try(:payment_date)
         end
 
+        #------------------------------------------------------------------------------
+        def payment_schedule
+          workshop_price ? workshop_price.payment_schedule(initial_payments_should_start_on) : []
+        end
+
         # Payment was entered manually, create the history record.  You can tell it's 
         # a manual entry if the user_profile is filled in - means a human did it.
         #------------------------------------------------------------------------------

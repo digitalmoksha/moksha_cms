@@ -132,7 +132,7 @@
             <h5>No workshop prices / options defined</h5>
           <% else %>
             <div class="workshop_price_list">
-              <%= f.input :workshop_price_id, collection: @workshop.workshop_prices.map { |r| [price_details(r), r.id] }  %>
+              <%= f.input :workshop_price_id, collection: @workshop.workshop_prices.includes(:translations).map { |r| [price_details(r), r.id] }  %>
             </div>
 
             <% if @registration.workshop_price && @registration.workshop_price.price %>
@@ -186,7 +186,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% @registration.payment_histories.each do |payment| %>
+                <% @payment_histories.each do |payment| %>
                   <tr>
                     <td><%= format_date(payment.payment_date) %></td>
                     <td><%= payment.item_ref %></td>
@@ -287,7 +287,7 @@
     <%#--- Comments Tab %>
     <div class="tab-pane fade" id="private_comments">
       <%= subsection title: 'Private Comments' do %>
-        <%= render partial: 'dm_core/admin/comments/comment_section', locals: {commenting_on: @registration, comments: @registration.private_comments, name: 'private_comments'} %>
+        <%= render partial: 'dm_core/admin/comments/comment_section', locals: {commenting_on: @registration, comments: @registration.private_comments.includes(:user), name: 'private_comments'} %>
       <% end %>
     </div>
 
@@ -318,7 +318,7 @@
     <% end %>
   <% end %>
 
-  <% @registration.payment_histories.each do |payment_history| %>
+  <% @payment_histories.each do |payment_history| %>
     <% #--- only allow editing of manual payments %>
     <% if payment_history.user_profile %>
       <%= simple_form_for payment_history, url: ajax_edit_payment_admin_registration_path(locale: I18n.locale, id: @registration, payment_id: payment_history.id),
