@@ -1,7 +1,6 @@
 <% content_for :content_title, 'Outstanding Payments' %>
 
 <% num_reminders = @unpaid.count { |x| PaymentReminderService.payment_reminder_due?(x) }%>
-<%# toolbar = toolbar_btn('Send Payment Reminders', send_payment_reminder_emails_admin_workshop_path(@workshop, registration_id: :all), class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
 <% toolbar = toolbar_btn("Send #{num_reminders} Payment Reminders", admin_workshop_send_payment_reminder_emails_path, class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
 <%= panel body: false, title: "#{@unpaid.count} Unpaid Participants", toolbar: toolbar, class: 'panel-warning' do %>
   <div class="panel-body">

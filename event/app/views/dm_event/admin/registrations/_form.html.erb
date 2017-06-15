@@ -277,6 +277,7 @@
           </tbody>
         </table>
         
+        <%= link_to 'Send', send_payment_reminder_admin_registration_path(@registration.id), title: 'Send reminder now', class: 'btn btn-sm btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
         <% if @registration.preferred_payment_reminder_hold_until && @registration.preferred_payment_reminder_hold_until > Time.now %>
           <span>&nbsp;&nbsp;Requested not to send reminder until <strong><%= format_date(@registration.preferred_payment_reminder_hold_until) %></strong></span>
         <% end %>

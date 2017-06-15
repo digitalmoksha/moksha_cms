@@ -13,25 +13,35 @@ class PaymentReminderService
 
   # Send out payment reminder emails to unpaid attendees
   #------------------------------------------------------------------------------
-  def self.send_payment_reminder_emails
+  def self.send_payment_reminder_emails(registration = nil)
     success     = failed = 0
     unpaid_list = Registration.unpaid.nowriteoff
     unpaid_list.each do |registration|
       if registration.payment_owed.positive?
         registration.check_if_writeoff!
         if self.payment_reminder_due?(registration)
-          email = PaymentReminderMailer.payment_reminder(registration).deliver_now
-          if email
-            registration.update_attribute(:payment_reminder_sent_on, Time.now)
-            registration.update_attribute(:payment_reminder_history,  [Time.now] + registration.payment_reminder_history)
-            success += 1
-          else
-            failed += 1
-          end
+          self.send_reminder(registration) ? (success += 1) : (failed += 1)
         end
       end
     end
     return {success: success, failed: failed}
+  end
+
+  # send a single reminder email, regardless of status
+  #------------------------------------------------------------------------------
+  def self.send_reminder(registration, queue = false)
+    if queue
+      email = PaymentReminderMailer.payment_reminder(registration).deliver_later
+    else
+      email = PaymentReminderMailer.payment_reminder(registration).deliver_now
+    end
+    if email
+      registration.update_attribute(:payment_reminder_sent_on, Time.now)
+      registration.update_attribute(:payment_reminder_history,  [Time.now] + registration.payment_reminder_history)
+      return true
+    else
+      return false
+    end
   end
 
   # Is it time to send a payment reminder?
