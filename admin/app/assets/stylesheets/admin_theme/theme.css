@@ -14,8 +14,11 @@
  *= require 'admin_theme/sbadmin2/metisMenu/metisMenu.css'
  *= require 'admin_theme/sbadmin2/dist/css/sb-admin-2.css'
  *= require 'admin_theme/sbadmin2/morrisjs/morris.css'
- *= require 'admin_theme/sbadmin2/datatables-plugins/dataTables.bootstrap.css'
- *= require 'admin_theme/sbadmin2/datatables-responsive/dataTables.responsive.css'
+
+ *= require 'admin_theme/DataTables-1.10.15/media/css/dataTables.bootstrap.css'
+ *= require 'admin_theme/DataTables-1.10.15/extensions/Responsive/css/responsive.bootstrap.css'
+ *= require 'admin_theme/DataTables-1.10.15/extensions/RowGroup/css/rowGroup.bootstrap.css'
+
  *= require 'admin_theme/bootstrap3-datetimepicker-rails/bootstrap-datetimepicker.css'
  *= require 'admin_theme/select2/css/select2.css'
  *= require 'admin_theme/select2-bootstrap-theme/select2-bootstrap.css'

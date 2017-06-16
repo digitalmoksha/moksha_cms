@@ -108,7 +108,7 @@
           <td class="name"><%= link_to registration.full_name, dm_event.edit_admin_registration_path(registration) %> </td>
           <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons(:comments), class: 'pull-right') if registration.private_comments.count > 0 %></td>
           <td class="cost"><%= registration.payment_owed.format %><%= " <sup>R</sup>".html_safe if registration.try(:workshop_price).try(:recurring_payments?) %></td>
-          <td class="date" style="white-space:nowrap"><%= format_date(registration.last_payment_due_on) %></td>
+          <td class="date"><%= format_date(registration.last_payment_due_on) %></td>
           <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if PaymentReminderService.payment_reminder_due?(registration) %>>
             <% if registration.payment_reminder_sent_on.nil? %>
               not yet
@@ -150,7 +150,7 @@
     <tbody>
       <% @payments.sort { |x, y| x.payment_date <=> y.payment_date }.each_with_index do |payment, index| -%>
         <tr>
-          <td class="date" style="white-space:nowrap"><%= format_date(payment.payment_date) %></td>
+          <td class="date"><%= format_date(payment.payment_date) %></td>
           <td class="name"><%= link_to payment.owner.full_name, dm_event.edit_admin_registration_path(payment.owner) %></td>
           <td class="item_id"><%= payment.item_ref %></td>
           <td class="cost"><%= payment.total.format(no_cents_if_whole: true, symbol: true) %></td>
