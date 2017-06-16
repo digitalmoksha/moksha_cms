@@ -1,318 +1,415 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!doctype html>
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      /* -------------------------------------
+          GLOBAL RESETS
+      ------------------------------------- */
+      img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+        max-width: 100%; }
+      body {
+        background-color: #f6f6f6;
+        font-family: sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 14px;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0; 
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%; }
+      table {
+        border-collapse: separate;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        width: 100%; }
+        table td {
+          font-family: sans-serif;
+          font-size: 14px;
+          vertical-align: top; }
+      /* -------------------------------------
+          BODY & CONTAINER
+      ------------------------------------- */
+      .body {
+        background-color: #f6f6f6;
+        width: 100%; }
+      /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+      .container {
+        display: block;
+        Margin: 0 auto !important;
+        /* makes it centered */
+        max-width: 600px;
+        padding: 10px;
+        width: 600px; }
+      /* This should also be a block element, so that it will fill 100% of the .container */
+      .content {
+        box-sizing: border-box;
+        display: block;
+        Margin: 0 auto;
+        max-width: 600px;
+        padding: 10px; }
+      /* -------------------------------------
+          HEADER, FOOTER, MAIN
+      ------------------------------------- */
+      .main {
+        background: #fff;
+        border-radius: 3px;
+        width: 100%; }
+      .wrapper {
+        box-sizing: border-box;
+        padding: 20px; }
+      .footer {
+        clear: both;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+        width: 100%; }
+        .footer td,
+        .footer p,
+        .footer span,
+        .footer a {
+          color: #999999;
+          font-size: 12px;
+          text-align: center; }
+      /* -------------------------------------
+          TYPOGRAPHY
+      ------------------------------------- */
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: #666;
+        font-family: sans-serif;
+        font-weight: 400;
+        line-height: 1.4;
+        margin: 0;
+        Margin-bottom: 10px; }
+      h1 {
+        font-size: 20px;
+        font-weight: 300;
+        text-align: center;
+        text-transform: capitalize;
+        color:#800040;
+        margin-top:30px;
+        margin-bottom:20px;
+      }
+      h2 {
+        font-size:16px;
+      }
+      h3 {
+        font-size:16px;
+        line-height:100%;
+      }
+      h4 {
+        font-size:14px;
+      }
+      p,
+      ul,
+      ol {
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        margin: 0;
+        Margin-bottom: 15px; }
+        p li,
+        ul li,
+        ol li {
+          margin-left: 5px;
+          margin-bottom: 10px;
+        }
+      ul, ol {
+        padding-left: 15px;
+      }
+      a {
+        color: #3498db;
+        text-decoration: underline; }
+      /* -------------------------------------
+          BUTTONS
+      ------------------------------------- */
+      .btn {
+        box-sizing: border-box;
+        width: 100%; }
+        .btn > tbody > tr > td {
+          padding-bottom: 15px; }
+        .btn table {
+          width: auto; }
+        .btn table td {
+          background-color: #ffffff;
+          border-radius: 5px;
+          text-align: center; }
+        .btn a {
+          background-color: #ffffff;
+          border: solid 1px #3498db;
+          border-radius: 5px;
+          box-sizing: border-box;
+          color: #3498db;
+          cursor: pointer;
+          display: inline-block;
+          font-size: 14px;
+          font-weight: bold;
+          margin: 0;
+          padding: 12px 25px;
+          text-decoration: none;
+          text-transform: capitalize; }
+      .btn-primary table td {
+        background-color: #3498db; }
+      .btn-primary a {
+        background-color: #3498db;
+        border-color: #3498db;
+        color: #ffffff; }
+      .btn-success table td {
+        background-color: #2c9615; }
+      .btn-success a {
+        background-color: #2c9615;
+        border-color: #2c9615;
+        color: #ffffff; }
+      /* -------------------------------------
+          OTHER STYLES THAT MIGHT BE USEFUL
+      ------------------------------------- */
+      .last {
+        margin-bottom: 0; }
+      .first {
+        margin-top: 0; }
+      .align-center {
+        text-align: center; }
+      .align-right {
+        text-align: right; }
+      .align-left {
+        text-align: left; }
+      .clear {
+        clear: both; }
+      .mt0 {
+        margin-top: 0; }
+      .mb0 {
+        margin-bottom: 0; }
+      .preheader {
+        color: transparent;
+        display: none;
+        height: 0;
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        mso-hide: all;
+        visibility: hidden;
+        width: 0; }
+      .powered-by a {
+        text-decoration: none; }
+      hr {
+        border: 0;
+        border-bottom: 1px solid #eee;
+        Margin: 20px 0; }
   
-  <style type="text/css">
-    #outlook a { padding:0; }
-    body { width:100% !important; }
-    .ReadMsgBody { width:100%; }
-    .ExternalClass { width:100%; }
-    figure {margin:0; padding:0; display:block;}
-    body { -webkit-text-size-adjust:none; }
-    body {
-      margin:0;
-      padding:0;
-      font-size: 12px;
-      font-family: Arial, sans-serif;
-    }
-    img {
-      border:0;
-      height:auto;
-      line-height:100%;
-      outline:none;
-      text-decoration:none;
-    }
-    table td { border-collapse:collapse; }
-    #backgroundTable{
-      height:100% !important;
-      margin:0;
-      padding:0;
-      width:100% !important;
-    }
-    body,#backgroundTable { background-color:#FFFFFF; }
-    #templateContainer { border:1px solid #E7E0C4; }
-    h1,.h1 {
-      color:#800040;
-      display:block;
-      font-family:Arial;
-      font-size: 18px;
-      font-weight: normal;
-      line-height: 24px;
-      text-transform: uppercase;
-      margin-top:20px;
-      margin-right:0;
-      margin-bottom:20px;
-      margin-left:0;
-      text-align:left;
-      padding-bottom: 5px;
-    }
-    h2,.h2 {
-      color:#8c8c8c;
-      display:block;
-      font-family:Arial;
-      font-size:16px;
-      font-weight:normal;
-      line-height:100%;
-      margin-top:0;
-      margin-right:0;
-      margin-bottom:10px;
-      margin-left:0;
-      text-align:left;
-      text-transform: uppercase;
-    }
-    h3,.h3 {
-      color:#8c8c8c;
-      display:block;
-      font-family:Arial;
-      font-size:16px;
-      font-weight:normal;
-      line-height:100%;
-      margin-top:0;
-      margin-right:0;
-      margin-bottom:10px;
-      margin-left:0;
-      text-align:left;
-    }
-    h4,.h4 {
-      color:#8c8c8c;
-      display:block;
-      font-family:Arial;
-      font-size:14px;
-      font-weight:bold;
-      line-height:100%;
-      margin-top:0;
-      margin-right:0;
-      margin-bottom:10px;
-      margin-left:0;
-      text-align:left;
-    }
-    #templatePreheader { background-color:#FFF; }
-    .preheaderContent div {
-      color:#505050;
-      font-family:Arial;
-      font-size:10px;
-      line-height:100%;
-      text-align:left;
-    }
-    .preheaderContent div a:link,.preheaderContent div a:visited,.preheaderContent div a .yshortcuts {
-      color:#336699;
-      font-weight:normal;
-      text-decoration:underline;
-    }
-    #templateHeader {
-      background-color:#FFFFFF;
-      border-bottom:0;
-    }
-    .headerContent {
-      color:#202020;
-      font-family:Arial;
-      font-size:34px;
-      font-weight:bold;
-      line-height:100%;
-      padding:0;
-      text-align:center;
-      vertical-align:middle;
-    }
-    .headerContent a:link,.headerContent a:visited,.headerContent a .yshortcuts {
-      color:#336699;
-      font-weight:normal;
-      text-decoration:underline;
-    }
-    #headerImage {
-      height:auto;
-      max-width:650px !important;
-    }
-    #templateContainer,.bodyContent { background-color:#FFFFFF; }
-    .bodyContent div {
-      color:#505050;
-      font-family:Arial;
-      font-size:13px;
-      line-height:150%;
-      text-align:left;
-    }
-    .bodyContent div a:link,.bodyContent div a:visited,.bodyContent div a .yshortcuts {
-      color:#336699;
-      font-weight:normal;
-      text-decoration:underline;
-    }
-    .bodyContent img {
-      display:inline;
-      height:auto;
-    }
-    #templateFooter {
-      background-color:#F8F8F8;
-      border-top: 1px solid #ddd;
-    }
-    .footerContent div {
-      color:#707070;
-      font-family:Arial;
-      font-size:11px;
-      line-height:125%;
-      text-align:center;
-    }
-    .footerContent div a:link,.footerContent div a:visited,.footerContent div a .yshortcuts {
-      color:#336699;
-      font-weight:normal;
-      text-decoration:underline;
-    }
-    .footerContent img { display:inline; }
-    hr, .hr {
-      width: 100%;
-      clear: both;
-      border: none;
-      height: 1px;      
-      background-color: #aaa;
-      margin-top: 30px;
-      margin-bottom: 30px;
-    }
-    .bodyContent blockquote p {
-      border-left: 3px solid silver;
-      padding-bottom: 5px;
-      margin-bottom: 10px;
-      padding-left: 5px;
-      margin-left: 10px;
-      margin-right: 0;
-    }
-    .bodyContent .date {
-      text-align: right;
-      font-size: 12px;
-    }
-    .bodyContent img, img.img_right {
-      float: right;
-      padding: 0px 0px 10px 20px;
-    }
-    img.img_left {
-      float: left;
-      padding: 0px 20px 10px 0px;
-    }
-    img.img_full {
-      float: none;
-      padding: 0px 0px 0px 0px !important;
-      margin: 0px 0px 0px 0px;
-      clear: both;
-    }
+      blockquote p {
+        border-left: 3px solid #ccc;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        padding-left: 5px;
+      }
+      .date {
+        text-align: right;
+        font-size: 12px;
+      }
+      .wrapper img, img.img_right {
+        float: right;
+        padding: 0px 0px 10px 20px;
+      }
+      img.img_left {
+        float: left;
+        padding: 0px 20px 10px 0px;
+      }
+      img.img_full {
+        float: none;
+        padding: 0px 0px 0px 0px !important;
+        margin: 0px 0px 0px 0px;
+        clear: both;
+      }
 
-    #social {
-      background-color:#F8F6EF;
-      border:0;
-    }
-    #social div, #social div table { 
-      text-align:center;
-      background-color: #F8F6EF;
-      color: #707070;
-      font-family: Arial;
-      font-size: 13px;
-      line-height: 125%;
-    }
-    #social img { vertical-align:middle; }
-    #utility {
-      background-color:#F8F6EF;
-      border:0;
-    }
-    #utility div { text-align:center; }
-    #monkeyRewards img { max-width:190px; }
-  </style>
-</head>
-<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
-  <center>
-    <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
+      #social {
+        background-color:#F8F6EF;
+        border:0;
+      }
+      #social div, #social div table { 
+        text-align:center;
+        background-color: #F8F6EF;
+        color: #707070;
+        font-family: Arial;
+        font-size: 13px;
+        line-height: 125%;
+      }
+      #social img { vertical-align:middle; }
+
+      table.invoice_table {
+        margin-right: auto;
+        margin-left: auto;
+        width: 350px;
+        margin-bottom: 30px;
+      }
+      .section_row th {
+        padding-top: 20px;
+        border-bottom: 1px solid #999;
+      }
+      .item_row th {
+        font-weight: normal;
+        font-size: 14px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      .item_row td {
+        font-weight: normal;
+        font-size: 14px;
+        text-align: right;
+        border-bottom: 1px solid #ddd;
+      }
+      .summary_row th, .summary_row td{
+        border-top: 1px solid #999;
+      }
+      .summary_row th {
+        font-weight: bold;
+        font-size: 14px;
+        text-align: left;
+      }
+      .summary_row td {
+        font-weight: normal;
+        font-size: 14px;
+        text-align: right;
+      }
+      .workshop_date {
+        font-weight: normal;
+        font-size: 14px;
+      }
+      /* -------------------------------------
+          RESPONSIVE AND MOBILE FRIENDLY STYLES
+      ------------------------------------- */
+      @media only screen and (max-width: 576px) {
+        table[class=body] h1 {
+          font-size: 28px !important;
+          margin-bottom: 10px !important; }
+        table[class=body] h2 {
+          font-size: 20px !important;
+          margin-bottom: 10px !important; }
+        table[class=body] p,
+        table[class=body] ul,
+        table[class=body] ol,
+        table[class=body] td,
+        table[class=body] span,
+        table[class=body] a {
+          font-size: 16px !important; }
+        table[class=body] .wrapper,
+        table[class=body] .article {
+          padding: 10px !important; }
+        table[class=body] .content {
+          padding: 0 !important; }
+        table[class=body] .container {
+          padding: 0 !important;
+          width: 100% !important; }
+        table[class=body] .main {
+          border-left-width: 0 !important;
+          border-radius: 0 !important;
+          border-right-width: 0 !important; }
+        table[class=body] .btn table {
+          width: 100% !important; }
+        table[class=body] .btn a {
+          width: 100% !important; }
+        table[class=body] .img-responsive {
+          height: auto !important;
+          max-width: 100% !important;
+          width: auto !important; }}
+        table[class=body] .footer .content-block,
+        table[class=body] .footer .content-block a {
+          font-size: 12px !important;
+        }
+      /* -------------------------------------
+          PRESERVE THESE STYLES IN THE HEAD
+      ------------------------------------- */
+      @media all {
+        .ExternalClass {
+          width: 100%; }
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {
+          line-height: 100%; }
+        .apple-link a {
+          color: inherit !important;
+          font-family: inherit !important;
+          font-size: inherit !important;
+          font-weight: inherit !important;
+          line-height: inherit !important;
+          text-decoration: none !important; } 
+        .btn-primary table td:hover {
+          background-color: #1f77b1 !important; }
+        .btn-primary a:hover {
+          background-color: #1f77b1 !important;
+          border-color: #1f77b1 !important; } }
+        .btn-success table td:hover {
+          background-color: #237a10 !important; }
+        .btn-success a:hover {
+          background-color: #237a10 !important;
+          border-color: #237a10 !important; } }
+    </style>
+  </head>
+  <body class="">
+    <table border="0" cellpadding="0" cellspacing="0" class="body">
       <tr>
-        <td align="center" valign="top" style="border-collapse: collapse;">
-          <!-- // Begin Template Preheader \\ -->
-          <table border="0" cellpadding="10" cellspacing="0" width="650" id="templatePreheader">
-            <tr>
-              <td valign="top" class="preheaderContent">
-                <div>
+        <td>&nbsp;</td>
+        <td class="container">
+          <div class="content">
+
+            <!-- START CENTERED WHITE CONTAINER -->
 <!-- ====================== Start Teaser Section ====================== -->
+            <!-- <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span> -->
 <!-- ====================== End Teaser Section ====================== -->
-                </div>
-              </td>
-            </tr>
-          </table>
-          <!-- // End Template Preheader \\ -->
-          <table border="0" cellpadding="0" cellspacing="0" width="650" id="templateContainer">
-            <tr>
-              <td align="center" valign="top" style="border-collapse: collapse;">
-                <!-- // Begin Template Header \\ -->
-                <table border="0" cellpadding="0" cellspacing="0" width="650" id="templateHeader">
-                  <tr>
-                    <td class="headerContent">
-                  
-                      <!-- // Begin Module: Standard Header Image \\ -->
-                      <img src="<%= site_asset_url('newsletter/template/email_header_eventinfo.jpg') %>" style="max-width:650px;" id="headerImage" />
-                      <!-- // End Module: Standard Header Image \\ -->
-                  
-                    </td>
-                  </tr>
-                </table>
-                <!-- // End Template Header \\ -->
-              </td>
-            </tr>
-            <tr>
-              <td align="center" valign="top" style="border-collapse: collapse;">
-                <!-- // Begin Template Body \\ -->
-                <table border="0" cellpadding="0" cellspacing="0" width="650" id="templateBody">
-                  <tr>
-                    <td valign="top" style="border-collapse: collapse;">
-                      <table border="0" cellpadding="0" cellspacing="0" width="650">
-                        <tr>
-                          <td valign="top" class="bodyContent">
-                                          
-                            <!-- // Begin Module: Standard Content \\ -->
-                            <table border="0" cellpadding="20" cellspacing="0" width="100%">
-                              <tr>
-                                <td valign="top" style="border-collapse: collapse;">
-                                    <div>
+            <table class="main" border="0" cellpadding="0" cellspacing="0">
+
+              <!-- START MAIN CONTENT AREA -->
+            	<tr>
+                <td valign="top" class="headerContent">
+                  <img src="<%= site_asset_url('newsletter/template/email_header_eventinfo.jpg') %>" style="width:100%;max-width:600px;" id="headerImage" />
+                </td>
+              </tr>
+              <tr>
+                <td class="wrapper">
+                  <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
 <!-- ====================== Start Main Content ====================== -->
-                                      <%= yield %>
+                        <%= yield %>
 <!-- ====================== End Main Content ====================== -->
-                                    </div>
-                                </td>
-                              </tr>
-                            </table>
-                            <!-- // End Module: Standard Content \\ -->
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <!-- // End Template Body \\ -->
-              </td>
-            </tr>
-            <tr>
-              <td align="center" valign="top" style="border-collapse: collapse;">
-                <!-- // Begin Template Footer \\ -->
-                <table border="0" cellpadding="10" cellspacing="0" width="650" id="templateFooter">
-                  <tr>
-                    <td valign="top" class="footerContent" style="border-collapse: collapse;">
-                            
-                      <!-- // Begin Module: Standard Footer \\ -->
-                      <table border="0" cellpadding="10" cellspacing="0" width="100%">
-                        <tr>
-                          <td valign="top" width="650">
-                          <div>
-                            <em>Copyright &copy; <%= Time.now.year %> <%= Account.current.company_name %></em>
-                            &nbsp;&bull;&nbsp;<a href="mailto:<%= Account.current.contact_email %>"><%= Account.current.contact_email %></a>
-                            &nbsp;&bull;&nbsp;<a href="http://<%= Account.current.domain %>"><%= Account.current.domain %></a>
-                          </div>
-                          </td>
-                        </tr>
-                      </table>
-                      <!-- // End Module: Standard Footer \\ -->
-                                            
-                    </td>
-                  </tr>
-                </table>
-                <!-- // End Template Footer \\ -->
-              </td>
-            </tr>
-          </table>
-          <br>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            <!-- END MAIN CONTENT AREA -->
+            </table>
+
+            <!-- START FOOTER -->
+            <div class="footer">
+              <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="content-block">
+                    <em>Copyright &copy; <%= Time.now.year %> <%= Account.current.company_name %></em>
+                    &nbsp;&bull;&nbsp;<a href="mailto:<%= Account.current.contact_email %>"><%= Account.current.contact_email %></a>
+                    &nbsp;&bull;&nbsp;<a href="http://<%= Account.current.domain %>"><%= Account.current.domain %></a>
+                  </td>
+                </tr>
+              </tr>
+              </table>
+            </div>
+            <!-- END FOOTER -->
+            
+          <!-- END CENTERED WHITE CONTAINER -->
+          </div>
         </td>
+        <td>&nbsp;</td>
       </tr>
     </table>
-  </center>
-</body>
+  </body>
 </html>
