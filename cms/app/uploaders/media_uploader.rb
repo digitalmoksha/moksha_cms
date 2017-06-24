@@ -34,48 +34,59 @@ class MediaUploader < CarrierWave::Uploader::Base
     end
   end
 
-   # If a pdf, convert to jpg and size, maintain aspect ration and pad to square
-   # If an image, resize it to a cropped square
-   #------------------------------------------------------------------------------
-   def thumb_image_pdf(width, height)
-     if pdf?(self)
-       self.convert(:jpg)
-       self.resize_and_pad(width, height)
-     else
-       self.resize_to_fill(width, height)
-     end
-   end
-   
-   # Convert to png if a pdf, then size to a specfic width
-   #------------------------------------------------------------------------------
-   def size_image_pdf(width)
-     self.convert(:jpg, 0) if pdf?(self)
-     self.resize_to_width(width)
-   end
-   
-   # From: https://github.com/jhnvz/retina_rails
-   # Process retina quality of the image.
-   # Works with ImageMagick and MiniMagick
-   # === Parameters
-   #
-   # [percentage (Int)] quality in percentage
-   #
-   def retina_quality(percentage)
-     manipulate! do |img|
-       if defined?(Magick)
-         img.write(current_path) { self.quality = percentage } unless img.quality == percentage
-       elsif defined?(MiniMagick)
-         img.quality(percentage.to_s)
-       end
-       img = yield(img) if block_given?
-       img
-     end
-   end
+  # Modern cameras often produce JPEGs that have a "I should be rotated 90° to the left" flag.
+  # Carrierwave ignores this setting, so fix it here
+  # https://makandracards.com/makandra/12323-carrierwave-auto-rotate-tagged-jpegs 
+  #------------------------------------------------------------------------------
+  def auto_orient
+    manipulate! do |img|
+      img = img.auto_orient
+    end
+  end
+
+  # If a pdf, convert to jpg and size, maintain aspect ration and pad to square
+  # If an image, resize it to a cropped square
+  #------------------------------------------------------------------------------
+  def thumb_image_pdf(width, height)
+    if pdf?(self)
+      self.convert(:jpg)
+      self.resize_and_pad(width, height)
+    else
+      self.resize_to_fill(width, height)
+    end
+  end
+  
+  # Convert to png if a pdf, then size to a specfic width
+  #------------------------------------------------------------------------------
+  def size_image_pdf(width)
+    self.convert(:jpg, 0) if pdf?(self)
+    self.resize_to_width(width)
+  end
+  
+  # From: https://github.com/jhnvz/retina_rails
+  # Process retina quality of the image.
+  # Works with ImageMagick and MiniMagick
+  # === Parameters
+  #
+  # [percentage (Int)] quality in percentage
+  #
+  def retina_quality(percentage)
+    manipulate! do |img|
+      if defined?(Magick)
+        img.write(current_path) { self.quality = percentage } unless img.quality == percentage
+      elsif defined?(MiniMagick)
+        img.quality(percentage.to_s)
+      end
+      img = yield(img) if block_given?
+      img
+    end
+  end
 
   # Create different versions of image files
   #   Retina naming: http://blog.remarkablelabs.com/2013/01/creating-retina-images-with-carrierwave
   #------------------------------------------------------------------------------
   version :retina_lg, :if => :thumbnable_retina? do
+    process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_large_width * 2]
     process :size_image_pdf => [900 * 2]
     process :retina_quality => 60
@@ -85,6 +96,7 @@ class MediaUploader < CarrierWave::Uploader::Base
     end
   end
   version :lg, :if => :thumbnable? do
+    process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_large_width]
     process :size_image_pdf => [900]
     def full_filename (for_file = model.file.file)
@@ -93,6 +105,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   end
 
   version :retina_md, :if => :thumbnable_retina?, :from_version => :retina_lg do
+    process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_medium_width * 2]
     process :size_image_pdf => [600 * 2]
     process :retina_quality => 60
@@ -102,6 +115,7 @@ class MediaUploader < CarrierWave::Uploader::Base
     end
   end
   version :md, :if => :thumbnable?, :from_version => :lg do
+    process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_medium_width]
     process :size_image_pdf => [600]
     def full_filename (for_file = model.file.file)
@@ -110,6 +124,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   end
 
   version :retina_sm, :if => :thumbnable_retina?, :from_version => :retina_md do
+    process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_small_width * 2]
     process :size_image_pdf => [300 * 2]
     process :retina_quality => 60
@@ -119,6 +134,7 @@ class MediaUploader < CarrierWave::Uploader::Base
     end
   end
   version :sm, :if => :thumbnable?, :from_version => :md do
+    process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_small_width]
     process :size_image_pdf => [300]
     def full_filename (for_file = model.file.file)
@@ -127,6 +143,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   end
 
   version :thumb, :if => :thumbnable?, :from_version => :md do
+    process :auto_orient
     # process thumb_image_pdf: [Account.current.preferred_image_thumbnail_width, Account.current.preferred_image_thumbnail_width]
     process thumb_image_pdf: [200, 200]
     def full_filename (for_file = model.file.file)

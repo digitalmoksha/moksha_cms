@@ -29,24 +29,40 @@ class AvatarUploader < CarrierWave::Uploader::Base
     end
   end
 
+  # Modern cameras often produce JPEGs that have a "I should be rotated 90° to the left" flag.
+  # Carrierwave ignores this setting, so fix it here
+  # https://makandracards.com/makandra/12323-carrierwave-auto-rotate-tagged-jpegs 
+  #------------------------------------------------------------------------------
+  def auto_orient
+    manipulate! do |img|
+      img = img.auto_orient
+    end
+  end
+   
   # Create different versions of your uploaded files:
   #------------------------------------------------------------------------------
   version :sq35 do
+    process :auto_orient
     process :resize_to_fill => [35, 35]
   end
   version :sq100 do
+    process :auto_orient
     process :resize_to_fill => [100, 100]
   end
   version :sq200 do
+    process :auto_orient
     process :resize_to_fill => [200, 200]
   end
   version :w100 do
+    process :auto_orient
     process :resize_to_width => [100]
   end
   version :w200 do
+    process :auto_orient
     process :resize_to_width => [200]
   end
   version :w300 do
+    process :auto_orient
     process :resize_to_width => [300]
   end
 
