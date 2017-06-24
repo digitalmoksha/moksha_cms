@@ -7,7 +7,8 @@
     <div class="tabbable">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#summary_tab" data-toggle="tab">Summary</a></li>
-        <li><a href="#profile_tab" data-toggle="tab">Profile</a></li>
+        <li><a href="#public_profile_tab" data-toggle="tab">Public Profile</a></li>
+        <li><a href="#private_profile_tab" data-toggle="tab">Private Profile</a></li>
         <li><a href="#permissions_tab" data-toggle="tab">Permissions</a></li>
       </ul>
 
@@ -114,28 +115,53 @@
           </div>
         </div>
 
-        <%#--- Profile Tab %>
-        <div class="tab-pane fade in" id="profile_tab">
+        <%#--- Public Profile Tab %>
+        <div class="tab-pane fade in" id="public_profile_tab">
           <div class="row">
             <div class="col-md-12">
-              <%= subsection title: "Profile for #{@user.display_name}" do %>
-                <%= simple_form_for(@user, :url => dm_core.admin_user_path,
-                      html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings) do |f| %>
-
-                  <%= f.error_notification :message => "Please review the problems below" %>
-                  <%#= f.input :first_name %>
-                  <%#= f.input :last_name %>
-                  <%= f.input :email, disabled: disable_fields, hint: 'Note: If you change the email address, a confirmation email will be sent to the new address. The email 
-                  address will look unchanged until it is confirmed' %>
-                  <%= f.input(:unconfirmed_email, disabled: true, 
-                       hint: "The user needs to re-confirm this email address - an email has already been sent.<br> 
-                        #{link_to 'Resend Confirmation Email', dm_core.resend_confirmation_email_admin_user_path(@user.id), method: :patch} or #{link_to 'Cancel Change of Email', dm_core.cancel_change_of_email_admin_user_path(@user.id), method: :patch}".html_safe) if @user.pending_reconfirmation? %>
-                  <%#= f.input :country_id, :wrapper_html => { :class => 'searchDrop' }, :input_html => { :class => 'chosen_select' }, 
-                              :collection => ut_country_select_collection, :label_method => lambda {|t| t[0]}, :value_method => lambda {|t| t[1]},
-                              :label => "Country" %>
-      
-                  <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
+              <p><%= I18n.t 'core.profile_public_explanation', locale: :en %></p>
+              <%= simple_form_for @user, :url => dm_core.admin_user_path, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
+                <%= f.error_notification :message => "Please review the problems below" %>
+                <%= f.simple_fields_for :user_profile do |p| %>
+                  <%= p.input :public_name, label: I18n.t('core.profile_public_name', locale: :en), required: true %>
+                  <%= p.input :country_id, collection: ut_country_select_collection(false), label: I18n.t('core.profile_country', locale: :en), required: true %>
+                  <%= p.input :public_avatar, label: I18n.t('core.profile_public_upload', locale: :en), as: :image, hint: I18n.t('core.profile_public_upload_help', locale: :en), input_html: {preview_version: :sq100} %>
                 <% end %>
+                <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <%#--- Private Profile Tab %>
+        <div class="tab-pane fade in" id="private_profile_tab">
+          <div class="row">
+            <div class="col-md-12">
+              <p><%= I18n.t 'core.profile_private_explanation', locale: :en %></p>
+              <%= simple_form_for @user, :url => dm_core.admin_user_path, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
+                <%= f.error_notification :message => "Please review the problems below" %>
+                <%= f.simple_fields_for :user_profile do |p| %>
+                  <%= p.input :first_name, label: I18n.t('core.profile_first_name', locale: :en), required: true %>
+                  <%= p.input :last_name, label: I18n.t('core.profile_last_name', locale: :en), required: true %>
+                <% end %>
+                <%= f.input :email, disabled: disable_fields, hint: 'Note: If you change the email address, a confirmation email will be sent to the new address. The email 
+                address will look unchanged until it is confirmed' %>
+                <%= f.input(:unconfirmed_email, disabled: true, 
+                     hint: "The user needs to re-confirm this email address - an email has already been sent.<br> 
+                      #{link_to 'Resend Confirmation Email', dm_core.resend_confirmation_email_admin_user_path(@user.id), method: :patch} or #{link_to 'Cancel Change of Email', dm_core.cancel_change_of_email_admin_user_path(@user.id), method: :patch}".html_safe) if @user.pending_reconfirmation? %>
+
+                <hr>
+
+                <%= f.simple_fields_for :user_profile do |p| %>
+                  <%= p.input :address, label: I18n.t('core.profile_address', locale: :en) %>
+                  <%= p.input :address2, label: I18n.t('core.profile_address2', locale: :en) %>
+                  <%= p.input :city, label: I18n.t('core.profile_city', locale: :en) %>
+                  <%= p.input :state, label: I18n.t('core.profile_state', locale: :en) %>
+                  <%= p.input :zipcode, label: I18n.t('core.profile_zipcode', locale: :en) %>
+                  <%= p.input :country_id, collection: ut_country_select_collection(false), label: I18n.t('core.profile_country', locale: :en), required: true %>
+                <% end %>
+
+                <%= submit_or_cancel :cancel_url => dm_core.admin_users_url %>
               <% end %>
             </div>
           </div>
