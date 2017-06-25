@@ -127,6 +127,10 @@ private
         @admin_theme[:main_menu] << {text: 'Subscriptions', icon_class: :subscriptions, link: dm_subscriptions.admin_subscription_plans_path, active: admin_path_active_class?(dm_subscriptions.admin_subscription_plans_path) }
       end
 
+      if Rails.application.config.action_mailer.delivery_method == :letter_opener_web
+        @admin_theme[:main_menu] << {text: 'Letter Opener', icon_class: :mail, link: main_app.letter_opener_web_path, active: admin_path_active_class?(main_app.letter_opener_web_path) }
+      end
+
       #--- give main application a chance to add anything it wants
       if self.respond_to? :admin_specific_menus
         self.admin_specific_menus @admin_theme

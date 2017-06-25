@@ -14,13 +14,13 @@ class PaymentReminderService
   # Send out payment reminder emails to unpaid attendees
   #------------------------------------------------------------------------------
   def self.send_payment_reminder_emails(registration = nil)
-    success     = failed = 0
-    unpaid_list = Registration.unpaid.nowriteoff
-    unpaid_list.each do |registration|
-      if registration.payment_owed.positive?
-        registration.check_if_writeoff!
-        if self.payment_reminder_due?(registration)
-          self.send_reminder(registration) ? (success += 1) : (failed += 1)
+    success = failed = 0
+    Registration.unpaid.nowriteoff.each do |registration|
+      unless registration.check_if_writeoff!
+        if registration.payment_owed.positive?
+          if self.payment_reminder_due?(registration)
+            self.send_reminder(registration) ? (success += 1) : (failed += 1)
+          end
         end
       end
     end
@@ -61,7 +61,7 @@ class PaymentReminderService
   # is due.
   #------------------------------------------------------------------------------
   def self.payment_reminder_due?(registration)
-    return false if !self.past_due?(registration)
+    return false if !self.past_due?(registration) || registration.writeoff?
     now         = Time.now
     result      = false
     start_date  = registration.last_payment_due_on

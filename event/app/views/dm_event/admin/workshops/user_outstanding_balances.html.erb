@@ -1,7 +1,11 @@
 <% content_for :content_title, 'Outstanding Payments' %>
 
-<% num_reminders = @unpaid.count { |x| PaymentReminderService.payment_reminder_due?(x) }%>
-<% toolbar = toolbar_btn("Send #{num_reminders} Payment Reminders", admin_workshop_send_payment_reminder_emails_path, class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
+<% num_reminders   = @unpaid.count { |x| PaymentReminderService.payment_reminder_due?(x) && !x.should_writeoff? } %>
+<% num_to_writeoff = @unpaid.count { |x| x.should_writeoff? } %>
+<% toolbar = capture do %>
+  <span class='text-danger'><%= num_to_writeoff %> will be written off&nbsp;</span>
+  <%= toolbar_btn("Send #{num_reminders} Payment Reminders", admin_workshop_send_payment_reminder_emails_path, class: 'btn btn-xs btn-info', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to those eligible?"}) %>
+<% end %>
 <%= panel body: false, title: "#{@unpaid.count} Unpaid Participants", toolbar: toolbar, class: 'panel-warning' do %>
   <div class="panel-body">
     <p>Shows those that have missed their payment (either a full payment, or a recurring payment).  If they have made all the payments 
@@ -38,7 +42,9 @@
           <td class="cost"><%= registration.balance_owed.format %><%= content_tag(:span, icons(:comments), class: 'pull-right') if registration.private_comments.count > 0 %></td>
           <td class="cost"><%= registration.payment_owed.format %><%= " <sup>R</sup>".html_safe if registration.try(:workshop_price).try(:recurring_payments?) %></td>
           <td class="date"><%= format_date(registration.last_payment_due_on) %></td>
-          <td class="date" <%= "style='background-color: #B3D4FD;'".html_safe if PaymentReminderService.payment_reminder_due?(registration) %>>
+          <% color = 'bg-info' if PaymentReminderService.payment_reminder_due?(registration) %>
+          <% color = 'bg-danger' if registration.should_writeoff? %>
+          <td class="date <%= color if color %>">
             <% if registration.payment_reminder_sent_on.nil? %>
               not yet
             <% elsif registration.payment_reminder_history.count < 2 %>
