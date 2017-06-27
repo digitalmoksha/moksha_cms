@@ -175,13 +175,13 @@ module DmEvent
 
         #------------------------------------------------------------------------------
         def should_writeoff?
-          !writeoff && balance_owed.positive? && workshop_price && (workshop_price.last_scheduled_payment_date(initial_payments_should_start_on).to_date + WRITE_OFF_DAYS.days) < Time.now
+          self.writtenoff_on.nil? && balance_owed.positive? && workshop_price && (workshop_price.last_scheduled_payment_date(initial_payments_should_start_on).to_date + WRITE_OFF_DAYS.days) < Time.now
         end
           
         # writeoff the registration if it needs to
         #------------------------------------------------------------------------------
         def check_if_writeoff!
-          should_writeoff? ? self.update_attribute(:writeoff, true) : false
+          should_writeoff? ? self.update_attribute(:writtenoff_on, Time.now) : false
         end
       end
 

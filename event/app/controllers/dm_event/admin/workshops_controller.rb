@@ -102,10 +102,10 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def user_outstanding_balances
     authorize! :manage_events, :all
-    @unpaid = Registration.unpaid.nowriteoff.includes(:user_profile, :workshop_price)
+    @unpaid = Registration.unpaid.notwrittenoff.includes(:user_profile, :workshop_price)
     @unpaid = @unpaid.to_a.delete_if {|i| i.balance_owed.zero?}
 
-    @writeoffs = Registration.attending.writeoffs.includes(:user_profile, :workshop_price)
+    @writeoffs = Registration.attending.writtenoff.includes(:user_profile, :workshop_price)
   end
 
   # Handle any additional configuration, such as selecting the attached blog/forum

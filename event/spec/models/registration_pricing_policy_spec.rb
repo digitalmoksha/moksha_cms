@@ -93,29 +93,29 @@ describe Registration, :type => :model do
       #------------------------------------------------------------------------------
       it '#check_if_writeoff!' do
         registration = create :registration, workshop: workshop
-        expect(registration.writeoff?).to eq false
+        expect(registration.writtenoff_on).to eq nil
         
         registration = create :registration, workshop: workshop, created_at: 92.days.ago
         registration.check_if_writeoff!
-        expect(registration.writeoff?).to eq true
+        expect(registration.writtenoff_on).not_to eq nil
 
         registration = create :registration, workshop: workshop, created_at: 80.days.ago
         registration.check_if_writeoff!
-        expect(registration.writeoff?).to eq false
+        expect(registration.writtenoff_on).to eq nil
       end
 
       #------------------------------------------------------------------------------
       it '#check_if_writeoff! with recurring' do
         registration = create :registration, workshop: workshop_r
-        expect(registration.writeoff?).to eq false
+        expect(registration.writtenoff_on).to eq nil
         
         registration = create :registration, workshop: workshop_r, created_at: (122 + Registration::WRITE_OFF_DAYS).days.ago
         registration.check_if_writeoff!
-        expect(registration.writeoff?).to eq true
+        expect(registration.writtenoff_on).not_to eq nil
 
         registration = create :registration, workshop: workshop_r, created_at: (110 + Registration::WRITE_OFF_DAYS).days.ago
         registration.check_if_writeoff!
-        expect(registration.writeoff?).to eq false
+        expect(registration.writtenoff_on).to eq nil
       end
     end
   
