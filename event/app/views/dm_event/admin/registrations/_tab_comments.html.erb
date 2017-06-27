@@ -1,0 +1,6 @@
+<%#--- Comments Tab %>
+<div class="tab-pane fade" id="private_comments">
+  <%= subsection title: 'Private Comments' do %>
+    <%= render partial: 'dm_core/admin/comments/comment_section', locals: {commenting_on: @registration, comments: @registration.private_comments.includes(:user), name: 'private_comments'} %>
+  <% end %>
+</div>

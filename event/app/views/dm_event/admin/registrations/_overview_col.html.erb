@@ -1,0 +1,56 @@
+<div class="caption text-center">
+  <%= avatar_for(@registration.user_profile.user, '80%', class: 'img-circle') %>
+  <h5>
+    <%= @registration.full_name %><small><%= @registration.user_profile.country.english_name %></small>
+    <small><%= @registration.user_profile.email %></small>
+    <%= "<small>no user account</small>".html_safe unless @registration.user_profile.user %>
+  </h5>
+</div>
+<ul class="statistics">
+  <% color = @registration.balance_owed.positive? ? :danger : :success %>
+  <li><%= stat_block_small label: 'Balance', number: @registration.balance_owed.format(no_cents_if_whole: true), color_type: color, icon: 'fa fa-money', percent: 100 %></li>
+</ul>
+<table class="accounting" style="width: 100%">
+  <tr>
+    <th>Price
+      <% if @registration.workshop_price.try(:recurring_payments?) %>
+          <span style="font-weight: normal"></br>On a payment plan</span>
+      <% end %>
+    </th>
+    <td><%= @registration.price.format %></td>
+  </tr>
+  <tr>
+    <th>Discount</th>
+    <td class="text-danger"> - <%= @registration.discount.format %></td>
+  </tr>
+  <tr class="section">
+    <th>Total</th>
+    <td><strong><%= @registration.discounted_price.format %></strong></td>
+  </tr>
+  <tr>
+    <th>Paid</th>
+    <td class="text-success"><%= @registration.amount_paid.format %></td>
+  </tr>
+  <% if @registration.payment_owed.positive? %>
+    <tr class="section">
+      <th>Payment Owed</th>
+      <td class="text-info"><%= @registration.payment_owed.format %></td>
+    </tr>
+    <tr>
+      <th>Payment Due On</th>
+      <td class="text-info"><%= format_date(@registration.last_payment_due_on) %></td>
+    </tr>
+  <% end %>
+  <tr class="section">
+    <th colspan="2"></th>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left"><p>Payments are due on the following dates:</p></td>
+  </tr>
+  <% @registration.payment_schedule.each do |payment| %>
+    <tr class="item_row">
+      <th><%= payment[:due_on].to_date %></th>
+      <td><%= payment[:period_payment].format(no_cents_if_whole: true, symbol: true) %></td>
+    </tr>
+  <% end %>
+</table>

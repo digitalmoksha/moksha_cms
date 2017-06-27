@@ -1,0 +1,52 @@
+<%#--- Overview Tab %>
+<div class="tab-pane fade in active" id="overview_tab">
+  <% if @registration.workshop_price %>
+    <dl class="block">
+      <dt class="text-info">Registered On</dt>
+      <dd><%= format_date(@registration.created_at) %></dd>
+      <dt class="text-info">Receipt Code</dt>
+      <dd><%= @registration.receipt_code %></dd>
+      <dt class="text-info">Price</dt>
+      <dd><%= price_details(@registration.workshop_price) %></dd>
+      <% if @registration.payment_comment %>
+        <dt class="text-info">Reason for Discount</dt>
+        <dd><%= @registration.payment_comment.body %></dd>
+      <% end %>
+    </dl>
+  <% end %>
+  <%= subsection title: "Previous Event Registrations" do %>
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <th width=20></th>
+          <th class="name">Workshop Title</th>
+          <th class="name">Paid</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%# outstanding = Money.new(0) %>
+        <% Registration.where(user_profile_id: @registration.user_profile).each do |registration| %>
+          <% unless registration == @registration %>
+            <tr>
+              <td>
+                <button class='btn btn-sm btn-<%= registration.current_state %> hovertip' data-placement='right' title='<%= "#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}" %>'></button>
+              </td>
+              <td class="name"><%= link_to registration.workshop.title, edit_admin_registration_path(registration) %></td>
+              <td class="name"><%= present(registration).balance_or_paid %></td>
+            </tr>
+            <%# outstanding += registration.balance_owed %>
+          <% end %>
+        <% end %>
+      </tbody>
+      <% if false # [todo] Unfortunately, this code did not work since each workshop could be in a different currency.  Revisit %>
+        <tfooter>
+          <tr>
+            <td></td>
+            <td><strong>Outstanding Balance</strong></td>
+            <td><%= outstanding.format %></td>
+          </tr>
+        </tfooter>
+      <% end %>
+    </table>
+  <% end %>
+</div>

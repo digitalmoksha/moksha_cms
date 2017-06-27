@@ -1,0 +1,54 @@
+<%#--- Update Registration Tab %>
+<div class="tab-pane fade" id="update_registration_tab">
+  <%= simple_form_for @registration, url: admin_registration_path,
+        html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+  
+    <%= subsection title: 'Price' do %>
+      <%= f.error_notification message: "Please review the problems below" %>
+
+      <% if @workshop.workshop_prices.empty? %>
+        <h5>No workshop prices / options defined</h5>
+      <% else %>
+        <div class="workshop_price_list">
+          <%= f.input :workshop_price_id, collection: @workshop.workshop_prices.includes(:translations).map { |r| [price_details(r), r.id] }  %>
+        </div>
+
+        <% if @registration.workshop_price && @registration.workshop_price.price %>
+          <% discount_currency = @registration.workshop_price.price.currency.symbol %>
+
+          <%= f.input :discount_value, label: 'Discount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
+            <%= f.input_field :discount_value, as: :string, class: "form-control" %>
+            <span class="input-group-addon">
+              <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]] %>
+            </span>
+          <% end %>
+          
+
+        <% end %>
+
+        <% if @registration.payment_comment %>
+          <%= f.input :payment_comment_text, label: 'Reason for discount', as: :text_full_width, rows: 3, hint: 'Used for justifcation of discount. Will then be available in comment section.', disabled: true, input_html: {value: @registration.payment_comment.body} %>
+        <% else %>
+          <%= f.input 'payment_comment_text', label: 'Reason for discount', as: :text_full_width, rows: 3, hint: 'Used for justifcation of discount. Will then be available in comment section.' %>
+        <% end %>
+        
+
+        <%= f.input :preferred_payment_reminder_hold_until, placeholder: @registration.created_at.to_date.to_s(:db), label: 'Payments are not required until', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'},
+                     hint: 'Setting this will indicate that payments are not required until the specified date.  On that date, we will begin any payment plans, count down to sending reminder emails, etc.  Leave blank to use default' %>
+  
+      <% end %>
+    <% end %>
+
+    <% unless @workshop.custom_field_defs.empty? %>
+      <%= subsection title: 'Custom Fields' do %>
+        <% f.object.build_missing_fields @workshop %>
+        <%= f.simple_fields_for :custom_fields do |builder| %>
+          <% field = builder.object %>
+          <%= render "dm_core/admin/custom_fields/#{field.field_type}", field: field, f: builder %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= submit_or_cancel cancel_url: admin_workshop_path(@workshop), delete_url: [:admin, @registration], delete_confirm: 'Are you sure you wish to delete this registration?  Any associated payments will also be deleted!' %>
+  <% end %>
+</div>
