@@ -1,15 +1,6 @@
 class PaymentReminderService
 
-  # ## Dunning letters (payment reminders)
-  #
-  # The existing functionality should be extended that:
-  #
-  # - there are 4 types of dunning letters (1st day, 14 day, 30 day, 60 day)
-  # - for each registration we track which type of dunning letter has already been send
-  # - if all 4 types of dunning letters have been send and there was still no payment after an additional 30 days, the registration should be marked as written-off
-  #
-
-  REMINDER_SCHEDULE = [2, 14, 30, 60]
+  REMINDER_SCHEDULE = [14, 30, 60]
 
   # Send out payment reminder emails to unpaid attendees
   #------------------------------------------------------------------------------
