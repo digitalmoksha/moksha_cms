@@ -1,4 +1,4 @@
-<% content_for :content_title, "#{h(@registration.full_name)} <small>#{h(@workshop.title)}</small>".html_safe %>
+<% content_for :content_title, "#{h(@registration.full_name)} <small>[#{@registration.receipt_code}] : #{h(@workshop.title)}</small>".html_safe %>
 <% content_for :content_title_extra do %>
   <%= page_header_buttons do %>
     <%= present(@registration).admin_status_label %>
@@ -35,6 +35,8 @@
             <dl class="block">
               <dt class="text-info">Registered On</dt>
               <dd><%= format_date(@registration.created_at) %></dd>
+              <dt class="text-info">Receipt Code</dt>
+              <dd><%= @registration.receipt_code %></dd>
               <dt class="text-info">Price</dt>
               <dd><%= price_details(@registration.workshop_price) %></dd>
               <% if @registration.payment_comment %>
@@ -113,6 +115,18 @@
               <tr>
                 <th>Payment Due On</th>
                 <td class="text-info"><%= format_date(@registration.last_payment_due_on) %></td>
+              </tr>
+            <% end %>
+            <tr class="section">
+              <th colspan="2"></th>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align: left"><p>Payments are due on the following dates:</p></td>
+            </tr>
+            <% @registration.payment_schedule.each do |payment| %>
+              <tr class="item_row">
+                <th><%= payment[:due_on].to_date %></th>
+                <td><%= payment[:period_payment].format(no_cents_if_whole: true, symbol: true) %></td>
               </tr>
             <% end %>
           </table>
@@ -207,6 +221,41 @@
               &nbsp;&nbsp;Next payment should be: <span class="text-info"><%= @registration.payment_owed.format %></span>
             <% end %>
           <% end %>
+      
+        <%= subsection title: 'Payment Reminders' do %>
+          <%= simple_form_for @registration, url: admin_registration_path,
+                html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+            <%= f.input :preferred_payment_reminder_hold_until, label: 'No reminder until', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'},
+                         hint: 'When sending reminders in batch, this persons reminder will not be sent unless after the specified date' %>
+      
+            <%= submit_or_cancel cancel: false %>
+          <% end %>
+          <hr/>
+
+          <table class="table table-condensed table-gradient table-hover" style="margin-bottom: 20px;">
+            <thead>
+              <tr>
+                <th width="100">Last Sent On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @registration.payment_reminder_sent_on.nil? %>
+                <tr><td>not yet</td></tr>
+              <% else %>
+                <% @registration.payment_reminder_history.each do |date| %>
+                  <tr>
+                    <td><%= format_date(date) %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        
+          <%= link_to 'Send', send_payment_reminder_admin_registration_path(@registration.id), title: 'Send reminder now', class: 'btn btn-sm btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
+          <% if @registration.preferred_payment_reminder_hold_until && @registration.preferred_payment_reminder_hold_until > Time.now %>
+            <span>&nbsp;&nbsp;Requested not to send reminder until <strong><%= format_date(@registration.preferred_payment_reminder_hold_until) %></strong></span>
+          <% end %>
+        <% end %>
         </div>
         <div class="col-md-3 col-sm-3">
           <ul class="statistics">
@@ -244,44 +293,21 @@
                 <td class="text-info"><%= format_date(@registration.last_payment_due_on) %></td>
               </tr>
             <% end %>
+            <tr class="section">
+              <th colspan="2"></th>
+            </tr>
+            <tr>
+              <td colspan="2" style="text-align: left"><p>Payments are due on the following dates:</p></td>
+            </tr>
+            <% @registration.payment_schedule.each do |payment| %>
+              <tr class="item_row">
+                <th><%= payment[:due_on].to_date %></th>
+                <td><%= payment[:period_payment].format(no_cents_if_whole: true, symbol: true) %></td>
+              </tr>
+            <% end %>
           </table>
         </div>
       </div>
-      
-      <%= subsection title: 'Payment Reminders' do %>
-        <%= simple_form_for @registration, url: admin_registration_path,
-              html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
-          <%= f.input :preferred_payment_reminder_hold_until, label: 'No reminder until', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'},
-                       hint: 'When sending reminders in batch, this persons reminder will not be sent unless after the specified date' %>
-      
-          <%= submit_or_cancel cancel: false %>
-        <% end %>
-        <hr/>
-
-        <table class="table table-condensed table-gradient table-hover" style="margin-bottom: 20px;">
-          <thead>
-            <tr>
-              <th width="100">Last Sent On</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if @registration.payment_reminder_sent_on.nil? %>
-              <tr><td>not yet</td></tr>
-            <% else %>
-              <% @registration.payment_reminder_history.each do |date| %>
-                <tr>
-                  <td><%= format_date(date) %></td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
-        
-        <%= link_to 'Send', send_payment_reminder_admin_registration_path(@registration.id), title: 'Send reminder now', class: 'btn btn-sm btn-default', method: :patch, data: {confirm: "Are you sure you wish to send a reminder email to this person?"} %>
-        <% if @registration.preferred_payment_reminder_hold_until && @registration.preferred_payment_reminder_hold_until > Time.now %>
-          <span>&nbsp;&nbsp;Requested not to send reminder until <strong><%= format_date(@registration.preferred_payment_reminder_hold_until) %></strong></span>
-        <% end %>
-      <% end %>
     </div>
 
     <%#--- Comments Tab %>

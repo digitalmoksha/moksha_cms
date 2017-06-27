@@ -65,7 +65,7 @@ module AdminTheme
       title     << options[:title]
       title     << (content_tag(:small, options[:subtitle], style: 'display: block;')) if options[:subtitle]
 
-      content_tag(:div, content_tag(:h5, title, class: "heading-hr") + content, class: 'block', id: options[:id])
+      content_tag(:div, content_tag(:h5, title) + content, class: 'subsection', id: options[:id])
     end
 
     # Statistics block

@@ -54,6 +54,16 @@ h6.panel-title { font-weight: 300; font-size: 1em;}
   color: #666;
 }
 
+.subsection {
+  margin-bottom: 25px;
+}
+
+.subsection h5 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  font-weight: 500;
+  font-style: italic;
+}
 
 /*--- Tables ---*/
 
