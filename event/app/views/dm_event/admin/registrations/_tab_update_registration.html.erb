@@ -1,7 +1,6 @@
 <%#--- Update Registration Tab %>
 <div class="tab-pane fade" id="update_registration_tab">
-  <%= simple_form_for @registration, url: admin_registration_path,
-        html: { class: 'form-horizontal' }, wrapper: :bs3_horizontal_form, wrapper_mappings: DmAdmin::FormWrapperMappings do |f| %>
+  <%= simple_form_for @registration, url: admin_registration_path, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
   
     <%= subsection title: 'Price' do %>
       <%= f.error_notification message: "Please review the problems below" %>
@@ -16,7 +15,7 @@
         <% if @registration.workshop_price && @registration.workshop_price.price %>
           <% discount_currency = @registration.workshop_price.price.currency.symbol %>
 
-          <%= f.input :discount_value, label: 'Discount', wrapper: :bs3_horizontal_group, input_wrapper_html: {class: 'col-sm-4'} do %>
+          <%= f.input :discount_value, label: 'Discount', wrapper: :bs3_vertical_group, input_wrapper_html: {class: 'col-sm-4'} do %>
             <%= f.input_field :discount_value, as: :string, class: "form-control" %>
             <span class="input-group-addon">
               <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]] %>
