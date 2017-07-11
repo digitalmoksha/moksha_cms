@@ -2,14 +2,13 @@
 
 **dm_core** provides the foundation of common services and features for the MokshaCMS collection of gems.  It includes authentication (Devise), role authorization, user profiles, etc.
 
-_The MokshaCMS collection of gems provides an integrated system of services for content, event, forum, learning, and newsletter management.  It supports sites with multiple languages and mutliple distinct sites per installation.  Administration is built in.  Additional services/engines can be written to provide additional functionality._
+_The MokshaCMS collection of gems provides an integrated system of services for content, event, forum, learning, and newsletter management.  It supports sites with multiple languages and multiple distinct sites per installation.  Administration is built in.  Additional services/engines can be written to provide additional functionality._
 
-- core foundation ([dm_core](https://github.com/digitalmoksha/dm_core))
-- content management ([dm_cms](https://github.com/digitalmoksha/dm_cms))
-- event management ([dm_event](https://github.com/digitalmoksha/dm_event))
-- forum management ([dm_forum](https://github.com/digitalmoksha/dm_forum))
-- learning management ([dm_lms](https://github.com/digitalmoksha/dm_lms))
-- newsletter management ([dm_newsletter](https://github.com/digitalmoksha/dm_newsletter))
+- core foundation (core)
+- content management (cms)
+- event management (event)
+- forum management (forum)
+- newsletter management (newsletter)
 
 ## Installation
 
