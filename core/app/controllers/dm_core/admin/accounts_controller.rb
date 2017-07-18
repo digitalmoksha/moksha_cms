@@ -25,6 +25,10 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
     @account = Account.new(account_params)
     @account.general_validation = true
     if @account.save
+      org_account = Account.current
+      Account.current = @account
+      CmsPage.create_default_site
+      Account.current = org_account
       redirect_to dm_core.admin_account_general_path(@account), notice: 'New Account/Site was successfully created.'
     else
       render action: :general
