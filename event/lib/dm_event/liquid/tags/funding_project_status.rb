@@ -18,7 +18,7 @@ module Liquid
       output                = super
       content               = output.strip
       workshop_id           = @attributes['project_id'] unless @attributes['project_id'].blank?
-      image                 = file_url(@attributes["image"], account_site_assets: context_account_site_assets(context), default_folder: 'images', protected: @attributes['protected'].as_boolean)
+      image                 = file_url(@attributes["image"], base: "#{context_account_site_assets(context)}/images", protected: @attributes['protected'].as_boolean)
       @attributes['style'] += css_style_width(@attributes['width'])
       
       context.registers[:view].render(partial: 'dm_event/liquid_tags/funding_project_status', 

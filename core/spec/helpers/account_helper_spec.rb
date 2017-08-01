@@ -31,8 +31,8 @@ describe DmCore::AccountHelper do
   
   #------------------------------------------------------------------------------
   it "returns the path of the site's media folder" do
-    expect(account_site_assets_media).to eq '/site_assets/test/site/media'
-    expect(account_site_assets_media(false)).to eq 'site_assets/test/site/media'
+    expect(account_site_assets_media).to eq '/site_assets/test/uploads'
+    expect(account_site_assets_media(false)).to eq 'site_assets/test/uploads'
   end
 
   #------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ describe DmCore::AccountHelper do
   #   Pass in false not to include leading slash
   #------------------------------------------------------------------------------
   it "returns url to the site's media assets" do
-    expect(account_site_assets_media_url).to eq 'http://test.example.com/site_assets/test/site/media'
+    expect(account_site_assets_media_url).to eq 'http://test.example.com/site_assets/test/uploads'
   end
   
 end

@@ -16,6 +16,7 @@ class MediaUploader < CarrierWave::Uploader::Base
 
   # Choose what kind of storage to use for this uploader:
   storage :file
+  # storage :aws
 
   # Everything gets stored in the 'media' folder
   #------------------------------------------------------------------------------

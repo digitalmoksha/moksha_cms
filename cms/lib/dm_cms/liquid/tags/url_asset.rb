@@ -15,7 +15,7 @@ module Liquid
         src = MediaFile.url_by_name(@attributes['src'], version: @attributes['version'])
       else
         #--- handle like regular url
-        src = file_url(@attributes['src'], account_site_assets: context_account_site_assets(context), default_folder: 'media', protected: @attributes['protected'].as_boolean)
+        src = file_url(@attributes['src'], base: context_account_site_assets_media(context), protected: @attributes['protected'].as_boolean)
       end
       return src.nil? ? '' : src
     end

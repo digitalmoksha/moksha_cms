@@ -12,11 +12,18 @@ module DmCore
       current_account.account_prefix
     end
 
+    # Returns the path (from the root of the site) to the base site specific directory
+    #   Pass in false not to include leading slash
+    #------------------------------------------------------------------------------
+    def account_site_assets_base(leading_slash = true)
+      leading_slash ? "/site_assets/#{account_prefix}" : "site_assets/#{account_prefix}"
+    end
+
     # Returns the path (from the root of the site) to the site general asset files
     #   Pass in false not to include leading slash
     #------------------------------------------------------------------------------
     def account_site_assets(leading_slash = true)
-      leading_slash ? "/site_assets/#{account_prefix}/site" : "site_assets/#{account_prefix}/site"
+      "#{account_site_assets_base(leading_slash)}/site"
     end
 
     # Returns the path (from the root of the site) to the protected asset files
@@ -31,7 +38,14 @@ module DmCore
     #   Pass in false not to include leading slash
     #------------------------------------------------------------------------------
     def account_site_assets_media(leading_slash = true)
-      account_site_assets(leading_slash) + '/media'
+      "#{account_site_assets_base(leading_slash)}/uploads"
+    end
+
+    # Returns the url of the site's base site specific directory
+    #   Pass in false not to include leading slash
+    #------------------------------------------------------------------------------
+    def account_site_assets_base_url
+      Account.current.url_base + account_site_assets_base(true)
     end
 
     # Returns the url of the site's general asset files

@@ -56,6 +56,11 @@ module LiquidExtensions
     def context_account_site_assets(context)
       context.registers[:account_site_assets]
     end
+
+    #------------------------------------------------------------------------------
+    def context_account_site_assets_media(context)
+      context.registers[:account_site_assets_media]
+    end
   end
 end
 

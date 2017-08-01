@@ -9,9 +9,10 @@ module DmCore::LiquidHelper
   # This assumes that the content is from a trusted source
   #------------------------------------------------------------------------------
   def liquidize_textile(content, arguments = {})
-    doc = RedCloth.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
-                              :registers => { :controller => controller, :view => self,
-                                              :account_site_assets => account_site_assets_url }))
+    doc = RedCloth.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters], 
+                              registers: { controller: controller, view: self,
+                                           account_site_assets: account_site_assets_url,
+                                           account_site_assets_media: account_site_assets_media_url }))
     #doc.hard_breaks = false
     return doc.to_html.html_safe
   end
@@ -20,19 +21,21 @@ module DmCore::LiquidHelper
   # This assumes that the content is from a trusted source
   #------------------------------------------------------------------------------
   def liquidize_markdown(content, arguments = {})
-    doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
-                              :registers => { :controller => controller, :view => self, 
-                                              :account_site_assets => account_site_assets_url }),
-                          :parse_block_html => true)
+    doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters], 
+                              registers: { controller: controller, view: self, 
+                                           account_site_assets: account_site_assets_url,
+                                           account_site_assets_media: account_site_assets_media_url }),
+                              parse_block_html: true)
     return doc.to_html.html_safe
   end
 
   # This assumes that the content is from a trusted source
   #------------------------------------------------------------------------------
   def liquidize_html(content, arguments = {})
-    doc = Liquid::Template.parse(content).render(arguments, :filters => [LiquidFilters], 
-                              :registers => { :controller => controller, :view => self, 
-                                              :account_site_assets => account_site_assets_url })
+    doc = Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters], 
+                              registers: { controller: controller, view: self, 
+                                           account_site_assets: account_site_assets_url,
+                                           account_site_assets_media: account_site_assets_media_url })
     return doc.html_safe
   end
 

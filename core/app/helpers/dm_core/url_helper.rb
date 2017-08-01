@@ -11,7 +11,7 @@ module DmCore
     # will not include the protocol)
     #------------------------------------------------------------------------------
     def file_url(file_name, options = {})
-      options.reverse_merge!  default_folder: 'media', account_site_assets: account_site_assets
+      options.reverse_merge!  base: account_site_assets_media
       if file_name.blank?
         ''
       elsif file_name.start_with?('s3://', 's3s://')
@@ -26,8 +26,7 @@ module DmCore
         file_name.expand_url("/protected_asset/")
       else
         # append our site's asset folder and default folder
-        folder = options[:default_folder].blank? ? '' : "#{options[:default_folder]}/"
-        file_name.expand_url("#{options[:account_site_assets]}/#{folder}")
+        file_name.expand_url("#{options[:base]}/")
       end
     end
 

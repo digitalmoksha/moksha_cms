@@ -21,7 +21,7 @@ module Liquid
         url = MediaFile.url_by_name(src, version: version)
       else
         #--- handle like regular url
-        url = file_url(src, account_site_assets: context_account_site_assets(context), default_folder: 'media', protected: protect)
+        url = file_url(src, base: context_account_site_assets_media(context), protected: protect)
       end
       image_tag(url,  @attributes)
     end
