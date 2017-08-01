@@ -13,17 +13,17 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def render(context)
-      if @attributes['version']
+      src     = @attributes.delete('src')
+      version = @attributes.delete('version')
+      protect = @attributes.delete('protected').as_boolean
+      if version
         #--- pull from MediaFile object
-        src = MediaFile.url_by_name(@attributes['src'], version: @attributes['version'])
-        @attributes.delete('version')
+        url = MediaFile.url_by_name(src, version: version)
       else
         #--- handle like regular url
-        src = file_url(@attributes['src'], account_site_assets: context_account_site_assets(context), default_folder: 'media', protected: @attributes['protected'].as_boolean)
+        url = file_url(src, account_site_assets: context_account_site_assets(context), default_folder: 'media', protected: protect)
       end
-      @attributes.delete('src')
-      
-      image_tag(src,  @attributes)
+      image_tag(url,  @attributes)
     end
   
     #------------------------------------------------------------------------------

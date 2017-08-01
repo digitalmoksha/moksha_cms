@@ -7,12 +7,6 @@ module DmCore
       DmCore::Language.translate_url(request.url, locale)
     end
     
-    # # Usually don't care if a form submits a PUT or POST.  Was something submitted?
-    # #------------------------------------------------------------------------------
-    # def put_or_post?
-    #   request.put? || request.post? || request.patch?
-    # end
-  
     # Given a file name (relative or absolute), generate a full url path (usually
     # will not include the protocol)
     #------------------------------------------------------------------------------
@@ -38,7 +32,7 @@ module DmCore
     end
 
     # Generate an AWS S3 expiring link, using a special formatted url
-    #   s3://bucket_name/object_name?expires=120     => non-SSL, expires in 120 minutes
+    #   s3://bucket_name/object_name?expires=120     => SSL, expires in 120 minutes
     #   s3s://bucket_name/object_name?expires=20     => SSL, expires in 20 minutes
     #   s3s://bucket_name/object_name?expires=public => links directly to file (it must
     #      be a World readable file, and the link will never expire)

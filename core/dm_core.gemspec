@@ -42,12 +42,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'money-rails', '~> 1.8'
   s.add_dependency 'globalize', '~> 5.1.0.beta1'        # translations in database
   s.add_dependency 'exception_notification', '~> 4.2'
-  s.add_dependency 'aws-sdk', '~> 1.49'
-  # TODO s.add_dependency 'aws-sdk', '~> 2'
   s.add_dependency 'biggs', "~> 0.3.3"            # address formatting
   s.add_dependency 'codemirror-rails', '~> 5.16'
   s.add_dependency 'mini_magick', '~> 4.7'
+  s.add_dependency 'aws-sdk', '~> 2.0'
   s.add_dependency 'carrierwave', '~> 1.0'
+  s.add_dependency 'carrierwave-aws', '~> 1.2'
   s.add_dependency 'delayed_job_active_record', '~> 4.1'
   s.add_dependency 'delayed_job', '~> 4.1'
   s.add_dependency 'daemons', '~> 1.2'
