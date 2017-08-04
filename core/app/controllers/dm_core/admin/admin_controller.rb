@@ -59,10 +59,6 @@ private
         end
         
         if is_sysadmin?
-          item[:children] << {text: 'Update Assets', icon_class: :refresh, link: dm_core.admin_dashboard_update_site_assets_url, link_options: {method: :patch} }
-        end
-        
-        if is_sysadmin?
           item[:children] << {text: 'System Admin', icon_class: :wrench, link: dm_core.admin_system_path }
         end
       end
