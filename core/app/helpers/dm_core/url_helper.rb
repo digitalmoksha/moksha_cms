@@ -23,7 +23,7 @@ module DmCore
       elsif options[:protected]
         # a protected asset, append our protected asset name (which will trigger a
         # special route to handle the file)
-        file_name.expand_url("/protected_asset/")
+        file_name.expand_url("#{account_protected_assets_base}/")
       else
         # append our site's asset folder and default folder
         file_name.expand_url("#{options[:base]}/")

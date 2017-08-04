@@ -1,6 +1,10 @@
 module DmCore
   module AccountHelper
 
+    PROTECTED_ASSETS_FOLDER = 'protected_assets'
+    PROTECTED_ASSET_TRIGGER = 'protected_asset'  # name used to trigger the special route
+    SITE_ASSETS_FOLDER      = 'site_assets'
+
     #------------------------------------------------------------------------------
     def current_account
       Account.current
@@ -16,21 +20,30 @@ module DmCore
     #   Pass in false not to include leading slash
     #------------------------------------------------------------------------------
     def account_site_assets_base(leading_slash = true)
-      leading_slash ? "/site_assets/#{account_prefix}" : "site_assets/#{account_prefix}"
+      leading_slash ? "/#{SITE_ASSETS_FOLDER}" : SITE_ASSETS_FOLDER
+    end
+
+    #------------------------------------------------------------------------------
+    def account_protected_assets_base(leading_slash = true)
+      leading_slash ? "/#{PROTECTED_ASSET_TRIGGER}" : PROTECTED_ASSET_TRIGGER
+    end
+
+    #------------------------------------------------------------------------------
+    def account_protected_assets_folder
+      "#{Rails.root}/#{PROTECTED_ASSETS_FOLDER}"
     end
 
     # Returns the path (from the root of the site) to the site general asset files
     #   Pass in false not to include leading slash
     #------------------------------------------------------------------------------
     def account_site_assets(leading_slash = true)
-      "#{account_site_assets_base(leading_slash)}/site"
+      "#{account_site_assets_base(leading_slash)}/content/#{account_prefix}"
     end
 
     # Returns the path (from the root of the site) to the protected asset files
-    #   Pass in false not to include leading slash
     #------------------------------------------------------------------------------
-    def account_protected_assets(leading_slash = true)
-      leading_slash ? "/protected_assets/#{account_prefix}" : "protected_assets/#{account_prefix}"
+    def account_protected_assets_media_folder
+      "#{account_protected_assets_folder}/uploads/#{account_prefix}"
     end
 
     # Returns the path (from the root of the site) to the site's uploadable asset
@@ -38,7 +51,7 @@ module DmCore
     #   Pass in false not to include leading slash
     #------------------------------------------------------------------------------
     def account_site_assets_media(leading_slash = true)
-      "#{account_site_assets_base(leading_slash)}/uploads"
+      "#{account_site_assets_base(leading_slash)}/uploads/#{account_prefix}"
     end
 
     # Returns the url of the site's base site specific directory
