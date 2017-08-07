@@ -51,6 +51,9 @@ private
         item = { text: '', icon_class: :gear, children: [], link: '#' }
         if defined?(DmCms) && can?(:manage_content, :all)
           item[:children] << {text: 'Clear Page Cache', icon_class: :undo, link: dm_cms.admin_expire_cache_path, link_options: {method: :patch} }
+          if is_sysadmin?
+            item[:children] << {text: 'Clear All Page Caches', icon_class: :undo, link: dm_cms.admin_expire_cache_total_path, link_options: {method: :patch} }
+          end
         end
         @admin_theme[:top_menu] << item
         

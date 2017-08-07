@@ -2,7 +2,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
   helper "dm_cms/cms_pages"
   
-  before_action   :current_page, :except => [:index, :file_tree, :expire_cache_total]
+  before_action   :current_page, :except => [:index, :file_tree, :expire_cache, :expire_cache_total]
 
   #------------------------------------------------------------------------------
   def index
@@ -92,17 +92,28 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     redirect_to :action => :index
   end
 
+  # Removes all cache files for this account. This can be used when we're not sure if the
+  # cache file for a changed page has been deleted or not
+  #------------------------------------------------------------------------------
+  def expire_cache
+    #--- expire only items for this account
+    key_start = fragment_cache_key(Account.current.id)
+    expire_fragment(%r{\A#{key_start}})
+
+    respond_to do |format| 
+      format.html { redirect_to({:action => :index}, :notice => 'Page Cache was cleared') } 
+      format.js { head :ok }
+    end
+  end
+
   # Removes all cache files. This can be used when we're not sure if the
   # cache file for a changed page has been deleted or not
   #------------------------------------------------------------------------------
   def expire_cache_total
-    #--- expire only items for this account
-    key_start = fragment_cache_key(Account.current.id)
-    expire_fragment(%r{\A#{key_start}})
-    # expire_fragment(%r{\S}) #--- this would expire *all* cache files
+    expire_fragment(%r{\S})
 
     respond_to do |format| 
-      format.html { redirect_to({:action => :index}, :notice => 'Page Cache was cleared') } 
+      format.html { redirect_to({:action => :index}, :notice => 'Page Cache for all sites cleared') } 
       format.js { head :ok }
     end
   end

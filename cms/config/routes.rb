@@ -2,7 +2,8 @@ DmCms::Engine.routes.draw do
   scope ":locale" do
 
     namespace :admin do
-      patch '/cms_pages/expire_cache_total',                    controller: 'cms_pages', action: :expire_cache_total, as: :expire_cache
+      patch '/cms_pages/expire_cache',                          controller: 'cms_pages', action: :expire_cache, as: :expire_cache
+      patch '/cms_pages/expire_cache_total',                    controller: 'cms_pages', action: :expire_cache_total, as: :expire_cache_total
       post  '/cms_pages/ajax_sort',                             controller: 'cms_pages', action: :ajax_sort, as: :cms_page_sort
       get   '/dashboard/widget_blog_comments(/:comment_day)',   controller: 'dashboard', action: :widget_blog_comments, as: :widget_blog_comments
       resources :cms_pages do
