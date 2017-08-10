@@ -15,8 +15,7 @@ module DmCore::Admin::ApplicationHelper
   #------------------------------------------------------------------------------
   def admin_path_active_class?(*paths)
     active = false
-    # paths.each { |path| active ||= current_page?(path) }
-    paths.each { |path| active ||= request.url.include?(path) }
+    paths.flatten.each { |path| active ||= request.url.include?(path) }
     active ? 'active' : nil
   end
   

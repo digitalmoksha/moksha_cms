@@ -176,6 +176,12 @@ protected
     end    
   end
   
+  # https://github.com/ryanb/cancan/wiki/ability-for-other-users
+  #------------------------------------------------------------------------------
+  def current_ability
+    current_user.ability
+  end
+  
   # Update the user's last_access if signed_in
   #------------------------------------------------------------------------------
   def update_user

@@ -40,6 +40,16 @@ module DmCore
         scope                   :current_account_users, -> { includes(:user_site_profiles, :user_profile, :current_site_profile).references(:user_site_profiles).where("user_site_profiles.account_id = #{Account.current.id}") }
         scope                   :online, -> { includes(:user_site_profiles).where('user_site_profiles.last_access_at >= ?', 10.minutes.ago.utc) }
 
+
+        # In a few cases, we need to be able to check an ability where we only have a
+        # passed in User object.  This allows that
+        # https://github.com/ryanb/cancan/wiki/ability-for-other-users
+        #------------------------------------------------------------------------------
+        def ability
+          @ability ||= Ability.new(self)
+        end
+        delegate :can?, :cannot?, :to => :ability
+        
         # Keep the profile email in sync with the user's email
         #------------------------------------------------------------------------------
         def update_profile_email
