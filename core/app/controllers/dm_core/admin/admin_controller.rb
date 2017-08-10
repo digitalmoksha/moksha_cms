@@ -92,8 +92,10 @@ private
       # set the active state to true if the path matches
       @admin_theme[:main_menu].each do |item|
         item[:active] = admin_path_active_class?(item[:active_links] || item[:link]) if item[:link] && item[:link] != '#'
-        item[:children]&.each do |child|
-          child[:active] = admin_path_active_class?(child[:active_links] || child[:link]) if child[:link] && child[:link] != '#'
+        if item[:children]
+          item[:children].each do |child|
+            child[:active] = admin_path_active_class?(child[:active_links] || child[:link]) if child[:link] && child[:link] != '#'
+          end
         end
       end
 
