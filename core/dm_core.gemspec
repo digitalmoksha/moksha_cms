@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'actionview-encoded_mail_to', '~> 1.0'
   s.add_dependency 'devise', '~> 4.2'           # Authentication
   s.add_dependency 'validates_email_format_of'
-  s.add_dependency "cancancan", "~> 1.13"         # Authorization
+  s.add_dependency "cancancan", "~> 2.0"         # Authorization
   s.add_dependency "simple_form", '~> 3.2'        # Form handling
   s.add_dependency "will_paginate", "~> 3.1"      # pagination
   s.add_dependency 'country_select', "~> 1.3"

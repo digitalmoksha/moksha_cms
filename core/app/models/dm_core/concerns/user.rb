@@ -46,7 +46,7 @@ module DmCore
         # https://github.com/ryanb/cancan/wiki/ability-for-other-users
         #------------------------------------------------------------------------------
         def ability
-          @ability ||= Ability.new(self)
+          @ability ||= ::Ability.new(self)
         end
         delegate :can?, :cannot?, :to => :ability
         
