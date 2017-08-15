@@ -15,7 +15,7 @@ cs:
     ticket_contact: Kontaktní informace
     ticket_registered_following_event: "byl/a jste přihlášen/a na program:"
     ticket_outstanding_balance: "Podle naší evidence Vám z kurzovného zbývá uhradit:"
-    ticket_payment_link_leadin: "Tuto částku můžete zaplatit některým ze způsobů uvedených na následujícím linku:"
+    ticket_payment_link_leadin: "Tuto částku můžete zaplatit některým ze způsobů uvedených na následujícím linku"
     ticket_payment_link_text: Způsoby platby
     ticket_payment_reminder_subject: "Připomínka úhrady kurzovného: %{value}"
     ticket_if_already_paid: "Tento e-mail je automaticky generovaný a odeslaný naším systémem. Pokud jste výše uvedenou částku již dříve zaplatil/a, nebo se domníváte, že tato připomínka není oprávněná, zašlete prosím e-mail na %{value}. Pokud jste platbu provedli v posledních třech dnech, můžete tuto připomínku ignorovat."
