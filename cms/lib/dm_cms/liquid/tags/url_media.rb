@@ -4,18 +4,12 @@ module Liquid
     include ActionView::Helpers::AssetTagHelper
     include DmCore::UrlHelper
     include DmCore::ParamsHelper
-    include DmCore::AccountHelper
 
     #------------------------------------------------------------------------------
     def render(context)
-      if @attributes['version']
-        #--- pull from MediaFile object
-        src = MediaFile.url_by_name(@attributes['src'], version: @attributes['version'])
-      else
-        #--- handle like regular url
-        src = file_url(@attributes['src'], base: context_account_site_assets_media(context), protected: @attributes['protected'].as_boolean)
-      end
-      return src.nil? ? '' : src
+      url = DmCms::MediaUrlService.call(@attributes['src'], version: @attributes['version'] || :original, 
+                                        protected: @attributes['protected'].as_boolean)
+      return url.nil? ? '' : url
     end
   
     def self.details
@@ -38,5 +32,9 @@ END_OF_DESCRIPTION
     end
   end
   
-  Template.register_tag('url_media', UrlMedia)
+  Template.register_tag('url_media',  UrlMedia)
+  Template.register_tag('url_asset',  UrlMedia)  # TODO - DEPRECATED 
+  Template.register_tag('image_path', UrlMedia)  # TODO - DEPRECATED 
+  Template.register_tag('url_image',  UrlMedia)  # TODO - DEPRECATED 
+  
 end

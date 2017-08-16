@@ -9,21 +9,14 @@ module Liquid
     include ActionView::Helpers::AssetTagHelper
     include DmCore::UrlHelper
     include DmCore::ParamsHelper
-    include DmCore::AccountHelper
 
     #------------------------------------------------------------------------------
     def render(context)
       src     = @attributes.delete('src')
-      version = @attributes.delete('version')
+      version = @attributes.delete('version') || :original
       protect = @attributes.delete('protected').as_boolean
-      if version
-        #--- pull from MediaFile object
-        url = MediaFile.url_by_name(src, version: version)
-      else
-        #--- handle like regular url
-        url = file_url(src, base: context_account_site_assets_media(context), protected: protect)
-      end
-      image_tag(url,  @attributes)
+      url = DmCms::MediaUrlService.call(src, version: version, protected: protect)
+      image_tag(url, @attributes)
     end
   
     #------------------------------------------------------------------------------

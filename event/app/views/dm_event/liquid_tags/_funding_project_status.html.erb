@@ -1,4 +1,4 @@
-<% workshop = Workshop.find(workshop_id) %>
+<% workshop = Workshop.find_by_slug(workshop_id) %>
 <% percent = workshop.total_paid.cents.percent_of(workshop.funding_goal.cents) %>
 <div markdown="0" class="donation_card <%= div_class %>" style="<%= div_style %>">
   <%= image_tag image %>
