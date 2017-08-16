@@ -16,7 +16,7 @@ module DmCore
         ''
       elsif file_name.start_with?('s3://', 's3s://')
         # amazon S3 url - generate a signed expiring link
-        s3_generate_expiring_link(file_name)
+        DmCore::S3SignedUrlService.new.generate(file_name)
       elsif file_name.absolute_url?
         # it's absolute, nothing to do
         file_name
@@ -28,29 +28,6 @@ module DmCore
         # append our site's asset folder and default folder
         file_name.expand_url("#{options[:base]}/")
       end
-    end
-
-    # Generate an AWS S3 expiring link, using a special formatted url
-    #   s3://bucket_name/object_name?expires=120     => SSL, expires in 120 minutes
-    #   s3s://bucket_name/object_name?expires=20     => SSL, expires in 20 minutes
-    #   s3s://bucket_name/object_name?expires=public => links directly to file (it must
-    #      be a World readable file, and the link will never expire)
-    # All urls are SSL
-    #------------------------------------------------------------------------------
-    def s3_generate_expiring_link(url)
-      access_key  = Account.current.theme_data['AWS_ACCESS_KEY_ID']
-      secret_key  = Account.current.theme_data['AWS_SECRET_ACCESS_KEY']
-      region      = Account.current.theme_data['AWS_REGION']
-      uri         = URI.parse(url)
-      bucket      = uri.host
-      object_name = uri.path.gsub(/^\//, '')
-      expire_mins = (uri.query.blank? ? nil : CGI::parse(uri.query)['expires'][0]) || '10'
-      expire_secs = expire_mins.to_i.minutes.to_i  # will be 0 if 'public' or some other non-integer string
-      client      = Aws::S3::Client.new(access_key_id: access_key, secret_access_key: secret_key, region: region)
-      s3          = Aws::S3::Resource.new(client: client)
-      object      = s3.bucket(bucket).object(object_name)
-
-      expire_secs == 0 ? object.public_url : object.presigned_url(:get, expires_in: expire_secs)
     end
 
     # if a relative url path is given, then expand it by prepending the supplied 
