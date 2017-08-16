@@ -2,11 +2,13 @@
 # Including this module will allow you to simplify the UserCreator.new(params).call 
 # or UserCreator.new.call(params) notations into UserCreator.call(params)
 #------------------------------------------------------------------------------
-module ServiceSupport
-  extend ActiveSupport::Concern
-  class_methods do
-    def call(*args)
-      new(*args).call
+module DmCore
+  module ServiceSupport
+    extend ActiveSupport::Concern
+    class_methods do
+      def call(*args)
+        new(*args).call
+      end
     end
   end
 end
