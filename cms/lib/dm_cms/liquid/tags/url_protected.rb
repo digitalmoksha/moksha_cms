@@ -4,12 +4,11 @@ module Liquid
     include ActionView::Helpers::AssetTagHelper
     include DmCore::UrlHelper
     include DmCore::ParamsHelper
-    include DmCore::AccountHelper
 
     #------------------------------------------------------------------------------
     def render(context)
-      src = file_url(@attributes["src"], base: context_account_site_assets(context), protected: true)
-      return src.nil? ? '' : src
+      url = DmCms::MediaUrlService.call(@attributes['src'], protected: true)
+      return url.nil? ? '' : url
     end
   
     def self.details

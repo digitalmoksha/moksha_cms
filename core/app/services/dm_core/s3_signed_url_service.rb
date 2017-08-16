@@ -12,7 +12,7 @@ module DmCore
     def initialize(options = {})
       @access_key  = options[:access_key] || Account.current.theme_data['AWS_ACCESS_KEY_ID']
       @secret_key  = options[:secret_key] || Account.current.theme_data['AWS_SECRET_ACCESS_KEY']
-      @region      = options[:region] || Account.current.theme_data['AWS_REGION']
+      @region      = options[:region] || Account.current.theme_data['AWS_REGION'] || Aws.config[:region]
     end
 
     #------------------------------------------------------------------------------

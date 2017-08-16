@@ -7,6 +7,12 @@ describe DmCms::MediaUrlService, type: :service do
     let(:url)    { 'http://test.example.com/site_assets/uploads/test/media/2017/test.png' }
     let(:url_sm) { 'http://test.example.com/site_assets/uploads/test/media/2017/test_sm.png' }
 
+    it 'returns missing image when nil or not found' do
+      allow(MediaFile).to receive(:url_by_name).and_return(nil)
+      expect(DmCms::MediaUrlService.call('test.png')).to eq(DmCms::MediaUrlService::IMAGE_MISSING)
+      expect(DmCms::MediaUrlService.call(nil)).to eq(DmCms::MediaUrlService::IMAGE_MISSING)
+    end
+
     it 'with relative path returns url to media' do
       allow(MediaFile).to receive(:url_by_name).and_return(url)
       expect(DmCms::MediaUrlService.call('test.png')).to eq(url)

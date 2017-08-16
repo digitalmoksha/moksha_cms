@@ -7,29 +7,6 @@ module DmCore
       DmCore::Language.translate_url(request.url, locale)
     end
     
-    # Given a file name (relative or absolute), generate a full url path (usually
-    # will not include the protocol)
-    #------------------------------------------------------------------------------
-    def file_url(file_name, options = {})
-      options.reverse_merge!  base: account_site_assets_media
-      if file_name.blank?
-        ''
-      elsif file_name.start_with?('s3://', 's3s://')
-        # amazon S3 url - generate a signed expiring link
-        DmCore::S3SignedUrlService.new.generate(file_name)
-      elsif file_name.absolute_url?
-        # it's absolute, nothing to do
-        file_name
-      elsif options[:protected]
-        # a protected asset, append our protected asset name (which will trigger a
-        # special route to handle the file)
-        file_name.expand_url("#{account_protected_assets_base}/")
-      else
-        # append our site's asset folder and default folder
-        file_name.expand_url("#{options[:base]}/")
-      end
-    end
-
     # if a relative url path is given, then expand it by prepending the supplied 
     # path.
     #------------------------------------------------------------------------------
