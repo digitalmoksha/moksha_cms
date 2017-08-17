@@ -1,24 +1,22 @@
 # For uploading files into the media library.  Creates versions based on
 # settings in the Account.  Will also create retina versions automatically.
-# Files are stored in the theme's 'media' folder.  User can specify a single
+# Files are stored in `uploads` in the site specific `media` folder.  User can specify a single
 # subfolder to store the file, giving a little extra flexibility.
-# At the moment, files are in the public folders.  Future version will
+# At the moment, files are in the public folders.  Future version may
 # allow uploading protected files.
 #
 # make sure ghostscript is installed for PDF thumbnailing
-# on OSX, `brew install ghostscript`
+# on macOS, `brew install ghostscript`
 #------------------------------------------------------------------------------
 class MediaUploader < CarrierWave::Uploader::Base
   include DmCore::AccountHelper
-
-  # Include RMagick or MiniMagick support:
   include CarrierWave::MiniMagick
 
-  # Choose what kind of storage to use for this uploader:
-  storage :file
-  # storage :aws
+  # media files could be stored locally or on a cloud provider.
+  # let the main app decide
+  # storage :file
 
-  # Everything gets stored in the 'media' folder
+  # Everything gets stored in the `uploads/[site]/media` folder
   #------------------------------------------------------------------------------
   def store_dir
     partition_dir = model.folder
@@ -65,12 +63,9 @@ class MediaUploader < CarrierWave::Uploader::Base
   end
   
   # From: https://github.com/jhnvz/retina_rails
-  # Process retina quality of the image.
-  # Works with ImageMagick and MiniMagick
-  # === Parameters
-  #
-  # [percentage (Int)] quality in percentage
-  #
+  # Process retina quality of the image. Works with ImageMagick and MiniMagick
+  #   Params: [percentage (Int)] quality in percentage
+  #------------------------------------------------------------------------------
   def retina_quality(percentage)
     manipulate! do |img|
       if defined?(Magick)
@@ -168,25 +163,18 @@ protected
 
   #------------------------------------------------------------------------------
   def thumbnable_retina?(new_file)
-    model.generate_retina? ? (image?(new_file) || pdf?(new_file)) : false
+    model.generate_retina? ? thumbnable?(new_file) : false
   end
 
   #------------------------------------------------------------------------------
   def image?(new_file)
-    if new_file.content_type
-      new_file.content_type.start_with? 'image'
-    else
-      new_file.model.image?
-    end
+    model.new_record? ? new_file.content_type.start_with?('image') : model.image?
   end
 
   #------------------------------------------------------------------------------
   def pdf?(new_file)
-    if new_file.content_type
-      new_file.content_type.end_with? 'pdf'
-    else
-      new_file.model.pdf?
-    end
+    model.new_record? ? new_file.content_type.start_with?('pdf') : model.pdf?
   end
+  
   
 end
