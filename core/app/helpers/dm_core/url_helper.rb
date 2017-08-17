@@ -60,14 +60,14 @@ module DmCore
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
     def site_asset_media_path(src)
-      rewrite_asset_path(src.expand_url("#{account_site_assets_media}/"))
+      rewrite_asset_path(DmCms::MediaUrlService.call(src))
     end
 
     # Returns a path to a site assets, relative to the site_assets folder
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
     def site_asset_media_url(src)
-      rewrite_asset_path(src.expand_url("#{account_site_assets_media_url}/"))
+      rewrite_asset_path(DmCms::MediaUrlService.call(src))
     end
 
     #------------------------------------------------------------------------------
