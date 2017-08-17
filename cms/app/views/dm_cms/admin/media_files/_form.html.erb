@@ -21,23 +21,19 @@
         <% end %>
       <% end %>
       <div class="media-body">
-        <table class='table' style="border-top: none;">
-          <tr>
-            <th>URL</th>
-            <td><%= @media_file.media.url %></td>
-          </tr>
-        </table>
         <table class='table table-condensed table-bordered'>
           <thead>
             <tr>
-              <th>Name</th>
+              <th></th>
+              <th>Usage example</th>
               <th>Version</th>
-              <th>File Size</th>
+              <th class="nowrap">File Size</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong><%= link_to @media_file.short_location, @media_file.media.url %></strong></td>
+              <td><strong><%= link_to icons(:view), @media_file.media.url, target: '_blank' %></strong></td>
+              <td>{% photo src: '<%= @media_file.short_location %>' %}</td>
               <td><strong>original</strong></td>
               <td><strong><%= number_to_human_size @media_file.media.file.size, precision: 3 %></strong></td>
             </tr>
@@ -45,15 +41,26 @@
               <% @media_file.media.versions.each do |key, value| %>
                   <% if @media_file.media.version_exists?(key) %>
                   <tr>
-                    <td><%= link_to @media_file.short_location(key), value.url %></td>
+                    <td><%= link_to icons(:view), value.url, target: '_blank' %></td>
+                    <td>{% photo src: '<%= @media_file.short_location(key) %>', version: '<%= key %>' %}</td>
                     <td><%= key %></td>
-                    <td><%= number_to_human_size value.file.size, precision: 3 %></td>
+                    <td class="nowrap"><%= number_to_human_size value.file.size, precision: 3 %></td>
                   </tr>
                 <% end %>
               <% end %>
             <% end %>
           </tbody>
         </table>
+        <p class="help-block">
+          <u><strong>Other examples:</strong></u><br>
+          {% image src: '<%= @media_file.short_location %>' %}<br>
+          {% url_media src: '<%= @media_file.short_location %>' %}
+        </p>
+        <p class="help-block">
+          <u><strong>URL:</strong> (For future proofing, avoid using this url.  Use helper tags mentioned above)</u><br>
+          <%= @media_file.media.url %><br>
+        </p>
+        
       </div>
     </div>
   <% end %>
@@ -68,12 +75,11 @@
   <%= panel title: @title, toolbar: toolbar do %>
 
   <% if @media_file.new_record? %>
-    <% folders = Dir["#{Rails.root}/public/#{account_site_assets_media(false)}/*/"].map { |a| File.basename(a) } %>
     <%= f.input :media, error: false, label: 'Media Location', wrapper: :bs3_horizontal_group, hint: 'You can select or type a folder to save the uploaded file into.  Default will be the current year.' do %>
         <%= content_tag :div, class: "input-group-btn" do %>
           <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" >Folder <span class="caret"></span></button>
           <ul class="dropdown-menu dropdown-field" data-field="folder_field">
-            <% folders.sort.each do |folder| %>
+            <% @folder_names.each do |folder| %>
               <li><a href="#"><%= folder %></a></li>
             <% end %>
           </ul>

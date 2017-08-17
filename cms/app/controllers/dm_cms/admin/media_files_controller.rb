@@ -19,7 +19,8 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def new
-    @media_file = MediaFile.new
+    @media_file   = MediaFile.new
+    prepare_folder_names
   end
   
   #------------------------------------------------------------------------------
@@ -45,6 +46,7 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
     if @media_file.errors.empty?
       redirect_to admin_media_files_url, notice: 'Media successfully uploaded'
     else
+      prepare_folder_names
       render action: :new
     end
   end
@@ -71,6 +73,11 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
   end
   
 private
+
+  #------------------------------------------------------------------------------
+  def prepare_folder_names
+    @folder_names = MediaFile.distinct(:folder).order(:folder).pluck(:folder)   
+  end
 
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
