@@ -1,3 +1,3 @@
 module DmCore
-  VERSION = "5.0.30"
+  VERSION = "5.0.31"
 end

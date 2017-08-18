@@ -50,15 +50,19 @@ class MediaUploader < CarrierWave::Uploader::Base
     if pdf?(self)
       self.convert(:jpg)
       self.resize_and_pad(width, height)
+      self.file.content_type = 'image/jpeg'
     else
       self.resize_to_fill(width, height)
     end
   end
   
-  # Convert to png if a pdf, then size to a specfic width
+  # Convert to jpg if a pdf, then size to a specfic width
   #------------------------------------------------------------------------------
   def size_image_pdf(width)
-    self.convert(:jpg, 0) if pdf?(self)
+    if pdf?(self)
+      self.convert(:jpg, 0)
+      self.file.content_type = 'image/jpeg'
+    end
     self.resize_to_width(width)
   end
   
@@ -81,69 +85,72 @@ class MediaUploader < CarrierWave::Uploader::Base
   # Create different versions of image files
   #   Retina naming: http://blog.remarkablelabs.com/2013/01/creating-retina-images-with-carrierwave
   #------------------------------------------------------------------------------
-  version :retina_lg, :if => :thumbnable_retina? do
+  version :retina_lg, if: :thumbnable_retina? do
     process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_large_width * 2]
-    process :size_image_pdf => [900 * 2]
-    process :retina_quality => 60
-    def full_filename(for_file = model.media.file)
-      name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
-      pdf?(self) ? (name.chomp(File.extname(name)) + '.jpg') : name
+    process size_image_pdf: [900 * 2]
+    process retina_quality: 60
+    def full_filename(for_file = model.file.file)
+      name = filename_retina(super)
+      filename_pdf_to_jpg(name)
     end
   end
-  version :lg, :if => :thumbnable? do
+  version :lg, if: :thumbnable? do
     process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_large_width]
-    process :size_image_pdf => [900]
+    process size_image_pdf: [900]
     def full_filename (for_file = model.file.file)
-      pdf?(self) ? (super.chomp(File.extname(super)) + '.jpg') : super
+      filename_pdf_to_jpg(super)
     end
   end
 
-  version :retina_md, :if => :thumbnable_retina?, :from_version => :retina_lg do
+  #------------------------------------------------------------------------------
+  version :retina_md, if: :thumbnable_retina?, from_version: :retina_lg do
     process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_medium_width * 2]
-    process :size_image_pdf => [600 * 2]
-    process :retina_quality => 60
-    def full_filename(for_file = model.media.file)
-      name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
-      pdf?(self) ? (name.chomp(File.extname(name)) + '.jpg') : name
+    process size_image_pdf: [600 * 2]
+    process retina_quality: 60
+    def full_filename(for_file = model.file.file)
+      name = filename_retina(super)
+      filename_pdf_to_jpg(name)
     end
   end
-  version :md, :if => :thumbnable?, :from_version => :lg do
+  version :md, if: :thumbnable?, from_version: :lg do
     process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_medium_width]
-    process :size_image_pdf => [600]
+    process size_image_pdf: [600]
     def full_filename (for_file = model.file.file)
-      pdf?(self) ? (super.chomp(File.extname(super)) + '.jpg') : super
+      filename_pdf_to_jpg(super)
     end
   end
 
-  version :retina_sm, :if => :thumbnable_retina?, :from_version => :retina_md do
+  #------------------------------------------------------------------------------
+  version :retina_sm, if: :thumbnable_retina?, from_version: :retina_md do
     process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_small_width * 2]
-    process :size_image_pdf => [300 * 2]
-    process :retina_quality => 60
-    def full_filename(for_file = model.media.file)
-      name = super.tap {|file_name| file_name.gsub!(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub!('retina_', '') }
-      pdf?(self) ? (name.chomp(File.extname(name)) + '.jpg') : name
+    process size_image_pdf: [300 * 2]
+    process retina_quality: 60
+    def full_filename(for_file = model.file.file)
+      name = filename_retina(super)
+      filename_pdf_to_jpg(name)
     end
   end
-  version :sm, :if => :thumbnable?, :from_version => :md do
+  version :sm, if: :thumbnable?, from_version: :lg do
     process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_small_width]
-    process :size_image_pdf => [300]
+    process size_image_pdf: [300]
     def full_filename (for_file = model.file.file)
-      pdf?(self) ? (super.chomp(File.extname(super)) + '.jpg') : super
+      filename_pdf_to_jpg(super)
     end
   end
 
-  version :thumb, :if => :thumbnable?, :from_version => :md do
+  #------------------------------------------------------------------------------
+  version :thumb, if: :thumbnable?, from_version: :md do
     process :auto_orient
     # process thumb_image_pdf: [Account.current.preferred_image_thumbnail_width, Account.current.preferred_image_thumbnail_width]
     process thumb_image_pdf: [200, 200]
     def full_filename (for_file = model.file.file)
-      pdf?(self) ? (super.chomp(File.extname(super)) + '.jpg') : super
+      filename_pdf_to_jpg(super)
     end
   end
 
@@ -176,5 +183,13 @@ protected
     model.new_record? ? new_file.content_type.end_with?('pdf') : model.pdf?
   end
   
-  
+  #------------------------------------------------------------------------------
+  def filename_pdf_to_jpg(filename)
+    pdf?(self) ? (filename.chomp(File.extname(filename)) + '.jpg') : filename
+  end
+
+  #------------------------------------------------------------------------------
+  def filename_retina(filename)
+    filename.gsub(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub('retina_', '')
+  end
 end
