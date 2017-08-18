@@ -173,7 +173,7 @@ protected
 
   #------------------------------------------------------------------------------
   def pdf?(new_file)
-    model.new_record? ? new_file.content_type.start_with?('pdf') : model.pdf?
+    model.new_record? ? new_file.content_type.end_with?('pdf') : model.pdf?
   end
   
   
