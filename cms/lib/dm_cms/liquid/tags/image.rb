@@ -7,14 +7,13 @@ module Liquid
   class Image < DmCore::LiquidTag
     include ActionView::Helpers::TagHelper 
     include ActionView::Helpers::AssetTagHelper
-    include DmCore::UrlHelper
-    include DmCore::ParamsHelper
 
     #------------------------------------------------------------------------------
     def render(context)
-      src     = @attributes.delete('src')
-      version = @attributes.delete('version') || :original
-      protect = @attributes.delete('protected').as_boolean
+      @attributes.symbolize_keys!
+      src     = @attributes.delete(:src)
+      version = @attributes.delete(:version) || :original
+      protect = @attributes.delete(:protected).as_boolean
       url = DmCms::MediaUrlService.call(src, version: version, protected: protect)
       image_tag(url, @attributes)
     end

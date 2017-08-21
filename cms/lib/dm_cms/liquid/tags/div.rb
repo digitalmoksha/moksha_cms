@@ -1,21 +1,23 @@
+# Simple div tag
+#
+# {% div id: some_id, class: "class1 class2", style: "color: red; background-color: #aaa;" %}
+# ...content
+# {% enddiv %}
+#------------------------------------------------------------------------------
 module Liquid
   class Div < DmCore::LiquidBlock
+    include ActionView::Helpers::TagHelper
 
     #------------------------------------------------------------------------------
     def render(context)
-      @attributes.reverse_merge!  'class' =>  '', 'id' => '', 'style' => '', 'markdown' => ''
+      @attributes.symbolize_keys!      
+      @attributes[:markdown] = (@attributes[:markdown].as_boolean ? 1 : 0) if @attributes[:markdown]
 
-      output    = super
-      style     = "style='#{@attributes["style"]}'" unless @attributes['style'].blank?
-      dclass    = "class='#{@attributes["class"]}'" unless @attributes['class'].blank?
-      id        = "id='#{@attributes["id"]}'" unless @attributes['id'].blank?
-      markdown  = "markdown='#{@attributes["markdown"]}'" unless @attributes['markdown'].blank?
-      
-      out  = "<div #{[id, dclass, style, markdown].join(' ')}>"
-      out += output
-      out += "</div>"
+      content = super
+      content_tag :div, content, @attributes, false
     end
 
+    #------------------------------------------------------------------------------
     def self.details
       { name: self.tag_name,
         summary: 'HTML div block',
