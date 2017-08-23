@@ -20,17 +20,15 @@ module Liquid
       
       # return the list of tags that are available.  Tags available at any instance is
       # the global tags, the current theme's tags, and the parent theme's tags.
+      # theme tags will override global tags
       #------------------------------------------------------------------------------
       def tags
-        if Account.current.nil?
-          tags_namespaced('system_tags').merge(@tags)
-        else
-          t = tags_namespaced('system_tags').merge(@tags).merge(tags_namespaced(Account.current.current_theme))
-          
-          #--- if parent theme, reverse_merge tags - they should not override current theme tags
-          t.reverse_merge!(tags_namespaced(Account.current.parent_theme)) if Account.current.parent_theme
-          return t
+        t = @tags.merge(tags_namespaced('system_tags'))
+        unless Account.current.nil?
+          t.merge!(tags_namespaced(Account.current.parent_theme)) if Account.current.parent_theme
+          t.merge!(tags_namespaced(Account.current.current_theme))
         end
+        return t
       end
       
       #------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 #   s3s://bucket_name/object_name?expires=20     => SSL, expires in 20 minutes
 #   s3s://bucket_name/object_name?expires=public => links directly to file (it must
 #      be a World readable file, and the link will never expire)
-# All urls are SSL
+# All urls are SSL.  Defaults to expiring after 10 minutes
 #------------------------------------------------------------------------------
 module DmCore
   class S3SignedUrlService
@@ -20,7 +20,7 @@ module DmCore
       uri         = URI.parse(url)
       bucket      = uri.host
       object_name = uri.path.gsub(/^\//, '')
-      expire_mins = (uri.query.blank? ? nil : CGI::parse(uri.query)['expires'][0]) || 'public'
+      expire_mins = (uri.query.blank? ? nil : CGI::parse(uri.query)['expires'][0]) || '10'
       expire_secs = expire_mins.to_i.minutes.to_i  # will be 0 if 'public' or some other non-integer string
       client      = Aws::S3::Client.new(access_key_id: @access_key, secret_access_key: @secret_key, region: @region)
       s3          = Aws::S3::Resource.new(client: client)
