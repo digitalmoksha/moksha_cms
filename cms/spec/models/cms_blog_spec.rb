@@ -31,6 +31,12 @@ describe CmsBlog do
       expect(blog2).not_to be_valid
       expect(blog2.errors[:slug]).to include("has already been taken")
     end
+    
+    #------------------------------------------------------------------------------
+    it 'creates an auto-generated slug based on the title' do
+      blog = create(:blog, slug: nil)
+      expect(blog.slug).to eq 'test-blog'
+    end
 
   end
 
