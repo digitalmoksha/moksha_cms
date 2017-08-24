@@ -33,11 +33,9 @@ describe DmCms::MediaUrlService, type: :service do
 
     it 'returns an expiring S3 link' do
       # http://docs.aws.amazon.com/sdkforruby/api/Aws/ClientStubs.html
-      Aws.config.update({ 
-        region: 'eu-west-1',
-        s3: { stub_responses: {} }
-      })
-      expect(DmCms::MediaUrlService.call('s3://bucket/test.png')).to eq('https://bucket.s3-eu-west-1.amazonaws.com/test.png')
+      Aws.config.update({ region: 'eu-west-1', s3: { stub_responses: {} } })
+      expect(DmCms::MediaUrlService.call('s3://bucket/test.png')).to include('https://bucket.s3-eu-west-1.amazonaws.com/test.png')
+      expect(DmCms::MediaUrlService.call('s3://bucket/test.png')).to include('Expires=')
     end
   end
 end
