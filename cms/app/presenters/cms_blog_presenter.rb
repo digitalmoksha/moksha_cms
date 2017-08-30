@@ -10,7 +10,6 @@ class CmsBlogPresenter < BasePresenter
   #------------------------------------------------------------------------------
   def visibility
     vis = cms_blog.visibility_to_s
-    puts vis
     case vis
     when 'public'
       icon_label(:public, vis, icon_class: 'text-success')
