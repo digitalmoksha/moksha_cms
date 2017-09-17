@@ -17,7 +17,7 @@ class CustomFieldDef < ApplicationRecord
   default_scope           { where(account_id: Account.current.id) }
 
   translates              :label, :description, fallbacks_for_empty_translations: true
-  globalize_accessors     locales: DmCore::Language.language_array
+  globalize_accessors     locales: I18n.available_locales
 
   validates_presence_of   :field_type
   validates_length_of     :field_type, maximum: 20

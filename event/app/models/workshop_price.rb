@@ -18,11 +18,14 @@ class WorkshopPrice < ApplicationRecord
 
   # --- globalize
   translates              :price_description, :sub_description, :payment_details, fallbacks_for_empty_translations: true
-  globalize_accessors     locales: DmCore::Language.language_array
+  globalize_accessors     locales: I18n.available_locales
 
-  monetize                :price_cents, with_model_currency: :price_currency, allow_nil: true
-  monetize                :alt1_price_cents, with_model_currency: :alt1_price_currency, allow_nil: true
-  monetize                :alt2_price_cents, with_model_currency: :alt2_price_currency, allow_nil: true
+  monetize                :price_cents, with_model_currency: :price_currency, allow_nil: true,
+                            numericality: { :greater_than_or_equal_to => 0,:less_than_or_equal_to => 10000000 }
+  monetize                :alt1_price_cents, with_model_currency: :alt1_price_currency, allow_nil: true,
+                            numericality: { :greater_than_or_equal_to => 0,:less_than_or_equal_to => 10000000 }
+  monetize                :alt2_price_cents, with_model_currency: :alt2_price_currency, allow_nil: true,
+                            numericality: { :greater_than_or_equal_to => 0,:less_than_or_equal_to => 10000000 }
 
   include RankedModel
   ranks                   :row_order, with_same: :workshop_id
@@ -34,6 +37,9 @@ class WorkshopPrice < ApplicationRecord
   validates_presence_of   :alt2_price_currency, if: Proc.new { |w| w.alt2_price_cents }
   validates_presence_of   :recurring_period,    if: Proc.new { |w| w.recurring_number }
   validates_presence_of   :recurring_number,    if: Proc.new { |w| w.recurring_period }
+  I18n.available_locales.each do |locale|
+    validates_length_of     :"price_description_#{locale}", maximum: 255
+  end
 
   PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Sofort', 'Wire Transfer']
 

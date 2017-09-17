@@ -3,7 +3,9 @@ require 'spec_helper'
 describe CmsPost do
   setup_account
 
-  it 'write more tests'
+  it { is_expected.to validate_length_of(:slug).is_at_most(255) }
+  it { is_expected.to validate_length_of(:featured_image).is_at_most(255) }
+  it { is_expected.to validate_length_of(:title_en).is_at_most(255) }
   
   describe 'slug handling' do
 

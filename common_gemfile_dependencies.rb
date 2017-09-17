@@ -32,5 +32,6 @@ group :test do
   gem 'selenium-webdriver', '~> 3.3'
   gem 'rspec-formatter-webkit'
   gem 'rails-controller-testing'
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'syntax'
 end

@@ -11,7 +11,7 @@ class Category < ApplicationRecord
 
   # --- globalize
   translates            :name, :description, :fallbacks_for_empty_translations => true
-  globalize_accessors   :locales => DmCore::Language.language_array
+  globalize_accessors   locales: I18n.available_locales
 
   validates             :name, presence_default_locale: true
 

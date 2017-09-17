@@ -3,7 +3,7 @@ class CmsBlog < ApplicationRecord
 
   # --- globalize
   translates                :title, :fallbacks_for_empty_translations => true
-  globalize_accessors       :locales => DmCore::Language.language_array
+  globalize_accessors       locales: I18n.available_locales
     
   # --- FriendlyId
   extend FriendlyId
@@ -29,6 +29,12 @@ class CmsBlog < ApplicationRecord
 
   validates                 :title, presence_default_locale: true
   validates_uniqueness_of   :slug, scope: :account_id
+  validates_length_of       :slug, maximum: 255
+  validates_length_of       :header_image, maximum: 255
+  validates_length_of       :image_email_header, maximum: 255
+  I18n.available_locales.each do |locale|
+    validates_length_of     :"title_#{locale}", maximum: 255
+  end
   
   #------------------------------------------------------------------------------
   def model_slug

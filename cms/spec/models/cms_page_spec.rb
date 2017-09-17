@@ -3,8 +3,14 @@ require 'spec_helper'
 describe CmsPage do
   setup_account
 
-  #------------------------------------------------------------------------------
-  it 'write tests'
+  it { is_expected.to validate_length_of(:slug).is_at_most(255) }
+  it { is_expected.to validate_length_of(:template).is_at_most(50) }
+  it { is_expected.to validate_length_of(:link).is_at_most(255) }
+  it { is_expected.to validate_length_of(:menuimage).is_at_most(255) }
+  it { is_expected.to validate_length_of(:featured_image).is_at_most(255) }
+  it { is_expected.to validate_length_of(:header_image).is_at_most(255) }
+  it { is_expected.to validate_length_of(:title_en).is_at_most(255) }
+  it { is_expected.to validate_length_of(:menutitle_en).is_at_most(255) }
 
   #------------------------------------------------------------------------------
   it 'finds single welcome page' do

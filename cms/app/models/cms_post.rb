@@ -2,7 +2,7 @@ class CmsPost < ApplicationRecord
 
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates              :title, :summary, :content, :fallbacks_for_empty_translations => true #, :versioning => true
-  globalize_accessors     :locales => DmCore::Language.language_array
+  globalize_accessors     locales: I18n.available_locales
 
   # --- FriendlyId
   extend FriendlyId
@@ -22,7 +22,11 @@ class CmsPost < ApplicationRecord
   validates               :summary, liquid: { :locales => true }, presence_default_locale: true
   validates               :content, liquid: { :locales => true }, presence_default_locale: true
   validates_uniqueness_of :slug, scope: [:account_id, :cms_blog_id]
-  
+  validates_length_of     :slug, maximum: 255
+  validates_length_of     :featured_image, maximum: 255
+  I18n.available_locales.each do |locale|
+    validates_length_of     :"title_#{locale}", maximum: 255
+  end
   self.per_page = 10
   
   # Base the slug on the default locale

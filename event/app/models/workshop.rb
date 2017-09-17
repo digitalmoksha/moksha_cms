@@ -21,7 +21,7 @@ class Workshop < ApplicationRecord
   
   # --- globalize
   translates              :title, :description, :summary, :sidebar, fallbacks_for_empty_translations: true
-  globalize_accessors     locales: DmCore::Language.language_array
+  globalize_accessors     locales: I18n.available_locales
 
   # --- FriendlyId
   extend FriendlyId
@@ -43,6 +43,15 @@ class Workshop < ApplicationRecord
   validates               :title, presence_default_locale: true
   validates               :description, liquid: { locales: true }, presence_default_locale: true
   validates               :sidebar, liquid: { locales: true }
+  validates_length_of     :slug, maximum: 255
+  validates_length_of     :contact_email, maximum: 60
+  validates_length_of     :contact_phone, maximum: 20
+  validates_length_of     :info_url, maximum: 255
+  validates_length_of     :event_style, maximum: 255
+  validates_length_of     :image, maximum: 255
+  I18n.available_locales.each do |locale|
+    validates_length_of     :"title_#{locale}", maximum: 255
+  end
   
   # validates_presence_of   :deadline_on
 

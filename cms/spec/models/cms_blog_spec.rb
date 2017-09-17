@@ -3,7 +3,10 @@ require 'spec_helper'
 describe CmsBlog do
   setup_account
   
-  it 'write more tests'
+  it { is_expected.to validate_length_of(:slug).is_at_most(255) }
+  it { is_expected.to validate_length_of(:header_image).is_at_most(255) }
+  it { is_expected.to validate_length_of(:image_email_header).is_at_most(255) }
+  it { is_expected.to validate_length_of(:title_en).is_at_most(255) }
 
   describe 'slug handling' do
 

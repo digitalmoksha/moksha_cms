@@ -13,7 +13,7 @@ class CmsPage < ApplicationRecord
   
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates              :title, :summary, :menutitle, :fallbacks_for_empty_translations => true #, :versioning => true
-  globalize_accessors     :locales => DmCore::Language.language_array
+  globalize_accessors     locales: I18n.available_locales
     
   # --- versioning - skip anything translated
   has_paper_trail         :skip => [:title, :menutitle]
@@ -45,10 +45,18 @@ class CmsPage < ApplicationRecord
   end
   
   # --- validations
-  validates_length_of     :slug, :maximum => 50
   validates_presence_of   :slug
-  validates_uniqueness_of :slug, :scope => :account_id
-  validates_length_of     :template, :maximum => 50
+  validates_length_of     :slug, maximum: 255
+  validates_uniqueness_of :slug, scope: :account_id
+  validates_length_of     :template, maximum: 50
+  validates_length_of     :link, maximum: 255
+  validates_length_of     :menuimage, maximum: 255
+  validates_length_of     :featured_image, maximum: 255
+  validates_length_of     :header_image, maximum: 255
+  I18n.available_locales.each do |locale|
+    validates_length_of     :"title_#{locale}", maximum: 255
+    validates_length_of     :"menutitle_#{locale}", maximum: 255
+  end
   
   # Base the slug on the default locale
   #------------------------------------------------------------------------------
