@@ -20,8 +20,13 @@
       to them.
     </p>
 
-    <%= f.input :cms_blog, label: 'Blog',  collection: CmsBlog.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]), selected: @workshop.cms_blog.try(:id), include_blank: true %>
-    <%= f.input :forum,    label: 'Forum', collection: Forum.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]),   selected: @workshop.forum.try(:id), include_blank: true %>
+    <%= f.input :cms_blog, label: 'Blog',   collection: CmsBlog.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]), selected: @workshop.cms_blog.try(:id), include_blank: true %>
+    <% if defined?(DmLms) %>
+      <%= f.input :forum,    label: 'Forum',  collection: Forum.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]),   selected: @workshop.forum.try(:id), include_blank: true %>
+    <% end %>
+    <% if defined?(DmLms) %>
+      <%= f.input :course,   label: 'Course', collection: Course.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]),  selected: @workshop.course.try(:id), include_blank: true %>
+    <% end %>
   <% end %>
     
   <%= panel title: icon_label('fa fa-list-alt fa-fw', 'Custom Fields') do %>

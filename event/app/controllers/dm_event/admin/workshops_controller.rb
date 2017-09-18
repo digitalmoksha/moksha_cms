@@ -15,38 +15,6 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   end
 
   #------------------------------------------------------------------------------
-  def new
-    authorize! :manage_events, :all
-    @workshop = Workshop.new
-  end
-
-  #------------------------------------------------------------------------------
-  def edit
-    authorize! :manage_events, @workshop
-  end
-
-  #------------------------------------------------------------------------------
-  def create
-    authorize! :manage_events, :all
-    @workshop = Workshop.new(workshop_params)
-    if @workshop.save
-      redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully created.'
-    else
-      render action: :new
-    end
-  end
-
-  #------------------------------------------------------------------------------
-  def update
-    authorize! :manage_events, @workshop
-    if @workshop.update_attributes(workshop_params)
-      redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully updated.'
-    else
-      render action: :edit
-    end
-  end
-
-  #------------------------------------------------------------------------------
   def show
     authorize! :list_events, @workshop
     respond_to do |format|
@@ -65,10 +33,55 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   end
 
   #------------------------------------------------------------------------------
+  def new
+    authorize! :manage_events, :all
+    @workshop = Workshop.new
+  end
+
+  #------------------------------------------------------------------------------
+  def edit
+    authorize! :manage_events, @workshop
+  end
+
+  #------------------------------------------------------------------------------
+  def create
+    authorize! :manage_events, :all
+    @workshop = DmEvent::Workshops::CreateService.new(workshop_params).call
+    if @workshop.persisted?
+      redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully created.'
+    else
+      render action: :new
+    end
+  end
+
+  #------------------------------------------------------------------------------
+  def update
+    authorize! :manage_events, @workshop
+    if DmEvent::Workshops::UpdateService.new(@workshop, workshop_params).call
+      redirect_to admin_workshop_url(@workshop), notice: 'Workshop was successfully updated.'
+    else
+      render action: :edit
+    end
+  end
+
+  #------------------------------------------------------------------------------
   def destroy
     authorize! :manage_events, :all
-    @workshop.destroy
+    DmEvent::Workshops::DestroyService.new(@workshop).call
     redirect_to admin_workshops_url, notice: 'Workshop was successfully deleted.'
+  end
+  
+  # Handle any additional configuration, such as selecting the attached blog/forum
+  #------------------------------------------------------------------------------
+  def additional_configuration
+    authorize! :manage_events, @workshop
+    if put_or_post?
+      if DmEvent::Workshops::UpdateService.new(@workshop, workshop_params, additional_configuration: true).call
+        redirect_to additional_configuration_admin_workshop_url(@workshop), notice: 'Workshop was successfully updated.'
+      else
+        render action: :additional_configuration
+      end
+    end
   end
   
   # Edit/create of the registration state emails.  :email_type is passed in
@@ -108,35 +121,6 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
     @writeoffs = Registration.attending.writtenoff.includes(:user_profile, :workshop_price)
   end
 
-  # Handle any additional configuration, such as selecting the attached blog/forum
-  #------------------------------------------------------------------------------
-  def additional_configuration
-    authorize! :manage_events, @workshop
-    if put_or_post?
-      if @workshop.valid?
-        new_blog_id = params[:workshop].delete(:cms_blog).to_i
-        if @workshop.cms_blog.try(:id) != new_blog_id
-          @workshop.cms_blog = new_blog_id == 0 ? nil : CmsBlog.find(new_blog_id)
-        end
-    
-        new_forum_id = params[:workshop].delete(:forum).to_i
-        if @workshop.forum.try(:id) != new_forum_id
-          @workshop.forum = new_forum_id == 0 ? nil : Forum.find(new_forum_id)
-        end
-
-        #--- remove any extra "custom_field" attributes left during the field definition
-        if params[:workshop][:custom_field_defs_attributes]
-          params[:workshop][:custom_field_defs_attributes].each_pair {|key, value| params[:workshop][:custom_field_defs_attributes][key].delete(:custom_field)}
-        end
-        
-        @workshop.update_attributes(workshop_params)
-        redirect_to additional_configuration_admin_workshop_url(@workshop), notice: 'Workshop was successfully updated.'
-      else
-        render action: :additional_configuration
-      end
-    end
-  end
-  
   #------------------------------------------------------------------------------
   def send_payment_reminder_emails
     authorize! :manage_events, :all

@@ -17,7 +17,12 @@ class Workshop < ApplicationRecord
   has_one                 :refunded_email,    -> { where("email_type LIKE 'refunded'") },   class_name: 'SystemEmail', as: :emailable
   has_one                 :noshow_email,      -> { where("email_type LIKE 'noshow'") },     class_name: 'SystemEmail', as: :emailable
   has_one                 :cms_blog, as: :owner
-  has_one                 :forum, as: :owner  
+  if defined?(DmLms)
+    has_one                 :forum, as: :owner
+  end
+  if defined?(DmLms)
+    has_one                 :course, as: :owner
+  end
   
   # --- globalize
   translates              :title, :description, :summary, :sidebar, fallbacks_for_empty_translations: true
