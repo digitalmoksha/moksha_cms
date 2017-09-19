@@ -1,9 +1,9 @@
 FactoryGirl.define do
 
   factory :blog, class: CmsBlog do
-    slug            'test-blog'
-    title           'Test Blog'
-    published       true
+    # let the slug get auto-generated
+    title                   'Test Blog'
+    published               true
     
     factory :news_blog do
       slug          'news-blog'

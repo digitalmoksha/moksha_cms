@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative Rails.root.join '../../../core/spec/concerns/public_private_shared'
 
 describe CmsBlog do
   setup_account
@@ -29,8 +30,8 @@ describe CmsBlog do
 
     #------------------------------------------------------------------------------
     it 'raises an error when same slug is specified for blogs in the same account' do
-      blog1 = create(:blog)
-      blog2 = build(:blog)
+      blog1 = create(:blog, slug: 'test')
+      blog2 = build(:blog, slug: 'test')
       expect(blog2).not_to be_valid
       expect(blog2.errors[:slug]).to include("has already been taken")
     end
@@ -44,7 +45,6 @@ describe CmsBlog do
   end
 
   describe 'tag handling' do
-
     let(:blog1) { create(:blog) }
 
     #------------------------------------------------------------------------------
@@ -61,6 +61,7 @@ describe CmsBlog do
       blog2.update_attribute(:tag_list, 'one, three')
       expect(CmsBlog.tag_list_all).to eq ['one', 'three', 'two']
     end
-
   end
+  
+  it_behaves_like :public_private_protected, :blog
 end

@@ -3,6 +3,11 @@
 # "protected"     means it is available to anyone that is logged in
 # "private"       means it is hidden unless you are an explicit member of the object
 # "subscription"  means a paid subscription is required
+#
+# needs these in the table:
+#  is_public: boolean
+#  requires_login: boolean
+#  requires_subscription: boolean
 #------------------------------------------------------------------------------
 module DmCore
   module Concerns
@@ -128,21 +133,32 @@ module DmCore
         # Get list of available objects for user
         #------------------------------------------------------------------------------
         def available_to_user(user)
+          include_translations = self.method_defined?(:translations)
           if user.nil?
             #--- not logged in, only public
-            objects = self.by_public.published.includes(:translations)
+            objects = self.by_public.published
+            objects = objects.includes(:translations) if include_translations
           elsif user.is_admin?
-            objects = self.all.includes(:translations)
+            objects = self.all
+            objects = objects.includes(:translations) if include_translations
           else
             #--- all public/protected, as well as private that they are a member and subscriptions
-            objects  = self.all_public.published.includes(:translations)
-            objects += self.by_private.published.includes(:translations).with_role(:member, user)
-            self.by_private.published.includes(:translations).where('owner_id IS NOT NULL').each do |item|
+            public_objs     = self.all_public.published
+            private_objs    = self.by_private.published
+            subscribed_objs = self.by_subscription.published if user.is_paid_subscriber?
+            if include_translations
+              public_objs     = public_objs.includes(:translations)
+              private_objs    = private_objs.includes(:translations)
+              subscribed_objs = subscribed_objs.includes(:translations) if user.is_paid_subscriber?
+            end
+            objects  = public_objs
+            objects += private_objs.with_role(:member, user)
+            private_objs.where('owner_id IS NOT NULL').each do |item|
               objects << item if item.owner.member?(user)
             end
-            objects += self.by_subscription.published.includes(:translations) if user.is_paid_subscriber?
-            return objects
+            objects += subscribed_objs if user.is_paid_subscriber?
           end
+          return objects
         end
       end
     end
