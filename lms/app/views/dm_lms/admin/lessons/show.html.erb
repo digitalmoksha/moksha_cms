@@ -1,0 +1,44 @@
+<% content_for :content_title, @lesson.title %>
+<% content_for :content_subtitle, 'Course: '.html_safe + link_to(@course.title, admin_course_path(@course), title: 'Go back to this course') %>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= present(@lesson).label_published %>
+    <%= link_to icons(:edit),  [:edit, :admin, @lesson], class: "btn btn-sm btn-default", title: 'Edit' %>
+  <% end %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-8">
+    <p><%= truncate(@lesson.description, length: 300, separator: ' ') %></p>
+
+    <% toolbar = capture do %>
+      <%= link_to(icon_label(:new, 'New Teaching'), new_admin_lesson_teaching_path(@lesson), title: 'New Teaching', class: "btn btn-xs btn-default") %>
+      <% if defined?(Quiz) %>
+        <%= link_to(icon_label(present(Quiz.new).icon, 'New Quiz'), new_admin_lesson_quiz_path(@lesson), title: 'New Quiz', class: "btn btn-xs btn-default") %>
+      <% end %>
+    <% end %>
+    <%= panel title: 'Teaching Pages', toolbar: toolbar do %>
+      <div id="drag_sort" class="admin_lesson_pages_list" data-update_url="<%= dm_lms.admin_lesson_page_sort_path %>">
+        <% @lesson.lesson_pages.includes(item: [:translations]).each do |page| %>
+          <% present page.item do |item_presenter| %>
+            <div class="media item" data-item_id="<%= page.id %>">
+              <div class="media-body">
+                <div class="pull-right">
+                  <%= present(page).label_published %>
+                  <% if can?(:manage_content, :all) %>
+                    <span class="sort_handle"></span>
+                  <% end %>
+                </div>
+                <h4 class="media-heading"><%= icon_label(item_presenter.icon, link_to(page.item.title, [:edit, :admin, page.item])) %></h4>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class='col-md-4'>
+    <%= render partial: 'dm_lms/admin/courses/index_sidebar' %>
+  </div>
+</div>
+

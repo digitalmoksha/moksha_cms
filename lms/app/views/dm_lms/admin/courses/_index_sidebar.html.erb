@@ -1,0 +1,35 @@
+<%= subsection title: 'Quick Navigator' do %>
+  <div class="tree" style="">
+    <ul>
+      <% Course.all.includes(:translations, :lessons).each do |course| %>
+        <% cookie_name  = "tree_course_#{course.id}" %>
+        <% open         = cookies[cookie_name] ? true : false %>
+        <% icon         = open ? 'fa fa-minus-square-o fa-fw' : course.lessons.empty? ? 'fa fa-square-o fa-fw' : 'fa fa-plus-square-o fa-fw' %>
+        <li data-save_id="<%= cookie_name %>" >
+          <span><i class="<%= icon %>"></i></span><%= link_to course.title, admin_course_path(course) %>
+          <% unless course.lessons.empty? %>
+            <ul style="<%= 'display:none' unless open %>">
+              <% course.lessons.includes(:translations, lesson_pages: [item: [:translations]]).each do |lesson| %>
+                <% cookie_name  = "tree_lesson_#{lesson.id}" %>
+                <% open   = cookies[cookie_name] ? true : false %>
+                <% icon   = open ? 'fa fa-minus-square-o fa-fw' : lesson.lesson_pages.empty? ? 'fa fa-square-o fa-fw' : 'fa fa-plus-square-o fa-fw' %>
+                <li data-save_id="<%= cookie_name %>">
+                  <span><i class="<%= icon %>"></i></span><%= link_to lesson.title, admin_lesson_path(lesson) %>
+                  <% unless lesson.lesson_pages.empty? %>
+                    <ul style="<%= 'display:none' unless open %>">
+                      <% lesson.lesson_pages.each do |page| %>
+                        <li>
+                          <span><%= icons(present(page.item).icon) %></span><%= link_to(page.item.title, [:edit, :admin, page.item]) if page.item.present? %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'dm_event',      s.version
   s.add_dependency 'dm_forum',      s.version
   s.add_dependency 'dm_newsletter', s.version
+  s.add_dependency 'dm_lms', s.version
 end

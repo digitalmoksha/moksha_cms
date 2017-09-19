@@ -1,0 +1,48 @@
+<% content_for :content_title, @title %>
+<% unless @course.new_record? %>
+  <% content_for :content_title_extra do %>
+    <%= page_header_buttons do %>
+      <%= present(@course).label_published %>
+      <%= link_to(icons(:view), course_show_url(@course), class: "btn btn-sm btn-default", title: 'View', target: '_blank') %>
+      <div class="btn-group">
+        <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><%= icons(:gear) %> <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right icons-right">
+          <li class="text-danger"><%= link_to icon_label(:delete, 'Delete Course', icon_class: 'text-danger', label_class: 'text-danger'), ([:admin, @course] unless @course.new_record?), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure you wish to delete this course?  All lessons/comments will also be deleted!'} %></li>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% submit_url = (@course.new_record? ? admin_courses_path : admin_course_path) %>
+<%= simple_form_for @course, url: submit_url, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
+  <div class="row">
+    <div class="col-md-8">
+      <%= f.error_notification message: "Please review the problems below" %>
+    	<%= panel header: false do %>
+        <%= locale_tabs do |locale| %>
+          <%= f.input "title_#{locale}", label: 'Title of Course', id: 'title_error', required: true %>
+          <%= f.input "menutitle_#{locale}", label: 'Menu Title', hint: 'Leave blank to keep from being listed in navigation' %>
+          <%= f.input "description_#{locale}", as: :text, label: 'Description', input_html: { rows: 6, class: 'input-block-level monospaced' } %>
+        <% end %>
+
+        <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>  
+        <% if defined? DmSubscriptions %>
+          <%= f.input :require_subscription, inline_label: 'Require Subscription', hint: 'Require a valid subscription' %>
+        <% end %>
+        <%= f.input :teaser_only, inline_label: 'Show as Teaser', hint: 'Use to display as a teaser, even if not published' %>
+    	<% end %>
+    </div>
+
+    <div class="col-md-4">
+      <%= panel title: icon_label(:calendar, 'Publish') do %>
+        <%= f.input :published, inline_label: 'Publish It?' %>
+        <%= f.input :is_public, inline_label: 'Make Course Public?', hint: 'Allow anyone to see this course' %>
+        <%= f.input :requires_login, inline_label: 'Public Requires Login?', hint: 'If a public course, user must be logged in to see it.  (All private courses automatically require login)' %>
+      <% end %>
+
+      <%= submit_or_cancel save: @course.new_record? ? 'Create' : 'Update', cancel_url: submit_url %>
+      <hr>
+    </div>
+  </div>
+<% end %>

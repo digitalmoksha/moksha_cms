@@ -1,0 +1,6 @@
+<%= nav_bar_items([
+      present(item).label_published,
+      link_to(icon_label(:edit, 'Edit'), [:edit, :admin, item], class: "nav-btn-primary"),
+      link_to(icon_label(:trash, 'Delete'), [:admin, item], method: :delete, class: "nav-btn-danger", data: {confirm: 'Are you sure you wish to delete this lesson?  All associated teaching and quizzes will also be deleted!'})
+    ])
+%>

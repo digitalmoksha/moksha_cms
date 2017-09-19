@@ -1,0 +1,87 @@
+<% content_for :content_title, @course.title %>
+<% content_for :content_subtitle, 'Permalink: '.html_safe + link_to(course_show_url(@course), course_show_url(@course), title: 'Permalink for this course', target: '_blank') %>
+<% content_for :content_title_extra do %>
+  <%= page_header_buttons do %>
+    <%= present(@course).label_published %>
+    <%= link_to icons(:view),  course_show_url(@course), class: "btn btn-sm btn-default", title: 'View', target: '_blank' %>
+    <%= link_to(icons(:edit),  [:edit, :admin, @course], class: "btn btn-sm btn-default", title: 'Edit') %>
+  <% end %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-8">
+    <p><%= truncate(@course.description, length: 300, separator: ' ') %></p>
+
+    <% toolbar = toolbar_btn(icons(:new), new_admin_course_lesson_path(@course), title: 'New Lesson', class: "btn btn-xs btn-default") %>
+    <%= panel title: 'Lessons', toolbar: toolbar do %>
+      <div id="drag_sort" class="admin_course_lesson_list" data-update_url="<%= dm_lms.admin_lesson_sort_path %>">
+        <% @course.lessons.includes(:translations).each do |lesson| %>
+          <% present lesson do |lesson_presenter| %>
+            <div class="media item" data-item_id="<%= lesson.id %>">
+              <div class="media-body">
+                <div class="pull-right">
+                  <%= lesson_presenter.label_published %>
+                  <% if can?(:manage_content, :all) %>
+                    <span class="sort_handle"></span>
+                  <% end %>
+                </div>
+                <h4 class="media-heading"><%= link_to lesson.title, admin_lesson_path(lesson) %></h4>
+                <p><%= truncate(lesson.description, length: 200, separator: ' ') %></p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <%= render partial: 'dm_lms/admin/courses/index_sidebar' %>
+
+    <% if @course.is_subscription_only? %>
+      <%= subsection title: 'Visibility: <span class="text-success">Subscription</span>'.html_safe do %>
+        <p>Only paid subscribers can view, and will receive notification emails.</p>
+      <% end %>
+    <% elsif @course.is_private? %>
+      <%= subsection title: 'Visibility: <span class="text-success">Private</span>'.html_safe do %>
+        <p>Only users who have been given access (manually or through an associated event) can view, and will receive notification emails.</p>
+      <% end %>
+    <% elsif @course.is_public? %>
+      <%= subsection title: 'Visibility: <span class="text-success">Public</span>'.html_safe do %>
+        <p>All content is available publicly for anyone to see.  Logged in users can 'Follow' the blog to receive notification emails.</p>
+      <% end %>
+    <% elsif @course.is_protected? %>
+      <%= subsection title: 'Visibility: <span class="text-success">Protected</span>'.html_safe do %>
+        <p>Only logged in users can see the content.  Logged in users can 'Follow' to receive notification emails.</p>
+      <% end %>
+    <% end %>
+
+    <%= subsection title: 'Attributes' do %>
+      <table class="table table-condensed table-nolines">
+        <tr>
+          <% if @course.is_private? %>
+            <td>Members</td>
+            <td><%= @course.member_count(:all) %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <td>Commenting?</td>
+          <td><input type="checkbox" <%= 'checked="1"' if @course.comments_allowed %> disabled="disabled" /></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>
+
+<% if @course.owner %>
+  <div class="row">
+    <div class="col-md-12">
+      <% toolbar = toolbar_btn(@course.member_count(:automatic), '#', title: 'Number of users with automatic access', class: 'label label-success pull-right') %>
+      <%= panel title: 'Users with Automatic Access', toolbar: toolbar do %>
+        <div class="body">
+          <h5>Automatic Access Granted for Event</h5>
+          <p><%= @course.owner.title %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

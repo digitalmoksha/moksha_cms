@@ -1,0 +1,41 @@
+<% content_for :content_title, @title %>
+<% content_for :content_subtitle, 'Course: '.html_safe + link_to(@course.title, admin_course_path(@course), title: 'Go back to this course') %>
+<% unless @lesson.new_record? %>
+  <% content_for :content_title_extra do %>
+    <%= page_header_buttons do %>
+      <%= present(@lesson).label_published %>
+      <div class="btn-group">
+        <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><%= icons(:gear) %> <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right icons-right">
+          <li class="text-danger"><%= link_to icon_label(:delete, 'Delete Lesson', icon_class: 'text-danger', label_class: 'text-danger'), ([:admin, @lesson] unless @lesson.new_record?), method: :delete, class: 'text-danger', data: {confirm: 'Are you sure you wish to delete this lesson?  All teaching pages will also be deleted!'} %></li>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% submit_url = (@lesson.new_record? ? admin_course_lessons_path(@course) : admin_lesson_path) %>
+<%= simple_form_for @lesson, url: submit_url, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
+  <div class="row">
+    <div class="col-md-8">
+      <%= f.error_notification message: "Please review the problems below" %>
+  
+    	<%= panel title: @title do %>
+      	<%= locale_tabs do |locale| %>
+          <%= f.input "title_#{locale}", label: 'Title of Lesson', required: true, autofocus: true %>
+          <%= f.input "menutitle_#{locale}", label: 'Menu Title' %>
+          <%= f.input "description_#{locale}", as: :text, label: 'Description', input_html: { rows: 6, class: 'input-block-level monospaced' } %>
+        <% end %>
+        <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>  
+    	<% end %>
+    </div>
+
+    <div class="col-md-4">
+      <%= panel title: icon_label(:calendar, 'Publish') do %>
+        <%= f.input :published, inline_label: 'Publish It?' %>
+      <% end %>
+      <%= submit_or_cancel save: @lesson.new_record? ? 'Create' : 'Update', cancel_url: (@lesson.new_record? ? [:admin, @course] : [:admin, @lesson]) %>
+      <hr>
+    </div>
+  </div>
+<% end %>

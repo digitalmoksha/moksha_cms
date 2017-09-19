@@ -1,0 +1,14 @@
+de:
+  lms:
+    quiz_feedback_instructions_incorrect: "Entscheide, wie schwer diese Frage für Dich war, bevor Du mit der nächsten Karte weitermachst"
+    quiz_feedback_instructions_correct: "Entscheide, wie schwer diese Frage für Dich war, bevor Du mit der nächsten Karte weitermachst"
+    quiz_feedback_button_incorrect_almost: Fast richtig
+    quiz_feedback_button_incorrect_no_idea: Ich hatte keine Ahnung
+    quiz_feedback_button_correct_easy: Das war leicht
+    quiz_feedback_button_correct_not_easy: Ich musste etwas nachdenken
+    quiz_congratulations_1: Herzlichen Glückwunsch! Du bist bereit für die nächste Lektion
+    quiz_congratulations_2: "(oder Du kannst %{link})"
+    quiz_congratulations_take_quiz_again: das Quiz noch einmal machen
+    quiz_progress_status: "%{num} von %{total} durchgeführt"
+    
+    subscription_required: Abonnement erforderlich

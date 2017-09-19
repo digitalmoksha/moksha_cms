@@ -1,0 +1,49 @@
+<% content_for :content_title, icon_label(:courses, 'Courses') %>
+<% content_for :content_title_extra do %>
+  <% if can? :manage_content, :all %>
+    <%= page_header_buttons do %>
+      <%= link_to icon_label(:new, 'New Course'), new_admin_course_path, title: 'New Course', class: 'btn btn-sm btn-default' %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-8">
+    <%= panel title: 'Current Courses', body: true do %>
+      <div id="drag_sort" class="admin_course_list" data-update_url="<%= dm_lms.admin_course_sort_path %>">
+        <% @courses.each do |course| %>
+          <% present course do |course_presenter| %>
+            <div class="media item" data-item_id="<%= course.id %>">
+              <div class="media-body">
+                <div class="pull-right">
+                  <span class="info_stat">
+                    <%#= course_presenter.visibility %>
+                  </span>
+                  <span class="info_stat">
+                    <%#= blog.is_private? ? content_tag(:span, "(#{blog.member_count(:all)} Members)") : content_tag(:span, "#{blog.followers.count} Followers", class: 'text-info') %>
+                  </span>
+                  <%= course_presenter.label_published %>
+                  <% if can?(:manage_content, :all) %>
+                    <span class="sort_handle"></span>
+                  <% end %>
+                </div>
+                <h4 class="media-heading"><%= link_to course.title, admin_course_path(course) %></h4>
+                <p><%= truncate(course.description, length: 200, separator: ' ') %></p>
+                <div class="tag_list">
+                  <%# course.tag_list.each do |tag| %>
+                    <%# active_tag = (@tag_filter == tag ? 'active' : '') %>
+                    <%#= link_to content_tag(:span, tag, class: "tag #{active_tag}"), admin_course_path(course) %>
+                  <%# end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>  
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <%= render partial: 'dm_lms/admin/courses/index_sidebar' %>
+  </div>
+</div>
+

@@ -1,0 +1,34 @@
+<% title = @comment_day == 0 ? 'Today\'s Lesson Comments' : @comment_day == 1 ? 'Yesterday\'s Lesson Comments' : "Lesson Comments #{@comment_day} days ago" %>
+<% content_for :title_toolbar do %>
+  <%= link_to icons('fa fa-arrow-left'), @url_prev, remote: true, class: 'btn btn-xs btn-default' %>
+  <% if @comment_day == 0 %>
+    <%= link_to icons('fa fa-arrow-right'), '#', class: 'btn btn-xs btn-default disabled' %>
+  <% else %>
+    <%= link_to icons('fa fa-arrow-right'), @url_next, remote: true, class: 'btn btn-xs btn-default' %></li>
+  <% end %>
+  <%= link_to icons(:refresh), @url_refresh, class: 'btn btn-xs btn-default hovertip', title: 'Refresh', remote: true %>
+  <%= toolbar_btn(@comments.size, @url_today, title: 'Number of comments today', class: 'label label-success', remote: true) %>
+<% end %>
+
+<%= panel title: title, toolbar: content_for(:title_toolbar) do %>
+  <% if @comments.size == 0 %>
+    <p>No comments posted yet</p>
+  <% else %>
+    <% @comments.each do |comment| %>
+      <!-- Comment -->
+      <div class="media">
+        <a class="pull-left" href="#"><div class="media-object"><%= avatar_for comment.user, 50 %></div></a>
+        <div class="media-body">
+          <%= link_to "#{present(comment).author}", dm_lms.lesson_page_show_path(comment.commentable.lesson.course.slug, comment.commentable.lesson.slug, comment.commentable.slug, anchor: "comment_#{comment.id}"), class: 'media-heading hovertip', data: {placement: 'top'}, title: comment.user.full_name %>
+
+          <ul class="headline-info">
+            <li><%= format_datetime comment.created_at %></li>
+            <li><%= link_to comment.commentable.title, dm_lms.lesson_page_show_path(comment.commentable.lesson.course.slug, comment.commentable.lesson.slug, comment.commentable.slug, anchor: "comment_#{comment.id}"), class: 'post_title', target: '_blank' %></li>
+          </ul>
+          <%= present(comment).formatted_comment %>
+        </div>
+      </div>
+      <!-- /comment -->
+    <% end %>
+  <% end %>
+<% end %>

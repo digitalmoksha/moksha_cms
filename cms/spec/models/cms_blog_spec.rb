@@ -8,6 +8,7 @@ describe CmsBlog do
   it { is_expected.to validate_length_of(:header_image).is_at_most(255) }
   it { is_expected.to validate_length_of(:image_email_header).is_at_most(255) }
   it { is_expected.to validate_length_of(:title_en).is_at_most(255) }
+  it_behaves_like :public_private_protected, :blog
 
   describe 'slug handling' do
 
@@ -62,6 +63,4 @@ describe CmsBlog do
       expect(CmsBlog.tag_list_all).to eq ['one', 'three', 'two']
     end
   end
-  
-  it_behaves_like :public_private_protected, :blog
 end

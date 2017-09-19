@@ -16,3 +16,4 @@ cms/spec/dummy
 event/spec/dummy
 forum/spec/dummy
 newsletter/spec/dummy
+lms/spec/dummy

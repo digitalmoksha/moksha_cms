@@ -1,0 +1,25 @@
+<% content_for :page_title, nls(:chalkboard_title) %>
+<ul class="course_list_overview">
+  <% @courses.each do |course| %>
+    <% if can?(:read, course) || course.teaser_only? || course.published? %>
+      <% if course.teaser_only? || (!can?(:read, course) && course.published?) %>
+        <li class="teaser">
+          <%= link_to '#', title: I18n.t("lms.subscription_required"), id: course.slug do %>
+            <span class="course_image"></span>
+            <h2><%= course.title %></h2>
+            <p><%= course.description %></p>
+            <p class="subscription_required"><%= I18n.t("lms.subscription_required") %></p>
+          <% end %>
+        </li>
+      <% elsif can?(:read, course) && course.published? %>
+        <li>
+          <%= link_to course_show_path(course.slug), id: course.slug do %>
+            <span class="course_image"></span>
+            <h2><%= course.title %></h2>
+            <p><%= course.description %></p>
+          <% end %>
+        </li>
+      <% end %>
+    <% end %>
+  <% end %>
+</ul>
