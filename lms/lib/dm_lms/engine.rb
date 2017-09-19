@@ -1,5 +1,12 @@
 require 'dm_core'
 
+# TODO this is a hack for DmLms::Admin::CoursesController
+# `course_params` for some reason was not being found/loaded,
+# even with the correct line `include DmLms::PermittedParams`.
+# One app works without it, another one doesn't.  So for now, make
+# sure `permitted_params` is loaded
+require_relative '../../app/models/dm_lms/permitted_params'
+
 module DmLms
   class Engine < ::Rails::Engine
     isolate_namespace DmLms

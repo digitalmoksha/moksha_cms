@@ -1,6 +1,5 @@
 module DmCore
   module PermittedParams
-
     #------------------------------------------------------------------------------
     def account_params
       params.require(:account).permit! if current_user.try(:is_admin?)

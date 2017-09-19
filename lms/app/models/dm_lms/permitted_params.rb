@@ -1,6 +1,5 @@
 module DmLms
   module PermittedParams
-
     #------------------------------------------------------------------------------
     def course_params
       params.require(:course).permit! if can? :manage_courses, :all
