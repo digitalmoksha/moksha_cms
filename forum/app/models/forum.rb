@@ -57,18 +57,4 @@ class Forum < ApplicationRecord
   def to_s
     name
   end
-  
-  # Send comment notifications to any followers
-  #------------------------------------------------------------------------------
-  def self.notify_followers(start_time, end_time = Time.now)
-    comments          = Comment.where(commentable_type: 'ForumTopic', created_at: start_time..end_time)
-    comments_by_topic = comments.group_by {|i| i.commentable_id }
-    comments_by_topic.each do |topic_id, topic_comments|
-      forum_topic = ForumTopic.find(topic_id)
-      followers   = forum_topic.followers
-      followers.each do |follower|
-        email =  ForumNotificationMailer.follower_notification(follower.user, forum_topic, topic_comments).deliver_now
-      end
-    end
-  end
 end

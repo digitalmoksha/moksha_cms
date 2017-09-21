@@ -37,6 +37,7 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
       redirect_to forum_forum_topic_path(@forum, @forum_topic)
     else
       current_user.following.follow(@forum_topic)
+      DmForum::SendCommentNotificationService.new(@forum_comment).call
       flash[:notice] = 'Comment successfully created.'
       redirect_to(forum_forum_topic_path(@forum, @forum_topic, {:anchor => dom_id(@forum_comment), :page => @forum_topic.last_page}))
     end
