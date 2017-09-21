@@ -34,8 +34,7 @@ class DmCms::BlogsController < DmCms::ApplicationController
   def toggle_follow
     @blog = CmsBlog.friendly.find(params[:cms_blog_id])
     authorize! :read, @blog
-    @following = current_user.following.follows?(@blog)
-    @following ? current_user.following.unfollow(@blog) : current_user.following.follow(@blog)
+    DmCore::ToggleFollowerService.new(current_user, @blog).call
   end
   
 protected
