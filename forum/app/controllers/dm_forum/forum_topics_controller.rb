@@ -25,7 +25,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
     @forum_topic.hit! unless user_signed_in? && @forum_topic.user_id == current_user.id
     @forum_comments = @forum_topic.forum_comments.paginate :page => page_number
     @forum_comment  = ForumComment.new
-    @following      = user_signed_in? && @forum_topic.followed_by?(current_user.following)
+    @following      = user_signed_in? && current_user.following.follows?(@forum_topic)
   end
   
   #------------------------------------------------------------------------------
@@ -74,8 +74,8 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   #------------------------------------------------------------------------------
   def toggle_follow
     @forum_topic  = @forum.forum_topics.find(params[:forum_topic_id])
-    @following    = current_user.following.following?(@forum_topic)
-    @following    ? current_user.following.stop_following(@forum_topic) : current_user.following.follow(@forum_topic)
+    @following    = current_user.following.follows?(@forum_topic)
+    @following    ? current_user.following.unfollow(@forum_topic) : current_user.following.follow(@forum_topic)
   end
   
 protected

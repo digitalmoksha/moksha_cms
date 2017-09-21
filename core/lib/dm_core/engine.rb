@@ -16,7 +16,7 @@ require 'liquid'
 require 'sanitize'
 require 'acts_as_commentable'
 require 'acts_as_votable'
-require 'acts_as_follower'
+require 'partisan'
 require 'acts-as-taggable-on'
 require 'ancestry'
 require 'ranked-model'
@@ -36,6 +36,8 @@ require 'carrierwave-aws'
 require 'validates_email_format_of'
 require 'activemerchant'
 require 'offsite_payments'
+require 'delayed_job_active_record'
+require 'delayed_job'
 
 module DmCore
   class Engine < ::Rails::Engine

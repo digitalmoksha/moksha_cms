@@ -88,9 +88,6 @@ class Account < ApplicationRecord
   preference              :nms_api_key,                     :string
   preference              :nms_lists_synced_on,             :datetime
   
-  #--- status values (no UI)
-  preference              :follower_notifications_sent_at,  :datetime # when last follower notifications were sent
-  
   #--- Media libary preferences
   preference              :image_thumbnail_width,           :integer, default: 200
   preference              :image_small_width,               :integer, default: 300

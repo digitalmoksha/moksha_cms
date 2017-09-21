@@ -27,7 +27,7 @@
                 <%= blog_presenter.visibility %>
               </span>
               <span class="info_stat">
-                <%= blog.is_private? ? content_tag(:span, "(#{blog.member_count(:all)} Members)") : content_tag(:span, "#{blog.followers.count} Followers", class: 'text-info') %>
+                <%= blog.is_private? ? content_tag(:span, "(#{blog.member_count(:all)} Members)") : content_tag(:span, "#{blog.followings.count} Followers", class: 'text-info') %>
                 <%#= blog.is_private? ? colored_label("Members: #{blog.member_count(:all)}", :info) : colored_label("Followers: #{blog.followers.count}", :info) %>
               </span>
               <%= blog_presenter.label_published %>

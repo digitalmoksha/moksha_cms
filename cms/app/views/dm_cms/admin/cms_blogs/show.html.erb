@@ -94,7 +94,7 @@
             <td><%= @blog.member_count(:all) %></td>
           <% else %>
             <td>Followers</td>
-            <td><%= @blog.followers.count %></td>
+            <td><%= @blog.followings.count %></td>
           <% end %>
         </tr>
         <tr>
@@ -118,7 +118,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @blog.followers.each do |follower| %>
+            <% @blog.user_site_profile_followers.each do |follower| %>
               <tr>
                 <td><%= follower.user.full_name %></td>
                 <td><%= follower.user.try(:country).try(:english_name) %></td>

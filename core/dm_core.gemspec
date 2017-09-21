@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sanitize", "~> 4.4"
   s.add_dependency 'acts_as_commentable', "~> 4.0.2" # we customize our usage, so can't use the 'with_threading' version
   s.add_dependency 'acts_as_votable', '~> 0.10.0'
-  s.add_dependency 'acts_as_follower', '~> 0.2.1'
+  s.add_dependency 'partisan', '~> 0.5'   # acts_as_follower clone
   s.add_dependency 'ancestry', "~> 2.2"
   s.add_dependency 'ranked-model', '~> 0.4.0'     # sort order for a list
   s.add_dependency 'amoeba', '~> 3.0'             # [todo] (see if still needed) for handling model duplicating
