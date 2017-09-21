@@ -18,6 +18,7 @@ RSpec.configure do |config|
   config.extend  AccountMacros, type: :model
   config.extend  AccountMacros, type: :helper
   config.extend  AccountMacros, type: :service
+  config.extend  AccountMacros, type: :mailer
   config.extend  AccountMacros, type: :uploader
   config.extend  AccountMacros, type: :liquid_tag
 end
