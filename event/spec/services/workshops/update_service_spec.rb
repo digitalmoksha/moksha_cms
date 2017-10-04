@@ -30,9 +30,9 @@ describe DmEvent::Workshops::UpdateService, type: :service do
 
     context 'additional configuration panel' do
       it 'sets the social buttons' do
-        expect(workshop.preferred_show_social_buttons).to be_falsey
-        expect(update_workshop(preferred_show_social_buttons: true)).to be_truthy
-        expect(workshop.preferred_show_social_buttons).to be_truthy
+        expect(workshop.show_social_buttons).to be_falsey
+        expect(update_workshop(show_social_buttons: true)).to be_truthy
+        expect(workshop.show_social_buttons).to be_truthy
       end
 
       it 'sets the summary' do

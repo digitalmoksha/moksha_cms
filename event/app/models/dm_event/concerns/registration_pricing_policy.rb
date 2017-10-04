@@ -77,7 +77,7 @@ module DmEvent
         # until a certain date, either at the workshop or individual registration level
         #------------------------------------------------------------------------------
         def initial_payments_should_start_on
-          preferred_payment_reminder_hold_until.nil? ? self.created_at : preferred_payment_reminder_hold_until
+          payment_reminder_hold_until.nil? ? self.created_at : payment_reminder_hold_until
         end
 
         #------------------------------------------------------------------------------

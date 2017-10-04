@@ -92,14 +92,14 @@ describe PaymentReminderService, type: :service do
     end
     
     #------------------------------------------------------------------------------
-    it 'payment reminder respects preferred_payment_reminder_hold_until' do
+    it 'payment reminder respects payment_reminder_hold_until' do
       workshop      = create :workshop_with_price
       registration  = create :registration, workshop: workshop, created_at: 30.days.ago
-      registration.preferred_payment_reminder_hold_until = 10.days.from_now
+      registration.payment_reminder_hold_until = 10.days.from_now
       registration.payment_reminder_sent_on = 20.days.ago
       expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
-      registration.preferred_payment_reminder_hold_until = 14.days.ago
+      registration.payment_reminder_hold_until = 14.days.ago
       expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
     end
 

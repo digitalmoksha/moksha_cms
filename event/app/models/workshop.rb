@@ -35,9 +35,6 @@ class Workshop < ApplicationRecord
   acts_as_taggable
   resourcify
 
-  preference              :show_social_buttons,  :boolean, default: false
-  preference              :header_accent_color,  :string
-
   # --- validations
   validates_presence_of   :country_id
   validates_presence_of   :base_currency
@@ -54,6 +51,7 @@ class Workshop < ApplicationRecord
   validates_length_of     :info_url, maximum: 255
   validates_length_of     :event_style, maximum: 255
   validates_length_of     :image, maximum: 255
+  validates_length_of     :header_accent_color, maximum: 255
   I18n.available_locales.each do |locale|
     validates_length_of     :"title_#{locale}", maximum: 255
   end
@@ -94,11 +92,6 @@ class Workshop < ApplicationRecord
   #------------------------------------------------------------------------------
   def past?
     ending_on < Time.now
-  end
-  
-  #------------------------------------------------------------------------------
-  def show_social_buttons?
-    preferred_show_social_buttons?
   end
   
   # Is the registration closed?  If deadline is null, then registration is open ended
@@ -216,7 +209,7 @@ class Workshop < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def header_accent_color(default = '')
-    self.preferred_header_accent_color || default
+    self[:header_accent_color] || default
   end
   
   # Find list of newly createdusers that have not registered for any events, between 

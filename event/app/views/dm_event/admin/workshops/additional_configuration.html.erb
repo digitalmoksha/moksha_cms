@@ -7,7 +7,7 @@
   <%= f.error_notification message: "Please review the problems below" %>
 
   <%= panel title: icon_label(:social_media, 'Social Media') do %>
-    <%= f.input :preferred_show_social_buttons, as: :boolean, inline_label: 'Show social buttons' %>
+    <%= f.input :show_social_buttons, as: :boolean, inline_label: 'Show social buttons' %>
     <%= locale_tabs do |locale| %>
       <%= f.input "summary_#{locale}", label: 'Workshop Summary', as: :code_editor, autoheight: true, input_html: {class: "CodeMirror-autoheight"},
              hint: 'Text used when a workshop is liked on Facebook.  This text will not be visible on the registration page.' %>
