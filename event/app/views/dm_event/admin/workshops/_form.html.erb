@@ -61,6 +61,8 @@
         <%= f.input :starting_on, label: 'Starting on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.starting_on, full_date: true) %>
         <%= f.input :ending_on, label: 'Ending on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.ending_on, full_date: true) %>
         <%= f.input :deadline_on, label: 'Deadline', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, hint: format_date(@workshop.deadline_on, full_date: true) %>
+        <%= f.input :initial_payment_required_on, label: 'Initial Payment Expected By', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, 
+                    hint: @workshop.initial_payment_required_on ? format_date(@workshop.initial_payment_required_on, full_date: true) : 'Leave blank to expect initial payment on date of registration' %>
       <% end %>
 
       <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
