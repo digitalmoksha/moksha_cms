@@ -39,6 +39,7 @@ module DmCore
 
         scope                   :current_account_users, -> { includes(:user_site_profiles, :user_profile, :current_site_profile).references(:user_site_profiles).where("user_site_profiles.account_id = #{Account.current.id}") }
         scope                   :online, -> { includes(:user_site_profiles).where('user_site_profiles.last_access_at >= ?', 10.minutes.ago.utc) }
+        scope                   :confirmed, -> { where.not(confirmed_at: nil) }
 
 
         # In a few cases, we need to be able to check an ability where we only have a
@@ -179,6 +180,25 @@ module DmCore
         #------------------------------------------------------------------------------
         def paid_subscribers
           with_role(:paid_subscription)
+        end
+
+        # Setup the columns for exporting data as csv.
+        #------------------------------------------------------------------------------
+        def csv_columns
+          column_definitions = []
+          column_definitions <<     ['Full Name',         'item.full_name', 100]
+          column_definitions <<     ['Last Name',         'item.last_name.capitalize', 100]
+          column_definitions <<     ['First Name',        'item.first_name.capitalize', 100]
+          column_definitions <<     ['Email',             'item.email.downcase', 150]
+          column_definitions <<     ['Address',           'item.user_profile.address', 150]
+          column_definitions <<     ['Address2',          'item.user_profile.address2']
+          column_definitions <<     ['City',              'item.user_profile.city.capitalize', 100]
+          column_definitions <<     ['State',             'item.user_profile.state.capitalize']
+          column_definitions <<     ['Zipcode',           'item.user_profile.zipcode']
+          column_definitions <<     ['Country',           'item.user_profile.country.code']
+          column_definitions <<     ['Confirmed on',      'item.confirmed_at.to_date', 75, {type: 'DateTime', numberformat: 'd mmm, yyyy'}]
+
+          return column_definitions
         end
       end
     end

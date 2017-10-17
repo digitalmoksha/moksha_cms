@@ -1,4 +1,6 @@
 class DmCore::Admin::UsersController < DmCore::Admin::AdminController
+  include CsvExporter
+
   before_action :authorize_access
   before_action :template_setup, except: [:edit]
 
@@ -10,6 +12,8 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: UserDatatable.new(view_context) }
+      format.xls  { data_export(User.csv_columns, User.current_account_users.confirmed, filename: 'users_export', expressions: true, format: 'xls')}
+      format.csv  { data_export(User.csv_columns, User.current_account_users.confirmed, filename: 'users_export', expressions: true, format: 'csv')}
     end
   end
 
