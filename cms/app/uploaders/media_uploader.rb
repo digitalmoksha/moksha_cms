@@ -35,11 +35,13 @@ class MediaUploader < CarrierWave::Uploader::Base
 
   # Modern cameras often produce JPEGs that have a "I should be rotated 90° to the left" flag.
   # Carrierwave ignores this setting, so fix it here
-  # https://makandracards.com/makandra/12323-carrierwave-auto-rotate-tagged-jpegs 
+  # https://makandracards.com/makandra/12323-carrierwave-auto-rotate-tagged-jpegs
   #------------------------------------------------------------------------------
   def auto_orient
-    manipulate! do |img|
-      img = img.auto_orient
+    unless svg?(self)
+      manipulate! do |img|
+        img = img.auto_orient
+      end
     end
   end
 
@@ -52,10 +54,10 @@ class MediaUploader < CarrierWave::Uploader::Base
       self.resize_and_pad(width, height)
       self.file.content_type = 'image/jpeg'
     else
-      self.resize_to_fill(width, height)
+      self.resize_to_fill(width, height) unless svg?(self)
     end
   end
-  
+
   # Convert to jpg if a pdf, then size to a specfic width
   #------------------------------------------------------------------------------
   def size_image_pdf(width)
@@ -63,22 +65,24 @@ class MediaUploader < CarrierWave::Uploader::Base
       self.convert(:jpg, 0)
       self.file.content_type = 'image/jpeg'
     end
-    self.resize_to_width(width)
+    self.resize_to_width(width) unless svg?(self)
   end
-  
+
   # From: https://github.com/jhnvz/retina_rails
   # Process retina quality of the image. Works with ImageMagick and MiniMagick
   #   Params: [percentage (Int)] quality in percentage
   #------------------------------------------------------------------------------
   def retina_quality(percentage)
-    manipulate! do |img|
-      if defined?(Magick)
-        img.write(current_path) { self.quality = percentage } unless img.quality == percentage
-      elsif defined?(MiniMagick)
-        img.quality(percentage.to_s)
+    unless svg?(self)
+      manipulate! do |img|
+        if defined?(Magick)
+          img.write(current_path) { self.quality = percentage } unless img.quality == percentage
+        elsif defined?(MiniMagick)
+          img.quality(percentage.to_s)
+        end
+        img = yield(img) if block_given?
+        img
       end
-      img = yield(img) if block_given?
-      img
     end
   end
 
@@ -158,7 +162,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   #------------------------------------------------------------------------------
   def extension_whitelist
-    %w(jpg jpeg gif png mp3 mp4 m4v ogg webm pdf css js)
+    %w(jpg jpeg gif png svg mp3 mp4 m4v ogg webm pdf css js)
   end
 
 protected
@@ -182,7 +186,12 @@ protected
   def pdf?(new_file)
     model.new_record? ? new_file.content_type.end_with?('pdf') : model.pdf?
   end
-  
+
+  #------------------------------------------------------------------------------
+  def svg?(new_file)
+    model.new_record? ? new_file.content_type.start_with?('image/svg') : model.image?
+  end
+
   #------------------------------------------------------------------------------
   def filename_pdf_to_jpg(filename)
     pdf?(self) ? (filename.chomp(File.extname(filename)) + '.jpg') : filename

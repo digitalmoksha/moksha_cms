@@ -3,7 +3,7 @@ require 'devise'
 # from https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-(and-RSpec)
 #------------------------------------------------------------------------------
 module LoginMacros
-  
+
   TEST_DOMAIN = 'test.example.com'
 
   #------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ module LoginMacros
       Account.current = FactoryGirl.create(:account)
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def sign_in(user)
     visit main_app.new_user_session_path
@@ -49,6 +49,10 @@ end
 #------------------------------------------------------------------------------
 RSpec.configure do |config|
   config.include  Devise::Test::ControllerHelpers,  type: :controller
+  config.include  Devise::TestHelpers,              type: :helper
+  config.include  Devise::Test::ControllerHelpers,  type: :view
+  config.include  Devise::Test::IntegrationHelpers, type: :feature
+  config.include  Warden::Test::Helpers,            type: :request
   config.extend   LoginMacros,                      type: :controller
   config.include  LoginMacros,                      type: :feature
 end

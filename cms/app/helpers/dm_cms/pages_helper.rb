@@ -1,15 +1,15 @@
 # Handles building the different content streams for a page
 #------------------------------------------------------------------------------
 module DmCms::PagesHelper
-  
+
   # Easy way to get a page url
   # slug can either be a string, or a CmsPage object
   #------------------------------------------------------------------------------
   def page_url(slug, locale = DmCore::Language.locale)
     showpage_url(:locale => locale, :slug => (slug.kind_of?(CmsPage) ? slug.slug : slug))
   end
-  
-  # Given the name of a container, queries for all content items for that 
+
+  # Given the name of a container, queries for all content items for that
   # container within the given page.
   #------------------------------------------------------------------------------
   def content_by_name( name )
@@ -65,16 +65,22 @@ module DmCms::PagesHelper
   # Generates a simple multi-level page menu including children
   #------------------------------------------------------------------------------
   def main_menu(options = {})
-    return '' if (root = CmsPage.roots[0]).nil?
-
+    return '' if (root = CmsPage.roots.first).nil?
     menu_str                 = ''
     options[:ul]             = ''
-    options[:ul]            += "class='#{options[:class]}' "  unless options[:class].blank?
-    options[:ul]            += "id='#{options[:id]}' "        unless options[:id].blank?
+    options[:ul]            += "class=\"#{options[:class]}\" "  unless options[:class].blank?
+    options[:ul]            += "id=\"#{options[:id]}\" "        unless options[:id].blank?
     options[:include_root]   = root                           if options[:include_home]
     options[:active_class] ||= 'current'
     children                 = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
-    menu_str, submenu_active = (options[:type] == :bs3 ? menu_from_pages_bs3(children, options) : menu_from_pages(children, options))
+    menu_str, submenu_active = case options[:type]
+    when :bs3
+      menu_from_pages_bs3(children, options)
+    when :bs4
+      menu_from_pages_bs4(children, options)
+    else
+      menu_from_pages(children, options)
+    end
     return menu_str.html_safe
   end
 
@@ -83,18 +89,19 @@ module DmCms::PagesHelper
     options[:ul]  ||= ''
     menu_str        = ''
     active_found    = false
-    if (root = options[:include_root])
-      active          = (current_page?(root) ? options[:active_class] : nil)
+    if (root = options[:include_root]) && allow_page_in_menu?(root)
+      active          = (on_current_page?(root) ? options[:active_class] : nil)
       active_found  ||= !active.nil?
       menu_str       += content_tag :li, page_link(root), class: active
     end
     pages.each do |page, children|
       if allow_page_in_menu?(page)
-        submenu, submenu_active = (children.empty? ? '' : menu_from_pages(children, active_class: options[:active_class]))
-        active                  = (submenu_active || current_page?(page) ? options[:active_class] : nil)
+        ul_class = options[:sub_menu_1] ? "class=\"#{options[:sub_menu_1]}\"" : ''
+        submenu, submenu_active = (children.empty? ? '' : menu_from_pages(children, active_class: options[:active_class], ul: ul_class))
+        active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
         active_found          ||= !active.nil?
         menu_str += content_tag(:li, class: active) do
-          page_link(page) + 
+          page_link(page) +
           submenu.html_safe
         end
       end
@@ -109,17 +116,17 @@ module DmCms::PagesHelper
     menu_str        = ''
     active_found    = false
     if (root = options[:include_root])
-      active          = (current_page?(root) ? options[:active_class] : nil)
+      active          = (on_current_page?(root) ? options[:active_class] : nil)
       active_found  ||= !active.nil?
       menu_str       += content_tag :li, page_link(root), class: active
     end
     pages.each do |page, children|
       if allow_page_in_menu?(page)
         submenu, submenu_active = (children.empty? ? '' : menu_from_pages_bs3(children, ul: 'class="dropdown-menu"', active_class: options[:active_class]))
-        active                  = (submenu_active || current_page?(page) ? options[:active_class] : nil)
+        active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
         active_found          ||= !active.nil?
         if !submenu.blank?
-          menu_str += content_tag(:li, class: ['dropdown', active].join(' ')) do
+          menu_str += content_tag(:li, class: ['dropdown', active].css_join(' ')) do
             page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'dropdown-toggle', data: {toggle: 'dropdown'}) +
             submenu.html_safe
           end
@@ -130,14 +137,43 @@ module DmCms::PagesHelper
     end
     return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found
   end
-  
+
+  # Creates a standard Bootstrap 3 version of a main menu
+  #------------------------------------------------------------------------------
+  def menu_from_pages_bs4(pages, options = {})
+    options[:ul]  ||= ''
+    menu_str        = ''
+    active_found    = false
+    if (root = options[:include_root])
+      active          = (on_current_page?(root) ? options[:active_class] : nil)
+      active_found  ||= !active.nil?
+      menu_str       += content_tag :li, page_link(root, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
+    end
+    pages.each do |page, children|
+      if allow_page_in_menu?(page)
+        submenu, submenu_active = (children.empty? ? '' : menu_from_pages_bs4(children, ul: 'class="dropdown-menu"', active_class: options[:active_class]))
+        active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
+        active_found          ||= !active.nil?
+        if !submenu.blank?
+          menu_str += content_tag(:li, class: ['nav-item', 'dropdown', active].css_join(' ')) do
+            page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'nav-link dropdown-toggle', data: {toggle: 'dropdown'}) +
+            submenu.html_safe
+          end
+        else
+          menu_str += content_tag :li, page_link(page, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
+        end
+      end
+    end
+    return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found
+  end
+
 
   # return true if the page should be allowed to be dislpayed in a menu
   #------------------------------------------------------------------------------
   def allow_page_in_menu?(page)
-    page.present? && (page.is_published? || is_admin?) && page_authorized?(page) && !page.menutitle.blank?    
+    page.present? && (page.is_published? || is_admin?) && page_authorized?(page) && !page.menutitle.blank?
   end
-  
+
   #------------------------------------------------------------------------------
   def main_menu_select(options = {})
     return '' if (root = CmsPage.roots[0]).nil?
@@ -158,7 +194,7 @@ module DmCms::PagesHelper
     menu_str += "</select>"
     return menu_str.html_safe
   end
-  
+
   # return a link to the page's slug, with the passed in link text
   #------------------------------------------------------------------------------
   def page_link(page, text = nil, options = {})
@@ -166,7 +202,7 @@ module DmCms::PagesHelper
     options   = options.merge(target: '_blank') if page.preferred_open_in_new_window?
     link_to(text, redirect_link(page.link) || redirect_link(page.slug), options)
   end
-  
+
   # determine where to redirect based on the style of the link
   # always ensure there is a locale on the front unless it's a fully
   # qualified link
@@ -185,16 +221,16 @@ module DmCms::PagesHelper
       else
         dm_cms.showpage_url(slug: link)  # relative link/slug
       end
-    end    
+    end
   end
 
 private
 
-  # Currently check is page requires a login and if user is logged in.  
+  # Currently check is page requires a login and if user is logged in.
   # {todo} add additional authorization checks
   #------------------------------------------------------------------------------
   def page_authorized?(page)
-    if page.requires_login? 
+    if page.requires_login?
       return user_signed_in?
     else
       true
@@ -203,7 +239,7 @@ private
 
   # Determine if this page is currently being  displayed
   #------------------------------------------------------------------------------
-  def current_page?(page)
+  def on_current_page?(page)
     (@current_page == page) ? true : false
   end
 
