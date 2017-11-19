@@ -65,6 +65,11 @@ class PaymentReminderService
         # if they have made a payment during this period, then don't send a reminder
         needs_sending = false if !registration.last_payment_on.nil? && registration.last_payment_on > time_period
         result = needs_sending
+      else
+        # an initial payment reminder should be sent if the initial_payment_required_on date has passed
+        if start_date == registration.workshop.initial_payment_required_on && registration.payment_reminder_sent_on.nil?
+          result = true
+        end
       end
     end
     return result

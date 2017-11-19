@@ -104,6 +104,16 @@ describe PaymentReminderService, type: :service do
     end
 
     #------------------------------------------------------------------------------
+    it 'payment reminder respects workshop.initial_payment_required_on' do
+      workshop      = create :workshop_with_price, created_at: 30.days.ago, initial_payment_required_on: 1.days.from_now
+      registration  = create :registration, workshop: workshop
+      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
+
+      workshop.initial_payment_required_on = 1.days.ago
+      expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
+    end
+
+    #------------------------------------------------------------------------------
     it 'handles time before or after' do
       workshop      = create :workshop_with_price
       registration  = create :registration, workshop: workshop, created_at: (Time.now + 2.days)
