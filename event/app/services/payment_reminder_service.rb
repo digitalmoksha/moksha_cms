@@ -40,7 +40,7 @@ class PaymentReminderService
   # 1. reminders are only sent when a payment is considered past due
   # 2. REMINDER_SCHEDULE indicates the days on which to send the next reminder email
   #    from the date when the payment was due
-  # 3. It doesn't matter if payment was made recently - if the next payment is due, 
+  # 3. It doesn't matter if payment was made recently - if the next payment is due,
   #    then we will follow the reminder schedule
   # 4. the entire payment schedule (re)starts based on when the last payment was due.
   # Note: The reminder schedule must be based off of when the last payment was due.

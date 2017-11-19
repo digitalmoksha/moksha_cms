@@ -6,7 +6,7 @@ describe PaymentReminderService, type: :service do
 
   # tests assume   REMINDER_SCHEDULE = [14, 30, 60]
   describe '#payment_reminder_due?' do
-    
+
     describe 'non-recurring' do
       #------------------------------------------------------------------------------
       it 'reminder due after 14 days' do
@@ -44,7 +44,7 @@ describe PaymentReminderService, type: :service do
     end
 
     describe 'recurring' do
-    
+
       #------------------------------------------------------------------------------
       it 'reminder due 14 days after a payment is due' do
         workshop      = create :workshop_with_recurring_price
@@ -70,7 +70,7 @@ describe PaymentReminderService, type: :service do
         allow(registration).to receive(:last_payment_on).and_return(15.days.ago)
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
       end
-      
+
       #------------------------------------------------------------------------------
       it 'reminder not due when full monthly payment made' do
         workshop      = create :workshop_with_recurring_price
@@ -90,7 +90,7 @@ describe PaymentReminderService, type: :service do
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
       end
     end
-    
+
     #------------------------------------------------------------------------------
     it 'payment reminder respects payment_reminder_hold_until' do
       workshop      = create :workshop_with_price
@@ -123,7 +123,7 @@ describe PaymentReminderService, type: :service do
 
     it 'marks a registration as a loss if beyond end of period'
   end
-  
+
   describe '#past_due?' do
 
     #------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ describe PaymentReminderService, type: :service do
 
       registration  = create :registration, workshop: workshop, created_at: Time.now
       expect(PaymentReminderService.past_due?(registration)).to eq false
-    
+
       registration  = create :registration, workshop: workshop, created_at: 8.days.ago, amount_paid_cents: 10000
       expect(PaymentReminderService.past_due?(registration)).to eq true
     end
