@@ -1,3 +1,4 @@
+<% editor_only = !can?(:manage_event_registrations, @workshop) && !can?(:manage_event_finances, @workshop) %>
 <% content_for :content_title, "#{@workshop.title}" %>
 <% content_for :content_subtitle, present(@workshop).label_published %>
 <% content_for :content_title_extra do %>
@@ -22,19 +23,19 @@
         <% if can?(:manage_events, :all) %>
           <li><%= link_to icon_label(:lock, 'Permissions'), permissions_admin_workshop_url(@workshop) %></li>
         <% end %>
-        
+
       </ul>
     </div>
   <% end %>
 <% end %>
 
 <div class="row">
-  <div class="col-md-9">
-    <% toolbar  = toolbar_btn(icons(:new), register_new_url(@workshop), target: '_blank', title: 'New Registration', class: "btn btn-xs btn-default") %>
-    <% if can?(:manage_event_registrations, @workshop) || can?(:manage_event_finances, @workshop) %>
-      <% title    = params[:duplicates].nil? ? 'Registrations' : 'Registrations (Duplicates)'%>
+  <div class="col-md-<%= editor_only ? '12' : '9' %>">
+    <% toolbar = toolbar_btn(icons(:new), register_new_url(@workshop), target: '_blank', title: 'New Registration', class: "btn btn-xs btn-default") %>
+    <% if editor_only %>
+      <% title = 'Registrations (only displaying personal registrations)' %>
     <% else %>
-      <% title    = 'Registrations (only displaying personal registrations)' %>
+      <% title = params[:duplicates].nil? ? 'Registrations' : 'Registrations (Duplicates)'%>
     <% end %>
     <%= panel title: title, toolbar: toolbar, body: true do %>
       <table id="registration_table" class="table table-striped table-bordered" data-source="<%= dm_event.admin_workshop_url(@workshop, duplicates: params[:duplicates]) %>">
@@ -54,7 +55,7 @@
     <% end %>
   </div>
 
-  <% if can?(:manage_event_registrations, @workshop) || can?(:manage_event_finances, @workshop) %>
+  <% if !editor_only %>
     <div class="col-md-3">
       <%= panel header: false do %>
         <%= render partial: 'registration_stats', locals: {workshop: @workshop} %>
@@ -62,4 +63,10 @@
     </div>
   <% end %>
 </div>
+
+<% if editor_only %>
+  <div class="alert alert-info">
+    <p>As an editor, you can register yourself as well as change the state of your registration to test out the emails that are sent</p>
+  </div>
+<% end %>
 
