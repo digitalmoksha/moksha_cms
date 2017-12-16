@@ -3,10 +3,10 @@ class RegistrationDatatable
   include DmEvent::RegistrationsHelper
   include DmUtilities::DateHelper
   include DmCore::ApplicationHelper
-  
+
   delegate :params, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
   delegate :url_helpers, to: 'DmEvent::Engine.routes'
-  
+
   #------------------------------------------------------------------------------
   def initialize(view, user, permissions)
     @view = view
@@ -54,7 +54,7 @@ private
       registration.full_name
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
@@ -81,17 +81,13 @@ private
   def registration_actions(registration)
     actions = ''
     actions += '<div class="btn-group">'
-      if @permissions[:manage_event_registrations]
-        actions += "<button class='btn btn-xs dropdown-toggle btn-#{registration.current_state} hovertip' data-placement='right' data-toggle='dropdown' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'><i class='caret'></i></button>"
-        actions += '<ul class="dropdown-menu">'
-          actions += action_list(registration)
-        actions += '</ul>'
-      else
-        actions += "<button class='btn btn-xs btn-#{registration.current_state} hovertip' data-placement='right' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'></button>"
-      end
+      actions += "<button class='btn btn-xs dropdown-toggle btn-#{registration.current_state} hovertip' data-placement='right' data-toggle='dropdown' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'><i class='caret'></i></button>"
+      actions += '<ul class="dropdown-menu">'
+        actions += action_list(registration)
+      actions += '</ul>'
     actions += '</div>'
   end
-  
+
   #------------------------------------------------------------------------------
   def action_list(registration)
     actions = registration.aasm.permissible_events
@@ -100,14 +96,14 @@ private
     output = ''
     actions.each do |action|
       output << '<li>' +
-      link_to(action.to_s.titlecase, 
+      link_to(action.to_s.titlecase,
               url_helpers.action_state_admin_registration_path(I18n.locale, registration, :state_event => action),
               {:remote => true, :method => :put}) +
        '</li>'
      end
     return output.html_safe
   end
-  
+
   #------------------------------------------------------------------------------
   def page
     params[:iDisplayStart].to_i/per_page + 1

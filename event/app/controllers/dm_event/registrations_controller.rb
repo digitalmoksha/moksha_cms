@@ -13,15 +13,15 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   layout          'layouts/event_templates/register'
 
   before_action   :workshop_lookup, except: [:success]
-  
+
   #------------------------------------------------------------------------------
   def new
     redirect_to main_app.root_url and return if @workshop.nil?
-    
-    if !@workshop.registration_closed? || is_admin?
+
+    if !@workshop.registration_closed? || authorize!(:manage_events, @workshop) #is_admin?
       @registration               = @workshop.registrations.build
       @registration.user_profile  = current_user ? current_user.user_profile : UserProfile.new
-      
+
       if @workshop.require_address && !@registration.user_profile.address_valid?
         #--- address is required and there are missing fields in the profile
         @registration.user_profile.address_required = true
@@ -38,10 +38,10 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   #------------------------------------------------------------------------------
   def create
     redirect_to(action: :new) and return if @workshop.require_account && current_user.nil?
-    
+
     profile_params                  = params[:registration].delete("user_profile_attributes") if params[:registration]
     profile_params.delete(:id)      if profile_params
-    
+
     @registration                   = @workshop.registrations.new(registration_params(@workshop))
     @registration.registered_locale = I18n.locale
     @registration.user_profile      = current_user ? current_user.user_profile : UserProfile.new
@@ -73,12 +73,12 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
         redirect_to main_app.root_url and return
       end
     end
-    
+
     if @registration.balance_owed.zero?
       render :payment_complete and return
     end
   end
-  
+
   # Success page for a registration.  Look up the uuid and display success.
   # Can do this many times - if the user doesn't own the registration, then kick
   # them out.
@@ -101,8 +101,8 @@ private
     @workshop = Workshop.find_by_slug(params[:id])
   end
 end
-  
-  
+
+
 =begin
   helper          'dm_event/event_registrations'
   helper          'dm_event/custom_fields'
@@ -111,7 +111,7 @@ end
   before_action   :ssl_required
 
   layout          :use_layout
-  
+
   # TODO GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
   #verify :method => :post, :only => [ :confirm, :verify_payment ],
   #       :redirect_to => { :action => :index }
@@ -129,7 +129,7 @@ public
     session[:event_registration] = nil
     redirect_to '/'
   end
-  
+
   # :id => the workshop id we're registering for
   #-----------------------------------------------------------------------
   def register
@@ -152,15 +152,15 @@ public
       if !params[:r_id].blank? and permit?("#{SystemRoles::Moderator} on :workshop or #{SystemRoles::Admin} on Event or #{SystemRoles::Admin} on Student or #{SystemRoles::System}")
         old_registration    = EventRegistration.find(params[:r_id])
         @register_user      = old_registration.student.user
-        @event_registration = EventRegistration.new_registration_from_old(@workshop.id, old_registration)  
+        @event_registration = EventRegistration.new_registration_from_old(@workshop.id, old_registration)
       elsif  !params[:s_id].blank? and permit?("#{SystemRoles::Moderator} on :workshop or #{SystemRoles::Admin} on Event or #{SystemRoles::Admin} on Student or #{SystemRoles::System}")
         @register_user      = Student.find(params[:s_id]).user
-        @event_registration = EventRegistration.new(:event_workshop_id => @workshop.id, :country_id => @workshop.country_id)  
+        @event_registration = EventRegistration.new(:event_workshop_id => @workshop.id, :country_id => @workshop.country_id)
       else
         @register_user      = current_user
-        @event_registration = EventRegistration.new(:event_workshop_id => @workshop.id, :country_id => @workshop.country_id)  
+        @event_registration = EventRegistration.new(:event_workshop_id => @workshop.id, :country_id => @workshop.country_id)
       end
-    
+
       @use_login_info       = @workshop.require_account || (!@register_user.nil? && !params['no_login'])
 
       unless put_or_post?
@@ -186,7 +186,7 @@ public
               #--- they asked to be notified of news, sign them up for the newletter
               params[:newsletters].each do |idtag|
                 #--- we don't really care about the return code ---
-                rc = Newsletter.add_subscriber( idtag, !@use_login_info ? @event_registration : @event_registration.student, 
+                rc = Newsletter.add_subscriber( idtag, !@use_login_info ? @event_registration : @event_registration.student,
                                                 :remote_ip => request.remote_ip,
                                                 :subscriber_id => !@use_login_info ? nil : @event_registration.student.id)
               end
@@ -196,8 +196,8 @@ public
             #--- if shopping cart payment required, add redirect to the link that adds
             #--- the items to the cart.  Receipt is emailed after we get confirmation back
             #--- from shopping cart that payment was made.
-            if (  !@event_registration.event_payment.nil? and 
-                  @event_registration.event_payment.payment_type == 'cc' and 
+            if (  !@event_registration.event_payment.nil? and
+                  @event_registration.event_payment.payment_type == 'cc' and
                   !@event_registration.item_code.blank?)
               redirect_to generate_shoppingcart_link(@event_registration) and return
             else
@@ -211,12 +211,12 @@ public
     #--- use the overriden template if specified, otherwise the default register.rhtml is used
     @workshop.template.blank? ? render(:action => :register) : render(:action => :register, :layout => "#{account_layouts}/#{@workshop.template}")
   end
-  
+
   #-----------------------------------------------------------------------
   def success
     unless session[:event_registration] == nil
       @event_registration = EventRegistration.find_by_id(session[:event_registration])
-      
+
       #--- clear out the session information
       session[:event_registration] = nil
       @content = (@event_registration.compile_receipt)[:content]
@@ -225,8 +225,8 @@ public
       redirect_to :action => 'index'
     end
   end
-  
-  # Clears the session of any information that might be there, and returns 
+
+  # Clears the session of any information that might be there, and returns
   # user to event information page.
   #-----------------------------------------------------------------------
   def user_cancel
@@ -237,7 +237,7 @@ public
   #------------------------------------------------------------------------------
   def show_registrations
     @student = current_user.student
-    
+
     render :layout => "#{account_layouts}/members_backend"
   end
 
@@ -250,7 +250,7 @@ public
     event_registration = EventRegistration.find(params[:id])
     redirect_to generate_shoppingcart_link(event_registration) and return
   end
-  
+
   #------------------------------------------------------------------------------
   def update_registration
     redirect_to :action => 'index' and return if params[:id] == nil
@@ -259,8 +259,8 @@ public
       flash[:error] = 'This registration is not valid.'
       redirect_to :action => :show_registrations and return
     end
-    
-    @workshop           = @event_registration.event_workshop 
+
+    @workshop           = @event_registration.event_workshop
     unless @workshop.workshop_closed
       if @workshop.require_account
         flash[:warning] = 'Please login to your student account before registering' and return unless login_required
@@ -269,7 +269,7 @@ public
 
       if put_or_post? && @event_registration.updates_allowed?
         @event_registration.errors.add(:base, 'Please fill in the form') and return if params[:event_registration].nil?
-      
+
         #--- TODO security problem - shouldn't do the following assignment blindly
         @event_registration.attributes              = params[:event_registration]
         @event_registration.user_updated_at         = Time.new
@@ -292,19 +292,19 @@ public
         end
       end
     end
-  
+
     #--- use the overriden template if specified, otherwise the default register.rhtml is used
     render :layout => "#{account_layouts}/#{@workshop.template}" unless @workshop.template.blank?
   end
 
   #------------------------------------------------------------------------------
   def update_successful
-    @event_registration = EventRegistration.find_by_token(params[:id])    
+    @event_registration = EventRegistration.find_by_token(params[:id])
     if @event_registration.nil?
       flash[:error] = 'This registration is not valid.'
       redirect_to :action => :show_registrations and return
     end
-    @workshop           = @event_registration.event_workshop 
+    @workshop           = @event_registration.event_workshop
   end
 
   #------------------------------------------------------------------------------
@@ -313,14 +313,14 @@ public
       flash[:error] = 'This registration is not valid.'
       redirect_to :action => :show_registrations and return
     end
-    
-    @workshop = @event_registration.event_workshop 
+
+    @workshop = @event_registration.event_workshop
     if @workshop.workshop_closed
       flash[:error] = 'This workshop is closed.'
       redirect_to :action => :show_registrations and return
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def add_comment
     if params[:id].nil? || (@event_registration  = EventRegistration.find_by_token(params[:id])).nil? || @event_registration.event_workshop.workshop_closed || current_user.nil?
@@ -329,19 +329,19 @@ public
     end
     @comment = Comment.new(:comment => params[:comment], :user_id => current_user.id)
     @event_registration.add_comment(@comment)
-    
+
     #--- give the object a chance to do something if necessary
     @event_registration.comment_notify(@comment) if @event_registration.respond_to?(:comment_notify)
     redirect_to :action => :registration_comments, :id => params[:id]
   end
-  
+
   # Show the workshops information page
   #------------------------------------------------------------------------------
   def information_page
     redirect_to :action => 'index' and return if params[:id].nil?
-    @event_registration = EventRegistration.find_by_token(params[:id])    
+    @event_registration = EventRegistration.find_by_token(params[:id])
     redirect_to :action => 'index' and return if @event_registration.nil?
-    @workshop           = @event_registration.event_workshop 
+    @workshop           = @event_registration.event_workshop
 
     unless permit?("#{SystemRoles::Moderator} on :workshop or #{SystemRoles::Admin} on Event or #{SystemRoles::System}", :event => @workshop.event)
       if @workshop.require_account
@@ -353,7 +353,7 @@ public
         redirect_to :action => 'index' and return if @workshop.past?
       end
     end
-    
+
     #--- use the overriden template if specified, otherwise the default register.rhtml is used
     @workshop.template.blank? ? render(:action => :information_page) : render(:action => :information_page, :layout => "#{account_layouts}/#{@workshop.template}")
   end

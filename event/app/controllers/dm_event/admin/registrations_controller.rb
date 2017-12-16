@@ -6,7 +6,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def action_state
-    authorize! :manage_event_registrations, @workshop
+    authorize! :manage_events, @workshop
 
     @state_event  = params[:state_event].downcase
     case @state_event
@@ -22,12 +22,12 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
       #--- send to state machine if it's an allowed event
       @registration.send("#{@state_event}!") if @registration.aasm.events.include? @state_event.to_sym
     end
-  
+
     respond_to do |format|
       format.html { redirect_to admin_workshop(@workshop) }
       format.js   { render action: :action_state }
     end
-  
+
   rescue ActiveRecord::StaleObjectError
   end
 
@@ -37,7 +37,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
     @registration.destroy
     redirect_to admin_workshop_url(@workshop), notice: 'Registration was successfully deleted.'
   end
-  
+
   #------------------------------------------------------------------------------
   def edit
     authorize! :manage_event_registrations, @workshop
@@ -121,6 +121,10 @@ private
   def registration_lookup
     @registration = Registration.find(params[:id])
     @workshop     = @registration.workshop
+    if !can?(:manage_event_registrations, @workshop) && !can?(:manage_event_finances, @workshop)
+      # limit to your own registration if can only edit the workshop
+      @registration = nil if @registration.user_profile_id != current_user.user_profile.id
+    end
   end
 
 end
