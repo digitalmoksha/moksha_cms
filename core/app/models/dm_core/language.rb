@@ -7,7 +7,7 @@ class DmCore::Language < ApplicationRecord # :nodoc:
   # If it doesn't exist, return the default language
   #------------------------------------------------------------------------------
   def self.get_language(locale, default_locale = DmCore.config.default_locale)
-    self.find_by_iso_639_1(locale) || get_language(default_locale, default_locale)
+    self.find_by_iso_639_1(locale) || self.find_by_iso_639_1(default_locale)
   end
 
   # get the current locale
@@ -62,6 +62,7 @@ class DmCore::Language < ApplicationRecord # :nodoc:
     uri.to_s
   end
 
+  # [todo] don't know if this is needed anymore
   #------------------------------------------------------------------------------
   def locale
     self.iso_639_1
