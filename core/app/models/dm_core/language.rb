@@ -49,8 +49,17 @@ class DmCore::Language < ApplicationRecord # :nodoc:
   # route, like showpage_url(:locale => 'ja'), but it doesn't work in some cases
   #------------------------------------------------------------------------------
   def self.translate_url(url, locale)
-    binding.pry
-    return url.sub("/#{self.locale.to_s}/", "/#{locale.to_s}/")
+    uri = URI.parse(url)
+
+    if uri.path.start_with?("/#{self.locale.to_s}/")
+      uri.path.sub!("/#{self.locale.to_s}/", "/#{locale.to_s}/")
+    elsif uri.path.blank? || uri.path == "/#{self.locale.to_s}"
+      uri.path = "/#{locale.to_s}/"
+    else
+      uri.path = "/#{locale.to_s}#{uri.path}"
+    end
+
+    uri.to_s
   end
 
   #------------------------------------------------------------------------------
