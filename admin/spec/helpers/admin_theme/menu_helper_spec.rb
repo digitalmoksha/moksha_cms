@@ -4,5 +4,5 @@ describe AdminTheme::MenuHelper do
 
   #------------------------------------------------------------------------------
   it 'write tests'
-  
+
 end

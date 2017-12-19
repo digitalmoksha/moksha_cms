@@ -27,7 +27,7 @@ class RemoveEventPreferences < ActiveRecord::Migration[5.0]
       end
     end
   end
-  
+
   def down
     Registration.unscoped.each do |r|
       Account.current = Account.find(r.account_id)

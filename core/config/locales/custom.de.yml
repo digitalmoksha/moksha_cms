@@ -75,8 +75,7 @@ de:
     profile_password_updated: Ihr Passwort wurde aktualisiert
     profile_email_needs_confirmation: 'Ihre E-Mail-Adresse wurde bereits geändert worden'
     profile_email_needs_confirmation_2: 'Eine E-Mail an diese Adresse zur Bestätigung gesandt. Wenn Sie nicht die Bestätigung per E-Mail, aktualisieren Sie einfach die E-Mail noch einmal neu zu senden Sie die Bestätigung.'
-    
+
   email:
     salutation: "Liebe/r %{value},"
     thank_you: "Vielen Dank"
-    

@@ -37,7 +37,7 @@ fi:
     new_password_confirm: vahvista uusi salasana
     change_password: Muuta salasana
     create_account: Luo uusi tili
-      
+
     #--- CMS/Site Messages
 
     #--- Forum System
@@ -47,7 +47,7 @@ fi:
     #--- Profile
     profile_title: Tili ja profiili
     profile_subtitle: Asetukset
-    
+
     #--- Newletter Kirjaudu sisään
     newsletter_choose: Valitse
 

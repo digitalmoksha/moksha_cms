@@ -28,9 +28,9 @@ class CreateEvents < ActiveRecord::Migration[4.2]
       t.datetime    :updated_at
       t.integer     :account_id
     end
-    
+
     add_index :ems_workshops, ["slug"], :name => "workshopname_key"
-    
+
     create_table :ems_registrations, :force => true do |t|
       t.integer     :workshop_id
       t.integer     :user_id
@@ -52,9 +52,9 @@ class CreateEvents < ActiveRecord::Migration[4.2]
       t.integer     :account_id
       t.integer     :lock_version,                       :default => 0
     end
-    
+
     add_index :ems_registrations, ["receipt_code"], :name => "receipt_code_key"
-    
+
     create_table :ems_workshop_price_translations, :force => true do |t|
       t.integer     :ems_workshop_price_id
       t.string      :locale

@@ -7,7 +7,7 @@
     <% end %>
   </ul>
   <div class="tab-content well">
-    <% current_account.site_locales.each do |locale| %>        
+    <% current_account.site_locales.each do |locale| %>
       <% active = "active" if current_account.preferred_default_locale == locale %>
       <div id="<%= tab_prefix + locale.to_s %>" class="tab-pane fade in <%= active %>">
         <div class="">

@@ -8,7 +8,7 @@ class DmCore::Admin::AdminController < ApplicationController
   before_action :template_setup
 
   layout 'admin_theme/admin'
-  
+
   include DmCore::ApplicationHelper
   include DmCore::AccountHelper
   include DmCore::Admin::ApplicationHelper
@@ -20,12 +20,12 @@ class DmCore::Admin::AdminController < ApplicationController
   # Make sure some type of administrative user is logged in
   #------------------------------------------------------------------------------
   def authenticate_admin_user!
-    authenticate_user! 
+    authenticate_user!
     unless can?(:access_admin, :all)
       flash[:alert] = "Unauthorized Access!"
-      redirect_to current_account.index_path 
+      redirect_to current_account.index_path
     end
-  end  
+  end
 
 private
 
@@ -40,12 +40,12 @@ private
       @admin_theme[:brand_link] = main_app.index_url
       @admin_theme[:top_menu]   = []
       @admin_theme[:main_menu]  = []
-      
+
       #=== Top Menu
       #--- Users
       item = {text: ' ', icon_class: :users, badge: User.current_account_users.count, link: (can?(:manage, :all) ? dm_core.admin_users_path : '#')}
       @admin_theme[:top_menu] << item
-      
+
       #--- Gear menu
       if is_admin? || can?(:manage_content, :all)
         item = { text: '', icon_class: :gear, children: [], link: '#' }
@@ -56,7 +56,7 @@ private
           end
         end
         @admin_theme[:top_menu] << item
-        
+
         item[:children] << {text: 'Site Settings', icon_class: :gear,   link: dm_core.admin_account_path } if is_admin?
         item[:children] << {text: 'System Admin',  icon_class: :wrench, link: dm_core.admin_system_path }  if is_sysadmin?
       end
@@ -66,7 +66,7 @@ private
       item[:children] << {text: 'My profile',   icon_class: :user, link: dm_core.edit_profile_account_path }
       item[:children] << {text: 'Logout',       icon_class: :exit, link: main_app.destroy_user_session_path, link_options: {method: :delete} }
       @admin_theme[:top_menu] << item
-       
+
       #=== Main Menu
       @admin_theme[:main_menu] << {text: 'Dashboard', icon_class: :dashboard, link: dm_core.admin_dashboard_path }
       @admin_theme[:main_menu] |= DmCms::AdminMenuInject.menu_items(current_user)           if defined?(DmCms)

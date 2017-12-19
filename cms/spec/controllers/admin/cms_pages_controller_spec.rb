@@ -3,14 +3,14 @@ require 'spec_helper'
 describe DmCms::Admin::CmsPagesController do
   routes { DmCms::Engine.routes }
   login_admin
-  
+
   #------------------------------------------------------------------------------
   it "verify using admin role" do
     expect(@current_user.is_admin?).to eq true
   end
 
   it "write tests"
-  
+
   describe 'GET #index' do
     #------------------------------------------------------------------------------
     # it "populates an array of all documents" do

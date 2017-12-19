@@ -13,15 +13,15 @@ class CmsSnippet < ApplicationRecord
   include DmCore::Concerns::FriendlyId
 
   default_scope         { where(account_id: Account.current.id) }
-  
+
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates            :content, :fallbacks_for_empty_translations => true
   globalize_accessors   locales: I18n.available_locales
 
   # --- versioning - skip anything translated
   has_paper_trail       :skip => :content
-  
-  # --- validations 
+
+  # --- validations
   validates_presence_of :itemtype, :slug
   validates_length_of   :slug, maximum: 255
   validates_length_of   :itemtype, maximum: 30
@@ -34,7 +34,7 @@ class CmsSnippet < ApplicationRecord
   def is_published?
     published
   end
-  
+
   #------------------------------------------------------------------------------
   def to_liquid
     {}

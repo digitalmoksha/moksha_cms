@@ -110,7 +110,7 @@ module DmCore
 
 
   private
-  
+
     # setup the account scope, used for scoping models to an Account
     #------------------------------------------------------------------------------
     def scope_current_account
@@ -120,7 +120,7 @@ module DmCore
       Account.current.set_url_parts(request.protocol, request.host_with_port)
       yield
     ensure
-      # Ensure that once this request is done, the Account.current (which 
+      # Ensure that once this request is done, the Account.current (which
       # is stored in thread storage) is cleared.
       # When testing, it's better *not* to clear it, since expectations
       # after the controller call may need the current account

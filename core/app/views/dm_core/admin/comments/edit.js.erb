@@ -1,2 +1,2 @@
-$('#comment_section #<%= dom_id(@comment) %>').after("<%= j render partial: 'dm_core/admin/comments/comment_edit_form', 
+$('#comment_section #<%= dom_id(@comment) %>').after("<%= j render partial: 'dm_core/admin/comments/comment_edit_form',
       locals: {commenting_on: @commenter, name: params[:name]} %>")

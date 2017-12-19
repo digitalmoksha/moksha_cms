@@ -1,17 +1,17 @@
 module Liquid
   class UrlMedia < DmCore::LiquidTag
-    include ActionView::Helpers::TagHelper 
+    include ActionView::Helpers::TagHelper
     include ActionView::Helpers::AssetTagHelper
     include DmCore::UrlHelper
     include DmCore::ParamsHelper
 
     #------------------------------------------------------------------------------
     def render(context)
-      url = DmCms::MediaUrlService.call(@attributes['src'], version: @attributes['version'] || :original, 
+      url = DmCms::MediaUrlService.call(@attributes['src'], version: @attributes['version'] || :original,
                                         protected: @attributes['protected'].as_boolean)
       return url.nil? ? '' : url
     end
-  
+
     def self.details
       { name: self.tag_name,
         summary: 'Returns url of a media file',
@@ -31,10 +31,10 @@ END_OF_DESCRIPTION
       }
     end
   end
-  
+
   Template.register_tag('url_media',  UrlMedia)
-  Template.register_tag('url_asset',  UrlMedia)  # TODO - DEPRECATED 
-  Template.register_tag('image_path', UrlMedia)  # TODO - DEPRECATED 
-  Template.register_tag('url_image',  UrlMedia)  # TODO - DEPRECATED 
-  
+  Template.register_tag('url_asset',  UrlMedia)  # TODO - DEPRECATED
+  Template.register_tag('image_path', UrlMedia)  # TODO - DEPRECATED
+  Template.register_tag('url_image',  UrlMedia)  # TODO - DEPRECATED
+
 end

@@ -18,7 +18,7 @@ describe CmsPage do
     expect(CmsPage.welcome_page).to eq nil
     page.mark_as_welcome_page
     expect(CmsPage.welcome_page).to eq page
-    
+
     page2 = create(:page, slug: 'welcome')
     page2.mark_as_welcome_page
     expect(CmsPage.welcome_page).to eq page2
@@ -34,7 +34,7 @@ describe CmsPage do
       page.update_attribute(:tag_list, 'one, two')
       expect(page.tag_list).to eq ['one', 'two']
     end
-    
+
     #------------------------------------------------------------------------------
     it 'all tags across pages' do
       page.update_attribute(:tag_list, 'one, two')

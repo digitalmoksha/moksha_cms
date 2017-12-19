@@ -9,7 +9,7 @@ module CsvExporter
 
   # include Ruport
   # include DmUtilities::RenderingHelper
-  
+
   #------------------------------------------------------------------------------
   def data_export(column_definitions, data_array, options = {})
     case options[:format]
@@ -24,7 +24,7 @@ module CsvExporter
 
   # Exports data to a CSV formatted file.
   # column_definitions: defines the name of the fields and how they are accessed.
-  #   Array of items, where each item is an array of 
+  #   Array of items, where each item is an array of
   #     name used in CSV column
   #     name used to access the value in the data records
   #     width of field
@@ -39,7 +39,7 @@ module CsvExporter
   #
   # data_array: an array of objects (link from a find)
   # :filename => 'file_name' name of file to save as.
-  # :expressions => true : the data definintion can be a complex expression, 
+  # :expressions => true : the data definintion can be a complex expression,
   #    so simply evaluate it directly. To access the current item, the expression
   #    should use 'item', as in 'item.name.blank? ? "n/a" : item.name'
   #------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ module CsvExporter
           data = get_data_value(item, x[1], options)
           #data = "\"#{data}\"" if data.include?(',') #--- add quotes if comma included
           outputArray << data
-        end            
+        end
         csv << outputArray
       end
     end
@@ -81,7 +81,7 @@ module CsvExporter
 
   # Exports data to an Excel formatted file.
   # column_definitions: defines the name of the fields and how they are accessed.
-  #   Array of items, where each item is an array of 
+  #   Array of items, where each item is an array of
   #     name used in CSV column
   #     name used to access the value in the data records
   #     width of field
@@ -96,7 +96,7 @@ module CsvExporter
   #
   # data_array: an array of objects (link from a find)
   # :filename => 'file_name' name of file to save as.
-  # :expressions => true : the data definintion can be a complex expression, 
+  # :expressions => true : the data definintion can be a complex expression,
   #    so simply evaluate it directly. To access the current item, the expression
   #    should use 'item', as in 'item.name.blank? ? "n/a" : item.name'
   #------------------------------------------------------------------------------
@@ -104,12 +104,12 @@ module CsvExporter
     options.symbolize_keys
     rows      = Array.new
     columns   = Array.new
-  
+
     #--- create the workbook
     wb          = Scio::Excel::SimpleWorkbook.new(to_excel_filename(options[:filename] ? options[:filename] : 'Workbook'))
     stc         = wb.default_cell_style
     stc.borders = stc.borders & 0
-  
+
     column_definitions.each do |x|
       style = x[3].nil? ? nil : Scio::Excel::SimpleStyle.new(x[3])
       c = Scio::Excel::Column.new(x[0], x[3].nil? ? {} : x[3])
@@ -125,10 +125,10 @@ module CsvExporter
       end
       rows << data
     end
-  
+
     wb.columns  = columns
     wb.rows     = rows
-  
+
     if options[:filename]
       send_data wb.create, :filename => to_excel_filename(options[:filename]), :disposition => 'attachment', :type => 'application/excel'
     else
@@ -145,20 +145,20 @@ module CsvExporter
 
     column_definitions.each { |x| column_array << x[0] }
 
-    table = Table(column_array) do |t| 
+    table = Table(column_array) do |t|
       data_array.each do |item|
         output_array.clear
         column_definitions.each do |x|
           value = get_data_value(item, x[1], options)
           output_array << convert_value(value, x[3])
-        end      
+        end
         t << output_array
       end
     end
     return table
   end
 =end
-  
+
 private
   #------------------------------------------------------------------------------
   def get_data_value(item, data_def, options)
@@ -185,7 +185,7 @@ private
       when 'link'
       end
     end
-  
+
     return value
   end
 

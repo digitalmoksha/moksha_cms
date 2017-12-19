@@ -31,7 +31,7 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
   def unsubscribe_from_newsletter
     email       = current_user ? current_user.email : ''
     @newsletter = Newsletter.find_newsletter(params['token'])
-    
+
     if (@newsletter)
       result = @newsletter.unsubscribe(email)
       respond_to do |format|

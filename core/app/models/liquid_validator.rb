@@ -23,4 +23,4 @@ class LiquidValidator < ActiveModel::EachValidator
     end
   end
 end
- 
+

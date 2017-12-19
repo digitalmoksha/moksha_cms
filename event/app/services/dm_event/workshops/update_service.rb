@@ -18,7 +18,7 @@ module DmEvent::Workshops
     end
 
   private
-    
+
     # blindly saving these would erase them when updating the workshop on the
     # normal page.  Only do on the additional configuration page
     #------------------------------------------------------------------------------
@@ -49,4 +49,3 @@ module DmEvent::Workshops
     end
   end
 end
-  

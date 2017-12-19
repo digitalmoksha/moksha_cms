@@ -16,7 +16,7 @@ module DmCore
       flash_class = {:notice => 'alert-success', :error => 'alert-error', :alert => 'alert-info'}
       raw([:notice, :error, :alert].collect {|type| content_tag('div', flash[type], :id => type, :class => "alert #{flash_class[type]}") if flash[type] }.join)
     end
-  
+
     #------------------------------------------------------------------------------
     def is_admin?
       user_signed_in? && current_user.is_admin?
@@ -26,7 +26,7 @@ module DmCore
     def is_sysadmin?
       user_signed_in? && current_user.is_sysadmin?
     end
-  
+
     # for determining if use is on a paritcular page, for active nav highlighting
     # http://stackoverflow.com/questions/3705898/best-way-to-add-current-class-to-nav-in-rails-3
     #------------------------------------------------------------------------------
@@ -41,10 +41,10 @@ module DmCore
 
     # Usually don't care if a form submits a PUT or POST.  Was something submitted?
     #------------------------------------------------------------------------------
-    def put_or_post? 
+    def put_or_post?
       request.put? || request.post? || request.patch?
     end
-    
+
     #------------------------------------------------------------------------------
     def link_to_add_custom_fields(name, f, association)
       new_object  = f.object.send(association).klass.new

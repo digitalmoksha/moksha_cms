@@ -4,7 +4,7 @@ When updating the bootstrap or theme files, we need to change the path to font a
 
 ## bootstrap.css
 
-Change the 
+Change the
 
     @font-face {
       font-family: 'Glyphicons Halflings';
@@ -13,7 +13,7 @@ Change the
       src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
     }
 
-to 
+to
 
     @font-face {
       font-family: 'Glyphicons Halflings';

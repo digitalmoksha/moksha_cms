@@ -6,7 +6,7 @@
     <%= panel body: false, title: "Permissions" do %>
       <div class="panel-body">
         <p>The users below can be granted different levels of access to this particular workshop.</p>
-  
+
         <% @event_managers_alacarte.each do |user| %>
           <div class="row">
             <div class="col-md-12">
@@ -28,7 +28,7 @@
   <div class="col-md-4">
     <%= subsection title: "Event Managers" do %>
       <p>Current users that can fully manage this event</p>
-  
+
       <table class="table table-bordered table-bordered table-condensed table-striped">
         <tbody>
           <% @event_managers.each do |user| %>

@@ -1,7 +1,7 @@
 # Subclass from main ApplicationController, which will subclass from DmCore
 #------------------------------------------------------------------------------
 class DmEvent::ApplicationController < ::ApplicationController
-  include ApplicationHelper  
+  include ApplicationHelper
 
   #--- these are needed to support rendering layouts built for the CMS
   helper    DmCms::RenderHelper
@@ -12,7 +12,7 @@ class DmEvent::ApplicationController < ::ApplicationController
   #before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
-  
+
 private
 
   #------------------------------------------------------------------------------

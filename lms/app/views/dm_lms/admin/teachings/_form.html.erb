@@ -1,5 +1,5 @@
 <% content_for :content_title, @title %>
-<% content_for :content_subtitle, 
+<% content_for :content_subtitle,
       'Course: '.html_safe + link_to(@lesson.course.title, admin_course_path(@lesson.course), title: 'Go back to this course') +
       ' &mdash; Lesson: '.html_safe + link_to(@lesson.title, admin_lesson_path(@lesson), title: 'Go back to this lesson') %>
 <% unless @lesson_page.new_record? %>
@@ -30,7 +30,7 @@
         <% end %>
 
         <%= f.simple_fields_for @lesson_page do |p| %>
-          <%= p.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>  
+          <%= p.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
         <% end %>
     	<% end %>
     </div>

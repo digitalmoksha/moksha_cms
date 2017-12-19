@@ -3,7 +3,7 @@ module DmCore
     module RegistrationsController
       extend ActiveSupport::Concern
       include DmCore::PermittedParams
-      
+
       included do
         before_action :configure_permitted_parameters, if: :devise_controller?
         before_action :check_captcha, only: [:create]
@@ -17,7 +17,7 @@ module DmCore
           unless verify_recaptcha(secret_key: Rails.application.secrets[:recaptcha_secret_key])
             self.resource = resource_class.new sign_up_params
             respond_with_navigational(resource) { render :new }
-          end 
+          end
         end
 
         # hook into devise to permit our special parameters
@@ -26,7 +26,7 @@ module DmCore
           devise_parameter_sanitizer.permit(:sign_up) do |user_params|
             devise_sign_up_params(user_params)
           end
-          
+
         end
 
       module ClassMethods

@@ -62,7 +62,7 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
       format.json { head :no_content }
     end
   end
-  
+
   # Change to a different user, so we can check their permissions, etc
   #------------------------------------------------------------------------------
   def masquerade
@@ -88,7 +88,7 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
       redirect_to dm_core.edit_admin_user_path(@user), alert: 'User is already confirmed'
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def resend_confirmation_email
     @user = User.find(params[:id])
@@ -102,7 +102,7 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
       redirect_to dm_core.edit_admin_user_path(@user), alert: 'User is already confirmed'
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def cancel_change_of_email
     @user = User.find(params[:id])
@@ -111,14 +111,14 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
     end
     redirect_to dm_core.edit_admin_user_path(@user)
   end
-  
+
 protected
 
   #------------------------------------------------------------------------------
   def authorize_access
     unless can? :manage, :all
       flash[:alert] = "Unauthorized Access!"
-      redirect_to current_account.index_path 
+      redirect_to current_account.index_path
     end
   end
 

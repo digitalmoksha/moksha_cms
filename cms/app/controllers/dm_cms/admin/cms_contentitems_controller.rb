@@ -50,8 +50,8 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
     authorize! :manage_content, @current_page
     if @cms_contentitem.update_attributes(cms_contentitem_params)
       #@cms_page.merge!(@item.cms_page.get_page_render_values)
-      #respond_to do |format| 
-      #  format.js { render :action => :update_fragment } 
+      #respond_to do |format|
+      #  format.js { render :action => :update_fragment }
       #end
     end
   end
@@ -74,7 +74,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   end
 
 protected
-  
+
   #------------------------------------------------------------------------------
   def current_page
     @current_page  = CmsPage.friendly.find(params[:id])

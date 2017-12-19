@@ -23,7 +23,7 @@ module DmUtilities::DateHelper
     return '' if start_date.nil? or start_date.year < 1900
     end_date ||= start_date
     options[:separator] ||= " &mdash; "
-    
+
     if start_date.month == end_date.month && start_date.day == end_date.day && start_date.year == end_date.year
       event_date     = start_date.localize(:count => start_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy))
       fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmddyy)
@@ -45,7 +45,7 @@ module DmUtilities::DateHelper
   def format_time_range(start_time, end_time, ignore_end_time = false)
     return '' if start_time.nil?
     ignore_end_time = true if end_time.nil?
-    
+
     eventTime = start_time.localize(:format => :hhmmpp)
 
     ignore_end_time ? eventTime : "#{eventTime} &mdash; #{end_time.localize(:format => :hhmmpp)}".html_safe

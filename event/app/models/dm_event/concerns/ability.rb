@@ -32,7 +32,7 @@ module DmEvent
             manage_event_ids = @user_roles.select {|r| r.name == 'manage_event' && r.resource_type == 'Workshop'}.map(&:resource_id)
             can :manage_events, Workshop, id: manage_event_ids
             # can(:access_media_library, :all) unless manage_event_ids.empty?
-            
+
             # can see and manage a workshops registrations
             manage_event_registration_ids = @user_roles.select {|r| r.name == 'manage_event_registration' && r.resource_type == 'Workshop'}.map(&:resource_id)
             can :manage_event_registrations, Workshop, id: manage_event_registration_ids
@@ -40,7 +40,7 @@ module DmEvent
             # can see and manage a workshops finances
             manage_event_finance_ids = @user_roles.select {|r| r.name == 'manage_event_finance' && r.resource_type == 'Workshop'}.map(&:resource_id)
             can :manage_event_finances, Workshop, id: manage_event_finance_ids
-            
+
             can :list_events, Workshop, id: (manage_event_ids + manage_event_registration_ids + manage_event_finance_ids).uniq
           end
 
@@ -48,7 +48,7 @@ module DmEvent
       end
 
       ::Ability.register_abilities(:dm_event_abilities)
-      
+
     end
   end
 end

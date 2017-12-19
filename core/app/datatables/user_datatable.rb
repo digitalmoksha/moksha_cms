@@ -1,10 +1,10 @@
 class UserDatatable
   include ActionView::Helpers::TagHelper
   include DmCore::ApplicationHelper
-  
+
   delegate :params, :link_to, :image_tag, :number_to_currency, :time_ago_in_words, to: :@view
   delegate :url_helpers, to: 'DmCore::Engine.routes'
-  
+
   #------------------------------------------------------------------------------
   def initialize(view)
     @view = view

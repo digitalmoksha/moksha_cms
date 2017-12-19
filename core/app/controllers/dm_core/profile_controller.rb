@@ -4,5 +4,5 @@ class DmCore::ProfileController < ::ApplicationController
   include DmCore::Concerns::ProfileController
 
   layout 'layouts/general_templates/user_profile'
-  
+
 end

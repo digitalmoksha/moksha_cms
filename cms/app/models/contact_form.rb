@@ -2,7 +2,7 @@
 # be created in the theme's models folder
 #------------------------------------------------------------------------------
 class ContactForm < ::MailForm::Base
-  
+
   attribute :name,        :validate => true
   attribute :email,       :validate =>  /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
   attribute :organization                    # Not validated
@@ -10,7 +10,7 @@ class ContactForm < ::MailForm::Base
   attribute :message,     :validate => true
   attribute :reason,      :validate => true
   attribute :nickname,    :captcha  => true
-  
+
   # append    :remote_ip, :user_agent, :session   # append these values to the end of all emails
 
   # for a contact form, the "from" address should be a valid email address
@@ -19,7 +19,7 @@ class ContactForm < ::MailForm::Base
   # the validity of the sending domain.
   #------------------------------------------------------------------------------
   def headers
-    { subject:  "#{I18n.t('cms.contact_form.subject_prefix')}: #{reason}: #{subject}" , 
+    { subject:  "#{I18n.t('cms.contact_form.subject_prefix')}: #{reason}: #{subject}" ,
       to:       Account.current.preferred_support_email,
       from:     Account.current.preferred_support_email,
       reply_to: %("#{name}" <#{email}>)

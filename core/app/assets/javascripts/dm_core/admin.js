@@ -23,8 +23,8 @@ function toggle_reveal(item, options) {
   options          = (typeof options == 'undefined') ? {duration:500} : options;
   options.duration = (typeof options.duration == 'undefined') ? 500 : options.duration;
   $(item).animate({
-    height: 'toggle', 
-    opacity: 'toggle' 
+    height: 'toggle',
+    opacity: 'toggle'
   }, options.duration);
 }
 
@@ -62,7 +62,7 @@ $(document).ready(function() {
       })
     }
   });
-  
+
   // http://boagworld.com/dev/creating-a-draggable-sitemap-with-jquery/
   //----------------------------------------------------------------------
   $('#tree_sort li').prepend('<div class="dropzone"></div>');
@@ -74,7 +74,7 @@ $(document).ready(function() {
       helper: 'clone',
       zIndex: 100
   });
-  
+
   $('#tree_sort dl, #tree_sort .dropzone').droppable({
     accept: '#tree_sort li',
     tolerance: 'pointer',
@@ -92,7 +92,7 @@ $(document).ready(function() {
       else {
         li.before(ui.draggable);
       }
-      
+
       //--- send update to the server
       var item_id   = ui.draggable.data('item_id');
       var position  = ui.draggable.index();
@@ -100,7 +100,7 @@ $(document).ready(function() {
         var parent_id = li.data('item_id');
       }
       else {
-        var parent_id = li.parents('li').first().data('item_id');        
+        var parent_id = li.parents('li').first().data('item_id');
       }
       $.ajax({
         type: 'POST',
@@ -108,7 +108,7 @@ $(document).ready(function() {
         dataType: 'json',
         data: { id: item_id, item: { position: position, parent_id: parent_id } }
       })
-      
+
       //--- reset our background colours.
       li.find('dl,.dropzone').css({ backgroundColor: '', borderColor: '' });
     },
@@ -121,7 +121,7 @@ $(document).ready(function() {
       $(this).filter('.dropzone').css({ borderColor: '' });
     }
   });
-  
+
   $('.tree_expand').on('click', function() {
     $(this).parent().parent().parent().toggleClass('tree_open').toggleClass('tree_closed');
     li = $(this).parent().parent().parent();
@@ -162,8 +162,8 @@ $(document).ready(function() {
         $(this).remove(); //then remove from the DOM
       });
     });
-  }); 
-  
+  });
+
   $('#new_user_sparkline').sparkline(
     'html', {type: 'bar', barColor: '#a6c659', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
   );
@@ -194,12 +194,12 @@ $(document).ready(function() {
   });
 
   //----------------------------------------------------------------
-  $.fn.toolbarTabs = function(){ 
-  
+  $.fn.toolbarTabs = function(){
+
     $(this).find(".tab_content").hide(); //Hide all content
     $(this).find("ul.tabs.toolbar li:first").addClass("activeTab").show(); //Activate first tab
     $(this).find(".tab_content:first").show(); //Show first tab content
-  
+
     $("ul.tabs.toolbar li").click(function() {
       $(this).parent().parent().find("ul.tabs li").removeClass("activeTab"); //Remove any "active" class
       $(this).addClass("activeTab"); //Add "active" class to selected tab
@@ -208,7 +208,7 @@ $(document).ready(function() {
       $(activeTab).show(); //Fade in the active content
       return false;
     });
-  
+
   };
   $("div[class^='widget']").toolbarTabs(); //Run function on any div with class name of "Content Tabs"
 

@@ -1,23 +1,23 @@
 # Allow Liquid tags to be namespaced, based on the account_prefix.  This allows
 # multiple sites to have tags named the same, but the correct one will get used
-# during rendering 
+# during rendering
 #------------------------------------------------------------------------------
 module Liquid
   class Template
     class << self
-      
+
       #------------------------------------------------------------------------------
       def register_tag(name, klass)
         register_tag_namespace(name, klass)
       end
-      
+
       # Store tags in a namespace, usually a theme name.  This is so we can register
       # many different tags for each theme and keep them seperate.
       #------------------------------------------------------------------------------
       def register_tag_namespace(name, klass, namespace = 'system_tags')
         tags_namespaced(namespace)[name.to_s] = klass
       end
-      
+
       # return the list of tags that are available.  Tags available at any instance is
       # the global tags, the current theme's tags, and the parent theme's tags.
       # theme tags will override global tags
@@ -30,7 +30,7 @@ module Liquid
         end
         return t
       end
-      
+
       #------------------------------------------------------------------------------
       def tags_namespaced(namespace)
         @tags_namespaced            ||= {}
@@ -68,11 +68,11 @@ module DmCore
   class LiquidTag < Liquid::Tag
     include LiquidExtensions::Helpers
 
-    SimpleSyntax = /#{Liquid::QuotedFragment}/        
+    SimpleSyntax = /#{Liquid::QuotedFragment}/
     NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/
 
     #------------------------------------------------------------------------------
-    def initialize(tag_name, markup, tokens)      
+    def initialize(tag_name, markup, tokens)
       @attributes    = {}
       markup.scan(Liquid::TagAttributes) do |key, value|
         @attributes[key] = ((value.delete "\"").delete "\'")
@@ -96,25 +96,25 @@ module DmCore
   class LiquidBlock < Liquid::Block
     include LiquidExtensions::Helpers
 
-    SimpleSyntax = /#{Liquid::QuotedFragment}/        
+    SimpleSyntax = /#{Liquid::QuotedFragment}/
     NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/
 
     #------------------------------------------------------------------------------
-    def initialize(tag_name, markup, tokens)      
+    def initialize(tag_name, markup, tokens)
       @attributes    = {}
       markup.scan(Liquid::TagAttributes) do |key, value|
         @attributes[key] = ((value.delete "\"").delete "\'")
       end
-      super    
+      super
     end
-    
+
     # Liquid will automatically throw away a block with empty/blank content.
     # Call this in the tag's render method to allow the tag to be rendered anyway
     #------------------------------------------------------------------------------
     def allow_empty_block
       @blank = false
     end
-    
+
     class << self
       #------------------------------------------------------------------------------
       def tag_name

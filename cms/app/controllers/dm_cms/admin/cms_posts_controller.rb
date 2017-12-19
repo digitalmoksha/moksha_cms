@@ -3,7 +3,7 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
 
   before_action   :blog_lookup
   before_action   :post_lookup, :except =>  [:new, :create]
-  
+
   #------------------------------------------------------------------------------
   def new
     authorize! :manage_content, @blog
@@ -43,7 +43,7 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
     @post.destroy
     redirect_to admin_cms_blog_url(@blog), notice: 'Post was successfully deleted.'
   end
-  
+
   #------------------------------------------------------------------------------
   def send_notifications_emails
     authorize! :manage_content, @blog

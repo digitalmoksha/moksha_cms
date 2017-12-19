@@ -56,7 +56,7 @@
 .label-approved[href], .badge-approved[href] { background-color: #4a48ff;}
 .label-subscribed, .badge-subscribed { background-color: #4a48ff; }
 .label-subscribed[href], .badge-subscribed[href] { background-color: #4a48ff;}
-.btn-accepted, .progress-bar-accepted { 
+.btn-accepted, .progress-bar-accepted {
   background-color: #4a48ff !important;
 }
 .btn-accepted .caret { border-top-color: #fff; border-bottom-color: #fff; }

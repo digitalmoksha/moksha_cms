@@ -10,10 +10,10 @@
 class WorkshopPrice < ApplicationRecord
 
   self.table_name         = 'ems_workshop_prices'
-  
+
   belongs_to              :workshop
   has_many                :registrations
-  
+
   default_scope           { where(account_id: Account.current.id).order('row_order ASC') }
 
   # --- globalize
@@ -45,7 +45,7 @@ class WorkshopPrice < ApplicationRecord
 
   # For some reason, the initial monetized price gets created with the default
   # Money currency.  Need to use the current currency, as the internal fractional
-  # value depends on it.  For example, 
+  # value depends on it.  For example,
   #  "15000".to_money('JPY').cents == 15000
   #  "15000".to_money('EUR').cents == 1500000
   # Call this method on the attributes before passing into new() or update_attributes()
@@ -56,30 +56,30 @@ class WorkshopPrice < ApplicationRecord
     attributes['alt2_price']  = attributes['alt2_price'].to_money(attributes['alt2_price_currency']) if attributes['alt2_price'].present? && attributes['alt2_price_currency'].present?
     return attributes
   end
-  
+
   #------------------------------------------------------------------------------
   def visible?
     !(disabled? || (!valid_starting_on.nil? && valid_starting_on > Date.today) || (!valid_until.nil? && valid_until < Date.today))
   end
- 
-  # If the total_available is nil, then there are unlimited tickets to be sold.  
+
+  # If the total_available is nil, then there are unlimited tickets to be sold.
   # Otherwise, check if we have sold out
   #------------------------------------------------------------------------------
   def sold_out?(num_sold)
     total_available.nil? ? false : (num_sold >= total_available)
   end
-  
+
   #------------------------------------------------------------------------------
   def price_formatted
     price.nil? ? '' : price.format(no_cents_if_whole: true, symbol: true)
   end
-  
+
   # returns the amount of a payment
   #------------------------------------------------------------------------------
   def payment_price
     recurring_payments? ? (price / recurring_number) : price
   end
-  
+
   #------------------------------------------------------------------------------
   def recurring_payments?
     recurring_number.to_i > 1
@@ -112,7 +112,7 @@ class WorkshopPrice < ApplicationRecord
     payment_schedule(from_date).reverse.detect {|item| item[:due_on] <= on_date}
   end
 
-  # date of last scheduled payment, or the onlye 
+  # date of last scheduled payment, or the onlye
   #------------------------------------------------------------------------------
   def last_scheduled_payment_date(from_date)
     payment_schedule(from_date).last[:due_on]
@@ -127,13 +127,13 @@ class WorkshopPrice < ApplicationRecord
     list << [alt2_price_currency, alt2_price_currency] unless alt2_price_currency.blank?
     return list
   end
-  
+
   # Convert an amount in an alternate currency into the base currency
   #------------------------------------------------------------------------------
   def to_base_currency(money)
     bank.exchange_with(money, price_currency)
   end
-  
+
   # return a bank object filled with the exchange rates, based on the prices.
   # then you can do:  bank.exchange_with(price, 'USD')
   # note: since JPY doesn't have cents (the price doesn't get multiplied by 100)
@@ -160,5 +160,5 @@ class WorkshopPrice < ApplicationRecord
     end
     return @bank
   end
-  
+
 end

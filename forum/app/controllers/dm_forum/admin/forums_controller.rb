@@ -4,7 +4,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
   before_action   :category_lookup, :only =>    [:index, :new, :create]
   before_action   :forum_lookup,    :except =>  [:index, :new, :create]
   #before_action   :set_title
-  
+
   # GET /admin/fms/forums
   #------------------------------------------------------------------------------
   def index
@@ -17,9 +17,9 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def show
-    
+
   end
-  
+
   # GET /admin/fms/forums/new
   #------------------------------------------------------------------------------
   def new
@@ -36,7 +36,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
   def create
     @forum = @forum_category.forums.new(forum_params)
     @forum.forum_site = ForumSite.site
-    
+
     if @forum.save
       redirect_to admin_forum_category_url(@forum_category), notice: 'Forum was successfully created.'
     else
@@ -61,7 +61,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
 
     redirect_to admin_forum_category_url(@forum.forum_category)
   end
-  
+
   #------------------------------------------------------------------------------
   def sort
     @forum.update_attribute(:row_order_position, params[:item][:row_order_position])
@@ -69,14 +69,14 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
     #--- this action will be called via ajax
     head :ok
   end
-  
+
   #------------------------------------------------------------------------------
   def forum_users
     respond_to do |format|
       format.json { render json: ForumUserDatatable.new(view_context, @forum) }
     end
   end
-  
+
   # Add user(s) to forum.
   # => user_id: add a single user
   #------------------------------------------------------------------------------
@@ -89,14 +89,14 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
       redirect_to admin_forum_url(@forum), alert: "Incorrect parameters supplied"
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def forum_delete_member
     user = User.find(params[:user_id])
     @forum.remove_member(user)
     redirect_to admin_forum_url(@forum), notice: "Forum access removed for #{user.full_name}"
   end
-  
+
 private
 
   #------------------------------------------------------------------------------

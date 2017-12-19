@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 class BasePresenter
   include DmCore::LiquidHelper
-  
+
   #------------------------------------------------------------------------------
   def initialize(object, template)
     @object   = object

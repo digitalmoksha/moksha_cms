@@ -7,7 +7,7 @@ ja:
     subscription_updated: あなたの購読情報は更新されました
     unsubscribe_successful: あなたのeメールアドレスは購読解除されています
     already_subscribed: すでにサブスクライブ
-    
+
     #--- Mailchimp specific errors
     List_DoesNotExist: このリストは存在しません
     List_AlreadySubscribed: このeメールアドレスは既に購読登録されています

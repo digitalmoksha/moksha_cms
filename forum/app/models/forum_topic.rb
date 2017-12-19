@@ -10,7 +10,7 @@ class ForumTopic < ApplicationRecord
   include DmCore::Concerns::FriendlyId
 
   acts_as_followable
-  
+
   before_validation       :set_default_attributes, :on => :create
 
   after_create            :create_initial_comment
@@ -22,7 +22,7 @@ class ForumTopic < ApplicationRecord
   #--- creator of forum topic
   belongs_to              :user
   belongs_to              :account
-  
+
   #--- creator of recent comment
   belongs_to              :last_user, :class_name => "User"
 
@@ -36,7 +36,7 @@ class ForumTopic < ApplicationRecord
   has_one                 :recent_comment, -> { where(ancestry_depth: 1).order('created_at DESC') }, :as => :commentable, :class_name => "ForumComment"
 
   has_many                :voices, -> { distinct(true) }, :through => :forum_comments, :source => :user
-  
+
   validates_presence_of   :user_id, :forum_site_id, :forum_id, :title
   validates_presence_of   :body, :on => :create
 
@@ -47,7 +47,7 @@ class ForumTopic < ApplicationRecord
   def model_slug
     title
   end
-  
+
   # The first comment on a topic is the topic text.  So the number of *replies*
   # is the number of comments - 1
   #------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ class ForumTopic < ApplicationRecord
   def sticky?
     sticky
   end
-  
+
   #------------------------------------------------------------------------------
   def hit!
     self.class.increment_counter :hits, id
@@ -93,7 +93,7 @@ class ForumTopic < ApplicationRecord
   def update_cached_comment_fields(forum_comment)
     #--- these fields are not accessible to mass assignment
     if remaining_comment = forum_comment.frozen? ? recent_comment : forum_comment
-      self.class.where(:id => id).update_all(:last_updated_at => remaining_comment.created_at, 
+      self.class.where(:id => id).update_all(:last_updated_at => remaining_comment.created_at,
             :last_user_id => remaining_comment.user_id, :last_forum_comment_id => remaining_comment.id)
     else
       destroy

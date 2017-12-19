@@ -36,7 +36,7 @@ en:
     new_password_confirm: Confirm new password
     change_password: Change my password
     create_account: Create new account
-      
+
     #--- CMS/Site Messages
 
     #--- Forum System
@@ -46,10 +46,10 @@ en:
     #--- Profile
     profile_title: Account and Profile
     profile_subtitle: Settings
-    
+
     #--- Newletter Signup
     newsletter_choose: Please Choose
-    
+
     #--- Forum
     forum:
       no_public: "Here you have the opportunity to participate in online discussions via closed and open forums"

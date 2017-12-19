@@ -47,7 +47,7 @@ describe DmEvent::Workshops::UpdateService, type: :service do
         expect(update_workshop(cms_blog: 1, additional_configuration: true)).to be_truthy
         expect(workshop.cms_blog).to eq blog
       end
-    
+
       # TODO definition of custom fields needs to be extracted into it's own panel
       # and creation/management process
       # describe 'custom fields' do

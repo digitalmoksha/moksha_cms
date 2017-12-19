@@ -1,6 +1,6 @@
 module DmForum
   class AdminMenuInject
-        
+
     #------------------------------------------------------------------------------
     def self.menu_items(user)
       menu = []

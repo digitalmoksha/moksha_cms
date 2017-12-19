@@ -75,8 +75,7 @@ cs:
     profile_password_updated: Vaše heslo bylo aktualizováno.
     profile_email_needs_confirmation: 'Vaše e-mailová adresa byla změněna na'
     profile_email_needs_confirmation_2: 'Na zadanou e-mailovou adresu byl zaslán potvrzující e-mail. Pokud jste jej neobdrželi, jednoduše aktualizujte svůj e-mail znovu. Potvrzení bude znovu odesláno.'
-    
+
   email:
     salutation: 'Drahý/Drahá %{value},'
     thank_you: Děkujeme
-    

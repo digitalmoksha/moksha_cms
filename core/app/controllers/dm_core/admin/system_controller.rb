@@ -28,7 +28,7 @@ protected
   def authorize_access
     unless is_sysadmin?
       flash[:alert] = "Unauthorized Access!"
-      redirect_to current_account.index_path 
+      redirect_to current_account.index_path
     end
   end
 

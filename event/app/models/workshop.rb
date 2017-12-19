@@ -23,7 +23,7 @@ class Workshop < ApplicationRecord
   if defined?(DmLms)
     has_one                 :course, as: :owner
   end
-  
+
   # --- globalize
   translates              :title, :description, :summary, :sidebar, fallbacks_for_empty_translations: true
   globalize_accessors     locales: I18n.available_locales
@@ -55,21 +55,21 @@ class Workshop < ApplicationRecord
   I18n.available_locales.each do |locale|
     validates_length_of     :"title_#{locale}", maximum: 255
   end
-  
+
   # validates_presence_of   :deadline_on
 
   default_scope           { where(account_id: Account.current.id) }
-  
+
   #--- upcoming and past are used in the admin, so should be published and non-published
   scope                   :upcoming,  -> { where('ending_on > ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC').includes(:translations) }
   scope                   :past,      -> { where('ending_on <= ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC').includes(:translations) }
 
   #--- available is list of published and registration open and not ended
-  scope                   :available, -> { where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', 
+  scope                   :available, -> { where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL',
                                       (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC') }
 
   scope                   :published, -> { where(published: true).where('archived_on IS NULL') }
-  
+
   #--- don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
   monetize                :funding_goal_cents, with_model_currency: :base_currency
 
@@ -80,26 +80,26 @@ class Workshop < ApplicationRecord
     send("title_#{Account.current.preferred_default_locale}")
   end
 
-  # If the total_available is nil, then there are unlimited tickets to be sold.  
+  # If the total_available is nil, then there are unlimited tickets to be sold.
   # Otherwise, check if we have sold out
   #------------------------------------------------------------------------------
   def price_sold_out?(workshop_price)
     # p.sold_out?(@workshop.event_registration.number_of(:registrations_by_paymenttype, payment_id: p.id)
     false # TODO
   end
-  
-  # Is this workshop in the past?  
+
+  # Is this workshop in the past?
   #------------------------------------------------------------------------------
   def past?
     ending_on < Time.now
   end
-  
+
   # Is the registration closed?  If deadline is null, then registration is open ended
   #------------------------------------------------------------------------------
   def registration_closed?
     !published? || (deadline_on ? (deadline_on < Time.now.to_date) : false)
   end
-  
+
   #------------------------------------------------------------------------------
   def published?
     published
@@ -110,7 +110,7 @@ class Workshop < ApplicationRecord
   def toggle_archive
     archived_on ? update_attribute(:archived_on, nil) : update_attribute(:archived_on, Time.now)
   end
-  
+
   #------------------------------------------------------------------------------
   def archived?
     self.archived_on ? true : false
@@ -127,7 +127,7 @@ class Workshop < ApplicationRecord
   def financial_details(level = :detail)
     #--- pick currency of first price
     financials = {summary: { total_possible: Money.new(0, base_currency),          total_possible_worst: Money.new(0, base_currency),
-                                total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency), 
+                                total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency),
                                 total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency),
                                 total_paid_percent: 0},
                   collected: {},
@@ -154,7 +154,7 @@ class Workshop < ApplicationRecord
             payment_method = payment_history.payment_method.titlecase
             financials[:collected]["#{payment_method}"] = Money.new(0, base_currency) if financials[:collected]["#{payment_method}"].nil?
             financials[:collected]["#{payment_method}"] += payment_history.total
-      
+
             month = payment_history.payment_date.beginning_of_month
             financials[:collected_monthly][month] = Money.new(0, base_currency) if financials[:collected_monthly][month].nil?
             financials[:collected_monthly][month] += payment_history.total
@@ -180,10 +180,10 @@ class Workshop < ApplicationRecord
     end
     return total_paid
   end
-  
+
   # is the passed in user attending?  Used in some deep level authorization checks,
   # which rely on the "member?" method.
-  # This does not consider a userless registration as a "member", since there is 
+  # This does not consider a userless registration as a "member", since there is
   # no way they can login
   #------------------------------------------------------------------------------
   def member?(user)
@@ -211,8 +211,8 @@ class Workshop < ApplicationRecord
   def header_accent_color(default = '')
     self[:header_accent_color] || default
   end
-  
-  # Find list of newly createdusers that have not registered for any events, between 
+
+  # Find list of newly createdusers that have not registered for any events, between
   # the end of the workshop and up to 60 day before the start of the workshop.
   # Not perfect, since people can register just to access special
   # content.  But gives rough idea of people creating an account but not realizing
@@ -236,5 +236,5 @@ class Workshop < ApplicationRecord
   def self.tag_list_all
     Workshop.tag_counts_on(:tags).map(&:name).sort
   end
-  
+
 end

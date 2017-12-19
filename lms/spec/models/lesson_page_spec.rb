@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe LessonPage do
   setup_account
-  
+
   it { is_expected.to validate_length_of(:slug).is_at_most(255) }
 
   describe 'slug handling' do
     let(:course)  { create(:course) }
     let(:lesson1) { create(:lesson,   course: course, published: true) }
     let(:lesson2) { create(:lesson_2, course: course, published: true) }
-    
+
     #------------------------------------------------------------------------------
     it 'allows the same specified slug between two lessons (scoped to lesson)' do
       teaching1 = create(:teaching)
@@ -47,7 +47,7 @@ describe LessonPage do
       expect(lesson1.slug).not_to eq lesson2.slug
     end
   end
-  
+
   describe 'next/previous' do
     let(:course)  { create(:course) }
     let(:lesson)  { create(:lesson,   course: course, published: true) }
@@ -86,7 +86,7 @@ describe LessonPage do
       page2 = create(:lesson_page_2, lesson: lesson, published: false, item: create(:teaching_2))
       expect(page2.previous(published_only: false)).to eq page1
     end
-    
+
     #------------------------------------------------------------------------------
     it '#next published lesson_page in the next lesson' do
       page1 = create(:lesson_page,   lesson: lesson,  published: true,  item: create(:teaching))
@@ -107,7 +107,7 @@ describe LessonPage do
       expect(page3.previous).to eq page2
       expect(page2.previous).to eq nil
       expect(page2.previous(published_only: false)).to eq page1
-    end    
+    end
   end
 
 end

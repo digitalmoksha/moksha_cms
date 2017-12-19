@@ -3,7 +3,7 @@ module DmCore
     module ProfileController
       extend ActiveSupport::Concern
       include DmCore::PermittedParams
-      
+
       included do
         before_action   :authenticate_user!
       end
@@ -23,7 +23,7 @@ module DmCore
           end
         end
       end
-  
+
       #------------------------------------------------------------------------------
       def details
         @user_profile = current_user.user_profile

@@ -216,7 +216,7 @@ Disallow: /password
         File.exists?("#{filename}#{extension}")
       end
     end
-    
+
     def dm_core_routes
       <<-ROUTES
   scope ":locale" do

@@ -34,8 +34,8 @@ class Ultracart::PaymentHistory < PaymentHistory
     value         = nil
     option_items  = item_details['option']
     option_items  = Array.[](option_items) if option_items.class == Hash or option_items.class == HashWithIndifferentAccess
-    unless option_items.nil? 
-      option_items.each do |the_option| 
+    unless option_items.nil?
+      option_items.each do |the_option|
         if the_option['option_name'] == name
           value = the_option['option_value'] unless the_option['option_value'].blank?
         end

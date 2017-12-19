@@ -18,7 +18,7 @@ en:
       hhmmpp: "%I:%M %p"
 
   english: "English"
-  
+
   core:
     next_page: "Next <i class='fa fa-angle-right'></i>"
     prev_page: "<i class='fa fa-angle-left'></i> Previous"
@@ -29,7 +29,7 @@ en:
     login_required: Please login to your account first
     resource_invalid: Requested page is not available in your account
     create_account: Create Account
-    
+
     confirmation_email_1: 'Thank you for registering for an account on %{value}'
     confirmation_email_2: 'Please click on the following link to complete your registration:'
     confirmation_email_3: 'Thank you!'
@@ -43,7 +43,7 @@ en:
     unlock_email_2: 'Your account has been locked due to an excessive amount of unsuccessful sign in attempts.'
     unlock_email_3: "Click the link below to unlock your account"
     unlock_email_link: Unlock my account
-    
+
     profile_full_name: "%{firstname} %{lastname}"
     profile_email: Email
     profile_password: Password
@@ -81,4 +81,3 @@ en:
   email:
     salutation: "Dear %{value},"
     thank_you: Thank you
-    

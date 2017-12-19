@@ -36,7 +36,7 @@ ja:
     new_password_confirm: 新しいパスワード（確認）
     change_password: パスワードを変更する
     create_account: 新しいアカウントを作成する
-      
+
     #--- CMS/Site Messages
 
     #--- Forum System
@@ -46,7 +46,7 @@ ja:
     #--- Profile
     profile_title: アカウントとプロフィール
     profile_subtitle: 設定
-    
+
     #--- Newletter Signup
     newsletter_choose: 選択して下さい
 

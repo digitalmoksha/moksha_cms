@@ -1,5 +1,5 @@
 # TODO The one problem I have with this is that when a field is empty, we still
-#      save the record to the database.  The difficulty is that when the 
+#      save the record to the database.  The difficulty is that when the
 #      form is displayed, you need to have all the records there, ones that
 #      were saved and empty ones for those not saved, all in the proper order.
 #      This presents a challenge I'm not willing to tackle at this moment.
@@ -12,14 +12,14 @@
 class CustomField < ApplicationRecord
   self.table_name               = 'core_custom_fields'
   serialize                     :field_data
-  
+
   # acts_as_reportable
 
   belongs_to                    :custom_field_def
   belongs_to                    :owner, polymorphic: true
 
   default_scope                 { where(account_id: Account.current.id) }
-  
+
   # before_save                   :prepare_data
 
   delegate :field_type,         to: :custom_field_def
@@ -46,7 +46,7 @@ class CustomField < ApplicationRecord
     super(*options, &block)
     # prepare_data
   end
-  
+
   # Returns a munged value depending on the field type.  Used when data is exported.
   #------------------------------------------------------------------------------
   def value
@@ -60,18 +60,18 @@ class CustomField < ApplicationRecord
       self.field_data
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def checkbox_required
     errors.add(:field_data, :blank) if self.value.blank?
   end
-  
+
   # # Munge the data so that it's stored correctly
   # #------------------------------------------------------------------------------
   # def prepare_data
   #   #--- an array of values is stores as a comma delimited string
   #   self.field_data = self.field_data.join(', ') if self.field_data.class == Array
-  # 
+  #
   #   # #--- if field is a date/time field, convert the date into database format
   #   # unless custom_field_def_id.nil?
   #   #   field_def = CustomFieldDef.find(custom_field_def_id)
@@ -85,16 +85,16 @@ class CustomField < ApplicationRecord
   #   #   end
   #   # end
   # end
-  # 
+  #
   # # Treat data as comma delimited, return it as an array of values
   # #------------------------------------------------------------------------------
   # def field_data_array
   #   self.field_data.nil? ? [] : self.field_data.split(',').collect { |item| item.strip }
-  # end  
-  # 
+  # end
+  #
   # #------------------------------------------------------------------------------
   # def human_attribute_name(key)
   #   label.blank? ? 'Field' : "'#{nls(label, namespace: 'site_custom_field')}'"
   # end
-  
+
 end

@@ -32,7 +32,7 @@ $(document).ready ->
 
         "Shift-Tab": (cm) ->
           cm.indentSelection("subtract")
-        
+
       }
     })
 
@@ -43,7 +43,7 @@ $(document).ready ->
     target = $(e.target).attr("href") # activated tab
     $(target + ' .CodeMirror').each (i, el) ->
       el.CodeMirror.refresh()
-    
+
   $(".tag_field").select2({
     tags: true
   })
@@ -54,7 +54,7 @@ $(document).ready ->
     editor_id = $(this).data('editor')
     $(editor_id + ' .CodeMirror')[0].CodeMirror.setOption("fullScreen", true)
     $(editor_id + ' .CodeMirror')[0].CodeMirror.focus()
-    
+
   $('.cm_cmd_bold_markdown').on 'click', (e) ->
     editor_id = $(this).data('editor')
     editor    = $(editor_id + ' .CodeMirror')[0].CodeMirror
@@ -102,7 +102,7 @@ $(document).ready ->
     new_text  = "\"#{text}\":"
     editor.doc.replaceSelection(new_text)
     editor.cm.focus()
-      
+
   $(document).on 'click', 'form .remove_custom_fields', (event) ->
     # $(this).prev('input[type=hidden]').val('1')
     # $(this).closest('fieldset').hide()

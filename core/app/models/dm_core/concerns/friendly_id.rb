@@ -1,5 +1,5 @@
 # FriendlyID support methods
-# In general, 
+# In general,
 # - extends FriendlyID
 # - requires slug to be present
 # - normalizes slug using Babosa gem.  Ensures normalized even if user inputed
@@ -42,7 +42,7 @@ module DmCore
         def normalize_slug
           self.slug = normalize_friendly_id(self.slug)
         end
-  
+
         # use babosa gem (to_slug) to allow better handling of multi-language slugs
         #------------------------------------------------------------------------------
         def normalize_friendly_id(text)

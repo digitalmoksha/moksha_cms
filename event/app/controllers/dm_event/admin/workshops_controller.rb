@@ -2,9 +2,9 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   include DmEvent::PermittedParams
   include DmCore::PermittedParams
   include CsvExporter
-  
+
   before_action   :workshop_lookup, except: [:index, :new, :create, :user_outstanding_balances, :send_payment_reminder_emails]
-  
+
   helper DmEvent::WorkshopsHelper
 
   #------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
     authorize! :list_events, @workshop
     respond_to do |format|
       format.html # show.html.erb
-      format.json { 
+      format.json {
         permissions = {
           manage_events: can?(:manage_events, @workshop),
           manage_event_registrations: can?(:manage_event_registrations, @workshop),
@@ -70,7 +70,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
     DmEvent::Workshops::DestroyService.new(@workshop).call
     redirect_to admin_workshops_url, notice: 'Workshop was successfully deleted.'
   end
-  
+
   # Handle any additional configuration, such as selecting the attached blog/forum
   #------------------------------------------------------------------------------
   def additional_configuration
@@ -83,7 +83,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
       end
     end
   end
-  
+
   # Edit/create of the registration state emails.  :email_type is passed in
   # to determine which one we're editing
   #------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
     authorize! :manage_events, @workshop
     redirect_to(admin_workshop_url(@workshop), error: 'Invalid system email type') if params[:email_type].blank?
     # [todo] verify that the email_type is one of the Registration.aasm.states
-    
+
     @system_email = @workshop.send("#{params[:email_type]}_email") || @workshop.send("build_#{params[:email_type]}_email")
     @system_email.email_type = params[:email_type]
     if put_or_post?
@@ -99,9 +99,9 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
       if @system_email.save
         redirect_to edit_system_email_admin_workshop_path(@workshop, email_type: @system_email.email_type), notice: 'Email was successfully updated.'
       end
-    end    
+    end
   end
-  
+
   #------------------------------------------------------------------------------
   def financials
     authorize! :manage_event_finances, @workshop

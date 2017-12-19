@@ -18,7 +18,7 @@ class CreateSubscribers < ActiveRecord::Migration[4.2]
       t.datetime  'created_at'
       t.datetime  'updated_at'
       t.integer   'account_id'
-      
+
       #--- Mailchimp specific fields
       t.string    'mc_id'               # unique id (euid) for this email address on an account
       t.string    'mc_email_type'       # type of requested email: html or text
@@ -27,6 +27,6 @@ class CreateSubscribers < ActiveRecord::Migration[4.2]
     add_index 'email_subscriptions', ['account_id', 'newsletter_id']
     add_index 'email_subscriptions', ['account_id', 'email']
     add_index 'email_subscriptions', ['mc_id']
-    
+
   end
 end

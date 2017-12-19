@@ -1,5 +1,5 @@
 class DmCms::PostsController < DmCms::ApplicationController
-  include ApplicationHelper  
+  include ApplicationHelper
 
   helper  DmCms::RenderHelper
   helper  DmCore::LiquidHelper
@@ -12,7 +12,7 @@ class DmCms::PostsController < DmCms::ApplicationController
   before_action   :post_lookup, except: [:ajax_delete_comment]
 
   layout    'cms_templates/blog_post'
-  
+
   #------------------------------------------------------------------------------
   def show
     @blogs        = CmsBlog.available_to_user(current_user)
@@ -32,25 +32,25 @@ class DmCms::PostsController < DmCms::ApplicationController
       format.html { redirect_back(fallback_location: post_show_url(@post)) }
       format.json { head :ok }
     end
-    
+
   end
-  
+
   # #------------------------------------------------------------------------------
   # def ajax_edit_comment
   #   @comment  = Comment.find(params[:id])
   #   @post     = comment.commentable
   #   authorize! :read, @post.cms_blog
-  # 
+  #
   #   if put_or_post?
   #   end
-  #   
+  #
   #   @post.comments.create(:body => params[:comment][:body], :user_id => current_user.id)
   #   respond_to do |format|
   #     format.html { redirect_back(fallback_location: post_show_url(@post)) }
   #     format.json { head :ok }
   #   end
   # end
-  
+
   #------------------------------------------------------------------------------
   def ajax_delete_comment
     if is_admin?
@@ -71,7 +71,7 @@ protected
     redirect_to blog_root_path and return if @blog.nil?
     raise Account::LoginRequired.new(I18n.t('cms.blog_login_required')) if !current_user && !@blog.is_public?
     authorize! :read, @blog
-    
+
     @post = @blog.posts.friendly.find(params[:id])
     redirect_to blog_show_path(@blog) and return if @post.nil?
     authorize! :read, @post

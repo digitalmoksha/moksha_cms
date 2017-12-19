@@ -2,7 +2,7 @@ class DmLms::Admin::LessonPagesController < DmLms::Admin::AdminController
   include DmLms::PermittedParams
 
   before_action   :lesson_page_lookup
-  
+
   # GET /admin/lessons, GET /admin/lessons.json
   # Unused: happens through the lesson object
   #------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ class DmLms::Admin::LessonPagesController < DmLms::Admin::AdminController
       format.json { head :no_content }
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def sort
     @lesson_page.update_attribute(:row_order_position, params[:item][:row_order_position])

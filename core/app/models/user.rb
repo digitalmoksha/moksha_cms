@@ -11,12 +11,12 @@
 # public/private avatars.  This information is used across all sites.
 #
 # UserSiteProfile:
-# A User has one of these for each site they have logged into.  Keeps track of 
-# any site specific information, like the last_access_at field, etc.  Also 
+# A User has one of these for each site they have logged into.  Keeps track of
+# any site specific information, like the last_access_at field, etc.  Also
 # allows us to know if someone has ever logged into a specific site.
 #------------------------------------------------------------------------------
 class User < ApplicationRecord
 
   include DmCore::Concerns::User
-  
+
 end

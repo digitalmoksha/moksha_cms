@@ -26,7 +26,7 @@ de:
       title: Folge dem Blog
       description: Folge dem Blog und erhalte Email Benachrichtigungen über neue Beiträge
       description_private: "Dies ist ein privater Blog - Du erhältst automatisch eine Email Benachrichtigung, wenn ein neuer Beitrag veröffentlicht wurde."
-    
+
     contact_form:
       sent: "Vielen Dank, Ihre Nachricht wurde erfolgreich gesendet."
       send_button: Nachricht senden
@@ -40,4 +40,3 @@ de:
         reason_1: 'Feedback'
         reason_2: 'Technisches Problem'
         reason_3: 'Andere'
-    

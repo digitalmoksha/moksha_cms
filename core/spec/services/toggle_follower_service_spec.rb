@@ -8,7 +8,7 @@ end
 
 describe DmCore::ToggleFollowerService, type: :service do
   setup_account
-  
+
   let(:user) { create :user }
   let(:item_to_follow) { SystemEmail.create }
 

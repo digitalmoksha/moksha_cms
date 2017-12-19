@@ -1,6 +1,6 @@
 {
   "command": "ruby -rubygems -r./zeus_custom_plan -eZeus.go",
- 
+
   "plan": {
     "boot": {
       "default_bundle": {

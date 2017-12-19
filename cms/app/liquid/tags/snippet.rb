@@ -3,14 +3,14 @@ module Liquid
   class Snippet < DmCore::LiquidTag
     include DmCore::AccountHelper
     include DmCore::LiquidHelper
-    
+
     #------------------------------------------------------------------------------
     def render(context)
       output = ''
       if @attributes['slug'].present?
         cms_snippet = CmsSnippet.find_by_slug(@attributes['slug'])
         if cms_snippet
-          output = context.registers[:view].render_content_item(cms_snippet)          
+          output = context.registers[:view].render_content_item(cms_snippet)
         end
       end
       return output

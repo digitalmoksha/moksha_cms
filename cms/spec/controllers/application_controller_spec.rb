@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe DmCore::ApplicationController do
   no_user
-  
+
   #------------------------------------------------------------------------------
   it "return the welcome page url after signin" do
     page = create(:page, slug: 'welcome', published: false)

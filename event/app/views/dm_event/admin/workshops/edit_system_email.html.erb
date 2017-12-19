@@ -19,14 +19,14 @@
       <div class="callout callout-<%= @system_email.email_type %>">
         <% case @system_email.email_type %>
           <% when 'pending' %>
-            <p>When someone registers for an event, you can decide whether they automatically get "accepted" &mdash; 
-              meaning they actually have a seat reserved &mdash; or they can be placed in "pending", which means 
+            <p>When someone registers for an event, you can decide whether they automatically get "accepted" &mdash;
+              meaning they actually have a seat reserved &mdash; or they can be placed in "pending", which means
               their registration must first be reviewed and accepted.</p>
           <% when 'accepted' %>
-            <p class="explanation">When you either accept a registration, or you did not require the registration to be reviewed, 
+            <p class="explanation">When you either accept a registration, or you did not require the registration to be reviewed,
               this is the state the registration will be in.  It indicates the person has a reserved seat in
               the event/course.</p>
-            <p class="explanation">The email should include any event specific information, including any payment details, 
+            <p class="explanation">The email should include any event specific information, including any payment details,
               special timings, directions, special instructions, etc.</p>
           <% when 'paid'%>
             <p>Once the registration has been marked paid, this email will get sent to them.  If it's left empty, no email will be sent.</p>
@@ -36,7 +36,7 @@
             <p class="explanation">If you reject the registration, this email will get sent to them.  If it's left empty, no email will be sent.
               You should then notify as you see fit.</p>
         <% end %>
-  
+
         <div class="panel-group" id="template_variables" role="tablist" aria-multiselectable="true">
           <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingOne">
@@ -68,7 +68,7 @@
             </div>
           </div>
         </div>
-  
+
       </div>
 
     </div>

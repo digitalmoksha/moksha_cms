@@ -31,7 +31,7 @@ describe DmCore::AccountHelper do
   it "returns path to the site's protected assets media folder" do
     expect(account_protected_assets_media_folder).to eq "#{Rails.root}/protected_assets/uploads/test/media"
   end
-  
+
   #------------------------------------------------------------------------------
   it "returns the path of the site's media folder" do
     expect(account_site_assets_media).to eq '/site_assets/uploads/test/media'
@@ -49,5 +49,5 @@ describe DmCore::AccountHelper do
   it "returns url to the site's media assets" do
     expect(account_site_assets_media_url).to eq 'http://test.example.com/site_assets/uploads/test/media'
   end
-  
+
 end

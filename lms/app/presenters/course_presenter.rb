@@ -7,7 +7,7 @@ class CoursePresenter < LmsCommonPresenter
 
   #------------------------------------------------------------------------------
   def label_published
-    if course.teaser_only? 
+    if course.teaser_only?
       h.colored_label('Teaser', :info)
     else
       course.published? ? h.colored_label('Published', :success) : h.colored_label('Draft')

@@ -1,7 +1,7 @@
 class MailchimpNewsletterSubscriber < NewsletterSubscriber
 
   attr_accessor   :member_info_data, :email, :euid, :subscribed, :grouping_id, :groups
-  
+
   # is subscriber interested in the named group?
   #------------------------------------------------------------------------------
   def interest_group?(name)
@@ -13,8 +13,8 @@ class MailchimpNewsletterSubscriber < NewsletterSubscriber
   def subscribed?
     subscribed
   end
-  
-  # Instantiate a new subscriber based on data from a Mailchimp query like 
+
+  # Instantiate a new subscriber based on data from a Mailchimp query like
   # member_info.  Does nothing with the database at this time.
   #------------------------------------------------------------------------------
   def self.new_from_mailchimp(attributes = {})
@@ -27,7 +27,7 @@ class MailchimpNewsletterSubscriber < NewsletterSubscriber
     obj.groups            = attributes['merges']['GROUPINGS'] ? attributes['merges']['GROUPINGS'][0]['groups'] : nil
     return obj
   end
-  
+
   # Query for the subscriber info.
   #------------------------------------------------------------------------------
   def self.subscriber_info(newsletter, email)

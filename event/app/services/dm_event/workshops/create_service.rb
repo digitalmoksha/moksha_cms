@@ -16,4 +16,3 @@ module DmEvent::Workshops
 
   end
 end
-  

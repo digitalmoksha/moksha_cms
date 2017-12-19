@@ -2,7 +2,7 @@ DmForum::Engine.routes.draw do
 
   #--- for some reason, just having this in the main app's routes didn't work, so also added here
   themes_for_rails
-  
+
   scope ":locale" do
     namespace :admin do
       get   '/dashboard/widget_forum_comments(/:comment_day)',   :controller => 'dashboard', :action => :widget_forum_comments, :as => :widget_forum_comments
@@ -22,7 +22,7 @@ DmForum::Engine.routes.draw do
         end
       end
     end
-    
+
     scope 'forum' do
       get '/',                            :controller => 'forums', :action => :categories, :as => :forum_root
       get '/:id',                         :controller => 'forums', :action => :show, :as => :forum_show

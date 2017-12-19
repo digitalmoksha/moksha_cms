@@ -10,14 +10,14 @@ class CmsPage < ApplicationRecord
   end
 
   #--- NOTE: if you add any new fields, then update the duplicate_with_associations method
-  
+
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates              :title, :summary, :menutitle, :fallbacks_for_empty_translations => true #, :versioning => true
   globalize_accessors     locales: I18n.available_locales
-    
+
   # --- versioning - skip anything translated
   has_paper_trail         :skip => [:title, :menutitle]
-  
+
   # --- FriendlyId
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
@@ -34,7 +34,7 @@ class CmsPage < ApplicationRecord
 
   default_scope           { where(account_id: Account.current.id).order("ancestry, row_order ASC") }
   scope                   :welcome_pages, -> { where(welcome_page: true) }
-  
+
   preference              :show_social_buttons,  :boolean, default: false
   preference              :header_accent_color,  :string
   preference              :open_in_new_window,   :boolean, default: false
@@ -43,7 +43,7 @@ class CmsPage < ApplicationRecord
   amoeba do
     enable
   end
-  
+
   # --- validations
   validates_presence_of   :slug
   validates_length_of     :slug, maximum: 255
@@ -57,7 +57,7 @@ class CmsPage < ApplicationRecord
     validates_length_of     :"title_#{locale}", maximum: 255
     validates_length_of     :"menutitle_#{locale}", maximum: 255
   end
-  
+
   # Base the slug on the default locale
   #------------------------------------------------------------------------------
   def model_slug
@@ -75,14 +75,14 @@ class CmsPage < ApplicationRecord
   def show_social_buttons?
     preferred_show_social_buttons?
   end
-  
+
   # is this a special divider page - which doesn't get rendered, it's for adding
   # categories in a sub menu
   #------------------------------------------------------------------------------
   def divider?
     preferred_divider?
   end
-  
+
   #------------------------------------------------------------------------------
   def content_page?
     !divider? && link.blank?
@@ -92,7 +92,7 @@ class CmsPage < ApplicationRecord
   def redirect_page?
     !divider? && !link.blank?
   end
-  
+
   #------------------------------------------------------------------------------
   def pagetype_name
     content_page? ? 'Content' : (redirect_page? ? 'Redirect' : 'Divider')
@@ -104,14 +104,14 @@ class CmsPage < ApplicationRecord
   #------------------------------------------------------------------------------
   def page_template
     page = self
-    page = page.parent while page.template.blank? && !page.is_root?      
+    page = page.parent while page.template.blank? && !page.is_root?
     raise "No template available for page #{self.slug}" if page.template.blank?
     return page.template
   end
 
   # Return a list of published children pages
   # => user, to check for permissions
-  # => include_blank_titles to true to include pages with blank titles.  
+  # => include_blank_titles to true to include pages with blank titles.
   #      do not include by default
   #------------------------------------------------------------------------------
   def published_children(user, options = {include_blank_titles: false})
@@ -125,7 +125,7 @@ class CmsPage < ApplicationRecord
     end
     return pages
   end
-  
+
   # Return the header image, or a default if not specified
   #------------------------------------------------------------------------------
   def header_image(default = nil)
@@ -136,17 +136,17 @@ class CmsPage < ApplicationRecord
   def header_accent_color(default = '')
     self.preferred_header_accent_color || default
   end
-  
+
   # return a list of tags for all Page objects
   #------------------------------------------------------------------------------
   def self.tag_list_all
     CmsPage.tag_counts_on(:tags).map(&:name).sort
   end
-  
+
   # Generate any data to pass when rendering with Liquid
   #------------------------------------------------------------------------------
   def to_liquid
-    { 'page' => 
+    { 'page' =>
       {
         'title'     => self.title,
         'menutitle' => self.menutitle,
@@ -182,13 +182,13 @@ class CmsPage < ApplicationRecord
         description: "Display the page's slug"
       }
     ]
-  end  
+  end
 
   # Check if this page has been cookied.  If needed, we will set a cookie, using
   # the page's slug, to a value of 1.  This indicates that the page has
   # been visited.  This is only needed in cases where we want to ensure a page
   # has been visited before enabling some other function.
-  # 
+  #
   # If cookie_hash is empty, then we don't care if the page has been visited or not,
   # simply return true
   #------------------------------------------------------------------------------
@@ -224,11 +224,11 @@ class CmsPage < ApplicationRecord
     unless (standard = CmsPage.find_by_slug('standard_pages'))
       standard = site.children.create(slug: 'standard_pages', published: false, title: 'Standard Pages')
     end
-    
+
     unless CmsPage.find_by_slug('missing')
       standard.children.create( slug: 'missing', template: '404', published: true, title: 'Page Missing')
     end
-    
+
     unless CmsPage.find_by_slug('coming_soon')
       standard.children.create( slug: 'coming_soon', template: 'coming_soon', published: true, title: 'Coming Soon')
     end
@@ -266,7 +266,7 @@ class CmsPage < ApplicationRecord
       CmsContentitem::Translation.paper_trail_on!
 #       new_page      = self.initialize_dup(self)
 #       new_page.slug = new_slug
-#       
+#
 #       DmCore::Language.language_array.each do |locale|
 #         new_page.send("title_#{locale}=",     self.send("title_#{locale}"))     unless self.send("title_#{locale}").nil?
 #         new_page.send("menutitle_#{locale}=", self.send("menutitle_#{locale}")) unless self.send("menutitle_#{locale}").nil?
@@ -274,7 +274,7 @@ class CmsPage < ApplicationRecord
 #        end
 # #      new_page.save
 #       new_page.reload
-#       
+#
 #       # cms_contentitems.each do |content|
 #       #   content.deep_clone(new_page.id)
 #       # end

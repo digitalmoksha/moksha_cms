@@ -5,19 +5,19 @@
     <%= link_to 'View Registrations', [:admin, @workshop], class: 'btn btn-sm btn-default' %>
   <% end %>
 <% end %>
-  
+
 <div class="row">
   <div class="col-md-12">
     <%= panel title: 'Summary' do %>
       <div class="row">
-        <div class="chart col-md-6" style="height: 185px;margin-bottom:20px;" id="payment_outstanding_chart" 
-             data-values="<%= [ {label: "Paid: #{@financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true)}", 
+        <div class="chart col-md-6" style="height: 185px;margin-bottom:20px;" id="payment_outstanding_chart"
+             data-values="<%= [ {label: "Paid: #{@financials[:summary][:total_paid].format(no_cents_if_whole: true, symbol: true)}",
                                  data: @financials[:summary][:total_paid].to_f, color: '#4DB24A' },
                                 {label: "Outstanding: #{@financials[:summary][:total_outstanding].format(no_cents_if_whole: true, symbol: true)}",
                                  data: @financials[:summary][:total_outstanding].to_f, color: '#F24E50' }
                               ].to_json %>">
         </div>
-  
+
         <div class="col-md-6">
           <table class="table table-bordered table-condensed" style="margin-top:10px">
             <thead>
@@ -58,10 +58,10 @@
   <div class="col-md-6">
     <%= panel title: 'Collected Payments by Month' do %>
       <div class="row">
-        <div class="col-md-7 chart" style="height: 200px" id="collected_monthly_chart" 
+        <div class="col-md-7 chart" style="height: 200px" id="collected_monthly_chart"
              data-values="<%= financial_collected_monthly_json(@financials[:collected_monthly]) %>"
              data-currencysymbol="<%= Money.new(0, @workshop.base_currency).symbol %>" >
-        </div>  
+        </div>
         <div class="col-md-5">
           <table class="table table-bordered table-condensed" style="margin-top:10px">
             <tbody>
@@ -80,14 +80,14 @@
   <div class="col-md-6">
     <%= panel title: 'Collected Payments by Method' do %>
       <div class="chart" style="width: 100%;height: 185px;" id="collected_chart" data-values="<%= financial_collected_json(@financials[:collected]) %>">
-      </div>  
+      </div>
     <% end %>
   </div>
 </div>
 
 <%= panel body: false, title: "#{@unpaid.count} Unpaid Participants" do %>
   <div class="panel-body">
-    <p>Shows those that have missed their payment (either a full payment, or a recurring payment).  If they have made all the payments 
+    <p>Shows those that have missed their payment (either a full payment, or a recurring payment).  If they have made all the payments
     up to this point in time, they are not listed.</p>
   </div>
   <table class="table table-bordered table-condensed table-striped">

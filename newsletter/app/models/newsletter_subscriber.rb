@@ -1,16 +1,16 @@
-# [todo] currently not saving subscriber info in database, only working with a 
+# [todo] currently not saving subscriber info in database, only working with a
 # temporary object.  Look at caching/syncing subscriber info for performance
 #------------------------------------------------------------------------------
 class NewsletterSubscriber #< ApplicationRecord
 
 =begin
   belongs_to              :newsletter
-  
+
   validates_presence_of     :email
   validates_presence_of     :firstname,   :if => Proc.new { |sub| sub.newsletter.require_name}
   validates_presence_of     :lastname,    :if => Proc.new { |sub| sub.newsletter.require_name}
   validates_presence_of     :country,     :if => Proc.new { |sub| sub.newsletter.require_country}
-  
+
   default_scope             { where(account_id: Account.current.id) }
 
   #------------------------------------------------------------------------------
@@ -23,8 +23,8 @@ class NewsletterSubscriber #< ApplicationRecord
   scope :unconfirmed,   :conditions => ["process_state = ?", 'unconfirmed']
   scope :not_reminded,  :conditions => ["process_state = ? AND reminded_on IS NULL", 'unconfirmed']
 
-  attr_protected            :subscribedate, :confirmed, :confrimdate, :unsubscribed, 
-                            :unsubscribedate, :confirmcode, :subscribeip, 
+  attr_protected            :subscribedate, :confirmed, :confrimdate, :unsubscribed,
+                            :unsubscribedate, :confirmcode, :subscribeip,
                             :confirmationemail, :confirmationreply
 
   belongs_to                :country
@@ -53,21 +53,21 @@ class NewsletterSubscriber #< ApplicationRecord
     transitions :from => :unsubscribed,   :to => :unconfirmed
     transitions :from => :bounced,        :to => :unconfirmed
   end
-  
+
   #------------------------------------------------------------------------------
   event :subscribe do
     transitions :from => :unconfirmed,    :to => :subscribed
     transitions :from => :unsubscribed,   :to => :subscribed
     transitions :from => :bounced,        :to => :subscribed
-  end  
-  
+  end
+
   #------------------------------------------------------------------------------
   event :unsubscribe do
     transitions :from => :unconfirmed,    :to => :unsubscribed
     transitions :from => :subscribed,     :to => :unsubscribed
     transitions :from => :bounced,        :to => :unsubscribed
   end
-    
+
   #------------------------------------------------------------------------------
   event :bounce do
     transitions :from => :unconfirmed,    :to => :bounced
@@ -78,7 +78,7 @@ class NewsletterSubscriber #< ApplicationRecord
   # Takes either a Hash of values or an object that responds to the proper values
   #------------------------------------------------------------------------------
   def initialize(subscriber = nil, options = {:subscriber_id => nil})
-    if subscriber.nil? || subscriber.is_a?(Hash) 
+    if subscriber.nil? || subscriber.is_a?(Hash)
       super(subscriber)
     else
       super(:firstname => subscriber.firstname, :lastname => subscriber.lastname,
@@ -101,13 +101,13 @@ class NewsletterSubscriber #< ApplicationRecord
     end
     return subscriber
   end
-  
+
   #------------------------------------------------------------------------------
   def self.find_existing_subscription_is_subscribed(newsletter_id, subscriber_id = nil, email = nil)
     subscriber = NewsletterSubscriber.find_existing_subscription(newsletter_id, subscriber_id, email)
     return subscriber ? subscriber.is_subscribed? : false
   end
-  
+
   # Return a reference to the actual subscriber data (like name and email).
   #------------------------------------------------------------------------------
   def subscriber_data
@@ -125,7 +125,7 @@ class NewsletterSubscriber #< ApplicationRecord
     return name.blank? ? email : name
   end
 
-  # Given a subscriber, update the information in this record with that from the 
+  # Given a subscriber, update the information in this record with that from the
   # subscriber info.  If there is a subscriber_id, then don't update the record.
   #------------------------------------------------------------------------------
   def update_subscription(subscriber)
@@ -140,7 +140,7 @@ class NewsletterSubscriber #< ApplicationRecord
     increment!(:hard_bounces)
     bounce! if hard_bounces >= 1
   end
-  
+
   #------------------------------------------------------------------------------
   def soft_bounce
     increment!(:soft_bounces)
@@ -182,7 +182,7 @@ class NewsletterSubscriber #< ApplicationRecord
   end
 
   # This trys to keep information indicating that the user actually
-  # did click on the activation link in the email. We will track the 
+  # did click on the activation link in the email. We will track the
   # ipaddress and the uri that was requested.
   #------------------------------------------------------------------------------
   def update_confirmationreply(request_obj)
@@ -217,16 +217,16 @@ class NewsletterSubscriber #< ApplicationRecord
   #------------------------------------------------------------------------------
   def confirm_subscription_url
     confirm_url   = newsletter.account.preferred(:system_main_site) + "/#{I18n.locale}" + Hanuman::Application.config.confirm_subscription_url
-    confirm_url  += "?subid=#{self.id}&code=#{self.confirmcode}"          
+    confirm_url  += "?subid=#{self.id}&code=#{self.confirmcode}"
   end
 
   #------------------------------------------------------------------------------
   def confirm_unsubscribe_url
     confirm_url   = newsletter.account.preferred(:system_main_site) + "/#{I18n.locale}" + Hanuman::Application.config.confirm_unsubscription_url
-    confirm_url  += "?subid=#{self.id}&code=#{self.confirmcode}"          
+    confirm_url  += "?subid=#{self.id}&code=#{self.confirmcode}"
   end
 
-  # Return the number of items specified, in particular the number of items in 
+  # Return the number of items specified, in particular the number of items in
   # a particular state
   #------------------------------------------------------------------------------
   def self.number_of(state, options = {})
@@ -251,7 +251,7 @@ class NewsletterSubscriber #< ApplicationRecord
       joins(:country).where(:process_state => 'subscribed').select('globalize_countries.continent').group('continent').count('continent')
     end
   end
-  
+
 =end
 
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Lesson do
   setup_account
-  
+
   it { is_expected.to validate_length_of(:slug).is_at_most(255) }
   it { is_expected.to validate_length_of(:title_en).is_at_most(255) }
   it { is_expected.to validate_length_of(:menutitle_en).is_at_most(255) }
@@ -40,10 +40,10 @@ describe Lesson do
       expect(lesson1.slug).not_to eq lesson2.slug
     end
   end
-  
+
   describe 'next/previous' do
     let(:course1) { create(:course) }
-    
+
     #------------------------------------------------------------------------------
     it '#next published lesson' do
       lesson1 = create(:lesson,   course: course1, published: true)

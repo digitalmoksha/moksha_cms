@@ -9,7 +9,7 @@ module Liquid
       style   = "style='#{@attributes["style"]}'" unless @attributes['style'].blank?
       dclass  = "class='#{@attributes["class"]}'" unless @attributes['class'].blank?
       id      = "id='#{@attributes["id"]}'" unless @attributes['id'].blank?
-      
+
       out  = "<blockquote #{[id, dclass, style].join(' ')}>"
       out += output
       out += "\r\n<footer markdown='0'><cite>#{@attributes['author']}</cite></footer>" unless @attributes['author'].blank?
@@ -34,5 +34,5 @@ END_OF_DESCRIPTION
   end
 
   Template.register_tag('quote', Quote)
-  
+
 end

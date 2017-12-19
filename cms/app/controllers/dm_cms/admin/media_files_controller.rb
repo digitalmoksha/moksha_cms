@@ -22,12 +22,12 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
     @media_file   = MediaFile.new
     prepare_folder_names
   end
-  
+
   #------------------------------------------------------------------------------
   def edit
     @media_file = MediaFile.find(params[:id])
   end
-  
+
   #------------------------------------------------------------------------------
   def create
     @media_file   = MediaFile.new(media_file_params)  # for collecting all error msgs
@@ -50,7 +50,7 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
       render action: :new
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def update
     @media_file       = MediaFile.find(params[:id])
@@ -64,19 +64,19 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
       render action: :edit
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def destroy
     @media_file = MediaFile.find(params[:id])
     @media_file.destroy
     redirect_to admin_media_files_url
   end
-  
+
 private
 
   #------------------------------------------------------------------------------
   def prepare_folder_names
-    @folder_names = MediaFile.distinct(:folder).order(:folder).pluck(:folder)   
+    @folder_names = MediaFile.distinct(:folder).order(:folder).pluck(:folder)
   end
 
   # Set some values for the template based on the controller

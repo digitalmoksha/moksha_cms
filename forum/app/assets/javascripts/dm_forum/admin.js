@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  
+
   //----------------------------------------------------------------
   $('#forum_user_table').dataTable( {
      bJQueryUI: false,

@@ -29,7 +29,7 @@ module DmCms
             manage_page_ids = @user_roles.select {|r| r.name == 'manage_content' && r.resource_type == 'CmsPage'}.map(&:resource_id)
             can :manage_content, CmsPage, id: manage_page_ids
             can(:access_media_library, :all) unless manage_page_ids.empty?
-            
+
             # can edit a blog
             manage_blog_ids = @user_roles.select {|r| r.name == 'manage_content' && r.resource_type == 'CmsBlog'}.map(&:resource_id)
             can :manage_content, CmsBlog, id: manage_blog_ids
@@ -41,9 +41,9 @@ module DmCms
           can(:read,  CmsBlog)  { |blog| blog.can_be_read_by?(user) }
           can(:reply, CmsBlog)  { |blog| blog.can_be_replied_by?(user) }
           # can :moderate, CmsBlog, :id => CmsBlog.published.with_role(:moderator, user).map(&:id)
-          
+
           can(:read, CmsPost)   { |post| post.is_published? || user.has_role?(:reviewer) || user.has_role?(:content_manager)}
-          
+
           #--- Pages
           can(:read, CmsPage)   { |page| page.is_published? || user.has_role?(:reviewer) || user.has_role?(:content_manager)}
         else
@@ -53,9 +53,9 @@ module DmCms
           can(:read, CmsPage)   { |page| page.is_published? }
         end
       end
-      
+
       ::Ability.register_abilities(:dm_cms_abilities)
-      
+
     end
   end
 end

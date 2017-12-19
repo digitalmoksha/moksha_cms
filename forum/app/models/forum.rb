@@ -13,7 +13,7 @@ class Forum < ApplicationRecord
 
   include RankedModel
   ranks                       :row_order, :with_same => :forum_category_id
-  
+
   belongs_to                  :forum_site
   belongs_to                  :forum_category, :class_name => 'ForumCategory'
   has_many                    :forum_topics, -> { order('sticky desc, last_updated_at desc') }, :dependent => :destroy
@@ -35,7 +35,7 @@ class Forum < ApplicationRecord
   def normalize_slug
     self.slug = normalize_friendly_id(self.slug)
   end
-  
+
   # regenerate slug if it's blank
   #------------------------------------------------------------------------------
   def should_generate_new_friendly_id?
@@ -47,7 +47,7 @@ class Forum < ApplicationRecord
   def normalize_friendly_id(text)
     text.to_s.to_slug.normalize.to_s
   end
-  
+
   #------------------------------------------------------------------------------
   def followed_topics(user)
     user.following.following_by_type('ForumTopic').where(forum_id: self.id)

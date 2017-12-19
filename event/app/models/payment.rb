@@ -9,7 +9,7 @@ class Payment
     Rails.logger.error('===> Enter: Payment.event_payment_ipn')
     Rails.logger.error(notify.inspect)
     registration = Registration.find_by_receipt_code(notify.item_id)
-    
+
     if notify.acknowledge
       if registration
         Rails.logger.error(registration.inspect)

@@ -28,14 +28,14 @@
       <%= f.input :course,   label: 'Course', collection: Course.where(['owner_id = ? OR owner_id IS NULL', @workshop.id]),  selected: @workshop.course.try(:id), include_blank: true %>
     <% end %>
   <% end %>
-    
+
   <%= panel title: icon_label('fa fa-list-alt fa-fw', 'Custom Fields') do %>
     <%= f.simple_fields_for :custom_field_defs do |builder| %>
       <%= render 'dm_core/admin/custom_fields/custom_field_def_fields', f: builder %>
     <% end %>
-    <%= link_to_add_custom_fields 'Add Field', f, :custom_field_defs %>      
+    <%= link_to_add_custom_fields 'Add Field', f, :custom_field_defs %>
   <% end %>
-    
+
   <%= submit_or_cancel cancel_url: (@workshop.new_record? ? admin_workshops_url : admin_workshop_path(@workshop)) %>
 
 <% end %>

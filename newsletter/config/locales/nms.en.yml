@@ -7,7 +7,7 @@ en:
     subscription_updated: Your subscription was successfully updated
     unsubscribe_successful: Your email has been unsubscribed
     already_subscribed: Already Subscribed
-    
+
     #--- Mailchimp specific errors
     List_DoesNotExist: The specified list does not exist
     List_AlreadySubscribed: This email is already subscribed

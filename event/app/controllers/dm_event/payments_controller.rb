@@ -14,7 +14,7 @@ class DmEvent::PaymentsController < DmEvent::ApplicationController
 
     head :ok
   end
-  
+
   # TODO Not fully working yet
   #------------------------------------------------------------------------------
   def sofort_ipn
@@ -31,9 +31,9 @@ end
 
 =begin
   include         Ultracart::UltracartHelper
-  
+
   # This function is called by UltraCart when an item is purchased from the online
-  # store.  The entire order is sent.  Initially, we will look for the 
+  # store.  The entire order is sent.  Initially, we will look for the
   # registration code we place in a ticket order, and mark the appropriate record
   # as payed in the database.  But this also sets up the possibility of keeping
   # our own records purchase records and doing our own reporting.
@@ -44,9 +44,9 @@ end
 
     receipts.each do |r|
       begin
-        email_receipt(EventRegistration.receiptcode_to_id(r[:receiptcode]), r[:cost_cents], r[:description])      
+        email_receipt(EventRegistration.receiptcode_to_id(r[:receiptcode]), r[:cost_cents], r[:description])
       rescue Exception => e
-        #--- if there is a problem sending the receipt, we should send place it on a queue for 
+        #--- if there is a problem sending the receipt, we should send place it on a queue for
         #--- sending later TODO.  But we need to do the render below so that Ultracart
         #--- doesn't send the notification again.
       end
@@ -77,7 +77,7 @@ end
       :item_options                 => item_options
     }
     options[:ImmediateCheckout] = true if registration.event_workshop.shoppingcart_immediate_checkout
-    
+
     url_for_ultracart(registration.item_code, Ultracart::Config.cart_url, true, options)
   end
 =end

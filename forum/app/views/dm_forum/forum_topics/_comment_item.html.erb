@@ -11,7 +11,7 @@
     <%= " | #{edited}".html_safe if edited %>
     <%= ' | '.html_safe + link_to(I18n.t('fms.reply'), '#reply') unless @forum_topic.locked? || !user_signed_in? %>
     <% if user_signed_in? && can?(:edit, comment_item) %>
-    | 
+    |
       <%= link_to I18n.t('fms.admin.edit_post'), edit_forum_forum_topic_forum_comment_path(@forum, @forum_topic, comment_item), :class => 'utility' %>
     <% end %>
   </p>

@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 class DmLms::ApplicationController < ::ApplicationController
 
-  include       ApplicationHelper  
+  include       ApplicationHelper
   helper        DmLms::ApplicationHelper
   helper        DmLms::LessonMenuHelper
   layout        'course_templates/default_with_sidebar'

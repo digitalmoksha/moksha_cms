@@ -3,7 +3,7 @@ class DmCore::Admin::SetupController < ActionController::Base
   include DmCore::PermittedParams
 
   layout 'admin_theme/admin_basic'
-  
+
   include DmCore::ApplicationHelper
   include DmCore::AccountHelper
   include DmCore::Admin::ApplicationHelper
@@ -51,10 +51,10 @@ class DmCore::Admin::SetupController < ActionController::Base
         redirect_to admin_account_general_path(id: @account)
       end
     else
-      @user = User.new   
+      @user = User.new
     end
   end
-  
+
 protected
 
   def no_sysadmins?

@@ -75,7 +75,7 @@ module Scio
     # (needs fpdf for the PDF output)
     #
     #   wb = Scio::Excel::SimpleWorkbook.new("test de excel")
-    #   
+    #
     #   # create styles
     #   sth = Scio::Excel::SimpleStyle.new
     #   sth.text[:halign] = "Center"
@@ -142,11 +142,11 @@ module Scio
         xml = Builder::XmlMarkup.new(:target => buffer, :indent => 2)
         xml.instruct! :xml, :version => "1.0", :encoding => "UTF-8"
         xml.Workbook({
-          'xmlns'      => "urn:schemas-microsoft-com:office:spreadsheet", 
+          'xmlns'      => "urn:schemas-microsoft-com:office:spreadsheet",
           'xmlns:o'    => "urn:schemas-microsoft-com:office:office",
-          'xmlns:x'    => "urn:schemas-microsoft-com:office:excel",    
+          'xmlns:x'    => "urn:schemas-microsoft-com:office:excel",
           'xmlns:html' => "http://www.w3.org/TR/REC-html40",
-          'xmlns:ss'   => "urn:schemas-microsoft-com:office:spreadsheet" 
+          'xmlns:ss'   => "urn:schemas-microsoft-com:office:spreadsheet"
         }) do
           # add styles to the workbook
           styles = []
@@ -186,7 +186,7 @@ module Scio
       #   wb = Scio::Excel::Workbook.new("customers")
       #   ...
       #   send_data wb.create_pdf, :filename => "something.pdf", :type => "application/pdf"
-      # 
+      #
       # One thing to note is that you <b>must</b> specify a width for each
       # column, and that the units for the columns are different than those
       # for excel (i.e: specify smaller numbers).
@@ -293,18 +293,18 @@ module Scio
       #
       # Since the default style is an instance variable, you don't need to set the
       # style for a column if you modify it.
-      # 
+      #
       # == Example
-      # 
+      #
       #   wb = Scio::Excel::SimpleWorkbook.new("user list")
       #   sth = wb.default_header_style
       #   sth.bgcolor = "#CCFFCC"
       #   columns = Array.new
-      #   # when rendering, the columns will use the default header style, but with a 
+      #   # when rendering, the columns will use the default header style, but with a
       #   # bgcolor = #CCFFCC.
       #   columns << Scio::Excel::Column.new("User Name", :width => 276.75)
       #   columns << Scio::Excel::Column.new("Birthday", :width => 76.5)
-      # 
+      #
       # The same applies for the default_cell_style.
       def default_header_style
         if @default_header_style.nil?
@@ -342,7 +342,7 @@ module Scio
         xml.Worksheet 'ss:Name' => name do
           xml.Table do
             # create header
-            @columns.each do |c| 
+            @columns.each do |c|
               col_opts = {}
               if !c.width.nil? && c.width > 0
                 col_opts['ss:AutoFitWidth'] = "0"

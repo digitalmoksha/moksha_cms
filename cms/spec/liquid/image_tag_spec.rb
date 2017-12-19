@@ -25,7 +25,7 @@ describe Liquid::Image, type: :liquid_tag do
       doc = Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters])
       expect(doc).to eq '<img width="300" height="200" src="/test_img.jpg" alt="Test img" />'
     end
-  end  
+  end
 
   describe 'markdown rendering' do
     it 'just an image' do

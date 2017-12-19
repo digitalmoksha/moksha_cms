@@ -8,16 +8,16 @@
 <% end %>
 <%= panel body: false, title: "#{@unpaid.count} Unpaid Participants", toolbar: toolbar, class: 'panel-warning' do %>
   <div class="panel-body">
-    <p>Shows those that have missed their payment (either a full payment, or a recurring payment).  If they have made all the payments 
+    <p>Shows those that have missed their payment (either a full payment, or a recurring payment).  If they have made all the payments
     up to this point in time, they are not listed.  A line is marked in blue if we have detected that
       they should be sent a payment reminder. <em>Send Payment Reminders</em> will send the email to all persons marked in blue.</p>
   </div>
   <table id="unpaid_participants_table" class="table table-bordered table-condensed table-striped">
     <thead>
       <tr class="grouping_header">
-        <th colspan="7">Group By: 
-          <a class="group-by" data-column="2">Workshop</a> or 
-          <a class="group-by" data-column="1">Name</a> or 
+        <th colspan="7">Group By:
+          <a class="group-by" data-column="2">Workshop</a> or
+          <a class="group-by" data-column="1">Name</a> or
           <a class="group-by" data-column="none">None</a>
         </th>
       </tr>
@@ -67,20 +67,20 @@
         </tr>
       <% end %>
     </tbody>
-  </table>  
+  </table>
 <% end %>
 
 <%= panel body: false, title: "#{@writeoffs.count} Writeoffs", class: 'panel-danger' do %>
   <div class="panel-body">
-    <p>The following registrations are now considered "written off" - there is no expectation that payment will be made.  Payment reminders will 
+    <p>The following registrations are now considered "written off" - there is no expectation that payment will be made.  Payment reminders will
       <strong>not</strong> be sent to them.</p>
   </div>
   <table id="writeoffs_table" class="table table-bordered table-condensed table-striped">
     <thead>
       <tr class="grouping_header">
-        <th colspan="7">Group By: 
-          <a class="group-by" data-column="2">Workshop</a> or 
-          <a class="group-by" data-column="1">Name</a> or 
+        <th colspan="7">Group By:
+          <a class="group-by" data-column="2">Workshop</a> or
+          <a class="group-by" data-column="1">Name</a> or
           <a class="group-by" data-column="none">None</a>
         </th>
       </tr>

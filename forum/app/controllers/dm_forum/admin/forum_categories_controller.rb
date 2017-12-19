@@ -3,7 +3,7 @@ class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminControlle
 
   before_action   :check_forum_site,  only:   [:index]
   before_action   :category_lookup,   except: [:index, :new, :create]
-  
+
   # GET /admin/forum_categories
   #------------------------------------------------------------------------------
   def index
@@ -55,7 +55,7 @@ class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminControlle
 
     redirect_to admin_forum_categories_url
   end
-  
+
   #------------------------------------------------------------------------------
   def sort
     @forum_category.update_attribute(:row_order_position, params[:item][:row_order_position])
@@ -63,7 +63,7 @@ class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminControlle
     #--- this action will be called via ajax
     head :ok
   end
-  
+
 private
 
   # make sure a ForumSite singleton is created
@@ -71,7 +71,7 @@ private
   def check_forum_site
     ForumSite.create(enabled: true) unless ForumSite.site
   end
-  
+
   #------------------------------------------------------------------------------
   def category_lookup
     @forum_category = ForumCategory.find(params[:id])

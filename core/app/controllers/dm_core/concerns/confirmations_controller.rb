@@ -3,7 +3,7 @@ module DmCore
     module ConfirmationsController
       extend ActiveSupport::Concern
       include DmCore::PermittedParams
-      
+
       included do
       end
 

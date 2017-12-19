@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  
+
   //------------------------------------------------------------------------------
   function addCommas(nStr)
   {
@@ -13,7 +13,7 @@ $(document).ready(function() {
     }
     return x1 + x2;
   }
-  
+
   //------------------------------------------------------------------------------
   $('#registration_table').dataTable( {
      bJQueryUI: false,
@@ -34,7 +34,7 @@ $(document).ready(function() {
   var unpaid_participants_table = $('#unpaid_participants_table').DataTable({
     pageLength: 50,
     orderFixed: [2, 'asc'],
-    rowGroup: { 
+    rowGroup: {
       dataSrc: 2,
       endRender: function ( rows, group ) {
           var totalBalance = rows
@@ -59,16 +59,16 @@ $(document).ready(function() {
       { "targets": [ 7, 8 ], "visible": false}
     ]
   });
-  
+
   $('#unpaid_participants_table a.group-by').on( 'click', function (e) {
     var column = $(this).data('column');
     e.preventDefault();
     if (column == 'none') {
       unpaid_participants_table.order.fixed( {pre: []} );
-      unpaid_participants_table.rowGroup().disable().draw();  
+      unpaid_participants_table.rowGroup().disable().draw();
     } else {
-      unpaid_participants_table.rowGroup().enable();  
-      unpaid_participants_table.rowGroup().dataSrc( column );      
+      unpaid_participants_table.rowGroup().enable();
+      unpaid_participants_table.rowGroup().dataSrc( column );
       unpaid_participants_table.order.fixed( {pre: [[ column, 'asc' ]]} ).draw();
     }
   } );
@@ -78,7 +78,7 @@ $(document).ready(function() {
   var writeoffs_table = $('#writeoffs_table').DataTable({
     pageLength: 25,
     orderFixed: [2, 'asc'],
-    rowGroup: { 
+    rowGroup: {
       dataSrc: 2,
       endRender: function ( rows, group ) {
           var totalBalance = rows
@@ -103,24 +103,24 @@ $(document).ready(function() {
       { "targets": [ 5, 6 ], "visible": false}
     ]
   });
-  
+
   $('#writeoffs_table a.group-by').on( 'click', function (e) {
     var column = $(this).data('column');
     e.preventDefault();
     if (column == 'none') {
       writeoffs_table.order.fixed( {pre: []} );
-      writeoffs_table.rowGroup().disable().draw();  
+      writeoffs_table.rowGroup().disable().draw();
     } else {
-      writeoffs_table.rowGroup().enable();  
-      writeoffs_table.rowGroup().dataSrc( column );      
+      writeoffs_table.rowGroup().enable();
+      writeoffs_table.rowGroup().dataSrc( column );
       writeoffs_table.order.fixed( {pre: [[ column, 'asc' ]]} ).draw();
     }
   } );
-  
+
 
   // Financial charts
   //------------------------------------------------------------------------------
-  
+
   if ($('#payment_outstanding_chart').length) {
     $('#payment_outstanding_chart').plot($('#payment_outstanding_chart').data('values'), {
       series: {
@@ -170,7 +170,7 @@ $(document).ready(function() {
       }
     });
   }
-  
+
 });
 
 

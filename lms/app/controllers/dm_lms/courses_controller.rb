@@ -3,7 +3,7 @@ class DmLms::CoursesController < DmLms::ApplicationController
   before_action   :course_lookup, :except =>  [:index]
 
   layout    'course_templates/course_list', :only => [:index]
-  
+
   #------------------------------------------------------------------------------
   def index
     @courses = Course.all.includes(:translations)
@@ -20,7 +20,7 @@ class DmLms::CoursesController < DmLms::ApplicationController
     redirect_to dm_lms.lesson_page_show_path(@course.slug, @course.lessons.first.slug, @course.lessons.first.lesson_pages.first.slug)
   end
 
-  
+
 private
 
   #------------------------------------------------------------------------------

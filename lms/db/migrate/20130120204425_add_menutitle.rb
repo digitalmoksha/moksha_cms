@@ -5,7 +5,7 @@ class AddMenutitle < ActiveRecord::Migration[4.2]
     add_column    :lms_teaching_translations, :menutitle,     :string
     rename_column :lms_lesson_pages,          :content_id,    :item_id
     rename_column :lms_lesson_pages,          :content_type,  :item_type
-    add_column    :lms_teaching_translations, :content,       :text    
+    add_column    :lms_teaching_translations, :content,       :text
   end
 
   def down

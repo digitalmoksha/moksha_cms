@@ -19,14 +19,14 @@
   <div class="row">
     <div class="col-md-8">
       <%= f.error_notification message: "Please review the problems below" %>
-  
+
     	<%= panel title: @title do %>
       	<%= locale_tabs do |locale| %>
           <%= f.input "title_#{locale}", label: 'Title of Lesson', required: true, autofocus: true %>
           <%= f.input "menutitle_#{locale}", label: 'Menu Title' %>
           <%= f.input "description_#{locale}", as: :text, label: 'Description', input_html: { rows: 6, class: 'input-block-level monospaced' } %>
         <% end %>
-        <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>  
+        <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
     	<% end %>
     </div>
 

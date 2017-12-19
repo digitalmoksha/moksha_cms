@@ -1,6 +1,6 @@
 <%= render partial: 'layouts/admin_theme/header' %>
 
-<body class="<%= cookies[:admin_sidebar_narrow] ? 'sidebar-narrow' : '' %>"> 
+<body class="<%= cookies[:admin_sidebar_narrow] ? 'sidebar-narrow' : '' %>">
   <div id="wrapper">
     <%= render partial: 'layouts/admin_theme/sidebar' %>
 
@@ -13,7 +13,7 @@
               Site is currently in "maintenance mode" - all non-admin users will see the maintenance page
             </div>
           <% end %>
-          
+
           <%= page_header title: content_for(:content_title), subtitle: content_for(:content_subtitle) do %>
             <%= content_for :content_title_extra %>
           <% end %>

@@ -3,7 +3,7 @@ class DmLms::Admin::TeachingsController < DmLms::Admin::AdminController
 
   before_action   :lesson_lookup,       :only =>    [:index, :new, :create]
   before_action   :teaching_lookup,     :except =>  [:index, :new, :create]
-  
+
   # GET /admin/teachings/new, GET /admin/teachings/new.json
   #------------------------------------------------------------------------------
   def new
@@ -26,7 +26,7 @@ class DmLms::Admin::TeachingsController < DmLms::Admin::AdminController
   def create
     @lesson_page  = @lesson.lesson_pages.new(teaching_params.delete(:lesson_page))
     @teaching     = Teaching.new(params[:teaching])
-    
+
     Teaching.transaction do
       respond_to do |format|
         @lesson_page.item = @teaching  # can't check validity without doing this because of title delegation

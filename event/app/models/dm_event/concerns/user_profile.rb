@@ -8,7 +8,7 @@ module DmEvent
       included do
 
         has_many   :registrations
-        
+
       end
 
       #------------------------------------------------------------------------------

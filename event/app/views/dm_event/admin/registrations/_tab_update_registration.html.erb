@@ -1,7 +1,7 @@
 <%#--- Update Registration Tab %>
 <div class="tab-pane fade" id="update_registration_tab">
   <%= simple_form_for @registration, url: admin_registration_path, wrapper: :bs3_vertical_form, wrapper_mappings: DmAdmin::VerticalFormWrapperMappings do |f| %>
-  
+
     <%= subsection title: 'Price' do %>
       <%= f.error_notification message: "Please review the problems below" %>
 
@@ -21,7 +21,7 @@
               <%= f.select :discount_use_percent, [['%', true], [discount_currency, false]] %>
             </span>
           <% end %>
-          
+
 
         <% end %>
 
@@ -30,11 +30,11 @@
         <% else %>
           <%= f.input 'payment_comment_text', label: 'Reason for discount', as: :text_full_width, rows: 3, hint: 'Used for justifcation of discount. Will then be available in comment section.' %>
         <% end %>
-        
+
 
         <%= f.input :payment_reminder_hold_until, placeholder: @registration.created_at.to_date.to_s(:db), label: 'Payments are not required until', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'},
                      hint: 'Setting this will indicate that payments are not required until the specified date.  On that date, we will begin any payment plans, count down to sending reminder emails, etc.  Leave blank to use default' %>
-  
+
       <% end %>
     <% end %>
 

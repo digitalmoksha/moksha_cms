@@ -15,41 +15,41 @@ module DmCore
       extend ActiveSupport::Concern
 
       # 'included do' causes the included code to be evaluated in the
-      # conext where it is included (post.rb), rather than be 
+      # conext where it is included (post.rb), rather than be
       # executed in the module's context (blorgh/concerns/models/post).
       included do
-        
+
         scope :all_public,      -> { where(is_public: true) } # includes public and protected
         scope :by_public,       -> { where(is_public: true, requires_login: false) }
         scope :by_protected,    -> { where(is_public: true, requires_login: true) }
         scope :all_private,     -> { where(is_public: false) } # includes private and subscription
         scope :by_private,      -> { where(is_public: false, requires_subscription: false) }
         scope :by_subscription, -> { where(requires_subscription: true) }
-        
+
         # check if public (does not require login)
         #------------------------------------------------------------------------------
         def is_public?
           is_public == true && requires_login == false
         end
-  
+
         # check if protected (public and requires login)
         #------------------------------------------------------------------------------
         def is_protected?
           is_public == true && requires_login == true
         end
-  
+
         # check if private (not public and does not require login, or requires a subscription)
         # we consider a requires subscription as private in this context
         #------------------------------------------------------------------------------
         def is_private?
           is_public == false || (is_public == false && requires_subscription == true)
         end
-        
+
         #------------------------------------------------------------------------------
         def is_subscription_only?
           requires_subscription == true
         end
-  
+
         #------------------------------------------------------------------------------
         def visibility_to_s
           is_public? ? 'public' : is_subscription_only? ? 'subscription' : is_private? ? 'private' : 'protected'
@@ -60,12 +60,12 @@ module DmCore
         def add_member(user)
           user.add_role(:member, self)
         end
-        
+
         #------------------------------------------------------------------------------
         def remove_member(user)
           user.remove_role(:member, self)
         end
-        
+
         # Is the user a member of this object?
         #------------------------------------------------------------------------------
         def member?(user)
@@ -87,7 +87,7 @@ module DmCore
             member_count(:manual) + member_count(:automatic)
           end
         end
-        
+
         # Return a list of users that have access
         #------------------------------------------------------------------------------
         def member_list(which_ones = :all)
@@ -115,7 +115,7 @@ module DmCore
             self.published? && self.is_public?
           end
         end
-        
+
         # Can this object be replied to by user
         #------------------------------------------------------------------------------
         def can_be_replied_by?(attempting_user)

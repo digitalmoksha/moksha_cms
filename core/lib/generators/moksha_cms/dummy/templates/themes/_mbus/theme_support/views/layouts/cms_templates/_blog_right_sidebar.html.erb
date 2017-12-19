@@ -50,7 +50,7 @@
 <% if @blog %>
   <div class="well">
     <h4><%= I18n.t('cms.blog_follow_section.title') %></h4>
-    <% if @blog.is_private? %>  
+    <% if @blog.is_private? %>
       <div style="font-size: 12px;"><%= I18n.t('cms.blog_follow_section.description_private') %></div>
     <% else %>
       <div style="font-size: 12px;"><%= I18n.t('cms.blog_follow_section.description') %></div>

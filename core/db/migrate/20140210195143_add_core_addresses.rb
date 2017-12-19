@@ -11,7 +11,7 @@ class AddCoreAddresses < ActiveRecord::Migration[4.2]
       t.string    :addressable_type
       t.timestamps null: true
     end
- 
+
     add_index :core_addresses, [:addressable_type, :addressable_id], :unique => true
   end
 end

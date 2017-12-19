@@ -1,11 +1,11 @@
 <% content_for :content_title, "Lost Users" %>
 <% content_for :content_subtitle, "#{@workshop.title}" %>
-  
+
 <%= panel body: false, title: "#{@lost_users.count} Potential Lost Users" do %>
   <div class="panel-body">
     <div class="row">
       <div class="col-md-8">
-        <p>Provides a list of users who have created accounts in the past <strong><%= @days_ago %> days</strong> and who 
+        <p>Provides a list of users who have created accounts in the past <strong><%= @days_ago %> days</strong> and who
           have <strong>not</strong> registered for any workshops yet.  It gives the opportunity to detect
           users who got lost between registering as a new user and registering for a workshop.</p>
       </div>
@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  
+
   <table class="table table-bordered table-condensed table-striped">
     <thead>
       <tr>

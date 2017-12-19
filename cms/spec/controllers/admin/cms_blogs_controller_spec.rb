@@ -4,7 +4,7 @@ describe DmCms::Admin::CmsBlogsController do
 
   routes { DmCms::Engine.routes }
   login_admin
-  
+
   let(:blog) { create(:blog) }
 
   #------------------------------------------------------------------------------
@@ -157,17 +157,17 @@ describe DmCms::Admin::CmsBlogsController do
   describe 'sort' do
     it 'write test'
   end
-  
+
   describe 'blog_users' do
     it 'write test'
   end
-  
+
   describe 'blog_add_member' do
     it 'write test'
   end
-  
+
   describe 'blog_delete_member' do
     it 'write test'
   end
-  
+
 end

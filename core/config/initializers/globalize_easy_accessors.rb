@@ -4,21 +4,21 @@
 #
 #------------------------------------------------------------------------------
 # Definition like this:
-# 
+#
 #   class Product
 #     translates :title, :description
 #     globalize_accessors :locales => [:en, :pl], :attributes => [:title]
 #   end
-# 
-# Gives you access to methods: title_pl, title_en, title_pl=, title_en= (and similar 
-# set of description_* methods). And they work seamlessly with Globalize3 
+#
+# Gives you access to methods: title_pl, title_en, title_pl=, title_en= (and similar
+# set of description_* methods). And they work seamlessly with Globalize3
 # (not even touching the "core" title, title= methods used by Globalize3 itself).
-# 
+#
 # :locales and :attributes are optional. Default values are:
 #   :locales => I18n.available_locales
 #   :attributes => translated_attribute_names
-# 
-# which means that skipping all options will generate you accessor method for all 
+#
+# which means that skipping all options will generate you accessor method for all
 # translated fields and available languages
 #------------------------------------------------------------------------------
 module EasyGlobalizeAccessors
@@ -38,7 +38,7 @@ private
     define_getter(attr_name, locale)
     define_setter(attr_name, locale)
   end
-  
+
   #------------------------------------------------------------------------------
   def define_getter(attr_name, locale)
     define_method :"#{attr_name}_#{locale}" do

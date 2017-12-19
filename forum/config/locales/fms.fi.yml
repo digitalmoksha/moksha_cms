@@ -68,7 +68,7 @@ fi:
     suspended_user_post: Tämä viesti on poistettu
     reply_to_topic: Vastaa aiheeseen
     views_topics:
-      topic: Nimi      
+      topic: Nimi
       body: Body
       delete_sure: 'Poista tämä aihe lopullisesti?'
       locked_topic: 'Tämä aihe on lukittu.'
@@ -101,4 +101,3 @@ fi:
     topic_follow_section:
       title: seuraa aihetta sähköpostein
       description: seuraa aihetta ja vastaanota sähköposti-ilmoitus uusista kommenteista
-    

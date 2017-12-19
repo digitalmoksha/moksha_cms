@@ -42,20 +42,20 @@ require 'delayed_job'
 module DmCore
   class Engine < ::Rails::Engine
     isolate_namespace DmCore
-    
+
     initializer 'engine.helper' do |app|
       ActionView::Base.send :include, RenderHelper
       ActiveSupport.on_load(:action_controller) do
         include DmCore::ApplicationHelper
       end
     end
-    
+
     config.before_initialize do
       # make sure the ability.rb file is loaded initially - this was a problem when running specs
       require File.expand_path("../../../app/models/ability.rb", __FILE__)
       DmCore.initialize_configuration
     end
   end
-  
-  
+
+
 end

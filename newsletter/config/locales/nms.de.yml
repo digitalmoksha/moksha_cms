@@ -7,7 +7,7 @@ de:
     subscription_updated: Ihr Abonnement wurde erfolgreich aktualisiert
     unsubscribe_successful: Ihre E-Mail wurde abgemeldet
     already_subscribed: Bereits Angemeldet
-    
+
     #--- Mailchimp specific errors
     List_DoesNotExist: Die angegebene Liste existiert nicht
     List_AlreadySubscribed: Diese E-Mail ist bereits abonniert

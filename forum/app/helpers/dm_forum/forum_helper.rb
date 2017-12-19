@@ -4,7 +4,7 @@ module DmForum
     #------------------------------------------------------------------------------
     def topic_title_link(topic, options)
       if topic.title =~ /^\[([^\]]{1,15})\]((\s+)\w+.*)/
-        "<span class='flag'>#{$1}</span>" + 
+        "<span class='flag'>#{$1}</span>" +
         link_to($2.strip, forum_forum_topic_path(@forum, topic), options)
       else
         link_to(topic.title, forum_forum_topic_path(@forum, topic), options)
@@ -35,7 +35,7 @@ module DmForum
     def recent_topic_activity(topic)
       return false unless user_signed_in?
       return topic.last_updated_at > ((session[:forum_topics] ||= {})[topic.id] || last_active)
-    end 
+    end
 
     # used to know if a forum has changed since we read it last
     #------------------------------------------------------------------------------

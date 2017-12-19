@@ -11,7 +11,7 @@ class CreateUserSiteProfile < ActiveRecord::Migration[4.2]
     User.all.find_each do |user|
       Account.current = Account.find(user.account_id)
       p = user.user_site_profiles.create
-      p.update_attribute(:account_id, user.attributes['account_id']) 
+      p.update_attribute(:account_id, user.attributes['account_id'])
       p.update_attribute(:last_access_at, user.user_profile.attributes['last_access_at'])
       p.update_attribute(:created_at, user.attributes['created_at'])
       p.update_attribute(:updated_at, user.attributes['updated_at'])

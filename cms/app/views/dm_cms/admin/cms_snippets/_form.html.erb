@@ -12,7 +12,7 @@
     <%= f.input :itemtype, label: 'Item Type', collection: CmsContentitem::CONTENT_TYPES, include_blank: false %>
     <%= f.input :enable_cache, as: :boolean, inline_label: 'Cache Content', label: '&nbsp;'.html_safe %>
     <%= f.input :published, as: :boolean, inline_label: 'Publish It?', label: '&nbsp;'.html_safe %>
-    
+
     <%= locale_tabs title: '' do |locale| %>
       <div class="col-sm-12">
         <%= f.input "content_#{locale}", label: 'Content',    required: true, wrapper: :bs3_vertical_form, as: :code_editor, autoheight: true, input_html: {class: "CodeMirror-autoheight"} %>

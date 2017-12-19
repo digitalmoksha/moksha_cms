@@ -10,7 +10,7 @@ shared_examples :public_private_protected do |factory|
         built.requires_login = false
         expect(built.is_public?).to be_truthy
       end
-    
+
       it 'is not public' do
         built.is_public = false
         built.requires_login = false
@@ -27,7 +27,7 @@ shared_examples :public_private_protected do |factory|
         built.requires_login = true
         expect(built.is_protected?).to be_truthy
       end
-    
+
       it 'is not protected' do
         built.is_public = false
         built.requires_login = false
@@ -56,7 +56,7 @@ shared_examples :public_private_protected do |factory|
         expect(built.is_private?).to be_truthy
 
       end
-    
+
       it 'is not private' do
         built.is_public = true
         built.requires_login = false
@@ -90,18 +90,18 @@ shared_examples :public_private_protected do |factory|
       built.is_public = true
       built.requires_login = true
       expect(built.visibility_to_s).to eq 'protected'
-    
+
       built.is_public = true
       built.requires_login = true
       built.requires_subscription = true
       expect(built.visibility_to_s).to eq 'subscription'
-    
+
       built.is_public = false
       built.requires_login = false
       built.requires_subscription = false
       expect(built.visibility_to_s).to eq 'private'
     end
-  end  
+  end
 
   context "membership and access to #{described_class}" do
     let(:created) { create factory}
@@ -119,7 +119,7 @@ shared_examples :public_private_protected do |factory|
       created.remove_member(user)
       expect(created.member?(user)).to be_falsy
     end
-    
+
     describe '#member_count' do
       it 'counts manually added members' do
         created.add_member(user)
@@ -127,7 +127,7 @@ shared_examples :public_private_protected do |factory|
         expect(created.member_count).to eq 2
         expect(created.member_count(:manual)).to eq 2
       end
-      
+
       it 'counts automatic members with an owner' do
         allow(user).to receive(:member_count).and_return(10)
         created.owner = user
@@ -145,7 +145,7 @@ shared_examples :public_private_protected do |factory|
         expect(created.member_list).to eq [user]
         expect(created.member_list(:manual)).to eq [user]
       end
-      
+
       it 'counts automatic members with an owner' do
         allow(user).to receive(:member_list).and_return([1, 2])
         created.owner = user
@@ -156,7 +156,7 @@ shared_examples :public_private_protected do |factory|
         expect(created.member_list(:automatic)).to eq []
       end
     end
-    
+
     describe 'can_be_read_by?' do
       it 'not if unpublished' do
         created.published = false
@@ -263,7 +263,7 @@ shared_examples :public_private_protected do |factory|
         expect(created.can_be_replied_by?(user)).to be_falsy
       end
     end
-    
+
     describe 'available_to_user' do
       let!(:unpublished_obj) { create factory, is_public: true, published: false }
       let!(:public_obj) { create factory, is_public: true }

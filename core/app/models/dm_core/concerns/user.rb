@@ -4,7 +4,7 @@ module DmCore
       extend ActiveSupport::Concern
 
       # 'included do' causes the included code to be evaluated in the
-      # conext where it is included (post.rb), rather than be 
+      # conext where it is included (post.rb), rather than be
       # executed in the module's context (blorgh/concerns/models/post).
       included do
         rolify
@@ -50,13 +50,13 @@ module DmCore
           @ability ||= ::Ability.new(self)
         end
         delegate :can?, :cannot?, :to => :ability
-        
+
         # Keep the profile email in sync with the user's email
         #------------------------------------------------------------------------------
         def update_profile_email
           user_profile.update_attribute(:email, email) if self.email_changed?
         end
-        
+
         # When a user is created, attach it to the current account
         #------------------------------------------------------------------------------
         def add_account
@@ -64,7 +64,7 @@ module DmCore
           self.update_attribute(:account_id, Account.current.id)
           ensure_site_profile_exists
         end
-        
+
         #------------------------------------------------------------------------------
         def ensure_site_profile_exists
           if current_site_profile.nil?
@@ -72,13 +72,13 @@ module DmCore
             self.reload
           end
         end
-        
+
         # Determine if this user has the Admin role
         #------------------------------------------------------------------------------
         def is_admin?
           @is_admin.nil? ? (@is_admin = (has_role?(:admin) || is_sysadmin?)) : @is_admin
         end
-        
+
         # Determine if this user has the sysadmin role.  It spans the entire system,
         # not limited to one account.
         #------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ module DmCore
             @is_sysadmin
           end
         end
-        
+
         # does the user have a paid subscription
         #------------------------------------------------------------------------------
         def is_paid_subscriber?
@@ -110,7 +110,7 @@ module DmCore
           ensure_site_profile_exists
           current_site_profile.update_attribute(:last_access_at, Time.now.utc) if current_site_profile.last_access_at.nil? || (current_site_profile.last_access_at <= 10.minutes.ago)
         end
-        
+
         #------------------------------------------------------------------------------
         def to_liquid
           { 'user' => { 'first_name'          => h(first_name),
@@ -121,7 +121,7 @@ module DmCore
                       }
           }
         end
-        
+
         #------------------------------------------------------------------------------
         def self.liquid_help
           [
@@ -165,7 +165,7 @@ module DmCore
         def suspended?
           false
         end
-        
+
         # Return the state of the user
         # {todo} add in attribute or state machine for the users state
         #------------------------------------------------------------------------------

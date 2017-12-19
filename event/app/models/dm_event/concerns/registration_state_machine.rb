@@ -6,7 +6,7 @@ module DmEvent
       extend ActiveSupport::Concern
 
       # 'included do' causes the included code to be evaluated in the
-      # conext where it is included (post.rb), rather than be 
+      # conext where it is included (post.rb), rather than be
       # executed in the module's context (blorgh/concerns/models/post).
       #------------------------------------------------------------------------------
       included do
@@ -27,11 +27,11 @@ module DmEvent
 
           #------------------------------------------------------------------------------
           event :start do
-            transitions :from => :open,       :to => :waitlisted, :guard => Proc.new {|o| o.workshop.waitlisting?}   
-            transitions :from => :open,       :to => :pending,    :guard => Proc.new {|o| o.workshop.require_review?}   
+            transitions :from => :open,       :to => :waitlisted, :guard => Proc.new {|o| o.workshop.waitlisting?}
+            transitions :from => :open,       :to => :pending,    :guard => Proc.new {|o| o.workshop.require_review?}
             transitions :from => :open,       :to => :accepted
           end
-  
+
           #------------------------------------------------------------------------------
           event :review do
             transitions :from => :pending,    :to => :reviewing
@@ -41,8 +41,8 @@ module DmEvent
             transitions :from => :canceled,   :to => :reviewing
             transitions :from => :refunded,   :to => :reviewing
             transitions :from => :noshow,     :to => :reviewing
-          end  
-    
+          end
+
           #------------------------------------------------------------------------------
           event :accept do
             transitions :from => :pending,    :to => :accepted
@@ -53,8 +53,8 @@ module DmEvent
             transitions :from => :canceled,   :to => :accepted
             transitions :from => :refunded,   :to => :accepted
             transitions :from => :noshow,     :to => :accepted
-          end  
-  
+          end
+
           #------------------------------------------------------------------------------
           event :paid do
             transitions :from => :pending,    :to => :paid
@@ -66,7 +66,7 @@ module DmEvent
             transitions :from => :noshow,     :to => :paid
             transitions :from => :waitlisted, :to => :paid
           end
-    
+
           #------------------------------------------------------------------------------
           event :refund do
             transitions :from => :paid,       :to => :refunded
@@ -76,7 +76,7 @@ module DmEvent
             transitions :from => :reviewing,  :to => :refunded
             transitions :from => :waitlisted, :to => :refunded
           end
-    
+
           #------------------------------------------------------------------------------
           event :reject do
             transitions :from => :pending,    :to => :rejected
@@ -125,12 +125,12 @@ module DmEvent
           end
 
         end
-        
+
         #------------------------------------------------------------------------------
         def current_state
           aasm.current_state
         end
-        
+
         # send the email if it's defined
         #------------------------------------------------------------------------------
         def state_pending
@@ -185,17 +185,17 @@ module DmEvent
         def state_noshow
           update_state_date
         end
-        
+
         #------------------------------------------------------------------------------
         def update_state_date
           update_attribute(:process_changed_on, Time.now)
         end
-        
+
         #------------------------------------------------------------------------------
         def attending?
           aasm_state == 'accepted' || aasm_state == 'paid'
         end
-  
+
         # return true if they have registered
         #------------------------------------------------------------------------------
         def registered?

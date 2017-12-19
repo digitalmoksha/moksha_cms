@@ -6,14 +6,14 @@ module DmCore
     def url_translate(locale)
       DmCore::Language.translate_url(request.url, locale)
     end
-    
-    # if a relative url path is given, then expand it by prepending the supplied 
+
+    # if a relative url path is given, then expand it by prepending the supplied
     # path.
     #------------------------------------------------------------------------------
     def expand_url(url, path)
       url.expand_url(path)
     end
-    
+
     # Returns an image tag, where the src defaults to the site_assets image folder
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
@@ -71,11 +71,11 @@ module DmCore
     end
 
     #------------------------------------------------------------------------------
-    # Following code pulled from the Rails 3.0 source. 
-    #    action_pack/lib/action_view/helpers/asset_tag_helper.rb 
-    # Generates an asset id to be used for any assets we don't want in the asset 
+    # Following code pulled from the Rails 3.0 source.
+    #    action_pack/lib/action_view/helpers/asset_tag_helper.rb
+    # Generates an asset id to be used for any assets we don't want in the asset
     # pipeline.  Asset id gets appeneded as a query string to url.
-    # 
+    #
     # Use case: all themes are precompiled, but a single stylesheet per
     # theme lives outside the pipeline, so that it can be updated without having
     # to recompile all assets of all sites/themes.
@@ -83,11 +83,11 @@ module DmCore
     # Simplify the task: create the asset_id and append to the url - don't currently
     # take into account asset hosts, etc.
     #------------------------------------------------------------------------------
-    
+
     @@asset_timestamps_cache = {}
     @@asset_timestamps_cache_guard = Mutex.new
     @@cache_asset_timestamps = true
-    
+
     # Use the RAILS_ASSET_ID environment variable or the source's
     # modification time as its cache-busting asset id.
     #------------------------------------------------------------------------------
@@ -111,7 +111,7 @@ module DmCore
         end
       end
     end
-    
+
     # Break out the asset path rewrite in case plugins wish to put the asset id
     # someplace other than the query string.
     #------------------------------------------------------------------------------
@@ -130,6 +130,6 @@ module DmCore
       end
     end
 
-    
+
   end
 end

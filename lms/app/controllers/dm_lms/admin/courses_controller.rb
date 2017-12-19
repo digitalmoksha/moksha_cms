@@ -1,10 +1,10 @@
 class DmLms::Admin::CoursesController < DmLms::Admin::AdminController
   include DmLms::PermittedParams
-      
+
   helper DmLms::ApplicationHelper
-  
+
   before_action   :course_lookup, :except =>  [:index, :new, :create]
-  
+
   # GET /admin/courses, GET /admin/courses.json
   #------------------------------------------------------------------------------
   def index
@@ -81,7 +81,7 @@ class DmLms::Admin::CoursesController < DmLms::Admin::AdminController
       format.json { head :no_content }
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def sort
     @course.update_attribute(:row_order_position, params[:item][:row_order_position])
@@ -89,7 +89,7 @@ class DmLms::Admin::CoursesController < DmLms::Admin::AdminController
     #--- this action will be called via ajax
     head :ok
   end
-  
+
 private
 
   #------------------------------------------------------------------------------

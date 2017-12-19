@@ -3,7 +3,7 @@
 # set.
 #
 # There are two issues with the locale value on urls:
-# 1. for routes in the code (redirects, url_for, etc), we need the monkey 
+# 1. for routes in the code (redirects, url_for, etc), we need the monkey
 #    patch for ActionView and ActionDispatch
 #    Ref: https://github.com/rspec/rspec-rails/issues/255#issuecomment-24796864
 #

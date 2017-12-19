@@ -6,7 +6,7 @@ module DmCore
 
       included do
         has_many :custom_field_defs, as: :owner, dependent: :destroy
-  
+
         accepts_nested_attributes_for :custom_field_defs, allow_destroy: true
       end
 

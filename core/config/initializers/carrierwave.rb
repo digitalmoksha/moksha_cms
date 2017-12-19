@@ -35,4 +35,4 @@ end
 CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+\@]/
 
 #--- carrierwave only loads english locale by default.  pull in the other locales
-I18n.load_path += Dir.glob( Gem.loaded_specs['carrierwave'].full_gem_path + "/lib/carrierwave/locale/*.yml" ) 
+I18n.load_path += Dir.glob( Gem.loaded_specs['carrierwave'].full_gem_path + "/lib/carrierwave/locale/*.yml" )

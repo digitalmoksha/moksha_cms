@@ -6,9 +6,9 @@ module DmEvent
       extend ActiveSupport::Concern
 
       WRITE_OFF_DAYS    = 90
- 
+
       # 'included do' causes the included code to be evaluated in the
-      # conext where it is included (post.rb), rather than be 
+      # conext where it is included (post.rb), rather than be
       # executed in the module's context (blorgh/concerns/models/post).
       #------------------------------------------------------------------------------
       included do
@@ -18,13 +18,13 @@ module DmEvent
         def price
           (workshop_price && workshop_price.price) ? workshop_price.price : Money.new(0, workshop.base_currency)
         end
-  
+
         # Price with discount
         #------------------------------------------------------------------------------
         def discounted_price
           price - discount
         end
-  
+
         #------------------------------------------------------------------------------
         def discount
           return Money.new(0, workshop.base_currency) if workshop_price.nil? || workshop_price.price.nil?
@@ -44,7 +44,7 @@ module DmEvent
         def balance_owed
           discounted_price - amount_paid
         end
-  
+
         # suggested amount of next payment.
         # when it's recurring, they payment should be whatever is needed to bring their
         # payment plan up to date
@@ -57,7 +57,7 @@ module DmEvent
             balance_owed
           end
         end
-  
+
         # when a customer wants to make a payment, they should either charged the amount
         # for this month (which could be less than the normal monthly amount), or the
         # standard monthly amount, or whatever the balance_owed is
@@ -108,14 +108,14 @@ module DmEvent
           workshop_price ? workshop_price.payment_schedule(initial_payments_should_start_on) : []
         end
 
-        # Payment was entered manually, create the history record.  You can tell it's 
+        # Payment was entered manually, create the history record.  You can tell it's
         # a manual entry if the user_profile is filled in - means a human did it.
         #------------------------------------------------------------------------------
         def manual_payment(payment_history, cost, total_currency, user_profile,
                            options = { item_ref: '', payment_method: 'cash', bill_to_name: '', payment_date: Time.now,
                                        notify_data: nil, transaction_id: nil, status: '' } )
           amount            = Monetize.parse(cost, total_currency)
-    
+
           if payment_history
             new_amount_paid = self.amount_paid - self.workshop_price.to_base_currency(payment_history.total) + self.workshop_price.to_base_currency(amount)
             payment_history.update_attributes(
@@ -146,7 +146,7 @@ module DmEvent
                 status: (user_profile ? "Completed" : options[:status])
             )
           end
-        
+
           if payment_history.errors.empty?
             self.update_attribute(:amount_paid_cents, new_amount_paid.cents)
             self.reload
@@ -181,7 +181,7 @@ module DmEvent
         def should_writeoff?
           self.writtenoff_on.nil? && balance_owed.positive? && workshop_price && (workshop_price.last_scheduled_payment_date(initial_payments_should_start_on).to_date + WRITE_OFF_DAYS.days) < Time.now
         end
-          
+
         # writeoff the registration if it needs to
         #------------------------------------------------------------------------------
         def check_if_writeoff!

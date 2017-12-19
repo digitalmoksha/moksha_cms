@@ -6,12 +6,12 @@ describe CmsPost do
   it { is_expected.to validate_length_of(:slug).is_at_most(255) }
   it { is_expected.to validate_length_of(:featured_image).is_at_most(255) }
   it { is_expected.to validate_length_of(:title_en).is_at_most(255) }
-  
+
   describe 'slug handling' do
 
     let(:blog1) { create(:blog) }
     let(:blog2) { create(:news_blog)}
-    
+
     #------------------------------------------------------------------------------
     it 'allows the same specified slug between two blogs (scoped to blog)' do
       post1 = blog1.posts.create(attributes_for(:post, slug: 'test-slug'))
@@ -54,7 +54,7 @@ describe CmsPost do
       post1.update_attribute(:tag_list, 'one, two')
       expect(post1.tag_list).to eq ['one', 'two']
     end
-    
+
     #------------------------------------------------------------------------------
     it 'all tags across blogs' do
       post1 = blog1.posts.create(attributes_for(:post, slug: 'test-slug'))

@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 class DmCore::ApplicationController < ActionController::Base
   include DmCore::PermittedParams
-  
+
   before_action   :log_additional_data
   # before_action   :record_activity
   before_action   :check_site_assets
@@ -49,7 +49,7 @@ protected
   #------------------------------------------------------------------------------
   def store_location
     if params[:redirect_to].present?
-      store_location_for(:user, params[:redirect_to])    
+      store_location_for(:user, params[:redirect_to])
     end
 
     # note: don't store the previous url on each call.  this led to an issue where
@@ -92,7 +92,7 @@ protected
         return false
       end
     end
-  end  
+  end
 
   #------------------------------------------------------------------------------
   def ssl_redirect
@@ -109,7 +109,7 @@ protected
   def use_ssl?
     true # user_signed_in? (but would need to ensure Devise runs under ssl)
   end
-  
+
   # Choose the theme based on the account prefix in the Account
   #------------------------------------------------------------------------------
   def theme_resolver
@@ -125,24 +125,24 @@ protected
   # def record_activity
   #   if Rails.env.production?
   #     activity = Activity.new
-  # 
+  #
   #     #--- who is doing the activity?
   #     activity.session_id  = session['session_id'] unless session.nil?
   #     activity.user_id     = current_user.id unless current_user.nil?
   #     activity.browser     = request.env['HTTP_USER_AGENT']
   #     activity.ip_address  = request.env['REMOTE_ADDR']
-  # 
+  #
   #     #--- what are they doing?
   #     activity.controller = controller_name
   #     activity.action     = action_name
   #     activity.params     = params.to_json
   #     activity.slug       = params['slug'] unless params['slug'].blank?
   #     activity.lesson     = [params['course_slug'], params['lesson_slug'], params['content_slug']].join(',') unless params['course_slug'].blank?
-  # 
+  #
   #     activity.save!
   #   end
   # end
-  
+
   # Sets the default value for the url options.  Seems to allow links/redirect_to
   # to have the proper value for the locale in the url
   #------------------------------------------------------------------------------
@@ -173,9 +173,9 @@ protected
       # then the link is "http://example.com/calendar", instead of "http://example.com/en/calendar"
       # This will allow that to work.
       redirect_to "/#{current_account.preferred_default_locale}#{request.path}"
-    end    
+    end
   end
-  
+
   # Update the user's last_access if signed_in
   #------------------------------------------------------------------------------
   def update_user
@@ -188,7 +188,7 @@ protected
     klass ||= "#{object.class}Presenter".constantize
     klass.new(object, view_context)
   end
-  
+
   # FORCE to implement content_for in controller.  This is so we can use it in
   # the pages_controller to set the page title
   #------------------------------------------------------------------------------

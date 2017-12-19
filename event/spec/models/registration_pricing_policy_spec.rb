@@ -8,7 +8,7 @@ describe Registration, :type => :model do
 
     let(:workshop)   { create(:workshop_with_price) }
     let(:workshop_r) { create(:workshop_with_recurring_price) }
-    
+
     describe '#payment_owed' do
 
       #------------------------------------------------------------------------------
@@ -16,13 +16,13 @@ describe Registration, :type => :model do
         registration = create :registration, workshop: workshop
         expect(registration.payment_owed).to eq Money.new(50000, 'EUR')
       end
-    
+
       #------------------------------------------------------------------------------
       it "full payment with discount" do
         registration = create :registration, workshop: workshop, discount_value: 50, discount_use_percent: true
         expect(registration.payment_owed).to eq Money.new(25000, 'EUR')
       end
-    
+
       #------------------------------------------------------------------------------
       it "with partial payment" do
         registration = create :registration, workshop: workshop, amount_paid_cents: 20000
@@ -85,7 +85,7 @@ describe Registration, :type => :model do
         expect(registration.payment_owed).to eq Money.new(0, 'EUR')
       end
     end
-    
+
     describe '#initial_payments_should_start_on' do
       it 'starts as soon as the registration is created' do
         expect(workshop.initial_payment_required_on).to be_nil
@@ -111,14 +111,14 @@ describe Registration, :type => :model do
         expect(registration.initial_payments_should_start_on).to eq 2.days.from_now.to_date
       end
     end
-    
+
     describe 'writeoff' do
-      
+
       #------------------------------------------------------------------------------
       it '#check_if_writeoff!' do
         registration = create :registration, workshop: workshop
         expect(registration.writtenoff_on).to eq nil
-        
+
         registration = create :registration, workshop: workshop, created_at: 92.days.ago
         registration.check_if_writeoff!
         expect(registration.writtenoff_on).not_to eq nil
@@ -132,7 +132,7 @@ describe Registration, :type => :model do
       it '#check_if_writeoff! with recurring' do
         registration = create :registration, workshop: workshop_r
         expect(registration.writtenoff_on).to eq nil
-        
+
         registration = create :registration, workshop: workshop_r, created_at: (122 + Registration::WRITE_OFF_DAYS).days.ago
         registration.check_if_writeoff!
         expect(registration.writtenoff_on).not_to eq nil
@@ -142,6 +142,6 @@ describe Registration, :type => :model do
         expect(registration.writtenoff_on).to eq nil
       end
     end
-  
-  end  
+
+  end
 end

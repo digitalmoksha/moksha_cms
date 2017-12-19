@@ -14,7 +14,7 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
   end
 
 private
-  
+
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
   def template_setup

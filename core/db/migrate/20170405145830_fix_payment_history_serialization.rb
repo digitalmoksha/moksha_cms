@@ -13,7 +13,7 @@ class FixPaymentHistorySerialization < ActiveRecord::Migration[4.2]
       end
     end
   end
-  
+
   def down
   end
 end

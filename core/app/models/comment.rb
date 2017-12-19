@@ -17,7 +17,7 @@ class Comment < ApplicationRecord
   #--- don't use a counter cache until you can seperate users per account
   belongs_to        :user #, :counter_cache => true
   belongs_to        :account
-  
+
   validates_presence_of   :body
   validates_length_of     :body, maximum: 60000
   self.per_page = 10

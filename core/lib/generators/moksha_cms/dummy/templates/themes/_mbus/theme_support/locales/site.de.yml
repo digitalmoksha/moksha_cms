@@ -5,7 +5,7 @@ de:
     language_german: Deutsch
     language_czech: Tschechisch
     language_japanese: Japanese
-    
+
     #--- Login System
     signup_title: Sign Up for a New Account
     signup_first_name: Vorname
@@ -36,7 +36,7 @@ de:
     new_password_confirm: Neues Passwort bestätigen
     change_password: Mein Passwort ändern
     create_account: Neues Benutzerkonto anlegen
-    
+
     #--- CMS/Site Messages
 
     #--- Forum System
@@ -46,7 +46,7 @@ de:
     #--- Profile
     profile_title: Benutzerkonto und Profil
     profile_subtitle: Einstellungen
-    
+
     #--- Newletter Signup
     newsletter_choose: Bitte Newsletter auswählen
 

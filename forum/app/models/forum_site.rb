@@ -18,7 +18,7 @@ class ForumSite < ApplicationRecord
   def self.site
     ForumSite.first
   end
-  
+
   #------------------------------------------------------------------------------
   def ordered_forums
     forums

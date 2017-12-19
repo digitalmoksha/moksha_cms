@@ -18,7 +18,7 @@ fi:
       hhmmpp: "%I:%M %p"
 
   english: "suomi"
-  
+
   core:
     next_page: "Seuraava <i class='fa fa-angle-right'></i>"
     prev_page: "<i class='fa fa-angle-left'></i> Edellinen"
@@ -81,4 +81,3 @@ fi:
   email:
     salutation: "Hei %{value},"
     thank_you: Kiitos
-    

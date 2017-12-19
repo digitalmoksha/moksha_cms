@@ -3,7 +3,7 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
 
   before_action     :workshop_lookup, :only   => [:index, :new, :create]
   before_action     :price_lookup,  :except => [:index, :new, :create]
-  
+
   #------------------------------------------------------------------------------
   def index
     authorize! :manage_events, @workshop
@@ -69,7 +69,7 @@ private
   def workshop_lookup
     @workshop = Workshop.friendly.find(params[:workshop_id])
   end
-  
+
   #------------------------------------------------------------------------------
   def price_lookup
     @workshop_price = WorkshopPrice.find(params[:id])

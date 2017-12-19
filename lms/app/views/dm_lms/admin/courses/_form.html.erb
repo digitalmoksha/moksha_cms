@@ -26,7 +26,7 @@
           <%= f.input "description_#{locale}", as: :text, label: 'Description', input_html: { rows: 6, class: 'input-block-level monospaced' } %>
         <% end %>
 
-        <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>  
+        <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
         <% if defined? DmSubscriptions %>
           <%= f.input :require_subscription, inline_label: 'Require Subscription', hint: 'Require a valid subscription' %>
         <% end %>

@@ -12,7 +12,7 @@ class CreateNewsletter < ActiveRecord::Migration[4.2]
       t.datetime  'updated_at'
       t.integer   'account_id'
       t.string    'type'
-      
+
       #--- MailChimp specific fields
       t.string    'mc_id'
       t.boolean   'deleted',              :default => false  # set if list was deleted at MC

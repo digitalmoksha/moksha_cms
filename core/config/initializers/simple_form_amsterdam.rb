@@ -17,7 +17,7 @@
 #     #   input.use :error, :wrap_with => { :tag => 'span', :class => 'help-inline' }
 #     # end
 #   end
-# 
+#
 #   config.wrappers :vertical, :tag => 'div', :class => 'control-group', :error_class => 'error' do |b|
 #     b.use :html5
 #     b.use :placeholder

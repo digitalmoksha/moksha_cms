@@ -24,7 +24,7 @@ class AddUserProfile < ActiveRecord::Migration[4.2]
       t.datetime    :updated_at
       t.integer     :account_id
     end
-    
+
     User.all.find_each do |user|
       Account.current = Account.find(user.account_id)
       p = user.create_user_profile

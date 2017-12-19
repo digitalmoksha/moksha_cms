@@ -1,5 +1,5 @@
 # config/initializers/will_paginate.rb
-# 
+#
 # This extension code was written by Isaac Bowen, originally found
 # at http://isaacbowen.com/blog/using-will_paginate-action_view-and-bootstrap/
 
@@ -9,8 +9,8 @@ module WillPaginate
   module ActionView
     def will_paginate(collection = nil, options = {})
       options, collection = collection, nil if collection.is_a? Hash
-      collection                ||= infer_collection_from_controller 
-      
+      collection                ||= infer_collection_from_controller
+
       options[:version]         ||= :original
       case options.delete(:version)
       when :bootstrap2
@@ -21,7 +21,7 @@ module WillPaginate
         options[:renderer]      ||= OriginalLinkRenderer
         options[:class]         ||= 'tPages'
       end
-      
+
       options[:previous_label]  ||= '<i class="fa fa-arrow-left"></i>'
       options[:next_label]      ||= '<i class="fa fa-arrow-right"></i>'
       super.try :html_safe
@@ -31,7 +31,7 @@ module WillPaginate
     #------------------------------------------------------------------------------
     class OriginalLinkRenderer < LinkRenderer
       protected
-    
+
       def html_container(html)
         tag :div, tag(:ul, html, class: 'pages'), container_attributes
       end
@@ -54,7 +54,7 @@ module WillPaginate
     #------------------------------------------------------------------------------
     class Bootstrap2LinkRenderer < LinkRenderer
       protected
-    
+
       def html_container(html)
         tag :div, tag(:ul, html), container_attributes
       end
@@ -76,7 +76,7 @@ module WillPaginate
     #------------------------------------------------------------------------------
     class Bootstrap3LinkRenderer < Bootstrap2LinkRenderer
       protected
-    
+
       def html_container(html)
         tag :ul, html, container_attributes
       end

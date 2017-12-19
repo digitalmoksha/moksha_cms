@@ -4,7 +4,7 @@
 class DmCore::SiteMailer < ApplicationMailer
 
   layout 'email_templates/default_email_layout'
-  
+
   class DynamicSettingsInterceptor
     def self.delivering_email(message)
       unless Account.current.nil?

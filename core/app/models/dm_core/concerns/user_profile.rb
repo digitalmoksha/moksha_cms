@@ -4,10 +4,10 @@ module DmCore
       extend ActiveSupport::Concern
 
       # 'included do' causes the included code to be evaluated in the
-      # conext where it is included (post.rb), rather than be 
+      # conext where it is included (post.rb), rather than be
       # executed in the module's context (blorgh/concerns/models/post).
       included do
-        
+
         #--- for when a service (like event registration), needs to require a valid address
         #    can be set by the service to enable the validations
         attr_accessor           :address_required
@@ -15,12 +15,12 @@ module DmCore
 
         belongs_to              :user
         belongs_to              :country, :class_name => 'DmCore::Country'
-        
+
         #--- don't validate public_name if we're only updating the address
         #    (like with userless registration)
         validates_presence_of   :public_name,        :if => Proc.new { |p| !p.userless_registration }
         validates_uniqueness_of :public_name,        :case_sensitive => false, :if => Proc.new { |p| !p.userless_registration }
-        
+
         #--- validates used for a registration that is not associated with a student account
         validates_presence_of   :first_name,        :if => :require_name?
         validates_presence_of   :last_name,         :if => :require_name?
@@ -45,7 +45,7 @@ module DmCore
         # => public_avatar is for use in forums, blog comments, etc.
         # => private_avatar is for use in special events where building a group
         #    is important.
-        # => use_private_avatar_for_public is currently NOT used 
+        # => use_private_avatar_for_public is currently NOT used
         #------------------------------------------------------------------------------
         mount_uploader          :public_avatar,  AvatarUploader
         mount_uploader          :private_avatar, AvatarUploader
@@ -54,18 +54,18 @@ module DmCore
         def address_required=(value)
           @address_required = (value == true || value.as_boolean)
         end
-        
+
         #------------------------------------------------------------------------------
         def userless_registration=(value)
           @userless_registration = (value == true || value.as_boolean)
         end
-        
+
         # When a profile is created, attach it to the current account
         #------------------------------------------------------------------------------
         def add_account
           self.update_attribute(:account_id, Account.current.id)
         end
-        
+
         #------------------------------------------------------------------------------
         def full_name
           I18n.t('core.profile_full_name', firstname: first_name.to_s, lastname: last_name.to_s)
@@ -83,7 +83,7 @@ module DmCore
         def require_name?
           true
         end
-        
+
         # Override this method if you don't want to require country
         #------------------------------------------------------------------------------
         def require_country?

@@ -39,7 +39,7 @@ describe MediaUploader, type: :uploader do
   it "has the correct format" do
     expect(uploader).to be_format('png')
   end
-  
+
   it 'has correct storage directory' do
     expect(uploader.store_dir).to eq('site_assets/uploads/local/media/')
   end

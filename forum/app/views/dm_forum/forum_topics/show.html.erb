@@ -38,9 +38,9 @@
   </h1>
 
   <p class="subtitle">
-    <%= I18n.t 'fms.count_comments', count: @forum_topic.forum_comments.size - 1, 
+    <%= I18n.t 'fms.count_comments', count: @forum_topic.forum_comments.size - 1,
               num: number_with_delimiter(@forum_topic.forum_comments.size - 1) %>,
-    <%= I18n.t 'fms.count_voices', count: @forum_topic.voices.size, 
+    <%= I18n.t 'fms.count_voices', count: @forum_topic.voices.size,
               num: number_with_delimiter(@forum_topic.voices.size) %>
   </p>
 

@@ -18,7 +18,7 @@ module DmAdmin
   }.freeze
 
   module ApplicationHelper
-    
+
     #------------------------------------------------------------------------------
     def flag_image(locale = I18n.locale, options = {})
       image_tag("dm_admin/flags/#{locale}.gif", options)

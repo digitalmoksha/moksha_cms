@@ -1,9 +1,9 @@
 class RegistrationNotifyMailer < DmCore::SiteMailer
-  
+
   helper  DmCore::LiquidHelper
   helper  DmCore::UrlHelper
   helper  DmCore::AccountHelper
-    
+
   layout 'email_templates/dm_event_email_layout'
 
   #------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ class RegistrationNotifyMailer < DmCore::SiteMailer
     @content                    = content
     @state                      = substitutions['state']
 
-    headers = { "Reply-To" => (contact_email != "") ? contact_email : account.preferred_smtp_from_email, 
+    headers = { "Reply-To" => (contact_email != "") ? contact_email : account.preferred_smtp_from_email,
                 "Return-Path" => account.preferred_smtp_from_email }
 
     theme(account.account_prefix)

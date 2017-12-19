@@ -1,6 +1,6 @@
 module DmCore
   module RenderHelper
-    
+
     # gives the public avatar for a user
     #------------------------------------------------------------------------------
     def avatar_for(user, size=32, options = {})
@@ -13,10 +13,10 @@ module DmCore
     def page_number
       @page_number ||= [1, params[:page].to_i].max
     end
-    
+
     # Wrapper to pull the list of countries from our table
     #------------------------------------------------------------------------------
-    def ut_country_select(object, method, options = {include_blank: true}, html_options = {})    
+    def ut_country_select(object, method, options = {include_blank: true}, html_options = {})
       collection = ut_country_select_collection(include_blank: false, as: options[:as])
       select(object, method, collection, options, html_options)
     end
@@ -36,7 +36,7 @@ module DmCore
     #------------------------------------------------------------------------------
     def ut_country_select_collection(options = {include_blank: true, as: :id})
       options = {include_blank: options, as: :id} if !options.is_a?(Hash)
-      
+
       collection = (options[:include_blank] ? [[" ", ""]] : [])
       case options[:as]
       when :code
@@ -53,7 +53,7 @@ module DmCore
     # an id of 'state_select_container' to a drop down with the proper states
     # for that country.
     #------------------------------------------------------------------------------
-    def ut_country_select_with_states(object, method, method_state, options = {include_blank: true}, html_options = {})    
+    def ut_country_select_with_states(object, method, method_state, options = {include_blank: true}, html_options = {})
       collection = ut_country_select_collection(include_blank: false, as: options[:as])
       state_object_method = "#{object.to_s}[#{method_state.to_s}]"
       html_options[:id] ||= 'country_select'
@@ -73,14 +73,14 @@ module DmCore
         select_tag(object_method, "<option value=''>Please select a country".html_safe)
       else
         selected_country = ::StateCountryConstants::COUNTRIES_WITH_STATES.find {|x| x[:id] == country_id}
-        if selected_country 
+        if selected_country
           select_tag(object_method, state_options_for_select(selected_state, selected_country[:code]), {include_blank: true}).html_safe
         else
           text_field_tag(object_method, selected_state)
         end
       end
     end
-    
+
     #------------------------------------------------------------------------------
     def pagination(collection, options = {version: :original})
       if collection.total_entries > 1
@@ -94,7 +94,7 @@ module DmCore
       end
     end
 
-    # Return the name of the simple_form wrapper to use, which the theme can 
+    # Return the name of the simple_form wrapper to use, which the theme can
     # specify.  Typically either :bs2_horizontal_form or :bs3_horizontal_form.
     #------------------------------------------------------------------------------
     def simple_form_theme_wrapper

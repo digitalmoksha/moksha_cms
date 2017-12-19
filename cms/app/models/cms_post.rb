@@ -11,13 +11,13 @@ class CmsPost < ApplicationRecord
 
   acts_as_commentable
   acts_as_taggable
-  
+
   belongs_to              :cms_blog
   belongs_to              :account
-  
+
   default_scope           { where(account_id: Account.current.id) }
   scope                   :published, -> { where("published_on IS NOT NULL AND published_on <= ?", Time.now ) }
-  
+
   validates               :title, presence_default_locale: true
   validates               :summary, liquid: { :locales => true }, presence_default_locale: true
   validates               :content, liquid: { :locales => true }, presence_default_locale: true
@@ -28,7 +28,7 @@ class CmsPost < ApplicationRecord
     validates_length_of     :"title_#{locale}", maximum: 255
   end
   self.per_page = 10
-  
+
   # Base the slug on the default locale
   #------------------------------------------------------------------------------
   def model_slug
@@ -39,20 +39,20 @@ class CmsPost < ApplicationRecord
   def is_published?
     !published_on.nil? && published_on <= Time.now
   end
-  
+
   # Allow comments if also enabled in the blog
   #------------------------------------------------------------------------------
   def comments_allowed?
     cms_blog.comments_allowed? && comments_allowed
   end
-  
+
   # return a list of tags for all Blog post objects
   #------------------------------------------------------------------------------
   def self.tag_list_all
     CmsPost.tag_counts_on(:tags).map(&:name).sort
   end
-  
-  # Send post notification to any members and followers.  Updates the 
+
+  # Send post notification to any members and followers.  Updates the
   # :notification_sent_on column after emails sent.
   # Use 'sets' to only end up with a unique list of users
   #------------------------------------------------------------------------------

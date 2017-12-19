@@ -32,7 +32,7 @@ module DmCms
           MediaFile.url_by_name(@src, version: @version) || IMAGE_MISSING
         end
       end
-     
+
     end
   end
 end

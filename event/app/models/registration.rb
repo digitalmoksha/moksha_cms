@@ -45,8 +45,8 @@ class Registration < ApplicationRecord
   validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0}
   validates_numericality_of     :discount_value, allow_nil: true
   validates_length_of           :payment_comment, maximum: 255
-  
-  delegate                      :first_name, :last_name, :full_name, :email, :address, :address2, 
+
+  delegate                      :first_name, :last_name, :full_name, :email, :address, :address2,
                                 :city, :state, :country, :zipcode, :phone, to: :user_profile
 
 private
@@ -70,14 +70,14 @@ private
   def set_currency
     self[:amount_paid_currency] = workshop.base_currency
   end
-  
+
   # Receipt code: (workshop.id)-(registration.id).  eg.  003-101
   #------------------------------------------------------------------------------
   def set_receipt_code
     receipt_code = ("%03d" % workshop.id) + '-' + ("%03d" % self[:id])
     update_attribute(:receipt_code, receipt_code)
   end
-  
+
 public
 
   # receipt code is simply the record id + 1100
@@ -85,8 +85,8 @@ public
   def self.receiptcode_to_id(receiptcode)
     return receipt_code.split('-')[1].to_i
   end
-  
-  # Return the number of items specified, in particular the number of items in 
+
+  # Return the number of items specified, in particular the number of items in
   # a particular state
   #------------------------------------------------------------------------------
   def self.number_of(state, options = {})

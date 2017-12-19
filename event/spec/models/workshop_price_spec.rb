@@ -3,9 +3,9 @@ DmCore.config.locales = [:en, :de]
 
 describe WorkshopPrice, :type => :model do
   setup_account
-  
+
   describe "workshop_prices" do
-    
+
     #------------------------------------------------------------------------------
     it "creates price correctly" do
       attributes = WorkshopPrice.prepare_prices('price' => '11000', 'price_currency' => 'JPY',
@@ -22,10 +22,10 @@ describe WorkshopPrice, :type => :model do
       workshop_price = WorkshopPrice.new(price: Money.new(500, 'USD'))
       expect(workshop_price.total_available).to eq(nil)
       expect(workshop_price.sold_out?(1)).to eq false
-      
+
       workshop_price.total_available = 0
       expect(workshop_price.sold_out?(1)).to eq true
-      
+
       workshop_price.total_available = 10
       expect(workshop_price.sold_out?(1)).to eq false
       expect(workshop_price.sold_out?(10)).to eq true
@@ -61,7 +61,7 @@ describe WorkshopPrice, :type => :model do
     it 'should format price correctly' do
       workshop_price = WorkshopPrice.new(price: Money.new(534, 'USD'))
       expect(workshop_price.price_formatted).to eq '$5.34'
-      
+
       workshop_price.price = nil
       expect(workshop_price.price_formatted).to eq ''
 
@@ -102,7 +102,7 @@ describe WorkshopPrice, :type => :model do
       workshop_price = WorkshopPrice.new(price: Money.new(500, 'USD'))
       expect(workshop_price.to_base_currency(Money.new(250, 'USD'))).to   eq Money.new(250, 'USD')
     end
-    
+
     #------------------------------------------------------------------------------
     it 'has a one day payment schedule for non-recurring' do
       workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'))
@@ -122,7 +122,7 @@ describe WorkshopPrice, :type => :model do
         {due_on: start_day + 30.days, period_payment: Money.new(167, 'USD'), total_due: Money.new(334, 'USD')},
         {due_on: start_day + 60.days, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')}]
     end
-    
+
     #------------------------------------------------------------------------------
     it 'returns the scheudled payment entry for a date' do
       workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'), recurring_number: 3, recurring_period: 30)
@@ -131,13 +131,13 @@ describe WorkshopPrice, :type => :model do
       expect(workshop_price.specific_payment_schedule(start_day, 5.days.from_now)).to eq({due_on: start_day, period_payment: Money.new(167, 'USD'), total_due: Money.new(167, 'USD')})
       expect(workshop_price.specific_payment_schedule(start_day, 95.days.from_now)).to eq({due_on: start_day + 60.days, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')})
     end
-    
+
     #------------------------------------------------------------------------------
     it 'return the last scheduled payment date' do
       workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'), recurring_number: 3, recurring_period: 30)
       start_day       = Time.now.to_date
       expect(workshop_price.last_scheduled_payment_date(start_day)).to eq (start_day + 60.days)
-      
+
       workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'))
       expect(workshop_price.last_scheduled_payment_date(start_day)).to eq start_day
     end

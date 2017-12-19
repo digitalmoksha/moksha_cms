@@ -10,7 +10,7 @@ class MailchimpNewsletter < Newsletter
 
   validate        :validate_list_id
   after_create    :update_list_stats
-  
+
   #------------------------------------------------------------------------------
   def self.signup_information(token, options = {})
     information = { newsletter: self.find_newsletter(token, options) }
@@ -33,10 +33,10 @@ class MailchimpNewsletter < Newsletter
       if !list_info['errors'].empty?
         errors[:mc_id] << (list_info['errors'][0]['error'])
       end
-    else  
+    else
       errors[:mc_id] << ("list id must be provided")
     end
-  end 
+  end
 
   # Retrieve list of groupings from Mailchimp
   #------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ class MailchimpNewsletter < Newsletter
       return []
     end
   end
-  
+
   # subscribe user or email to the newsletter
   # Setting the Accept-Language will cause MC to send the confirmation in the users
   # language if the list auto-translate is turned on
@@ -79,7 +79,7 @@ class MailchimpNewsletter < Newsletter
     end
     merge_vars[:SPAMAPI]      = 1
     merge_vars[:MC_LANGUAGE]  = I18n.locale  # set the language to the current locale they are using
-    api.lists.subscribe(id: self.mc_id, email: email, merge_vars: merge_vars, 
+    api.lists.subscribe(id: self.mc_id, email: email, merge_vars: merge_vars,
                         double_optin: true, update_existing: options[:update_existing], replace_interests: true,
                         headers: headers)
     return { success: true, code: 0 }
@@ -125,12 +125,12 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def sent_campaign_list(options = {start: 0, limit: 100})
     api                 = MailchimpNewsletter.api
-    list_params         = {sort_field: 'send_time', sort_dir: 'DESC', 
+    list_params         = {sort_field: 'send_time', sort_dir: 'DESC',
                           filters: {list_id: self.mc_id}}
     list_params[:start] = options[:start] ? options[:start] : 0
     list_params[:limit] = options[:limit] ? options[:limit] : 100
     list_params[:filters][:folder_id] = options[:folder_id] if options[:folder_id]
-      
+
     campaigns   = api.campaigns.list(list_params)
   end
 
@@ -139,7 +139,7 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def sent_campaign_list_simple(options = {start: 0, limit: 100})
     list      = sent_campaign_list(options)
-    campaigns = list['data'].map {|item| {subject:      item['subject'], 
+    campaigns = list['data'].map {|item| {subject:      item['subject'],
                                           sent_on:      item['send_time'].to_datetime,
                                           archive_url:  item['archive_url']} }
   end
@@ -150,12 +150,12 @@ class MailchimpNewsletter < Newsletter
     folder_list = api.folders.list(type: type)
     folder_list.sort! {|x, y| x['name'] <=> y['name']}
   end
-  
+
   #------------------------------------------------------------------------------
   def map_error_to_msg(code)
     return MAILCHIMP_ERRORS[code] ? "nms.#{MAILCHIMP_ERRORS[code]}" : 'nms.mc_unknown_error'
   end
-  
+
   # Grab an API object to work with
   #------------------------------------------------------------------------------
   def self.api
@@ -165,14 +165,14 @@ class MailchimpNewsletter < Newsletter
       nil
     end
   end
-  
+
   # is the email already subscribed to this list
   #------------------------------------------------------------------------------
   def email_subscribed?(email)
     subscriber = MailchimpNewsletterSubscriber.subscriber_info(self, email)
     return subscriber.present? && subscriber.subscribed?
   end
-  
+
   # Query the lists in MailChimp, and create / update what we have in the database.
   # If a list no longer exists, we will delete it and any attached information
   # Note: [todo] This function is currently not used.  Still determining if it's needed.
@@ -182,7 +182,7 @@ class MailchimpNewsletter < Newsletter
   #   newsletters = MailchimpNewsletter.all
   #   api         = MailchimpNewsletter.api
   #   lists       = api.lists.list
-  #   
+  #
   #   unless lists['data'].nil?
   #     lists['data'].each do |list|
   #       index = newsletters.find_index { |item| item.mc_id == list['id'] }
@@ -197,15 +197,15 @@ class MailchimpNewsletter < Newsletter
   #       else
   #         #--- create a new newsletter
   #         MailchimpNewsletter.create!(
-  #           name:               list['name'], 
+  #           name:               list['name'],
   #           mc_id:              list['id'],
   #           created_at:         list['date_created'])
   #       end
   #     end
-  # 
+  #
   #     #--- if any left, then mark them as deleted
   #     newsletters.each { |old_list| old_list.update_attribute(:deleted, true) }
-  #     
+  #
   #     #--- update the lists_synced_on time
   #     account = Account.current
   #     account.preferred_nms_lists_synced_on = Time.now
@@ -213,5 +213,5 @@ class MailchimpNewsletter < Newsletter
   #   end
   # rescue Gibbon::MailChimpError
   # end
-  
+
 end

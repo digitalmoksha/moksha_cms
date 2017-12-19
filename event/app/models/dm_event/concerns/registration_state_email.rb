@@ -5,7 +5,7 @@ module DmEvent
     module RegistrationStateEmail
       extend ActiveSupport::Concern
       include DmUtilities::DateHelper
-      
+
       included do
 
         #------------------------------------------------------------------------------
@@ -27,11 +27,11 @@ module DmEvent
             'end_time'            => format_time(workshop.ending_on),
             'date_range'          => format_date_range(workshop.starting_on, workshop.ending_on)
           }
-    
+
           return result
         end
 
-        # Send an email for state notification.  if send_email is false, just return 
+        # Send an email for state notification.  if send_email is false, just return
         # the content of the email
         #------------------------------------------------------------------------------
         def email_state_notification(state = aasm.current_state.to_s, send_email = true)
@@ -41,7 +41,7 @@ module DmEvent
               receipt_content = compile_email(state, system_email)
               if send_email
                 return RegistrationNotifyMailer.registration_notify(self, receipt_content[:content], receipt_content[:substitutions]).deliver_now
-              else 
+              else
                 return receipt_content[:content]
               end
             end
@@ -57,7 +57,7 @@ module DmEvent
           }
           substitutions['payment_details'] = Liquid::Template.parse(workshop_price.payment_details).render(substitutions) unless workshop_price.try(:payment_details).blank?
           substitutions['subject']         = Liquid::Template.parse(system_email.subject).render(substitutions)
-          
+
           template  = Liquid::Template.parse(system_email.body)
           content   = template.render(substitutions)
           return {:content => content, :substitutions => substitutions}

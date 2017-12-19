@@ -10,5 +10,5 @@ en:
     quiz_congratulations_2: "(or you can %{link})"
     quiz_congratulations_take_quiz_again: take the quiz again
     quiz_progress_status: "Completed %{num} out of %{total}"
-    
+
     subscription_required: Subscription Required

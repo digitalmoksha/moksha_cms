@@ -18,5 +18,5 @@ module DmCore::Admin::ApplicationHelper
     paths.flatten.each { |path| active ||= request.url.include?(path) }
     active ? 'active' : nil
   end
-  
+
 end

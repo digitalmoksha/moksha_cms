@@ -3,9 +3,9 @@
 #   Each page has a content type, such as a teaching (video/explanation) or quizz
 #------------------------------------------------------------------------------
 class LessonPage < ApplicationRecord
-  
+
   self.table_name         = 'lms_lesson_pages'
-  
+
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
   friendly_id             :model_slug, use: :scoped, scope: [:account_id, :lesson]
@@ -14,11 +14,11 @@ class LessonPage < ApplicationRecord
   belongs_to              :item, polymorphic: true, dependent: :destroy
 
   acts_as_commentable
-  
+
   include RankedModel
   ranks                   :row_order, with_same: :lesson_id
   default_scope           { where(account_id: Account.current.id).order(:row_order) }
-  
+
   scope :published,       -> { where(published: true) }
   scope :next,            lambda {|row_order, lesson_id| where("row_order > ? AND lesson_id = ?", row_order, lesson_id) }
   scope :previous,        lambda {|row_order, lesson_id| where("row_order < ? AND lesson_id = ?", row_order, lesson_id) }
@@ -27,7 +27,7 @@ class LessonPage < ApplicationRecord
   DmCore::Language.language_array.each do |lang|
     delegate                "title_#{lang}", "menutitle_#{lang}", to: :item
   end
-  
+
   validates_uniqueness_of :slug, scope: :lesson_id
   validates_length_of     :slug, maximum: 255
 
@@ -41,7 +41,7 @@ class LessonPage < ApplicationRecord
   def comments_allowed?
     true
   end
-  
+
   # Find the next/previous objects, based on the row_order.
   # if the next/previous page is not there, then look in the
   # next/previous lesson

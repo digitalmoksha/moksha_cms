@@ -38,7 +38,7 @@ class DmLms::LessonPagesController < DmLms::ApplicationController
         #--- reset the history, start fresh
         @practice_history.reset_history
       end
-    
+
       @study_items      = @practice_history.study_items.shuffle
       render 'show_quiz', layout: 'course_templates/quiz_with_sidebar'
     else
@@ -52,16 +52,16 @@ class DmLms::LessonPagesController < DmLms::ApplicationController
     @lesson_page  = LessonPage.friendly.find(params[:lesson_page_id])
     # @lesson_page.comments.create(:body => params[:body], :user_id => current_user.id)
     @lesson_page.comments.create(:body => params[:comment][:body], :user_id => current_user.id) if current_user && !params[:comment][:body].blank?
-    
+
     #--- give the object a chance to do something if necessary
     # @lesson_page.comment_notify(@comment) if @lesson_page.respond_to?(:comment_notify)
-    
+
     respond_to do |format|
       format.html { redirect_back(fallback_location: lesson_page_url(@lesson_page)) }
       format.json { head :ok }
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def ajax_delete_comment
     comment = Comment.destroy(params[:id])
@@ -71,7 +71,7 @@ class DmLms::LessonPagesController < DmLms::ApplicationController
       format.json { head :ok }
     end
   end
-  
+
 private
 
   #------------------------------------------------------------------------------

@@ -9,7 +9,7 @@ module DmCore::LiquidHelper
   # This assumes that the content is from a trusted source
   #------------------------------------------------------------------------------
   def liquidize_textile(content, arguments = {})
-    doc = RedCloth.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters], 
+    doc = RedCloth.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters],
                               registers: { controller: controller, view: self,
                                            account_site_assets: account_site_assets_url,
                                            account_site_assets_media: account_site_assets_media_url }))
@@ -21,8 +21,8 @@ module DmCore::LiquidHelper
   # This assumes that the content is from a trusted source
   #------------------------------------------------------------------------------
   def liquidize_markdown(content, arguments = {})
-    doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters], 
-                              registers: { controller: controller, view: self, 
+    doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters],
+                              registers: { controller: controller, view: self,
                                            account_site_assets: account_site_assets_url,
                                            account_site_assets_media: account_site_assets_media_url }),
                               parse_block_html: true)
@@ -32,8 +32,8 @@ module DmCore::LiquidHelper
   # This assumes that the content is from a trusted source
   #------------------------------------------------------------------------------
   def liquidize_html(content, arguments = {})
-    doc = Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters], 
-                              registers: { controller: controller, view: self, 
+    doc = Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters],
+                              registers: { controller: controller, view: self,
                                            account_site_assets: account_site_assets_url,
                                            account_site_assets_media: account_site_assets_media_url })
     return doc.html_safe
@@ -53,9 +53,9 @@ module DmCore::LiquidHelper
     # for safety, use :basic or lower
     return options[:safe] ? sanitize_text(html, level: :basic).html_safe : html
   end
-  
-  # Uses Sanitize gem to fully sanitize any text.  
-  # Note: Default setting will make any markdown source (like user comments, etc) 
+
+  # Uses Sanitize gem to fully sanitize any text.
+  # Note: Default setting will make any markdown source (like user comments, etc)
   # safe for sending out in emails
   #------------------------------------------------------------------------------
   def sanitize_text(content, options = {level: :default})
@@ -67,13 +67,13 @@ module DmCore::LiquidHelper
       # Allows only very simple inline formatting markup. No links, images, or block elements.
       Sanitize.clean(content, Sanitize::Config::RESTRICTED)
     when :basic
-      # Allows a variety of markup including formatting tags, links, and lists. 
-      # Images and tables are not allowed, links are limited to FTP, HTTP, HTTPS, and 
+      # Allows a variety of markup including formatting tags, links, and lists.
+      # Images and tables are not allowed, links are limited to FTP, HTTP, HTTPS, and
       # mailto protocols, and a rel="nofollow" attribute is added to all links to
       # mitigate SEO spam.
       Sanitize.clean(content, Sanitize::Config::BASIC)
     when :relaxed
-      # Allows an even wider variety of markup than BASIC, including images and tables. 
+      # Allows an even wider variety of markup than BASIC, including images and tables.
       # Links are still limited to FTP, HTTP, HTTPS, and mailto protocols, while images
       # are limited to HTTP and HTTPS. In this mode, rel="nofollow" is not added to links.
       Sanitize.clean(content, Sanitize::Config::RELAXED)

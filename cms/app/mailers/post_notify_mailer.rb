@@ -1,5 +1,5 @@
 class PostNotifyMailer < DmCore::SiteMailer
-  
+
   helper  DmCms::PostsHelper
   helper  DmCore::LiquidHelper
   helper  DmCore::UrlHelper

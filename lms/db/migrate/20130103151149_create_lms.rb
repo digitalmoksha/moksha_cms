@@ -8,7 +8,7 @@ class CreateLms < ActiveRecord::Migration[4.2]
       t.timestamps null: true
     end
     add_index :lms_courses, ["slug"], :name => "courseslug_key"
-    
+
     create_table :lms_course_translations do |t|
       t.integer       :course_id
       t.string        :locale
@@ -17,7 +17,7 @@ class CreateLms < ActiveRecord::Migration[4.2]
       t.timestamps null: true
     end
     add_index :lms_course_translations, ["course_id"], :name => "course_id_index"
-    
+
     create_table :lms_lessons do |t|
       t.integer       :course_id
       t.string        :slug,            :limit => 50, :default => "", :null => false

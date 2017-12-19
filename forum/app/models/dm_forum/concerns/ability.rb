@@ -24,7 +24,7 @@ module DmForum
           can(:read, Forum)   { |forum| forum.can_be_read_by?(user) }
           can(:reply, Forum)  { |forum| forum.can_be_replied_by?(user) }
           can :moderate, Forum, :id => Forum.published.with_role(:moderator, user).map(&:id)
-          
+
           #--- Comment
           can :edit, ForumComment, :user_id => user.id
         else

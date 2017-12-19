@@ -24,7 +24,7 @@
         <%= subsection do %>
           <div class="row">
             <div class="col-md-6">
-              <%= f.input :country_id, required: true, wrapper_html: { class: 'searchDrop' }, 
+              <%= f.input :country_id, required: true, wrapper_html: { class: 'searchDrop' },
                           collection: ut_country_select_collection, label_method: lambda {|t| t[0]}, value_method: lambda {|t| t[1]},
                           label: 'Country' %>
             </div>
@@ -49,7 +49,7 @@
           <%= f.input :require_review, as: :boolean, inline_label: 'Review Registrations', hint: 'All new registrations become "Pending", waiting for approval' %>
           <%= f.input :payments_enabled, as: :boolean, inline_label: 'Enable Payments', hint: 'Should payment processing be enabled?' %>
         <% end %>
-  
+
         <%= subsection do %>
           <%= f.input :funding_goal, label: 'Funding Goal', hint: 'Goal (in the currency above) of this funding project', input_html: {class: 'width_25_percent'} %>
         <% end %>
@@ -61,7 +61,7 @@
         <%= f.input :starting_on, label: 'Starting on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.starting_on, full_date: true) %>
         <%= f.input :ending_on, label: 'Ending on', as: :datetime_picker, required: true, input_wrapper_html: {class: 'col-sm-4'}, hint: format_datetime(@workshop.ending_on, full_date: true) %>
         <%= f.input :deadline_on, label: 'Deadline', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, hint: format_date(@workshop.deadline_on, full_date: true) %>
-        <%= f.input :initial_payment_required_on, label: 'Initial Payment Expected By', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'}, 
+        <%= f.input :initial_payment_required_on, label: 'Initial Payment Expected By', as: :date_picker, input_wrapper_html: {class: 'col-sm-4'},
                     hint: @workshop.initial_payment_required_on ? format_date(@workshop.initial_payment_required_on, full_date: true) : 'Leave blank to expect initial payment on date of registration' %>
       <% end %>
 

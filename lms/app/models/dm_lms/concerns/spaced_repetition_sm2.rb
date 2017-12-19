@@ -19,7 +19,7 @@ module DmLms
 
         #------------------------------------------------------------------------------
         def spaced_repetition(answer_quality, prev_interval = 0, prev_ef = 2.5)
-          #--- if answer_quality is below 2 start repetition from the begining, 
+          #--- if answer_quality is below 2 start repetition from the begining,
           # without changing easiness_factor
           if answer_quality < 2
             @efactor   = prev_ef
@@ -28,7 +28,7 @@ module DmLms
             @efactor   = calculate_easiness_factor(answer_quality, prev_ef)
             @interval  = calculate_interval(answer_quality, prev_interval, prev_ef)
           end
-        
+
           @due_on = calculate_date(@interval)
         end
 

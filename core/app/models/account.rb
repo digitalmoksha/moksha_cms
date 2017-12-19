@@ -7,7 +7,7 @@ class Account < ApplicationRecord
   end
   class LoginRequired < StandardError
   end
-  
+
   CURRENCY_TYPES    = { 'British Pound (&pound;)'.html_safe => 'GBP',
                         'Czech Koruna (&#x4B;&#x10D;)'.html_safe => 'CZK',
                         'Euro (&euro;)'.html_safe => 'EUR',
@@ -15,13 +15,13 @@ class Account < ApplicationRecord
                         'Japanese Yen (&yen;)'.html_safe => 'JPY',
                         'Swiss Franc (Fr)' => 'CHF',
                         'US Dollar ($)' => 'USD' }
-  
+
   self.table_name   = 'core_accounts'
 
   attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation, :media_validation
-  attr_accessor           :url_base, :url_host, :url_protocol  #--- stores the current base site url for this request. 
+  attr_accessor           :url_base, :url_host, :url_protocol  #--- stores the current base site url for this request.
                                                                #    useful to mailers where request object not available
-  
+
   validates_presence_of   :domain,                                      :if => Proc.new { |p| p.general_validation }
   validates_presence_of   :account_prefix,                              :if => Proc.new { |p| p.general_validation }
   validates_presence_of   :preferred_default_locale,                    :if => Proc.new { |p| p.general_validation }
@@ -34,7 +34,7 @@ class Account < ApplicationRecord
   validates_presence_of   :preferred_site_title,       :maximum => 255, :if => Proc.new { |p| p.metadata_validation }
   validates_length_of     :preferred_site_description, :maximum => 255, :if => Proc.new { |p| p.metadata_validation }
   validates_length_of     :preferred_site_keywords,    :maximum => 255, :if => Proc.new { |p| p.metadata_validation }
-   
+
   after_create            :create_default_roles
 
   preference              :ssl_enabled,                     :boolean, :default => false
@@ -43,7 +43,7 @@ class Account < ApplicationRecord
   preference              :site_enabled,                    :boolean, :default => false
   preference              :site_maintenance,                :boolean, :default => false
   preference              :google_analytics_tracker_id,     :string
-  
+
   #--- Site wide page settings
   preference              :site_title,                      :string
   preference              :site_keywords,                   :string
@@ -67,7 +67,7 @@ class Account < ApplicationRecord
   preference              :smtp_password,                   :string
   preference              :smtp_from_email,                 :string
   preference              :blog_from_email,                 :string
-                        
+
   #--- PayPal
   preference              :paypal_merchant_id,              :string
   preference              :paypal_cert_id,                  :string
@@ -87,7 +87,7 @@ class Account < ApplicationRecord
   preference              :nms_use_mailchimp,               :boolean, :default => false
   preference              :nms_api_key,                     :string
   preference              :nms_lists_synced_on,             :datetime
-  
+
   #--- Media libary preferences
   preference              :image_thumbnail_width,           :integer, default: 200
   preference              :image_small_width,               :integer, default: 300
@@ -97,7 +97,7 @@ class Account < ApplicationRecord
   #--- eager load all preferences when an object is found
   after_find              :preferences
   after_find              :set_default_values
-  
+
   # Find the account using the specified host (usually from the request url).
   # Check for certain special subdomains before lookup:
   #   dev, www, backoffice, staging, stg-
@@ -112,7 +112,7 @@ class Account < ApplicationRecord
     separated   = separated.delete_if { |x| x == 'dev' || x == 'www' || x == 'backoffice' || x =~ /stg-/ || x == 'staging' }
     domain      = self.find_by_domain(separated.join('.'))
     return domain if domain
-    
+
     if Account.count == 0
       raise Account::NotSetup.new
     else
@@ -120,7 +120,7 @@ class Account < ApplicationRecord
     end
   end
 
-  # Since we need the current account for the default scope in models, we need 
+  # Since we need the current account for the default scope in models, we need
   # this information easily available at the model level.
   # This is thread safe, as opposed to using a simple cattr_accessor.
   # But we must ensure the that thread info is nulled out after every request
@@ -129,24 +129,24 @@ class Account < ApplicationRecord
   def self.current=(account)
     Thread.current[:account] = account
   end
-  
+
   def self.current
     Thread.current[:account]
   end
-  
+
   # Set the current account by looking up the account prefix.  To be used when
   # operating outside a request, such as from the console
   #------------------------------------------------------------------------------
   def self.current_by_prefix(account_prefix)
     Account.current = Account.find_by_account_prefix(account_prefix)
   end
-  
+
   # Once an account is found, setup the default url_ values.
   #------------------------------------------------------------------------------
   def set_default_values
     set_url_parts(self.ssl_enabled? ? 'https://' : 'http://', self.domain)
   end
-  
+
   # set the protocol and host for the account's url.  During request processing,
   # this is usually called with the request.protocol and request.host_with_port
   #------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ class Account < ApplicationRecord
     self.url_protocol  = protocol
     self.url_host      = host
   end
-  
+
   #------------------------------------------------------------------------------
   def url_base
     self.url_protocol + self.url_host
@@ -165,7 +165,7 @@ class Account < ApplicationRecord
     Role.unscoped.create!(name: 'admin',   account_id: self.id)
     Role.unscoped.create!(name: 'beta',    account_id: self.id)
   end
-  
+
   #------------------------------------------------------------------------------
   def site_enabled?
     preferred_site_enabled?
@@ -175,7 +175,7 @@ class Account < ApplicationRecord
   def site_maintenance?
     preferred_site_maintenance?
   end
-  
+
   #------------------------------------------------------------------------------
   def ssl_enabled?
     preferred_ssl_enabled?
@@ -186,19 +186,19 @@ class Account < ApplicationRecord
   def verify_locale(locale)
     (site_locales.include? locale.to_s) ? locale : preferred_default_locale
   end
-  
+
   # Reutrn an array of locales used for the site.  Split on commas and whitespace
   #------------------------------------------------------------------------------
   def site_locales
     preferred_locales.split(/,\s*/)
   end
-  
+
   # take the root path and use the default locale
   #------------------------------------------------------------------------------
   def index_path
     "/#{preferred_default_locale}/index"
   end
-  
+
   #------------------------------------------------------------------------------
   def smtp_settings
     {
@@ -209,7 +209,7 @@ class Account < ApplicationRecord
       :password             => preferred_smtp_password
     }
   end
-  
+
   # Return the current theme's data structure.
   # parent: true    will give the parent theme's data
   # if no data exists, return an empty hash
@@ -221,13 +221,13 @@ class Account < ApplicationRecord
       ThemesForRails.config.themes_data(current_theme) || {}
     end
   end
-  
-  # Get the value of the specific theme option.  
+
+  # Get the value of the specific theme option.
   #------------------------------------------------------------------------------
   def theme_option(option_name)
     theme_data(parent: true).merge(theme_data)[option_name.to_s]
   end
-  
+
   # get the account's theme filesystem path
   #------------------------------------------------------------------------------
   def theme_path
@@ -239,7 +239,7 @@ class Account < ApplicationRecord
   def current_theme
     account_prefix
   end
-  
+
   # Get the name of the parent theme
   #------------------------------------------------------------------------------
   def parent_theme

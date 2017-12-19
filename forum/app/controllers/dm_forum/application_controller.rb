@@ -1,7 +1,7 @@
 # Subclass from main ApplicationController, which will subclass from DmCore
 #------------------------------------------------------------------------------
 class DmForum::ApplicationController < ::ApplicationController
-  include ApplicationHelper  
+  include ApplicationHelper
 
   #--- these are needed to support rendering layouts built for the CMS
   helper    DmCms::RenderHelper
@@ -14,7 +14,7 @@ class DmForum::ApplicationController < ::ApplicationController
   layout    'forum_templates/forum_list'
 
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
-  
+
 private
 
   #------------------------------------------------------------------------------

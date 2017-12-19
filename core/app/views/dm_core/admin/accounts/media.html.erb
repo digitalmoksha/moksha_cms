@@ -30,7 +30,7 @@
       <%= f.input :preferred_image_medium_width, label: 'Medium  max width', as: :integer, input_html: {size: 6, maxlength: 4, style: "width:75px;"} %>
       <%= f.input :preferred_image_large_width, label: 'Large  max width', as: :integer, input_html: {size: 6, maxlength: 4, style: "width:75px;"} %>
     <% end %>
-    
+
     <%= submit_or_cancel :cancel_url => dm_core.admin_account_analytics_path %>
 
   <% end %>

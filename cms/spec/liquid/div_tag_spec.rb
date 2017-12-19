@@ -16,7 +16,7 @@ describe Liquid::Div do
       doc = Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters])
       expect(doc).to eq '<div class="wide shadow" style="text: align-left" id="my_id"><h1>Test</h1></div>'
     end
-  end  
+  end
 
   describe 'markdown rendering' do
     it 'with no options' do

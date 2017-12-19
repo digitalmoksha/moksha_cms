@@ -3,7 +3,7 @@ class AddPagesRankedModel < ActiveRecord::Migration[4.2]
     add_column    :cms_pages,         :row_order,   :integer
     rename_column :cms_contentitems,  :position,  :row_order
 
-    #--- because of some duplications in the position column, need to 
+    #--- because of some duplications in the position column, need to
     #    create a more unique position value.  So add up the positions
     total = 0
     CmsPage.unscoped.order(:ancestry, :position).each do |page|
@@ -13,7 +13,7 @@ class AddPagesRankedModel < ActiveRecord::Migration[4.2]
     end
     remove_column :cms_pages,        :position
   end
-  
+
   def down
     remove_column :cms_pages,         :row_order
     add_columnn   :cms_pages,         :position, :integer

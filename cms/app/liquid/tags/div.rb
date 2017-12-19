@@ -10,7 +10,7 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def render(context)
-      @attributes.symbolize_keys!      
+      @attributes.symbolize_keys!
       @attributes[:markdown] = (@attributes[:markdown].as_boolean ? 1 : 0) if @attributes[:markdown]
 
       content = super
@@ -24,7 +24,7 @@ module Liquid
         category: 'structure',
         description: <<-END_OF_DESCRIPTION
 Outputs an HTML 'div' block.  You can specify id, class, and style.
-You can also specify the markdown modifier, such as 'markdown: 0', if you don't wish the contents to be 
+You can also specify the markdown modifier, such as 'markdown: 0', if you don't wish the contents to be
 processed by Markdown.
 
 ~~~
@@ -40,5 +40,5 @@ END_OF_DESCRIPTION
   end
 
   Template.register_tag('div', Div)
-  
+
 end

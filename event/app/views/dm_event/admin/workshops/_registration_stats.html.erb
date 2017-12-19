@@ -49,10 +49,10 @@
         <% workshop.registrations.number_of(:for_all_prices).each do |price_id, registration_count| %>
           <% if price_id %>
             <% price = WorkshopPrice.find_by_id(price_id ) %>
-            <%= slim_progress_bar(label: price.price_formatted, value: registration_count, color: 'success', 
+            <%= slim_progress_bar(label: price.price_formatted, value: registration_count, color: 'success',
                     percentage: registration_count.percent_of(num_attending), bottom_label: price.price_description) %>
           <% else %>
-            <%= slim_progress_bar(label: 'no pricing selected', value: registration_count, color: 'noshow', 
+            <%= slim_progress_bar(label: 'no pricing selected', value: registration_count, color: 'noshow',
                     percentage: registration_count.percent_of(num_attending), bottom_label: '') %>
           <% end %>
         <% end %>

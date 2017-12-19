@@ -4,7 +4,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   before_action :find_forum
   before_action :find_topic, :only => [:show, :edit, :update, :destroy]
   # before_action :admin_required, :only => [:edit, :update, :destroy]
-  # 
+  #
 
   layout    'forum_templates/forum_list'
 
@@ -18,7 +18,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
       end
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def show
     (session[:forum_topics] ||= {})[@forum_topic.id] = Time.now.utc if user_signed_in?
@@ -27,12 +27,12 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
     @forum_comment  = ForumComment.new
     @following      = user_signed_in? && current_user.following.follows?(@forum_topic)
   end
-  
+
   #------------------------------------------------------------------------------
   def new
     @forum_topic = @forum.forum_topics.new
   end
-  
+
   #------------------------------------------------------------------------------
   def create
     params[:forum_topic].delete(:forum_id)
@@ -45,11 +45,11 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
       render :action => :new
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def edit
   end
-  
+
   #------------------------------------------------------------------------------
   def update
     #current_user.revise @topic, params[:topic]
@@ -64,27 +64,27 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
       render :action => "edit"
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def destroy
     @forum_topic.destroy if is_admin?
     redirect_to @forum
   end
-  
+
   #------------------------------------------------------------------------------
   def toggle_follow
     @forum_topic  = @forum.forum_topics.find(params[:forum_topic_id])
     DmCore::ToggleFollowerService.new(current_user, @forum_topic).call
   end
-  
+
 protected
-  
+
   #------------------------------------------------------------------------------
   def find_forum
     @forum = Forum.find_by_slug!(params[:forum_id])
     authorize! :read, @forum
   end
-  
+
   #------------------------------------------------------------------------------
   def find_topic
     @forum_topic = @forum.forum_topics.find_by_slug!(params[:id])

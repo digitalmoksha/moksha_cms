@@ -18,7 +18,7 @@ class ForumNotificationMailer < DmCore::SiteMailer
       @comment_list   = comment_list
       @topic_link     = url_helpers.forum_forum_topic_url(topic.forum.slug, topic.slug, locale: I18n.locale, host: account.url_host)
       @forum_link     = url_helpers.forum_show_url(topic.forum.slug, locale: I18n.locale, host: account.url_host)
-    
+
       theme(account.account_prefix)
       headers = { "Return-Path" => account.preferred_smtp_from_email }
       mail( from: account.preferred_smtp_from_email,

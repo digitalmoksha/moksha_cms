@@ -1,5 +1,5 @@
 class DmCms::BlogsController < DmCms::ApplicationController
-  include ApplicationHelper  
+  include ApplicationHelper
 
   helper  DmCms::RenderHelper
   helper  DmCore::LiquidHelper
@@ -10,7 +10,7 @@ class DmCms::BlogsController < DmCms::ApplicationController
   before_action   :blog_lookup, :except =>  [:index, :toggle_follow]
 
   layout    'cms_templates/blog', :only => [:index, :show]
-  
+
   #------------------------------------------------------------------------------
   def index
     redirect_to(index_url) and return if CmsBlog.count == 0
@@ -18,7 +18,7 @@ class DmCms::BlogsController < DmCms::ApplicationController
     @posts        = CmsPost.where(cms_blog_id: @blogs.map(&:id)).includes(:cms_blog, :translations).published.order('published_on DESC').paginate page: page_number
     @recent_posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).includes(:cms_blog, :translations).published.order('published_on DESC').limit(5)
     content_for :page_title, I18n.t('cms.blog_header')
-    
+
     render action: :show
   end
 
@@ -36,7 +36,7 @@ class DmCms::BlogsController < DmCms::ApplicationController
     authorize! :read, @blog
     DmCore::ToggleFollowerService.new(current_user, @blog).call
   end
-  
+
 protected
 
   #------------------------------------------------------------------------------

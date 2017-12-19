@@ -3,7 +3,7 @@ require_relative Rails.root.join '../../../core/spec/concerns/public_private_sha
 
 describe CmsBlog do
   setup_account
-  
+
   it { is_expected.to validate_length_of(:slug).is_at_most(255) }
   it { is_expected.to validate_length_of(:header_image).is_at_most(255) }
   it { is_expected.to validate_length_of(:image_email_header).is_at_most(255) }
@@ -20,7 +20,7 @@ describe CmsBlog do
       expect(blog1.account_id).not_to eq blog2.account_id
       expect(blog1.slug).to eq blog2.slug
     end
-    
+
     #------------------------------------------------------------------------------
     it 'creates a unique auto-generated slug for blogs in the same account' do
       blog1 = create(:blog)
@@ -36,7 +36,7 @@ describe CmsBlog do
       expect(blog2).not_to be_valid
       expect(blog2.errors[:slug]).to include("has already been taken")
     end
-    
+
     #------------------------------------------------------------------------------
     it 'creates an auto-generated slug based on the title' do
       blog = create(:blog, slug: nil)
@@ -54,7 +54,7 @@ describe CmsBlog do
       blog1.update_attribute(:tag_list, 'one, two')
       expect(blog1.tag_list).to eq ['one', 'two']
     end
-    
+
     #------------------------------------------------------------------------------
     it 'all tags across blogs' do
       blog1.update_attribute(:tag_list, 'one, two')

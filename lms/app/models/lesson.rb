@@ -2,13 +2,13 @@
 #   Holds multiple lesson pages
 #------------------------------------------------------------------------------
 class Lesson < ApplicationRecord
-  
+
   self.table_name         = 'lms_lessons'
 
   # --- globalize
   translates              :title, :menutitle, :description, foreign_key: :lesson_id, fallbacks_for_empty_translations: true
   globalize_accessors     locales: I18n.available_locales
-  
+
   # --- FriendlyId
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
@@ -16,7 +16,7 @@ class Lesson < ApplicationRecord
 
   belongs_to              :course
   has_many                :lesson_pages, dependent: :destroy
-  
+
   include RankedModel
   ranks                   :row_order, with_same: :course_id
   default_scope           { where(account_id: Account.current.id).order(:row_order) }

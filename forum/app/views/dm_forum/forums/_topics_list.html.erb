@@ -17,7 +17,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;
     <span class='filter'>
       <i class="fa fa-th-large"></i>
-      <%= link_to((I18n.t 'fms.followed'), forum_show_path(@forum)+"?followed=true", :id => 'filter_link') %> 
+      <%= link_to((I18n.t 'fms.followed'), forum_show_path(@forum)+"?followed=true", :id => 'filter_link') %>
     </span>
   <% end %>
   </span>
@@ -45,7 +45,7 @@
           <% end %>
         </span>
         <div class="topic_info">
-          <span class="started_by"><%= I18n.t 'fms.started' %>:  
+          <span class="started_by"><%= I18n.t 'fms.started' %>:
             <span class="author"><%= forum_topic.user.display_name %></span>
           </span>
           <% if forum_topic.recent_comment %>
@@ -74,7 +74,7 @@
 if (history && history.replaceState) {
   if ($('filter_link')) $('filter_link').writeAttribute('data-remote');
   if ($$('.pagination')) {
-    $$('.pagination a').invoke('writeAttribute','data-remote'); 
+    $$('.pagination a').invoke('writeAttribute','data-remote');
     $$('.pagination a').invoke('observe', 'click', function(){
       <%= p = Hash.new
        p.update('page' => params[:page].to_i) if params[:page]

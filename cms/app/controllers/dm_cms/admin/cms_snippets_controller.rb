@@ -1,6 +1,6 @@
 class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
-  
+
   before_action   :find_snippet, except: [:index, :new, :create]
   before_action   :set_title
 
@@ -50,8 +50,8 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
   def update_fragment
     if @cms_snippet.update_attributes(cms_snippet_params)
       #@cms_page.merge!(@item.cms_page.get_page_render_values)
-      #respond_to do |format| 
-      #  format.js { render :action => :update_fragment } 
+      #respond_to do |format|
+      #  format.js { render :action => :update_fragment }
       #end
     end
   end

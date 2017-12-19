@@ -1,11 +1,11 @@
 class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   include DmCore::PermittedParams
-  
+
   skip_before_action  :template_setup
   before_action       :authorize_access
   before_action       :account_lookup, except: [:new_account, :create_account]
   before_action       :template_setup
-  
+
   #------------------------------------------------------------------------------
   def show
     redirect_to dm_core.admin_account_general_path(@account)
@@ -34,7 +34,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
       render action: :general
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def general
     if put_or_post?
@@ -105,7 +105,7 @@ protected
   def authorize_access
     unless is_admin?
       flash[:alert] = "Unauthorized Access!"
-      redirect_to current_account.index_path 
+      redirect_to current_account.index_path
     end
   end
 

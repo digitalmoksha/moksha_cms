@@ -19,7 +19,7 @@ class UserPresenter < BasePresenter
       'User'
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def last_access
     user.last_access_at.nil? ? colored_label('n/a', :warning) : "#{time_ago_in_words(user.last_access_at)} ago"
@@ -43,5 +43,5 @@ class UserPresenter < BasePresenter
     image_tag(avatar, width: size, class: options[:class] ? options[:class] : 'image')
   end
 
-  
+
 end

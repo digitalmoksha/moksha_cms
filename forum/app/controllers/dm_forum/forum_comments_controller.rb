@@ -1,7 +1,7 @@
 class DmForum::ForumCommentsController < DmForum::ApplicationController
   include DmForum::PermittedParams
   include ActionView::RecordIdentifier        # for the dom_id method
-  
+
   before_action :find_parents
   before_action :find_post, :only => [:edit, :update, :destroy]
 
@@ -32,7 +32,7 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
 
   #------------------------------------------------------------------------------
   def create
-    @forum_comment = ForumComment.create_comment(@forum_topic, params[:forum_comment][:body], current_user)    
+    @forum_comment = ForumComment.create_comment(@forum_topic, params[:forum_comment][:body], current_user)
     if @forum_comment.new_record?
       redirect_to forum_forum_topic_path(@forum, @forum_topic)
     else

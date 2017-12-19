@@ -22,7 +22,7 @@ gem 'themes_for_rails',     git: 'git://github.com/digitalmoksha/themes_for_rail
 gem 'aced_rails',           git: 'git://github.com/digitalmoksha/aced_rails.git'
 ```
 
-After running `bundle install`, run 
+After running `bundle install`, run
 
 ```
 rake dm_core:install:migrations

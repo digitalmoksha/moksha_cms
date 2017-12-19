@@ -28,7 +28,7 @@
 
 <div class="row">
   <div class="col-md-9">
-    <% if @current_page.content_page? %>    
+    <% if @current_page.content_page? %>
       <div id="drag_sort" class="admin_blog_list" data-update_url="<%= dm_cms.admin_cms_contentitem_sort_path %>">
         <% @current_page.cms_contentitems.each do |item| %>
           <% toolbar = render partial: 'content_toolbar', locals: { contentitem: item,  contentitem_list: @current_page.cms_contentitems } %>
@@ -70,7 +70,7 @@
       <% end %>
     <% end %>
   </div>
-  
+
   <div class="col-md-3">
     <% if @current_page.header_image.present? || @current_page.tag_list.count > 0 %>
       <% if @current_page.header_image.present? %>

@@ -1,11 +1,11 @@
-# Simple image tag - uses rails helper 
+# Simple image tag - uses rails helper
 #
 # {% image src : source_img, class : ccc, title : ttt, size : 16x16, width : www, height : hhh,
 #          alt : aaa, style : sss, id : iii, mouseover : mmm}
 #------------------------------------------------------------------------------
 module Liquid
   class Image < DmCore::LiquidTag
-    include ActionView::Helpers::TagHelper 
+    include ActionView::Helpers::TagHelper
     include ActionView::Helpers::AssetTagHelper
 
     #------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ module Liquid
       url = DmCms::MediaUrlService.call(src, version: version, protected: protect)
       image_tag(url, @attributes)
     end
-  
+
     #------------------------------------------------------------------------------
     def self.details
       { name: self.tag_name,
@@ -63,6 +63,6 @@ END_OF_DESCRIPTION
       }
     end
   end
-  
+
   Template.register_tag('image', Image)
 end

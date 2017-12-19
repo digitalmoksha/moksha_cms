@@ -7,7 +7,7 @@ require 'will_paginate/view_helpers/action_view'
 module WillPaginate
   class AdminThemeRenderer < WillPaginate::ActionView::LinkRenderer
     protected
-  
+
     def html_container(html)
       tag :div, tag(:ul, html, class: 'pagination'), container_attributes
     end

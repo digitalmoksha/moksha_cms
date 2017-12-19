@@ -676,28 +676,28 @@ table.accounting tr.section { border-top: 1px solid #666; }
 
 .ui-datepicker { z-index: 10 !important; }
 
-/*--- Headline info ---*/  
+/*--- Headline info ---*/
 
-.headline-info { 
-  margin: 0 0 16px 0; 
-  padding: 0; 
+.headline-info {
+  margin: 0 0 16px 0;
+  padding: 0;
   list-style: none;
 }
-.headline-info > li { 
-  float: left; 
-  display: block; 
-  color: #999; 
-  padding: 0 12px; 
-  font-size: 11px; 
+.headline-info > li {
+  float: left;
+  display: block;
+  color: #999;
+  padding: 0 12px;
+  font-size: 11px;
   border: none;
-  border-left: 1px solid #eee; 
+  border-left: 1px solid #eee;
 }
-.headline-info > li:first-child { 
-  padding-left: 0; 
-  border-left: 0; 
+.headline-info > li:first-child {
+  padding-left: 0;
+  border-left: 0;
 }
-.headline-info > li > a { 
-  font-weight: 600; 
+.headline-info > li > a {
+  font-weight: 600;
 }
 
 
@@ -741,14 +741,14 @@ table.accounting tr.section { border-top: 1px solid #666; }
 
 /*--- Drag/Sort ---*/
 
-.sort_handle { 
+.sort_handle {
   width: 20px;
   padding: 0;
   opacity: 0.4;
   color: black;
   cursor: row-resize;
 }
-.sort_handle:before { 
+.sort_handle:before {
   content: '\f0c9';
   font-family: FontAwesome;
   z-index: 2;
@@ -758,7 +758,7 @@ table.accounting tr.section { border-top: 1px solid #666; }
 
 .table th.sort_handle { padding: 0; }
 .table td.sort_handle { padding: 0; }
-.table td.sort_handle:before { 
+.table td.sort_handle:before {
   padding: 0;
   display: inline-block;
   margin-left: 4px;
@@ -867,19 +867,19 @@ dl .icon_link_right i {
   clear: both;
 }
 .text-stats li {
-  float: left; 
-  display: block; 
-  text-align: center; 
-  border-left: 1px solid #d0cfcf; 
-  font-weight: bold; 
+  float: left;
+  display: block;
+  text-align: center;
+  border-left: 1px solid #d0cfcf;
+  font-weight: bold;
   width: 69px;
 }
 .text-stats li:first-child { border-left: none; }
 .text-stats li span {
   display: block;
-  color: #959494; 
-  font-size: 11px; 
-  line-height: 14px; 
+  color: #959494;
+  font-size: 11px;
+  line-height: 14px;
   font-weight: normal;
 }
 

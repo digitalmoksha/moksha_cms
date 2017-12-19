@@ -1,6 +1,6 @@
 module Liquid
   class UrlProtected < DmCore::LiquidTag
-    include ActionView::Helpers::TagHelper 
+    include ActionView::Helpers::TagHelper
     include ActionView::Helpers::AssetTagHelper
     include DmCore::UrlHelper
     include DmCore::ParamsHelper
@@ -10,7 +10,7 @@ module Liquid
       url = DmCms::MediaUrlService.call(@attributes['src'], protected: true)
       return url.nil? ? '' : url
     end
-  
+
     def self.details
       { name: self.tag_name,
         summary: 'Returns url of a protected asset',
@@ -25,6 +25,6 @@ module Liquid
       }
     end
   end
-  
+
   Template.register_tag('url_protected', UrlProtected)
 end

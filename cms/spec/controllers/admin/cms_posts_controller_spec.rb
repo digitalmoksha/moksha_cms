@@ -3,7 +3,7 @@ require 'spec_helper'
 describe DmCms::Admin::CmsPostsController do
   routes { DmCms::Engine.routes }
   login_admin
-  
+
   #------------------------------------------------------------------------------
   it "verify using admin role" do
     expect(@current_user.is_admin?).to eq true
@@ -11,7 +11,7 @@ describe DmCms::Admin::CmsPostsController do
 
   describe 'GET #new' do
     let(:blog) { create(:blog) }
-    
+
     #------------------------------------------------------------------------------
     it "assigns a new Post to @post" do
       get :new, params: {cms_blog_id: blog, locale: :en}
@@ -27,7 +27,7 @@ describe DmCms::Admin::CmsPostsController do
   describe 'GET #edit' do
     let(:blog) { create(:blog) }
     let(:post) { blog.posts.create(attributes_for(:post)) }
-    
+
     #------------------------------------------------------------------------------
     it "assigns the requested post to @post" do
       get :edit, params: {cms_blog_id: blog, id: post, locale: :en}

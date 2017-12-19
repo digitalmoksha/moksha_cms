@@ -3,12 +3,12 @@
 #------------------------------------------------------------------------------
 class ForumPresenter < ForumCommonPresenter
   presents :forum
-  
+
   #------------------------------------------------------------------------------
   def visibility
     forum.visibility_to_s
   end
-  
+
   # #delegate :something, to: :course
-  # 
+  #
 end

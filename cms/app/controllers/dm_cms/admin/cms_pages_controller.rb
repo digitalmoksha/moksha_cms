@@ -1,7 +1,7 @@
 class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
   helper "dm_cms/cms_pages"
-  
+
   before_action   :current_page, :except => [:index, :file_tree, :expire_cache, :expire_cache_total]
 
   #------------------------------------------------------------------------------
@@ -11,7 +11,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     # @tree = CmsPage.arrange(order: :position)
     @tree = CmsPage.includes(:translations).arrange(order: :row_order)
   end
-  
+
   #------------------------------------------------------------------------------
   def new_page
     authorize! :manage_content, :all
@@ -72,7 +72,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
       redirect_to edit_admin_cms_page_url(new_page), :flash => { :notice => 'Duplicate page created.  Please customize it.' }
     end
   end
-  
+
   # Given a new parent_id and position, place item in proper place
   # Note that position comes in as 0-based, increment to make 1-based
   #------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     #--- this action will be called via ajax
     head :ok
   end
-  
+
   #------------------------------------------------------------------------------
   def destroy
     authorize! :manage_content, :all
@@ -100,8 +100,8 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     key_start = fragment_cache_key(Account.current.id)
     expire_fragment(%r{\A#{key_start}})
 
-    respond_to do |format| 
-      format.html { redirect_to({:action => :index}, :notice => 'Page Cache was cleared') } 
+    respond_to do |format|
+      format.html { redirect_to({:action => :index}, :notice => 'Page Cache was cleared') }
       format.js { head :ok }
     end
   end
@@ -112,8 +112,8 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   def expire_cache_total
     expire_fragment(%r{\S})
 
-    respond_to do |format| 
-      format.html { redirect_to({:action => :index}, :notice => 'Page Cache for all sites cleared') } 
+    respond_to do |format|
+      format.html { redirect_to({:action => :index}, :notice => 'Page Cache for all sites cleared') }
       format.js { head :ok }
     end
   end
@@ -150,7 +150,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   end
 
 protected
-  
+
   #------------------------------------------------------------------------------
   def current_page
     @current_page = CmsPage.friendly.find(params[:id])

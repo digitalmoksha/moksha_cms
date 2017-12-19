@@ -7,7 +7,7 @@ cs:
     subscription_updated: Vaše předplatné byl úspěšně aktualizován
     unsubscribe_successful: Váš e-mail byl odhlášen
     already_subscribed: Již Přihlášeno k odběru
-    
+
     #--- Mailchimp specific errors
     List_DoesNotExist: Uvedené v seznamu neexistuje
     List_AlreadySubscribed: Tento e-mail je již předplatné

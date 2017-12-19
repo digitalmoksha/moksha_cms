@@ -2,7 +2,7 @@
 class MediaFile < ApplicationRecord
 
   self.table_name = 'cms_media_files'
-  
+
   translates              :title, :description, fallbacks_for_empty_translations: true
   globalize_accessors     locales: I18n.available_locales
   acts_as_taggable
@@ -10,11 +10,11 @@ class MediaFile < ApplicationRecord
   belongs_to              :user
   default_scope           { where(account_id: Account.current.id) }
   validate                :validate_name_is_unique
-  
+
   #--- Using Carrierwave
   mount_uploader          :media, MediaUploader
   before_save             :prepare_attributes
-  
+
   #------------------------------------------------------------------------------
   def image?
     self.media_content_type.start_with? 'image'
@@ -24,19 +24,19 @@ class MediaFile < ApplicationRecord
   def pdf?
     self.media_content_type.end_with? 'pdf'
   end
-  
+
   #------------------------------------------------------------------------------
   def short_location(version = nil)
     filename = version ? self.media.versions[version].file.filename : self.media.file.filename
     folder.blank? ? filename : "#{folder}/#{filename}"
   end
-  
+
   # return a list of tags for all media objects
   #------------------------------------------------------------------------------
   def self.tag_list_all
     MediaFile.tag_counts_on(:tags).map(&:name).sort
   end
-  
+
   # Given a name in the form 'folder/filename.ext', grab the url with the correct version
   # Use 'version: :original' to allow the original version to be pulled
   #------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ class MediaFile < ApplicationRecord
     folder      = components[-2] || ''
     asset       = MediaFile.where(folder: folder, media: filename).first
   end
-  
+
 private
 
   #------------------------------------------------------------------------------
@@ -96,6 +96,6 @@ private
       self.tag_list.add(media.file.extension)
     end
   end
-  
+
 
 end

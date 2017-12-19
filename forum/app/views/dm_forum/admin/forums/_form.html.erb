@@ -7,7 +7,7 @@
     <%= link_to icons(:cancel), (@forum.new_record? ? admin_forum_category_path(@forum.forum_category) : admin_forum_path(@forum)), class: 'btn btn-xs btn-default' %>
   <% end %>
   <%= panel title: @title, toolbar: toolbar do %>
-    <%= f.input :name, required: true, autofocus: true %>  
+    <%= f.input :name, required: true, autofocus: true %>
     <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
     <%= f.input :description, as: :text, label: 'Description', input_html: { rows: 4, class: 'input-block-level' } %>
     <%= f.input :published, as: :toggle, label: 'Publish It?' %>

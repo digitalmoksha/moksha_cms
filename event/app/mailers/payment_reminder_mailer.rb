@@ -1,11 +1,11 @@
 class PaymentReminderMailer < DmCore::SiteMailer
-  
+
   helper  DmCore::LiquidHelper
   helper  DmCore::UrlHelper
   helper  DmCore::AccountHelper
 
   layout 'email_templates/dm_event_email_layout'
-  
+
   #------------------------------------------------------------------------------
   def payment_reminder(registration)
     account                     = registration.account

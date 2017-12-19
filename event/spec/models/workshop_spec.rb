@@ -3,7 +3,7 @@ DmCore.config.locales = [:en, :de]
 
 describe Workshop, :type => :model do
   setup_account
-  
+
   it { is_expected.to validate_length_of(:slug).is_at_most(255) }
   it { is_expected.to validate_length_of(:contact_email).is_at_most(60) }
   it { is_expected.to validate_length_of(:contact_phone).is_at_most(20) }
@@ -13,7 +13,7 @@ describe Workshop, :type => :model do
   it { is_expected.to validate_length_of(:title_en).is_at_most(255) }
 
   describe "workshop_prices" do
-    
+
     let(:workshop) { create(:workshop) }
 
     #------------------------------------------------------------------------------

@@ -50,7 +50,7 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
     # @subscriptions  = @newsletter.subscriptions
     @folder_list = @newsletter.folder_list
   end
-  
+
   #------------------------------------------------------------------------------
   def synchronize_lists
     if using_mailchimp?
@@ -60,14 +60,14 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
       redirect_to(admin_newsletters_url) and return
     end
   end
-  
+
 private
 
   #------------------------------------------------------------------------------
   def newsletter_lookup
     @newsletter = Newsletter.find(params[:id])
   end
-  
+
   # Protects certain actions from being run if we're using mailchimp integration
   #------------------------------------------------------------------------------
   def mailchimp_guard

@@ -1,5 +1,5 @@
 class DmCms::Admin::DashboardController < DmCms::Admin::AdminController
-  
+
   #------------------------------------------------------------------------------
   def widget_blog_comments
     @comment_day = params[:comment_day].to_i

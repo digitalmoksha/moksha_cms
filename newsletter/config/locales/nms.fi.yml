@@ -7,7 +7,7 @@ fi:
     subscription_updated: Tilauksesi on onnistuneesti päivitetty
     unsubscribe_successful: Viestisi on peruttu
     already_subscribed: Jo Tilatut
-    
+
     #--- Mailchimp specific errors
     List_DoesNotExist: Määriteltyä luetteloa ei ole olemassa
     List_AlreadySubscribed: Tämä viesti on jo tilattu

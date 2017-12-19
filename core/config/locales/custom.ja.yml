@@ -18,7 +18,7 @@ ja:
       hhmmpp: "%I:%M %p"
 
   english: "English"
-  
+
   core:
     next_page: "次のページ <i class='fa fa-angle-right'></i>"
     prev_page: "<i class='fa fa-angle-left'></i> 前のページ"
@@ -81,4 +81,3 @@ ja:
   email:
     salutation: "%{value} 様"
     thank_you: 宜しくお願い致します
-    

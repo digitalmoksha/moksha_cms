@@ -44,10 +44,10 @@
         Note: it's better to use a <em>slug</em> or <em>relative url</em> when possible".html_safe %>
         <hr>
         <%= f.input :preferred_open_in_new_window, as: :boolean, inline_label: 'Open page/url in a new window' %>
-        <%= f.input :preferred_divider, as: :boolean, inline_label: 'Show as a divider in menu', 
-                hint: 'Only use this when you need a divider shown in the auto-generated menus - no content will be displayed. 
+        <%= f.input :preferred_divider, as: :boolean, inline_label: 'Show as a divider in menu',
+                hint: 'Only use this when you need a divider shown in the auto-generated menus - no content will be displayed.
                 <em>This option may not be supported by your theme</em>'.html_safe %>
-        
+
         <% if false #--- disable this for now %>
           <%= f.input :menuimage, label: 'Menu Image' %>
         <% end %>
@@ -73,7 +73,7 @@
         <% end %>
       <% end %>
     </div>
-  
+
     <div class="col-md-4">
       <%= panel title: icon_label(:calendar, 'Publish') do %>
         <%= f.input :published, inline_label: 'Publish It?' %>

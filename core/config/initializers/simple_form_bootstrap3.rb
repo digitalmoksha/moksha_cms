@@ -6,7 +6,7 @@ SimpleForm.setup do |config|
   #------------------------------------------------------------------------------
   # Bootstrap 3 vertical form style
   #------------------------------------------------------------------------------
-  
+
   config.wrappers :bs3_vertical_form, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
@@ -33,7 +33,7 @@ SimpleForm.setup do |config|
   #     input.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   #   end
   # end
- 
+
   config.wrappers :bs3_vertical_file_input, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
@@ -72,7 +72,7 @@ SimpleForm.setup do |config|
     b.use :html5
     b.use :placeholder
     b.use :label, class: 'control-label'
-    
+
     b.wrapper tag: 'div', class: 'input-group' do |ba|
       ba.use :input
     end
@@ -83,7 +83,7 @@ SimpleForm.setup do |config|
   #------------------------------------------------------------------------------
   # Bootstrap 3 horizontal form style
   #------------------------------------------------------------------------------
-  
+
   config.wrappers :bs3_horizontal_form, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
@@ -145,7 +145,7 @@ SimpleForm.setup do |config|
     b.use :html5
     b.use :placeholder
     b.use :label, class: 'col-sm-2 control-label'
-    
+
     b.wrapper :input_wrapper, tag: 'div', class: 'col-sm-10' do |input|
       input.wrapper tag: 'div', class: 'input-group' do |append|
         append.use :input
@@ -159,7 +159,7 @@ SimpleForm.setup do |config|
   # Bootstrap 3 horizontal form style
   # version that allows you to specify the column sizes to use
   #------------------------------------------------------------------------------
-  
+
   # f.input :email, label_html: {class: 'col-sm-5'}, input_wrapper_html: {class: 'col-sm-6'}
   config.wrappers :bs3_horizontal_nosize, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
@@ -188,7 +188,7 @@ SimpleForm.setup do |config|
     end
   end
 
-   
+
   # Wrappers for forms and inputs using the Bootstrap toolkit.
   # Check the Bootstrap docs (http://getbootstrap.com)
   # to learn about the different styles for forms and inputs,

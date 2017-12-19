@@ -1,9 +1,9 @@
 class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
-  
+
   before_action   :blog_lookup,    :except =>  [:index, :new, :create]
   #before_action   :set_title
-  
+
   #------------------------------------------------------------------------------
   def index
     authorize! :access_content_section, :all
@@ -20,7 +20,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
   def create
     authorize! :manage_content, :all
     @blog = CmsBlog.new(cms_blog_params)
-    
+
     if @blog.save
       redirect_to admin_cms_blog_url(@blog), notice: 'Blog was successfully created.'
     else
@@ -42,7 +42,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
       render action: :edit
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def show
     authorize! :manage_content, @blog
@@ -54,7 +54,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
     @blog.destroy
     redirect_to admin_cms_blogs_url
   end
-  
+
   #------------------------------------------------------------------------------
   def sort
     if can? :manage_content, :all
@@ -72,7 +72,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
       format.json { render json: BlogUserDatatable.new(view_context, @blog) }
     end
   end
-  
+
   # Add user(s) to blog
   # => user_id: add a single user
   #------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
       redirect_to admin_cms_blog_url(@blog), alert: "Incorrect parameters supplied"
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def blog_delete_member
     authorize! :manage_content, @blog

@@ -1,7 +1,7 @@
 # Bootstrap 3 helper functions
 #------------------------------------------------------------------------------
 module DmAdmin::Bootstrap3Helper
-  
+
   # Panel: outputs a panel structure
   #   body:     set to false to not wrap in a panel-body class
   #   id:       an id for the panel
@@ -37,7 +37,7 @@ module DmAdmin::Bootstrap3Helper
       concat(content_tag :div, options[:toolbar], class: 'panel_toolbar pull-right') if options[:toolbar].present?
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def panel_body(options = {}, &block)
     content = with_output_buffer(&block)
@@ -48,7 +48,7 @@ module DmAdmin::Bootstrap3Helper
   def page_header(options = {}, &block)
     content   = block_given? ? capture(&block) : ''
     sub_title = options[:subtitle].present? ? content_tag(:small, options[:subtitle]) : ''
-    
+
     content_tag(:div, class: 'page-header') do
       concat(content)
       concat(content_tag :h3, "#{options[:title]} #{sub_title}".html_safe)
@@ -58,7 +58,7 @@ module DmAdmin::Bootstrap3Helper
   #------------------------------------------------------------------------------
   def page_header_buttons(options = {}, &block)
     content = capture(&block)
-    
+
     buttons = content_tag(:div, class: 'header-buttons pull-right') do
       content_tag(:div, id: 'header-buttons') do
         content_tag(:div) do
@@ -155,7 +155,7 @@ module DmAdmin::Bootstrap3Helper
     options[:class] = "#{options[:class]} #{options[:icon_class]}" if options[:icon_class]
     options[:style] = "#{options[:style]} font-size:#{options[:size]}px;" if !options[:size].blank?
     options[:style] = "#{options[:style]} color:#{options[:color]}" if !options[:color].blank?
-    
+
     content_tag(:i, '', options )
   end
 
@@ -218,9 +218,9 @@ module DmAdmin::Bootstrap3Helper
     options[:include_save]    = options[:include_save].nil? ? false : options[:include_save]
     options[:delete_url]    ||= nil
     options[:delete_msg]    ||= 'Are you sure you want to DELETE this?'
-    
+
     content = with_output_buffer(&block)
     render :partial => 'dm_admin/shared/modal_dialog', :locals => { :options => options, :content => content }
-  end  
+  end
 
 end

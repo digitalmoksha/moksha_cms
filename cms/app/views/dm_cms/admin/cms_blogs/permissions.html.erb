@@ -6,7 +6,7 @@
     <%= panel body: false, title: "Permissions" do %>
       <div class="panel-body">
         <p>The users below can be granted access to this particular blog.</p>
-  
+
         <% @content_managers_alacarte.each do |user| %>
           <div class="row">
             <div class="col-md-12">
@@ -24,7 +24,7 @@
   <div class="col-md-4">
     <%= subsection title: 'Content Managers' do %>
         <p>Current users that can fully manage blogs</p>
-  
+
       <table class="table table-bordered table-condensed table-striped">
         <tbody>
           <% @content_managers.each do |user| %>

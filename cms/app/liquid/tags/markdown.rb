@@ -1,7 +1,7 @@
 module Liquid
   class Markdown < DmCore::LiquidBlock
     include DmCore::LiquidHelper
-    
+
     #------------------------------------------------------------------------------
     def render(context)
       markdown(super, safe: false)
@@ -26,5 +26,5 @@ END_OF_DESCRIPTION
   end
 
   Template.register_tag('markdown', Markdown)
-  
+
 end

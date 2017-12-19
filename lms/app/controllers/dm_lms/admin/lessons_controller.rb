@@ -3,7 +3,7 @@ class DmLms::Admin::LessonsController < DmLms::Admin::AdminController
 
   before_action   :course_lookup, :only =>    [:new, :create]
   before_action   :lesson_lookup, :except =>  [:new, :create]
-  
+
   # GET /admin/lessons/1, GET /admin/lessons/1.json
   #------------------------------------------------------------------------------
   def show
@@ -69,7 +69,7 @@ class DmLms::Admin::LessonsController < DmLms::Admin::AdminController
       format.json { head :no_content }
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def sort
     @lesson.update_attribute(:row_order_position, params[:item][:row_order_position])

@@ -45,7 +45,7 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
       end
     end
   end
-  
+
   #------------------------------------------------------------------------------
   def destroy
     @comment.destroy if can?(:manage, :all) #|| comment.user == current_user

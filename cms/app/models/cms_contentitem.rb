@@ -13,18 +13,18 @@ class CmsContentitem < ApplicationRecord
   include RankedModel
   ranks                 :row_order, with_same: [:account_id, :cms_page_id]
   default_scope         { where(account_id: Account.current.id) }
-  
+
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates            :content, fallbacks_for_empty_translations: true
   globalize_accessors   locales: I18n.available_locales
 
   # --- versioning - skip anything translated
   has_paper_trail       skip: :content
-  
+
   amoeba do
     enable
   end
-  # --- validations 
+  # --- validations
   validates_presence_of :itemtype,          :container
   validates_length_of   :itemtype,          maximum: 30
   validates_length_of   :container,         maximum: 30
@@ -39,7 +39,7 @@ class CmsContentitem < ApplicationRecord
     @original_updated_on || self.updated_on.to_f
   end
   attr_writer :original_updated_on
-  
+
   # Try to see if the record has been changed by someone while being edited by someone
   # else.  If original_updated_on is not set, then don't check - allows acts_as_list
   # methods to update without causing a problem.
@@ -61,7 +61,7 @@ class CmsContentitem < ApplicationRecord
   def to_liquid
     cms_page.to_liquid
   end
-  
+
   #------------------------------------------------------------------------------
   def deep_clone(new_cms_page_id)
     new_cms_contentitem                  = self.clone

@@ -4,14 +4,14 @@ class DmCms::PagesController < DmCms::ApplicationController
   include DmCore::LiquidHelper
   helper DmCms::RenderHelper
   helper DmCore::LiquidHelper
-  
+
   #------------------------------------------------------------------------------
   def show
     respond_to do |format|
-      format.html { 
+      format.html {
         #--- make sure we have a valid locale for this site set
         DmCore::Language.locale = current_account.verify_locale(params[:locale])
-    
+
         #--- find the requested page, and if not found try to find the 'missing' page
         @current_page = CmsPage.friendly.find_by_slug(params[:slug])
         if @current_page.nil? || !can?(:read, @current_page)
@@ -43,8 +43,8 @@ class DmCms::PagesController < DmCms::ApplicationController
     end
 
   end
-  
-  # Basically empty, as well as the view.  But gets rendered by dm_core when the 
+
+  # Basically empty, as well as the view.  But gets rendered by dm_core when the
   # site is disabled
   #------------------------------------------------------------------------------
   def coming_soon
