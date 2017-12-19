@@ -7,9 +7,9 @@ describe User do
   it "creates a new instance given a valid attribute" do
     user = create(:user)
     expect(user.class).to eq User
-    expect(FactoryGirl.build(:user)).to be_valid
+    expect(FactoryBot.build(:user)).to be_valid
   end
-  
+
   #------------------------------------------------------------------------------
   it "requires an email address" do
     no_email_user = build(:user, email: "")

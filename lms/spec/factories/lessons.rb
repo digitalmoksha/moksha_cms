@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :lesson, class: Lesson do
     slug            'lesson-1'
     title           'Lesson 1'
     association     :course
-    
+
     factory :lesson_2 do
       slug          'lesson-2'
       title         'Lesson 2'

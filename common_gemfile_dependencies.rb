@@ -21,7 +21,7 @@ group :development, :test do
 
   gem 'mocha', '~> 1.2', :require => false
   gem 'rspec-rails', '~> 3.5'
-  gem 'factory_girl_rails', '~> 4.8'
+  gem 'factory_bot_rails', '~> 4.8'
 end
 
 group :test do

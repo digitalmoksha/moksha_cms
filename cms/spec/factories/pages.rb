@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :page, class: CmsPage do
     slug            'test-page'
@@ -6,7 +6,7 @@ FactoryGirl.define do
     template        'index'
     published       true
     requires_login  false
-    
+
     factory :page_internal_pagelink do
       slug          'test-pagelink'
       link          'test-page'    # redirects to another page

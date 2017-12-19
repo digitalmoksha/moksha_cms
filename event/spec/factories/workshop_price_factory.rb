@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-FactoryGirl.define do
+FactoryBot.define do
   factory :workshop_price do
     price_description "Sample Price"
     price_cents       50000

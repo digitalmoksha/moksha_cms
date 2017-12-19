@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :forum_site, class: ForumSite do
     enabled true

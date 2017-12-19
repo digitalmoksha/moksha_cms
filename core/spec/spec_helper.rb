@@ -22,8 +22,8 @@ require "validates_email_format_of/rspec_matcher"
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
 Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
 
-FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
-FactoryGirl.find_definitions
+FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.find_definitions
 
 RSpec.configure do |config|
   config.color = true
@@ -42,7 +42,7 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   # Clean out the database state before the tests run
   config.before(:suite) do

@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :blog, class: CmsBlog do
     # let the slug get auto-generated
     title                   'Test Blog'
     published               true
-    
+
     factory :news_blog do
       slug          'news-blog'
       title         'News Blog'

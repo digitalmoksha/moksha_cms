@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-FactoryGirl.define do
+FactoryBot.define do
   factory :registration do
     amount_paid_cents     0
     amount_paid_currency  'EUR'

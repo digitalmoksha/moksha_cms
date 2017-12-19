@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :teaching, class: Teaching do
     title           'Teaching 1'

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :blog, class: CmsBlog do
     slug            'test-blog'

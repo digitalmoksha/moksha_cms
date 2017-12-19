@@ -1,12 +1,12 @@
 require 'faker'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     email           { Faker::Internet.email }
     password        "something"
     confirmed_at    Time.now
     user_profile
-    
+
     factory :admin_user do
       email           'admin@example.com'
       password        'something_admin'

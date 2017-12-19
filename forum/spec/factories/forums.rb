@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :forum, class: Forum do
     # let the slug get auto-generated

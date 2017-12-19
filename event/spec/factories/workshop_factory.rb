@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :workshop do
     title_en        'Test Workshop'
     description_en  'This is a test workshop'

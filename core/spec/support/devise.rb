@@ -11,8 +11,8 @@ module LoginMacros
     before :each do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       @request.host   = TEST_DOMAIN   # domain must match the account being used
-      Account.current = FactoryGirl.create(:account)
-      @current_user   = FactoryGirl.create(:admin_user)
+      Account.current = FactoryBot.create(:account)
+      @current_user   = FactoryBot.create(:admin_user)
       sign_in @current_user
     end
   end
@@ -22,8 +22,8 @@ module LoginMacros
     before :each do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       @request.host   = TEST_DOMAIN   # domain must match the account being used
-      Account.current = FactoryGirl.create(:account)
-      @current_user   = FactoryGirl.create(:user)
+      Account.current = FactoryBot.create(:account)
+      @current_user   = FactoryBot.create(:user)
       sign_in @current_user
     end
   end
@@ -32,7 +32,7 @@ module LoginMacros
   def no_user
     before :each do
       @request.host   = TEST_DOMAIN   # domain must match the account being used
-      Account.current = FactoryGirl.create(:account)
+      Account.current = FactoryBot.create(:account)
     end
   end
 
