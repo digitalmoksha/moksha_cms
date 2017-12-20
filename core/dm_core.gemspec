@@ -56,7 +56,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'activemerchant', '~> 1.63.0'  #--| here (instead of dm_event) because
   s.add_dependency 'offsite_payments', '~> 2.2'   #--| of PaymentHistory model
 
-  s.add_dependency 'acts-as-taggable-on', '~> 4.0'
+  s.add_dependency 'acts-as-taggable-on', '~> 5.0'
   s.add_dependency 'kramdown', "~> 1.9"
   s.add_dependency "RedCloth", "~> 4.3"
   s.add_dependency "rolify", "~> 5.0"           # User Roles
