@@ -114,37 +114,15 @@ module DmEvent
         def manual_payment(payment_history, cost, total_currency, user_profile,
                            options = { item_ref: '', payment_method: 'cash', bill_to_name: '', payment_date: Time.now,
                                        notify_data: nil, transaction_id: nil, status: '' } )
-          amount            = Monetize.parse(cost, total_currency)
+          amount = Monetize.parse(cost, total_currency)
 
           if payment_history
             new_amount_paid = self.amount_paid - self.workshop_price.to_base_currency(payment_history.total) + self.workshop_price.to_base_currency(amount)
-            payment_history.update_attributes(
-              item_ref: options[:item_ref],
-              cost: cost,
-              total_cents: amount.cents,
-              total_currency: amount.currency.iso_code,
-              payment_method: options[:payment_method],
-              bill_to_name: options[:bill_to_name],
-              payment_date: options[:payment_date],
-              user_profile_id: user_profile.id)
+            DmCore::PaymentHistories::UpdateService.call(payment_history, amount, user_profile, options)
           else
             new_amount_paid = self.amount_paid + self.workshop_price.to_base_currency(amount)
-            payment_history   = self.payment_histories.create(
-                anchor_id: receipt_code,
-                item_ref: options[:item_ref],
-                cost: cost,
-                quantity: 1,
-                discount: 0,
-                total_cents: amount.cents,
-                total_currency: amount.currency.iso_code,
-                payment_method: options[:payment_method],
-                bill_to_name: options[:bill_to_name],
-                payment_date: options[:payment_date],
-                user_profile_id: (user_profile ? user_profile.id : nil),
-                notify_data: options[:notify_data],
-                transaction_id: options[:transaction_id],
-                status: (user_profile ? "Completed" : options[:status])
-            )
+            payment_history = DmCore::PaymentHistories::CreateService.call(receipt_code, amount, user_profile, options)
+            self.payment_histories << payment_history
           end
 
           if payment_history.errors.empty?
