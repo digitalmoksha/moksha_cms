@@ -1,4 +1,12 @@
 cs:
+  language:
+    general: Jazyk
+    en: Anglicky
+    de: Německy
+    cs: Česky
+    ja: Japonsky
+    fi: Finnish
+
   date:
     formats:
       ddyy: "%d, %Y"
