@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'rails', '>= 4.2', '< 5.1'
+  s.add_dependency 'rails-i18n', '>= 4.2', '< 5.1'
   s.add_dependency 'dm_ruby_extensions', '~> 1.0'
   s.add_dependency 'dm_preferences', '~> 1.5'
   s.add_dependency 'actionview-encoded_mail_to', '~> 1.0'

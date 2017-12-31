@@ -1,5 +1,6 @@
 require 'csv'
 
+require 'rails-i18n'
 require 'preferences'
 require 'devise'
 require 'recaptcha/rails'
