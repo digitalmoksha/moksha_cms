@@ -3,34 +3,42 @@ cs:
     count_forums:
       zero: "žádná fóra"
       one: "1 fórum"
+      few: "%{num} fór"
       other: "%{num} fór"
     count_users:
       zero: "žádní uživatelé"
       one: "1 uživatel"
+      few: "%{num} uživatelů"
       other: "%{num} uživatelů"
     count_users_active:
       zero: "žádní aktivní uživatelé"
       one: "1 aktivní uživatel"
+      few: "%{num} aktivních uživatelů"
       other: "%{num} aktivních uživatelů"
     count_users_lurking:
       zero: "žádní skrytí uživatelé"
       one: "1 skrytý uživatel"
+      few: "%{num} skrytých uživatelů"
       other: "%{num} skrytých uživatelů"
     count_voices:
       zero: "žádný hlas"
       one: "1 hlas"
+      few: "%{num} hlasů"
       other: "%{num} hlasů"
     count_topics:
       zero: "žádné téma"
       one: "1 téma"
+      few: "%{num} témat"
       other: "%{num} témat"
     count_comments:
       zero: "žádný komentář"
       one: "1 komentář"
+      few: "%{num} komentářů"
       other: "%{num} komentářů"
     count_comments_found:
       zero: "žádný komentář nenalezen"
       one: "nalezen 1 komentář"
+      few: "%{count} komentářů nalezeno"
       other: "%{count} komentářů nalezeno"
     comment_age: "komentováno před %{when}"
     user_is_administrator: Administrátor

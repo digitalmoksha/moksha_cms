@@ -3,34 +3,42 @@ fi:
     count_forums:
       zero: "ei foorumia"
       one: "1 foorumi"
+      few: "%{num} foorumia"
       other: "%{num} foorumia"
     count_users:
       zero: "ei käyttäjiä"
       one: "1 käyttäjä"
+      few: "%{num} käyttäjää"
       other: "%{num} käyttäjää"
     count_users_active:
       zero: "ei aktiivisia käyttäjiä"
       one: "1 aktiivinen käyttäjä"
+      few: "%{num} aktiivista käyttäjää"
       other: "%{num} aktiivista käyttäjää"
     count_users_lurking:
       zero: "ei piileviä käyttäjiä"
       one: "1 piilevä käyttäjä"
+      few: "%{num} piileviä käyttäjiä"
       other: "%{num} piileviä käyttäjiä"
     count_voices:
       zero: "ei ääniä"
       one: "1 ääni"
+      few: "%{num} ääntä"
       other: "%{num} ääntä"
     count_topics:
       zero: "ei aiheita"
       one: "1 aihe"
+      few: "%{num} aihetta"
       other: "%{num} aihetta"
     count_comments:
       zero: "ei kommentteja"
       one: "1 kommentti"
+      few: "%{num} kommenttia"
       other: "%{num} kommenttia"
     count_comments_found:
       zero: "ei löydetty kommentteja"
       one: "1 kommentti löydetty"
+      few: "%{count} kommenttia löydetty"
       other: "%{count} kommenttia löydetty"
     comment_age: "kommentoitu %{when} sitten"
     user_is_administrator: Ylläpitäjä

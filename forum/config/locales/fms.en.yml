@@ -3,34 +3,42 @@ en:
     count_forums:
       zero: "no forum"
       one: "1 forum"
+      few: "%{num} forums"
       other: "%{num} forums"
     count_users:
       zero: "no users"
       one: "1 user"
+      few: "%{num} users"
       other: "%{num} users"
     count_users_active:
       zero: "no active users"
       one: "1 active user"
+      few: "%{num} active users"
       other: "%{num} active users"
     count_users_lurking:
       zero: "no lurking users"
       one: "1 lurking user"
+      few: "%{num} lurking users"
       other: "%{num} lurking users"
     count_voices:
       zero: "no voices"
       one: "1 voice"
+      few: "%{num} voices"
       other: "%{num} voices"
     count_topics:
       zero: "no topics"
       one: "1 topic"
+      few: "%{num} topics"
       other: "%{num} topics"
     count_comments:
       zero: "no comments"
       one: "1 comment"
+      few: "%{num} comments"
       other: "%{num} comments"
     count_comments_found:
       zero: "no comments found"
       one: "1 comment found"
+      few: "%{count} comments found"
       other: "%{count} comments found"
     comment_age: "commented %{when} ago"
     user_is_administrator: Administrator
