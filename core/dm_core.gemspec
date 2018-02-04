@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   # TODO s.add_dependency 'aasm', '~> 4.12'          # [todo] v4.x requires changes
   s.add_dependency 'money-rails', '~> 1'
   s.add_dependency 'globalize', '~> 5.1.0.beta1'        # translations in database
-  s.add_dependency 'exception_notification', '~> 4.2'
+  s.add_dependency 'exception_notification'
   s.add_dependency 'biggs', "~> 0.3.3"            # address formatting
   s.add_dependency 'codemirror-rails', '~> 5.16'
   s.add_dependency 'mini_magick', '~> 4.7'
