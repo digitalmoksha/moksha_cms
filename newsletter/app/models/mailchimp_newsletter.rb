@@ -4,6 +4,7 @@
 class MailchimpNewsletter < Newsletter
 
   MAILCHIMP_ERRORS = {  200 => 'List_DoesNotExist',
+                        212 => 'Email_WasRemoved',
                         214 => 'List_AlreadySubscribed',
                         232 => 'Email_NotExists'
                      }.freeze
@@ -84,7 +85,7 @@ class MailchimpNewsletter < Newsletter
                         headers: headers)
     return { success: true, code: 0 }
   rescue Gibbon::MailChimpError => exception
-    Rails.logger.info "=== Error Subscribing #{email} : #{exception.to_s}"
+    Rails.logger.info "=== Error Subscribing #{email} : code: #{exception.code} msg: #{exception.to_s}"
     return { success: false, code: exception.code }
   end
 

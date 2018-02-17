@@ -11,5 +11,6 @@ ja:
     #--- Mailchimp specific errors
     List_DoesNotExist: このリストは存在しません
     List_AlreadySubscribed: このeメールアドレスは既に購読登録されています
+    Email_WasRemoved: The specified email was previously removed, and cannot be resubscribed by the system. To prevent false spam complaints, you'll need to resubscribe of your own free will.
     Email_NotExists: このeメールアドレスは存在しません
     mc_unknown_error: 不明なMailchimpのエラーが起こりました
