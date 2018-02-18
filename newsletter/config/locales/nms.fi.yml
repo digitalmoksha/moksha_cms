@@ -13,4 +13,5 @@ fi:
     List_AlreadySubscribed: Tämä viesti on jo tilattu
     Email_WasRemoved: The specified email was previously removed, and cannot be resubscribed by the system. To prevent false spam complaints, you'll need to resubscribe of your own free will.
     Email_NotExists: Määriteltyä viestiä ei ole olemassa
+    Email_TooManySignups: This email has too many recent signup requests
     mc_unknown_error: Tuntematon mailchimp virhe

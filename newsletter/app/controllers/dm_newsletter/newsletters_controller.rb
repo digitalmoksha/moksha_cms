@@ -11,6 +11,7 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
 
     if @newsletter
       result = @newsletter.subscribe(user_or_email, subscription_params)
+
       respond_to do |format|
         if result[:success]
           msg = I18n.t('nms.subscription_successful')

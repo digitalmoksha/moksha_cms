@@ -6,7 +6,8 @@ class MailchimpNewsletter < Newsletter
   MAILCHIMP_ERRORS = {  200 => 'List_DoesNotExist',
                         212 => 'Email_WasRemoved',
                         214 => 'List_AlreadySubscribed',
-                        232 => 'Email_NotExists'
+                        232 => 'Email_NotExists',
+                        234 => 'Email_TooManySignups'
                      }.freeze
 
   validate        :validate_list_id
@@ -46,7 +47,7 @@ class MailchimpNewsletter < Newsletter
       api       = MailchimpNewsletter.api
       groupings = api.lists.interest_groupings(id: self.mc_id)
     rescue Gibbon::MailChimpError => exception
-      #--- groupings are not enabled for this list
+      # groupings are not enabled for this list
       return []
     end
   end
@@ -60,14 +61,14 @@ class MailchimpNewsletter < Newsletter
     api         = MailchimpNewsletter.api
     headers     = {'Accept-Language' => I18n.locale.to_s}
 
-    #--- update data if user logged in. Don't for an unprotected subscribe. but honor value if passed in
+    # update data if user logged in. Don't for an unprotected subscribe. but honor value if passed in
     options.reverse_merge!  update_existing: user_or_email.is_a?(User)
 
-    #--- remove any invalid merge vars or other options
+    # remove any invalid merge vars or other options
     merge_vars = options.except('new-email', :email, :optin_ip, :optin_time, :mc_location, :mc_notes,
                                 :update_existing, :mc_language, :headers)
 
-    #--- groupings needs to be an Array, but the form usually sends it as a Hash
+    # groupings needs to be an Array, but the form usually sends it as a Hash
     merge_vars['GROUPINGS'] = [merge_vars['GROUPINGS']] if merge_vars['GROUPINGS'] && !merge_vars['GROUPINGS'].is_a?(Array)
 
     if user_or_email.is_a?(User)
@@ -107,7 +108,7 @@ class MailchimpNewsletter < Newsletter
     api         = MailchimpNewsletter.api
     list_info   = api.lists.list(filters: {list_id: self.mc_id, exact: true})
 
-    #--- update the newsletter
+    # update the newsletter
     if list_info['errors'].empty?
       self.update_attributes(
         name:               list_info['data'][0]['name'],
@@ -116,7 +117,7 @@ class MailchimpNewsletter < Newsletter
         cleaned_count:      list_info['data'][0]['stats']['cleaned_count'],
         created_at:         list_info['data'][0]['date_created'])
     else
-      #--- looks like the list was deleted at MailChimp, mark as deleted
+      # looks like the list was deleted at MailChimp, mark as deleted
       self.update_attribute(:deleted, true)
     end
   end
@@ -188,7 +189,7 @@ class MailchimpNewsletter < Newsletter
   #     lists['data'].each do |list|
   #       index = newsletters.find_index { |item| item.mc_id == list['id'] }
   #       if index
-  #         #--- update the newsletter
+  #         # update the newsletter
   #         newsletters[index].update_attributes(
   #           name:               list['name'],
   #           subscribed_count:   list['stats']['member_count'],
@@ -196,7 +197,7 @@ class MailchimpNewsletter < Newsletter
   #           cleaned_count:      list['stats']['cleaned_count'])
   #         newsletters.delete_at(index)
   #       else
-  #         #--- create a new newsletter
+  #         # create a new newsletter
   #         MailchimpNewsletter.create!(
   #           name:               list['name'],
   #           mc_id:              list['id'],
@@ -204,10 +205,10 @@ class MailchimpNewsletter < Newsletter
   #       end
   #     end
   #
-  #     #--- if any left, then mark them as deleted
+  #     # if any left, then mark them as deleted
   #     newsletters.each { |old_list| old_list.update_attribute(:deleted, true) }
   #
-  #     #--- update the lists_synced_on time
+  #     # update the lists_synced_on time
   #     account = Account.current
   #     account.preferred_nms_lists_synced_on = Time.now
   #     account.save
