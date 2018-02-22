@@ -16,7 +16,7 @@ module MokshaCms
     class_option :enforce_available_locales, type: :boolean, default: nil
 
     def self.source_paths
-      paths = self.superclass.source_paths
+      paths = superclass.source_paths
       paths << File.expand_path('../templates', "../../#{__FILE__}")
       paths << File.expand_path('../templates', "../#{__FILE__}")
       paths << File.expand_path('../templates', __FILE__)
@@ -28,10 +28,10 @@ module MokshaCms
       @load_seed_data = options[:seed]
       @load_sample_data = options[:sample]
 
-      unless @run_migrations
-         @load_seed_data = false
-         @load_sample_data = false
-      end
+      return if @run_migrations
+
+      @load_seed_data = false
+      @load_sample_data = false
     end
 
     def add_files
@@ -39,7 +39,8 @@ module MokshaCms
     end
 
     def additional_tweaks
-      return unless File.exists? 'public/robots.txt'
+      return unless File.exist? 'public/robots.txt'
+
       append_file "public/robots.txt", <<-ROBOTS
 User-agent: *
 Disallow: /checkout
@@ -69,42 +70,6 @@ Disallow: /password
       #   template "vendor/assets/stylesheets/moksha_cms/backend/all.css"
       # end
     end
-
-    # def create_overrides_directory
-    #   empty_directory "app/overrides"
-    # end
-
-    # def configure_application
-    #   application <<-APP
-    #
-    # config.to_prepare do
-    #   # Load application's model / class decorators
-    #   Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
-    #     Rails.configuration.cache_classes ? require(c) : load(c)
-    #   end
-    #
-    #   # Load application's view overrides
-    #   Dir.glob(File.join(File.dirname(__FILE__), "../app/overrides/*.rb")) do |c|
-    #     Rails.configuration.cache_classes ? require(c) : load(c)
-    #   end
-    # end
-    #   APP
-    #
-    #   if !options[:enforce_available_locales].nil?
-    #     application <<-APP
-    # # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
-    # I18n.enforce_available_locales = #{options[:enforce_available_locales]}
-    #     APP
-    #   end
-    # end
-
-#     def include_seed_data
-#       append_file "db/seeds.rb", <<-SEEDS
-# \n
-# DmCore::Engine.load_seed if defined?(DmCore)
-# DmCms::Engine.load_seed if defined?(DmCms)
-#       SEEDS
-#     end
 
     def install_migrations
       say_status :copying, "migrations"
@@ -182,38 +147,38 @@ Disallow: /password
         dm_core_routes
       end
 
-      unless options[:quiet]
-        puts "*" * 50
-        puts "We added the following line to your application's config/routes.rb file:"
-        puts " "
-        puts "    mount Spree::Core::Engine, at: '/'"
-      end
+      return if options[:quiet]
+
+      puts "*" * 50
+      puts "We added the following line to your application's config/routes.rb file:"
+      puts " "
+      puts "    mount Spree::Core::Engine, at: '/'"
     end
 
     def complete
-      unless options[:quiet]
-        puts "*" * 50
-        puts "Spree has been installed successfully. You're all ready to go!"
-        puts " "
-        puts "Enjoy!"
-      end
+      return if options[:quiet]
+
+      puts "*" * 50
+      puts "Spree has been installed successfully. You're all ready to go!"
+      puts " "
+      puts "Enjoy!"
     end
 
     protected
 
     def javascript_exists?(script)
-      extensions = %w(.js.coffee .js.erb .js.coffee.erb .js)
+      extensions = %w[.js.coffee .js.erb .js.coffee.erb .js]
       file_exists?(extensions, script)
     end
 
     def stylesheet_exists?(stylesheet)
-      extensions = %w(.css.scss .css.erb .css.scss.erb .css)
+      extensions = %w[.css.scss .css.erb .css.scss.erb .css]
       file_exists?(extensions, stylesheet)
     end
 
     def file_exists?(extensions, filename)
       extensions.detect do |extension|
-        File.exists?("#{filename}#{extension}")
+        File.exist?("#{filename}#{extension}")
       end
     end
 

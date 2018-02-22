@@ -22,6 +22,11 @@ group :development, :test do
   gem 'mocha', '~> 1.2', :require => false
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_bot_rails', '~> 4.8'
+
+  gem 'rubocop', '~> 0.52.1'
+  gem 'rubocop-rspec', '~> 1.22.1'
+
+  gem 'gitlab-styles', require: false # use the GitLab rubocop styles
 end
 
 group :test do

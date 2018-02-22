@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'ancestry', "~> 2.2"
   s.add_dependency 'ranked-model', '~> 0.4.0'     # sort order for a list
   s.add_dependency 'amoeba', '~> 3.0'             # [todo] (see if still needed) for handling model duplicating
+  s.add_dependency 'unicode'                      # needed for babosa
   s.add_dependency 'babosa', '~> 1.0'             # for better unicode slug handling with friendly_id
   s.add_dependency 'aasm', '~> 3.3.1'          # [todo] v4.x requires changes
   # TODO s.add_dependency 'aasm', '~> 4.12'          # [todo] v4.x requires changes

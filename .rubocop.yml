@@ -1,0 +1,33 @@
+inherit_gem:
+  gitlab-styles:
+    - rubocop-default.yml
+
+# require: ./rubocop/rubocop
+
+AllCops:
+  TargetRailsVersion: 5.0
+  Exclude:
+    - '**/vendor/**/*'
+    - '**/node_modules/**/*'
+    - '**/db/**/*'
+    - '**/db/fixtures/**/*'
+    - '**/tmp/**/*'
+    - '**/bin/**/*'
+    - '**/generator_templates/**/*'
+    - '**/builds/**/*'
+  CacheRootDirectory: tmp
+
+# This cop checks whether some constant value isn't a
+# mutable literal (e.g. array or hash).
+Style/MutableConstant:
+  Enabled: true
+  Exclude:
+    - '**/db/migrate/**/*'
+
+# allow [:foo, :bar, :baz]
+Style/SymbolArray:
+  Enabled: false
+
+# allow ['Japan', 'Japan']
+Style/WordArray:
+  Enabled: false
