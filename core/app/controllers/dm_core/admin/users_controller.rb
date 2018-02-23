@@ -7,7 +7,7 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
   # GET /admin/users or GET /admin/users.json
   #------------------------------------------------------------------------------
   def index
-    #@users = User.paginate :page => params[:page], :per_page => 25
+    # @users = User.paginate :page => params[:page], :per_page => 25
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,4 +1,4 @@
-#Rails.application.routes.prepend do
+# Rails.application.routes.prepend do
 DmCore::Engine.routes.draw do
   get   '/protected_asset/*asset', controller: :protected_assets, action: :protected_asset, format: false, via: :get
   scope ':locale' do

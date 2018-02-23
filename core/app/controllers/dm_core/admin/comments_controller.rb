@@ -49,7 +49,7 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def destroy
-    @comment.destroy if can?(:manage, :all) #|| comment.user == current_user
+    @comment.destroy if can?(:manage, :all) # || comment.user == current_user
     respond_to do |format|
       format.html { redirect_back fallback_location: main_app.index_url }
       format.js

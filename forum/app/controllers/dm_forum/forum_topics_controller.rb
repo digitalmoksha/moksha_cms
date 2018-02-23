@@ -52,7 +52,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
 
   #------------------------------------------------------------------------------
   def update
-    #current_user.revise @topic, params[:topic]
+    # current_user.revise @topic, params[:topic]
     attributes = forum_topic_params
     @forum_topic.title = attributes[:title] if attributes.key?(:title)
     @forum_topic.sticky, @forum_topic.locked, @forum_topic.forum_id = attributes[:sticky], attributes[:locked], attributes[:forum_id] if can?(:moderate, @forum_topic.forum)

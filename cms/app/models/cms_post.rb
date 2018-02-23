@@ -1,6 +1,6 @@
 class CmsPost < ApplicationRecord
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
-  translates              :title, :summary, :content, :fallbacks_for_empty_translations => true #, :versioning => true
+  translates              :title, :summary, :content, :fallbacks_for_empty_translations => true # , :versioning => true
   globalize_accessors     locales: I18n.available_locales
 
   # --- FriendlyId

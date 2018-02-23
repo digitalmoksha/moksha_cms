@@ -6,7 +6,7 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
   before_action :find_post, :only => [:edit, :update, :destroy]
 
   # {todo} look into caching and sweepers - most of our stuff is not directly public
-  #cache_sweeper :forum_comments_sweeper, :only => [:create, :update, :destroy]
+  # cache_sweeper :forum_comments_sweeper, :only => [:create, :update, :destroy]
 
   # /posts
   # /users/1/posts

@@ -49,10 +49,10 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def update_fragment
     if @cms_snippet.update_attributes(cms_snippet_params)
-      #@cms_page.merge!(@item.cms_page.get_page_render_values)
-      #respond_to do |format|
+      # @cms_page.merge!(@item.cms_page.get_page_render_values)
+      # respond_to do |format|
       #  format.js { render :action => :update_fragment }
-      #end
+      # end
     end
   end
 

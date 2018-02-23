@@ -1,6 +1,6 @@
 class UserPresenter < BasePresenter
   presents :user
-  #delegate :username, to: :user
+  # delegate :username, to: :user
 
   #------------------------------------------------------------------------------
   def role_label

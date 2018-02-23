@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------
 class CoursePresenter < LmsCommonPresenter
   presents :course
-  #delegate :something, to: :course
+  # delegate :something, to: :course
 
   #------------------------------------------------------------------------------
   def label_published

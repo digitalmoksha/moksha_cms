@@ -12,10 +12,10 @@ class Comment < ApplicationRecord
   default_scope     { where(account_id: Account.current.id) }
 
   #--- NOTE: install the acts_as_votable plugin to vote on the quality of comments
-  #acts_as_voteable
+  # acts_as_voteable
 
   #--- don't use a counter cache until you can seperate users per account
-  belongs_to        :user #, :counter_cache => true
+  belongs_to        :user # , :counter_cache => true
   belongs_to        :account
 
   validates_presence_of   :body

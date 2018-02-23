@@ -2,7 +2,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
 
   before_action :blog_lookup, :except => [:index, :new, :create]
-  #before_action   :set_title
+  # before_action   :set_title
 
   #------------------------------------------------------------------------------
   def index

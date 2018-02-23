@@ -12,7 +12,7 @@ module DmCore::LiquidHelper
                                                                          registers: { controller: controller, view: self,
                                                                                       account_site_assets: account_site_assets_url,
                                                                                       account_site_assets_media: account_site_assets_media_url }))
-    #doc.hard_breaks = false
+    # doc.hard_breaks = false
     return doc.to_html.html_safe
   end
 

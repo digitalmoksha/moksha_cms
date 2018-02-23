@@ -3,7 +3,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
 
   before_action   :category_lookup, :only =>    [:index, :new, :create]
   before_action   :forum_lookup,    :except =>  [:index, :new, :create]
-  #before_action   :set_title
+  # before_action   :set_title
 
   # GET /admin/fms/forums
   #------------------------------------------------------------------------------

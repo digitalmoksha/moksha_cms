@@ -9,7 +9,7 @@ class DmForum::ApplicationController < ::ApplicationController
   helper    DmCms::PagesHelper
   include   DmCore::RenderHelper
 
-  #before_action :authenticate_user!
+  # before_action :authenticate_user!
 
   layout    'forum_templates/forum_list'
 
