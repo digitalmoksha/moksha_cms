@@ -10,7 +10,7 @@ class Registration < ApplicationRecord
   include DmCore::Concerns::HasCustomFields
   include OffsitePayments::Integrations
 
-  self.table_name               = 'ems_registrations'
+  self.table_name = 'ems_registrations'
 
   belongs_to                    :workshop, counter_cache: true
   belongs_to                    :workshop_price

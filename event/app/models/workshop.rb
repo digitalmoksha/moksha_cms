@@ -1,7 +1,7 @@
 class Workshop < ApplicationRecord
   include DmCore::Concerns::DefinesCustomFields
 
-  self.table_name         = 'ems_workshops'
+  self.table_name = 'ems_workshops'
 
   belongs_to              :country, class_name: 'DmCore::Country'
   has_many                :registrations, dependent: :destroy

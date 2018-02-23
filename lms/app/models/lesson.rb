@@ -2,7 +2,7 @@
 #   Holds multiple lesson pages
 #------------------------------------------------------------------------------
 class Lesson < ApplicationRecord
-  self.table_name         = 'lms_lessons'
+  self.table_name = 'lms_lessons'
 
   # --- globalize
   translates              :title, :menutitle, :description, foreign_key: :lesson_id, fallbacks_for_empty_translations: true

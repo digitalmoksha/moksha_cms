@@ -7,7 +7,7 @@
 class Course < ApplicationRecord
   include DmCore::Concerns::PublicPrivate
 
-  self.table_name         = 'lms_courses'
+  self.table_name = 'lms_courses'
 
   # globalize
   translates              :title, :menutitle, :description, foreign_key: :course_id, fallbacks_for_empty_translations: true

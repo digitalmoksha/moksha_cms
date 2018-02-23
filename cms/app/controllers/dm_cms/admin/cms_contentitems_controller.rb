@@ -9,7 +9,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   def new_content
     authorize! :manage_content, @current_page
     @cms_contentitem = CmsContentitem.new
-    @cms_contentitem.container  = 'body'
+    @cms_contentitem.container = 'body'
   end
 
   #------------------------------------------------------------------------------

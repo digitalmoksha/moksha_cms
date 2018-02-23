@@ -30,7 +30,7 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def create
-    @media_file   = MediaFile.new(media_file_params) # for collecting all error msgs
+    @media_file = MediaFile.new(media_file_params) # for collecting all error msgs
     if params[:media_list]
       params[:media_list].each do |file|
         media_file       = MediaFile.new(media_file_params)

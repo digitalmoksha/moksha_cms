@@ -132,7 +132,7 @@ class MailchimpNewsletter < Newsletter
     list_params[:limit] = options[:limit] ? options[:limit] : 100
     list_params[:filters][:folder_id] = options[:folder_id] if options[:folder_id]
 
-    campaigns   = api.campaigns.list(list_params)
+    campaigns = api.campaigns.list(list_params)
   end
 
   # Get simplified list of sent campaigns. Useful for showing archived

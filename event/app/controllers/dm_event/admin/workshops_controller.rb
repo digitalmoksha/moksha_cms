@@ -137,7 +137,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
       @days_ago = params[:lost_users][:days_ago].to_i
       @days_ago = 60 if @days_ago > 60
     else
-      @days_ago   = 10
+      @days_ago = 10
     end
     # @lost_users = Workshop.lost_users(@days_ago)
     @lost_users = @workshop.lost_users(@days_ago)

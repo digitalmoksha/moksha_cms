@@ -6,7 +6,7 @@
 # so store in yaml format instead
 #------------------------------------------------------------------------------
 class CustomFieldDef < ApplicationRecord
-  self.table_name         = 'core_custom_field_defs'
+  self.table_name = 'core_custom_field_defs'
 
   belongs_to              :owner, polymorphic: true
   has_many                :custom_fields, dependent: :destroy

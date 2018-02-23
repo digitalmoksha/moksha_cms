@@ -39,7 +39,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   def create
     redirect_to(action: :new) and return if @workshop.require_account && current_user.nil?
 
-    profile_params                  = params[:registration].delete("user_profile_attributes") if params[:registration]
+    profile_params = params[:registration].delete("user_profile_attributes") if params[:registration]
     profile_params.delete(:id)      if profile_params
 
     @registration                   = @workshop.registrations.new(registration_params(@workshop))

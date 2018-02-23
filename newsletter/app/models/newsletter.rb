@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 class Newsletter < ApplicationRecord
-  self.table_name         = 'email_newsletters'
+  self.table_name = 'email_newsletters'
 
   # [todo] has_many                :newsletter_subscribers, :dependent => :destroy
 

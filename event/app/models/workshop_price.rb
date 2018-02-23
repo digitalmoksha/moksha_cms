@@ -8,7 +8,7 @@
 # the prices in the two currencies.
 #------------------------------------------------------------------------------
 class WorkshopPrice < ApplicationRecord
-  self.table_name         = 'ems_workshop_prices'
+  self.table_name = 'ems_workshop_prices'
 
   belongs_to              :workshop
   has_many                :registrations

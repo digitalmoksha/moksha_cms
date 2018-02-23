@@ -19,7 +19,7 @@ module DmForum
         params_hash.each { |k, v| query_string << "#{k}=#{v}&" }
       end
       query_string = query_string.chop
-      %{history.#{function}(#{state}, '#{j(name)}', '#{j(path+query_string)}');}.html_safe
+      %{history.#{function}(#{state}, '#{j(name)}', '#{j(path + query_string)}');}.html_safe
     end
 
     #------------------------------------------------------------------------------

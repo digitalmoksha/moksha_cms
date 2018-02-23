@@ -3,7 +3,7 @@
 class Comment < ApplicationRecord
   include           ActsAsCommentable::Comment
 
-  self.table_name   = 'core_comments'
+  self.table_name = 'core_comments'
 
   belongs_to        :commentable, :polymorphic => true, :counter_cache => true
   has_ancestry      :cache_depth => true

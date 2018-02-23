@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 class Teaching < ApplicationRecord
-  self.table_name         = 'lms_teachings'
+  self.table_name = 'lms_teachings'
 
   # --- globalize
   translates              :title, :menutitle, :content, :foreign_key => :teaching_id, :fallbacks_for_empty_translations => true

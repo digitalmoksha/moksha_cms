@@ -20,12 +20,6 @@ Layout/SpaceAfterMethodName:
   Exclude:
     - 'cms/app/uploaders/media_uploader.rb'
 
-# Offense count: 74
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Layout/SpaceAroundOperators:
-  Enabled: false
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.

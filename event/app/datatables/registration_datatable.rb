@@ -106,7 +106,7 @@ class RegistrationDatatable
 
   #------------------------------------------------------------------------------
   def page
-    params[:iDisplayStart].to_i/per_page + 1
+    params[:iDisplayStart].to_i / per_page + 1
   end
 
   #------------------------------------------------------------------------------

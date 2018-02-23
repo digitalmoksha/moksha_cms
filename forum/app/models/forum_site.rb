@@ -1,7 +1,7 @@
 class ForumSite < ApplicationRecord
-  UndefinedError  = Class.new(StandardError)
+  UndefinedError = Class.new(StandardError)
 
-  self.table_name           = 'fms_forum_sites'
+  self.table_name = 'fms_forum_sites'
 
   has_many                  :forums,         -> { where(is_public: true) }
   has_many                  :all_forums,     :class_name => 'Forum'

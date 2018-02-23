@@ -29,7 +29,7 @@ module DmUtilities::DateHelper
       fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmddyy)
     elsif start_date.month == end_date.month && start_date.year == end_date.year
       event_date     = start_date.localize(:count => start_date.day, :format => :mmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => (options[:ignore_year] ? "%d" : "%d, %Y"))
-      fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format =>:wwmmddyy)
+      fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => :wwmmddyy)
     elsif start_date.year == end_date.year
       event_date     = start_date.localize(:count => start_date.day, :format => :mmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => (options[:ignore_year] ? :mmdd : :mmddyy))
       fullevent_date = start_date.localize(:count => start_date.day, :format => :wwmmdd) + options[:separator] + end_date.localize(:count => end_date.day, :format => :wwmmddyy)

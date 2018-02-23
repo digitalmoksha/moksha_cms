@@ -19,6 +19,6 @@ module DmUtilities::CurrencyHelper
   def ut_currency_cents(cents, country, options = {})
     return "&mdash;".html_safe if cents.blank?
 
-    ut_currency(cents/100, country, options)
+    ut_currency(cents / 100, country, options)
   end
 end

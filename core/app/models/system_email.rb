@@ -1,7 +1,7 @@
 # Generated from acts_as_commentable
 #------------------------------------------------------------------------------
 class SystemEmail < ApplicationRecord
-  self.table_name       = 'core_system_emails'
+  self.table_name = 'core_system_emails'
 
   belongs_to            :emailable, :polymorphic => true
 
