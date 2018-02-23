@@ -128,7 +128,7 @@ class MailchimpNewsletter < Newsletter
   def sent_campaign_list(options = {start: 0, limit: 100})
     api                 = MailchimpNewsletter.api
     list_params         = {sort_field: 'send_time', sort_dir: 'DESC',
-                          filters: {list_id: self.mc_id}}
+                           filters: {list_id: self.mc_id}}
     list_params[:start] = options[:start] ? options[:start] : 0
     list_params[:limit] = options[:limit] ? options[:limit] : 100
     list_params[:filters][:folder_id] = options[:folder_id] if options[:folder_id]

@@ -14,25 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
-# SupportedHashRocketStyles: key, separator, table
-# SupportedColonStyles: key, separator, table
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/AlignHash:
-  Exclude:
-    - 'admin/app/helpers/admin_theme/theme_helper.rb'
-    - 'cms/app/liquid/tags/url_media.rb'
-    - 'cms/app/services/dm_cms/admin_menu_inject.rb'
-    - 'core/app/helpers/dm_core/liquid_helper.rb'
-    - 'core/config/initializers/simple_form.rb'
-    - 'event/app/models/workshop.rb'
-    - 'event/app/models/workshop_price.rb'
-    - 'event/lib/dm_event/liquid/tags/funding_project_status.rb'
-    - 'forum/app/models/forum_topic.rb'
-    - 'newsletter/app/models/mailchimp_newsletter.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Layout/BlockEndNewline:

@@ -93,7 +93,7 @@ class ForumTopic < ApplicationRecord
     #--- these fields are not accessible to mass assignment
     if remaining_comment = forum_comment.frozen? ? recent_comment : forum_comment
       self.class.where(:id => id).update_all(:last_updated_at => remaining_comment.created_at,
-            :last_user_id => remaining_comment.user_id, :last_forum_comment_id => remaining_comment.id)
+                                             :last_user_id => remaining_comment.user_id, :last_forum_comment_id => remaining_comment.id)
     else
       destroy
     end

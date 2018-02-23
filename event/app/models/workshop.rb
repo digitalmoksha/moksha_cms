@@ -127,9 +127,9 @@ class Workshop < ApplicationRecord
   def financial_details(level = :detail)
     #--- pick currency of first price
     financials = {summary: { total_possible: Money.new(0, base_currency),          total_possible_worst: Money.new(0, base_currency),
-                                total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency),
-                                total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency),
-                                total_paid_percent: 0},
+                             total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency),
+                             total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency),
+                             total_paid_percent: 0},
                   collected: {},
                   collected_monthly: {},
                   payment_type: {},

@@ -21,13 +21,13 @@ module Liquid
       @attributes['style'] += css_style_width(@attributes['width'])
 
       context.registers[:view].render(partial: 'dm_event/liquid_tags/funding_project_status',
-                      locals: { content: content,
-                                workshop_id: workshop_id,
-                                image: image,
-                                div_class: @attributes['class'],
-                                div_style: @attributes['style'],
-                                button_text: @attributes['button_text'],
-                                button_link: @attributes['button_link']
+                                      locals: { content: content,
+                                                workshop_id: workshop_id,
+                                                image: image,
+                                                div_class: @attributes['class'],
+                                                div_style: @attributes['style'],
+                                                button_text: @attributes['button_text'],
+                                                button_link: @attributes['button_link']
                              })
     end
 
