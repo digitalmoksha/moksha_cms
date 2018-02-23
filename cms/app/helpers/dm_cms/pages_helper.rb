@@ -48,14 +48,14 @@ module DmCms::PagesHelper
       liquid_params = content_item.to_liquid
       liquid_params.reverse_merge!(current_user.to_liquid) if current_user
       case content_item.itemtype.downcase
-        when 'textile'
-          content = liquidize_textile(content_item.content, liquid_params)
-        when 'markdown'
-          content = liquidize_markdown(content_item.content, liquid_params)
-        when 'html'
-          content = liquidize_html(content_item.content, liquid_params)
-        else
-          content = ''
+      when 'textile'
+        content = liquidize_textile(content_item.content, liquid_params)
+      when 'markdown'
+        content = liquidize_markdown(content_item.content, liquid_params)
+      when 'html'
+        content = liquidize_html(content_item.content, liquid_params)
+      else
+        content = ''
       end
     end
     return content
@@ -74,12 +74,12 @@ module DmCms::PagesHelper
     options[:active_class] ||= 'current'
     children                 = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
     menu_str, submenu_active = case options[:type]
-    when :bs3
-      menu_from_pages_bs3(children, options)
-    when :bs4
-      menu_from_pages_bs4(children, options)
-    else
-      menu_from_pages(children, options)
+                               when :bs3
+                                 menu_from_pages_bs3(children, options)
+                               when :bs4
+                                 menu_from_pages_bs4(children, options)
+                               else
+                                 menu_from_pages(children, options)
     end
     return menu_str.html_safe
   end

@@ -14,16 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentOneStep, IndentationWidth.
-# SupportedStyles: case, end
-Layout/CaseIndentation:
-  Exclude:
-    - 'cms/app/controllers/dm_cms/admin/media_files_controller.rb'
-    - 'cms/app/helpers/dm_cms/pages_helper.rb'
-    - 'core/app/inputs/code_editor_input.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Layout/ClosingParenthesisIndentation:

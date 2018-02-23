@@ -7,12 +7,12 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
     @media_files = MediaFile.order('folder, media ASC')
 
     @media_files = case @tag_filter
-    when 'all'
-      @media_files
-    when 'top'
-      @media_files.where(folder: '')
-    else
-      @media_files.tagged_with(@tag_filter)
+                   when 'all'
+                     @media_files
+                   when 'top'
+                     @media_files.where(folder: '')
+                   else
+                     @media_files.tagged_with(@tag_filter)
     end
     @media_files = @media_files.paginate :page => params[:page], :per_page => 40
   end

@@ -4,14 +4,14 @@ class CodeEditorInput < SimpleForm::Inputs::TextInput
   def input(wrapper_options)
     options[:mode] = (options[:mode] || 'markdown').downcase
     editor_mode = case options[:mode]
-    when 'textile'
-      :htmlmixed  # no textile mode available
-    when 'markdown'
-      :markdown
-    when 'html'
-      :htmlmixed
-    else
-      :markdown
+                  when 'textile'
+                    :htmlmixed  # no textile mode available
+                  when 'markdown'
+                    :markdown
+                  when 'html'
+                    :htmlmixed
+                  else
+                    :markdown
     end
 
     input_html_options['codemirror-editor']   = ""
