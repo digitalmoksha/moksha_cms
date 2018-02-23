@@ -20,22 +20,6 @@ Layout/SpaceAfterMethodName:
   Exclude:
     - 'cms/app/uploaders/media_uploader.rb'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: space, no_space
-Layout/SpaceAroundEqualsInParameterDefault:
-  Exclude:
-    - 'admin/zeus_custom_plan.rb'
-    - 'cms/zeus_custom_plan.rb'
-    - 'core/app/controllers/dm_core/application_controller.rb'
-    - 'core/app/helpers/dm_core/render_helper.rb'
-    - 'core/zeus_custom_plan.rb'
-    - 'event/zeus_custom_plan.rb'
-    - 'forum/app/helpers/dm_forum/forum_helper.rb'
-    - 'forum/zeus_custom_plan.rb'
-    - 'newsletter/zeus_custom_plan.rb'
-
 # Offense count: 74
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.

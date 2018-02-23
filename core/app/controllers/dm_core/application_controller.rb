@@ -146,7 +146,7 @@ class DmCore::ApplicationController < ActionController::Base
   # Sets the default value for the url options.  Seems to allow links/redirect_to
   # to have the proper value for the locale in the url
   #------------------------------------------------------------------------------
-  def default_url_options(options={})
+  def default_url_options(options = {})
     options.merge({ locale: I18n.locale })
   end
 

@@ -11,7 +11,7 @@ module DmForum
     end
 
     #------------------------------------------------------------------------------
-    def modify_history(function, name, path, params_hash=nil)
+    def modify_history(function, name, path, params_hash = nil)
       state = "null"
       query_string = "?"
       if params_hash
