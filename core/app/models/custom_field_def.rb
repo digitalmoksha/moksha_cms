@@ -28,11 +28,10 @@ class CustomFieldDef < ApplicationRecord
                   ['Checkboxes',      'check_box_collection'],
                   ['Radio Buttons',   'radio_buttons'],
                   ['Drop Down Menu',  'select'],
-                  ['Divider',         'divider']
-                  # ['Date/Time Selection', 'date_time'],
-                  # ['Date Selection', 'date'],
-                  # ['Country Selection', 'country'],
-                ].freeze
+                  ['Divider',         'divider']].freeze
+  # ['Date/Time Selection', 'date_time']
+  # ['Date Selection', 'date']
+  # ['Country Selection', 'country']
 
   #------------------------------------------------------------------------------
   def divider?

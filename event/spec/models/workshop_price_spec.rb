@@ -114,12 +114,14 @@ describe WorkshopPrice, :type => :model do
       expect(workshop_price.payment_schedule).to eq [
         {due_on: 0,  period_payment: Money.new(167, 'USD'), total_due: Money.new(167, 'USD')},
         {due_on: 30, period_payment: Money.new(167, 'USD'), total_due: Money.new(334, 'USD')},
-        {due_on: 60, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')}]
+        {due_on: 60, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')}
+      ]
 
       expect(workshop_price.payment_schedule(start_day)).to eq [
         {due_on: start_day,           period_payment: Money.new(167, 'USD'), total_due: Money.new(167, 'USD')},
         {due_on: start_day + 30.days, period_payment: Money.new(167, 'USD'), total_due: Money.new(334, 'USD')},
-        {due_on: start_day + 60.days, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')}]
+        {due_on: start_day + 60.days, period_payment: Money.new(166, 'USD'), total_due: Money.new(500, 'USD')}
+      ]
     end
 
     #------------------------------------------------------------------------------
