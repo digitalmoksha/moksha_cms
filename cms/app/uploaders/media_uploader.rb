@@ -103,7 +103,7 @@ class MediaUploader < CarrierWave::Uploader::Base
     process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_large_width]
     process size_image_pdf: [900]
-    def full_filename (for_file = model.file.file)
+    def full_filename(for_file = model.file.file)
       filename_pdf_to_jpg(super)
     end
   end
@@ -123,7 +123,7 @@ class MediaUploader < CarrierWave::Uploader::Base
     process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_medium_width]
     process size_image_pdf: [600]
-    def full_filename (for_file = model.file.file)
+    def full_filename(for_file = model.file.file)
       filename_pdf_to_jpg(super)
     end
   end
@@ -143,7 +143,7 @@ class MediaUploader < CarrierWave::Uploader::Base
     process :auto_orient
     # process :size_image_pdf => [Account.current.preferred_image_small_width]
     process size_image_pdf: [300]
-    def full_filename (for_file = model.file.file)
+    def full_filename(for_file = model.file.file)
       filename_pdf_to_jpg(super)
     end
   end
@@ -153,7 +153,7 @@ class MediaUploader < CarrierWave::Uploader::Base
     process :auto_orient
     # process thumb_image_pdf: [Account.current.preferred_image_thumbnail_width, Account.current.preferred_image_thumbnail_width]
     process thumb_image_pdf: [200, 200]
-    def full_filename (for_file = model.file.file)
+    def full_filename(for_file = model.file.file)
       filename_pdf_to_jpg(super)
     end
   end

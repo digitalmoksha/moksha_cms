@@ -14,12 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Layout/SpaceAfterMethodName:
-  Exclude:
-    - 'cms/app/uploaders/media_uploader.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
