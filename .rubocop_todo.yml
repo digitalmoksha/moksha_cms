@@ -10,16 +10,6 @@
 Cop/RedirectWithStatus:
   Enabled: false
 
-# Offense count: 6
-FactoryBot/DynamicAttributeDefinedStatically:
-  Exclude:
-    - 'cms/spec/factories/users.rb'
-    - 'core/spec/factories/payment_histories.rb'
-    - 'core/spec/factories/users.rb'
-    - 'forum/spec/factories/users.rb'
-    - 'lms/spec/factories/users.rb'
-    - 'newsletter/spec/factories/users.rb'
-
 # Offense count: 26
 # Cop supports --auto-correct.
 # Configuration parameters: Include, TreatCommentsAsGroupSeparators.

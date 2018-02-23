@@ -10,8 +10,6 @@ FactoryBot.define do
     quantity        1
     discount        "0"
     payment_method  'paypal'
-    payment_date    Time.now
-    # expect(history).to have_attributes(bill_to_name: nil, notify_data: options[:notify_data], transaction_id: options[:transaction_id])
-    # expect(history).to have_attributes(user_profile_id: user_profile.id, status: 'Completed')
+    payment_date    { Time.now }
   end
 end

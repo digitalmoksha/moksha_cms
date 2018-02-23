@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :user do
     email           { Faker::Internet.email }
     password        "something"
-    confirmed_at    Time.now
+    confirmed_at    { Time.now }
     user_profile
 
     factory :admin_user do
