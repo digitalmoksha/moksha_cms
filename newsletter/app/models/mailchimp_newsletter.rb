@@ -6,8 +6,7 @@ class MailchimpNewsletter < Newsletter
                         212 => 'Email_WasRemoved',
                         214 => 'List_AlreadySubscribed',
                         232 => 'Email_NotExists',
-                        234 => 'Email_TooManySignups'
-                     }.freeze
+                        234 => 'Email_TooManySignups'}.freeze
 
   validate        :validate_list_id
   after_create    :update_list_stats

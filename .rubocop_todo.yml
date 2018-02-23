@@ -14,27 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Layout/MultilineBlockLayout:
-  Exclude:
-    - 'core/spec/services/payment_histories/create_service_spec.rb'
-    - 'event/app/models/workshop.rb'
-    - 'newsletter/app/models/mailchimp_newsletter.rb'
-
-# Offense count: 15
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineHashBraceLayout:
-  Exclude:
-    - 'cms/app/models/cms_page.rb'
-    - 'cms/app/models/contact_form.rb'
-    - 'core/app/models/dm_core/concerns/user.rb'
-    - 'event/app/models/workshop.rb'
-    - 'event/lib/dm_event/liquid/tags/funding_project_status.rb'
-    - 'newsletter/app/models/mailchimp_newsletter.rb'
-
 # Offense count: 11
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, IndentationWidth.

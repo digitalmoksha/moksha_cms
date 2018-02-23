@@ -116,9 +116,7 @@ module DmCore
                         'last_name'           => h(last_name),
                         'full_name'           => h(full_name),
                         'email'               => h(email),
-                        'paid_subscription?'  => is_paid_subscriber?
-                      }
-          }
+                        'paid_subscription?'  => is_paid_subscriber?}}
         end
 
         #------------------------------------------------------------------------------
@@ -128,26 +126,22 @@ module DmCore
               summary: "User's full name",
               category: 'variables',
               example: '{{ user.full_name }}',
-              description: "Display the user's full name"
-            },
+              description: "Display the user's full name"},
             { name: 'user.first_name',
               summary: "User's first name",
               category: 'variables',
               example: '{{ user.first_name }}',
-              description: "Display the user's first name"
-            },
+              description: "Display the user's first name"},
             { name: 'user.last_name',
               summary: "User's last name",
               category: 'variables',
               example: '{{ user.last_name }}',
-              description: "Display the user's last name"
-            },
+              description: "Display the user's last name"},
             { name: 'user.email',
               summary: "User's email address",
               category: 'variables',
               example: '{{ user.email }}',
-              description: "Display the user's email address"
-            },
+              description: "Display the user's email address"},
           ]
         end
 

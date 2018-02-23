@@ -157,8 +157,7 @@ class CmsPage < ApplicationRecord
       {
         'trial?'    => false,
         'active?'   => true
-      }
-    }
+      }}
   end
 
   #------------------------------------------------------------------------------
@@ -168,20 +167,17 @@ class CmsPage < ApplicationRecord
         summary: "Page title",
         category: 'variables',
         example: '{{ page.title }}',
-        description: "Display the page's title"
-      },
+        description: "Display the page's title"},
       { name: 'page.menutitle',
         summary: "Page menutitle",
         category: 'variables',
         example: '{{ page.menutitle }}',
-        description: "Display the page's menutitle"
-      },
+        description: "Display the page's menutitle"},
       { name: 'page.slug',
         summary: "Page slug",
         category: 'variables',
         example: '{{ page.slug }}',
-        description: "Display the page's slug"
-      }
+        description: "Display the page's slug"}
     ]
   end
 

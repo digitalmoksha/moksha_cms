@@ -131,8 +131,7 @@ class Workshop < ApplicationRecord
                   collected: {},
                   collected_monthly: {},
                   payment_type: {},
-                  projected: {}
-                 }
+                  projected: {}}
 
     registrations.attending.includes(:workshop_price).each do |registration|
       if registration.workshop_price

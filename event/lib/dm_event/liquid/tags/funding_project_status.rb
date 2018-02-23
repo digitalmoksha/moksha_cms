@@ -27,8 +27,7 @@ module Liquid
                                                 div_class: @attributes['class'],
                                                 div_style: @attributes['style'],
                                                 button_text: @attributes['button_text'],
-                                                button_link: @attributes['button_link']
-                             })
+                                                button_link: @attributes['button_link']})
     end
 
     #------------------------------------------------------------------------------
@@ -37,8 +36,7 @@ module Liquid
         summary: 'Funding Project Status',
         description: "",
         example: self.example,
-        category: 'structure'
-      }
+        category: 'structure'}
     end
 
     def self.example

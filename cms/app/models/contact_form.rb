@@ -21,7 +21,6 @@ class ContactForm < ::MailForm::Base
     { subject:  "#{I18n.t('cms.contact_form.subject_prefix')}: #{reason}: #{subject}" ,
       to:       Account.current.preferred_support_email,
       from:     Account.current.preferred_support_email,
-      reply_to: %("#{name}" <#{email}>)
-    }
+      reply_to: %("#{name}" <#{email}>)}
   end
 end
