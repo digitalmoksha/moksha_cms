@@ -63,7 +63,7 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
     head :ok
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def workshop_lookup

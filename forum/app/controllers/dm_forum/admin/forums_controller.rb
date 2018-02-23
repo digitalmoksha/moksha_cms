@@ -97,7 +97,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
     redirect_to admin_forum_url(@forum), notice: "Forum access removed for #{user.full_name}"
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def category_lookup

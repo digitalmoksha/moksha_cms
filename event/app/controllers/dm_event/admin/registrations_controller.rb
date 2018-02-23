@@ -115,7 +115,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
     end
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def registration_lookup

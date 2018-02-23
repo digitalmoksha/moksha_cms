@@ -59,7 +59,7 @@ class DmLms::Admin::TeachingsController < DmLms::Admin::AdminController
     end
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def lesson_lookup

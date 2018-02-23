@@ -55,7 +55,7 @@ class DmCore::Admin::SetupController < ActionController::Base
     end
   end
 
-protected
+  protected
 
   def no_sysadmins?
     sysadmin_role = Role.unscoped.find_by_name('sysadmin')

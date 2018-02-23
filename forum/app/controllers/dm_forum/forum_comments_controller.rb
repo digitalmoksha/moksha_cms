@@ -64,7 +64,7 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
     end
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def find_parents

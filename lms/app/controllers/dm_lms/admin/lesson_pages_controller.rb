@@ -47,7 +47,7 @@ class DmLms::Admin::LessonPagesController < DmLms::Admin::AdminController
     head :ok
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def lesson_page_lookup

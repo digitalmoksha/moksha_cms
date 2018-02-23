@@ -174,7 +174,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
     head :ok
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def workshop_lookup

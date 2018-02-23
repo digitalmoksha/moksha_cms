@@ -13,7 +13,7 @@ class DmEvent::ApplicationController < ::ApplicationController
 
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def record_not_found

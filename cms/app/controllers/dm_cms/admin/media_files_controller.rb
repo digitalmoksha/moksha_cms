@@ -72,7 +72,7 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
     redirect_to admin_media_files_url
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def prepare_folder_names

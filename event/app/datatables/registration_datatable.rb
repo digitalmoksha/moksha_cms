@@ -24,7 +24,7 @@ class RegistrationDatatable
     }
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def data

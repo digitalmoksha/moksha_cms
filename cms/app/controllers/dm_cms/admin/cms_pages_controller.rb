@@ -149,7 +149,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     head :ok
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def current_page

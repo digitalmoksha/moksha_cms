@@ -22,7 +22,7 @@ class DmCore::Admin::SystemController < DmCore::Admin::AdminController
     end
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def authorize_access
@@ -32,7 +32,7 @@ protected
     end
   end
 
-private
+  private
 
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------

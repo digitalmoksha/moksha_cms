@@ -4,7 +4,7 @@ class DmNewsletter::Admin::AdminController < DmCore::Admin::AdminController
 
   before_action   :authorize_access
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def authorize_access

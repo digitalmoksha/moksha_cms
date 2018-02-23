@@ -99,7 +99,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
     end
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def authorize_access
@@ -109,7 +109,7 @@ protected
     end
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def account_lookup

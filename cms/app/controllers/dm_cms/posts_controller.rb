@@ -63,7 +63,7 @@ class DmCms::PostsController < DmCms::ApplicationController
     end
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def post_lookup

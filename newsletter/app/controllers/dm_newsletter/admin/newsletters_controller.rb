@@ -61,7 +61,7 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
     end
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def newsletter_lookup

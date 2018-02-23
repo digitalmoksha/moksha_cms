@@ -9,7 +9,7 @@ class BasePresenter
     @template = template
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def self.presents(name)

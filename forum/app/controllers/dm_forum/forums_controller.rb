@@ -32,7 +32,7 @@ class DmForum::ForumsController < DmForum::ApplicationController
         (@forum.followed_topics(current_user).paginate :page => page_number) : nil
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def forum_lookup

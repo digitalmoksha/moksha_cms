@@ -126,7 +126,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
     head :ok
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def blog_lookup

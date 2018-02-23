@@ -64,7 +64,7 @@ class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminControlle
     head :ok
   end
 
-private
+  private
 
   # make sure a ForumSite singleton is created
   #------------------------------------------------------------------------------

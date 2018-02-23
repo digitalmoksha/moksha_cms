@@ -112,7 +112,7 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
     redirect_to dm_core.edit_admin_user_path(@user)
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def authorize_access
@@ -122,7 +122,7 @@ protected
     end
   end
 
-private
+  private
 
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------

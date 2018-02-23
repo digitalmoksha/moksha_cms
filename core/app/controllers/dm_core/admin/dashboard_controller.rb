@@ -13,7 +13,7 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
     redirect_back(fallback_location: index)
   end
 
-private
+  private
 
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------

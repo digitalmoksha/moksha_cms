@@ -165,7 +165,7 @@ class MediaUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png svg mp3 mp4 m4v ogg webm pdf css js)
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def thumbnable?(new_file)

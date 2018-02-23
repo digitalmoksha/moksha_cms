@@ -56,7 +56,7 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
     end
   end
 
-private
+  private
 
   # the blog needs to be specified in the url for each post.  post slugs are
   # unique per blog

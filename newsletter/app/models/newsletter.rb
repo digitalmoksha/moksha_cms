@@ -33,7 +33,7 @@ class Newsletter < ApplicationRecord
   def self.signup_information(token, options = {})
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def generate_token

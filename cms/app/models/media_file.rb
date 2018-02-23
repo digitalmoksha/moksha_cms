@@ -69,7 +69,7 @@ class MediaFile < ApplicationRecord
     asset       = MediaFile.where(folder: folder, media: filename).first
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def validate_name_is_unique

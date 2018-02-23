@@ -99,7 +99,7 @@ class ForumTopic < ApplicationRecord
     end
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def create_initial_comment

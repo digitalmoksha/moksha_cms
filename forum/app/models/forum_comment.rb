@@ -65,7 +65,7 @@ class ForumComment < Comment
     forum_topic.forum.name
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def update_cached_fields
@@ -77,7 +77,7 @@ protected
     errors.add(:base, "Topic is locked") if forum_topic && forum_topic.locked? && forum_topic.comments_count > 0
   end
 
-private
+  private
 
   # Since we can't have a belongs_to to the specific forum, update the comment
   # counter cache by hand

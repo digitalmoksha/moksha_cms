@@ -77,7 +77,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
     DmCore::ToggleFollowerService.new(current_user, @forum_topic).call
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def find_forum

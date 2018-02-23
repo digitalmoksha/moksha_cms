@@ -27,7 +27,7 @@ class DmCore::Admin::AdminController < ApplicationController
     end
   end
 
-private
+  private
 
   # Initialize the data needed by the admin theme - menus, etc.  This way it can
   # be rendered differently by different admin themes.

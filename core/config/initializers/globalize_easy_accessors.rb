@@ -31,7 +31,7 @@ module EasyGlobalizeAccessors
     end
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def define_accessors(attr_name, locale)

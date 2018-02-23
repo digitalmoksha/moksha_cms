@@ -20,7 +20,7 @@ class UserDatatable
     }
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def data

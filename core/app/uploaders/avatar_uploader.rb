@@ -74,7 +74,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
     "/site_assets/_shared/avatars/" + ["empty_avatar", version_name].compact.join('_') + '.png'
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def secure_token

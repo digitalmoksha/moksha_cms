@@ -109,7 +109,7 @@ module DmCore
     end
 
 
-  private
+    private
 
     # setup the account scope, used for scoping models to an Account
     #------------------------------------------------------------------------------

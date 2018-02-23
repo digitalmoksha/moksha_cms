@@ -21,7 +21,7 @@ class DmLms::CoursesController < DmLms::ApplicationController
   end
 
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def course_lookup

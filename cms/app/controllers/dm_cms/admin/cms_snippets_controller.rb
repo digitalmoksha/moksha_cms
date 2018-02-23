@@ -56,7 +56,7 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
     end
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def find_snippet

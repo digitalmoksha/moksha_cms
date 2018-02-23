@@ -49,7 +49,7 @@ class Registration < ApplicationRecord
   delegate                      :first_name, :last_name, :full_name, :email, :address, :address2,
                                 :city, :state, :country, :zipcode, :phone, to: :user_profile
 
-private
+  private
 
   # when a payment is made, we want reset whether a payment reminder has been sent
   #------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ private
     update_attribute(:receipt_code, receipt_code)
   end
 
-public
+  public
 
   # receipt code is simply the record id + 1100
   #------------------------------------------------------------------------------

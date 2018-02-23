@@ -227,7 +227,7 @@ module DmCms::PagesHelper
     end
   end
 
-private
+  private
 
   # Currently check is page requires a login and if user is logged in.
   # {todo} add additional authorization checks

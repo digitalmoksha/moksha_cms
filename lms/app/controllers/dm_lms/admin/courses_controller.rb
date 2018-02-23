@@ -90,7 +90,7 @@ class DmLms::Admin::CoursesController < DmLms::Admin::AdminController
     head :ok
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def course_lookup

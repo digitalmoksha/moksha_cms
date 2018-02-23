@@ -56,7 +56,7 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
     end
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def find_commenter

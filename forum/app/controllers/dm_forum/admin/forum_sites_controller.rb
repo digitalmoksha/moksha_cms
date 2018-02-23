@@ -30,7 +30,7 @@ class DmForum::Admin::ForumSitesController < DmForum::Admin::AdminController
     end
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def forum_site_lookup

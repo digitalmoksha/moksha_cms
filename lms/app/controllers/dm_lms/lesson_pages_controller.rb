@@ -72,7 +72,7 @@ class DmLms::LessonPagesController < DmLms::ApplicationController
     end
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def content_lookup

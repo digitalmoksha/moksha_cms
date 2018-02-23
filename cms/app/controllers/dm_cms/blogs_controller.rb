@@ -37,7 +37,7 @@ class DmCms::BlogsController < DmCms::ApplicationController
     DmCore::ToggleFollowerService.new(current_user, @blog).call
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def blog_lookup

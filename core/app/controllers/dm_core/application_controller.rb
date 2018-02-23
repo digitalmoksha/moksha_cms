@@ -26,7 +26,7 @@ class DmCore::ApplicationController < ActionController::Base
     redirect_to "/#{current_account.preferred_default_locale}/index", :status => :moved_permanently
   end
 
-protected
+  protected
 
   # Nov 27, 2013: There seems to be a nasty Safari 7 bug (and in iOS7).  If a 304 is returned,
   # an empty page can be cached, resulting in a blank page.

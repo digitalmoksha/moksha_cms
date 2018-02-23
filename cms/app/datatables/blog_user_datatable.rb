@@ -20,7 +20,7 @@ class BlogUserDatatable
     }
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def data

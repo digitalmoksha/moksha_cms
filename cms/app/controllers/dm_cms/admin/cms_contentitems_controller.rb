@@ -73,7 +73,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
     end
   end
 
-protected
+  protected
 
   #------------------------------------------------------------------------------
   def current_page
