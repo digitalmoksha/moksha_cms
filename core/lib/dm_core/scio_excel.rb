@@ -30,7 +30,6 @@ require 'builder'
 
 module Scio
   module Excel
-
     BORDER_ALL    = 0b1111
     BORDER_LEFT   = 0b0001
     BORDER_TOP    = 0b0010
@@ -195,6 +194,7 @@ module Scio
       def create_pdf(orientation = "L")
         require 'fpdf'
         raise "Invalid orientation" if !["L","P"].include?(orientation)
+
         pdf = FPDF.new
         # default font
         pdf.SetFont('Arial', '', 14)
@@ -492,6 +492,7 @@ class String
   # simple (and naive) way to convert html-hex color to array of colors
   def to_rgb
     raise "Invalid Hex Color" if self.size != 7 || self[0] != 35
+
     rgb = Hash.new
     rgb[:red]   = self[1,2].to_i(16)
     rgb[:green] = self[3,2].to_i(16)

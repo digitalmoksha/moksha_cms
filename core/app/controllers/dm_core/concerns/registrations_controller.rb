@@ -14,6 +14,7 @@ module DmCore
         #------------------------------------------------------------------------------
         def check_captcha
           return unless Rails.application.secrets[:recaptcha_secret_key]
+
           unless verify_recaptcha(secret_key: Rails.application.secrets[:recaptcha_secret_key])
             self.resource = resource_class.new sign_up_params
             respond_with_navigational(resource) { render :new }

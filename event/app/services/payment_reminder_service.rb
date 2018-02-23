@@ -1,5 +1,4 @@
 class PaymentReminderService
-
   REMINDER_SCHEDULE = [14, 30, 60].freeze
 
   # Send out payment reminder emails to unpaid attendees
@@ -53,6 +52,7 @@ class PaymentReminderService
   #------------------------------------------------------------------------------
   def self.payment_reminder_due?(registration)
     return false if !self.past_due?(registration) || registration.writtenoff_on
+
     now         = Time.now
     result      = false
     start_date  = registration.last_payment_due_on
@@ -85,6 +85,4 @@ class PaymentReminderService
       return Date.today > (registration.initial_payments_should_start_on)
     end
   end
-
-
 end

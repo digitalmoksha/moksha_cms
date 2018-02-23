@@ -27,6 +27,7 @@ module DeviseHelper
   #------------------------------------------------------------------------------
   def devise_recaptcha
     return '' unless Rails.application.secrets[:recaptcha_site_key]
+
     error = flash[:recaptcha_error] ? "<span class='help-inline'>#{flash[:recaptcha_error]}</span>" : ''
     html  = <<-HTML
     <div class="form-horizontal control-group #{'error' if flash[:recaptcha_error]}">

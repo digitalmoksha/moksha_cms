@@ -15,6 +15,7 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
   def create
     params[:name] ||= 'comments'
     raise "Invalid Parameter" unless params[:name].end_with?('comments')
+
     association     = params[:name].to_sym
 
     respond_to do |format|

@@ -1,6 +1,5 @@
 module DmEvent
   module PermittedParams
-
     # access to this is protected before the call
     #------------------------------------------------------------------------------
     def workshop_params
@@ -16,6 +15,7 @@ module DmEvent
     #------------------------------------------------------------------------------
     def registration_params(workshop)
       return nil if params[:registration].nil? || params[:registration].empty?
+
       if can?(:manage_event_registrations, @workshop)
         params.require(:registration).permit!
       else
@@ -33,6 +33,5 @@ module DmEvent
     def system_email_params
       params.require(:system_email).permit!
     end
-
   end
 end

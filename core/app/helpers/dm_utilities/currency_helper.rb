@@ -9,6 +9,7 @@ module DmUtilities::CurrencyHelper
   #------------------------------------------------------------------------------
   def ut_currency(amount, country, options = {})
     return "&mdash;".html_safe if amount.blank?
+
     precision = options[:precision] || 2
     number_to_currency(amount, :locale => country.locale, :precision => precision)
   end
@@ -17,8 +18,7 @@ module DmUtilities::CurrencyHelper
   #------------------------------------------------------------------------------
   def ut_currency_cents(cents, country, options = {})
     return "&mdash;".html_safe if cents.blank?
+
     ut_currency(cents/100, country, options)
   end
-
-
 end

@@ -106,6 +106,7 @@ class CmsPage < ApplicationRecord
     page = self
     page = page.parent while page.template.blank? && !page.is_root?
     raise "No template available for page #{self.slug}" if page.template.blank?
+
     return page.template
   end
 
@@ -279,7 +280,7 @@ class CmsPage < ApplicationRecord
 #       #   content.deep_clone(new_page.id)
 #       # end
     end
+
     return new_page
   end
-
 end

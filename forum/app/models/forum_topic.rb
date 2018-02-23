@@ -1,5 +1,4 @@
 class ForumTopic < ApplicationRecord
-
   self.table_name         = 'fms_forum_topics'
 
   attr_accessor           :body
@@ -125,6 +124,7 @@ protected
   #------------------------------------------------------------------------------
   def set_comment_forum_id
     return unless @old_forum_id
+
     Forum.where(:id => @old_forum_id).update_all("comments_count = comments_count - #{comments_count}")
     Forum.where(:id => forum_id).update_all("comments_count = comments_count + #{comments_count}")
     Forum.where(:id => @old_forum_id).update_all("forum_topics_count = forum_topics_count - 1")

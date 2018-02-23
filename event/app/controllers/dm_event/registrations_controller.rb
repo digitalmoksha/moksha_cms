@@ -68,6 +68,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
     if @workshop.require_account
       raise Account::LoginRequired.new(I18n.t('core.login_required')) if current_user.nil?
+
       if @registration.user_profile.user != current_user && !is_admin?
         flash[:alert] = I18n.t('core.resource_invalid')
         redirect_to main_app.root_url and return
@@ -94,14 +95,13 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @receipt_content  = @registration.email_state_notification(@registration.current_state, false) || ""
   end
 
-private
+  private
 
   #------------------------------------------------------------------------------
   def workshop_lookup
     @workshop = Workshop.find_by_slug(params[:id])
   end
 end
-
 
 =begin
   helper          'dm_event/event_registrations'

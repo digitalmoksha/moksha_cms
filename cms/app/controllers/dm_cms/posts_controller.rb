@@ -69,12 +69,13 @@ protected
   def post_lookup
     @blog = CmsBlog.friendly.find(params[:cms_blog_id])
     redirect_to blog_root_path and return if @blog.nil?
+
     raise Account::LoginRequired.new(I18n.t('cms.blog_login_required')) if !current_user && !@blog.is_public?
+
     authorize! :read, @blog
 
     @post = @blog.posts.friendly.find(params[:id])
     redirect_to blog_show_path(@blog) and return if @post.nil?
     authorize! :read, @post
   end
-
 end

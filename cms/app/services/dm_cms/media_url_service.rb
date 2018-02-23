@@ -19,6 +19,7 @@ module DmCms
     #------------------------------------------------------------------------------
     def call
       return IMAGE_MISSING if @src.blank?
+
       if @src.absolute_url?
         if @src.start_with?('s3://', 's3s://')
           DmCore::S3SignedUrlService.new.generate(@src)  # amazon S3 url - generate a signed expiring link
@@ -32,7 +33,6 @@ module DmCms
           MediaFile.url_by_name(@src, version: @version) || IMAGE_MISSING
         end
       end
-
     end
   end
 end

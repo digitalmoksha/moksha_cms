@@ -44,6 +44,7 @@ module DmUtilities::DateHelper
   #------------------------------------------------------------------------------
   def format_time_range(start_time, end_time, ignore_end_time = false)
     return '' if start_time.nil?
+
     ignore_end_time = true if end_time.nil?
 
     eventTime = start_time.localize(:format => :hhmmpp)
@@ -68,5 +69,4 @@ module DmUtilities::DateHelper
   def age_date(date)
     date.nil? ? 'n/a' : (date.to_age.to_s + ' / ' + format_date(date))
   end
-
 end

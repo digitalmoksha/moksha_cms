@@ -2,7 +2,6 @@
 # with MailChimp API V2
 #------------------------------------------------------------------------------
 class MailchimpNewsletter < Newsletter
-
   MAILCHIMP_ERRORS = {  200 => 'List_DoesNotExist',
                         212 => 'Email_WasRemoved',
                         214 => 'List_AlreadySubscribed',
@@ -58,6 +57,7 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def subscribe(user_or_email, options = {FNAME: '', LNAME: ''})
     return { success: false, code: 232 } if user_or_email.blank?
+
     api         = MailchimpNewsletter.api
     headers     = {'Accept-Language' => I18n.locale.to_s}
 
@@ -215,5 +215,4 @@ class MailchimpNewsletter < Newsletter
   #   end
   # rescue Gibbon::MailChimpError
   # end
-
 end

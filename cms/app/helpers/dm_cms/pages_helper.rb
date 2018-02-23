@@ -1,7 +1,6 @@
 # Handles building the different content streams for a page
 #------------------------------------------------------------------------------
 module DmCms::PagesHelper
-
   # Easy way to get a page url
   # slug can either be a string, or a CmsPage object
   #------------------------------------------------------------------------------
@@ -66,6 +65,7 @@ module DmCms::PagesHelper
   #------------------------------------------------------------------------------
   def main_menu(options = {})
     return '' if (root = CmsPage.roots.first).nil?
+
     menu_str                 = ''
     options[:ul]             = ''
     options[:ul]            += "class=\"#{options[:class]}\" "  unless options[:class].blank?
@@ -177,6 +177,7 @@ module DmCms::PagesHelper
   #------------------------------------------------------------------------------
   def main_menu_select(options = {})
     return '' if (root = CmsPage.roots[0]).nil?
+
     options[:id]            ||= ''
     options[:class]         ||= ''
     options[:include_root]    = root if options[:include_home]
@@ -192,6 +193,7 @@ module DmCms::PagesHelper
       end
     end
     menu_str += "</select>"
+
     return menu_str.html_safe
   end
 
@@ -209,6 +211,7 @@ module DmCms::PagesHelper
   #------------------------------------------------------------------------------
   def redirect_link(link)
     return nil if link.blank?
+
     begin
       uri = URI.parse(link)
     rescue URI::InvalidURIError
@@ -258,5 +261,4 @@ private
   def page_in_section?(page)
     (@current_page == page or @current_page.parent_id == page.id) ? true : false
   end
-
 end
