@@ -65,9 +65,7 @@ class Workshop < ApplicationRecord
   scope                   :past,      -> { where('ending_on <= ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC').includes(:translations) }
 
   #--- available is list of published and registration open and not ended
-  scope                   :available, -> { where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL',
-                                      (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC') }
-
+  scope                   :available, -> { where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC') }
   scope                   :published, -> { where(published: true).where('archived_on IS NULL') }
 
   #--- don't use allow_nil, as this will erase the base_currency field if no funding_goal is set

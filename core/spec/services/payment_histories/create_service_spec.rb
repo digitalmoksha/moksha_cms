@@ -8,8 +8,9 @@ describe DmCore::PaymentHistories::CreateService, type: :service do
   describe '#call' do
     let(:anchor_id) { 'test-1234' }
     let(:amount) { Money.new(5000, 'EUR') }
-    let(:options) { { item_ref: 'item one', payment_method: 'paypal', payment_date: Time.now,
-                      notify_data: 'test', transaction_id: '1234' } }
+    let(:options) do
+      { item_ref: 'item one', payment_method: 'paypal', payment_date: Time.now, notify_data: 'test', transaction_id: '1234' }
+    end
     let!(:service) { described_class.new(anchor_id, amount, user_profile, options) }
 
     it 'creates a new PaymentHistory' do

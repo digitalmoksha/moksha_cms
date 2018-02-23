@@ -141,9 +141,9 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def sent_campaign_list_simple(options = {start: 0, limit: 100})
     list      = sent_campaign_list(options)
-    campaigns = list['data'].map {|item| {subject:      item['subject'],
-                                          sent_on:      item['send_time'].to_datetime,
-                                          archive_url:  item['archive_url']} }
+    campaigns = list['data'].map do |item|
+      { subject: item['subject'], sent_on: item['send_time'].to_datetime, archive_url: item['archive_url'] }
+    end
   end
 
   #------------------------------------------------------------------------------
