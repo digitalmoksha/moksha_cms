@@ -158,7 +158,7 @@ class Registration < ApplicationRecord
     column_definitions <<     ["Balance",           "item.balance_owed.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
 
     # ---- add the extra fields defined in the workshop record
-    workshop.custom_field_defs.each_with_index do | x, index |
+    workshop.custom_field_defs.each_with_index do |x, index|
       case x.field_type
       when 'check_box_collection'
         column_definitions << [ "#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, {type: 'list', custom_field: true}]
