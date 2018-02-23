@@ -18,7 +18,7 @@ class ContactForm < ::MailForm::Base
   # the validity of the sending domain.
   #------------------------------------------------------------------------------
   def headers
-    { subject:  "#{I18n.t('cms.contact_form.subject_prefix')}: #{reason}: #{subject}" ,
+    { subject:  "#{I18n.t('cms.contact_form.subject_prefix')}: #{reason}: #{subject}",
       to:       Account.current.preferred_support_email,
       from:     Account.current.preferred_support_email,
       reply_to: %("#{name}" <#{email}>)}
