@@ -16,8 +16,10 @@ class Account < ApplicationRecord
   self.table_name   = 'core_accounts'
 
   attr_accessor           :email_validation, :general_validation, :analytics_validation, :metadata_validation, :media_validation
-  attr_accessor           :url_base, :url_host, :url_protocol  #--- stores the current base site url for this request.
-                                                               #    useful to mailers where request object not available
+
+  # stores the current base site url for this request. useful to mailers where request object not available
+  attr_accessor           :url_base, :url_host, :url_protocol
+
 
   validates_presence_of   :domain,                                      :if => Proc.new { |p| p.general_validation }
   validates_presence_of   :account_prefix,                              :if => Proc.new { |p| p.general_validation }

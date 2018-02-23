@@ -153,14 +153,5 @@ describe DmCms::Admin::CmsPostsController do
 
   describe 'PATCH #send_notifications_emails' do
     it "write test"
-  #   #------------------------------------------------------------------------------
-  #   it "replaces the tags on a srcid with the given tag list" do
-  #     document = create(:document)
-  #     document.set_tag_list_on(DmKnowledge::Document.tagcontext_from_srcid('1.12'), "tag1,tag2")
-  #     document.save
-  #     patch :add_tags, id: document.id, document: {srcid: '1.12', tag_list: 'tag3, tag4'}
-  #     document.reload
-  #     expect(DmKnowledge::Document.all_tags_list).to eq ['tag3', 'tag4']
-  #   end
   end
 end

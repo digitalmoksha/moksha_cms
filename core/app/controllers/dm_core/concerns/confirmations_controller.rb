@@ -9,13 +9,13 @@ module DmCore
 
       protected
 
-        # Example
-        # The path used after confirmation.
-        #------------------------------------------------------------------------------
-        # def after_confirmation_path_for(resource_name, resource)
-        #   index_url
-        # end
-        #------------------------------------------------------------------------------
+      # Example
+      # The path used after confirmation.
+      #------------------------------------------------------------------------------
+      # def after_confirmation_path_for(resource_name, resource)
+      #   index_url
+      # end
+      #------------------------------------------------------------------------------
 
       module ClassMethods
       end
