@@ -29,7 +29,7 @@ DmEvent::Engine.routes.draw do
       end
     end
 
-    get   '/event/workshop/published_workshops',        controller: :workshops,     action: :published_workshops,as: :published_workshops
+    get   '/event/workshop/published_workshops',        controller: :workshops,     action: :published_workshops, as: :published_workshops
     get   '/event/register/:id/new',                    controller: :registrations, action: :new,                as: :register_new
     post  '/event/register/:id/create',                 controller: :registrations, action: :create,             as: :register_create, via: :post
     get   '/event/register/success/(:uuid)',            controller: :registrations, action: :success,            as: :register_success

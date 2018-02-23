@@ -33,7 +33,7 @@ class Registration < ApplicationRecord
   scope                         :unpaid,    -> { where("aasm_state = 'accepted' AND archived_on IS NULL") } # same as accepted
   scope                         :writtenoff,    -> { where("writtenoff_on IS NOT NULL" ) }
   scope                         :notwrittenoff, -> { where("writtenoff_on IS NULL" ) }
-  scope                         :discounted,-> { where("discount_value > 0") } # use like registrations.attending.discounted
+  scope                         :discounted, -> { where("discount_value > 0") } # use like registrations.attending.discounted
 
   after_initialize              :create_uuid
   before_create                 :set_currency

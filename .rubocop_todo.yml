@@ -14,18 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 17
-# Cop supports --auto-correct.
-Layout/SpaceAfterComma:
-  Exclude:
-    - 'core/app/controllers/dm_core/application_controller.rb'
-    - 'core/lib/dm_core/scio_excel.rb'
-    - 'event/app/datatables/registration_datatable.rb'
-    - 'event/app/models/registration.rb'
-    - 'event/app/models/workshop_price.rb'
-    - 'event/config/routes.rb'
-    - 'forum/app/helpers/dm_forum/forum_helper.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Layout/SpaceAfterMethodName:

@@ -91,7 +91,7 @@ class RegistrationDatatable
   #------------------------------------------------------------------------------
   def action_list(registration)
     actions = registration.aasm.permissible_events
-    actions.sort! {|x,y| x.to_s <=> y.to_s}
+    actions.sort! {|x, y| x.to_s <=> y.to_s}
 
     output = ''
     actions.each do |action|

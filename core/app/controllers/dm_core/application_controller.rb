@@ -194,7 +194,7 @@ class DmCore::ApplicationController < ActionController::Base
   #------------------------------------------------------------------------------
   def view_context
     super.tap do |view|
-      (@_content_for || {}).each do |name,content|
+      (@_content_for || {}).each do |name, content|
         view.content_for name, content
       end
     end

@@ -20,11 +20,11 @@ class WorkshopPrice < ApplicationRecord
   globalize_accessors     locales: I18n.available_locales
 
   monetize                :price_cents, with_model_currency: :price_currency, allow_nil: true,
-                                        numericality: { :greater_than_or_equal_to => 0,:less_than_or_equal_to => 10000000 }
+                                        numericality: { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 10000000 }
   monetize                :alt1_price_cents, with_model_currency: :alt1_price_currency, allow_nil: true,
-                                             numericality: { :greater_than_or_equal_to => 0,:less_than_or_equal_to => 10000000 }
+                                             numericality: { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 10000000 }
   monetize                :alt2_price_cents, with_model_currency: :alt2_price_currency, allow_nil: true,
-                                             numericality: { :greater_than_or_equal_to => 0,:less_than_or_equal_to => 10000000 }
+                                             numericality: { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 10000000 }
 
   include RankedModel
   ranks                   :row_order, with_same: :workshop_id

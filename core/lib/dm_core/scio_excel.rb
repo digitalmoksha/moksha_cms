@@ -193,7 +193,7 @@ module Scio
       # This requires fpdf (http://zeropluszero.com/software/fpdf/)
       def create_pdf(orientation = "L")
         require 'fpdf'
-        raise "Invalid orientation" if !["L","P"].include?(orientation)
+        raise "Invalid orientation" if !["L", "P"].include?(orientation)
 
         pdf = FPDF.new
         # default font
@@ -214,7 +214,7 @@ module Scio
           fstyle = String.new
           fstyle << "B" if hstyle.font[:bold]
           fstyle << "I" if hstyle.font[:italic]
-          pdf.SetFont('',fstyle)
+          pdf.SetFont('', fstyle)
           border = 0
           if hstyle.borders > 0
             if hstyle.borders == BORDER_ALL
@@ -238,8 +238,8 @@ module Scio
         pdf.Ln
 
         # reset the styles
-        pdf.SetTextColor(0,0,0)
-        pdf.SetFont('','')
+        pdf.SetTextColor(0, 0, 0)
+        pdf.SetFont('', '')
 
         # draw the rows
         @rows.each do |r|
@@ -257,7 +257,7 @@ module Scio
             fstyle = String.new
             fstyle << "B" if cstyle.font[:bold]
             fstyle << "I" if cstyle.font[:italic]
-            pdf.SetFont('',fstyle)
+            pdf.SetFont('', fstyle)
             border = 0
             if cstyle.borders > 0
               if cstyle.borders == BORDER_ALL
@@ -493,9 +493,9 @@ class String
     raise "Invalid Hex Color" if self.size != 7 || self[0] != 35
 
     rgb = Hash.new
-    rgb[:red]   = self[1,2].to_i(16)
-    rgb[:green] = self[3,2].to_i(16)
-    rgb[:blue]  = self[5,2].to_i(16)
+    rgb[:red]   = self[1, 2].to_i(16)
+    rgb[:green] = self[3, 2].to_i(16)
+    rgb[:blue]  = self[5, 2].to_i(16)
     rgb
   end
 end
