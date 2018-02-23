@@ -24,7 +24,7 @@ namespace :common do
 
     # TODO not necessary and always problematic
     # puts "Precompiling assets..."
-    # system("bundle exec rake assets:precompile > #{File::NULL}") # rubocop:disable GitlabSecurity/SystemCommandInjection
+    # system("bundle exec rake assets:precompile > #{File::NULL}")
   end
 
   task :seed do |_t|

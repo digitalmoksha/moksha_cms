@@ -3,12 +3,12 @@ require 'spec_helper'
 
 # include LoginMacros
 
-feature 'myfeature' do
-  background do
+describe 'myfeature' do
+  before do
     # add setup details
   end
 
-  scenario 'my first test', :pending do
+  it 'my first test', :pending do
     # write the example!
     admin = create(:admin_user)
     sign_in admin
