@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
   s.files       = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files  = Dir["spec/**/*"]
 
-  s.add_dependency 'dm_core', s.version
   s.add_dependency 'dm_cms', s.version
+  s.add_dependency 'dm_core', s.version
 
   #--- don't forget to add 'require' statement in engine.rb
 end

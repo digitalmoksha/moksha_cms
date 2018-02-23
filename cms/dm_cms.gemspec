@@ -14,10 +14,9 @@ Gem::Specification.new do |s|
   s.files       = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files  = Dir["spec/**/*"]
 
-  s.add_dependency 'dm_core', s.version
+  # dont' forget to add 'require' statement in engine.rb
   s.add_dependency 'dm_admin', s.version
-
-  #--- dont' forget to add 'require' statement in engine.rb
-  s.add_dependency 'meta-tags-helpers', '~> 0.2.0'
+  s.add_dependency 'dm_core', s.version
   s.add_dependency 'mail_form', '~> 1.6.0'
+  s.add_dependency 'meta-tags-helpers', '~> 0.2.0'
 end
