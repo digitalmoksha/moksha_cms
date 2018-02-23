@@ -1,12 +1,9 @@
 #------------------------------------------------------------------------------
 class Account < ApplicationRecord
 
-  class DomainNotFound < StandardError
-  end
-  class NotSetup < StandardError
-  end
-  class LoginRequired < StandardError
-  end
+  DomainNotFound  = Class.new(StandardError)
+  NotSetup        = Class.new(StandardError)
+  LoginRequired   = Class.new(StandardError)
 
   CURRENCY_TYPES    = { 'British Pound (&pound;)'.html_safe => 'GBP',
                         'Czech Koruna (&#x4B;&#x10D;)'.html_safe => 'CZK',

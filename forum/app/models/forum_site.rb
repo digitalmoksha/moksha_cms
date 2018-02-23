@@ -1,5 +1,5 @@
 class ForumSite < ApplicationRecord
-  class UndefinedError < StandardError; end
+  UndefinedError  = Class.new(StandardError)
 
   self.table_name           = 'fms_forum_sites'
 
@@ -12,7 +12,6 @@ class ForumSite < ApplicationRecord
 
   attr_readonly             :comments_count, :forum_topics_count, :users_online
 
-
   # There is only one forum site per account
   #------------------------------------------------------------------------------
   def self.site
@@ -23,5 +22,4 @@ class ForumSite < ApplicationRecord
   def ordered_forums
     forums
   end
-
 end
