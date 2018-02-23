@@ -14,12 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/AlignArray:
-  Exclude:
-    - 'core/config/initializers/friendly_id.rb'
-
 # Offense count: 16
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
