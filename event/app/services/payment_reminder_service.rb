@@ -1,6 +1,6 @@
 class PaymentReminderService
 
-  REMINDER_SCHEDULE = [14, 30, 60]
+  REMINDER_SCHEDULE = [14, 30, 60].freeze
 
   # Send out payment reminder emails to unpaid attendees
   #------------------------------------------------------------------------------

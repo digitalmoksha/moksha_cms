@@ -14,7 +14,7 @@ class Account < ApplicationRecord
                         'Indian Rupee (Rs)' => 'INR',
                         'Japanese Yen (&yen;)'.html_safe => 'JPY',
                         'Swiss Franc (Fr)' => 'CHF',
-                        'US Dollar ($)' => 'USD' }
+                        'US Dollar ($)' => 'USD' }.freeze
 
   self.table_name   = 'core_accounts'
 

@@ -4,7 +4,7 @@ require 'devise'
 #------------------------------------------------------------------------------
 module LoginMacros
 
-  TEST_DOMAIN = 'test.example.com'
+  TEST_DOMAIN = 'test.example.com'.freeze
 
   #------------------------------------------------------------------------------
   def login_admin

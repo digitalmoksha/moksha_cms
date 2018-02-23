@@ -1,9 +1,9 @@
 module DmCore
   module AccountHelper
 
-    PROTECTED_ASSETS_FOLDER = 'protected_assets'
-    PROTECTED_ASSET_TRIGGER = 'protected_asset'  # name used to trigger the special route
-    SITE_ASSETS_FOLDER      = 'site_assets'
+    PROTECTED_ASSETS_FOLDER = 'protected_assets'.freeze
+    PROTECTED_ASSET_TRIGGER = 'protected_asset'.freeze  # name used to trigger the special route
+    SITE_ASSETS_FOLDER      = 'site_assets'.freeze
 
     #------------------------------------------------------------------------------
     def current_account

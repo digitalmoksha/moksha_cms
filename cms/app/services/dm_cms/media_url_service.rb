@@ -6,7 +6,7 @@ module DmCms
     include DmCore::ServiceSupport
     include DmCore::AccountHelper
 
-    IMAGE_MISSING = '/image_missing.png'
+    IMAGE_MISSING = '/image_missing.png'.freeze
 
     #------------------------------------------------------------------------------
     def initialize(src, options = {})

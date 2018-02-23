@@ -8,17 +8,17 @@ class CmsSnippet < ApplicationRecord
     has_paper_trail
   end
 
-  # --- FriendlyId
+  # FriendlyId
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
 
   default_scope         { where(account_id: Account.current.id) }
 
-  # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
+  # globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
   translates            :content, :fallbacks_for_empty_translations => true
   globalize_accessors   locales: I18n.available_locales
 
-  # --- versioning - skip anything translated
+  # versioning - skip anything translated
   has_paper_trail       :skip => :content
 
   # --- validations
@@ -28,7 +28,7 @@ class CmsSnippet < ApplicationRecord
   validates             :content, liquid: { :locales => true }, presence_default_locale: true
 
   # --- content types supported
-  CONTENT_TYPES = [ 'Markdown', 'Textile', 'HTML' ]
+  CONTENT_TYPES = [ 'Markdown', 'Textile', 'HTML' ].freeze
 
   #------------------------------------------------------------------------------
   def is_published?

@@ -41,7 +41,7 @@ class WorkshopPrice < ApplicationRecord
     validates_length_of     :"price_description_#{locale}", maximum: 255
   end
 
-  PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Sofort', 'Wire Transfer']
+  PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Sofort', 'Wire Transfer'].freeze
 
   # For some reason, the initial monetized price gets created with the default
   # Money currency.  Need to use the current currency, as the internal fractional

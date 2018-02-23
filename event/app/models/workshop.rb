@@ -73,7 +73,7 @@ class Workshop < ApplicationRecord
   #--- don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
   monetize                :funding_goal_cents, with_model_currency: :base_currency
 
-  EVENT_STYLES = [['Workshop', 'workshop'], ['Crowdfunding', 'crowdfunding']]
+  EVENT_STYLES = [['Workshop', 'workshop'], ['Crowdfunding', 'crowdfunding']].freeze
 
   #------------------------------------------------------------------------------
   def model_slug

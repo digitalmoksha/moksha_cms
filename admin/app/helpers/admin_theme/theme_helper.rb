@@ -52,7 +52,7 @@ CommonIcons = {
   users:            'fa fa-users fa-fw',
   view:             'fa fa-search fa-fw',
   wrench:           'fa fa-wrench fa-fw'
-}
+}.freeze
 
 module AdminTheme
   module ThemeHelper
