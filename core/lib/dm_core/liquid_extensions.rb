@@ -5,7 +5,6 @@
 module Liquid
   class Template
     class << self
-
       #------------------------------------------------------------------------------
       def register_tag(name, klass)
         register_tag_namespace(name, klass)
@@ -28,7 +27,7 @@ module Liquid
           t.merge!(tags_namespaced(Account.current.parent_theme)) if Account.current.parent_theme
           t.merge!(tags_namespaced(Account.current.current_theme))
         end
-        return t
+        t
       end
 
       #------------------------------------------------------------------------------
@@ -47,7 +46,7 @@ module LiquidExtensions
     # http://robots.thoughtbot.com/post/159806314/custom-tags-in-liquid
     #------------------------------------------------------------------------------
     def render_erb(context, file_name, locals = {})
-      context.registers[:controller].send(:render_to_string, :partial => file_name, :locals => locals)
+      context.registers[:controller].send(:render_to_string, partial: file_name, locals: locals) # rubocop:disable GitlabSecurity/PublicSend
     end
 
     #------------------------------------------------------------------------------
@@ -68,12 +67,12 @@ module DmCore
   class LiquidTag < Liquid::Tag
     include LiquidExtensions::Helpers
 
-    SimpleSyntax = /#{Liquid::QuotedFragment}/
-    NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/
+    SimpleSyntax = /#{Liquid::QuotedFragment}/ # rubocop:disable Naming/ConstantName
+    NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/ # rubocop:disable Naming/ConstantName
 
     #------------------------------------------------------------------------------
     def initialize(tag_name, markup, tokens)
-      @attributes    = {}
+      @attributes = {}
       markup.scan(Liquid::TagAttributes) do |key, value|
         @attributes[key] = ((value.delete "\"").delete "\'")
       end
@@ -83,10 +82,11 @@ module DmCore
     class << self
       #------------------------------------------------------------------------------
       def tag_name
-        self.name.split('::').last.underscore
+        name.split('::').last.underscore
       end
+
       def details
-        { name: self.tag_name, summary: '', description: '', example: '', category: '' }
+        { name: tag_name, summary: '', description: '', example: '', category: '' }
       end
     end
   end
@@ -96,12 +96,12 @@ module DmCore
   class LiquidBlock < Liquid::Block
     include LiquidExtensions::Helpers
 
-    SimpleSyntax = /#{Liquid::QuotedFragment}/
-    NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/
+    SimpleSyntax = /#{Liquid::QuotedFragment}/ # rubocop:disable Naming/ConstantName
+    NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/ # rubocop:disable Naming/ConstantName
 
     #------------------------------------------------------------------------------
     def initialize(tag_name, markup, tokens)
-      @attributes    = {}
+      @attributes = {}
       markup.scan(Liquid::TagAttributes) do |key, value|
         @attributes[key] = ((value.delete "\"").delete "\'")
       end
@@ -118,10 +118,11 @@ module DmCore
     class << self
       #------------------------------------------------------------------------------
       def tag_name
-        self.name.split('::').last.underscore
+        name.split('::').last.underscore
       end
+
       def details
-        { name: self.tag_name, summary: '', description: '', example: '', category: '' }
+        { name: tag_name, summary: '', description: '', example: '', category: '' }
       end
     end
   end

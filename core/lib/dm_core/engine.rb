@@ -45,7 +45,7 @@ module DmCore
     isolate_namespace DmCore
 
     initializer 'engine.helper' do |app|
-      ActionView::Base.send :include, RenderHelper
+      ActionView::Base.send :include, RenderHelper # rubocop:disable GitlabSecurity/PublicSend
       ActiveSupport.on_load(:action_controller) do
         include DmCore::ApplicationHelper
       end
@@ -57,6 +57,4 @@ module DmCore
       DmCore.initialize_configuration
     end
   end
-
-
 end

@@ -6,7 +6,6 @@ require 'dm_core/scio_excel'
 # Implements CSV Export functionality
 #------------------------------------------------------------------------------
 module CsvExporter
-
   # include Ruport
   # include DmUtilities::RenderingHelper
 
@@ -15,8 +14,6 @@ module CsvExporter
     case options[:format]
     when 'xls'
       excel_export(column_definitions, data_array, options)
-    when 'ruport'
-      # ruport_export(column_definitions, data_array, options)
     else
       csv_export(column_definitions, data_array, options)
     end
@@ -45,26 +42,25 @@ module CsvExporter
   #------------------------------------------------------------------------------
   def csv_export(column_definitions, data_array, options = {})
     options.symbolize_keys
-    outputArray = Array.new
-    csv_string  = CSV.generate do |csv|
-      column_definitions.each { |x| outputArray << x[0] }
-      csv << outputArray
+    output_array = []
+    csv_string   = CSV.generate do |csv|
+      column_definitions.each { |x| output_array << x[0] }
+      csv << output_array
 
       data_array.each do |item|
-        outputArray.clear
+        output_array.clear
         column_definitions.each do |x|
           data = get_data_value(item, x[1], options)
-          #data = "\"#{data}\"" if data.include?(',') #--- add quotes if comma included
-          outputArray << data
+          # data = "\"#{data}\"" if data.include?(',') #--- add quotes if comma included
+          output_array << data
         end
-        csv << outputArray
+        csv << output_array
       end
     end
-    if options[:filename]
-      send_data csv_string, :filename => to_csv_filename(options[:filename]), :disposition => 'attachment', :type => 'text/csv'
-    else
-      return csv_string
-    end
+
+    return csv_string unless options[:filename]
+
+    send_data csv_string, filename: to_csv_filename(options[:filename]), disposition: 'attachment', type: 'text/csv'
   end
 
   # Exports data to a CSV formatted file, using columns directly from a table
@@ -72,9 +68,9 @@ module CsvExporter
   # data_array: an array of hashes (link from a find)
   #------------------------------------------------------------------------------
   def csv_export_rawtable(table_name, data_array, options = {})
-    column_definitions = Array.new
-    for column in eval("#{table_name}.content_columns")
-        column_definitions << [column.name, column.name]
+    column_definitions = []
+    eval("#{table_name}.content_columns").each do |column|
+      column_definitions << [column.name, column.name]
     end
     csv_export(column_definitions, data_array, options)
   end
@@ -102,8 +98,8 @@ module CsvExporter
   #------------------------------------------------------------------------------
   def excel_export(column_definitions, data_array, options = {})
     options.symbolize_keys
-    rows      = Array.new
-    columns   = Array.new
+    rows      = []
+    columns   = []
 
     #--- create the workbook
     wb          = Scio::Excel::SimpleWorkbook.new(to_excel_filename(options[:filename] ? options[:filename] : 'Workbook'))
@@ -129,50 +125,48 @@ module CsvExporter
     wb.columns  = columns
     wb.rows     = rows
 
-    if options[:filename]
-      send_data wb.create, :filename => to_excel_filename(options[:filename]), :disposition => 'attachment', :type => 'application/excel'
-    else
-      return wb.create
-    end
+    return return wb.create unless options[:filename]
+
+    send_data wb.create, filename: to_excel_filename(options[:filename]), disposition: 'attachment', type: 'application/excel'
   end
 
-=begin
   #------------------------------------------------------------------------------
-  def ruport_export(column_definitions, data_array, options = {})
-    options.symbolize_keys
-    output_array = Array.new
-    column_array = Array.new
+  # def ruport_export(column_definitions, data_array, options = {})
+  #   options.symbolize_keys
+  #   output_array = []
+  #   column_array = []
+  #
+  #   column_definitions.each { |x| column_array << x[0] }
+  #
+  #   table = Table(column_array) do |t|
+  #     data_array.each do |item|
+  #       output_array.clear
+  #       column_definitions.each do |x|
+  #         value = get_data_value(item, x[1], options)
+  #         output_array << convert_value(value, x[3])
+  #       end
+  #       t << output_array
+  #     end
+  #   end
+  #   return table
+  # end
 
-    column_definitions.each { |x| column_array << x[0] }
+  private
 
-    table = Table(column_array) do |t|
-      data_array.each do |item|
-        output_array.clear
-        column_definitions.each do |x|
-          value = get_data_value(item, x[1], options)
-          output_array << convert_value(value, x[3])
-        end
-        t << output_array
-      end
-    end
-    return table
-  end
-=end
-
-private
   #------------------------------------------------------------------------------
   def get_data_value(item, data_def, options)
     begin
-      if item.is_a? Hash
-        value = options[:expressions] ? eval('(' + data_def + ').to_s') : eval('item[' + data_def + '].to_s')
-      else
-        value = options[:expressions] ? eval('(' + data_def + ').to_s') : eval('item.' + data_def + '.to_s')
-      end
-    rescue
-      #--- catch any nil references
+      value = if item.is_a? Hash
+                options[:expressions] ? eval('(' + data_def + ').to_s') : eval('item[' + data_def + '].to_s')
+              else
+                options[:expressions] ? eval('(' + data_def + ').to_s') : eval('item.' + data_def + '.to_s')
+              end
+    rescue StandardError
+      # catch any nil references
       value = nil
     end
-    return value.nil? ? '' : value.gsub(/[\r\n]/, '')  # strip off \r and \n
+
+    value.nil? ? '' : value.gsub(/[\r\n]/, '') # strip off \r and \n
   end
 
   # Use the column_options to change data to a specific type
@@ -182,18 +176,17 @@ private
       case column_options[:type]
       when 'Number'
         return value.to_i
-      when 'link'
       end
     end
 
-    return value
+    value
   end
 
   #------------------------------------------------------------------------------
   def to_csv_filename(title)
     the_time    = Time.now
     file_prefix = "#{the_time.year}_#{the_time.mon}_#{the_time.day}_"
-    filename    = (file_prefix + title.gsub(/[^\w\.\-]/,'_')).squeeze('_')
+    filename    = (file_prefix + title.gsub(/[^\w\.\-]/, '_')).squeeze('_')
     filename + '.csv'
   end
 
@@ -203,7 +196,7 @@ private
   def to_excel_filename(title)
     the_time    = Time.now
     file_prefix = "#{the_time.year}_#{the_time.mon}_#{the_time.day}_"
-    filename    = (file_prefix + title.gsub(/[^\w\.\-]/,'_')).squeeze('_')
+    filename    = (file_prefix + title.gsub(/[^\w\.\-]/, '_')).squeeze('_')
     # --- removed filename length limit - put back if problems occur : (filename.length > 27 ? filename[0...27] : filename) + '.xls'
     filename + '.xls'
   end

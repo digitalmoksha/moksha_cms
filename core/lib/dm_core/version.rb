@@ -1,3 +1,3 @@
 module DmCore
-  VERSION = "5.0.54"
+  VERSION = '5.0.54'.freeze
 end

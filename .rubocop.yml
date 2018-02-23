@@ -15,6 +15,7 @@ AllCops:
     - '**/bin/**/*'
     - '**/generator_templates/**/*'
     - '**/builds/**/*'
+    - '**/dummy/templates/rails/application.rb'
   CacheRootDirectory: tmp
 
 # This cop checks whether some constant value isn't a
@@ -31,3 +32,9 @@ Style/SymbolArray:
 # allow ['Japan', 'Japan']
 Style/WordArray:
   Enabled: false
+
+# Lint/Syntax:
+#   Exclude:
+#     - '**/dummy/templates/rails/application.rb'
+
+

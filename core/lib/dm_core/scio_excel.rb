@@ -87,7 +87,7 @@ module Scio
     #   stc.text[:halign] = "Left"
     #
     #   # create the columns
-    #   columns = Array.new
+    #   columns = []
     #   columns << Scio::Excel::Column.new("Nombre Cliente", :width => 150, :header_style => sth)
     #   columns << Scio::Excel::Column.new("R.U.T", :width => 40, :header_style => sth)
     #
@@ -299,7 +299,7 @@ module Scio
       #   wb = Scio::Excel::SimpleWorkbook.new("user list")
       #   sth = wb.default_header_style
       #   sth.bgcolor = "#CCFFCC"
-      #   columns = Array.new
+      #   columns = []
       #   # when rendering, the columns will use the default header style, but with a
       #   # bgcolor = #CCFFCC.
       #   columns << Scio::Excel::Column.new("User Name", :width => 276.75)

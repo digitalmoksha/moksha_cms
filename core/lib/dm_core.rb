@@ -10,7 +10,6 @@ require 'dm_core/csv_importer'
 include Nls
 
 module DmCore
-
   # DmCore configuration values are hung off of the Rails.application.config
   # object and can be accessed as either `DmCore.config.valuename` or
   # `Rails.application.config.dm_core.valuename`
@@ -29,10 +28,9 @@ module DmCore
   def self.initialize_configuration
     Rails.application.config.dm_core = ActiveSupport::OrderedOptions.new
     DmCore.configure do |config|
-      config.locales        = [ :en ]
+      config.locales        = [:en]
       config.default_locale = :en
       config.enable_themes  = false
     end
   end
-
 end

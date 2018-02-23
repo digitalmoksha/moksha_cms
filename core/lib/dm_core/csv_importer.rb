@@ -7,7 +7,7 @@ module CsvImporter
   # import data from CSV file and return an Array of Hashes
   #------------------------------------------------------------------------------
   def csv_import(the_file)
-    import_list = Array.new
+    import_list = []
     CSV.foreach(the_file, headers: true) do |row|
       import_list << row.to_hash
     end
