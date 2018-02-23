@@ -14,5 +14,4 @@ class LessonPresenter < LmsCommonPresenter
   #       source.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
-
 end

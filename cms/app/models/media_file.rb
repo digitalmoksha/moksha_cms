@@ -1,6 +1,5 @@
 #------------------------------------------------------------------------------
 class MediaFile < ApplicationRecord
-
   self.table_name = 'cms_media_files'
 
   translates              :title, :description, fallbacks_for_empty_translations: true
@@ -96,5 +95,4 @@ class MediaFile < ApplicationRecord
       self.tag_list.add(media.file.extension)
     end
   end
-
 end

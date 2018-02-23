@@ -2,7 +2,6 @@
 #   Holds multiple lesson pages
 #------------------------------------------------------------------------------
 class Lesson < ApplicationRecord
-
   self.table_name         = 'lms_lessons'
 
   # --- globalize

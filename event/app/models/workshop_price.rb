@@ -8,7 +8,6 @@
 # the prices in the two currencies.
 #------------------------------------------------------------------------------
 class WorkshopPrice < ApplicationRecord
-
   self.table_name         = 'ems_workshop_prices'
 
   belongs_to              :workshop
@@ -160,5 +159,4 @@ class WorkshopPrice < ApplicationRecord
     end
     return @bank
   end
-
 end

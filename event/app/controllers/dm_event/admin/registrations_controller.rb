@@ -126,5 +126,4 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
       @registration = nil if @registration.user_profile_id != current_user.user_profile.id
     end
   end
-
 end

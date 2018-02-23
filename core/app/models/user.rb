@@ -16,7 +16,5 @@
 # allows us to know if someone has ever logged into a specific site.
 #------------------------------------------------------------------------------
 class User < ApplicationRecord
-
   include DmCore::Concerns::User
-
 end

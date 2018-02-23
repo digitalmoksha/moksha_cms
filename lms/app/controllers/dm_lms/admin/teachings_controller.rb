@@ -72,5 +72,4 @@ class DmLms::Admin::TeachingsController < DmLms::Admin::AdminController
     @lesson_page  = @teaching.lesson_page
     @lesson       = @lesson_page.lesson
   end
-
 end

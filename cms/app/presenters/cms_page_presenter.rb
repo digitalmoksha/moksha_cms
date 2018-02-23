@@ -1,5 +1,4 @@
 class CmsPagePresenter < BasePresenter
-
   presents :cms_page
 
   #------------------------------------------------------------------------------

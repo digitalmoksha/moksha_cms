@@ -1,6 +1,5 @@
 #------------------------------------------------------------------------------
 class DmCore::Language < ApplicationRecord # :nodoc:
-
   self.table_name = "globalize_languages"
 
   # Given the short name of a language, get the associated language object

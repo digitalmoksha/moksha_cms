@@ -2,7 +2,6 @@
 # All mailers should inherit from this class
 #------------------------------------------------------------------------------
 class DmCore::SiteMailer < ApplicationMailer
-
   layout 'email_templates/default_email_layout'
 
   class DynamicSettingsInterceptor

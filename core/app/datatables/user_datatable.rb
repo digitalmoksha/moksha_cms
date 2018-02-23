@@ -71,5 +71,4 @@ class UserDatatable
   def sort_direction
     params[:sSortDir_0] == "desc" ? "desc" : "asc"
   end
-
 end

@@ -1,6 +1,5 @@
 #------------------------------------------------------------------------------
 class Category < ApplicationRecord
-
   self.table_name       = 'core_categories'
 
   include RankedModel
@@ -14,5 +13,4 @@ class Category < ApplicationRecord
   globalize_accessors   locales: I18n.available_locales
 
   validates             :name, presence_default_locale: true
-
 end

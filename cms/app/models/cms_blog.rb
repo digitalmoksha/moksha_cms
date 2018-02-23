@@ -98,5 +98,4 @@ class CmsBlog < ApplicationRecord
   #   posts = CmsPost.published.includes(:cms_blog).where(cms_blogs: {published: true}).where(notification_sent_on: nil)
   #   posts.each {|post| post.send_notification_emails }
   # end
-
 end

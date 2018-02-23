@@ -1,5 +1,4 @@
 class DmLms::CoursesController < DmLms::ApplicationController
-
   before_action   :course_lookup, :except =>  [:index]
 
   layout    'course_templates/course_list', :only => [:index]
@@ -27,5 +26,4 @@ class DmLms::CoursesController < DmLms::ApplicationController
     @course = Course.friendly.find(params[:course_slug])
     authorize! :read, @course
   end
-
 end

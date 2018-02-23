@@ -2,7 +2,5 @@
 # `helpers` (aka `h`).
 #------------------------------------------------------------------------------
 class ForumCommentPresenter < CommentPresenter
-
   presents :forum_comment
-
 end

@@ -180,5 +180,4 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   def workshop_lookup
     @workshop = Workshop.friendly.find(params[:id])
   end
-
 end

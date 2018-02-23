@@ -30,5 +30,4 @@ class RegistrationPresenter < EventCommonPresenter
       '-'
     end
   end
-
 end

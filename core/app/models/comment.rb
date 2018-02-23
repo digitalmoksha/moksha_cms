@@ -21,5 +21,4 @@ class Comment < ApplicationRecord
   validates_presence_of   :body
   validates_length_of     :body, maximum: 60000
   self.per_page = 10
-
 end

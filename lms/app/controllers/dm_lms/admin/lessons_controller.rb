@@ -90,5 +90,4 @@ class DmLms::Admin::LessonsController < DmLms::Admin::AdminController
     @lesson = Lesson.friendly.find(params[:id])
     @course = @lesson.course
   end
-
 end

@@ -42,6 +42,5 @@ class Course < ApplicationRecord
   def model_slug
     send("title_#{Account.current.preferred_default_locale}")
   end
-
 end
 

@@ -1,5 +1,4 @@
 class PaymentReminderMailer < DmCore::SiteMailer
-
   helper  DmCore::LiquidHelper
   helper  DmCore::UrlHelper
   helper  DmCore::AccountHelper
@@ -21,5 +20,4 @@ class PaymentReminderMailer < DmCore::SiteMailer
          template_path: 'layouts/email_templates',
          template_name: 'dm_event_payment_reminder')
   end
-
 end

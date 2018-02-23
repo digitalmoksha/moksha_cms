@@ -1,5 +1,4 @@
 class ColorPickerInput < SimpleForm::Inputs::StringInput
-
   #------------------------------------------------------------------------------
   def input(wrapper_options)
     template.content_tag :div, class: 'input-group colorpicker-component' do

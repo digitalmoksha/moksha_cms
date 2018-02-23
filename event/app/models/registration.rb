@@ -169,5 +169,4 @@ class Registration < ApplicationRecord
     end
     return column_definitions
   end
-
 end

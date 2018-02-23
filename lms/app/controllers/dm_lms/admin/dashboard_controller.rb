@@ -1,5 +1,4 @@
 class DmLms::Admin::DashboardController < DmLms::Admin::AdminController
-
   #------------------------------------------------------------------------------
   def widget_lesson_comments
     @comment_day  = params[:comment_day].to_i
@@ -13,5 +12,4 @@ class DmLms::Admin::DashboardController < DmLms::Admin::AdminController
       format.js
     end
   end
-
 end

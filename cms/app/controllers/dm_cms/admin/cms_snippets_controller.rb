@@ -69,5 +69,4 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
     text = 'Snippets'
     content_for :content_title, text
   end
-
 end

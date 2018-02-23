@@ -18,5 +18,4 @@ class CoursePresenter < LmsCommonPresenter
   def icon
     'fa fa-book'
   end
-
 end

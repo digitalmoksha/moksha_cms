@@ -57,5 +57,4 @@ class CustomFieldDef < ApplicationRecord
   #     !(disabled? || (!valid_until.nil? && valid_until < Time.now.to_date))
   #   end
   #
-
 end

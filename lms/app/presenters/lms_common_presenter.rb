@@ -23,5 +23,4 @@ class LmsCommonPresenter < BasePresenter
     arguments.reverse_merge!(current_user.to_liquid) if current_user
     DmLms.config.use_markdown ? liquidize_markdown(model.content, arguments) : liquidize_textile(model.content, arguments)
   end
-
 end

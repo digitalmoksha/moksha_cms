@@ -1,5 +1,4 @@
 class RegistrationNotifyMailer < DmCore::SiteMailer
-
   helper  DmCore::LiquidHelper
   helper  DmCore::UrlHelper
   helper  DmCore::AccountHelper
@@ -28,5 +27,4 @@ class RegistrationNotifyMailer < DmCore::SiteMailer
       format.html { render "layouts/email_templates/dm_event_registration_notify.html.erb" }
     end
   end
-
 end

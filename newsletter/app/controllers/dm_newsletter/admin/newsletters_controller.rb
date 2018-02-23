@@ -77,5 +77,4 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
       true
     end
   end
-
 end

@@ -10,5 +10,4 @@ class DmCms::Admin::AdminController  < DmCore::Admin::AdminController
       redirect_to current_account.index_path
     end
   end
-
 end

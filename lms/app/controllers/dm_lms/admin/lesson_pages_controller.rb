@@ -60,5 +60,4 @@ class DmLms::Admin::LessonPagesController < DmLms::Admin::AdminController
   def template_setup
     content_for :content_title, 'Lesson Pages'
   end
-
 end

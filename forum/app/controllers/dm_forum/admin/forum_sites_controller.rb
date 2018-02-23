@@ -35,5 +35,4 @@ class DmForum::Admin::ForumSitesController < DmForum::Admin::AdminController
   def forum_site_lookup
     @forum_site = ForumSite.site
   end
-
 end

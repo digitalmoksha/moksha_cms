@@ -1,6 +1,5 @@
 module Liquid
   class Quote < DmCore::LiquidBlock
-
     #------------------------------------------------------------------------------
     def render(context)
       @attributes.reverse_merge!  'class' => '', 'id' => '', 'style' => '', 'author' => ''

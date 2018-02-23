@@ -18,5 +18,4 @@ class WorkshopPresenter < EventCommonPresenter
   def start_end_date
     format_date_range(model.starting_on, model.ending_on)
   end
-
 end

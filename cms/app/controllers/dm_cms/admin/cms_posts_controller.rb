@@ -69,5 +69,4 @@ class DmCms::Admin::CmsPostsController < DmCms::Admin::AdminController
   def post_lookup
     @post = @blog.posts.friendly.find(params[:id])
   end
-
 end

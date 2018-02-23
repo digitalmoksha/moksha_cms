@@ -1,6 +1,5 @@
 #------------------------------------------------------------------------------
 class Teaching < ApplicationRecord
-
   self.table_name         = 'lms_teachings'
 
   # --- globalize
@@ -19,5 +18,4 @@ class Teaching < ApplicationRecord
     validates_length_of   :"title_#{locale}", maximum: 255
     validates_length_of   :"menutitle_#{locale}", maximum: 255
   end
-
 end

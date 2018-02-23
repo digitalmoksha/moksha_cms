@@ -96,5 +96,4 @@ class CustomField < ApplicationRecord
   # def human_attribute_name(key)
   #   label.blank? ? 'Field' : "'#{nls(label, namespace: 'site_custom_field')}'"
   # end
-
 end

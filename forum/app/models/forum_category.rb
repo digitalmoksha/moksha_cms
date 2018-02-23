@@ -1,5 +1,4 @@
 class ForumCategory < Category
-
   has_many     :forums, :dependent => :destroy
 
   # Are any of the forums readable by this user? One positive is all need...

@@ -234,5 +234,4 @@ class Workshop < ApplicationRecord
   def self.tag_list_all
     Workshop.tag_counts_on(:tags).map(&:name).sort
   end
-
 end

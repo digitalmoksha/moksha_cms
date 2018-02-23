@@ -1,5 +1,4 @@
 class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
-
   # Handle a newsletter signup.  By submitting using a Rails form
   # and then adding via the MailChimp API, it should cut out automated signups
   # from spam bots, because the authenticity token will be validated first.

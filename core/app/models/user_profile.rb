@@ -3,7 +3,5 @@
 # per user record.
 #------------------------------------------------------------------------------
 class UserProfile < ApplicationRecord
-
   include DmCore::Concerns::UserProfile
-
 end

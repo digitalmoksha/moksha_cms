@@ -7,7 +7,6 @@
 #------------------------------------------------------------------------------
 module DmCore
   class S3SignedUrlService
-
     #------------------------------------------------------------------------------
     def initialize(options = {})
       @access_key  = options[:access_key] || Account.current.theme_data['AWS_ACCESS_KEY_ID']

@@ -80,7 +80,6 @@ module WillPaginate
       def html_container(html)
         tag :ul, html, container_attributes
       end
-
     end
 
   end

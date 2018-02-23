@@ -381,7 +381,6 @@ module Scio
         end # Worksheet
         xml.target!
       end
-
     end # SimpleWorkbook
 
     # Defines a Column for the data. You can set different styles for the

@@ -109,5 +109,4 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
     @forum = Forum.friendly.find(params[:id])
     @forum_category = @forum.forum_category
   end
-
 end

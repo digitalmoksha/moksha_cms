@@ -96,5 +96,4 @@ class DmLms::Admin::CoursesController < DmLms::Admin::AdminController
   def course_lookup
     @course = Course.friendly.find(params[:id])
   end
-
 end

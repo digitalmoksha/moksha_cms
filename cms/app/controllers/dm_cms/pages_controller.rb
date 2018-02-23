@@ -49,5 +49,4 @@ class DmCms::PagesController < DmCms::ApplicationController
   #------------------------------------------------------------------------------
   def coming_soon
   end
-
 end

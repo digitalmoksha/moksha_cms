@@ -13,6 +13,5 @@ module DmEvent::Workshops
       @workshop.save
       @workshop
     end
-
   end
 end

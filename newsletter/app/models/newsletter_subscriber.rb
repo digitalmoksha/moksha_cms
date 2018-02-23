@@ -2,7 +2,6 @@
 # temporary object.  Look at caching/syncing subscriber info for performance
 #------------------------------------------------------------------------------
 class NewsletterSubscriber #< ApplicationRecord
-
 =begin
   belongs_to              :newsletter
 
@@ -253,5 +252,4 @@ class NewsletterSubscriber #< ApplicationRecord
   end
 
 =end
-
 end

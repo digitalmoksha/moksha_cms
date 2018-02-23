@@ -44,5 +44,4 @@ class Payment
       end
     end
   end
-
 end

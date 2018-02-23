@@ -24,5 +24,4 @@ class DmEvent::PaymentsController < DmEvent::ApplicationController
 
     head :ok
   end
-
 end

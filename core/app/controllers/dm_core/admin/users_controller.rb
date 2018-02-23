@@ -129,5 +129,4 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
   def template_setup
     content_for :content_title, "User Management"
   end
-
 end

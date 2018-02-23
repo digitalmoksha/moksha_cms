@@ -75,5 +75,4 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
     @workshop_price = WorkshopPrice.find(params[:id])
     @workshop       = @workshop_price.workshop
   end
-
 end

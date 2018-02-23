@@ -125,5 +125,4 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
     content_for :content_title,     @account.nil? ? 'Create a New Site' : @account.domain
     content_for :content_subtitle,  "Site Configuration"
   end
-
 end

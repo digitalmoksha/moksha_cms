@@ -39,5 +39,4 @@ class DmForum::ForumsController < DmForum::ApplicationController
     @forum = Forum.find_by_slug!(params[:id])
     authorize! :read, @forum
   end
-
 end

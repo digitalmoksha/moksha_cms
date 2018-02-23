@@ -1,6 +1,5 @@
 #------------------------------------------------------------------------------
 class Account < ApplicationRecord
-
   DomainNotFound  = Class.new(StandardError)
   NotSetup        = Class.new(StandardError)
   LoginRequired   = Class.new(StandardError)

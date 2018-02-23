@@ -1,6 +1,5 @@
 module DmNewsletter
   class AdminMenuInject
-
     #------------------------------------------------------------------------------
     def self.menu_items(user)
       menu = []
@@ -9,6 +8,5 @@ module DmNewsletter
       end
       return menu
     end
-
   end
 end

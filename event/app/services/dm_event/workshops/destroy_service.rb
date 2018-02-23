@@ -11,6 +11,5 @@ module DmEvent::Workshops
     def call
       @workshop.destroy
     end
-
   end
 end

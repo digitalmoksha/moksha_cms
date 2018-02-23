@@ -39,5 +39,4 @@ class CmsSnippet < ApplicationRecord
   def to_liquid
     {}
   end
-
 end

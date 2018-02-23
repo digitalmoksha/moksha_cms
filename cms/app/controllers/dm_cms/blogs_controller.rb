@@ -45,5 +45,4 @@ class DmCms::BlogsController < DmCms::ApplicationController
     redirect_to blog_root_path and return if @blog.nil?
     authorize! :read, @blog
   end
-
 end

@@ -5,5 +5,4 @@ class TeachingPresenter < LmsCommonPresenter
   def icon
     'fa fa-file-text-o'
   end
-
 end

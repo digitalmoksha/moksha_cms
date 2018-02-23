@@ -1,5 +1,4 @@
 class ForumComment < Comment
-
   #--- counter cache is set in the Comment model
   belongs_to              :forum_topic, :polymorphic => true, :foreign_key => :commentable_id, :foreign_type => :commentable_type
 
@@ -89,5 +88,4 @@ class ForumComment < Comment
   def decrement_forum_counter_cache
     Forum.decrement_counter( 'comments_count', self.forum_topic.forum.id ) unless self.forum_topic.nil?
   end
-
 end

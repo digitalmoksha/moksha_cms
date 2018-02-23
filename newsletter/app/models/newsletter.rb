@@ -1,6 +1,5 @@
 #------------------------------------------------------------------------------
 class Newsletter < ApplicationRecord
-
   self.table_name         = 'email_newsletters'
 
   # [todo] has_many                :newsletter_subscribers, :dependent => :destroy
@@ -41,5 +40,4 @@ class Newsletter < ApplicationRecord
       break random_token unless Newsletter.where(token: random_token).exists?
     end
   end
-
 end

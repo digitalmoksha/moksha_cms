@@ -3,7 +3,6 @@
 #   Each page has a content type, such as a teaching (video/explanation) or quizz
 #------------------------------------------------------------------------------
 class LessonPage < ApplicationRecord
-
   self.table_name         = 'lms_lesson_pages'
 
   extend FriendlyId

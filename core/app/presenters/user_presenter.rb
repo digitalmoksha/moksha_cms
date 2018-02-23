@@ -1,5 +1,4 @@
 class UserPresenter < BasePresenter
-
   presents :user
   #delegate :username, to: :user
 
@@ -42,5 +41,4 @@ class UserPresenter < BasePresenter
     end
     image_tag(avatar, width: size, class: options[:class] ? options[:class] : 'image')
   end
-
 end

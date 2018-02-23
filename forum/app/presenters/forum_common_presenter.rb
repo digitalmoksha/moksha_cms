@@ -27,5 +27,4 @@ class ForumCommonPresenter < BasePresenter
   #
   #   return doc.to_html.html_safe
   # end
-
 end

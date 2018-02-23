@@ -1,5 +1,4 @@
 class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
-
   #------------------------------------------------------------------------------
   def index
     @users = User.all

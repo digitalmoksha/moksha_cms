@@ -1,6 +1,5 @@
 module DmEvent
   class AdminMenuInject
-
     #------------------------------------------------------------------------------
     def self.menu_items(user)
       menu = []
@@ -20,6 +19,5 @@ module DmEvent
 
       return menu
     end
-
   end
 end

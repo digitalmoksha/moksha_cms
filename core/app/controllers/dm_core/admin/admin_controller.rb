@@ -2,7 +2,6 @@
 # scope_current_account gets called through the eventual inheritacne of DmCore::ApplicationController
 #------------------------------------------------------------------------------
 class DmCore::Admin::AdminController < ApplicationController
-
   before_action :authenticate_admin_user!
   before_action :setup_admin_data
   before_action :template_setup
@@ -107,5 +106,4 @@ class DmCore::Admin::AdminController < ApplicationController
   def template_setup
     # to be overridden by other controllers
   end
-
 end

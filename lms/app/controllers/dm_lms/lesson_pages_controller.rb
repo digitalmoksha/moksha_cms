@@ -1,5 +1,4 @@
 class DmLms::LessonPagesController < DmLms::ApplicationController
-
   include DmCore::RenderHelper
 
   before_action   :content_lookup, :except => [:ajax_add_comment, :ajax_delete_comment, ]
@@ -81,5 +80,4 @@ class DmLms::LessonPagesController < DmLms::ApplicationController
     @lesson = @course.lessons.friendly.find(params[:lesson_slug])
     @lesson_page = @lesson.try(:lesson_pages).try(:find_by_slug, params[:content_slug])
   end
-
 end

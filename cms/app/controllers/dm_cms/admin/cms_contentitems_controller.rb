@@ -85,5 +85,4 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
     @cms_contentitem  = CmsContentitem.find(params[:id]) unless params[:id].to_i == 0
     @current_page     = @cms_contentitem.cms_page
   end
-
 end

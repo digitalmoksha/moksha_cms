@@ -76,5 +76,4 @@ class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminControlle
   def category_lookup
     @forum_category = ForumCategory.find(params[:id])
   end
-
 end

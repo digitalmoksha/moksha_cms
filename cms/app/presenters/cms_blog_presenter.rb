@@ -1,5 +1,4 @@
 class CmsBlogPresenter < BasePresenter
-
   presents :cms_blog
 
   #------------------------------------------------------------------------------
@@ -23,5 +22,4 @@ class CmsBlogPresenter < BasePresenter
       vis
     end
   end
-
 end

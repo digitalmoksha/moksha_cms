@@ -1,5 +1,4 @@
 class CommentPresenter < BasePresenter
-
   presents :comment
 
   #------------------------------------------------------------------------------
@@ -16,5 +15,4 @@ class CommentPresenter < BasePresenter
   def author
     comment.user.nil? ? 'Anonymous' : comment.user.display_name
   end
-
 end

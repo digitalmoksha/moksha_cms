@@ -155,5 +155,4 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   def current_page
     @current_page = CmsPage.friendly.find(params[:id])
   end
-
 end

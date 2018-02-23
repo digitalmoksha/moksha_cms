@@ -5,7 +5,5 @@
 #   associations a little more difficult
 #------------------------------------------------------------------------------
 class UserSiteProfile < ApplicationRecord
-
   include DmCore::Concerns::UserSiteProfile
-
 end

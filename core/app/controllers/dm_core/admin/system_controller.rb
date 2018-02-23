@@ -40,5 +40,4 @@ class DmCore::Admin::SystemController < DmCore::Admin::AdminController
     content_for :content_title,     "System Administration"
     content_for :content_subtitle,  "Multi-site Management"
   end
-
 end

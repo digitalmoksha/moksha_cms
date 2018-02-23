@@ -29,5 +29,4 @@ class ForumNotificationMailer < DmCore::SiteMailer
       end
     end
   end
-
 end

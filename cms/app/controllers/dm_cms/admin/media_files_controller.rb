@@ -83,5 +83,4 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def template_setup
   end
-
 end

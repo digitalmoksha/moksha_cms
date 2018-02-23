@@ -3,7 +3,6 @@
 # integration with MailChimp
 #------------------------------------------------------------------------------
 class StandardNewsletter < Newsletter
-
   validates_presence_of   :name
 
   #------------------------------------------------------------------------------
@@ -15,5 +14,4 @@ class StandardNewsletter < Newsletter
   def map_error_to_msg(code)
     #--- [todo] implement
   end
-
 end
