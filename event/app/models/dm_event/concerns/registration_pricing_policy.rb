@@ -110,9 +110,9 @@ module DmEvent
         # Payment was entered manually, create the history record.  You can tell it's
         # a manual entry if the user_profile is filled in - means a human did it.
         #------------------------------------------------------------------------------
-        def manual_payment(payment_history, cost, total_currency, user_profile,
-                           options = { item_ref: '', payment_method: 'cash', bill_to_name: '', payment_date: Time.now,
-                                       notify_data: nil, transaction_id: nil, status: '' } )
+        def manual_payment(payment_history, cost, total_currency, user_profile, options)
+          options ||= { item_ref: '', payment_method: 'cash', bill_to_name: '', payment_date: Time.now,
+                        notify_data: nil, transaction_id: nil, status: '' }
           amount = Monetize.parse(cost, total_currency)
 
           if payment_history
