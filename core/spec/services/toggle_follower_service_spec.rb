@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # hijack this table/object so we can make followable
 class SystemEmail < ApplicationRecord
-  self.table_name       = 'core_system_emails'
+  self.table_name = 'core_system_emails'
   acts_as_followable
 end
 

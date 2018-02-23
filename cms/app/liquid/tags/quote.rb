@@ -2,7 +2,7 @@ module Liquid
   class Quote < DmCore::LiquidBlock
     #------------------------------------------------------------------------------
     def render(context)
-      @attributes.reverse_merge!  'class' => '', 'id' => '', 'style' => '', 'author' => ''
+      @attributes.reverse_merge! 'class' => '', 'id' => '', 'style' => '', 'author' => ''
 
       output  = super
       style   = "style='#{@attributes["style"]}'" unless @attributes['style'].blank?

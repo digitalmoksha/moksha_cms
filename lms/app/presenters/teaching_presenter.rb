@@ -1,5 +1,5 @@
 class TeachingPresenter < LmsCommonPresenter
-  presents  :teaching
+  presents :teaching
 
   #------------------------------------------------------------------------------
   def icon

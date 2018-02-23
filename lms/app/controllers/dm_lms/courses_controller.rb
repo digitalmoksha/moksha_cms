@@ -1,7 +1,7 @@
 class DmLms::CoursesController < DmLms::ApplicationController
-  before_action   :course_lookup, :except =>  [:index]
+  before_action :course_lookup, :except => [:index]
 
-  layout    'course_templates/course_list', :only => [:index]
+  layout 'course_templates/course_list', :only => [:index]
 
   #------------------------------------------------------------------------------
   def index

@@ -6,7 +6,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   # before_action :admin_required, :only => [:edit, :update, :destroy]
   #
 
-  layout    'forum_templates/forum_list'
+  layout 'forum_templates/forum_list'
 
   #------------------------------------------------------------------------------
   def index
@@ -14,7 +14,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
       format.html { redirect_to forum_path(@forum) }
       format.xml  do
         @forum_topics = find_forum.topics.paginate(:page => page_number)
-        render :xml  => @forum_topics
+        render :xml => @forum_topics
       end
     end
   end
@@ -73,7 +73,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
 
   #------------------------------------------------------------------------------
   def toggle_follow
-    @forum_topic  = @forum.forum_topics.find(params[:forum_topic_id])
+    @forum_topic = @forum.forum_topics.find(params[:forum_topic_id])
     DmCore::ToggleFollowerService.new(current_user, @forum_topic).call
   end
 

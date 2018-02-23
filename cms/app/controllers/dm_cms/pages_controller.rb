@@ -39,7 +39,7 @@ class DmCms::PagesController < DmCms::ApplicationController
           end
         end
       }
-      format.any  { head :not_found }
+      format.any { head :not_found }
     end
   end
 

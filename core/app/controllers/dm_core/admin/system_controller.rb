@@ -3,7 +3,7 @@
 class DmCore::Admin::SystemController < DmCore::Admin::AdminController
   include DmCore::PermittedParams
 
-  before_action   :authorize_access
+  before_action :authorize_access
 
   #------------------------------------------------------------------------------
   def show

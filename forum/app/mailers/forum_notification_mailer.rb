@@ -9,7 +9,7 @@ class ForumNotificationMailer < DmCore::SiteMailer
   #------------------------------------------------------------------------------
   def follower_notification(user, topic, comment_list)
     account         = topic.account
-    Account.current = account  # needed so this can run in a background job
+    Account.current = account # needed so this can run in a background job
     locale          = account.verify_locale(user.locale)
     I18n.with_locale(locale) do
       @subject        = "Comments: #{topic.title}"

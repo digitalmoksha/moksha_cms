@@ -11,7 +11,7 @@ FactoryBot.define do
 
     trait :with_recurring do
       recurring_amount 10000
-      recurring_period 30  # days
+      recurring_period 30 # days
       recurring_number 5
     end
   end

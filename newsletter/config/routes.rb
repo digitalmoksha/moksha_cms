@@ -2,7 +2,7 @@ DmNewsletter::Engine.routes.draw do
   scope ":locale" do
     namespace :admin do
       scope 'nms' do
-        patch '/newsletters/synchronize_lists',   :controller => :newsletters, :action => :synchronize_lists
+        patch '/newsletters/synchronize_lists', :controller => :newsletters, :action => :synchronize_lists
         resources :newsletters
       end
     end

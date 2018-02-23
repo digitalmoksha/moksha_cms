@@ -29,7 +29,7 @@ module DmForum
           can :edit, ForumComment, :user_id => user.id
         else
           #--- can only read/see public forums when not logged in
-          can(:read, Forum)   { |forum| forum.can_be_read_by?(user) }
+          can(:read, Forum) { |forum| forum.can_be_read_by?(user) }
         end
       end
 

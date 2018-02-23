@@ -1,6 +1,6 @@
 #Rails.application.routes.prepend do
 DmCore::Engine.routes.draw do
-  get   '/protected_asset/*asset',          controller: :protected_assets, action: :protected_asset, format: false, via: :get
+  get   '/protected_asset/*asset', controller: :protected_assets, action: :protected_asset, format: false, via: :get
   scope ':locale' do
     match '/profile/account',               controller: :profile, action: :account, as: :edit_profile_account, via: [:get, :patch]
     match '/profile/details',               controller: :profile, action: :details, as: :edit_profile_details, via: [:get, :patch]

@@ -7,9 +7,9 @@ class DmCms::BlogsController < DmCms::ApplicationController
   helper  DmCms::PostsHelper
   include DmCore::RenderHelper
 
-  before_action   :blog_lookup, :except =>  [:index, :toggle_follow]
+  before_action :blog_lookup, :except => [:index, :toggle_follow]
 
-  layout    'cms_templates/blog', :only => [:index, :show]
+  layout 'cms_templates/blog', :only => [:index, :show]
 
   #------------------------------------------------------------------------------
   def index

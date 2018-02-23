@@ -27,7 +27,7 @@ class CmsPage < ApplicationRecord
   # --- associations
   has_many                :cms_contentitems, -> { order(:row_order) }, :dependent => :destroy
   has_ancestry            :cache_depth => true
-  before_save             :cache_depth  # fixes bug where depth not recalculated when subtree moved
+  before_save             :cache_depth # fixes bug where depth not recalculated when subtree moved
 
   include RankedModel
   ranks                   :row_order, :with_same => [:account_id, :ancestry]

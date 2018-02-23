@@ -25,7 +25,7 @@ module DmLms
         else
           # can only read published course that doesn't require a subscription
           # can :read, Course, published: true, require_subscription: false
-          can(:read, Course)  { |course| course.can_be_read_by?(user) }
+          can(:read, Course) { |course| course.can_be_read_by?(user) }
         end
       end
 

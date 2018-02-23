@@ -8,7 +8,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
   def action_state
     authorize! :manage_events, @workshop
 
-    @state_event  = params[:state_event].downcase
+    @state_event = params[:state_event].downcase
     case @state_event
     # when 'verify payment'
     #   @registration.verify_payment
@@ -69,7 +69,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def send_payment_reminder
     authorize! :manage_event_registrations, @workshop
-    status  = PaymentReminderService.send_reminder(@registration)
+    status = PaymentReminderService.send_reminder(@registration)
     status ? (flash[:notice] = 'Reminder sent') : (flash[:warning] = 'Reminder failed sending')
     redirect_to action: :edit, id: @registration
   end

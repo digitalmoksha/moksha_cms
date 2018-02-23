@@ -8,7 +8,7 @@ class CmsContentitem < ApplicationRecord
     has_paper_trail
   end
 
-  belongs_to            :cms_page
+  belongs_to :cms_page
 
   include RankedModel
   ranks                 :row_order, with_same: [:account_id, :cms_page_id]

@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
 
   #--- dont' forget to add 'require' statement in engine.rb
   s.add_dependency               "font-awesome-rails"
-  s.add_development_dependency   "will_paginate", "~> 3.1"    # pagination
+  s.add_development_dependency   "will_paginate", "~> 3.1" # pagination
 end

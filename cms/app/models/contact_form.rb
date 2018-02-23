@@ -3,8 +3,8 @@
 #------------------------------------------------------------------------------
 class ContactForm < ::MailForm::Base
   attribute :name,        :validate => true
-  attribute :email,       :validate =>  /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
-  attribute :organization                    # Not validated
+  attribute :email,       :validate => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
+  attribute :organization # Not validated
   attribute :subject,     :validate => true
   attribute :message,     :validate => true
   attribute :reason,      :validate => true

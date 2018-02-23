@@ -13,7 +13,7 @@ describe PaymentReminderService, type: :service do
         registration  = create :registration, workshop: workshop, created_at: 1.days.ago
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
-        registration  = create :registration, workshop: workshop, created_at: 14.days.ago
+        registration = create :registration, workshop: workshop, created_at: 14.days.ago
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
       end
 
@@ -32,11 +32,11 @@ describe PaymentReminderService, type: :service do
         registration.payment_reminder_sent_on = registration.created_at + 2.days
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
-        registration  = create :registration, workshop: workshop, created_at: 14.days.ago
+        registration = create :registration, workshop: workshop, created_at: 14.days.ago
         registration.payment_reminder_sent_on = registration.created_at + 2.days
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
 
-        registration  = create :registration, workshop: workshop, created_at: 20.days.ago
+        registration = create :registration, workshop: workshop, created_at: 20.days.ago
         registration.payment_reminder_sent_on = registration.created_at + 14.days
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
       end
@@ -49,14 +49,14 @@ describe PaymentReminderService, type: :service do
         registration  = create :registration, workshop: workshop, created_at: 1.days.ago
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
-        registration  = create :registration, workshop: workshop, created_at: 14.days.ago
+        registration = create :registration, workshop: workshop, created_at: 14.days.ago
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
 
-        registration  = create :registration, workshop: workshop, created_at: (14 + 30 - 1).days.ago
+        registration = create :registration, workshop: workshop, created_at: (14 + 30 - 1).days.ago
         registration.payment_reminder_sent_on = registration.created_at + 14.days
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
-        registration  = create :registration, workshop: workshop, created_at: (14 + 30).days.ago
+        registration = create :registration, workshop: workshop, created_at: (14 + 30).days.ago
         registration.payment_reminder_sent_on = registration.created_at + 14.days
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
       end
@@ -117,7 +117,7 @@ describe PaymentReminderService, type: :service do
       registration  = create :registration, workshop: workshop, created_at: (Time.now + 2.days)
       expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
-      registration  = create :registration, workshop: workshop, created_at: 80.days.ago
+      registration = create :registration, workshop: workshop, created_at: 80.days.ago
       expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
     end
 
@@ -139,13 +139,13 @@ describe PaymentReminderService, type: :service do
       registration  = create :registration, workshop: workshop, created_at: 3.days.ago
       expect(PaymentReminderService.past_due?(registration)).to eq true
 
-      registration  = create :registration, workshop: workshop, created_at: 8.days.ago
+      registration = create :registration, workshop: workshop, created_at: 8.days.ago
       expect(PaymentReminderService.past_due?(registration)).to eq true
 
-      registration  = create :registration, workshop: workshop, created_at: Time.now
+      registration = create :registration, workshop: workshop, created_at: Time.now
       expect(PaymentReminderService.past_due?(registration)).to eq false
 
-      registration  = create :registration, workshop: workshop, created_at: 8.days.ago, amount_paid_cents: 10000
+      registration = create :registration, workshop: workshop, created_at: 8.days.ago, amount_paid_cents: 10000
       expect(PaymentReminderService.past_due?(registration)).to eq true
     end
 
@@ -155,10 +155,10 @@ describe PaymentReminderService, type: :service do
       registration  = create :registration, workshop: workshop, created_at: 3.days.ago
       expect(PaymentReminderService.past_due?(registration)).to eq true
 
-      registration  = create :registration, workshop: workshop, created_at: 8.days.ago
+      registration = create :registration, workshop: workshop, created_at: 8.days.ago
       expect(PaymentReminderService.past_due?(registration)).to eq true
 
-      registration  = create :registration, workshop: workshop, created_at: 25.days.ago, amount_paid_cents: 10000
+      registration = create :registration, workshop: workshop, created_at: 25.days.ago, amount_paid_cents: 10000
       expect(PaymentReminderService.past_due?(registration)).to eq false
     end
   end

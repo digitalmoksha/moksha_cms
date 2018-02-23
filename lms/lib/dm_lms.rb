@@ -19,7 +19,7 @@ module DmLms
   def self.initialize_configuration
     Rails.application.config.dm_lms = ActiveSupport::OrderedOptions.new
     DmLms.configure do |config|
-      config.use_markdown = true    # if false, Textile is used
+      config.use_markdown = true # if false, Textile is used
     end
   end
 end

@@ -1,7 +1,7 @@
 module DmCore
   module AccountHelper
     PROTECTED_ASSETS_FOLDER = 'protected_assets'.freeze
-    PROTECTED_ASSET_TRIGGER = 'protected_asset'.freeze  # name used to trigger the special route
+    PROTECTED_ASSET_TRIGGER = 'protected_asset'.freeze # name used to trigger the special route
     SITE_ASSETS_FOLDER      = 'site_assets'.freeze
 
     #------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ module DmCore
     # setup the account scope, used for scoping models to an Account
     #------------------------------------------------------------------------------
     def scope_current_account
-      Account.current           = Account.find_account(request.host)
+      Account.current = Account.find_account(request.host)
       #--- set the current request site url for use where request object is not avail,
       #    like in ActionMailer
       Account.current.set_url_parts(request.protocol, request.host_with_port)

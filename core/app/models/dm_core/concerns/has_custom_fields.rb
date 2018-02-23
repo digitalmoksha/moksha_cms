@@ -5,7 +5,7 @@ module DmCore
       extend ActiveSupport::Concern
 
       included do
-        has_many  :custom_fields, as: :owner, dependent: :destroy
+        has_many :custom_fields, as: :owner, dependent: :destroy
         accepts_nested_attributes_for :custom_fields
 
         # Given an object that defines all the custom fields, builds any missing fields

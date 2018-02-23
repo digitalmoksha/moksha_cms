@@ -99,7 +99,7 @@ describe WorkshopPrice, :type => :model do
       expect(workshop_price.to_base_currency(Money.new(285, 'JPY'))).to   eq Money.new(250, 'USD')
 
       workshop_price = WorkshopPrice.new(price: Money.new(500, 'USD'))
-      expect(workshop_price.to_base_currency(Money.new(250, 'USD'))).to   eq Money.new(250, 'USD')
+      expect(workshop_price.to_base_currency(Money.new(250, 'USD'))).to eq Money.new(250, 'USD')
     end
 
     #------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ describe WorkshopPrice, :type => :model do
       start_day       = Time.now.to_date
       expect(workshop_price.last_scheduled_payment_date(start_day)).to eq (start_day + 60.days)
 
-      workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'))
+      workshop_price = WorkshopPrice.new(price: Money.new(500, 'USD'))
       expect(workshop_price.last_scheduled_payment_date(start_day)).to eq start_day
     end
   end

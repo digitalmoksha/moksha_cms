@@ -3,7 +3,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   include DmCore::PermittedParams
   include CsvExporter
 
-  before_action   :workshop_lookup, except: [:index, :new, :create, :user_outstanding_balances, :send_payment_reminder_emails]
+  before_action :workshop_lookup, except: [:index, :new, :create, :user_outstanding_balances, :send_payment_reminder_emails]
 
   helper DmEvent::WorkshopsHelper
 

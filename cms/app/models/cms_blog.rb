@@ -33,7 +33,7 @@ class CmsBlog < ApplicationRecord
   validates_length_of       :header_image, maximum: 255
   validates_length_of       :image_email_header, maximum: 255
   I18n.available_locales.each do |locale|
-    validates_length_of     :"title_#{locale}", maximum: 255
+    validates_length_of :"title_#{locale}", maximum: 255
   end
 
   #------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ class CmsBlog < ApplicationRecord
   # one.
   #------------------------------------------------------------------------------
   def self.recent_posts(options = {user: nil, limit: 5, blog: nil})
-    if options[:blog].nil?  # get all available to user
+    if options[:blog].nil? # get all available to user
       query_blogs = CmsBlog.available_to_user(options[:user]).map(&:id)
     else
       query_blogs = CmsBlog.friendly.find(options[:blog])

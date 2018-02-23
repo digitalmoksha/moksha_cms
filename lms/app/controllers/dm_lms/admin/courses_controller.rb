@@ -3,7 +3,7 @@ class DmLms::Admin::CoursesController < DmLms::Admin::AdminController
 
   helper DmLms::ApplicationHelper
 
-  before_action   :course_lookup, :except =>  [:index, :new, :create]
+  before_action :course_lookup, :except => [:index, :new, :create]
 
   # GET /admin/courses, GET /admin/courses.json
   #------------------------------------------------------------------------------

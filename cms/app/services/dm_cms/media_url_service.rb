@@ -22,7 +22,7 @@ module DmCms
 
       if @src.absolute_url?
         if @src.start_with?('s3://', 's3s://')
-          DmCore::S3SignedUrlService.new.generate(@src)  # amazon S3 url - generate a signed expiring link
+          DmCore::S3SignedUrlService.new.generate(@src) # amazon S3 url - generate a signed expiring link
         else
           @src
         end

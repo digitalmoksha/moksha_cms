@@ -1,7 +1,7 @@
 class DmLms::LessonPagesController < DmLms::ApplicationController
   include DmCore::RenderHelper
 
-  before_action   :content_lookup, :except => [:ajax_add_comment, :ajax_delete_comment, ]
+  before_action :content_lookup, :except => [:ajax_add_comment, :ajax_delete_comment, ]
 
   # GET /learn/:course_slug/:lesson_slug/:content_slug
   # GET /learn/:course_slug/:lesson_slug/:content_slug.json
@@ -38,7 +38,7 @@ class DmLms::LessonPagesController < DmLms::ApplicationController
         @practice_history.reset_history
       end
 
-      @study_items      = @practice_history.study_items.shuffle
+      @study_items = @practice_history.study_items.shuffle
       render 'show_quiz', layout: 'course_templates/quiz_with_sidebar'
     else
       flash.now[:error] = 'A practice set needs to be specified'
@@ -48,7 +48,7 @@ class DmLms::LessonPagesController < DmLms::ApplicationController
 
   #------------------------------------------------------------------------------
   def ajax_add_comment
-    @lesson_page  = LessonPage.friendly.find(params[:lesson_page_id])
+    @lesson_page = LessonPage.friendly.find(params[:lesson_page_id])
     # @lesson_page.comments.create(:body => params[:body], :user_id => current_user.id)
     @lesson_page.comments.create(:body => params[:comment][:body], :user_id => current_user.id) if current_user && !params[:comment][:body].blank?
 

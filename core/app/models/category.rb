@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 class Category < ApplicationRecord
-  self.table_name       = 'core_categories'
+  self.table_name = 'core_categories'
 
   include RankedModel
   ranks                 :row_order, :with_same => :account_id

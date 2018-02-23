@@ -16,7 +16,7 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
     params[:name] ||= 'comments'
     raise "Invalid Parameter" unless params[:name].end_with?('comments')
 
-    association     = params[:name].to_sym
+    association = params[:name].to_sym
 
     respond_to do |format|
       if @commenter.respond_to? association

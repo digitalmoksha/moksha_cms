@@ -3,20 +3,20 @@ DmLms::Engine.routes.draw do
     post '/lesson_pages/ajax_add_comment',          controller: 'lesson_pages', action: :ajax_add_comment, as: :lesson_page_add_comment
     delete '/lesson_pages/ajax_delete_comment/:id', controller: 'lesson_pages', action: :ajax_delete_comment, as: :lesson_page_delete_comment
     namespace :admin do
-      get '/dashboard/widget_lesson_comments(/:comment_day)',   controller: 'dashboard', action: :widget_lesson_comments, as: :widget_lesson_comments
+      get '/dashboard/widget_lesson_comments(/:comment_day)', controller: 'dashboard', action: :widget_lesson_comments, as: :widget_lesson_comments
       scope 'lms' do
         # --- simplifying nested resources, from http://weblog.jamisbuck.org/2007/2/5/nesting-resources
-        post '/courses/sort',           controller: 'courses', action: :sort, as: :course_sort
+        post '/courses/sort', controller: 'courses', action: :sort, as: :course_sort
         resources :courses do
           resources :lessons
         end
-        post '/lessons/sort',           controller: 'lessons', action: :sort, as: :lesson_sort
+        post '/lessons/sort', controller: 'lessons', action: :sort, as: :lesson_sort
         resources :lessons
         resources :lessons do
           resources :lesson_pages
           resources :teachings
         end
-        post '/lesson_pages/sort',      controller: 'lesson_pages', action: :sort, as: :lesson_page_sort
+        post '/lesson_pages/sort', controller: 'lesson_pages', action: :sort, as: :lesson_page_sort
         resources :lesson_pages
         resources :teachings
       end

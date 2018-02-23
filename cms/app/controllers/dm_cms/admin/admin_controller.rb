@@ -1,4 +1,4 @@
-class DmCms::Admin::AdminController  < DmCore::Admin::AdminController
+class DmCms::Admin::AdminController < DmCore::Admin::AdminController
   before_action   :authorize_access
 
   protected

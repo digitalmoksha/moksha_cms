@@ -24,7 +24,7 @@ class CmsPost < ApplicationRecord
   validates_length_of     :slug, maximum: 255
   validates_length_of     :featured_image, maximum: 255
   I18n.available_locales.each do |locale|
-    validates_length_of     :"title_#{locale}", maximum: 255
+    validates_length_of :"title_#{locale}", maximum: 255
   end
   self.per_page = 10
 
@@ -69,7 +69,7 @@ class CmsPost < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def async_send_notification_emails(user_list)
-    success   = failed = 0
+    success = failed = 0
     Rails.logger.info "=== Sending #{user_list.size} emails for blog post '#{title}'"
     user_list.each do |user|
       email     = PostNotifyMailer.post_notify(user, self, self.account).deliver_later

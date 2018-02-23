@@ -9,7 +9,7 @@ class PostNotifyMailer < DmCore::SiteMailer
   # send notification email, using the users preferred locale if possible
   #------------------------------------------------------------------------------
   def post_notify(user, post, account)
-    Account.current               = account  # needed so this can run in a background job
+    Account.current               = account # needed so this can run in a background job
     # Account.current.set_default_values
     locale                        = account.verify_locale(user.locale)
     I18n.with_locale(locale) do

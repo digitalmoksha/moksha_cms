@@ -4,7 +4,7 @@
 # This class is used to contain some common presenter functions
 #------------------------------------------------------------------------------
 class LmsCommonPresenter < BasePresenter
-  presents  :model
+  presents :model
 
   #------------------------------------------------------------------------------
   # Admin presenter methods

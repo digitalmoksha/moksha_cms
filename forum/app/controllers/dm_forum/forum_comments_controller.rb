@@ -1,6 +1,6 @@
 class DmForum::ForumCommentsController < DmForum::ApplicationController
   include DmForum::PermittedParams
-  include ActionView::RecordIdentifier        # for the dom_id method
+  include ActionView::RecordIdentifier # for the dom_id method
 
   before_action :find_parents
   before_action :find_post, :only => [:edit, :update, :destroy]

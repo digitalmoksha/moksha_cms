@@ -1,7 +1,7 @@
 class DmLms::Admin::LessonPagesController < DmLms::Admin::AdminController
   include DmLms::PermittedParams
 
-  before_action   :lesson_page_lookup
+  before_action :lesson_page_lookup
 
   # GET /admin/lessons, GET /admin/lessons.json
   # Unused: happens through the lesson object

@@ -3,7 +3,7 @@
 # integration with MailChimp
 #------------------------------------------------------------------------------
 class StandardNewsletter < Newsletter
-  validates_presence_of   :name
+  validates_presence_of :name
 
   #------------------------------------------------------------------------------
   def self.signup_information(token, options = {})

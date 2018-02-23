@@ -9,9 +9,9 @@ class DmCms::PostsController < DmCms::ApplicationController
   include DmCore::UrlHelper
   include DmCore::LiquidHelper
 
-  before_action   :post_lookup, except: [:ajax_delete_comment]
+  before_action :post_lookup, except: [:ajax_delete_comment]
 
-  layout    'cms_templates/blog_post'
+  layout 'cms_templates/blog_post'
 
   #------------------------------------------------------------------------------
   def show

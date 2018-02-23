@@ -1,7 +1,7 @@
 class Forum < ApplicationRecord
   include DmCore::Concerns::PublicPrivate
 
-  self.table_name             = 'fms_forums'
+  self.table_name = 'fms_forums'
 
   # --- FriendlyId
   extend FriendlyId

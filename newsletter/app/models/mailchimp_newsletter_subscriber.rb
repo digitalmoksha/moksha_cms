@@ -1,5 +1,5 @@
 class MailchimpNewsletterSubscriber < NewsletterSubscriber
-  attr_accessor   :member_info_data, :email, :euid, :subscribed, :grouping_id, :groups
+  attr_accessor :member_info_data, :email, :euid, :subscribed, :grouping_id, :groups
 
   # is subscriber interested in the named group?
   #------------------------------------------------------------------------------

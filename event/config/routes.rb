@@ -25,7 +25,7 @@ DmEvent::Engine.routes.draw do
           end
         end
         resources :workshop_prices
-        post  '/workshop_prices/sort',                  controller: :workshop_prices, action: :sort, as: :workshop_price_sort
+        post '/workshop_prices/sort', controller: :workshop_prices, action: :sort, as: :workshop_price_sort
       end
     end
 

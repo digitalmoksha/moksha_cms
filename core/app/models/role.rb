@@ -7,5 +7,5 @@ class Role < ApplicationRecord
 
   scopify
 
-  default_scope           { where(account_id: Account.current.id) }
+  default_scope { where(account_id: Account.current.id) }
 end

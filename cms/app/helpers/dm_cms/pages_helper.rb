@@ -70,7 +70,7 @@ module DmCms::PagesHelper
     options[:ul]             = ''
     options[:ul]            += "class=\"#{options[:class]}\" "  unless options[:class].blank?
     options[:ul]            += "id=\"#{options[:id]}\" "        unless options[:id].blank?
-    options[:include_root]   = root                           if options[:include_home]
+    options[:include_root]   = root if options[:include_home]
     options[:active_class] ||= 'current'
     children                 = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
     menu_str, submenu_active = case options[:type]
@@ -221,7 +221,7 @@ module DmCms::PagesHelper
       if link.start_with?('/')
         dm_cms.showpage_url(slug: link[1..-1]) # absolute link to this site, with no host/scheme
       else
-        dm_cms.showpage_url(slug: link)  # relative link/slug
+        dm_cms.showpage_url(slug: link) # relative link/slug
       end
     end
   end

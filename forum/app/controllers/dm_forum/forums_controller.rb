@@ -7,7 +7,7 @@ class DmForum::ForumsController < DmForum::ApplicationController
   helper  DmCms::PagesHelper
   include DmCore::RenderHelper
 
-  before_action :forum_lookup, :except =>  [:list, :categories]
+  before_action :forum_lookup, :except => [:list, :categories]
   layout 'forum_templates/forum_list', :only => [:list, :show, :categories]
 
   #------------------------------------------------------------------------------

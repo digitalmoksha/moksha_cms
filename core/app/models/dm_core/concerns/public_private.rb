@@ -122,7 +122,7 @@ module DmCore
             self.published? && (self.is_public? || self.is_protected? || self.member?(attempting_user) || attempting_user.is_admin? ||
                   (self.is_subscription_only? && attempting_user.is_paid_subscriber?) )
           else
-            false  # must be logged in to make a reply
+            false # must be logged in to make a reply
           end
         end
       end

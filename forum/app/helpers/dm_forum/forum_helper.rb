@@ -75,7 +75,7 @@ module DmForum
           out   += link_to(I18n.t('fms.page_nr'), forum_path(:id => forum, :page => page))
           out   += ")</small>".html_safe
         end
-        out     += seperator
+        out += seperator
       end
       return out
     end

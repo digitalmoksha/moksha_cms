@@ -24,6 +24,6 @@ class DatePickerInput < SimpleForm::Inputs::StringInput
   end
 
   def input_html_classes
-    super.push ''   # 'form-control'
+    super.push '' # 'form-control'
   end
 end

@@ -59,7 +59,7 @@ module DmCore
         # When a user is created, attach it to the current account
         #------------------------------------------------------------------------------
         def add_account
-          self.skip_reconfirmation!  # make sure a second confirmation email is not sent
+          self.skip_reconfirmation! # make sure a second confirmation email is not sent
           self.update_attribute(:account_id, Account.current.id)
           ensure_site_profile_exists
         end
@@ -101,7 +101,7 @@ module DmCore
         #------------------------------------------------------------------------------
         def update_roles(new_roles, authorized_admin = false)
           new_roles.delete('admin') unless authorized_admin
-          new_roles.each  { |name, value| value.as_boolean ? add_role(name) : remove_role(name) }
+          new_roles.each { |name, value| value.as_boolean ? add_role(name) : remove_role(name) }
         end
 
         #------------------------------------------------------------------------------

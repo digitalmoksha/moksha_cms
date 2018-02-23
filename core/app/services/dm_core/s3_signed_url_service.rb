@@ -20,7 +20,7 @@ module DmCore
       bucket      = uri.host
       object_name = uri.path.gsub(/^\//, '')
       expire_mins = (uri.query.blank? ? nil : CGI::parse(uri.query)['expires'][0]) || '10'
-      expire_secs = expire_mins.to_i.minutes.to_i  # will be 0 if 'public' or some other non-integer string
+      expire_secs = expire_mins.to_i.minutes.to_i # will be 0 if 'public' or some other non-integer string
       client      = Aws::S3::Client.new(access_key_id: @access_key, secret_access_key: @secret_key, region: @region)
       s3          = Aws::S3::Resource.new(client: client)
       object      = s3.bucket(bucket).object(object_name)

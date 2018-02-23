@@ -5,7 +5,7 @@ class CodeEditorInput < SimpleForm::Inputs::TextInput
     options[:mode] = (options[:mode] || 'markdown').downcase
     editor_mode = case options[:mode]
                   when 'textile'
-                    :htmlmixed  # no textile mode available
+                    :htmlmixed # no textile mode available
                   when 'markdown'
                     :markdown
                   when 'html'
@@ -19,7 +19,7 @@ class CodeEditorInput < SimpleForm::Inputs::TextInput
     input_html_options['data-theme']          = options[:theme] || :default
 
     editor_id = "codemirror_container_#{rand(1000)}"
-    out  = ''
+    out = ''
     out << "<div class='cm_toolbar'>"
     out << "  <a class='cm_cmd_bold_#{options[:mode]}' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='fa fa-bold'></i></a>"
     out << "  <a class='cm_cmd_italic_#{options[:mode]}' href='javascript:void(0);' data-editor='\##{editor_id}'><i class='fa fa-italic'></i></a>"

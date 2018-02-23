@@ -62,7 +62,7 @@ class MailchimpNewsletter < Newsletter
     headers     = {'Accept-Language' => I18n.locale.to_s}
 
     # update data if user logged in. Don't for an unprotected subscribe. but honor value if passed in
-    options.reverse_merge!  update_existing: user_or_email.is_a?(User)
+    options.reverse_merge! update_existing: user_or_email.is_a?(User)
 
     # remove any invalid merge vars or other options
     merge_vars = options.except('new-email', :email, :optin_ip, :optin_time, :mc_location, :mc_notes,
@@ -77,10 +77,10 @@ class MailchimpNewsletter < Newsletter
       merge_vars[:LNAME]    = user_or_email.last_name
       merge_vars[:COUNTRY]  = user_or_email.country.english_name if user_or_email.country
     else
-      email               = {email: user_or_email}
+      email = {email: user_or_email}
     end
     merge_vars[:SPAMAPI]      = 1
-    merge_vars[:MC_LANGUAGE]  = I18n.locale  # set the language to the current locale they are using
+    merge_vars[:MC_LANGUAGE]  = I18n.locale # set the language to the current locale they are using
     api.lists.subscribe(id: self.mc_id, email: email, merge_vars: merge_vars,
                         double_optin: true, update_existing: options[:update_existing], replace_interests: true,
                         headers: headers)

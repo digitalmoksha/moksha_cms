@@ -27,7 +27,7 @@ class PaymentReminderService
     end
     if email
       registration.update_attribute(:payment_reminder_sent_on, Time.now)
-      registration.update_attribute(:payment_reminder_history,  [Time.now] + registration.payment_reminder_history)
+      registration.update_attribute(:payment_reminder_history, [Time.now] + registration.payment_reminder_history)
       return true
     else
       return false

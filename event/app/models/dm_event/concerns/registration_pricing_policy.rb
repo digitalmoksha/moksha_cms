@@ -5,7 +5,7 @@ module DmEvent
     module RegistrationPricingPolicy
       extend ActiveSupport::Concern
 
-      WRITE_OFF_DAYS    = 90
+      WRITE_OFF_DAYS = 90
 
       # 'included do' causes the included code to be evaluated in the
       # conext where it is included (post.rb), rather than be

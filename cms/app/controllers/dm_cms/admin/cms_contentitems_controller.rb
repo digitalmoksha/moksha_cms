@@ -8,7 +8,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def new_content
     authorize! :manage_content, @current_page
-    @cms_contentitem        = CmsContentitem.new
+    @cms_contentitem = CmsContentitem.new
     @cms_contentitem.container  = 'body'
   end
 
@@ -77,7 +77,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def current_page
-    @current_page  = CmsPage.friendly.find(params[:id])
+    @current_page = CmsPage.friendly.find(params[:id])
   end
 
   #------------------------------------------------------------------------------

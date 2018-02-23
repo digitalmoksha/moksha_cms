@@ -37,7 +37,7 @@ class WorkshopPrice < ApplicationRecord
   validates_presence_of   :recurring_period,    if: Proc.new { |w| w.recurring_number }
   validates_presence_of   :recurring_number,    if: Proc.new { |w| w.recurring_period }
   I18n.available_locales.each do |locale|
-    validates_length_of     :"price_description_#{locale}", maximum: 255
+    validates_length_of :"price_description_#{locale}", maximum: 255
   end
 
   PAYMENT_METHODS = ['Cash', 'Check', 'Credit Card', 'Money Order', 'PayPal', 'Sofort', 'Wire Transfer'].freeze

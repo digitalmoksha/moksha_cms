@@ -19,7 +19,7 @@
 class PaymentHistory < ApplicationRecord
   include OffsitePayments::Integrations
 
-  self.table_name         = 'core_payment_histories'
+  self.table_name = 'core_payment_histories'
 
   belongs_to                :owner, :polymorphic => true
   belongs_to                :user_profile

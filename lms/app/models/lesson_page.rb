@@ -3,7 +3,7 @@
 #   Each page has a content type, such as a teaching (video/explanation) or quizz
 #------------------------------------------------------------------------------
 class LessonPage < ApplicationRecord
-  self.table_name         = 'lms_lesson_pages'
+  self.table_name = 'lms_lesson_pages'
 
   extend FriendlyId
   include DmCore::Concerns::FriendlyId
@@ -24,7 +24,7 @@ class LessonPage < ApplicationRecord
 
   delegate                :title, :menutitle, to: :item
   DmCore::Language.language_array.each do |lang|
-    delegate                "title_#{lang}", "menutitle_#{lang}", to: :item
+    delegate "title_#{lang}", "menutitle_#{lang}", to: :item
   end
 
   validates_uniqueness_of :slug, scope: :lesson_id

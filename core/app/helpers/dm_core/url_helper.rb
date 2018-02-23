@@ -17,14 +17,14 @@ module DmCore
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
     def site_media_image_tag(src, options = {})
-      image_tag(site_asset_media_path(src),  options)
+      image_tag(site_asset_media_path(src), options)
     end
 
     # Returns an image tag, where the src defaults to the site_assets image folder
     # Supports both relative paths and explicit url
     #------------------------------------------------------------------------------
     def site_image_tag(src, options = {})
-      image_tag(site_image_path(src),  options)
+      image_tag(site_image_path(src), options)
     end
 
     # Returns a path to a site image, relative to the site_assets folder

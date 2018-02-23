@@ -61,7 +61,7 @@ class DmCore::ApplicationController < ActionController::Base
   # override Devise method, on login go to previous url if possible
   #------------------------------------------------------------------------------
   def after_sign_in_path_for(resource)
-    stored = stored_location_for(resource)  # this also delete the cookie
+    stored = stored_location_for(resource) # this also delete the cookie
     if stored
       stored
     elsif Account.current && defined?(CmsPage) && (welcome_page = CmsPage.welcome_page)

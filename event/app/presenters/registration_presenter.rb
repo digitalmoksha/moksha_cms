@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 class RegistrationPresenter < EventCommonPresenter
-  presents  :model
+  presents :model
 
   #------------------------------------------------------------------------------
   # Admin presenter methods

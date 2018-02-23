@@ -39,7 +39,7 @@ module AdminTheme
           end
           link    = link_to (menu_text(item, menu_options) + icons('fa arrow')), '#'
           menu_li = link + content_tag(:ul, sub_ul, class: 'nav nav-second-level')
-          menu   << content_tag(:li, menu_li, class: active ? 'active' : nil)
+          menu << content_tag(:li, menu_li, class: active ? 'active' : nil)
         end
       end
       menu

@@ -5,7 +5,7 @@ module DmCore
       include DmCore::PermittedParams
 
       included do
-        before_action   :authenticate_user!
+        before_action :authenticate_user!
       end
 
       #------------------------------------------------------------------------------

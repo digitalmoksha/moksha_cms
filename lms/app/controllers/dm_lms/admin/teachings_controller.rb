@@ -29,9 +29,9 @@ class DmLms::Admin::TeachingsController < DmLms::Admin::AdminController
 
     Teaching.transaction do
       respond_to do |format|
-        @lesson_page.item = @teaching  # can't check validity without doing this because of title delegation
+        @lesson_page.item = @teaching # can't check validity without doing this because of title delegation
         if (@teaching.valid? && @lesson_page.valid?) && @teaching.save
-          @teaching.lesson_page = @lesson_page   # this automatically saves the lesson
+          @teaching.lesson_page = @lesson_page # this automatically saves the lesson
           format.html { redirect_to edit_admin_teaching_url(@teaching), notice: 'Teaching was successfully created.' }
           format.json { render json: @teaching, status: :created, location: @teaching }
         else

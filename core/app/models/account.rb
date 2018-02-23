@@ -58,7 +58,7 @@ class Account < ApplicationRecord
   preference              :archive_email,                   :string
   preference              :mailchimp_api_key,               :string
   preference              :smtp_address,                    :string
-  preference              :smtp_port,                       :string,  :default => '587'
+  preference              :smtp_port,                       :string, :default => '587'
   preference              :smtp_domain,                     :string
   preference              :smtp_user_name,                  :string
   preference              :smtp_password,                   :string

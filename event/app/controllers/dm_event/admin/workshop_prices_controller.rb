@@ -1,13 +1,13 @@
 class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
   include DmEvent::PermittedParams
 
-  before_action     :workshop_lookup, :only   => [:index, :new, :create]
-  before_action     :price_lookup,  :except => [:index, :new, :create]
+  before_action     :workshop_lookup, :only => [:index, :new, :create]
+  before_action     :price_lookup, :except => [:index, :new, :create]
 
   #------------------------------------------------------------------------------
   def index
     authorize! :manage_events, @workshop
-    @workshop_prices  = @workshop.workshop_prices
+    @workshop_prices = @workshop.workshop_prices
   end
 
   #------------------------------------------------------------------------------

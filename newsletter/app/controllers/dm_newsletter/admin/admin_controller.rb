@@ -2,7 +2,7 @@ class DmNewsletter::Admin::AdminController < DmCore::Admin::AdminController
   include DmNewsletter::NewslettersHelper
   helper  'dm_newsletter/newsletters'
 
-  before_action   :authorize_access
+  before_action :authorize_access
 
   protected
 
