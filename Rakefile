@@ -6,10 +6,13 @@ MOKSHA_GEMS = %w(admin core cms event forum newsletter lms).freeze
 task default: :test
 
 desc "Runs all tests in all MokshaCms engines"
-# task test: :test_app do
 task :test do
   MOKSHA_GEMS.each do |gem_name|
     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
+      puts '------------------------------------------------------------------------------'
+      puts "#{gem_name} : running rspec..."
+      puts '------------------------------------------------------------------------------'
+
       sh 'rspec'
     end
   end
@@ -19,6 +22,10 @@ desc "Generates a dummy app for testing for every MokshaCms engine"
 task :test_app do
   MOKSHA_GEMS.each do |gem_name|
     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
+      puts '------------------------------------------------------------------------------'
+      puts "#{gem_name} : generating dummy app..."
+      puts '------------------------------------------------------------------------------'
+
       sh 'bundle install'
       sh 'rake test_app'
     end

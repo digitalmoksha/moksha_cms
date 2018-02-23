@@ -125,7 +125,7 @@ module CsvExporter
     wb.columns  = columns
     wb.rows     = rows
 
-    return return wb.create unless options[:filename]
+    return wb.create unless options[:filename]
 
     send_data wb.create, filename: to_excel_filename(options[:filename]), disposition: 'attachment', type: 'application/excel'
   end

@@ -12,7 +12,7 @@ namespace :common do
     MokshaCms::InstallGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--auto-accept", "--migrate=false", "--seed=false", "--sample=false", "--quiet", "--user_class=#{args[:user_class]}"]
 
     puts "Setting up dummy database..."
-    system("bundle exec rake db:drop db:create db:migrate > #{File::NULL}") # rubocop:disable GitLabSecurity/SystemCommandInjection
+    system("bundle exec rake db:drop db:create db:migrate > #{File::NULL}") # rubocop:disable GitlabSecurity/SystemCommandInjection
 
     begin
       require "generators/#{ENV['LIB_NAME']}/install/install_generator"
@@ -22,12 +22,13 @@ namespace :common do
       puts 'Skipping installation no generator to run...'
     end
 
-    puts "Precompiling assets..."
-    system("bundle exec rake assets:precompile > #{File::NULL}") # rubocop:disable GitLabSecurity/SystemCommandInjection
+    # TODO not necessary and always problematic
+    # puts "Precompiling assets..."
+    # system("bundle exec rake assets:precompile > #{File::NULL}") # rubocop:disable GitlabSecurity/SystemCommandInjection
   end
 
   task :seed do |_t|
     puts "Seeding ..."
-    system("bundle exec rake db:seed RAILS_ENV=test > #{File::NULL}") # rubocop:disable GitLabSecurity/SystemCommandInjection
+    system("bundle exec rake db:seed RAILS_ENV=test > #{File::NULL}") # rubocop:disable GitlabSecurity/SystemCommandInjection
   end
 end
