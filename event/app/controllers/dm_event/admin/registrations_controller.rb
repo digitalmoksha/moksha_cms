@@ -81,14 +81,14 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
 
     previous_payment  = params[:payment_id] ? PaymentHistory.find(params[:payment_id]) : nil
     @payment_history  = @registration.manual_payment(previous_payment,
-                              params[:payment_history][:cost],
-                              params[:payment_history][:total_currency],
-                              current_user.user_profile,
-                              item_ref: params[:payment_history][:item_ref],
-                              payment_method: params[:payment_history][:payment_method],
-                              bill_to_name: params[:payment_history][:bill_to_name],
-                              payment_date: params[:payment_history][:payment_date]
-                        )
+                                                     params[:payment_history][:cost],
+                                                     params[:payment_history][:total_currency],
+                                                     current_user.user_profile,
+                                                     item_ref: params[:payment_history][:item_ref],
+                                                     payment_method: params[:payment_history][:payment_method],
+                                                     bill_to_name: params[:payment_history][:bill_to_name],
+                                                     payment_date: params[:payment_history][:payment_date]
+                                                    )
 
     if @payment_history.errors.empty?
       @registration.update_attribute(:receipt_requested, params[:payment_history][:receipt_requested])
