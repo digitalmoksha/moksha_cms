@@ -99,7 +99,7 @@ module AdminTheme
       progress_bar = content_tag(:div, class: 'progress progress-micro') do
         content_tag(:div, class: "progress-bar progress-bar-#{options[:color_type].to_s}", role: 'progressbar',
                           aria: {valuenow: options[:percent], valuemin: '0', valuemax: '100'}, style: "width: #{options[:percent]}%") do
-            content_tag(:span, "#{options[:percent]}% Complete", class: 'sr-only')
+          content_tag(:span, "#{options[:percent]}% Complete", class: 'sr-only')
         end
       end
       info + progress_bar + content_tag(:span, options[:label])

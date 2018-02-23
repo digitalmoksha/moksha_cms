@@ -11,7 +11,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   #------------------------------------------------------------------------------
   def filename
-     "#{secure_token}.#{file.extension}" if original_filename.present?
+    "#{secure_token}.#{file.extension}" if original_filename.present?
   end
 
   # We basically want the width to be the max, allowing the height to grow

@@ -95,11 +95,11 @@ class RegistrationDatatable
 
     output = ''
     actions.each do |action|
-      output << '<li>' +
-      link_to(action.to_s.titlecase,
-              url_helpers.action_state_admin_registration_path(I18n.locale, registration, :state_event => action),
-              {:remote => true, :method => :put}) +
-       '</li>'
+       output << '<li>' +
+       link_to(action.to_s.titlecase,
+               url_helpers.action_state_admin_registration_path(I18n.locale, registration, :state_event => action),
+               {:remote => true, :method => :put}) +
+        '</li>'
      end
     return output.html_safe
   end

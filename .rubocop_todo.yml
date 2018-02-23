@@ -14,22 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 18
-# Cop supports --auto-correct.
-# Configuration parameters: Width, IgnoredPatterns.
-Layout/IndentationWidth:
-  Exclude:
-    - 'admin/app/helpers/admin_theme/theme_helper.rb'
-    - 'cms/app/controllers/dm_cms/admin/cms_contentitems_controller.rb'
-    - 'cms/app/controllers/dm_cms/admin/cms_pages_controller.rb'
-    - 'cms/app/controllers/dm_cms/admin/cms_snippets_controller.rb'
-    - 'cms/spec/mailers/post_notify_mailer_spec.rb'
-    - 'core/app/presenters/comment_presenter.rb'
-    - 'core/app/uploaders/avatar_uploader.rb'
-    - 'event/app/datatables/registration_datatable.rb'
-    - 'forum/app/helpers/dm_forum/forum_helper.rb'
-    - 'forum/spec/mailers/forum_notification_spec.rb'
-
 # Offense count: 25
 # Cop supports --auto-correct.
 Layout/LeadingCommentSpace:
