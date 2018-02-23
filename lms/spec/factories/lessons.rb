@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :lesson, class: Lesson do
     slug            'lesson-1'
     title           'Lesson 1'
@@ -15,5 +14,4 @@ FactoryBot.define do
       title         'Lesson 3'
     end
   end
-
 end

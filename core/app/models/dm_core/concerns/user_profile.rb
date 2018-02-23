@@ -7,7 +7,6 @@ module DmCore
       # conext where it is included (post.rb), rather than be
       # executed in the module's context (blorgh/concerns/models/post).
       included do
-
         #--- for when a service (like event registration), needs to require a valid address
         #    can be set by the service to enable the validations
         attr_accessor           :address_required
@@ -105,7 +104,6 @@ module DmCore
         def locale
           self.favored_locale
         end
-
       end
     end
   end

@@ -15,5 +15,4 @@ FactoryBot.define do
       recurring_number 5
     end
   end
-
 end

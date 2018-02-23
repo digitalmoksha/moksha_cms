@@ -16,7 +16,6 @@ module DmLms
       extend ActiveSupport::Concern
 
       included do
-
         #------------------------------------------------------------------------------
         def spaced_repetition(answer_quality, prev_interval = 0, prev_ef = 2.5)
           #--- if answer_quality is below 2 start repetition from the begining,

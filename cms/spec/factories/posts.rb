@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :post, class: CmsPost do
     slug            'test-post'
     title           'Test Post'
@@ -19,5 +18,4 @@ FactoryBot.define do
       content             nil
     end
   end
-
 end

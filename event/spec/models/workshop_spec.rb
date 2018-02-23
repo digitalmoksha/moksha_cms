@@ -13,7 +13,6 @@ describe Workshop, :type => :model do
   it { is_expected.to validate_length_of(:title_en).is_at_most(255) }
 
   describe "workshop_prices" do
-
     let(:workshop) { create(:workshop) }
 
     #------------------------------------------------------------------------------

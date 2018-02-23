@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :teaching, class: Teaching do
     title           'Teaching 1'
     content         'Lorem ipsum dolor...'
@@ -14,5 +13,4 @@ FactoryBot.define do
       content         'Lorem ipsum dolor...'
     end
   end
-
 end

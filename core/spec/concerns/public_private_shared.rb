@@ -54,7 +54,6 @@ shared_examples :public_private_protected do |factory|
         built.requires_login = false
         built.requires_subscription = true
         expect(built.is_private?).to be_truthy
-
       end
 
       it 'is not private' do

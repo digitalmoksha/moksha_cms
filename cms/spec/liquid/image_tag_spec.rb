@@ -4,7 +4,6 @@ describe Liquid::Image, type: :liquid_tag do
   setup_account
 
   describe 'html rendering' do
-
     it 'just an image' do
       content = "{% image src : '/test_img.jpg' %}"
       arguments = nil

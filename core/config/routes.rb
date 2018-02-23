@@ -32,7 +32,6 @@ DmCore::Engine.routes.draw do
       get     '/setup/initial_setup',       to: 'setup#initial_setup'
       match   '/setup/step1',               to: 'setup#step1',         via: [:get, :post]
       match   '/setup/step2',               to: 'setup#step2',         via: [:get, :post]
-
     end
   end
 end

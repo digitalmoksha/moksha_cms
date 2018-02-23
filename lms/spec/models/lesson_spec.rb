@@ -77,5 +77,4 @@ describe Lesson do
       expect(lesson2.previous(published_only: false)).to eq lesson1
     end
   end
-
 end

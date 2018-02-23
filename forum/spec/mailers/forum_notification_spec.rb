@@ -45,5 +45,4 @@ describe ForumNotificationMailer, type: :mailer do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to include "Comments: #{topic.title}"
   end
-
 end

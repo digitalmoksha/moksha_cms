@@ -43,5 +43,4 @@ describe PostNotifyMailer, type: :mailer do
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to include "Blog: #{post.cms_blog.title} :: #{post.title}"
   end
-
 end

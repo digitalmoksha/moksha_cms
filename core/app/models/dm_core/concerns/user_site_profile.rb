@@ -11,7 +11,6 @@ module DmCore
       # conext where it is included (post.rb), rather than be
       # executed in the module's context (blorgh/concerns/models/post).
       included do
-
         belongs_to              :user
 
         #--- votability on a per site basis

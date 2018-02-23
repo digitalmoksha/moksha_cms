@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :page, class: CmsPage do
     slug            'test-page'
     title           'Test Page'
@@ -28,5 +27,4 @@ FactoryBot.define do
       preferred_divider  true
     end
   end
-
 end

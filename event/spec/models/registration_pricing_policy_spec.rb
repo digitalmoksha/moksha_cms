@@ -5,12 +5,10 @@ describe Registration, :type => :model do
   setup_account
 
   context 'RegistrationPricingPolicy' do
-
     let(:workshop)   { create(:workshop_with_price) }
     let(:workshop_r) { create(:workshop_with_recurring_price) }
 
     describe '#payment_owed' do
-
       #------------------------------------------------------------------------------
       it "full payment" do
         registration = create :registration, workshop: workshop
@@ -112,7 +110,6 @@ describe Registration, :type => :model do
     end
 
     describe 'writeoff' do
-
       #------------------------------------------------------------------------------
       it '#check_if_writeoff!' do
         registration = create :registration, workshop: workshop
@@ -141,6 +138,5 @@ describe Registration, :type => :model do
         expect(registration.writtenoff_on).to eq nil
       end
     end
-
   end
 end

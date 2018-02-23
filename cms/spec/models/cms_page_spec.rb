@@ -25,7 +25,6 @@ describe CmsPage do
   end
 
   describe 'tag handling' do
-
     let(:page) { create(:page) }
 
     #------------------------------------------------------------------------------
@@ -42,6 +41,5 @@ describe CmsPage do
       page2.update_attribute(:tag_list, 'one, three')
       expect(CmsPage.tag_list_all).to eq ['one', 'three', 'two']
     end
-
   end
 end

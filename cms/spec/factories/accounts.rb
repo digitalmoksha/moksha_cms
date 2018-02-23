@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :account do
     domain                      'test.example.com'
     account_prefix              'local'
@@ -14,5 +13,4 @@ FactoryBot.define do
       preferred_default_currency  'USD'
     end
   end
-
 end

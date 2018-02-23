@@ -1,5 +1,4 @@
 DmLms::Engine.routes.draw do
-
   scope ":locale" do
     post '/lesson_pages/ajax_add_comment',          controller: 'lesson_pages', action: :ajax_add_comment, as: :lesson_page_add_comment
     delete '/lesson_pages/ajax_delete_comment/:id', controller: 'lesson_pages', action: :ajax_delete_comment, as: :lesson_page_delete_comment
@@ -35,5 +34,4 @@ DmLms::Engine.routes.draw do
       get   '/:course_slug/:lesson_slug/:content_slug',   controller: 'lesson_pages', action: :show, as: :lesson_page_show
     end
   end
-
 end

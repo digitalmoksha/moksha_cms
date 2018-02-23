@@ -1,5 +1,4 @@
 DmEvent::Engine.routes.draw do
-
   scope ":locale" do
     namespace :admin do
       scope 'ems' do
@@ -39,5 +38,4 @@ DmEvent::Engine.routes.draw do
     post  '/event/payment/paypal_ipn',                  controller: :payments,      action: :paypal_ipn,         as: :payment_paypal_ipn
     post  '/event/payment/sofort_ipn',                  controller: :payments,      action: :sofort_ipn,         as: :payment_sofort_ipn
   end
-
 end

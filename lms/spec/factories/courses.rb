@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :course, class: Course do
     # let the slug get auto-generated
     title           'Test Course'
@@ -11,5 +10,4 @@ FactoryBot.define do
       published     true
     end
   end
-
 end

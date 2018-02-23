@@ -61,7 +61,6 @@ describe User do
   end
 
   describe "password validations" do
-
     #------------------------------------------------------------------------------
     it "requires a password" do
       expect(build(:user, password: '', password_confirmation: '')).not_to be_valid
@@ -77,7 +76,6 @@ describe User do
       short = "a" * 7
       expect(build(:user, password: short, password_confirmation: short)).not_to be_valid
     end
-
   end
 
   describe "password encryption" do
@@ -95,5 +93,4 @@ describe User do
       expect(@user.encrypted_password).not_to be_blank
     end
   end
-
 end

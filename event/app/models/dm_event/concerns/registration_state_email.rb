@@ -7,7 +7,6 @@ module DmEvent
       include DmUtilities::DateHelper
 
       included do
-
         #------------------------------------------------------------------------------
         def to_liquid
           result = {
@@ -62,7 +61,6 @@ module DmEvent
           content   = template.render(substitutions)
           return {:content => content, :substitutions => substitutions}
         end
-
       end
 
       #------------------------------------------------------------------------------

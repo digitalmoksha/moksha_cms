@@ -6,7 +6,6 @@ describe PaymentReminderService, type: :service do
 
   # tests assume   REMINDER_SCHEDULE = [14, 30, 60]
   describe '#payment_reminder_due?' do
-
     describe 'non-recurring' do
       #------------------------------------------------------------------------------
       it 'reminder due after 14 days' do
@@ -44,7 +43,6 @@ describe PaymentReminderService, type: :service do
     end
 
     describe 'recurring' do
-
       #------------------------------------------------------------------------------
       it 'reminder due 14 days after a payment is due' do
         workshop      = create :workshop_with_recurring_price
@@ -135,7 +133,6 @@ describe PaymentReminderService, type: :service do
   end
 
   describe '#past_due?' do
-
     #------------------------------------------------------------------------------
     it 'knows if a non-recurring payment is past due' do
       workshop      = create :workshop_with_price
@@ -164,6 +161,5 @@ describe PaymentReminderService, type: :service do
       registration  = create :registration, workshop: workshop, created_at: 25.days.ago, amount_paid_cents: 10000
       expect(PaymentReminderService.past_due?(registration)).to eq false
     end
-
   end
 end

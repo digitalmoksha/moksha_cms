@@ -9,7 +9,6 @@ describe DmCms::PagesController do
   let(:page) { create(:page) }
 
   describe 'GET #show' do
-
     #------------------------------------------------------------------------------
     it 'renders the :show template' do
       get :show, params: {slug: page.slug, locale: :en}
@@ -66,7 +65,5 @@ describe DmCms::PagesController do
       get :show, params: {slug: target.slug, locale: :en}
       expect(response.body).to have_text 'Not a real page'
     end
-
   end
-
 end

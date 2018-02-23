@@ -12,5 +12,4 @@ describe DmCore::ApplicationController do
     page.update_attribute(:published, true)
     expect(controller.send(:after_sign_in_path_for, User)).to eq 'http://test.example.com/en/welcome'
   end
-
 end

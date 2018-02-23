@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Liquid::Div do
-
   describe 'html rendering' do
     it 'with no options' do
       content = "{% div %}<h1>Test</h1>{% enddiv %}"

@@ -109,5 +109,4 @@ describe LessonPage do
       expect(page2.previous(published_only: false)).to eq page1
     end
   end
-
 end

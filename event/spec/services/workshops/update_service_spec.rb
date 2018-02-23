@@ -62,5 +62,4 @@ describe DmEvent::Workshops::UpdateService, type: :service do
       # end
     end
   end
-
 end

@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :lesson_page, class: LessonPage do
     slug            'lesson-page'
     association     :lesson
@@ -12,5 +11,4 @@ FactoryBot.define do
       slug          'lesson-page-3'
     end
   end
-
 end

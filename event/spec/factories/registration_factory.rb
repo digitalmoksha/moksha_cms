@@ -9,5 +9,4 @@ FactoryBot.define do
     workshop
     workshop_price { workshop.workshop_prices.first }
   end
-
 end

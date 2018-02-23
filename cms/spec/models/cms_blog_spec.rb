@@ -11,7 +11,6 @@ describe CmsBlog do
   it_behaves_like :public_private_protected, :blog
 
   describe 'slug handling' do
-
     #------------------------------------------------------------------------------
     it 'allows the same blog slug per account (scoped to account)' do
       blog1 = create(:blog)
@@ -42,7 +41,6 @@ describe CmsBlog do
       blog = create(:blog, slug: nil)
       expect(blog.slug).to eq 'test-blog'
     end
-
   end
 
   describe 'tag handling' do

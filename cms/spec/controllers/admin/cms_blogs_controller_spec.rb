@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe DmCms::Admin::CmsBlogsController do
-
   routes { DmCms::Engine.routes }
   login_admin
 
@@ -101,7 +100,6 @@ describe DmCms::Admin::CmsBlogsController do
   end
 
   describe 'PATCH #update' do
-
     context "with valid attributes" do
       #------------------------------------------------------------------------------
       it "locates the requested @blog" do
@@ -140,7 +138,6 @@ describe DmCms::Admin::CmsBlogsController do
   end
 
   describe 'DELETE #destroy' do
-
     #------------------------------------------------------------------------------
     it "deletes the blog from the database" do
       blog
@@ -169,5 +166,4 @@ describe DmCms::Admin::CmsBlogsController do
   describe 'blog_delete_member' do
     it 'write test'
   end
-
 end

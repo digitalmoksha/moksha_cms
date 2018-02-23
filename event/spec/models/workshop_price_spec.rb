@@ -5,7 +5,6 @@ describe WorkshopPrice, :type => :model do
   setup_account
 
   describe "workshop_prices" do
-
     #------------------------------------------------------------------------------
     it "creates price correctly" do
       attributes = WorkshopPrice.prepare_prices('price' => '11000', 'price_currency' => 'JPY',
@@ -141,6 +140,5 @@ describe WorkshopPrice, :type => :model do
       workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'))
       expect(workshop_price.last_scheduled_payment_date(start_day)).to eq start_day
     end
-
   end
 end

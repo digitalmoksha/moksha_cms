@@ -66,7 +66,6 @@ describe DmCms::PagesHelper, type: :helper do
       page = create(:page_external_link_new_window, menutitle: 'Go Here')
       expect(page_link(page)).to eq '<a target="_blank" href="http://another.example.com/en/test-page">Go Here</a>'
     end
-
   end
 
   # x = main_menu(class: 'sf-menu', include_home: true, sub_menu_1: 'sub-menu', sub_menu_2: 'sub-menu third-menu')
@@ -147,5 +146,4 @@ describe DmCms::PagesHelper, type: :helper do
   it '#current_page?'
   it '#current_page_path?'
   it '#page_in_section?'
-
 end

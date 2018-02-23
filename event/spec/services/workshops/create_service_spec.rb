@@ -15,5 +15,4 @@ describe DmEvent::Workshops::CreateService, type: :service do
   def create_workshop(opts)
     DmEvent::Workshops::CreateService.new(opts).call
   end
-
 end

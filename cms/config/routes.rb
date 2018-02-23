@@ -1,6 +1,5 @@
 DmCms::Engine.routes.draw do
   scope ":locale" do
-
     namespace :admin do
       patch '/cms_pages/expire_cache',                          controller: 'cms_pages', action: :expire_cache, as: :expire_cache
       patch '/cms_pages/expire_cache_total',                    controller: 'cms_pages', action: :expire_cache_total, as: :expire_cache_total
@@ -70,6 +69,5 @@ DmCms::Engine.routes.draw do
     post  '/contact_form/create',                 controller: :contact_form, action: :create, as: :create_contact_form
     get   '/coming_soon',                         controller: 'pages', action: :show, slug: 'coming_soon', as: :coming_soon
     get   '/*slug(/:xaction(/:xid))',             controller: 'pages', action: :show, as: :showpage  # use *slug to fix this https://github.com/rails/rails/issues/16058
-
   end
 end

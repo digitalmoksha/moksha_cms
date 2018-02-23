@@ -20,7 +20,6 @@ module DmCore
       extend ActiveSupport::Concern
 
       included do
-
         friendly_id               :model_slug, use: :scoped, scope: :account_id
         validates_presence_of     :slug
         before_save               :normalize_slug

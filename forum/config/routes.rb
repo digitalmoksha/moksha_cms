@@ -1,5 +1,4 @@
 DmForum::Engine.routes.draw do
-
   #--- for some reason, just having this in the main app's routes didn't work, so also added here
   themes_for_rails
 
@@ -39,5 +38,4 @@ DmForum::Engine.routes.draw do
       end
     end
   end
-
 end

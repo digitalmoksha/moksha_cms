@@ -10,7 +10,6 @@ describe Course do
   it_behaves_like :public_private_protected, :course
 
   describe 'slug handling' do
-
     #------------------------------------------------------------------------------
     it 'allows the same course slug per account (scoped to account)' do
       course1 = create(:course)
@@ -41,7 +40,5 @@ describe Course do
       course = create(:course, slug: nil)
       expect(course.slug).to eq 'test-course'
     end
-
   end
-
 end

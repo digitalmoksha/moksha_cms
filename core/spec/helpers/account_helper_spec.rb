@@ -49,5 +49,4 @@ describe DmCore::AccountHelper do
   it "returns url to the site's media assets" do
     expect(account_site_assets_media_url).to eq 'http://test.example.com/site_assets/uploads/test/media'
   end
-
 end

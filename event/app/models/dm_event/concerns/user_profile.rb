@@ -6,9 +6,7 @@ module DmEvent
       extend ActiveSupport::Concern
 
       included do
-
         has_many   :registrations
-
       end
 
       #------------------------------------------------------------------------------

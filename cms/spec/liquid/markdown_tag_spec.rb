@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Liquid::Markdown do
-
   describe 'markdown rendering' do
     it 'with markdown content' do
       content = "{% markdown %}# Test{% endmarkdown %}"

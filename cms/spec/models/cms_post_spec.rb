@@ -8,7 +8,6 @@ describe CmsPost do
   it { is_expected.to validate_length_of(:title_en).is_at_most(255) }
 
   describe 'slug handling' do
-
     let(:blog1) { create(:blog) }
     let(:blog2) { create(:news_blog)}
 
@@ -40,11 +39,9 @@ describe CmsPost do
       post2 = blog1.posts.create(attributes_for(:post, slug: nil))
       expect(post1.slug).not_to eq post2.slug
     end
-
   end
 
   describe 'tag handling' do
-
     let(:blog1) { create(:blog) }
 
     #------------------------------------------------------------------------------
@@ -63,7 +60,5 @@ describe CmsPost do
       post2.update_attribute(:tag_list, 'one, three')
       expect(CmsPost.tag_list_all).to eq ['one', 'three', 'two']
     end
-
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe DmEvent::RegistrationsController do
-
   routes { DmEvent::Engine.routes }
   # login_admin
 

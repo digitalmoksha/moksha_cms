@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :blog, class: CmsBlog do
     # let the slug get auto-generated
     title                   'Test Blog'
@@ -15,5 +14,4 @@ FactoryBot.define do
       title               nil
     end
   end
-
 end

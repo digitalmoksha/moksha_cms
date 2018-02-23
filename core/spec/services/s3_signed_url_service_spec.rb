@@ -4,7 +4,6 @@ describe DmCore::S3SignedUrlService, type: :service do
   setup_account
 
   describe '#generate' do
-
     before do
       # http://docs.aws.amazon.com/sdkforruby/api/Aws/ClientStubs.html
       Aws.config.update({
@@ -34,6 +33,5 @@ describe DmCore::S3SignedUrlService, type: :service do
       expect(url).to include('SignedHeaders=')
       expect(url).to include('Expires=7200')
     end
-
   end
 end

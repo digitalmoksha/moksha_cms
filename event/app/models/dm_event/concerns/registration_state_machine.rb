@@ -123,7 +123,6 @@ module DmEvent
             transitions :from => :reviewing,  :to => :pending
             transitions :from => :waitlisted, :to => :pending
           end
-
         end
 
         #------------------------------------------------------------------------------

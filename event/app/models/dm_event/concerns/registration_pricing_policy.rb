@@ -12,7 +12,6 @@ module DmEvent
       # executed in the module's context (blorgh/concerns/models/post).
       #------------------------------------------------------------------------------
       included do
-
         # Price of this registration (without discount)
         #------------------------------------------------------------------------------
         def price
