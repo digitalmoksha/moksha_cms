@@ -104,7 +104,6 @@ describe Registration, :type => :model do
         expect(registration.initial_payments_should_start_on).to eq 10.days.from_now.to_date
       end
 
-
       it 'starts on the hold date of the workshop' do
         workshop.initial_payment_required_on = 2.days.from_now
         registration = create :registration, workshop: workshop

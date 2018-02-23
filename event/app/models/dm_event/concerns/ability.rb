@@ -53,7 +53,6 @@ module DmEvent
   end
 end
 
-
 #------------------------------------------------------------------------------
 # The abilities get basically compiled.  So if you use
 #

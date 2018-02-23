@@ -14,7 +14,6 @@ class LmsCommonPresenter < BasePresenter
     model.published? ? h.colored_label('Published', :success) : h.colored_label('Draft')
   end
 
-
   #------------------------------------------------------------------------------
   # Front-end presenter methods
 

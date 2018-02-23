@@ -13,7 +13,6 @@ class Course < ApplicationRecord
   translates              :title, :menutitle, :description, foreign_key: :course_id, fallbacks_for_empty_translations: true
   globalize_accessors     locales: I18n.available_locales
 
-
   # FriendlyId
   extend FriendlyId
   include DmCore::Concerns::FriendlyId

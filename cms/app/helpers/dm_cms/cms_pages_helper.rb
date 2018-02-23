@@ -33,5 +33,4 @@ module DmCms::CmsPagesHelper
     template_item ? template_item[0] : ''
   end
 
-
 end

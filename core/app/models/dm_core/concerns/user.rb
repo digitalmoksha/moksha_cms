@@ -41,7 +41,6 @@ module DmCore
         scope                   :online, -> { includes(:user_site_profiles).where('user_site_profiles.last_access_at >= ?', 10.minutes.ago.utc) }
         scope                   :confirmed, -> { where.not(confirmed_at: nil) }
 
-
         # In a few cases, we need to be able to check an ability where we only have a
         # passed in User object.  This allows that
         # https://github.com/ryanb/cancan/wiki/ability-for-other-users

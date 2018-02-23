@@ -43,5 +43,4 @@ class UserPresenter < BasePresenter
     image_tag(avatar, width: size, class: options[:class] ? options[:class] : 'image')
   end
 
-
 end

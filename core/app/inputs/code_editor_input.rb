@@ -18,7 +18,6 @@ class CodeEditorInput < SimpleForm::Inputs::TextInput
     input_html_options['data-mode']           = editor_mode
     input_html_options['data-theme']          = options[:theme] || :default
 
-
     editor_id = "codemirror_container_#{rand(1000)}"
     out  = ''
     out << "<div class='cm_toolbar'>"
@@ -32,7 +31,6 @@ class CodeEditorInput < SimpleForm::Inputs::TextInput
     out << "</div>"
   end
 end
-
 
 # def input(wrapper_options)
 #   # :preview_version is a custom attribute from :input_html hash, so you can pick custom sizes

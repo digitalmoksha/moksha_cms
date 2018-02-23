@@ -141,6 +141,5 @@ module AdminTheme
                           bottom_label: options[:bottom_label]})
     end
 
-
   end
 end

@@ -106,7 +106,6 @@ module DmCore
       "#{account_protected_assets_folder}/uploads/#{account_prefix}/media"
     end
 
-
     private
 
     # setup the account scope, used for scoping models to an Account

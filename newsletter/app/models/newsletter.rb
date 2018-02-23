@@ -7,7 +7,6 @@ class Newsletter < ApplicationRecord
 
   validates_uniqueness_of :token
 
-
   default_scope           { where(account_id: Account.current.id) }
   before_create           :generate_token
 

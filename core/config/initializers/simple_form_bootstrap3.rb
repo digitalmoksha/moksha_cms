@@ -188,7 +188,6 @@ SimpleForm.setup do |config|
     end
   end
 
-
   # Wrappers for forms and inputs using the Bootstrap toolkit.
   # Check the Bootstrap docs (http://getbootstrap.com)
   # to learn about the different styles for forms and inputs,
