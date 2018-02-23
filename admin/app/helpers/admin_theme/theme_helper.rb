@@ -119,7 +119,7 @@ module AdminTheme
     def stat_with_graph(options = {title: 'Page Visits', number: '21,252', color_type: :success, data_list: '12, 30, 8, 5, 10'})
       title_section = content_tag :div, class: 'page-stats-showcase' do
         content_tag(:span, options[:title]) +
-        content_tag(:h2, options[:number])
+          content_tag(:h2, options[:number])
       end
       bar_section = content_tag :div, options[:data_list], class: "bar-#{options[:color_type].to_s} chart pull-right"
       title_section + bar_section

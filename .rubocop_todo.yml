@@ -14,21 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented
-Layout/MultilineOperationIndentation:
-  Exclude:
-    - 'admin/app/helpers/admin_theme/theme_helper.rb'
-    - 'cms/app/helpers/dm_cms/pages_helper.rb'
-    - 'cms/app/presenters/cms_page_presenter.rb'
-    - 'core/app/models/dm_core/concerns/user_profile.rb'
-    - 'event/app/datatables/registration_datatable.rb'
-    - 'event/app/models/payment.rb'
-    - 'forum/app/helpers/dm_forum/forum_helper.rb'
-    - 'forum/app/models/forum_comment.rb'
-
 # Offense count: 17
 # Cop supports --auto-correct.
 Layout/SpaceAfterComma:

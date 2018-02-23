@@ -94,7 +94,7 @@ module DmCore
         #------------------------------------------------------------------------------
         def address_valid?
           not_valid = email.blank? || first_name.blank? || last_name.blank? || address.blank? || city.blank? ||
-                      zipcode.blank? || country.blank?
+            zipcode.blank? || country.blank?
           return !not_valid
         end
 

@@ -11,7 +11,7 @@ class CmsPagePresenter < BasePresenter
   def admin_edit_title
     main_title  = (cms_page.title.present? ? cms_page.title : (cms_page.menutitle.present? ? cms_page.menutitle : '(no title)'))
     sub_title   = 'Permalink: '.html_safe +
-                  link_to(dm_cms.showpage_url(cms_page.slug), dm_cms.showpage_url(cms_page.slug), title: 'Permalink for this page', target: '_blank')
+      link_to(dm_cms.showpage_url(cms_page.slug), dm_cms.showpage_url(cms_page.slug), title: 'Permalink for this page', target: '_blank')
 
     #--- make sure it's built safely...
     html = "".html_safe

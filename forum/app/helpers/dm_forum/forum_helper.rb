@@ -4,7 +4,7 @@ module DmForum
     def topic_title_link(topic, options)
       if topic.title =~ /^\[([^\]]{1,15})\]((\s+)\w+.*)/
         "<span class='flag'>#{$1}</span>" +
-        link_to($2.strip, forum_forum_topic_path(@forum, topic), options)
+          link_to($2.strip, forum_forum_topic_path(@forum, topic), options)
       else
         link_to(topic.title, forum_forum_topic_path(@forum, topic), options)
       end

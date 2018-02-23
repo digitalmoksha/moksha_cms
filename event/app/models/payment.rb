@@ -14,16 +14,16 @@ class Payment
       if registration
         Rails.logger.error(registration.inspect)
         payment_history = PaymentHistory.find_by_transaction_id(notify.transaction_id) ||
-                            registration.manual_payment(nil,
-                                                        notify.amount.to_f.to_s,
-                                                        notify.currency,
-                                                        nil,
-                                                        payment_method: payment_method,
-                                                        payment_date: notify.received_at,
-                                                        notify_data: notify,
-                                                        transaction_id: notify.transaction_id,
-                                                        status: notify.status
-                                                       )
+          registration.manual_payment(nil,
+                                      notify.amount.to_f.to_s,
+                                      notify.currency,
+                                      nil,
+                                      payment_method: payment_method,
+                                      payment_date: notify.received_at,
+                                      notify_data: notify,
+                                      transaction_id: notify.transaction_id,
+                                      status: notify.status
+                                     )
         Rails.logger.error(payment_history.inspect)
 
         begin

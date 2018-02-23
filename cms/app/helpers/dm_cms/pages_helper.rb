@@ -102,7 +102,7 @@ module DmCms::PagesHelper
         active_found          ||= !active.nil?
         menu_str += content_tag(:li, class: active) do
           page_link(page) +
-          submenu.html_safe
+            submenu.html_safe
         end
       end
     end
@@ -128,7 +128,7 @@ module DmCms::PagesHelper
         if !submenu.blank?
           menu_str += content_tag(:li, class: ['dropdown', active].css_join(' ')) do
             page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'dropdown-toggle', data: {toggle: 'dropdown'}) +
-            submenu.html_safe
+              submenu.html_safe
           end
         else
           menu_str += content_tag :li, page_link(page), class: active
@@ -157,7 +157,7 @@ module DmCms::PagesHelper
         if !submenu.blank?
           menu_str += content_tag(:li, class: ['nav-item', 'dropdown', active].css_join(' ')) do
             page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'nav-link dropdown-toggle', data: {toggle: 'dropdown'}) +
-            submenu.html_safe
+              submenu.html_safe
           end
         else
           menu_str += content_tag :li, page_link(page, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
