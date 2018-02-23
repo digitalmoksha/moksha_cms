@@ -14,12 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/EmptyLinesAroundAccessModifier:
-  Exclude:
-    - 'core/lib/dm_core/scio_excel.rb'
-
 # Offense count: 118
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.

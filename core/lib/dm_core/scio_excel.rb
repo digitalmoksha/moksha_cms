@@ -336,6 +336,7 @@ module Scio
       end
 
       protected
+
       def createWorksheet(name) #:nodoc:
         buffer = ""
         xml = Builder::XmlMarkup.new(:target => buffer, :indent => 2)
