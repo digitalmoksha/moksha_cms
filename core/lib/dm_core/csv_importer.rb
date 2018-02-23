@@ -1,7 +1,6 @@
 # Implements CSV Import functionality
 #------------------------------------------------------------------------------
 module CsvImporter
-
   require 'csv'
 
   # import data from CSV file and return an Array of Hashes

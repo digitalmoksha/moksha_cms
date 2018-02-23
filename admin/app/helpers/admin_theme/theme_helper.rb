@@ -56,7 +56,6 @@ CommonIcons = {
 
 module AdminTheme
   module ThemeHelper
-
     #------------------------------------------------------------------------------
     def subsection(options = {}, &block)
       content   = block_given? ? capture(&block) : ''
@@ -140,6 +139,5 @@ module AdminTheme
                           percentage: options[:percentage].to_i,
                           bottom_label: options[:bottom_label]})
     end
-
   end
 end

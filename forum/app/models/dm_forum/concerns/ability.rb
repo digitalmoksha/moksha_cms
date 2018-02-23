@@ -34,7 +34,6 @@ module DmForum
       end
 
       ::Ability.register_abilities(:dm_forum_abilities)
-
     end
   end
 end

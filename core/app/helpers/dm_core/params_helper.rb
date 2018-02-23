@@ -1,6 +1,5 @@
 module DmCore
   module ParamsHelper
-
     # given a "width" parameter, make it into a valid css width value
     #------------------------------------------------------------------------------
     def css_style_width(width = '')
@@ -14,6 +13,5 @@ module DmCore
       height = height.to_s.as_css_size
       return height.blank? ? '' : "height:#{height};"
     end
-
   end
 end

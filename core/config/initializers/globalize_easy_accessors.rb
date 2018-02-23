@@ -22,7 +22,6 @@
 # translated fields and available languages
 #------------------------------------------------------------------------------
 module EasyGlobalizeAccessors
-
   #------------------------------------------------------------------------------
   def globalize_accessors(options = {})
     options.reverse_merge!(:locales => I18n.available_locales, :attributes => translated_attribute_names)
@@ -61,7 +60,6 @@ module EasyGlobalizeAccessors
       end
     end
   end
-
 end
 
 ActiveRecord::Base.extend EasyGlobalizeAccessors

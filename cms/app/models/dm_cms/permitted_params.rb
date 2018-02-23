@@ -1,6 +1,5 @@
 module DmCms
   module PermittedParams
-
     #------------------------------------------------------------------------------
     def cms_snippet_params
       params.require(:cms_snippet).permit!

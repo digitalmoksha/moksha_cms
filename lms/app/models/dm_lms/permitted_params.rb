@@ -14,6 +14,5 @@ module DmLms
     def teaching_params
       params.require(:teaching).permit! if can? :manage_courses, :all
     end
-
   end
 end

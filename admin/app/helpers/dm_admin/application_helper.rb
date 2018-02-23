@@ -2,7 +2,6 @@ include DmAdmin::Bootstrap3Helper
 include AdminTheme::MenuHelper
 include AdminTheme::ThemeHelper
 module DmAdmin
-
   VerticalFormWrapperMappings = {
     check_boxes:    :bs3_vertical_radio_and_checkboxes,
     radio_buttons:  :bs3_vertical_radio_and_checkboxes,
@@ -18,11 +17,9 @@ module DmAdmin
   }.freeze
 
   module ApplicationHelper
-
     #------------------------------------------------------------------------------
     def flag_image(locale = I18n.locale, options = {})
       image_tag("dm_admin/flags/#{locale}.gif", options)
     end
-
   end
 end

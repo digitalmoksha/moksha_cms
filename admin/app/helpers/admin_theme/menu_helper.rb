@@ -1,6 +1,5 @@
 module AdminTheme
   module MenuHelper
-
     #------------------------------------------------------------------------------
     def admin_top_menu
       menu = ''.html_safe

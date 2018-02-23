@@ -30,7 +30,6 @@ module DmLms
       end
 
       ::Ability.register_abilities(:dm_lms_abilities)
-
     end
   end
 end

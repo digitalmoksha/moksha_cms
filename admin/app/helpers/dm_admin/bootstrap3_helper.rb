@@ -1,7 +1,6 @@
 # Bootstrap 3 helper functions
 #------------------------------------------------------------------------------
 module DmAdmin::Bootstrap3Helper
-
   # Panel: outputs a panel structure
   #   body:     set to false to not wrap in a panel-body class
   #   id:       an id for the panel
@@ -222,5 +221,4 @@ module DmAdmin::Bootstrap3Helper
     content = with_output_buffer(&block)
     render :partial => 'dm_admin/shared/modal_dialog', :locals => { :options => options, :content => content }
   end
-
 end

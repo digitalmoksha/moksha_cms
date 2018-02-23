@@ -36,5 +36,4 @@ END_OF_DESCRIPTION
   Template.register_tag('url_asset',  UrlMedia)  # TODO - DEPRECATED
   Template.register_tag('image_path', UrlMedia)  # TODO - DEPRECATED
   Template.register_tag('url_image',  UrlMedia)  # TODO - DEPRECATED
-
 end

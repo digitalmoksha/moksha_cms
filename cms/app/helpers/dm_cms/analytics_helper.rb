@@ -1,6 +1,5 @@
 module DmCms
   module AnalyticsHelper
-
     # Will insert the google analytics code. First it checks that the GA code was
     # specified in the account.  If a theme wants different/more complex analytics
     # code, then they can override the 'customized/analytics/google_analytics' partial
@@ -21,6 +20,5 @@ module DmCms
       #   "" # [todo] "<script src='/mint/?js' type='text/javascript'></script>".html_safe
       # end
     end
-
   end
 end

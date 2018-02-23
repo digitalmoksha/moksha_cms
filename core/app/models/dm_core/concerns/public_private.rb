@@ -128,7 +128,6 @@ module DmCore
       end
 
       module ClassMethods
-
         # Get list of available objects for user
         #------------------------------------------------------------------------------
         def available_to_user(user)

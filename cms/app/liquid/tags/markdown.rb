@@ -26,5 +26,4 @@ END_OF_DESCRIPTION
   end
 
   Template.register_tag('markdown', Markdown)
-
 end

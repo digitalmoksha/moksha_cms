@@ -24,13 +24,6 @@ Layout/EmptyLinesAroundMethodBody:
     - 'core/app/controllers/dm_core/concerns/registrations_controller.rb'
     - 'forum/app/controllers/dm_forum/admin/forums_controller.rb'
 
-# Offense count: 77
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines
-Layout/EmptyLinesAroundModuleBody:
-  Enabled: false
-
 # Offense count: 173
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.

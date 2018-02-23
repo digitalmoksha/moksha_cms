@@ -1,5 +1,4 @@
 module DmCms::CmsPagesHelper
-
   #------------------------------------------------------------------------------
   def nested_tree(tree)
     tree.map do |item, sub_items|
@@ -32,5 +31,4 @@ module DmCms::CmsPagesHelper
     template_item = template_menu_list.detect {|x| x[1] == search_for}
     template_item ? template_item[0] : ''
   end
-
 end

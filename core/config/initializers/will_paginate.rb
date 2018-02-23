@@ -81,6 +81,5 @@ module WillPaginate
         tag :ul, html, container_attributes
       end
     end
-
   end
 end

@@ -4,7 +4,6 @@ require 'kramdown'
 # that helper included in the mailers.
 #------------------------------------------------------------------------------
 module DmCore::LiquidHelper
-
   # Pass :view in a register so this view (with helpers) can be used inside of a tag
   # This assumes that the content is from a trusted source
   #------------------------------------------------------------------------------
@@ -79,5 +78,4 @@ module DmCore::LiquidHelper
       Sanitize.clean(content, Sanitize::Config::RELAXED)
     end
   end
-
 end

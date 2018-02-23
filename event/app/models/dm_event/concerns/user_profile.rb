@@ -12,7 +12,6 @@ module DmEvent
       #------------------------------------------------------------------------------
       module ClassMethods
       end
-
     end
   end
 end

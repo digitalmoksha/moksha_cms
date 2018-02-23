@@ -1,5 +1,4 @@
 module DmEvent::WorkshopsHelper
-
   #------------------------------------------------------------------------------
   def render_workshop_description(workshop)
     if workshop.description.nil?

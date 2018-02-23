@@ -32,7 +32,6 @@ module DmCore
       end
 
       module ClassMethods
-
         # Count the number of new users in the last 30 days.  returns a hash
         # with the total, and a json list of 15 values indicating how many were created
         # every 2 days
@@ -56,7 +55,6 @@ module DmCore
           end
           return { total: items.inject(:+), list: items.join(',') }
         end
-
       end
     end
   end

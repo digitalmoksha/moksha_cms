@@ -3,7 +3,6 @@ require 'devise'
 # from https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-(and-RSpec)
 #------------------------------------------------------------------------------
 module LoginMacros
-
   TEST_DOMAIN = 'test.example.com'.freeze
 
   #------------------------------------------------------------------------------

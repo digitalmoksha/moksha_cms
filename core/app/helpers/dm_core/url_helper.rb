@@ -1,6 +1,5 @@
 module DmCore
   module UrlHelper
-
     # Takes the full url path and converts to another locale
     #------------------------------------------------------------------------------
     def url_translate(locale)
@@ -129,6 +128,5 @@ module DmCore
         source + "?#{asset_id}"
       end
     end
-
   end
 end

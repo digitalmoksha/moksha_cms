@@ -1,5 +1,4 @@
 module DmCore::Admin::ApplicationHelper
-
   # Switch to the different user
   #------------------------------------------------------------------------------
   def switch_user(user)
@@ -18,5 +17,4 @@ module DmCore::Admin::ApplicationHelper
     paths.flatten.each { |path| active ||= request.url.include?(path) }
     active ? 'active' : nil
   end
-
 end

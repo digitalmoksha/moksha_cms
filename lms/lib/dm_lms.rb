@@ -1,7 +1,6 @@
 require "dm_lms/engine"
 
 module DmLms
-
   # configuration values are hung off of the Rails.application.config
   # object and can be accessed as either `DmLms.config.valuename` or
   # `Rails.application.config.dm_lms.valuename`
@@ -23,5 +22,4 @@ module DmLms
       config.use_markdown = true    # if false, Textile is used
     end
   end
-
 end

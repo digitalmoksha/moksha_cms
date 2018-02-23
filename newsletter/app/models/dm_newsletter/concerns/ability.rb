@@ -21,7 +21,6 @@ module DmNewsletter
       end
 
       ::Ability.register_abilities(:dm_newsletter_abilities)
-
     end
   end
 end

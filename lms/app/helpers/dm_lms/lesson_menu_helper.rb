@@ -1,6 +1,5 @@
 module DmLms
   module LessonMenuHelper
-
     # return the information needed to create a menu link for a lesson
     #------------------------------------------------------------------------------
     def lesson_menu_item(lesson, current_lesson)
@@ -31,6 +30,5 @@ module DmLms
       end
       return item
     end
-
   end
 end

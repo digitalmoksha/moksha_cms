@@ -1,6 +1,5 @@
 module DmCore
   module ApplicationHelper
-
     # Used for accessing a models presenter object - can also accept a block
     #------------------------------------------------------------------------------
     def present(object, klass = nil)

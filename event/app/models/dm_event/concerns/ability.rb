@@ -48,7 +48,6 @@ module DmEvent
       end
 
       ::Ability.register_abilities(:dm_event_abilities)
-
     end
   end
 end

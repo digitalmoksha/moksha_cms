@@ -1,6 +1,5 @@
 module DmCore
   module RenderHelper
-
     # gives the public avatar for a user
     #------------------------------------------------------------------------------
     def avatar_for(user, size=32, options = {})

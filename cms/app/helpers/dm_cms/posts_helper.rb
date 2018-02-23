@@ -21,5 +21,4 @@ module DmCms::PostsHelper
   def display_post_content(post)
     post.content.blank? ? '' : liquidize_markdown(post.content)
   end
-
 end

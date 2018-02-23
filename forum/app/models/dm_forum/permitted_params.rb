@@ -1,6 +1,5 @@
 module DmForum
   module PermittedParams
-
     #------------------------------------------------------------------------------
     def forum_site_params
       params.require(:forum_site).permit! if can? :manage_forums, :all
@@ -33,6 +32,5 @@ module DmForum
         params.require(:forum_comment).permit(:title, :body)
       end
     end
-
   end
 end

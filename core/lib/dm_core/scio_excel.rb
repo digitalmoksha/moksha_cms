@@ -484,7 +484,6 @@ module Scio
         xml.target!
       end
     end # SimpleStyle
-
   end
 end
 

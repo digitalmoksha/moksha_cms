@@ -174,7 +174,6 @@ module DmCore
       end
 
       module ClassMethods
-
         # List of Users who have :paid_subscription role
         #------------------------------------------------------------------------------
         def paid_subscribers

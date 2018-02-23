@@ -1,6 +1,5 @@
 module DmCore
   module AccountHelper
-
     PROTECTED_ASSETS_FOLDER = 'protected_assets'.freeze
     PROTECTED_ASSET_TRIGGER = 'protected_asset'.freeze  # name used to trigger the special route
     SITE_ASSETS_FOLDER      = 'site_assets'.freeze
@@ -123,6 +122,5 @@ module DmCore
       # after the controller call may need the current account
       Account.current = nil unless Rails.env.test?
     end
-
   end
 end

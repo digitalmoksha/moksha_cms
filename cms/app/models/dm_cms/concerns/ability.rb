@@ -55,7 +55,6 @@ module DmCms
       end
 
       ::Ability.register_abilities(:dm_cms_abilities)
-
     end
   end
 end

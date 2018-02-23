@@ -1,6 +1,5 @@
 module DmForum
   module ForumHelper
-
     #------------------------------------------------------------------------------
     def topic_title_link(topic, options)
       if topic.title =~ /^\[([^\]]{1,15})\]((\s+)\w+.*)/

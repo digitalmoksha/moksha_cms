@@ -51,5 +51,4 @@ END_OF_STRING
   end
 
   Template.register_tag('funding_project_status', FundingProjectStatus)
-
 end
