@@ -141,12 +141,12 @@ module Scio
         xml = Builder::XmlMarkup.new(:target => buffer, :indent => 2)
         xml.instruct! :xml, :version => "1.0", :encoding => "UTF-8"
         xml.Workbook({
-          'xmlns'      => "urn:schemas-microsoft-com:office:spreadsheet",
-          'xmlns:o'    => "urn:schemas-microsoft-com:office:office",
-          'xmlns:x'    => "urn:schemas-microsoft-com:office:excel",
-          'xmlns:html' => "http://www.w3.org/TR/REC-html40",
-          'xmlns:ss'   => "urn:schemas-microsoft-com:office:spreadsheet"
-        }) do
+                       'xmlns'      => "urn:schemas-microsoft-com:office:spreadsheet",
+                       'xmlns:o'    => "urn:schemas-microsoft-com:office:office",
+                       'xmlns:x'    => "urn:schemas-microsoft-com:office:excel",
+                       'xmlns:html' => "http://www.w3.org/TR/REC-html40",
+                       'xmlns:ss'   => "urn:schemas-microsoft-com:office:spreadsheet"
+                     }) do
           # add styles to the workbook
           styles = []
           @columns.each do |c|

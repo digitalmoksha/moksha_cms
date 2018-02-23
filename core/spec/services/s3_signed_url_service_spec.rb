@@ -7,9 +7,9 @@ describe DmCore::S3SignedUrlService, type: :service do
     before do
       # http://docs.aws.amazon.com/sdkforruby/api/Aws/ClientStubs.html
       Aws.config.update({
-        region: 'eu-west-1',
-        s3: { stub_responses: {} }
-      })
+                          region: 'eu-west-1',
+                          s3: { stub_responses: {} }
+                        })
     end
 
     it 'an unsigned, non-expiring public url' do
