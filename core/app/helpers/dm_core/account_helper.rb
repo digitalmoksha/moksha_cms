@@ -83,8 +83,6 @@ module DmCore
       Account.current.url_base + account_site_assets_media(true)
     end
 
-
-
     # Returns the path (from the root of the site) to the protected asset directory
     # It is built with the trigger word, `protected_asset`, which will trigger the
     # special route that adds the protection

@@ -14,7 +14,6 @@ class DmForum::Admin::ForumSitesController < DmForum::Admin::AdminController
     end
   end
 
-
   # GET /admin/fms/forum_site/edit
   #------------------------------------------------------------------------------
   def edit

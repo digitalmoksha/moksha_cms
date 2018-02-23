@@ -14,18 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: AllowAdjacentOneLineDefs, NumberOfEmptyLines.
-Layout/EmptyLineBetweenDefs:
-  Exclude:
-    - 'cms/app/helpers/dm_cms/pages_helper.rb'
-    - 'core/app/controllers/dm_core/application_controller.rb'
-    - 'core/app/helpers/dm_core/account_helper.rb'
-    - 'event/lib/dm_event/liquid/tags/funding_project_status.rb'
-    - 'forum/app/controllers/dm_forum/admin/forum_sites_controller.rb'
-    - 'forum/app/models/forum_topic.rb'
-
 # Offense count: 31
 # Cop supports --auto-correct.
 Layout/EmptyLines:

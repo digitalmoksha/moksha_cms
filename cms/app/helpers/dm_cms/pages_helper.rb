@@ -167,7 +167,6 @@ module DmCms::PagesHelper
     return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found
   end
 
-
   # return true if the page should be allowed to be dislpayed in a menu
   #------------------------------------------------------------------------------
   def allow_page_in_menu?(page)

@@ -40,6 +40,7 @@ module Liquid
         category: 'structure'
       }
     end
+
     def self.example
       example = <<-END_OF_STRING
 {% funding_project_status  %}

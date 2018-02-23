@@ -53,6 +53,7 @@ class ForumTopic < ApplicationRecord
   def num_replies
     comments_count - 1
   end
+
   #------------------------------------------------------------------------------
   def to_s
     title
