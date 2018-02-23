@@ -14,16 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Layout/EmptyLinesAroundMethodBody:
-  Exclude:
-    - 'cms/app/controllers/dm_cms/pages_controller.rb'
-    - 'cms/app/controllers/dm_cms/posts_controller.rb'
-    - 'cms/app/services/dm_cms/media_url_service.rb'
-    - 'core/app/controllers/dm_core/concerns/registrations_controller.rb'
-    - 'forum/app/controllers/dm_forum/admin/forums_controller.rb'
-
 # Offense count: 173
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.

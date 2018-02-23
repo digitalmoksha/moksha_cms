@@ -32,7 +32,6 @@ class DmCms::PostsController < DmCms::ApplicationController
       format.html { redirect_back(fallback_location: post_show_url(@post)) }
       format.json { head :ok }
     end
-
   end
 
   # #------------------------------------------------------------------------------

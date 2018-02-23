@@ -17,7 +17,6 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def show
-
   end
 
   # GET /admin/fms/forums/new

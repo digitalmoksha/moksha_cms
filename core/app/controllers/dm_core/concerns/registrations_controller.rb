@@ -27,7 +27,6 @@ module DmCore
           devise_parameter_sanitizer.permit(:sign_up) do |user_params|
             devise_sign_up_params(user_params)
           end
-
         end
 
       module ClassMethods

@@ -41,7 +41,6 @@ class DmCms::PagesController < DmCms::ApplicationController
       }
       format.any  { head :not_found }
     end
-
   end
 
   # Basically empty, as well as the view.  But gets rendered by dm_core when the
