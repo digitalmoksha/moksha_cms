@@ -44,7 +44,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     authorize! :manage_content, @current_page
     if @current_page.update_attributes(cms_page_params)
       redirect_to :action => :show, :id => @current_page
-     else
+    else
       @cms_page = @current_page
       render :action => :edit
      end

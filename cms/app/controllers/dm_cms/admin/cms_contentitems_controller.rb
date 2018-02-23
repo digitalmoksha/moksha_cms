@@ -33,7 +33,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
     authorize! :manage_content, @current_page
     if @cms_contentitem.update_attributes(cms_contentitem_params)
       redirect_to edit_admin_cms_contentitem_url(@cms_contentitem), notice: 'Content updated'
-     else
+    else
       render :action => :edit, alert: 'An error of some kind occurred'
      end
   end

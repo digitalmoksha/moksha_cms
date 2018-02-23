@@ -14,14 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Layout/ElseAlignment:
-  Exclude:
-    - 'cms/app/controllers/dm_cms/admin/cms_contentitems_controller.rb'
-    - 'cms/app/controllers/dm_cms/admin/cms_pages_controller.rb'
-    - 'cms/app/controllers/dm_cms/admin/cms_snippets_controller.rb'
-
 # Offense count: 7
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAdjacentOneLineDefs, NumberOfEmptyLines.
