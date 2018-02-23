@@ -198,6 +198,6 @@ class MediaUploader < CarrierWave::Uploader::Base
 
   #------------------------------------------------------------------------------
   def filename_retina(filename)
-    filename.gsub(/\.+[0-9a-zA-Z]{3,4}$/){ "@2x#{$&}" }.gsub('retina_', '')
+    filename.gsub(/\.+[0-9a-zA-Z]{3,4}$/) { "@2x#{$&}" }.gsub('retina_', '')
   end
 end
