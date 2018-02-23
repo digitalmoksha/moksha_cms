@@ -79,12 +79,12 @@ class RegistrationDatatable
 
   #------------------------------------------------------------------------------
   def registration_actions(registration)
-    actions = ''
+    actions  = ''
     actions += '<div class="btn-group">'
-      actions += "<button class='btn btn-xs dropdown-toggle btn-#{registration.current_state} hovertip' data-placement='right' data-toggle='dropdown' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'><i class='caret'></i></button>"
-      actions += '<ul class="dropdown-menu">'
-        actions += action_list(registration)
-      actions += '</ul>'
+    actions += "<button class='btn btn-xs dropdown-toggle btn-#{registration.current_state} hovertip' data-placement='right' data-toggle='dropdown' title='#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}'><i class='caret'></i></button>"
+    actions += '<ul class="dropdown-menu">'
+    actions += action_list(registration)
+    actions += '</ul>'
     actions += '</div>'
   end
 

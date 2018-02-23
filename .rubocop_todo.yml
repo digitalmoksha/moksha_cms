@@ -14,18 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: normal, rails
-Layout/IndentationConsistency:
-  Exclude:
-    - 'cms/app/models/cms_page.rb'
-    - 'core/app/controllers/dm_core/concerns/registrations_controller.rb'
-    - 'core/app/mailers/dm_core/site_mailer.rb'
-    - 'event/app/datatables/registration_datatable.rb'
-    - 'event/app/models/payment.rb'
-
 # Offense count: 18
 # Cop supports --auto-correct.
 # Configuration parameters: Width, IgnoredPatterns.

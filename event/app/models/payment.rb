@@ -24,7 +24,8 @@ class Payment
                                                         transaction_id: notify.transaction_id,
                                                         status: notify.status
                                                        )
-          Rails.logger.error(payment_history.inspect)
+        Rails.logger.error(payment_history.inspect)
+
         begin
           if notify.complete?
             payment_history.status = notify.status

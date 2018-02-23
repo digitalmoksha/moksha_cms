@@ -12,6 +12,7 @@ class DmCore::SiteMailer < ApplicationMailer
         message.reply_to = Account.current.preferred_smtp_from_email if message.reply_to.blank?
       end
     end
-   end
-   register_interceptor DynamicSettingsInterceptor
+  end
+
+  register_interceptor DynamicSettingsInterceptor
 end
