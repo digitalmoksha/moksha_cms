@@ -17,9 +17,9 @@ module DmEvent
             'discounted_price'    => discounted_price.format(no_cents_if_whole: true, symbol: true),
             'title'               => workshop.title,
             'fullname'            => user_profile.full_name,
-            'payment_url'         => self.payment_url,
-            'balance'             => self.balance_owed.format,
-            'payment_owed'        => self.payment_owed.format,
+            'payment_url'         => payment_url,
+            'balance'             => balance_owed.format,
+            'payment_owed'        => payment_owed.format,
             'start_date'          => format_date(workshop.starting_on, true),
             'end_date'            => format_date(workshop.ending_on, true),
             'start_time'          => format_time(workshop.starting_on),
@@ -52,7 +52,7 @@ module DmEvent
         def compile_email(state, system_email)
           substitutions = {
             'state'   => state.to_s,
-            'event'   => self.to_liquid
+            'event'   => to_liquid
           }
           substitutions['payment_details'] = Liquid::Template.parse(workshop_price.payment_details).render(substitutions) unless workshop_price.try(:payment_details).blank?
           substitutions['subject']         = Liquid::Template.parse(system_email.subject).render(substitutions)

@@ -14,10 +14,10 @@ module Liquid
 
     def self.details
       {
-        name: self.tag_name,
+        name: tag_name,
         summary: 'Returns url of a media file',
         category: 'url',
-        description: self.description
+        description: description
       }
     end
 

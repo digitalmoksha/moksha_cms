@@ -62,7 +62,7 @@ class Registration < ApplicationRecord
   # a customer registers without having a user account.
   #------------------------------------------------------------------------------
   def create_uuid
-    self.uuid = SecureRandom.uuid if self.new_record?
+    self.uuid = SecureRandom.uuid if new_record?
   end
 
   # The amount_paid currency should match the workshop base currency
@@ -130,7 +130,7 @@ class Registration < ApplicationRecord
   # check if the regsitration is unpaid
   #------------------------------------------------------------------------------
   def unpaid?
-    self.accepted? && self.archived_on == nil
+    accepted? && archived_on == nil
   end
 
   # Setup the columns for exporting data as csv.

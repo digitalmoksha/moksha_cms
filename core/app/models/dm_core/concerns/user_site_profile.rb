@@ -39,7 +39,7 @@ module DmCore
         #------------------------------------------------------------------------------
         def new_last_30_days
           items = 28.step(0, -2).map do |date|
-            self.where('created_at <= ? AND created_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 2).days.ago.to_datetime, Account.current.id).count
+            where('created_at <= ? AND created_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 2).days.ago.to_datetime, Account.current.id).count
           end
           return { total: items.inject(:+), list: items.join(',') }
         end

@@ -53,14 +53,14 @@ module DmCore
         # Keep the profile email in sync with the user's email
         #------------------------------------------------------------------------------
         def update_profile_email
-          user_profile.update_attribute(:email, email) if self.email_changed?
+          user_profile.update_attribute(:email, email) if email_changed?
         end
 
         # When a user is created, attach it to the current account
         #------------------------------------------------------------------------------
         def add_account
-          self.skip_reconfirmation! # make sure a second confirmation email is not sent
-          self.update_attribute(:account_id, Account.current.id)
+          skip_reconfirmation! # make sure a second confirmation email is not sent
+          update_attribute(:account_id, Account.current.id)
           ensure_site_profile_exists
         end
 
@@ -68,7 +68,7 @@ module DmCore
         def ensure_site_profile_exists
           if current_site_profile.nil?
             user_site_profiles.create().update_attribute(:account_id, Account.current.id)
-            self.reload
+            reload
           end
         end
 
@@ -84,7 +84,7 @@ module DmCore
         def is_sysadmin?
           if @is_sysadmin.nil?
             sysadmin_role = Role.unscoped.find_by_name('sysadmin')
-            @is_sysadmin = sysadmin_role.nil? ? false : !sysadmin_role.users.where('user_id = ?', self.id).empty?
+            @is_sysadmin = sysadmin_role.nil? ? false : !sysadmin_role.users.where('user_id = ?', id).empty?
           else
             @is_sysadmin
           end

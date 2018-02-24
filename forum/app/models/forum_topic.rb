@@ -81,7 +81,7 @@ class ForumTopic < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def comment_number(forum_comment)
-    self.forum_comments.where("id <= #{forum_comment.id}").count
+    forum_comments.where("id <= #{forum_comment.id}").count
   end
 
   #------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ class ForumTopic < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def create_initial_comment
-    self.forum_comments.create_comment(self, body, user)
+    forum_comments.create_comment(self, body, user)
     @body = nil
   end
 

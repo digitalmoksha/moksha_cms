@@ -60,12 +60,12 @@ class CmsBlog < ApplicationRecord
   # Return the header image, or a default if not specified
   #------------------------------------------------------------------------------
   def header_image(default = nil)
-    self.attributes['header_image'] || default
+    attributes['header_image'] || default
   end
 
   #------------------------------------------------------------------------------
   def header_accent_color(default = '')
-    self.preferred_header_accent_color || default
+    preferred_header_accent_color || default
   end
 
   # return a list of tags for all Blog post objects

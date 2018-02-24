@@ -62,7 +62,7 @@ module DmCore
         # When a profile is created, attach it to the current account
         #------------------------------------------------------------------------------
         def add_account
-          self.update_attribute(:account_id, Account.current.id)
+          update_attribute(:account_id, Account.current.id)
         end
 
         #------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ module DmCore
         # supports
         #------------------------------------------------------------------------------
         def locale
-          self.favored_locale
+          favored_locale
         end
       end
     end

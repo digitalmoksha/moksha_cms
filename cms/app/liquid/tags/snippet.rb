@@ -19,10 +19,10 @@ module Liquid
     #------------------------------------------------------------------------------
     def self.details
       {
-        name: self.tag_name,
+        name: tag_name,
         summary: 'Display a snippet',
         category: 'structure',
-        description: self.description
+        description: description
       }
     end
 

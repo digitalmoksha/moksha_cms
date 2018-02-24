@@ -33,13 +33,13 @@ module DmCore
         # regenerate slug if it's blank
         #------------------------------------------------------------------------------
         def should_generate_new_friendly_id?
-          self.slug.blank?
+          slug.blank?
         end
 
         # If user set slug sepcifically, we need to make sure it's been normalized
         #------------------------------------------------------------------------------
         def normalize_slug
-          self.slug = normalize_friendly_id(self.slug)
+          self.slug = normalize_friendly_id(slug)
         end
 
         # use babosa gem (to_slug) to allow better handling of multi-language slugs

@@ -36,7 +36,7 @@ class CmsContentitem < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def original_updated_on
-    @original_updated_on || self.updated_on.to_f
+    @original_updated_on || updated_on.to_f
   end
   attr_writer :original_updated_on
 
@@ -46,7 +46,7 @@ class CmsContentitem < ApplicationRecord
   # [todo] still needed since we don't use acts_as_list anymore?
   #------------------------------------------------------------------------------
   def validate_conflict
-    if @conflict || (!@original_updated_on.nil? && self.updated_on.to_f > @original_updated_on.to_f)
+    if @conflict || (!@original_updated_on.nil? && updated_on.to_f > @original_updated_on.to_f)
       @conflict             = true
       @original_updated_on  = nil
       errors.add :base, "This record was changed while you were editing."
@@ -64,7 +64,7 @@ class CmsContentitem < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def deep_clone(new_cms_page_id)
-    new_cms_contentitem                  = self.clone
+    new_cms_contentitem                  = clone
     new_cms_contentitem.cms_page_id      = new_cms_page_id
 
     DmCore::Language.language_array.each do |locale|

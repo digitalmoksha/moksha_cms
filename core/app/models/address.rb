@@ -18,6 +18,6 @@ class Address < ApplicationRecord
   #------------------------------------------------------------------------------
   def to_html(name_to_use = '')
     # self.to_s(name_to_use).gsub("\n", "<br/>".html_safe)
-    self.to_s(name_to_use).split(/\n/).xss_aware_join('<br>'.html_safe)
+    to_s(name_to_use).split(/\n/).xss_aware_join('<br>'.html_safe)
   end
 end

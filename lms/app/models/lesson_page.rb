@@ -47,7 +47,7 @@ class LessonPage < ApplicationRecord
   #------------------------------------------------------------------------------
   def next(options = {})
     options = options.reverse_merge(published_only: true)
-    page = LessonPage.next(self.row_order, self.lesson_id)
+    page = LessonPage.next(row_order, lesson_id)
     page = (options[:published_only] ? page.published : page).try(:first)
     if page.nil?
       lesson = self.lesson.next(options)
@@ -60,7 +60,7 @@ class LessonPage < ApplicationRecord
 
   def previous(options = {})
     options = options.reverse_merge(published_only: true)
-    page = LessonPage.previous(self.row_order, self.lesson_id)
+    page = LessonPage.previous(row_order, lesson_id)
     page = (options[:published_only] ? page.published : page).try(:last)
     if page.nil?
       lesson = self.lesson.previous(options)

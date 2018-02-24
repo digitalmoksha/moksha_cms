@@ -107,7 +107,7 @@ class Account < ApplicationRecord
     separated   = host.downcase.split('.')
     separated   = separated[0..-7] if host.end_with?('xip.io') # strip off xip.io and ip address
     separated   = separated.delete_if { |x| x == 'dev' || x == 'www' || x == 'backoffice' || x =~ /stg-/ || x == 'staging' }
-    domain      = self.find_by_domain(separated.join('.'))
+    domain      = find_by_domain(separated.join('.'))
     return domain if domain
 
     if Account.count == 0
@@ -141,7 +141,7 @@ class Account < ApplicationRecord
   # Once an account is found, setup the default url_ values.
   #------------------------------------------------------------------------------
   def set_default_values
-    set_url_parts(self.ssl_enabled? ? 'https://' : 'http://', self.domain)
+    set_url_parts(ssl_enabled? ? 'https://' : 'http://', domain)
   end
 
   # set the protocol and host for the account's url.  During request processing,
@@ -154,13 +154,13 @@ class Account < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def url_base
-    self.url_protocol + self.url_host
+    url_protocol + url_host
   end
 
   #------------------------------------------------------------------------------
   def create_default_roles
-    Role.unscoped.create!(name: 'admin',   account_id: self.id)
-    Role.unscoped.create!(name: 'beta',    account_id: self.id)
+    Role.unscoped.create!(name: 'admin',   account_id: id)
+    Role.unscoped.create!(name: 'beta',    account_id: id)
   end
 
   #------------------------------------------------------------------------------

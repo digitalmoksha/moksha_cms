@@ -4,7 +4,7 @@ class MailchimpNewsletterSubscriber < NewsletterSubscriber
   # is subscriber interested in the named group?
   #------------------------------------------------------------------------------
   def interest_group?(name)
-    group = self.groups.detect { |group| group['name'] == name } if self.groups
+    group = groups.detect { |group| group['name'] == name } if groups
     return (group ? group['interested'] : false)
   end
 

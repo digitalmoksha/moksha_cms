@@ -16,17 +16,17 @@ class MediaFile < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def image?
-    self.media_content_type.start_with? 'image'
+    media_content_type.start_with? 'image'
   end
 
   #------------------------------------------------------------------------------
   def pdf?
-    self.media_content_type.end_with? 'pdf'
+    media_content_type.end_with? 'pdf'
   end
 
   #------------------------------------------------------------------------------
   def short_location(version = nil)
-    filename = version ? self.media.versions[version].file.filename : self.media.file.filename
+    filename = version ? media.versions[version].file.filename : media.file.filename
     folder.blank? ? filename : "#{folder}/#{filename}"
   end
 
@@ -73,11 +73,11 @@ class MediaFile < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def validate_name_is_unique
-    if self.new_record?
-      if self.media.file.nil?
+    if new_record?
+      if media.file.nil?
         errors.add :media, "please select a file to upload"
-      elsif MediaFile.where(media: self.media.file.original_filename, folder: self.folder, account_id: self.account_id).count > 0
-        errors.add :media, "'#{self.short_location}' already exists"
+      elsif MediaFile.where(media: media.file.original_filename, folder: folder, account_id: account_id).count > 0
+        errors.add :media, "'#{short_location}' already exists"
       end
     end
   end
@@ -90,10 +90,10 @@ class MediaFile < ApplicationRecord
       self.media_file_size    = media.file.size
     end
 
-    if self.new_record?
-      self.folder = self.folder.sanitize_filename
-      self.tag_list.add(self.folder)
-      self.tag_list.add(media.file.extension)
+    if new_record?
+      self.folder = folder.sanitize_filename
+      tag_list.add(folder)
+      tag_list.add(media.file.extension)
     end
   end
 end

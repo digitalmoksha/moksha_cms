@@ -13,7 +13,7 @@ class MailchimpNewsletter < Newsletter
 
   #------------------------------------------------------------------------------
   def self.signup_information(token, options = {})
-    information = { newsletter: self.find_newsletter(token, options) }
+    information = { newsletter: find_newsletter(token, options) }
     if information[:newsletter]
       information[:grouping] = information[:newsletter].groupings[0]
       if options[:current_user]
@@ -27,11 +27,11 @@ class MailchimpNewsletter < Newsletter
   # Make sure list id is specified, and it's valid with MailChimp
   #------------------------------------------------------------------------------
   def validate_list_id
-    if self.mc_id.blank?
+    if mc_id.blank?
       errors[:mc_id] << ("list id must be provided")
     else
       api         = MailchimpNewsletter.api
-      list_info   = api.lists.list(filters: { list_id: self.mc_id, exact: true })
+      list_info   = api.lists.list(filters: { list_id: mc_id, exact: true })
       if !list_info['errors'].empty?
         errors[:mc_id] << (list_info['errors'][0]['error'])
       end
@@ -43,7 +43,7 @@ class MailchimpNewsletter < Newsletter
   def groupings
     begin
       api = MailchimpNewsletter.api
-      api.lists.interest_groupings(id: self.mc_id)
+      api.lists.interest_groupings(id: mc_id)
     rescue Gibbon::MailChimpError
       # groupings are not enabled for this list
       return []
@@ -80,7 +80,7 @@ class MailchimpNewsletter < Newsletter
     end
     merge_vars[:SPAMAPI]      = 1
     merge_vars[:MC_LANGUAGE]  = I18n.locale # set the language to the current locale they are using
-    api.lists.subscribe(id: self.mc_id, email: email, merge_vars: merge_vars,
+    api.lists.subscribe(id: mc_id, email: email, merge_vars: merge_vars,
                         double_optin: true, update_existing: options[:update_existing], replace_interests: true,
                         headers: headers)
     return { success: true, code: 0 }
@@ -95,7 +95,7 @@ class MailchimpNewsletter < Newsletter
     return false if email.blank?
 
     api = MailchimpNewsletter.api
-    api.lists.unsubscribe(id: self.mc_id, email: { email: email }, delete_member: false, send_goodbye: true, send_notify: true)
+    api.lists.unsubscribe(id: mc_id, email: { email: email }, delete_member: false, send_goodbye: true, send_notify: true)
     return true
   rescue Gibbon::MailChimpError => exception
     Rails.logger.info "=== Error Unsubscribing #{email} : #{exception}"
@@ -105,11 +105,11 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def update_list_stats
     api         = MailchimpNewsletter.api
-    list_info   = api.lists.list(filters: { list_id: self.mc_id, exact: true })
+    list_info   = api.lists.list(filters: { list_id: mc_id, exact: true })
 
     # update the newsletter
     if list_info['errors'].empty?
-      self.update_attributes(
+      update_attributes(
         name:               list_info['data'][0]['name'],
         subscribed_count:   list_info['data'][0]['stats']['member_count'],
         unsubscribed_count: list_info['data'][0]['stats']['unsubscribe_count'],
@@ -117,7 +117,7 @@ class MailchimpNewsletter < Newsletter
         created_at:         list_info['data'][0]['date_created'])
     else
       # looks like the list was deleted at MailChimp, mark as deleted
-      self.update_attribute(:deleted, true)
+      update_attribute(:deleted, true)
     end
   end
 
@@ -127,7 +127,7 @@ class MailchimpNewsletter < Newsletter
   def sent_campaign_list(options = { start: 0, limit: 100 })
     api                 = MailchimpNewsletter.api
     list_params         = { sort_field: 'send_time', sort_dir: 'DESC',
-                            filters: { list_id: self.mc_id } }
+                            filters: { list_id: mc_id } }
     list_params[:start] = options[:start] ? options[:start] : 0
     list_params[:limit] = options[:limit] ? options[:limit] : 100
     list_params[:filters][:folder_id] = options[:folder_id] if options[:folder_id]

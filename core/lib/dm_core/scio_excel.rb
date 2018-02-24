@@ -506,7 +506,7 @@ end
 class String
   # simple (and naive) way to convert html-hex color to array of colors
   def to_rgb
-    raise "Invalid Hex Color" if self.size != 7 || self[0] != 35
+    raise "Invalid Hex Color" if size != 7 || self[0] != 35
 
     rgb = Hash.new
     rgb[:red]   = self[1, 2].to_i(16)

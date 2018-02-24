@@ -21,10 +21,10 @@ module Liquid
     #------------------------------------------------------------------------------
     def self.details
       {
-        name: self.tag_name,
+        name: tag_name,
         summary: 'Displays an image',
         category: 'media',
-        description: self.description
+        description: description
       }
     end
 

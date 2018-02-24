@@ -9,10 +9,10 @@ module Liquid
 
     def self.details
       {
-        name: self.tag_name,
+        name: tag_name,
         summary: 'Process text with Markdown',
         category: 'structure',
-        description: self.description
+        description: description
       }
     end
 

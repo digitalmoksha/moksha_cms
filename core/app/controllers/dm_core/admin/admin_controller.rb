@@ -76,8 +76,8 @@ class DmCore::Admin::AdminController < ApplicationController
       @admin_theme[:main_menu] |= DmSubscriptions::AdminMenuInject.menu_items(current_user) if defined?(DmSubscriptions)
 
       # give main application a chance to add anything it wants
-      if self.respond_to? :admin_specific_menus
-        self.admin_specific_menus @admin_theme
+      if respond_to? :admin_specific_menus
+        admin_specific_menus @admin_theme
       end
 
       if defined?(::AdminMenuInject)

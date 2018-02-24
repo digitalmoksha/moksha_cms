@@ -10,10 +10,10 @@ module Liquid
     #------------------------------------------------------------------------------
     def self.details
       {
-        name: self.tag_name,
+        name: tag_name,
         summary: 'Contact form tag',
         category: 'form',
-        description: self.description
+        description: description
       }
     end
 

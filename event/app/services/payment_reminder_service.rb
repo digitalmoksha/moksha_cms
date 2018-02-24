@@ -8,8 +8,8 @@ class PaymentReminderService
     Registration.unpaid.notwrittenoff.each do |registration|
       unless registration.check_if_writeoff!
         if registration.payment_owed.positive?
-          if self.payment_reminder_due?(registration)
-            self.send_reminder(registration) ? (success += 1) : (failed += 1)
+          if payment_reminder_due?(registration)
+            send_reminder(registration) ? (success += 1) : (failed += 1)
           end
         end
       end
@@ -51,7 +51,7 @@ class PaymentReminderService
   # is due.
   #------------------------------------------------------------------------------
   def self.payment_reminder_due?(registration)
-    return false if !self.past_due?(registration) || registration.writtenoff_on
+    return false if !past_due?(registration) || registration.writtenoff_on
 
     now         = Time.now
     result      = false

@@ -57,7 +57,7 @@ class CmsPost < ApplicationRecord
   #------------------------------------------------------------------------------
   def send_notification_emails(test_user = nil)
     if test_user
-      email = PostNotifyMailer.post_notify(test_user, self, self.account).deliver_now
+      email = PostNotifyMailer.post_notify(test_user, self, account).deliver_now
       return (email ? 1 : 0)
     else
       user_list = cms_blog.member_list(:all).to_set
@@ -72,7 +72,7 @@ class CmsPost < ApplicationRecord
     success = failed = 0
     Rails.logger.info "=== Sending #{user_list.size} emails for blog post '#{title}'"
     user_list.each do |user|
-      email     = PostNotifyMailer.post_notify(user, self, self.account).deliver_later
+      email     = PostNotifyMailer.post_notify(user, self, account).deliver_later
       success  += 1 if email
       failed   += 1 if email.nil?
     end

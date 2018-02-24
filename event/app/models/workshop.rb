@@ -111,12 +111,12 @@ class Workshop < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def archived?
-    self.archived_on ? true : false
+    archived_on ? true : false
   end
 
   #------------------------------------------------------------------------------
   def crowdfunding?
-    self.event_style == 'crowdfunding'
+    event_style == 'crowdfunding'
   end
 
   # Return financial summary and details
@@ -184,24 +184,24 @@ class Workshop < ApplicationRecord
   # no way they can login
   #------------------------------------------------------------------------------
   def member?(user)
-    self.registrations.attending.where(user_profile_id: user.user_profile.id).count > 0
+    registrations.attending.where(user_profile_id: user.user_profile.id).count > 0
   end
 
   # Provide a list of users that are members (does not include userless registrations)
   #------------------------------------------------------------------------------
   def member_count
-    self.registrations.attending.joins(user_profile: [:user]).references(:user_profile).where('user_profiles.user_id IS NOT NULL').count
+    registrations.attending.joins(user_profile: [:user]).references(:user_profile).where('user_profiles.user_id IS NOT NULL').count
   end
 
   # Return list of Users that are attending (does not include userless registrations)
   #------------------------------------------------------------------------------
   def member_list
-    User.includes(:user_profile).references(:user_profile).where(user_profiles: { id: self.registrations.attending.map(&:user_profile_id) })
+    User.includes(:user_profile).references(:user_profile).where(user_profiles: { id: registrations.attending.map(&:user_profile_id) })
   end
 
   #------------------------------------------------------------------------------
   def header_image(default = nil)
-    self.image || default
+    image || default
   end
 
   #------------------------------------------------------------------------------
@@ -217,7 +217,7 @@ class Workshop < ApplicationRecord
   #------------------------------------------------------------------------------
   def lost_users(days_ago = 10)
     lost = []
-    new_users = User.where(created_at: (self.starting_on - days_ago.day)..self.ending_on, account_id: Account.current.id)
+    new_users = User.where(created_at: (starting_on - days_ago.day)..ending_on, account_id: Account.current.id)
     new_users.each do |user|
       if user.user_site_profiles.where(account_id: Account.current.id)
         if user.user_profile.registrations.count == 0

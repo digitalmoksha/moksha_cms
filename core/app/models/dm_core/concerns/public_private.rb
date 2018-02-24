@@ -68,7 +68,7 @@ module DmCore
         # Is the user a member of this object?
         #------------------------------------------------------------------------------
         def member?(user)
-          user.has_role?(:member, self) || self.owner.try('member?', user)
+          user.has_role?(:member, self) || owner.try('member?', user)
         end
 
         #------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ module DmCore
             if is_subscription_only?
               ::User.paid_subscribers.count
             else
-              self.owner ? self.owner.member_count : 0
+              owner ? owner.member_count : 0
             end
           when :all
             member_count(:manual) + member_count(:automatic)
@@ -97,7 +97,7 @@ module DmCore
             if is_subscription_only?
               ::User.paid_subscribers
             else
-              self.owner ? self.owner.member_list : []
+              owner ? owner.member_list : []
             end
           when :all
             member_list(:manual) + member_list(:automatic)
@@ -108,10 +108,10 @@ module DmCore
         #------------------------------------------------------------------------------
         def can_be_read_by?(attempting_user)
           if attempting_user
-            self.published? && (self.is_public? || self.is_protected? || self.member?(attempting_user) || attempting_user.is_admin? ||
-                  (self.is_subscription_only? && attempting_user.is_paid_subscriber?))
+            published? && (is_public? || is_protected? || member?(attempting_user) || attempting_user.is_admin? ||
+                  (is_subscription_only? && attempting_user.is_paid_subscriber?))
           else
-            self.published? && self.is_public?
+            published? && is_public?
           end
         end
 
@@ -119,8 +119,8 @@ module DmCore
         #------------------------------------------------------------------------------
         def can_be_replied_by?(attempting_user)
           if attempting_user
-            self.published? && (self.is_public? || self.is_protected? || self.member?(attempting_user) || attempting_user.is_admin? ||
-                  (self.is_subscription_only? && attempting_user.is_paid_subscriber?))
+            published? && (is_public? || is_protected? || member?(attempting_user) || attempting_user.is_admin? ||
+                  (is_subscription_only? && attempting_user.is_paid_subscriber?))
           else
             false # must be logged in to make a reply
           end
@@ -131,19 +131,19 @@ module DmCore
         # Get list of available objects for user
         #------------------------------------------------------------------------------
         def available_to_user(user)
-          include_translations = self.method_defined?(:translations)
+          include_translations = method_defined?(:translations)
           if user.nil?
             #--- not logged in, only public
-            objects = self.by_public.published
+            objects = by_public.published
             objects = objects.includes(:translations) if include_translations
           elsif user.is_admin?
-            objects = self.all
+            objects = all
             objects = objects.includes(:translations) if include_translations
           else
             #--- all public/protected, as well as private that they are a member and subscriptions
-            public_objs     = self.all_public.published
-            private_objs    = self.by_private.published
-            subscribed_objs = self.by_subscription.published if user.is_paid_subscriber?
+            public_objs     = all_public.published
+            private_objs    = by_private.published
+            subscribed_objs = by_subscription.published if user.is_paid_subscriber?
             if include_translations
               public_objs     = public_objs.includes(:translations)
               private_objs    = private_objs.includes(:translations)

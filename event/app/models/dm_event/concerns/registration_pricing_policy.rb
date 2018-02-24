@@ -79,7 +79,7 @@ module DmEvent
           if payment_reminder_hold_until
             payment_reminder_hold_until
           else
-            workshop.initial_payment_required_on ? workshop.initial_payment_required_on : self.created_at
+            workshop.initial_payment_required_on ? workshop.initial_payment_required_on : created_at
           end
         end
 
@@ -116,18 +116,18 @@ module DmEvent
           amount = Monetize.parse(cost, total_currency)
 
           if payment_history
-            new_amount_paid = self.amount_paid - self.workshop_price.to_base_currency(payment_history.total) + self.workshop_price.to_base_currency(amount)
+            new_amount_paid = amount_paid - workshop_price.to_base_currency(payment_history.total) + workshop_price.to_base_currency(amount)
             DmCore::PaymentHistories::UpdateService.call(payment_history, amount, user_profile, options)
           else
-            new_amount_paid = self.amount_paid + self.workshop_price.to_base_currency(amount)
+            new_amount_paid = amount_paid + workshop_price.to_base_currency(amount)
             payment_history = DmCore::PaymentHistories::CreateService.call(receipt_code, amount, user_profile, options)
-            self.payment_histories << payment_history
+            payment_histories << payment_history
           end
 
           if payment_history.errors.empty?
-            self.update_attribute(:amount_paid_cents, new_amount_paid.cents)
-            self.reload
-            self.send('paid!') if balance_owed.cents <= 0 && self.accepted?
+            update_attribute(:amount_paid_cents, new_amount_paid.cents)
+            reload
+            send('paid!') if balance_owed.cents <= 0 && accepted?
           else
             logger.error("===> Error: Registration.manual_payment: #{payment_history.errors.inspect}")
           end
@@ -139,10 +139,10 @@ module DmEvent
         def delete_payment(payment_id)
           payment = PaymentHistory.find(payment_id)
           if payment
-            self.update_attribute(:amount_paid_cents, (self.amount_paid - self.workshop_price.to_base_currency(payment.total)).cents)
+            update_attribute(:amount_paid_cents, (amount_paid - workshop_price.to_base_currency(payment.total)).cents)
             payment.destroy
             suppress_transition_email
-            self.send('accept!') if balance_owed.positive? && self.paid?
+            send('accept!') if balance_owed.positive? && paid?
             return true
           end
           return false
@@ -151,18 +151,18 @@ module DmEvent
         # Return the payment page url, so that it can be used in emails
         #------------------------------------------------------------------------------
         def payment_url
-          DmEvent::Engine.routes.url_helpers.register_choose_payment_url(self.uuid, host: Account.current.url_host, locale: I18n.locale)
+          DmEvent::Engine.routes.url_helpers.register_choose_payment_url(uuid, host: Account.current.url_host, locale: I18n.locale)
         end
 
         #------------------------------------------------------------------------------
         def should_writeoff?
-          self.writtenoff_on.nil? && balance_owed.positive? && workshop_price && (workshop_price.last_scheduled_payment_date(initial_payments_should_start_on).to_date + WRITE_OFF_DAYS.days) < Time.now
+          writtenoff_on.nil? && balance_owed.positive? && workshop_price && (workshop_price.last_scheduled_payment_date(initial_payments_should_start_on).to_date + WRITE_OFF_DAYS.days) < Time.now
         end
 
         # writeoff the registration if it needs to
         #------------------------------------------------------------------------------
         def check_if_writeoff!
-          should_writeoff? ? self.update_attribute(:writtenoff_on, Time.now) : false
+          should_writeoff? ? update_attribute(:writtenoff_on, Time.now) : false
         end
       end
 

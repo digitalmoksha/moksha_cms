@@ -48,11 +48,11 @@ class MediaUploader < CarrierWave::Uploader::Base
   #------------------------------------------------------------------------------
   def thumb_image_pdf(width, height)
     if pdf?(self)
-      self.convert(:jpg)
-      self.resize_and_pad(width, height)
-      self.file.content_type = 'image/jpeg'
+      convert(:jpg)
+      resize_and_pad(width, height)
+      file.content_type = 'image/jpeg'
     else
-      self.resize_to_fill(width, height) unless svg?(self)
+      resize_to_fill(width, height) unless svg?(self)
     end
   end
 
@@ -60,10 +60,10 @@ class MediaUploader < CarrierWave::Uploader::Base
   #------------------------------------------------------------------------------
   def size_image_pdf(width)
     if pdf?(self)
-      self.convert(:jpg, 0)
-      self.file.content_type = 'image/jpeg'
+      convert(:jpg, 0)
+      file.content_type = 'image/jpeg'
     end
-    self.resize_to_width(width) unless svg?(self)
+    resize_to_width(width) unless svg?(self)
   end
 
   # From: https://github.com/jhnvz/retina_rails

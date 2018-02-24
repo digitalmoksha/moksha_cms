@@ -105,7 +105,7 @@ class CmsPage < ApplicationRecord
   def page_template
     page = self
     page = page.parent while page.template.blank? && !page.is_root?
-    raise "No template available for page #{self.slug}" if page.template.blank?
+    raise "No template available for page #{slug}" if page.template.blank?
 
     return page.template
   end
@@ -117,8 +117,8 @@ class CmsPage < ApplicationRecord
   #------------------------------------------------------------------------------
   def published_children(user, options = { include_blank_titles: false })
     pages = []
-    if self.has_children?
-      self.children.each do |child|
+    if has_children?
+      children.each do |child|
         if child.is_published? || (user&.is_admin?)
           pages << child unless child[:menutitle].blank? && !options[:include_blank_titles]
         end
@@ -130,12 +130,12 @@ class CmsPage < ApplicationRecord
   # Return the header image, or a default if not specified
   #------------------------------------------------------------------------------
   def header_image(default = nil)
-    self.attributes['header_image'] || default
+    attributes['header_image'] || default
   end
 
   #------------------------------------------------------------------------------
   def header_accent_color(default = '')
-    self.preferred_header_accent_color || default
+    preferred_header_accent_color || default
   end
 
   # return a list of tags for all Page objects
@@ -149,9 +149,9 @@ class CmsPage < ApplicationRecord
   def to_liquid
     { 'page' =>
       {
-        'title'     => self.title,
-        'menutitle' => self.menutitle,
-        'slug'      => self.slug
+        'title'     => title,
+        'menutitle' => menutitle,
+        'slug'      => slug
       },
       'subscription' =>
       {
@@ -195,7 +195,7 @@ class CmsPage < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def mark_as_welcome_page
-    if self.welcome_page?
+    if welcome_page?
       update_attribute(:welcome_page, false)
     else
       prev_page = CmsPage.welcome_page
@@ -206,7 +206,7 @@ class CmsPage < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def self.welcome_page
-    self.welcome_pages.first
+    welcome_pages.first
   end
 
   # Create a default site.  Check if pages exists first, so we can add missing
@@ -243,7 +243,7 @@ class CmsPage < ApplicationRecord
   #------------------------------------------------------------------------------
   def duplicate_with_associations
     new_page = nil
-    new_slug = "duplicate-#{self.slug}"
+    new_slug = "duplicate-#{slug}"
     if CmsPage.find_by_slug(new_slug)
       #--- already a duplicate page, return nil
       return nil
@@ -252,7 +252,7 @@ class CmsPage < ApplicationRecord
       CmsContentitem.paper_trail_off!
       CmsPage::Translation.paper_trail_off!
       CmsContentitem::Translation.paper_trail_off!
-      new_page = self.amoeba_dup
+      new_page = amoeba_dup
       new_page.slug = new_slug
 
       # new_page.without_versioning do

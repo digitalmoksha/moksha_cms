@@ -52,18 +52,18 @@ class CustomField < ApplicationRecord
   def value
     #--- if field is a country field, convert the country_id into real name
     if custom_field_def.field_type == 'country'
-      Country.find(self.field_data.to_i).english_name
-    elsif self.field_data.is_a? Array
+      Country.find(field_data.to_i).english_name
+    elsif field_data.is_a? Array
       # make into a comma delimited string.  remove any blank/nil entries
-      self.field_data.reject(&:blank?).join(', ')
+      field_data.reject(&:blank?).join(', ')
     else
-      self.field_data
+      field_data
     end
   end
 
   #------------------------------------------------------------------------------
   def checkbox_required
-    errors.add(:field_data, :blank) if self.value.blank?
+    errors.add(:field_data, :blank) if value.blank?
   end
 
   # # Munge the data so that it's stored correctly
