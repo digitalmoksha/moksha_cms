@@ -11,23 +11,23 @@ describe DmCms::Admin::CmsPagesController do
 
   it "write tests"
 
-  describe 'GET #index' do
-    #------------------------------------------------------------------------------
-    # it "populates an array of all documents" do
-    #   document1 = create(:document)
-    #   document2 = create(:document, title: 'Another document')
-    #   get :index, locale: :en
-    #   expect(assigns(:documents)).to match_array([document1, document2])
-    # end
-
-    #------------------------------------------------------------------------------
-    # it "renders the :index template" do
-    #   blog = create(:blog)
-    #
-    #   get :index, cms_blog_id: blog.id
-    #   expect(response).to render_template :index
-    # end
-  end
+  # describe 'GET #index' do
+  #   #------------------------------------------------------------------------------
+  #   it "populates an array of all documents" do
+  #     document1 = create(:document)
+  #     document2 = create(:document, title: 'Another document')
+  #     get :index, locale: :en
+  #     expect(assigns(:documents)).to match_array([document1, document2])
+  #   end
+  #
+  #   #------------------------------------------------------------------------------
+  #   it "renders the :index template" do
+  #     blog = create(:blog)
+  #
+  #     get :index, cms_blog_id: blog.id
+  #     expect(response).to render_template :index
+  #   end
+  # end
 
   # describe 'GET #show' do
   #   #------------------------------------------------------------------------------

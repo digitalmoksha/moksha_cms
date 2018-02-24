@@ -37,7 +37,7 @@ describe Liquid::Div do
       arguments = nil
       doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters]), parse_block_html: true)
 
-      expect(doc.to_html.html_safe).to eq <<-CONTENT
+      expect(doc.to_html.html_safe).to eq <<-CONTENT.strip_heredoc
         <div>
           <h1 id="test">Test</h1>
         </div>

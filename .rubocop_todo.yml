@@ -51,25 +51,6 @@ Naming/PredicateName:
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'core/app/models/dm_core/concerns/user.rb'
 
-# Offense count: 2
-# Configuration parameters: CustomIncludeMethods.
-RSpec/EmptyExampleGroup:
-  Exclude:
-    - 'cms/spec/controllers/admin/cms_pages_controller_spec.rb'
-    - 'event/spec/models/registration_spec.rb'
-
-# Offense count: 1
-RSpec/EmptyLineAfterFinalLet:
-  Exclude:
-    - 'event/spec/services/workshops/destroy_service_spec.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: method_call, block
-RSpec/ExpectChange:
-  Exclude:
-    - 'event/spec/services/workshops/destroy_service_spec.rb'
-
 # Offense count: 20
 # Configuration parameters: CustomTransform, IgnoreMethods.
 RSpec/FilePath:

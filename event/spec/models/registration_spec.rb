@@ -3,4 +3,6 @@ DmCore.config.locales = [:en, :de]
 
 describe Registration, :type => :model do
   setup_account
+
+  it "write tests"
 end
