@@ -5,7 +5,7 @@ describe DmCore::Language do
     I18n.locale = :en
   end
 
-  context '#translate_url' do
+  context 'when #translate_url' do
     it 'already has a language specifier' do
       expect(described_class.translate_url('http://example.com/en/test', :de)).to eq 'http://example.com/de/test'
     end
@@ -29,6 +29,7 @@ describe DmCore::Language do
 
   it '#locale=' do
     described_class.locale = :de
+
     expect(described_class.locale).to eq :de
   end
 end

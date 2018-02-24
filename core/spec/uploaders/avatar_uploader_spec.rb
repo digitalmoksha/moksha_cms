@@ -16,7 +16,7 @@ describe AvatarUploader do
     uploader.remove!
   end
 
-  context 'different square sizes' do
+  context 'with different square sizes' do
     it "scales down image to be exactly 35 by 35 pixels" do
       expect(uploader.sq35).to have_dimensions(35, 35)
     end
@@ -30,7 +30,7 @@ describe AvatarUploader do
     end
   end
 
-  context 'different width sizes' do
+  context 'with different width sizes' do
     it "scales down image to be 100 pixels wide" do
       expect(uploader.w100).to have_width(100)
     end

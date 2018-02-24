@@ -16,7 +16,7 @@ describe DmEvent::Workshops::UpdateService, type: :service do
       return result
     end
 
-    context 'main panel' do
+    context 'when main panel' do
       it 'updates contact email' do
         expect(update_workshop(contact_email: 'another@example.com')).to be_truthy
         expect(workshop.contact_email).to eq 'another@example.com'
@@ -28,7 +28,7 @@ describe DmEvent::Workshops::UpdateService, type: :service do
       end
     end
 
-    context 'additional configuration panel' do
+    context 'when additional configuration panel' do
       it 'sets the social buttons' do
         expect(workshop.show_social_buttons).to be_falsey
         expect(update_workshop(show_social_buttons: true)).to be_truthy
@@ -43,6 +43,7 @@ describe DmEvent::Workshops::UpdateService, type: :service do
 
       it 'sets the associated blog' do
         blog = create :blog
+
         expect(workshop.cms_blog).to eq nil
         expect(update_workshop(cms_blog: 1, additional_configuration: true)).to be_truthy
         expect(workshop.cms_blog).to eq blog

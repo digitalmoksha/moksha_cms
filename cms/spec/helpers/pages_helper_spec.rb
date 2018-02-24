@@ -118,7 +118,7 @@ describe DmCms::PagesHelper, type: :helper do
       expect(main_menu(sub_menu_1: 'sub-menu')).to eq "<ul ><li><a href=\"http://test.example.com/en/top1\">Top</a><ul class=\"sub-menu\"><li><a href=\"http://test.example.com/en/second1\">Second</a></li></ul></li></ul>"
     end
 
-    context 'bs4 menu' do
+    context 'with bs4 menu' do
       it 'returns root page' do
         expect(main_menu(include_home: true, type: :bs4)).to eq '<ul ><li class="nav-item"><a class="nav-link" href="http://test.example.com/en/index">Home</a></li></ul>'
       end

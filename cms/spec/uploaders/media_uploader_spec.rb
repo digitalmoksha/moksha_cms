@@ -18,7 +18,7 @@ describe MediaUploader, type: :uploader do
     uploader.remove!
   end
 
-  context 'different width sizes' do
+  context 'with different width sizes' do
     it "scales down image to the thumb size" do
       expect(uploader.thumb).to have_dimensions(200, 200)
     end

@@ -51,18 +51,6 @@ Naming/PredicateName:
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'core/app/models/dm_core/concerns/user.rb'
 
-# Offense count: 8
-# Configuration parameters: Prefixes.
-# Prefixes: when, with, without
-RSpec/ContextWording:
-  Exclude:
-    - 'cms/spec/helpers/pages_helper_spec.rb'
-    - 'cms/spec/uploaders/media_uploader_spec.rb'
-    - 'core/spec/models/language_spec.rb'
-    - 'core/spec/uploaders/avatar_uploader_spec.rb'
-    - 'event/spec/models/registration_pricing_policy_spec.rb'
-    - 'event/spec/services/workshops/update_service_spec.rb'
-
 # Offense count: 17
 # Configuration parameters: SkipBlocks, EnforcedStyle.
 # SupportedStyles: described_class, explicit
