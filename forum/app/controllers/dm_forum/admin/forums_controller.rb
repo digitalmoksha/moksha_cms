@@ -16,8 +16,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
   end
 
   #------------------------------------------------------------------------------
-  def show
-  end
+  def show; end
 
   # GET /admin/fms/forums/new
   #------------------------------------------------------------------------------
@@ -27,8 +26,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
 
   # GET /admin/fms/forums/1/edit
   #------------------------------------------------------------------------------
-  def edit
-  end
+  def edit; end
 
   # POST /admin/fms/forums
   #------------------------------------------------------------------------------

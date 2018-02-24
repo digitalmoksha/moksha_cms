@@ -79,6 +79,5 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
 
   # Set some values for the template based on the controller
   #------------------------------------------------------------------------------
-  def template_setup
-  end
+  def template_setup; end
 end

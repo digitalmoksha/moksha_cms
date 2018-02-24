@@ -27,8 +27,7 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
   end
 
   #------------------------------------------------------------------------------
-  def edit
-  end
+  def edit; end
 
   #------------------------------------------------------------------------------
   def update

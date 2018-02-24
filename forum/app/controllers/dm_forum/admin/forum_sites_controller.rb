@@ -14,8 +14,7 @@ class DmForum::Admin::ForumSitesController < DmForum::Admin::AdminController
 
   # GET /admin/fms/forum_site/edit
   #------------------------------------------------------------------------------
-  def edit
-  end
+  def edit; end
 
   # PUT /admin/fms/forum_site
   #------------------------------------------------------------------------------

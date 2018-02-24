@@ -10,16 +10,13 @@ class Newsletter < ApplicationRecord
   before_create           :generate_token
 
   #------------------------------------------------------------------------------
-  def subscribe(user_or_email, options = { FNAME: '', LNAME: '' })
-  end
+  def subscribe(user_or_email, options = { FNAME: '', LNAME: '' }); end
 
   #------------------------------------------------------------------------------
-  def update_list_stats
-  end
+  def update_list_stats; end
 
   #------------------------------------------------------------------------------
-  def map_error_to_msg(code)
-  end
+  def map_error_to_msg(code); end
 
   # Find the newsletter associated with the token
   #------------------------------------------------------------------------------
@@ -28,8 +25,7 @@ class Newsletter < ApplicationRecord
   end
 
   #------------------------------------------------------------------------------
-  def self.signup_information(token, options = {})
-  end
+  def self.signup_information(token, options = {}); end
 
   protected
 

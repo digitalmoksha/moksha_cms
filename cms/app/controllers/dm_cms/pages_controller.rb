@@ -46,6 +46,5 @@ class DmCms::PagesController < DmCms::ApplicationController
   # Basically empty, as well as the view.  But gets rendered by dm_core when the
   # site is disabled
   #------------------------------------------------------------------------------
-  def coming_soon
-  end
+  def coming_soon; end
 end

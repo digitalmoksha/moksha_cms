@@ -27,8 +27,7 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
   end
 
   #------------------------------------------------------------------------------
-  def edit
-  end
+  def edit; end
 
   #------------------------------------------------------------------------------
   def create

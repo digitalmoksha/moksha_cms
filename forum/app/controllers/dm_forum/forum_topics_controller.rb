@@ -47,8 +47,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   end
 
   #------------------------------------------------------------------------------
-  def edit
-  end
+  def edit; end
 
   #------------------------------------------------------------------------------
   def update

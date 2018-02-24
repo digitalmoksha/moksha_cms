@@ -42,8 +42,6 @@ class MediaFile < ApplicationRecord
   def self.url_by_name(name, options = { version: :original })
     if name && (asset = MediaFile.find_by_name(name))
       options[:version] == :original ? asset.media.url : asset.media.url(options[:version])
-    else
-      nil
     end
   end
 

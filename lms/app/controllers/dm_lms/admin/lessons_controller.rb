@@ -26,8 +26,7 @@ class DmLms::Admin::LessonsController < DmLms::Admin::AdminController
 
   # GET /admin/lessons/1/edit
   #------------------------------------------------------------------------------
-  def edit
-  end
+  def edit; end
 
   # POST /admin/lessons, POST /admin/lessons.json
   #------------------------------------------------------------------------------

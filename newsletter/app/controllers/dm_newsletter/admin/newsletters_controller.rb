@@ -16,8 +16,7 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
   end
 
   #------------------------------------------------------------------------------
-  def edit
-  end
+  def edit; end
 
   #------------------------------------------------------------------------------
   def create

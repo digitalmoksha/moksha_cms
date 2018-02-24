@@ -43,8 +43,6 @@ module DmCms
         current_account.preferred_twitter_url
       when :linkedin
         current_account.preferred_linkedin_url
-      else
-        nil
       end
     end
   end

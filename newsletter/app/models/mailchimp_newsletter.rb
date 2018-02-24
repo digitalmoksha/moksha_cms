@@ -156,11 +156,7 @@ class MailchimpNewsletter < Newsletter
   # Grab an API object to work with
   #------------------------------------------------------------------------------
   def self.api
-    if !Account.current.preferred_nms_api_key.blank?
-      Gibbon::API.new(Account.current.preferred_nms_api_key)
-    else
-      nil
-    end
+    Gibbon::API.new(Account.current.preferred_nms_api_key) unless Account.current.preferred_nms_api_key.blank?
   end
 
   # is the email already subscribed to this list

@@ -12,8 +12,7 @@ class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminControlle
 
   # GET /admin/forum_categories/1
   #------------------------------------------------------------------------------
-  def show
-  end
+  def show; end
 
   # GET /admin/forum_categories/new
   #------------------------------------------------------------------------------
@@ -23,8 +22,7 @@ class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminControlle
 
   # GET /admin/forum_categories/1/edit
   #------------------------------------------------------------------------------
-  def edit
-  end
+  def edit; end
 
   # POST /admin/forum_categories
   #------------------------------------------------------------------------------
