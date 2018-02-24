@@ -164,16 +164,14 @@ class DmCore::ApplicationController < ActionController::Base
   # Set the locale of this request.
   #------------------------------------------------------------------------------
   def set_locale
-    begin
-      DmCore::Language.locale = (!params[:locale].blank? ? params[:locale] : current_account.preferred_default_locale)
-    rescue I18n::InvalidLocale
-      # if it's an invalid locale, append the default locale and try again
-      # this also fixes the case of using simple link names on a home page.
-      # So if home page is "http://example.com" and the link is <a href="calendar">
-      # then the link is "http://example.com/calendar", instead of "http://example.com/en/calendar"
-      # This will allow that to work.
-      redirect_to "/#{current_account.preferred_default_locale}#{request.path}"
-    end
+    DmCore::Language.locale = (!params[:locale].blank? ? params[:locale] : current_account.preferred_default_locale)
+  rescue I18n::InvalidLocale
+    # if it's an invalid locale, append the default locale and try again
+    # this also fixes the case of using simple link names on a home page.
+    # So if home page is "http://example.com" and the link is <a href="calendar">
+    # then the link is "http://example.com/calendar", instead of "http://example.com/en/calendar"
+    # This will allow that to work.
+    redirect_to "/#{current_account.preferred_default_locale}#{request.path}"
   end
 
   # Update the user's last_access if signed_in

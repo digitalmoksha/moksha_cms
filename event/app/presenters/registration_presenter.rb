@@ -17,7 +17,7 @@ class RegistrationPresenter < EventCommonPresenter
 
   #------------------------------------------------------------------------------
   def admin_status_label
-    h.colored_label(model.current_state.to_s.titlecase, (model.current_state).to_s)
+    h.colored_label(model.current_state.to_s.titlecase, model.current_state.to_s)
   end
 
   #------------------------------------------------------------------------------

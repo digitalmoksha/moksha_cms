@@ -36,7 +36,7 @@ module DmCms::PagesHelper
 
   #------------------------------------------------------------------------------
   def snippet?(slug)
-    CmsSnippet.where(slug: slug).count == 0 ? false : true
+    !(CmsSnippet.where(slug: slug).count == 0)
   end
 
   #------------------------------------------------------------------------------
@@ -241,7 +241,7 @@ module DmCms::PagesHelper
   # Determine if this page is currently being  displayed
   #------------------------------------------------------------------------------
   def on_current_page?(page)
-    @current_page == page ? true : false
+    @current_page == page
   end
 
   # Use the request url to determine if the current url matches any passed in paths
@@ -257,6 +257,6 @@ module DmCms::PagesHelper
   # {todo} should be able to go to any depth
   #------------------------------------------------------------------------------
   def page_in_section?(page)
-    @current_page == page or @current_page.parent_id == page.id ? true : false
+    @current_page == page or @current_page.parent_id == page.id
   end
 end

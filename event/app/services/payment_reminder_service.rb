@@ -82,7 +82,7 @@ class PaymentReminderService
     if registration.workshop_price.recurring_payments?
       return registration.amount_paid < registration.recurring_what_should_be_paid_by_now
     else
-      return Date.today > (registration.initial_payments_should_start_on)
+      return Date.today > registration.initial_payments_should_start_on
     end
   end
 end

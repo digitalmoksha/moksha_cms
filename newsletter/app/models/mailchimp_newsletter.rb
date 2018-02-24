@@ -28,7 +28,7 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def validate_list_id
     if mc_id.blank?
-      errors[:mc_id] << ("list id must be provided")
+      errors[:mc_id] << "list id must be provided"
     else
       api         = MailchimpNewsletter.api
       list_info   = api.lists.list(filters: { list_id: mc_id, exact: true })
@@ -41,13 +41,11 @@ class MailchimpNewsletter < Newsletter
   # Retrieve list of groupings from Mailchimp
   #------------------------------------------------------------------------------
   def groupings
-    begin
-      api = MailchimpNewsletter.api
-      api.lists.interest_groupings(id: mc_id)
-    rescue Gibbon::MailChimpError
-      # groupings are not enabled for this list
-      return []
-    end
+    api = MailchimpNewsletter.api
+    api.lists.interest_groupings(id: mc_id)
+  rescue Gibbon::MailChimpError
+    # groupings are not enabled for this list
+    return []
   end
 
   # subscribe user or email to the newsletter

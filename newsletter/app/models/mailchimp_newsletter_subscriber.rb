@@ -19,7 +19,7 @@ class MailchimpNewsletterSubscriber < NewsletterSubscriber
   def self.new_from_mailchimp(attributes = {})
     obj = MailchimpNewsletterSubscriber.new
     obj.member_info_data  = attributes
-    obj.subscribed        = attributes['status'] == 'subscribed' ? true : false
+    obj.subscribed        = attributes['status'] == 'subscribed'
     obj.email             = attributes['email']
     obj.euid              = attributes['euid']
     obj.grouping_id       = attributes['merges']['GROUPINGS'] ? attributes['merges']['GROUPINGS'][0]['id'] : nil

@@ -62,7 +62,7 @@ module AdminTheme
       title     = ''.html_safe
       title     << (content_tag(:i, '', class: options[:icon]) + ' ') if options[:icon]
       title     << options[:title]
-      title     << (content_tag(:small, options[:subtitle], style: 'display: block;')) if options[:subtitle]
+      title     << content_tag(:small, options[:subtitle], style: 'display: block;') if options[:subtitle]
 
       content_tag(:div, content_tag(:h5, title) + content, class: 'subsection', id: options[:id])
     end
