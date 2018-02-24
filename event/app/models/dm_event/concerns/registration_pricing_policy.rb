@@ -28,11 +28,11 @@ module DmEvent
         def discount
           return Money.new(0, workshop.base_currency) if workshop_price.nil? || workshop_price.price.nil?
 
-          if discount_value.blank?
-            cents = 0
-          else
-            cents = (discount_use_percent ? (workshop_price.price.cents * discount_value / 100) : (discount_value * 100))
-          end
+          cents = if discount_value.blank?
+                    0
+                  else
+                    (discount_use_percent ? (workshop_price.price.cents * discount_value / 100) : (discount_value * 100))
+                  end
           Money.new(cents, workshop_price.price.currency)
         end
 

@@ -44,11 +44,11 @@ module DmCore::LiquidHelper
   #------------------------------------------------------------------------------
   def markdown(content = '', options = { safe: true }, &block)
     content ||= ''
-    if block_given?
-      html = ::Kramdown::Document.new(capture(&block)).to_html.html_safe
-    else
-      html = ::Kramdown::Document.new(content).to_html.html_safe
-    end
+    html = if block_given?
+             ::Kramdown::Document.new(capture(&block)).to_html.html_safe
+           else
+             ::Kramdown::Document.new(content).to_html.html_safe
+           end
     # for safety, use :basic or lower
     options[:safe] ? sanitize_text(html, level: :basic).html_safe : html
   end

@@ -27,17 +27,17 @@ class UserPresenter < BasePresenter
   # gives the public avatar for a user
   #------------------------------------------------------------------------------
   def avatar_for(size = 32, options = {})
-    if size.class == String && size.end_with?('%')
-      avatar = user.user_profile.public_avatar_url(:sq200)
-    elsif size <= 35
-      avatar = user.user_profile.public_avatar_url(:sq35)
-    elsif size <= 100
-      avatar = user.user_profile.public_avatar_url(:sq100)
-    elsif size <= 200
-      avatar = user.user_profile.public_avatar_url(:sq200)
-    else
-      avatar = user.user_profile.public_avatar_url
-    end
+    avatar = if size.class == String && size.end_with?('%')
+               user.user_profile.public_avatar_url(:sq200)
+             elsif size <= 35
+               user.user_profile.public_avatar_url(:sq35)
+             elsif size <= 100
+               user.user_profile.public_avatar_url(:sq100)
+             elsif size <= 200
+               user.user_profile.public_avatar_url(:sq200)
+             else
+               user.user_profile.public_avatar_url
+             end
     image_tag(avatar, width: size, class: options[:class] ? options[:class] : 'image')
   end
 end

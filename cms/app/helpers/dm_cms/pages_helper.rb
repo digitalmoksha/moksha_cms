@@ -5,7 +5,7 @@ module DmCms::PagesHelper
   # slug can either be a string, or a CmsPage object
   #------------------------------------------------------------------------------
   def page_url(slug, locale = DmCore::Language.locale)
-    showpage_url(:locale => locale, :slug => (slug.kind_of?(CmsPage) ? slug.slug : slug))
+    showpage_url(:locale => locale, :slug => (slug.is_a?(CmsPage) ? slug.slug : slug))
   end
 
   # Given the name of a container, queries for all content items for that
@@ -47,16 +47,16 @@ module DmCms::PagesHelper
       # --- process content type
       liquid_params = content_item.to_liquid
       liquid_params.reverse_merge!(current_user.to_liquid) if current_user
-      case content_item.itemtype.downcase
-      when 'textile'
-        content = liquidize_textile(content_item.content, liquid_params)
-      when 'markdown'
-        content = liquidize_markdown(content_item.content, liquid_params)
-      when 'html'
-        content = liquidize_html(content_item.content, liquid_params)
-      else
-        content = ''
-      end
+      content = case content_item.itemtype.downcase
+                when 'textile'
+                  liquidize_textile(content_item.content, liquid_params)
+                when 'markdown'
+                  liquidize_markdown(content_item.content, liquid_params)
+                when 'html'
+                  liquidize_html(content_item.content, liquid_params)
+                else
+                  ''
+                end
     end
     content
   end
@@ -125,14 +125,14 @@ module DmCms::PagesHelper
       submenu, submenu_active = (children.empty? ? '' : menu_from_pages_bs3(children, ul: 'class="dropdown-menu"', active_class: options[:active_class]))
       active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
       active_found          ||= !active.nil?
-      if !submenu.blank?
-        menu_str += content_tag(:li, class: ['dropdown', active].css_join(' ')) do
-          page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'dropdown-toggle', data: { toggle: 'dropdown' }) +
-            submenu.html_safe
-        end
-      else
-        menu_str += content_tag :li, page_link(page), class: active
-      end
+      menu_str += if !submenu.blank?
+                    content_tag(:li, class: ['dropdown', active].css_join(' ')) do
+                      page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'dropdown-toggle', data: { toggle: 'dropdown' }) +
+                        submenu.html_safe
+                    end
+                  else
+                    content_tag :li, page_link(page), class: active
+                  end
     end
     [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
   end
@@ -154,14 +154,14 @@ module DmCms::PagesHelper
       submenu, submenu_active = (children.empty? ? '' : menu_from_pages_bs4(children, ul: 'class="dropdown-menu"', active_class: options[:active_class]))
       active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
       active_found          ||= !active.nil?
-      if !submenu.blank?
-        menu_str += content_tag(:li, class: ['nav-item', 'dropdown', active].css_join(' ')) do
-          page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' }) +
-            submenu.html_safe
-        end
-      else
-        menu_str += content_tag :li, page_link(page, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
-      end
+      menu_str += if !submenu.blank?
+                    content_tag(:li, class: ['nav-item', 'dropdown', active].css_join(' ')) do
+                      page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' }) +
+                        submenu.html_safe
+                    end
+                  else
+                    content_tag :li, page_link(page, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
+                  end
     end
     [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
   end

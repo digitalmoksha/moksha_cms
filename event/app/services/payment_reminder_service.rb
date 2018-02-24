@@ -19,11 +19,11 @@ class PaymentReminderService
   # send a single reminder email, regardless of status
   #------------------------------------------------------------------------------
   def self.send_reminder(registration, queue = false)
-    if queue
-      email = PaymentReminderMailer.payment_reminder(registration).deliver_later
-    else
-      email = PaymentReminderMailer.payment_reminder(registration).deliver_now
-    end
+    email = if queue
+              PaymentReminderMailer.payment_reminder(registration).deliver_later
+            else
+              PaymentReminderMailer.payment_reminder(registration).deliver_now
+            end
     if email
       registration.update_attribute(:payment_reminder_sent_on, Time.now)
       registration.update_attribute(:payment_reminder_history, [Time.now] + registration.payment_reminder_history)

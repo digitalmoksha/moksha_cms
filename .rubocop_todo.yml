@@ -220,25 +220,11 @@ Style/BlockDelimiters:
     - 'forum/spec/services/send_comment_notification_service_spec.rb'
     - 'newsletter/app/models/mailchimp_newsletter.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: is_a?, kind_of?
-Style/ClassCheck:
-  Exclude:
-    - 'cms/app/helpers/dm_cms/pages_helper.rb'
-
 # Offense count: 4
 Style/ClassVars:
   Exclude:
     - 'core/app/helpers/dm_core/url_helper.rb'
     - 'core/app/models/ability.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/ColonMethodCall:
-  Exclude:
-    - 'core/app/services/dm_core/s3_signed_url_service.rb'
 
 # Offense count: 11
 Style/CommentedKeyword:
@@ -246,23 +232,6 @@ Style/CommentedKeyword:
     - 'core/app/controllers/dm_core/application_controller.rb'
     - 'core/lib/dm_core/scio_excel.rb'
     - 'newsletter/app/models/newsletter_subscriber.rb'
-
-# Offense count: 13
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SingleLineConditionsOnly, IncludeTernaryExpressions.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'admin/app/helpers/admin_theme/menu_helper.rb'
-    - 'cms/app/helpers/dm_cms/pages_helper.rb'
-    - 'cms/app/models/cms_blog.rb'
-    - 'core/app/controllers/dm_core/concerns/profile_controller.rb'
-    - 'core/app/helpers/dm_core/liquid_helper.rb'
-    - 'core/app/helpers/dm_core/render_helper.rb'
-    - 'core/app/presenters/user_presenter.rb'
-    - 'event/app/models/dm_event/concerns/registration_pricing_policy.rb'
-    - 'event/app/services/payment_reminder_service.rb'
-    - 'lms/app/models/dm_lms/concerns/spaced_repetition_sm2.rb'
 
 # Offense count: 61
 # Configuration parameters: MinBodyLength.

@@ -4,16 +4,16 @@ module AdminTheme
     def admin_top_menu
       menu = ''.html_safe
       @admin_theme[:top_menu].each do |item|
-        if item[:children].nil?
-          menu << content_tag(:li, link_to(menu_text(item), item[:link], item[:link_options]))
-        else
-          menu << content_tag(:li, class: 'dropdown') do
-            link    = link_to (menu_text(item) + ' ' + icons(:caret_down)), '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' }
-            sub_ul  = ''.html_safe
-            item[:children].each { |child| sub_ul << content_tag(:li, link_to(menu_text(child), child[:link], child[:link_options])) }
-            link + content_tag(:ul, sub_ul, class: 'dropdown-menu dropdown-menu-right')
-          end
-        end
+        menu << if item[:children].nil?
+                  content_tag(:li, link_to(menu_text(item), item[:link], item[:link_options]))
+                else
+                  content_tag(:li, class: 'dropdown') do
+                    link    = link_to (menu_text(item) + ' ' + icons(:caret_down)), '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' }
+                    sub_ul  = ''.html_safe
+                    item[:children].each { |child| sub_ul << content_tag(:li, link_to(menu_text(child), child[:link], child[:link_options])) }
+                    link + content_tag(:ul, sub_ul, class: 'dropdown-menu dropdown-menu-right')
+                  end
+                end
       end
       menu
     end
@@ -51,11 +51,11 @@ module AdminTheme
       text = ''.html_safe
       text << (icons(item[:icon_class]) + ' ') if item[:icon_class]
       if item[:badge]
-        if options[:badge_position] == :right
-          text << content_tag(:span, item[:badge], class: "badge #{badge_class} pull-right")
-        else
-          text << content_tag(:span, item[:badge], class: "badge #{badge_class}")
-        end
+        text << if options[:badge_position] == :right
+                  content_tag(:span, item[:badge], class: "badge #{badge_class} pull-right")
+                else
+                  content_tag(:span, item[:badge], class: "badge #{badge_class}")
+                end
       end
       text << content_tag(:span, item[:text]) if item[:text]
       text
