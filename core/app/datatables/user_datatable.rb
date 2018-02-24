@@ -26,7 +26,7 @@ class UserDatatable
   def data
     users.map do |user|
       [
-        "#{link_to present(user).avatar_for(35, class: 'img-circle'), user.user_profile.public_avatar_url}",
+        (link_to present(user).avatar_for(35, class: 'img-circle'), user.user_profile.public_avatar_url).to_s,
         link_to(user.full_name.to_s_default, url_helpers.edit_admin_user_path(user, :locale => DmCore::Language.locale), :title => "Edit #{user.full_name}"),
         user.email,
         user.country.nil? ? 'n/a' : user.country.english_name,

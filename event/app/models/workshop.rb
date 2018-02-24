@@ -149,8 +149,8 @@ class Workshop < ApplicationRecord
           #--- Calculate what has been collected, by payment method
           registration.payment_histories.each do |payment_history|
             payment_method = payment_history.payment_method.titlecase
-            financials[:collected]["#{payment_method}"] = Money.new(0, base_currency) if financials[:collected]["#{payment_method}"].nil?
-            financials[:collected]["#{payment_method}"] += payment_history.total
+            financials[:collected][payment_method.to_s] = Money.new(0, base_currency) if financials[:collected][payment_method.to_s].nil?
+            financials[:collected][payment_method.to_s] += payment_history.total
 
             month = payment_history.payment_date.beginning_of_month
             financials[:collected_monthly][month] = Money.new(0, base_currency) if financials[:collected_monthly][month].nil?

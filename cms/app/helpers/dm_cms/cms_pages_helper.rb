@@ -18,11 +18,11 @@ module DmCms::CmsPagesHelper
   #------------------------------------------------------------------------------
   def template_menu_list
     theme = current_account.theme_data
-    unless theme.empty?
+    if theme.empty?
+      nil
+    else
       templates = (current_account.theme_data(parent: true)['templates'] || {}).merge(theme['templates'] || {})
       [['Inherit from parent', '']] + templates.collect { |key, value| [value['name'], key] }
-    else
-      nil
     end
   end
 

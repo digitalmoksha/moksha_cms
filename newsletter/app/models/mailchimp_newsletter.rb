@@ -27,14 +27,14 @@ class MailchimpNewsletter < Newsletter
   # Make sure list id is specified, and it's valid with MailChimp
   #------------------------------------------------------------------------------
   def validate_list_id
-    unless self.mc_id.blank?
+    if self.mc_id.blank?
+      errors[:mc_id] << ("list id must be provided")
+    else
       api         = MailchimpNewsletter.api
       list_info   = api.lists.list(filters: { list_id: self.mc_id, exact: true })
       if !list_info['errors'].empty?
         errors[:mc_id] << (list_info['errors'][0]['error'])
       end
-    else
-      errors[:mc_id] << ("list id must be provided")
     end
   end
 

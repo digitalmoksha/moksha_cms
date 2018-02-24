@@ -33,7 +33,7 @@ module DmEvent::WorkshopsHelper
   def financial_collected_monthly_json(collected)
     json = []
     collected.sort.each do |item|
-      json << ["#{item[0].localize("%b")}", collected[item[0]].to_f]
+      json << [item[0].localize("%b").to_s, collected[item[0]].to_f]
     end
     json.to_json
   end

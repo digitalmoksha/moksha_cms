@@ -14,7 +14,7 @@ class DmCms::ContactFormController < DmCms::ApplicationController
         object      = "#{part_module}/#{part_class}".camelize.constantize
       else
         part_class  = form_key
-        object      = "#{part_class}".camelize.constantize
+        object      = part_class.to_s.camelize.constantize
       end
       @contact = object.new(params[form_key])
       if @contact.deliver
