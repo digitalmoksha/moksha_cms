@@ -2,7 +2,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   include DmForum::PermittedParams
 
   before_action :find_forum
-  before_action :find_topic, :only => [:show, :edit, :update, :destroy]
+  before_action :find_topic, only: [:show, :edit, :update, :destroy]
   # before_action :admin_required, :only => [:edit, :update, :destroy]
   #
 
@@ -13,8 +13,8 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
     respond_to do |format|
       format.html { redirect_to forum_path(@forum) }
       format.xml  do
-        @forum_topics = find_forum.topics.paginate(:page => page_number)
-        render :xml => @forum_topics
+        @forum_topics = find_forum.topics.paginate(page: page_number)
+        render xml: @forum_topics
       end
     end
   end
@@ -23,7 +23,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
   def show
     (session[:forum_topics] ||= {})[@forum_topic.id] = Time.now.utc if user_signed_in?
     @forum_topic.hit! unless user_signed_in? && @forum_topic.user_id == current_user.id
-    @forum_comments = @forum_topic.forum_comments.paginate :page => page_number
+    @forum_comments = @forum_topic.forum_comments.paginate page: page_number
     @forum_comment  = ForumComment.new
     @following      = user_signed_in? && current_user.following.follows?(@forum_topic)
   end
@@ -42,7 +42,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
       current_user.following.follow(@forum_topic)
       redirect_to forum_forum_topic_path(@forum, @forum_topic), notice: 'Topic was successfully created.'
     else
-      render :action => :new
+      render action: :new
     end
   end
 
@@ -64,7 +64,7 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
       flash[:notice] = 'Topic was successfully updated.'
       redirect_to(forum_forum_topic_path(Forum.find(@forum_topic.forum_id), @forum_topic))
     else
-      render :action => "edit"
+      render action: "edit"
     end
   end
 

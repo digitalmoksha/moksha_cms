@@ -96,7 +96,7 @@ module DmAdmin::Bootstrap3Helper
   # Format flash messages for admin theme
   #------------------------------------------------------------------------------
   def flash_admin
-    flash_class = { :notice => 'alert-success', :error => 'alert-danger', :alert => 'alert-warning', :warning => 'alert-warning', :info => 'alert-info' }
+    flash_class = { notice: 'alert-success', error: 'alert-danger', alert: 'alert-warning', warning: 'alert-warning', info: 'alert-info' }
     msgs = [:notice, :error, :alert, :warning, :info].collect do |type|
       next unless flash[type]
 
@@ -134,7 +134,7 @@ module DmAdmin::Bootstrap3Helper
         end
         concat(content_tag(:span, '&nbsp;&nbsp;&nbsp;&nbsp;'.html_safe, class: 'submit_or'))
       end
-      concat(submit_tag(options[:save], :class => 'btn btn-sm btn-primary'))
+      concat(submit_tag(options[:save], class: 'btn btn-sm btn-primary'))
     end
   end
 
@@ -180,7 +180,7 @@ module DmAdmin::Bootstrap3Helper
     current_account.site_locales.each do |locale|
       content[locale] = capture(locale, &block)
     end
-    render :partial => 'dm_admin/shared/locale_tabs', locals: { :options => options, :content => content }
+    render partial: 'dm_admin/shared/locale_tabs', locals: { options: options, content: content }
   end
 
   # A colored text label.
@@ -216,6 +216,6 @@ module DmAdmin::Bootstrap3Helper
     options[:delete_msg]    ||= 'Are you sure you want to DELETE this?'
 
     content = with_output_buffer(&block)
-    render :partial => 'dm_admin/shared/modal_dialog', :locals => { :options => options, :content => content }
+    render partial: 'dm_admin/shared/modal_dialog', locals: { options: options, content: content }
   end
 end

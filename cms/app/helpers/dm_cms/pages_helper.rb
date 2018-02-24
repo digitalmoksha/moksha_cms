@@ -5,7 +5,7 @@ module DmCms::PagesHelper
   # slug can either be a string, or a CmsPage object
   #------------------------------------------------------------------------------
   def page_url(slug, locale = DmCore::Language.locale)
-    showpage_url(:locale => locale, :slug => (slug.is_a?(CmsPage) ? slug.slug : slug))
+    showpage_url(locale: locale, slug: (slug.is_a?(CmsPage) ? slug.slug : slug))
   end
 
   # Given the name of a container, queries for all content items for that
@@ -14,7 +14,7 @@ module DmCms::PagesHelper
   def content_by_name(name)
     unless @current_page.nil?
       items = @current_page.cms_contentitems.where(container: name)
-      render :partial => (items.nil? ? 'not_found' : 'content_fragment'), :collection => items
+      render partial: (items.nil? ? 'not_found' : 'content_fragment'), collection: items
     end
   end
 
@@ -28,7 +28,7 @@ module DmCms::PagesHelper
   def snippet(slug)
     cms_snippet = CmsSnippet.find_by_slug(slug)
     if cms_snippet
-      render :partial => 'dm_cms/pages/snippet_fragment', locals: { snippet_fragment: cms_snippet }
+      render partial: 'dm_cms/pages/snippet_fragment', locals: { snippet_fragment: cms_snippet }
     else
       render text: 'Snippet not found'
     end

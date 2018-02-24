@@ -1,8 +1,8 @@
 class DmLms::Admin::TeachingsController < DmLms::Admin::AdminController
   include DmLms::PermittedParams
 
-  before_action   :lesson_lookup,       :only =>    [:index, :new, :create]
-  before_action   :teaching_lookup,     :except =>  [:index, :new, :create]
+  before_action   :lesson_lookup,       only: [:index, :new, :create]
+  before_action   :teaching_lookup,     except: [:index, :new, :create]
 
   # GET /admin/teachings/new, GET /admin/teachings/new.json
   #------------------------------------------------------------------------------

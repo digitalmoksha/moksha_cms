@@ -2,13 +2,13 @@
 # be created in the theme's models folder
 #------------------------------------------------------------------------------
 class ContactForm < ::MailForm::Base
-  attribute :name,        :validate => true
-  attribute :email,       :validate => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
+  attribute :name,        validate: true
+  attribute :email,       validate: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
   attribute :organization # Not validated
-  attribute :subject,     :validate => true
-  attribute :message,     :validate => true
-  attribute :reason,      :validate => true
-  attribute :nickname,    :captcha  => true
+  attribute :subject,     validate: true
+  attribute :message,     validate: true
+  attribute :reason,      validate: true
+  attribute :nickname,    captcha: true
 
   # append    :remote_ip, :user_agent, :session   # append these values to the end of all emails
 

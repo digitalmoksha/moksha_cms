@@ -14,11 +14,11 @@ module DmCore
         devise :database_authenticatable, :registerable, :confirmable,
                :recoverable, :rememberable, :trackable, :validatable
 
-        belongs_to              :country, :class_name => 'DmCore::Country'
-        has_one                 :user_profile, :dependent => :destroy
-        has_many                :user_site_profiles, :dependent => :destroy
+        belongs_to              :country, class_name: 'DmCore::Country'
+        has_one                 :user_profile, dependent: :destroy
+        has_many                :user_site_profiles, dependent: :destroy
         has_one                 :current_site_profile, -> { where(account_id: Account.current.id) }, class_name: 'UserSiteProfile'
-        has_many                :comments, :dependent => :destroy
+        has_many                :comments, dependent: :destroy
 
         #--- this allows us to use @user.voting.likes(@post) and it will be stored with the site specific user profile
         has_one                 :voting, -> { where(account_id: Account.current.id) }, class_name: 'UserSiteProfile'
@@ -29,13 +29,13 @@ module DmCore
         accepts_nested_attributes_for :user_profile
 
         validates_presence_of     :email
-        validates_email_format_of :email, :message => 'does seem to be valid'
+        validates_email_format_of :email, message: 'does seem to be valid'
 
         after_create            :add_account
         after_update            :update_profile_email
 
-        delegate                :first_name, :last_name, :full_name, :display_name, :name, :country, :locale, :to => :user_profile
-        delegate                :last_access_at, :to => :current_site_profile
+        delegate                :first_name, :last_name, :full_name, :display_name, :name, :country, :locale, to: :user_profile
+        delegate                :last_access_at, to: :current_site_profile
 
         scope                   :current_account_users, -> { includes(:user_site_profiles, :user_profile, :current_site_profile).references(:user_site_profiles).where("user_site_profiles.account_id = #{Account.current.id}") }
         scope                   :online, -> { includes(:user_site_profiles).where('user_site_profiles.last_access_at >= ?', 10.minutes.ago.utc) }
@@ -48,7 +48,7 @@ module DmCore
         def ability
           @ability ||= ::Ability.new(self)
         end
-        delegate :can?, :cannot?, :to => :ability
+        delegate :can?, :cannot?, to: :ability
 
         # Keep the profile email in sync with the user's email
         #------------------------------------------------------------------------------

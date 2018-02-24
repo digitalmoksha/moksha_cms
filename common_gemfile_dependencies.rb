@@ -19,7 +19,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'thin' # use the Thin webserver during development
 
-  gem 'mocha', '~> 1.2', :require => false
+  gem 'mocha', '~> 1.2', require: false
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_bot_rails', '~> 4.8'
 

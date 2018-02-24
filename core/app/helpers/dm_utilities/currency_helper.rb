@@ -11,7 +11,7 @@ module DmUtilities::CurrencyHelper
     return "&mdash;".html_safe if amount.blank?
 
     precision = options[:precision] || 2
-    number_to_currency(amount, :locale => country.locale, :precision => precision)
+    number_to_currency(amount, locale: country.locale, precision: precision)
   end
 
   # Takes a number and a country code and formats it as a monetary value

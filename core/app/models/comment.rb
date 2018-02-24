@@ -5,8 +5,8 @@ class Comment < ApplicationRecord
 
   self.table_name = 'core_comments'
 
-  belongs_to        :commentable, :polymorphic => true, :counter_cache => true
-  has_ancestry      :cache_depth => true
+  belongs_to        :commentable, polymorphic: true, counter_cache: true
+  has_ancestry      cache_depth: true
 
   #--- don't add ordering to default scope, as it messes with calculating recent_comment
   default_scope     { where(account_id: Account.current.id) }

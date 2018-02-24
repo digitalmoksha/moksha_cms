@@ -13,7 +13,7 @@ class DmForum::ApplicationController < ::ApplicationController
 
   layout    'forum_templates/forum_list'
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   private
 

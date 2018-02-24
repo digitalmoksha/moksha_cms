@@ -39,7 +39,7 @@ class BlogUserDatatable
 
   #------------------------------------------------------------------------------
   def fetch_users
-    users = User.includes(:user_profile => [:country]).references(:user_profile).order("#{sort_column} #{sort_direction}")
+    users = User.includes(user_profile: [:country]).references(:user_profile).order("#{sort_column} #{sort_direction}")
     users = users.page(page).per_page(per_page)
     users = users.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(users.email) like :search", search: "%#{params[:sSearch]}%".downcase) if params[:sSearch].present?
     users
@@ -71,7 +71,7 @@ class BlogUserDatatable
     if @blog.member?(user)
       icons(:check) + "&nbsp;&nbsp;".html_safe + user.full_name
     else
-      link_to(icons(:add), url_helpers.blog_add_member_admin_cms_blog_path(@blog, :locale => DmCore::Language.locale, :user_id => user.id), :title => 'Add Access') + "&nbsp;&nbsp;".html_safe + user.full_name
+      link_to(icons(:add), url_helpers.blog_add_member_admin_cms_blog_path(@blog, locale: DmCore::Language.locale, user_id: user.id), title: 'Add Access') + "&nbsp;&nbsp;".html_safe + user.full_name
     end
   end
 end

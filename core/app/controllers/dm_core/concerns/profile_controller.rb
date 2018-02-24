@@ -14,7 +14,7 @@ module DmCore
         if put_or_post?
           if @user.update_with_password(user_params)
             #--- Sign in the user bypassing validation in case his password changed
-            sign_in @user, :bypass => true
+            sign_in @user, bypass: true
             flash.now[:notice] = if params[:user][:email] != @user.email
                                    I18n.t('core.profile_email_confirmation')
                                  else

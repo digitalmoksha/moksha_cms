@@ -14,7 +14,7 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
                    else
                      @media_files.tagged_with(@tag_filter)
                    end
-    @media_files = @media_files.paginate :page => params[:page], :per_page => 40
+    @media_files = @media_files.paginate page: params[:page], per_page: 40
   end
 
   #------------------------------------------------------------------------------

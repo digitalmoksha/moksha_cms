@@ -6,7 +6,7 @@ class DmCore::ApplicationController < ActionController::Base
   before_action   :log_additional_data
   # before_action   :record_activity
   before_action   :check_site_assets
-  before_action   :site_enabled?, :unless => :devise_controller?
+  before_action   :site_enabled?, unless: :devise_controller?
   before_action   :set_mailer_url_options
   before_action   :update_user
   before_action   :store_location
@@ -23,7 +23,7 @@ class DmCore::ApplicationController < ActionController::Base
 
   #------------------------------------------------------------------------------
   def index
-    redirect_to "/#{current_account.preferred_default_locale}/index", :status => :moved_permanently
+    redirect_to "/#{current_account.preferred_default_locale}/index", status: :moved_permanently
   end
 
   protected
@@ -97,7 +97,7 @@ class DmCore::ApplicationController < ActionController::Base
     if Rails.env.production? && current_account.ssl_enabled?
       if request.ssl? && !use_ssl? || !request.ssl? && use_ssl?
         protocol = request.ssl? ? "http" : "https"
-        redirect_to({ protocol: "#{protocol}://" }.merge(params), :flash => flash)
+        redirect_to({ protocol: "#{protocol}://" }.merge(params), flash: flash)
       end
     end
   end
@@ -232,7 +232,7 @@ class DmCore::ApplicationController < ActionController::Base
   # Store any additional data to be used by the ExceptionNotification gem
   #------------------------------------------------------------------------------
   def log_additional_data
-    request.env["exception_notifier.exception_data"] = { :user => current_user, :account => current_account }
+    request.env["exception_notifier.exception_data"] = { user: current_user, account: current_account }
   end
 
   # Note: rescue_from should be listed from generic exception to most specific
@@ -240,17 +240,17 @@ class DmCore::ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     if current_user
       #--- Redirect to the index page if we get an access denied
-      redirect_to main_app.root_url, :alert => exception.message
+      redirect_to main_app.root_url, alert: exception.message
     else
       #--- Redirect to the login page
       store_location_for(:user, request.url) # so we get returned here after login
-      redirect_to main_app.new_user_session_path, :alert => exception.message
+      redirect_to main_app.new_user_session_path, alert: exception.message
     end
   end
   rescue_from Account::LoginRequired do |exception|
     #--- Redirect to the login page
     store_location_for(:user, request.url) # so we get returned here after login
-    redirect_to main_app.new_user_session_path, :alert => exception.message
+    redirect_to main_app.new_user_session_path, alert: exception.message
   end
   rescue_from Account::DomainNotFound do |exception|
     #--- log the invalid domain and render nothing.

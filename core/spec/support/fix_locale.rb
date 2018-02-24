@@ -20,7 +20,7 @@
 [ApplicationController, ActionController::Base].each do |klass|
   klass.class_eval do
     def default_url_options(options = {})
-      { :locale => "en" }.merge(options)
+      { locale: "en" }.merge(options)
     end
   end
 end

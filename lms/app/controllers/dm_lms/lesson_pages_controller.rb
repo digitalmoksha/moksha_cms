@@ -1,7 +1,7 @@
 class DmLms::LessonPagesController < DmLms::ApplicationController
   include DmCore::RenderHelper
 
-  before_action :content_lookup, :except => [:ajax_add_comment, :ajax_delete_comment]
+  before_action :content_lookup, except: [:ajax_add_comment, :ajax_delete_comment]
 
   # GET /learn/:course_slug/:lesson_slug/:content_slug
   # GET /learn/:course_slug/:lesson_slug/:content_slug.json
@@ -50,7 +50,7 @@ class DmLms::LessonPagesController < DmLms::ApplicationController
   def ajax_add_comment
     @lesson_page = LessonPage.friendly.find(params[:lesson_page_id])
     # @lesson_page.comments.create(:body => params[:body], :user_id => current_user.id)
-    @lesson_page.comments.create(:body => params[:comment][:body], :user_id => current_user.id) if current_user && !params[:comment][:body].blank?
+    @lesson_page.comments.create(body: params[:comment][:body], user_id: current_user.id) if current_user && !params[:comment][:body].blank?
 
     #--- give the object a chance to do something if necessary
     # @lesson_page.comment_notify(@comment) if @lesson_page.respond_to?(:comment_notify)

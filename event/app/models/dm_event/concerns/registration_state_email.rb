@@ -59,7 +59,7 @@ module DmEvent
 
           template  = Liquid::Template.parse(system_email.body)
           content   = template.render(substitutions)
-          { :content => content, :substitutions => substitutions }
+          { content: content, substitutions: substitutions }
         end
       end
 

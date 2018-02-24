@@ -58,7 +58,7 @@ class RegistrationDatatable
   #------------------------------------------------------------------------------
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
-    registrations = @workshop.registrations.includes(:workshop_price, :user_profile => [:user => :current_site_profile]).references(:user_profiles).order("#{sort_column} #{sort_direction}")
+    registrations = @workshop.registrations.includes(:workshop_price, user_profile: [user: :current_site_profile]).references(:user_profiles).order("#{sort_column} #{sort_direction}")
 
     if !@permissions[:manage_event_registrations] && !@permissions[:manage_event_finances]
       # limit to your own registration if can only edit the workshop
@@ -95,8 +95,8 @@ class RegistrationDatatable
     actions.each do |action|
       output << '<li>' +
         link_to(action.to_s.titlecase,
-                url_helpers.action_state_admin_registration_path(I18n.locale, registration, :state_event => action),
-                { :remote => true, :method => :put }) +
+                url_helpers.action_state_admin_registration_path(I18n.locale, registration, state_event: action),
+                { remote: true, method: :put }) +
         '</li>'
     end
     output.html_safe

@@ -132,12 +132,12 @@ module AdminTheme
       #--- if no label specified, value will not get displayed properly
       options[:label] = '&nbsp;'.html_safe if options[:label].blank? && options[:value]
 
-      render(:partial => 'admin_theme/shared/slim_progress_bar',
-             :locals => { label: options[:label],
-                          value: options[:value].to_s,
-                          color: (options[:color] || 'info'),
-                          percentage: options[:percentage].to_i,
-                          bottom_label: options[:bottom_label] })
+      render(partial: 'admin_theme/shared/slim_progress_bar',
+             locals: { label: options[:label],
+                       value: options[:value].to_s,
+                       color: (options[:color] || 'info'),
+                       percentage: options[:percentage].to_i,
+                       bottom_label: options[:bottom_label] })
     end
   end
 end

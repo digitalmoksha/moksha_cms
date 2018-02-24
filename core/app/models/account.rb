@@ -19,26 +19,26 @@ class Account < ApplicationRecord
   # stores the current base site url for this request. useful to mailers where request object not available
   attr_accessor           :url_host, :url_protocol
 
-  validates_presence_of   :domain,                                      :if => proc { |p| p.general_validation }
-  validates_presence_of   :account_prefix,                              :if => proc { |p| p.general_validation }
-  validates_presence_of   :preferred_default_locale,                    :if => proc { |p| p.general_validation }
-  validates_presence_of   :preferred_locales,                           :if => proc { |p| p.general_validation }
-  validates_presence_of   :preferred_smtp_address,                      :if => proc { |p| p.email_validation }
-  validates_presence_of   :preferred_smtp_port,                         :if => proc { |p| p.email_validation }
-  validates_presence_of   :preferred_smtp_user_name,                    :if => proc { |p| p.email_validation }
-  validates_presence_of   :preferred_smtp_from_email,                   :if => proc { |p| p.email_validation }
-  validates_presence_of   :preferred_webmaster_email,                   :if => proc { |p| p.email_validation }
-  validates_presence_of   :preferred_site_title,       :maximum => 255, :if => proc { |p| p.metadata_validation }
-  validates_length_of     :preferred_site_description, :maximum => 255, :if => proc { |p| p.metadata_validation }
-  validates_length_of     :preferred_site_keywords,    :maximum => 255, :if => proc { |p| p.metadata_validation }
+  validates_presence_of   :domain,                                      if: proc { |p| p.general_validation }
+  validates_presence_of   :account_prefix,                              if: proc { |p| p.general_validation }
+  validates_presence_of   :preferred_default_locale,                    if: proc { |p| p.general_validation }
+  validates_presence_of   :preferred_locales,                           if: proc { |p| p.general_validation }
+  validates_presence_of   :preferred_smtp_address,                      if: proc { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_port,                         if: proc { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_user_name,                    if: proc { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_from_email,                   if: proc { |p| p.email_validation }
+  validates_presence_of   :preferred_webmaster_email,                   if: proc { |p| p.email_validation }
+  validates_presence_of   :preferred_site_title,       maximum: 255, if: proc { |p| p.metadata_validation }
+  validates_length_of     :preferred_site_description, maximum: 255, if: proc { |p| p.metadata_validation }
+  validates_length_of     :preferred_site_keywords,    maximum: 255, if: proc { |p| p.metadata_validation }
 
   after_create            :create_default_roles
 
-  preference              :ssl_enabled,                     :boolean, :default => false
-  preference              :default_locale,                  :string,  :default => 'en'
-  preference              :locales,                         :string,  :default => 'en, de'
-  preference              :site_enabled,                    :boolean, :default => false
-  preference              :site_maintenance,                :boolean, :default => false
+  preference              :ssl_enabled,                     :boolean, default: false
+  preference              :default_locale,                  :string,  default: 'en'
+  preference              :locales,                         :string,  default: 'en, de'
+  preference              :site_enabled,                    :boolean, default: false
+  preference              :site_maintenance,                :boolean, default: false
   preference              :google_analytics_tracker_id,     :string
 
   #--- Site wide page settings
@@ -58,7 +58,7 @@ class Account < ApplicationRecord
   preference              :archive_email,                   :string
   preference              :mailchimp_api_key,               :string
   preference              :smtp_address,                    :string
-  preference              :smtp_port,                       :string, :default => '587'
+  preference              :smtp_port,                       :string, default: '587'
   preference              :smtp_domain,                     :string
   preference              :smtp_user_name,                  :string
   preference              :smtp_password,                   :string
@@ -81,7 +81,7 @@ class Account < ApplicationRecord
   preference              :subscription_bcc_email,          :string
 
   #--- Newsletter
-  preference              :nms_use_mailchimp,               :boolean, :default => false
+  preference              :nms_use_mailchimp,               :boolean, default: false
   preference              :nms_api_key,                     :string
   preference              :nms_lists_synced_on,             :datetime
 
@@ -199,11 +199,11 @@ class Account < ApplicationRecord
   #------------------------------------------------------------------------------
   def smtp_settings
     {
-      :address              => preferred_smtp_address,
-      :port                 => preferred_smtp_port,
-      :domain               => preferred_smtp_domain,
-      :user_name            => preferred_smtp_user_name,
-      :password             => preferred_smtp_password
+      address: preferred_smtp_address,
+      port: preferred_smtp_port,
+      domain: preferred_smtp_domain,
+      user_name: preferred_smtp_user_name,
+      password: preferred_smtp_password
     }
   end
 

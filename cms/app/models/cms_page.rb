@@ -12,11 +12,11 @@ class CmsPage < ApplicationRecord
   #--- NOTE: if you add any new fields, then update the duplicate_with_associations method
 
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
-  translates              :title, :summary, :menutitle, :fallbacks_for_empty_translations => true # , :versioning => true
+  translates              :title, :summary, :menutitle, fallbacks_for_empty_translations: true # , :versioning => true
   globalize_accessors     locales: I18n.available_locales
 
   # --- versioning - skip anything translated
-  has_paper_trail         :skip => [:title, :menutitle]
+  has_paper_trail         skip: [:title, :menutitle]
 
   # --- FriendlyId
   extend FriendlyId
@@ -25,12 +25,12 @@ class CmsPage < ApplicationRecord
   acts_as_taggable
 
   # --- associations
-  has_many                :cms_contentitems, -> { order(:row_order) }, :dependent => :destroy
-  has_ancestry            :cache_depth => true
+  has_many                :cms_contentitems, -> { order(:row_order) }, dependent: :destroy
+  has_ancestry            cache_depth: true
   before_save             :cache_depth # fixes bug where depth not recalculated when subtree moved
 
   include RankedModel
-  ranks                   :row_order, :with_same => [:account_id, :ancestry]
+  ranks                   :row_order, with_same: [:account_id, :ancestry]
 
   default_scope           { where(account_id: Account.current.id).order("ancestry, row_order ASC") }
   scope                   :welcome_pages, -> { where(welcome_page: true) }

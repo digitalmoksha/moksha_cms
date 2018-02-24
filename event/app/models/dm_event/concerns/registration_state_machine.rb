@@ -14,114 +14,114 @@ module DmEvent
 
         #--- define how the state machine works
         aasm do
-          state :open,                :initial => true, :after_enter => proc { |o| o.start! }
-          state :pending,             :after_enter => :state_pending
-          state :reviewing,           :after_enter => :state_reviewing
-          state :accepted,            :after_enter => :state_acceptance
-          state :rejected,            :after_enter => :state_rejection
-          state :paid,                :after_enter => :state_paid
-          state :waitlisted,          :after_enter => :state_waitlisted
-          state :canceled,            :after_enter => :state_canceled
-          state :refunded,            :after_enter => :state_refunded
-          state :noshow,              :after_enter => :state_noshow
+          state :open,                initial: true, after_enter: proc { |o| o.start! }
+          state :pending,             after_enter: :state_pending
+          state :reviewing,           after_enter: :state_reviewing
+          state :accepted,            after_enter: :state_acceptance
+          state :rejected,            after_enter: :state_rejection
+          state :paid,                after_enter: :state_paid
+          state :waitlisted,          after_enter: :state_waitlisted
+          state :canceled,            after_enter: :state_canceled
+          state :refunded,            after_enter: :state_refunded
+          state :noshow,              after_enter: :state_noshow
 
           #------------------------------------------------------------------------------
           event :start do
-            transitions :from => :open,       :to => :waitlisted, :guard => proc { |o| o.workshop.waitlisting? }
-            transitions :from => :open,       :to => :pending,    :guard => proc { |o| o.workshop.require_review? }
-            transitions :from => :open,       :to => :accepted
+            transitions from: :open,       to: :waitlisted, guard: proc { |o| o.workshop.waitlisting? }
+            transitions from: :open,       to: :pending,    guard: proc { |o| o.workshop.require_review? }
+            transitions from: :open,       to: :accepted
           end
 
           #------------------------------------------------------------------------------
           event :review do
-            transitions :from => :pending,    :to => :reviewing
-            transitions :from => :accepted,   :to => :reviewing
-            transitions :from => :rejected,   :to => :reviewing
-            transitions :from => :waitlisted, :to => :reviewing
-            transitions :from => :canceled,   :to => :reviewing
-            transitions :from => :refunded,   :to => :reviewing
-            transitions :from => :noshow,     :to => :reviewing
+            transitions from: :pending,    to: :reviewing
+            transitions from: :accepted,   to: :reviewing
+            transitions from: :rejected,   to: :reviewing
+            transitions from: :waitlisted, to: :reviewing
+            transitions from: :canceled,   to: :reviewing
+            transitions from: :refunded,   to: :reviewing
+            transitions from: :noshow,     to: :reviewing
           end
 
           #------------------------------------------------------------------------------
           event :accept do
-            transitions :from => :pending,    :to => :accepted
-            transitions :from => :paid,       :to => :accepted
-            transitions :from => :reviewing,  :to => :accepted
-            transitions :from => :rejected,   :to => :accepted
-            transitions :from => :waitlisted, :to => :accepted
-            transitions :from => :canceled,   :to => :accepted
-            transitions :from => :refunded,   :to => :accepted
-            transitions :from => :noshow,     :to => :accepted
+            transitions from: :pending,    to: :accepted
+            transitions from: :paid,       to: :accepted
+            transitions from: :reviewing,  to: :accepted
+            transitions from: :rejected,   to: :accepted
+            transitions from: :waitlisted, to: :accepted
+            transitions from: :canceled,   to: :accepted
+            transitions from: :refunded,   to: :accepted
+            transitions from: :noshow,     to: :accepted
           end
 
           #------------------------------------------------------------------------------
           event :paid do
-            transitions :from => :pending,    :to => :paid
-            transitions :from => :reviewing,  :to => :paid
-            transitions :from => :accepted,   :to => :paid
-            transitions :from => :paid,       :to => :paid
-            transitions :from => :rejected,   :to => :paid
-            transitions :from => :refunded,   :to => :paid
-            transitions :from => :noshow,     :to => :paid
-            transitions :from => :waitlisted, :to => :paid
+            transitions from: :pending,    to: :paid
+            transitions from: :reviewing,  to: :paid
+            transitions from: :accepted,   to: :paid
+            transitions from: :paid,       to: :paid
+            transitions from: :rejected,   to: :paid
+            transitions from: :refunded,   to: :paid
+            transitions from: :noshow,     to: :paid
+            transitions from: :waitlisted, to: :paid
           end
 
           #------------------------------------------------------------------------------
           event :refund do
-            transitions :from => :paid,       :to => :refunded
-            transitions :from => :canceled,   :to => :refunded
-            transitions :from => :accepted,   :to => :refunded
-            transitions :from => :pending,    :to => :refunded
-            transitions :from => :reviewing,  :to => :refunded
-            transitions :from => :waitlisted, :to => :refunded
+            transitions from: :paid,       to: :refunded
+            transitions from: :canceled,   to: :refunded
+            transitions from: :accepted,   to: :refunded
+            transitions from: :pending,    to: :refunded
+            transitions from: :reviewing,  to: :refunded
+            transitions from: :waitlisted, to: :refunded
           end
 
           #------------------------------------------------------------------------------
           event :reject do
-            transitions :from => :pending,    :to => :rejected
-            transitions :from => :reviewing,  :to => :rejected
-            transitions :from => :waitlisted, :to => :rejected
-            transitions :from => :canceled,   :to => :rejected
+            transitions from: :pending,    to: :rejected
+            transitions from: :reviewing,  to: :rejected
+            transitions from: :waitlisted, to: :rejected
+            transitions from: :canceled,   to: :rejected
           end
 
           #------------------------------------------------------------------------------
           event :cancellation do
-            transitions :from => :accepted,   :to => :canceled
-            transitions :from => :pending,    :to => :canceled
-            transitions :from => :reviewing,  :to => :canceled
-            transitions :from => :paid,       :to => :canceled
-            transitions :from => :waitlisted, :to => :canceled
-            transitions :from => :rejected,   :to => :canceled
-            transitions :from => :noshow,     :to => :canceled
+            transitions from: :accepted,   to: :canceled
+            transitions from: :pending,    to: :canceled
+            transitions from: :reviewing,  to: :canceled
+            transitions from: :paid,       to: :canceled
+            transitions from: :waitlisted, to: :canceled
+            transitions from: :rejected,   to: :canceled
+            transitions from: :noshow,     to: :canceled
           end
 
           #------------------------------------------------------------------------------
           event :waitlist do
-            transitions :from => :pending,    :to => :waitlisted
-            transitions :from => :reviewing,  :to => :waitlisted
-            transitions :from => :rejected,   :to => :waitlisted
-            transitions :from => :accepted,   :to => :waitlisted
-            transitions :from => :canceled,   :to => :waitlisted
-            transitions :from => :paid,       :to => :waitlisted
+            transitions from: :pending,    to: :waitlisted
+            transitions from: :reviewing,  to: :waitlisted
+            transitions from: :rejected,   to: :waitlisted
+            transitions from: :accepted,   to: :waitlisted
+            transitions from: :canceled,   to: :waitlisted
+            transitions from: :paid,       to: :waitlisted
           end
 
           #------------------------------------------------------------------------------
           event :noshow do
-            transitions :from => :pending,    :to => :noshow
-            transitions :from => :reviewing,  :to => :noshow
-            transitions :from => :accepted,   :to => :noshow
-            transitions :from => :rejected,   :to => :noshow
-            transitions :from => :paid,       :to => :noshow
-            transitions :from => :canceled,   :to => :noshow
-            transitions :from => :waitlisted, :to => :noshow
-            transitions :from => :refunded,   :to => :noshow
+            transitions from: :pending,    to: :noshow
+            transitions from: :reviewing,  to: :noshow
+            transitions from: :accepted,   to: :noshow
+            transitions from: :rejected,   to: :noshow
+            transitions from: :paid,       to: :noshow
+            transitions from: :canceled,   to: :noshow
+            transitions from: :waitlisted, to: :noshow
+            transitions from: :refunded,   to: :noshow
           end
 
           #------------------------------------------------------------------------------
           event :pending do
-            transitions :from => :reviewing,  :to => :pending
-            transitions :from => :waitlisted, :to => :pending
+            transitions from: :reviewing,  to: :pending
+            transitions from: :waitlisted, to: :pending
           end
         end
 

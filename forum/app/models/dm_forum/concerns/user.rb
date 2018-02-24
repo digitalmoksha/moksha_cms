@@ -10,7 +10,7 @@ module DmForum
       # executed in the module's context (blorgh/concerns/models/post).
       #------------------------------------------------------------------------------
       included do
-        has_many :forum_comments, { :as => :commentable, :dependent => :delete_all }
+        has_many :forum_comments, { as: :commentable, dependent: :delete_all }
         has_many :forum_topics, -> { order("#{ForumTopic.table_name}.created_at desc") }
 
         #------------------------------------------------------------------------------

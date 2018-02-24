@@ -12,20 +12,20 @@ class Forum < ApplicationRecord
   resourcify
 
   include RankedModel
-  ranks                       :row_order, :with_same => :forum_category_id
+  ranks                       :row_order, with_same: :forum_category_id
 
   belongs_to                  :forum_site
-  belongs_to                  :forum_category, :class_name => 'ForumCategory'
-  has_many                    :forum_topics, -> { order('sticky desc, last_updated_at desc') }, :dependent => :destroy
-  belongs_to                  :owner, :polymorphic => true
+  belongs_to                  :forum_category, class_name: 'ForumCategory'
+  has_many                    :forum_topics, -> { order('sticky desc, last_updated_at desc') }, dependent: :destroy
+  belongs_to                  :owner, polymorphic: true
 
   # this is used to see if a forum is "fresh"... we can't use topics because it puts
   # stickies first even if they are not the most recently modified
-  has_many                    :recent_topics, -> { includes(:user).order('last_updated_at DESC') }, :class_name => 'ForumTopic'
-  has_one                     :recent_topic,  -> { order('last_updated_at DESC') },                 :class_name => 'ForumTopic'
+  has_many                    :recent_topics, -> { includes(:user).order('last_updated_at DESC') }, class_name: 'ForumTopic'
+  has_one                     :recent_topic,  -> { order('last_updated_at DESC') },                 class_name: 'ForumTopic'
 
   default_scope               { where(account_id: Account.current.id).order(:row_order) }
-  scope                       :published, -> { where(:published => true) }
+  scope                       :published, -> { where(published: true) }
 
   # --- validations
   validates_presence_of       :name

@@ -3,7 +3,7 @@ class CommentPresenter < BasePresenter
 
   #------------------------------------------------------------------------------
   def formatted_comment
-    markdown(comment.body, :safe => true)
+    markdown(comment.body, safe: true)
   end
 
   #------------------------------------------------------------------------------

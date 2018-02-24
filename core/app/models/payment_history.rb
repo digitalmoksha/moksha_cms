@@ -21,12 +21,12 @@ class PaymentHistory < ApplicationRecord
 
   self.table_name = 'core_payment_histories'
 
-  belongs_to                :owner, :polymorphic => true
+  belongs_to                :owner, polymorphic: true
   belongs_to                :user_profile
   serialize                 :order_details
   serialize                 :item_details
   serialize                 :notify_data
-  monetize                  :total_cents, :with_model_currency => :total_currency, :allow_nil => true
+  monetize                  :total_cents, with_model_currency: :total_currency, allow_nil: true
 
   default_scope             { where(account_id: Account.current.id) }
 

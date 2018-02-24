@@ -13,30 +13,30 @@ module DmCore
         attr_accessor           :userless_registration
 
         belongs_to              :user
-        belongs_to              :country, :class_name => 'DmCore::Country'
+        belongs_to              :country, class_name: 'DmCore::Country'
 
         #--- don't validate public_name if we're only updating the address
         #    (like with userless registration)
-        validates_presence_of   :public_name,        :if => proc { |p| !p.userless_registration }
-        validates_uniqueness_of :public_name,        :case_sensitive => false, :if => proc { |p| !p.userless_registration }
+        validates_presence_of   :public_name,        if: proc { |p| !p.userless_registration }
+        validates_uniqueness_of :public_name,        case_sensitive: false, if: proc { |p| !p.userless_registration }
 
         #--- validates used for a registration that is not associated with a student account
-        validates_presence_of   :first_name,        :if => :require_name?
-        validates_presence_of   :last_name,         :if => :require_name?
-        validates_presence_of   :country_id,        :if => :require_country?
-        validates_presence_of   :email,             :if => proc { |p| p.address_required }
-        validates_presence_of   :address,           :if => proc { |p| p.address_required }
-        validates_presence_of   :city,              :if => proc { |p| p.address_required }
-        validates_presence_of   :zipcode,           :if => proc { |p| p.address_required }
+        validates_presence_of   :first_name,        if: :require_name?
+        validates_presence_of   :last_name,         if: :require_name?
+        validates_presence_of   :country_id,        if: :require_country?
+        validates_presence_of   :email,             if: proc { |p| p.address_required }
+        validates_presence_of   :address,           if: proc { |p| p.address_required }
+        validates_presence_of   :city,              if: proc { |p| p.address_required }
+        validates_presence_of   :zipcode,           if: proc { |p| p.address_required }
 
-        validates_length_of     :address,           :maximum => 70
-        validates_length_of     :address2,          :maximum => 70
-        validates_length_of     :city,              :maximum => 20
-        validates_length_of     :state,             :maximum => 30
-        validates_length_of     :zipcode,           :maximum => 10
-        validates_length_of     :phone,             :maximum => 20
-        validates_length_of     :fax,               :maximum => 20
-        validates_length_of     :cell,              :maximum => 20
+        validates_length_of     :address,           maximum: 70
+        validates_length_of     :address2,          maximum: 70
+        validates_length_of     :city,              maximum: 20
+        validates_length_of     :state,             maximum: 30
+        validates_length_of     :zipcode,           maximum: 10
+        validates_length_of     :phone,             maximum: 20
+        validates_length_of     :fax,               maximum: 20
+        validates_length_of     :cell,              maximum: 20
 
         after_create            :add_account
 

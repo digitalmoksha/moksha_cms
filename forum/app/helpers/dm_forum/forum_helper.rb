@@ -24,7 +24,7 @@ module DmForum
 
     #------------------------------------------------------------------------------
     def edited_on_tag(post)
-      %(<span class='date'>#{I18n.t 'fms.post_edited', :when => time_ago_in_words(post.updated_at)}</span>).html_safe if post.updated_at - post.created_at > 5.minutes
+      %(<span class='date'>#{I18n.t 'fms.post_edited', when: time_ago_in_words(post.updated_at)}</span>).html_safe if post.updated_at - post.created_at > 5.minutes
     end
 
     # used to know if a topic has changed since we read it last
@@ -70,7 +70,7 @@ module DmForum
         page     = session[:forum_page] ? session[:forum_page][forum.id] : nil
         if page and page != 1
           out   += "<small style='color:#ccc'>(".html_safe
-          out   += link_to(I18n.t('fms.page_nr'), forum_path(:id => forum, :page => page))
+          out   += link_to(I18n.t('fms.page_nr'), forum_path(id: forum, page: page))
           out   += ")</small>".html_safe
         end
         out += seperator
@@ -97,9 +97,9 @@ module DmForum
     #------------------------------------------------------------------------------
     def forum_comment_user_state(forum_comment)
       if forum_comment.user.is_admin?
-        I18n.t 'fms.user_is_administrator', :default => 'Administator'
+        I18n.t 'fms.user_is_administrator', default: 'Administator'
       elsif can?(:moderate, forum_comment.forum_topic.forum)
-        I18n.t 'fms.user_is_moderator', :default => 'Moderator'
+        I18n.t 'fms.user_is_moderator', default: 'Moderator'
       elsif forum_comment.user.suspended?
         forum_comment.user.state
       end

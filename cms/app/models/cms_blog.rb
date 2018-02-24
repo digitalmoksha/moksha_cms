@@ -2,7 +2,7 @@ class CmsBlog < ApplicationRecord
   include DmCore::Concerns::PublicPrivate
 
   # --- globalize
-  translates                :title, :fallbacks_for_empty_translations => true
+  translates                :title, fallbacks_for_empty_translations: true
   globalize_accessors       locales: I18n.available_locales
 
   # --- FriendlyId
@@ -15,16 +15,16 @@ class CmsBlog < ApplicationRecord
   resourcify
 
   include RankedModel
-  ranks                     :row_order, :with_same => :account_id
+  ranks                     :row_order, with_same: :account_id
 
   default_scope             { where(account_id: Account.current.id).order(:row_order) }
-  scope                     :published, -> { where(:published => true) }
+  scope                     :published, -> { where(published: true) }
 
-  has_many                  :posts, -> { order('published_on DESC') }, :class_name => 'CmsPost', :dependent => :destroy
+  has_many                  :posts, -> { order('published_on DESC') }, class_name: 'CmsPost', dependent: :destroy
   belongs_to                :account
-  belongs_to                :owner, :polymorphic => true
+  belongs_to                :owner, polymorphic: true
 
-  preference                :show_social_buttons,  :boolean, :default => false
+  preference                :show_social_buttons,  :boolean, default: false
   preference                :header_accent_color,  :string
 
   validates                 :title, presence_default_locale: true

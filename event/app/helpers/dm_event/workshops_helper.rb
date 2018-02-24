@@ -5,7 +5,7 @@ module DmEvent::WorkshopsHelper
       description = ""
     else
       # --- process as markdown
-      x           = render :inline => workshop.description
+      x           = render inline: workshop.description
       description = liquidize_markdown(x, {})
     end
     description
@@ -15,7 +15,7 @@ module DmEvent::WorkshopsHelper
   def render_workshop_sidebar(workshop)
     return '' if workshop.sidebar.nil?
 
-    liquidize_markdown(render(:inline => workshop.sidebar), {})
+    liquidize_markdown(render(inline: workshop.sidebar), {})
   end
 
   # Convert the financial "collected" data into json for pie charts
@@ -23,7 +23,7 @@ module DmEvent::WorkshopsHelper
   def financial_collected_json(collected)
     json = []
     collected.sort.each do |item|
-      json << { label: "#{item[0]}: #{item[1].format(:no_cents_if_whole => true, :symbol => true)}", data: item[1].to_f }
+      json << { label: "#{item[0]}: #{item[1].format(no_cents_if_whole: true, symbol: true)}", data: item[1].to_f }
     end
     json.to_json
   end

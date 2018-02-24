@@ -1,13 +1,13 @@
 class Address < ApplicationRecord
   self.table_name = 'core_addresses'
-  belongs_to        :addressable, :polymorphic => true
+  belongs_to        :addressable, polymorphic: true
 
   attr_accessor     :name
 
   biggs :postal_address,
-          :recipient => :name,
-          :country => :country_code,
-          :street => proc { |address| "#{address.line1} #{address.line2}" }
+          recipient: :name,
+          country: :country_code,
+          street: proc { |address| "#{address.line1} #{address.line2}" }
 
   #------------------------------------------------------------------------------
   def to_s(name_to_use = '')

@@ -1,6 +1,6 @@
 class ForumComment < Comment
   #--- counter cache is set in the Comment model
-  belongs_to              :forum_topic, :polymorphic => true, :foreign_key => :commentable_id, :foreign_type => :commentable_type
+  belongs_to              :forum_topic, polymorphic: true, foreign_key: :commentable_id, foreign_type: :commentable_type
 
   #--- update counter cache in forum
   after_create            :increment_forum_counter_cache
@@ -23,7 +23,7 @@ class ForumComment < Comment
   def self.create_comment(forum_topic, body, user, parent_comment = nil)
     # if it's the first comment, make it the root, otherwise it's a child
     parent_comment ||= (forum_topic.forum_comments.empty? ? nil : forum_topic.forum_comments[0].root)
-    forum_topic.forum_comments.build(:body => body).tap do |comment|
+    forum_topic.forum_comments.build(body: body).tap do |comment|
       comment.user      = user
       comment.parent    = parent_comment
       comment.save
@@ -38,7 +38,7 @@ class ForumComment < Comment
     options[:joins]      ||= "inner join #{ForumTopic.table_name} on #{ForumComment.table_name}.topic_id = #{ForumTopic.table_name}.id " \
       "inner join #{Forum.table_name} as f on #{ForumTopic.table_name}.forum_id = f.id"
     options[:order]      ||= "#{ForumComment.table_name}.created_at DESC"
-    options[:count]      ||= { :select => "#{ForumComment.table_name}.id" }
+    options[:count]      ||= { select: "#{ForumComment.table_name}.id" }
     paginate options
   end
 

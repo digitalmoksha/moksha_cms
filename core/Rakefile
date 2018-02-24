@@ -24,7 +24,7 @@ RSpec::Core::RakeTask.new
 # desc "Run all specs in spec directory (excluding plugin specs)"
 # RSpec::Core::RakeTask.new(:spec => 'app:db:test:prepare')
 
-task :default => :spec
+task default: :spec
 
 desc "Generates a dummy app for testing"
 task :test_app do

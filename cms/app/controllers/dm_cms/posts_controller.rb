@@ -27,7 +27,7 @@ class DmCms::PostsController < DmCms::ApplicationController
 
   #------------------------------------------------------------------------------
   def ajax_add_comment
-    @post.comments.create(:body => params[:comment][:body], :user_id => current_user.id) if current_user && !params[:comment][:body].blank?
+    @post.comments.create(body: params[:comment][:body], user_id: current_user.id) if current_user && !params[:comment][:body].blank?
     respond_to do |format|
       format.html { redirect_back(fallback_location: post_show_url(@post)) }
       format.json { head :ok }

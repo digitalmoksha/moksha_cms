@@ -3,7 +3,7 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
   include ActionView::RecordIdentifier # for the dom_id method
 
   before_action :find_parents
-  before_action :find_post, :only => [:edit, :update, :destroy]
+  before_action :find_post, only: [:edit, :update, :destroy]
 
   # {todo} look into caching and sweepers - most of our stuff is not directly public
   # cache_sweeper :forum_comments_sweeper, :only => [:create, :update, :destroy]
@@ -16,8 +16,8 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
   def index
     @followed         = user_signed_in? && params[:followed]
     @q                = params[:q] ? params[:q].purify : nil
-    @posts            = (@parent ? @parent.forum_comments : ForumSite.site.forum_comments).search(@q, :page => page_number)
-    @followed_posts   = user_signed_in? ? (@parent ? @parent.forum_comments : ForumSite.site.forum_comments).search_followed(current_user.id, @q, :page => page_number) : nil
+    @posts            = (@parent ? @parent.forum_comments : ForumSite.site.forum_comments).search(@q, page: page_number)
+    @followed_posts   = user_signed_in? ? (@parent ? @parent.forum_comments : ForumSite.site.forum_comments).search_followed(current_user.id, @q, page: page_number) : nil
     @users            = @user ? { @user.id => @user } : User.index_from(@posts)
   end
 
@@ -38,7 +38,7 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
       current_user.following.follow(@forum_topic)
       DmForum::SendCommentNotificationService.new(@forum_comment).call
       flash[:notice] = 'Comment successfully created.'
-      redirect_to(forum_forum_topic_path(@forum, @forum_topic, { :anchor => dom_id(@forum_comment), :page => @forum_topic.last_page }))
+      redirect_to(forum_forum_topic_path(@forum, @forum_topic, { anchor: dom_id(@forum_comment), page: @forum_topic.last_page }))
     end
   end
 
@@ -46,9 +46,9 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
   def update
     if @forum_comment.update_attributes(forum_comment_params)
       flash[:notice] = 'Post was successfully updated.'
-      redirect_to(forum_forum_topic_path(@forum, @forum_topic, { :anchor => dom_id(@forum_comment), :page => @forum_topic.comment_page(@forum_comment) }))
+      redirect_to(forum_forum_topic_path(@forum, @forum_topic, { anchor: dom_id(@forum_comment), page: @forum_topic.comment_page(@forum_comment) }))
     else
-      render :action => :edit
+      render action: :edit
     end
   end
 

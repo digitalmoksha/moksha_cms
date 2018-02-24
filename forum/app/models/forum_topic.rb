@@ -10,7 +10,7 @@ class ForumTopic < ApplicationRecord
 
   acts_as_followable
 
-  before_validation       :set_default_attributes, :on => :create
+  before_validation       :set_default_attributes, on: :create
 
   after_create            :create_initial_comment
   before_update           :check_for_moved_forum
@@ -23,21 +23,21 @@ class ForumTopic < ApplicationRecord
   belongs_to              :account
 
   #--- creator of recent comment
-  belongs_to              :last_user, :class_name => "User"
+  belongs_to              :last_user, class_name: "User"
 
-  belongs_to              :forum, :counter_cache => true
+  belongs_to              :forum, counter_cache: true
 
   #--- forum's site, set by callback
-  belongs_to              :forum_site, :counter_cache => true
+  belongs_to              :forum_site, counter_cache: true
 
   #--- don't use acts_as_commentable since we're using a specialized ForumComment class
-  has_many                :forum_comments, { :as => :commentable, :dependent => :destroy }
-  has_one                 :recent_comment, -> { where(ancestry_depth: 1).order('created_at DESC') }, :as => :commentable, :class_name => "ForumComment"
+  has_many                :forum_comments, { as: :commentable, dependent: :destroy }
+  has_one                 :recent_comment, -> { where(ancestry_depth: 1).order('created_at DESC') }, as: :commentable, class_name: "ForumComment"
 
-  has_many                :voices, -> { distinct(true) }, :through => :forum_comments, :source => :user
+  has_many                :voices, -> { distinct(true) }, through: :forum_comments, source: :user
 
   validates_presence_of   :user_id, :forum_site_id, :forum_id, :title
-  validates_presence_of   :body, :on => :create
+  validates_presence_of   :body, on: :create
 
   default_scope           { where(account_id: Account.current.id) }
 
@@ -93,8 +93,8 @@ class ForumTopic < ApplicationRecord
   def update_cached_comment_fields(forum_comment)
     #--- these fields are not accessible to mass assignment
     if remaining_comment = forum_comment.frozen? ? recent_comment : forum_comment
-      self.class.where(:id => id).update_all(:last_updated_at => remaining_comment.created_at,
-                                             :last_user_id => remaining_comment.user_id, :last_forum_comment_id => remaining_comment.id)
+      self.class.where(id: id).update_all(last_updated_at: remaining_comment.created_at,
+                                          last_user_id: remaining_comment.user_id, last_forum_comment_id: remaining_comment.id)
     else
       destroy
     end
@@ -126,10 +126,10 @@ class ForumTopic < ApplicationRecord
   def set_comment_forum_id
     return unless @old_forum_id
 
-    Forum.where(:id => @old_forum_id).update_all("comments_count = comments_count - #{comments_count}")
-    Forum.where(:id => forum_id).update_all("comments_count = comments_count + #{comments_count}")
-    Forum.where(:id => @old_forum_id).update_all("forum_topics_count = forum_topics_count - 1")
-    Forum.where(:id => forum_id).update_all("forum_topics_count = forum_topics_count + 1")
+    Forum.where(id: @old_forum_id).update_all("comments_count = comments_count - #{comments_count}")
+    Forum.where(id: forum_id).update_all("comments_count = comments_count + #{comments_count}")
+    Forum.where(id: @old_forum_id).update_all("forum_topics_count = forum_topics_count - 1")
+    Forum.where(id: forum_id).update_all("forum_topics_count = forum_topics_count + 1")
   end
 
   #------------------------------------------------------------------------------
@@ -139,7 +139,7 @@ class ForumTopic < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def update_cached_forum_and_user_counts
-    Forum.where(:id => forum_id).update_all("comments_count = comments_count - #{comments_count}")
+    Forum.where(id: forum_id).update_all("comments_count = comments_count - #{comments_count}")
     # @user_comments.each do |user_id, comments|
     #   User.where(:id => user_id).update_all("comments_count = comments_count - #{forum_comments.size}")
     # end

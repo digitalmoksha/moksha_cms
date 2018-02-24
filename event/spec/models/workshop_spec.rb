@@ -1,7 +1,7 @@
 require 'spec_helper'
 DmCore.config.locales = [:en, :de]
 
-describe Workshop, :type => :model do
+describe Workshop, type: :model do
   setup_account
 
   it { is_expected.to validate_length_of(:slug).is_at_most(255) }

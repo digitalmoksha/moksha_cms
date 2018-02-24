@@ -8,7 +8,7 @@ class DmCore::Admin::DashboardController < DmCore::Admin::AdminController
   # used as a css selector
   #------------------------------------------------------------------------------
   def change_theme
-    cookies[:theme] = { :value => params[:id].replace_non_alphanumeric, :expires => Time.now + 1825.days }
+    cookies[:theme] = { value: params[:id].replace_non_alphanumeric, expires: Time.now + 1825.days }
     redirect_back(fallback_location: index)
   end
 

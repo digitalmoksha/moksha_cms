@@ -24,7 +24,7 @@
 module EasyGlobalizeAccessors
   #------------------------------------------------------------------------------
   def globalize_accessors(options = {})
-    options.reverse_merge!(:locales => I18n.available_locales, :attributes => translated_attribute_names)
+    options.reverse_merge!(locales: I18n.available_locales, attributes: translated_attribute_names)
     each_attribute_and_locale(options) do |attr_name, locale|
       define_accessors(attr_name, locale)
     end
@@ -41,14 +41,14 @@ module EasyGlobalizeAccessors
   #------------------------------------------------------------------------------
   def define_getter(attr_name, locale)
     define_method :"#{attr_name}_#{locale}" do
-      read_attribute(attr_name, :locale => locale)
+      read_attribute(attr_name, locale: locale)
     end
   end
 
   #------------------------------------------------------------------------------
   def define_setter(attr_name, locale)
     define_method :"#{attr_name}_#{locale}=" do |value|
-      write_attribute(attr_name, value, :locale => locale)
+      write_attribute(attr_name, value, locale: locale)
     end
   end
 

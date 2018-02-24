@@ -4,7 +4,7 @@ module Liquid
     #------------------------------------------------------------------------------
     def render(context)
       partial_name = @attributes['name'].present? ? "#{@attributes['name']}_contact_form" : 'contact_form'
-      context.registers[:view].render(:partial => "liquid_tags/#{partial_name}")
+      context.registers[:view].render(partial: "liquid_tags/#{partial_name}")
     end
 
     #------------------------------------------------------------------------------

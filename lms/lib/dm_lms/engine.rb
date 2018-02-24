@@ -23,7 +23,7 @@ module DmLms
   # Add any specific files that need to be precompiled seperately for the asset pipeline
   #-------------------------------------------------------------------------------------
   class Railtie < Rails::Railtie
-    initializer :lms_precompile, :group => :assets do |app|
+    initializer :lms_precompile, group: :assets do |app|
       # app.config.assets.precompile += %w( dm_lms/practice_sheet.css )
     end
   end

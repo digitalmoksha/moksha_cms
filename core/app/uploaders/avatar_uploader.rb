@@ -36,27 +36,27 @@ class AvatarUploader < CarrierWave::Uploader::Base
   #------------------------------------------------------------------------------
   version :sq35 do
     process :auto_orient
-    process :resize_to_fill => [35, 35]
+    process resize_to_fill: [35, 35]
   end
   version :sq100 do
     process :auto_orient
-    process :resize_to_fill => [100, 100]
+    process resize_to_fill: [100, 100]
   end
   version :sq200 do
     process :auto_orient
-    process :resize_to_fill => [200, 200]
+    process resize_to_fill: [200, 200]
   end
   version :w100 do
     process :auto_orient
-    process :resize_to_width => [100]
+    process resize_to_width: [100]
   end
   version :w200 do
     process :auto_orient
-    process :resize_to_width => [200]
+    process resize_to_width: [200]
   end
   version :w300 do
     process :auto_orient
-    process :resize_to_width => [300]
+    process resize_to_width: [300]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

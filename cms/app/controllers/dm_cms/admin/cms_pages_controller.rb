@@ -2,7 +2,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
   helper "dm_cms/cms_pages"
 
-  before_action :current_page, :except => [:index, :file_tree, :expire_cache, :expire_cache_total]
+  before_action :current_page, except: [:index, :file_tree, :expire_cache, :expire_cache_total]
 
   #------------------------------------------------------------------------------
   def index
@@ -43,10 +43,10 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   def update
     authorize! :manage_content, @current_page
     if @current_page.update_attributes(cms_page_params)
-      redirect_to :action => :show, :id => @current_page
+      redirect_to action: :show, id: @current_page
     else
       @cms_page = @current_page
-      render :action => :edit
+      render action: :edit
     end
   end
 
@@ -67,9 +67,9 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     authorize! :manage_content, :all
     new_page = @current_page.duplicate_with_associations
     if new_page.nil?
-      redirect_to admin_cms_page_url(@current_page), :flash => { :error => 'A duplicate page already exists' }
+      redirect_to admin_cms_page_url(@current_page), flash: { error: 'A duplicate page already exists' }
     else
-      redirect_to edit_admin_cms_page_url(new_page), :flash => { :notice => 'Duplicate page created.  Please customize it.' }
+      redirect_to edit_admin_cms_page_url(new_page), flash: { notice: 'Duplicate page created.  Please customize it.' }
     end
   end
 
@@ -87,7 +87,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   def destroy
     authorize! :manage_content, :all
     @current_page.destroy
-    redirect_to :action => :index
+    redirect_to action: :index
   end
 
   # Removes all cache files for this account. This can be used when we're not sure if the
@@ -99,7 +99,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     expire_fragment(%r{\A#{key_start}})
 
     respond_to do |format|
-      format.html { redirect_to({ :action => :index }, :notice => 'Page Cache was cleared') }
+      format.html { redirect_to({ action: :index }, notice: 'Page Cache was cleared') }
       format.js { head :ok }
     end
   end
@@ -111,7 +111,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     expire_fragment(%r{\S})
 
     respond_to do |format|
-      format.html { redirect_to({ :action => :index }, :notice => 'Page Cache for all sites cleared') }
+      format.html { redirect_to({ action: :index }, notice: 'Page Cache for all sites cleared') }
       format.js { head :ok }
     end
   end

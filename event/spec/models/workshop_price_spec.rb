@@ -1,7 +1,7 @@
 require 'spec_helper'
 DmCore.config.locales = [:en, :de]
 
-describe WorkshopPrice, :type => :model do
+describe WorkshopPrice, type: :model do
   setup_account
 
   describe "workshop_prices" do

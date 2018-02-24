@@ -1,6 +1,6 @@
 class CmsPost < ApplicationRecord
   # --- globalize (don't use versioning: true, translations erased when updating regular model data.  Maybe fixed in github version)
-  translates              :title, :summary, :content, :fallbacks_for_empty_translations => true # , :versioning => true
+  translates              :title, :summary, :content, fallbacks_for_empty_translations: true # , :versioning => true
   globalize_accessors     locales: I18n.available_locales
 
   # --- FriendlyId
@@ -18,8 +18,8 @@ class CmsPost < ApplicationRecord
   scope                   :published, -> { where("published_on IS NOT NULL AND published_on <= ?", Time.now) }
 
   validates               :title, presence_default_locale: true
-  validates               :summary, liquid: { :locales => true }, presence_default_locale: true
-  validates               :content, liquid: { :locales => true }, presence_default_locale: true
+  validates               :summary, liquid: { locales: true }, presence_default_locale: true
+  validates               :content, liquid: { locales: true }, presence_default_locale: true
   validates_uniqueness_of :slug, scope: [:account_id, :cms_blog_id]
   validates_length_of     :slug, maximum: 255
   validates_length_of     :featured_image, maximum: 255

@@ -138,8 +138,8 @@ module Scio
       #   render_text(wb.create)
       def create
         buffer = ""
-        xml = Builder::XmlMarkup.new(:target => buffer, :indent => 2)
-        xml.instruct! :xml, :version => "1.0", :encoding => "UTF-8"
+        xml = Builder::XmlMarkup.new(target: buffer, indent: 2)
+        xml.instruct! :xml, version: "1.0", encoding: "UTF-8"
         xml.Workbook({
                        'xmlns'      => "urn:schemas-microsoft-com:office:spreadsheet",
                        'xmlns:o'    => "urn:schemas-microsoft-com:office:office",
@@ -355,7 +355,7 @@ module Scio
 
       def create_worksheet(name) #:nodoc:
         buffer = ""
-        xml = Builder::XmlMarkup.new(:target => buffer, :indent => 2)
+        xml = Builder::XmlMarkup.new(target: buffer, indent: 2)
         xml.Worksheet 'ss:Name' => name do
           xml.Table do
             # create header
@@ -459,7 +459,7 @@ module Scio
       # Creates the xml for the style. You should not call this directly.
       def create(workbook)
         buffer = ""
-        xml = Builder::XmlMarkup.new(:target => buffer, :indent => 2)
+        xml = Builder::XmlMarkup.new(target: buffer, indent: 2)
         @excel_id = workbook.next_style_id
         xml.Style 'ss:ID' => @excel_id do
           unless @text.empty?

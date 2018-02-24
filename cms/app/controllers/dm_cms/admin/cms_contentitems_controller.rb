@@ -2,8 +2,8 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
   include DmCore::LiquidHelper
 
-  before_action   :current_page,    :only =>    [:new_content, :create_content]
-  before_action   :current_content, :except =>  [:new_content, :create_content]
+  before_action   :current_page,    only: [:new_content, :create_content]
+  before_action   :current_content, except: [:new_content, :create_content]
 
   #------------------------------------------------------------------------------
   def new_content
@@ -34,7 +34,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
     if @cms_contentitem.update_attributes(cms_contentitem_params)
       redirect_to edit_admin_cms_contentitem_url(@cms_contentitem), notice: 'Content updated'
     else
-      render :action => :edit, alert: 'An error of some kind occurred'
+      render action: :edit, alert: 'An error of some kind occurred'
     end
   end
 
@@ -42,7 +42,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   def destroy
     authorize! :manage_content, @current_page
     @cms_contentitem.destroy
-    redirect_to(:controller => 'dm_cms/admin/cms_pages', :action => :show, :id => @cms_contentitem.cms_page_id)
+    redirect_to(controller: 'dm_cms/admin/cms_pages', action: :show, id: @cms_contentitem.cms_page_id)
   end
 
   #------------------------------------------------------------------------------
