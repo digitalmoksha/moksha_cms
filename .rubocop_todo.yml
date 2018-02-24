@@ -68,6 +68,15 @@ RSpec/PredicateMatcher:
     - 'core/spec/services/toggle_follower_service_spec.rb'
     - 'event/spec/services/workshops/create_service_spec.rb'
 
+# Offense count: 3
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
+# SupportedStyles: slashes, percent_r, mixed
+Style/RegexpLiteral:
+  Exclude:
+    - 'cms/app/controllers/dm_cms/admin/cms_pages_controller.rb'
+    - 'core/app/services/dm_core/s3_signed_url_service.rb'
+
 #------------------------------------------------------------------------------
 
 # Offense count: 4
@@ -557,27 +566,3 @@ Style/RedundantReturn:
 # Cop supports --auto-correct.
 Style/RedundantSelf:
   Enabled: false
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'cms/app/controllers/dm_cms/admin/cms_pages_controller.rb'
-    - 'core/app/services/dm_core/s3_signed_url_service.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/RescueModifier:
-  Exclude:
-    - 'core/lib/dm_core/scio_excel.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, explicit
-Style/RescueStandardError:
-  Exclude:
-    - 'event/app/models/payment.rb'
-

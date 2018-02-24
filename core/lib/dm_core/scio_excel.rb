@@ -203,13 +203,21 @@ module Scio
         @columns.each do |c|
           # set the style
           hstyle = c.header_style.nil? ? default_header_style : c.header_style
-          rgb = hstyle.bgcolor.to_rgb rescue nil
+          rgb = begin
+                  hstyle.bgcolor.to_rgb
+                rescue StandardError
+                  nil
+                end
           fill = 0
           unless rgb.nil?
             pdf.SetFillColor(rgb[:red], rgb[:green], rgb[:blue])
             fill = 1
           end
-          rgb = hstyle.font[:color].to_rgb rescue nil
+          rgb = begin
+                  hstyle.font[:color].to_rgb
+                rescue StandardError
+                  nil
+                end
           pdf.SetTextColor(rgb[:red], rgb[:green], rgb[:blue]) unless rgb.nil?
           fstyle = ''
           fstyle << "B" if hstyle.font[:bold]
@@ -246,13 +254,21 @@ module Scio
           # set the style
           @columns.each do |c|
             cstyle = c.cell_style.nil? ? default_cell_style : c.cell_style
-            rgb = cstyle.bgcolor.to_rgb rescue nil
+            rgb = begin
+                    cstyle.bgcolor.to_rgb
+                  rescue StandardError
+                    nil
+                  end
             fill = 0
             unless rgb.nil?
               pdf.SetFillColor(rgb[:red], rgb[:green], rgb[:blue])
               fill = 1
             end
-            rgb = cstyle.font[:color].to_rgb rescue nil
+            rgb = begin
+                    cstyle.font[:color].to_rgb
+                  rescue StandardError
+                    nil
+                  end
             pdf.SetTextColor(rgb[:red], rgb[:green], rgb[:blue]) unless rgb.nil?
             fstyle = ''
             fstyle << "B" if cstyle.font[:bold]

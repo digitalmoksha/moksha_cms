@@ -33,7 +33,7 @@ class Payment
             # TODO need to handle refunding, etc
             Rails.logger.error("Failed to verify #{payment_method} payment notification, please investigate")
           end
-        rescue
+        rescue StandardError
           payment_history.status = 'Error'
           raise
         ensure
