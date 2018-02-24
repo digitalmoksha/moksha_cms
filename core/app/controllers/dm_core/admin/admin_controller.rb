@@ -50,9 +50,7 @@ class DmCore::Admin::AdminController < ApplicationController
         item = { text: '', icon_class: :gear, children: [], link: '#' }
         if defined?(DmCms) && can?(:manage_content, :all)
           item[:children] << { text: 'Clear Page Cache', icon_class: :undo, link: dm_cms.admin_expire_cache_path, link_options: { method: :patch } }
-          if is_sysadmin?
-            item[:children] << { text: 'Clear All Page Caches', icon_class: :undo, link: dm_cms.admin_expire_cache_total_path, link_options: { method: :patch } }
-          end
+          item[:children] << { text: 'Clear All Page Caches', icon_class: :undo, link: dm_cms.admin_expire_cache_total_path, link_options: { method: :patch } } if is_sysadmin?
         end
         @admin_theme[:top_menu] << item
 
@@ -76,17 +74,11 @@ class DmCore::Admin::AdminController < ApplicationController
       @admin_theme[:main_menu] |= DmSubscriptions::AdminMenuInject.menu_items(current_user) if defined?(DmSubscriptions)
 
       # give main application a chance to add anything it wants
-      if respond_to? :admin_specific_menus
-        admin_specific_menus @admin_theme
-      end
+      admin_specific_menus @admin_theme if respond_to? :admin_specific_menus
 
-      if defined?(::AdminMenuInject)
-        @admin_theme[:main_menu] |= ::AdminMenuInject.menu_items(current_user)
-      end
+      @admin_theme[:main_menu] |= ::AdminMenuInject.menu_items(current_user) if defined?(::AdminMenuInject)
 
-      if Rails.application.config.action_mailer.delivery_method == :letter_opener_web
-        @admin_theme[:main_menu] << { text: 'Letter Opener', icon_class: :mail, link: main_app.letter_opener_web_path }
-      end
+      @admin_theme[:main_menu] << { text: 'Letter Opener', icon_class: :mail, link: main_app.letter_opener_web_path } if Rails.application.config.action_mailer.delivery_method == :letter_opener_web
 
       # set the active state to true if the path matches
       @admin_theme[:main_menu].each do |item|

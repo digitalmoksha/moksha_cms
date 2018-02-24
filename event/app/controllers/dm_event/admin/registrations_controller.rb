@@ -90,9 +90,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
                                                      payment_date: params[:payment_history][:payment_date]
                                                     )
 
-    if @payment_history.errors.empty?
-      @registration.update_attribute(:receipt_requested, params[:payment_history][:receipt_requested])
-    end
+    @registration.update_attribute(:receipt_requested, params[:payment_history][:receipt_requested]) if @payment_history.errors.empty?
 
     respond_to do |format|
       format.html {

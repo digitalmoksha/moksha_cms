@@ -36,9 +36,7 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
         media_file       = MediaFile.new(media_file_params)
         media_file.media = file
         media_file.user  = current_user
-        unless media_file.save
-          media_file.errors.each { |attribute, error| @media_file.errors.add(attribute, error) }
-        end
+        media_file.errors.each { |attribute, error| @media_file.errors.add(attribute, error) } unless media_file.save
       end
     else
       @media_file.errors[:base] << 'Please select files to upload'

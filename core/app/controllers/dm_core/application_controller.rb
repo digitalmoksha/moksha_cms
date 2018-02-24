@@ -48,9 +48,7 @@ class DmCore::ApplicationController < ActionController::Base
   # from an email link, the url gets saved before getting redirected to the login
   #------------------------------------------------------------------------------
   def store_location
-    if params[:redirect_to].present?
-      store_location_for(:user, params[:redirect_to])
-    end
+    store_location_for(:user, params[:redirect_to]) if params[:redirect_to].present?
 
     # note: don't store the previous url on each call.  this led to an issue where
     # missing asset might get run through this code, causing the user to be redirected

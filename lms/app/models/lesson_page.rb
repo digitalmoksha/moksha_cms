@@ -19,8 +19,8 @@ class LessonPage < ApplicationRecord
   default_scope           { where(account_id: Account.current.id).order(:row_order) }
 
   scope :published,       -> { where(published: true) }
-  scope :next,            lambda { |row_order, lesson_id| where("row_order > ? AND lesson_id = ?", row_order, lesson_id) }
-  scope :previous,        lambda { |row_order, lesson_id| where("row_order < ? AND lesson_id = ?", row_order, lesson_id) }
+  scope :next,            ->(row_order, lesson_id) { where("row_order > ? AND lesson_id = ?", row_order, lesson_id) }
+  scope :previous,        ->(row_order, lesson_id) { where("row_order < ? AND lesson_id = ?", row_order, lesson_id) }
 
   delegate                :title, :menutitle, to: :item
   DmCore::Language.language_array.each do |lang|

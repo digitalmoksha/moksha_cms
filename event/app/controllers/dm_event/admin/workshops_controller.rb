@@ -96,9 +96,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
     @system_email.email_type = params[:email_type]
     if put_or_post?
       @system_email.attributes = system_email_params
-      if @system_email.save
-        redirect_to edit_system_email_admin_workshop_path(@workshop, email_type: @system_email.email_type), notice: 'Email was successfully updated.'
-      end
+      redirect_to edit_system_email_admin_workshop_path(@workshop, email_type: @system_email.email_type), notice: 'Email was successfully updated.' if @system_email.save
     end
   end
 

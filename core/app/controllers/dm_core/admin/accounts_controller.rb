@@ -113,9 +113,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def account_lookup
-    if is_sysadmin? && params[:id]
-      @account = Account.find(params[:id])
-    end
+    @account = Account.find(params[:id]) if is_sysadmin? && params[:id]
     @account ||= current_account
   end
 

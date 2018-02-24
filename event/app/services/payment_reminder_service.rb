@@ -66,9 +66,7 @@ class PaymentReminderService
         result = needs_sending
       else
         # an initial payment reminder should be sent if the initial_payment_required_on date has passed
-        if start_date == registration.workshop.initial_payment_required_on && registration.payment_reminder_sent_on.nil?
-          result = true
-        end
+        result = true if start_date == registration.workshop.initial_payment_required_on && registration.payment_reminder_sent_on.nil?
       end
     end
     result

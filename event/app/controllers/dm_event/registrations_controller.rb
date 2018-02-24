@@ -75,9 +75,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
       end
     end
 
-    if @registration.balance_owed.zero?
-      render :payment_complete and return
-    end
+    render :payment_complete and return if @registration.balance_owed.zero?
   end
 
   # Success page for a registration.  Look up the uuid and display success.

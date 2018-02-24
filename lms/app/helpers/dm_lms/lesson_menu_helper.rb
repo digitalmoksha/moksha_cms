@@ -8,9 +8,7 @@ module DmLms
                title:      lesson.menutitle,
                allowed:    false }
       if item[:published] || can?(:edit, lesson)
-        unless item[:title].blank?
-          item[:allowed] = true
-        end
+        item[:allowed] = true unless item[:title].blank?
       end
       item
     end

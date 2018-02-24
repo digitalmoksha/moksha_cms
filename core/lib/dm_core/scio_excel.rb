@@ -386,9 +386,7 @@ module Scio
                   cell_opts = {}
                   cell_opts["ss:StyleID"] = c.cell_style.excel_id unless c.cell_style.nil?
                   xml.Cell cell_opts do
-                    unless r[c.name].blank?
-                      xml.Data r[c.name], 'ss:Type' => c.type
-                    end
+                    xml.Data r[c.name], 'ss:Type' => c.type unless r[c.name].blank?
                   end
                 end
               end

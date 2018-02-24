@@ -10,9 +10,7 @@ module DmCms
         menu << { text: 'Blogs', icon_class: :blogs, link: DmCms::Engine.routes.url_helpers.admin_cms_blogs_path(locale: I18n.locale) }
       end
 
-      if user.can?(:access_media_library, :all)
-        menu << { text: 'Media Library', icon_class: :media_library, link: DmCms::Engine.routes.url_helpers.admin_media_files_path(locale: I18n.locale) }
-      end
+      menu << { text: 'Media Library', icon_class: :media_library, link: DmCms::Engine.routes.url_helpers.admin_media_files_path(locale: I18n.locale) } if user.can?(:access_media_library, :all)
       menu
     end
   end

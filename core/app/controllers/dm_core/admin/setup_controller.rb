@@ -24,9 +24,7 @@ class DmCore::Admin::SetupController < ActionController::Base
     if put_or_post?
       @account = Account.new(params.require(:account).permit!)
       @account.general_validation = true
-      if @account.save
-        redirect_to dm_core.admin_setup_step2_path
-      end
+      redirect_to dm_core.admin_setup_step2_path if @account.save
       Role.unscoped.create!(name: 'sysadmin', account_id: 0)
     else
       @account = Account.new

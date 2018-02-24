@@ -32,9 +32,7 @@ class MailchimpNewsletter < Newsletter
     else
       api         = MailchimpNewsletter.api
       list_info   = api.lists.list(filters: { list_id: mc_id, exact: true })
-      unless list_info['errors'].empty?
-        errors[:mc_id] << (list_info['errors'][0]['error'])
-      end
+      errors[:mc_id] << (list_info['errors'][0]['error']) unless list_info['errors'].empty?
     end
   end
 

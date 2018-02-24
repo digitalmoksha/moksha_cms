@@ -17,12 +17,8 @@ class Workshop < ApplicationRecord
   has_one                 :refunded_email,    -> { where("email_type LIKE 'refunded'") },   class_name: 'SystemEmail', as: :emailable
   has_one                 :noshow_email,      -> { where("email_type LIKE 'noshow'") },     class_name: 'SystemEmail', as: :emailable
   has_one                 :cms_blog, as: :owner
-  if defined?(DmLms)
-    has_one                 :forum, as: :owner
-  end
-  if defined?(DmLms)
-    has_one                 :course, as: :owner
-  end
+  has_one                 :forum, as: :owner if defined?(DmLms)
+  has_one                 :course, as: :owner if defined?(DmLms)
 
   # --- globalize
   translates              :title, :description, :summary, :sidebar, fallbacks_for_empty_translations: true
@@ -53,7 +49,7 @@ class Workshop < ApplicationRecord
   validates_length_of     :image, maximum: 255
   validates_length_of     :header_accent_color, maximum: 255
   I18n.available_locales.each do |locale|
-    validates_length_of     :"title_#{locale}", maximum: 255
+    validates_length_of :"title_#{locale}", maximum: 255
   end
 
   # validates_presence_of   :deadline_on
@@ -221,9 +217,7 @@ class Workshop < ApplicationRecord
     new_users.each do |user|
       next unless user.user_site_profiles.where(account_id: Account.current.id)
 
-      if user.user_profile.registrations.count == 0
-        lost << user
-      end
+      lost << user if user.user_profile.registrations.count == 0
     end
     lost
   end

@@ -24,9 +24,7 @@ module DmForum
 
     #------------------------------------------------------------------------------
     def edited_on_tag(post)
-      if post.updated_at - post.created_at > 5.minutes
-        %(<span class='date'>#{I18n.t 'fms.post_edited', :when => time_ago_in_words(post.updated_at)}</span>).html_safe
-      end
+      %(<span class='date'>#{I18n.t 'fms.post_edited', :when => time_ago_in_words(post.updated_at)}</span>).html_safe if post.updated_at - post.created_at > 5.minutes
     end
 
     # used to know if a topic has changed since we read it last

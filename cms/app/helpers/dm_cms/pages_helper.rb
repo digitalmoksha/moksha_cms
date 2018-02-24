@@ -182,13 +182,9 @@ module DmCms::PagesHelper
     pages                     = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
     menu_str                  = "<select id='#{options[:id]}' class='#{options[:class]}'>"
     menu_str                 += "<option value='' selected='selected'>#{nls(:main_menu_select_prompt)}</option>"
-    if options[:include_home]
-      menu_str += "<option value='#{dm_cms.showpage_url(root.slug)}'>#{root.menutitle}</option>"
-    end
+    menu_str += "<option value='#{dm_cms.showpage_url(root.slug)}'>#{root.menutitle}</option>" if options[:include_home]
     pages.each_key do |page|
-      if allow_page_in_menu?(page)
-        menu_str += "<option value='#{dm_cms.showpage_url(page.slug)}'>#{page.menutitle}</option>"
-      end
+      menu_str += "<option value='#{dm_cms.showpage_url(page.slug)}'>#{page.menutitle}</option>" if allow_page_in_menu?(page)
     end
     menu_str += "</select>"
 

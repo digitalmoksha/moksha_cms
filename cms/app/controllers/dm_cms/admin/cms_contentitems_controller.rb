@@ -68,9 +68,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def markdown
     @text = ''
-    if put_or_post?
-      @text = params[:sample_text][:markdown]
-    end
+    @text = params[:sample_text][:markdown] if put_or_post?
   end
 
   protected

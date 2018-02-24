@@ -106,9 +106,7 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
   #------------------------------------------------------------------------------
   def cancel_change_of_email
     @user = User.find(params[:id])
-    if @user&.unconfirmed_email
-      @user.update_attribute(:unconfirmed_email, nil)
-    end
+    @user.update_attribute(:unconfirmed_email, nil) if @user&.unconfirmed_email
     redirect_to dm_core.edit_admin_user_path(@user)
   end
 

@@ -57,9 +57,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def sort
-    if can? :manage_content, :all
-      @blog.update_attribute(:row_order_position, params[:item][:row_order_position])
-    end
+    @blog.update_attribute(:row_order_position, params[:item][:row_order_position]) if can? :manage_content, :all
 
     #--- this action will be called via ajax
     head :ok

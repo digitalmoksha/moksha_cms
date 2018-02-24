@@ -9,9 +9,7 @@ module Liquid
       output = ''
       if @attributes['slug'].present?
         cms_snippet = CmsSnippet.find_by_slug(@attributes['slug'])
-        if cms_snippet
-          output = context.registers[:view].render_content_item(cms_snippet)
-        end
+        output = context.registers[:view].render_content_item(cms_snippet) if cms_snippet
       end
       output
     end

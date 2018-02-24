@@ -4,8 +4,6 @@
 class PresenceDefaultLocaleValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     attribute_locale = "#{attribute}_#{Account.current.preferred_default_locale}"
-    if record.send(attribute_locale).blank?
-      record.errors.add attribute_locale, I18n.t("errors.messages.blank")
-    end
+    record.errors.add attribute_locale, I18n.t("errors.messages.blank") if record.send(attribute_locale).blank?
   end
 end

@@ -77,9 +77,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   # Note that position comes in as 0-based, increment to make 1-based
   #------------------------------------------------------------------------------
   def ajax_sort
-    if can? :manage_content, :all
-      @current_page.update_attributes(row_order_position: params[:item][:position], parent_id: params[:item][:parent_id])
-    end
+    @current_page.update_attributes(row_order_position: params[:item][:position], parent_id: params[:item][:parent_id]) if can? :manage_content, :all
 
     #--- this action will be called via ajax
     head :ok

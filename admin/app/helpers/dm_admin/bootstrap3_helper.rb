@@ -121,9 +121,7 @@ module DmAdmin::Bootstrap3Helper
 
     content_tag :div, class: 'form-action text-right' do
       #--- check if we want a delete button
-      if options[:delete_url]
-        concat(link_to(options[:delete], options[:delete_url], method: :delete, class: 'btn btn-sm btn-danger pull-left', data: { confirm: options[:delete_confirm] }))
-      end
+      concat(link_to(options[:delete], options[:delete_url], method: :delete, class: 'btn btn-sm btn-danger pull-left', data: { confirm: options[:delete_confirm] })) if options[:delete_url]
       #--- check if we want a cancel button
       if options[:cancel] != false
         if options[:cancel_url].blank?

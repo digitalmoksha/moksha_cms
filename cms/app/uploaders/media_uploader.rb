@@ -38,9 +38,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   # https://makandracards.com/makandra/12323-carrierwave-auto-rotate-tagged-jpegs
   #------------------------------------------------------------------------------
   def auto_orient
-    unless svg?(self)
-      manipulate!(&:auto_orient)
-    end
+    manipulate!(&:auto_orient) unless svg?(self)
   end
 
   # If a pdf, convert to jpg and size, maintain aspect ration and pad to square
