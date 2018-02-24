@@ -46,10 +46,9 @@ module DmUtilities::DateHelper
     return '' if start_time.nil?
 
     ignore_end_time = true if end_time.nil?
+    event_time      = start_time.localize(format: :hhmmpp)
 
-    eventTime = start_time.localize(:format => :hhmmpp)
-
-    ignore_end_time ? eventTime : "#{eventTime} &mdash; #{end_time.localize(:format => :hhmmpp)}".html_safe
+    ignore_end_time ? event_time : "#{eventTime} &mdash; #{end_time.localize(format: :hhmmpp)}".html_safe
   end
 
   #------------------------------------------------------------------------------

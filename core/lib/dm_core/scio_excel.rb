@@ -172,7 +172,7 @@ module Scio
               xml << s.create(self)
             end
           end
-          xml << createWorksheet(@name)
+          xml << create_worksheet(@name)
           # reset the styles-id
           @style_id = 0
         end # Workbook
@@ -337,7 +337,7 @@ module Scio
 
       protected
 
-      def createWorksheet(name) #:nodoc:
+      def create_worksheet(name) #:nodoc:
         buffer = ""
         xml = Builder::XmlMarkup.new(:target => buffer, :indent => 2)
         xml.Worksheet 'ss:Name' => name do

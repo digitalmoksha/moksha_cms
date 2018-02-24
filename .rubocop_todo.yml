@@ -32,13 +32,6 @@ Naming/ConstantName:
     - 'admin/app/helpers/admin_theme/theme_helper.rb'
     - 'admin/app/helpers/dm_admin/application_helper.rb'
 
-# Offense count: 1
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: snake_case, camelCase
-Naming/MethodName:
-  Exclude:
-    - 'core/lib/dm_core/scio_excel.rb'
-
 # Offense count: 14
 # Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist, MethodDefinitionMacros.
 # NamePrefix: is_, has_, have_
@@ -57,13 +50,6 @@ Naming/PredicateName:
     - 'core/app/helpers/dm_core/application_helper.rb'
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'core/app/models/dm_core/concerns/user.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: snake_case, camelCase
-Naming/VariableName:
-  Exclude:
-    - 'core/app/helpers/dm_utilities/date_helper.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
