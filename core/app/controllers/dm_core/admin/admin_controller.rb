@@ -33,7 +33,7 @@ class DmCore::Admin::AdminController < ApplicationController
   #------------------------------------------------------------------------------
   def setup_admin_data
     # not needed if it's an ajax call
-    if !request.xhr?
+    unless request.xhr?
       @admin_theme              = {}
       @admin_theme[:brand]      = current_account.domain
       @admin_theme[:brand_link] = main_app.index_url

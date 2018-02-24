@@ -77,7 +77,7 @@ class PaymentReminderService
   # past due means they haven't paid what they should have paid by now
   #------------------------------------------------------------------------------
   def self.past_due?(registration)
-    return false if !registration.balance_owed.positive?
+    return false unless registration.balance_owed.positive?
     if registration.workshop_price.recurring_payments?
       return registration.amount_paid < registration.recurring_what_should_be_paid_by_now
     else

@@ -193,7 +193,7 @@ module Scio
       # This requires fpdf (http://zeropluszero.com/software/fpdf/)
       def create_pdf(orientation = "L")
         require 'fpdf'
-        raise "Invalid orientation" if !["L", "P"].include?(orientation)
+        raise "Invalid orientation" unless ["L", "P"].include?(orientation)
 
         pdf = FPDF.new
         # default font
@@ -466,8 +466,8 @@ module Scio
         xml.Style 'ss:ID' => @excel_id do
           unless @text.empty?
             alignment_opts = {}
-            alignment_opts["ss:Vertical"] = @text[:valign] if !@text[:valign].nil?
-            alignment_opts["ss:Horizontal"] = @text[:halign] if !@text[:halign].nil?
+            alignment_opts["ss:Vertical"] = @text[:valign] unless @text[:valign].nil?
+            alignment_opts["ss:Horizontal"] = @text[:halign] unless @text[:halign].nil?
             alignment_opts["ss:WrapText"] = "1" if @text[:wrap]
             xml.Alignment alignment_opts unless alignment_opts.empty?
           end

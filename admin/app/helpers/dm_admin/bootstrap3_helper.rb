@@ -29,11 +29,11 @@ module DmAdmin::Bootstrap3Helper
     title = options[:title] + (options[:subtitle].blank? ? '' : content_tag(:small, options[:subtitle]))
     content_tag(:div, class: 'panel-heading') do
       if options[:title_small]
-        concat(content_tag :span, title)
+        concat(content_tag(:span, title))
       else
-        concat(content_tag :h3, title, class: 'panel-title')
+        concat(content_tag(:h3, title, class: 'panel-title'))
       end
-      concat(content_tag :div, options[:toolbar], class: 'panel_toolbar pull-right') if options[:toolbar].present?
+      concat(content_tag(:div, options[:toolbar], class: 'panel_toolbar pull-right')) if options[:toolbar].present?
     end
   end
 
@@ -50,7 +50,7 @@ module DmAdmin::Bootstrap3Helper
 
     content_tag(:div, class: 'page-header') do
       concat(content)
-      concat(content_tag :h3, "#{options[:title]} #{sub_title}".html_safe)
+      concat(content_tag(:h3, "#{options[:title]} #{sub_title}".html_safe))
     end
   end
 
@@ -80,9 +80,9 @@ module DmAdmin::Bootstrap3Helper
 
     content = with_output_buffer(&block)
     content_tag :div do
-      concat(content_tag :span, options[:title], class: 'subtitle') unless options[:title].blank?
-      concat(content_tag :p, options[:explanation], class: 'explanation') unless options[:explanation].blank?
-      concat(content_tag :div, content, class: class_options, id: options[:id])
+      concat(content_tag(:span, options[:title], class: 'subtitle')) unless options[:title].blank?
+      concat(content_tag(:p, options[:explanation], class: 'explanation')) unless options[:explanation].blank?
+      concat(content_tag(:div, content, class: class_options, id: options[:id]))
     end
   end
 
@@ -122,21 +122,21 @@ module DmAdmin::Bootstrap3Helper
     content_tag :div, class: 'form-action text-right' do
       #--- check if we want a delete button
       if options[:delete_url]
-        concat(link_to options[:delete], options[:delete_url], method: :delete, class: 'btn btn-sm btn-danger pull-left', data: { confirm: options[:delete_confirm] })
+        concat(link_to(options[:delete], options[:delete_url], method: :delete, class: 'btn btn-sm btn-danger pull-left', data: { confirm: options[:delete_confirm] }))
       end
       #--- check if we want a cancel button
       if options[:cancel] != false
         if options[:cancel_url].blank?
           #--- if no url specified, assume sliding the div closed
-          concat(link_to options[:cancel], '#', class: 'toggle_link btn', data: { toggleid: options[:slide] })
+          concat(link_to(options[:cancel], '#', class: 'toggle_link btn', data: { toggleid: options[:slide] }))
         elsif options[:cancel_url] == 'close-modal'
-          concat(link_to options[:cancel], '#', class: 'btn btn-sm btn-default', data: { dismiss: 'modal' })
+          concat(link_to(options[:cancel], '#', class: 'btn btn-sm btn-default', data: { dismiss: 'modal' }))
         else
-          concat(link_to options[:cancel], options[:cancel_url], { class: 'btn btn-sm btn-default' })
+          concat(link_to(options[:cancel], options[:cancel_url], { class: 'btn btn-sm btn-default' }))
         end
-        concat(content_tag :span, '&nbsp;&nbsp;&nbsp;&nbsp;'.html_safe, class: 'submit_or')
+        concat(content_tag(:span, '&nbsp;&nbsp;&nbsp;&nbsp;'.html_safe, class: 'submit_or'))
       end
-      concat(submit_tag options[:save], :class => 'btn btn-sm btn-primary')
+      concat(submit_tag(options[:save], :class => 'btn btn-sm btn-primary'))
     end
   end
 
@@ -151,8 +151,8 @@ module DmAdmin::Bootstrap3Helper
   def icons(icon_class, options = {})
     options[:class] = (::CommonIcons[icon_class] || icon_class)
     options[:class] = "#{options[:class]} #{options[:icon_class]}" if options[:icon_class]
-    options[:style] = "#{options[:style]} font-size:#{options[:size]}px;" if !options[:size].blank?
-    options[:style] = "#{options[:style]} color:#{options[:color]}" if !options[:color].blank?
+    options[:style] = "#{options[:style]} font-size:#{options[:size]}px;" unless options[:size].blank?
+    options[:style] = "#{options[:style]} color:#{options[:color]}" unless options[:color].blank?
 
     content_tag(:i, '', options)
   end

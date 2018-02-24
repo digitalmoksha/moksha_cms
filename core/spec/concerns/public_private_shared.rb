@@ -122,7 +122,7 @@ shared_examples :public_private_protected do |factory|
     describe '#member_count' do
       it 'counts manually added members' do
         created.add_member(user)
-        created.add_member(create :user)
+        created.add_member(create(:user))
         expect(created.member_count).to eq 2
         expect(created.member_count(:manual)).to eq 2
       end

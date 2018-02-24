@@ -51,7 +51,7 @@ class LessonPage < ApplicationRecord
     page = (options[:published_only] ? page.published : page).try(:first)
     if page.nil?
       lesson = self.lesson.next(options)
-      if !lesson.nil?
+      unless lesson.nil?
         page = (options[:published_only] ? lesson.lesson_pages.published : lesson.lesson_pages).try(:first)
       end
     end
@@ -64,7 +64,7 @@ class LessonPage < ApplicationRecord
     page = (options[:published_only] ? page.published : page).try(:last)
     if page.nil?
       lesson = self.lesson.previous(options)
-      if !lesson.nil?
+      unless lesson.nil?
         page = (options[:published_only] ? lesson.lesson_pages.published : lesson.lesson_pages).try(:last)
       end
     end

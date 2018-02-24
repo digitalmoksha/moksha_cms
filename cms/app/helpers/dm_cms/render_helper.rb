@@ -8,7 +8,7 @@ module DmCms
     #------------------------------------------------------------------------------
     def page_title
       title = current_account.preferred_site_title
-      content_for?(:page_title) ? "#{h(content_for :page_title)} | #{h(title)}".html_safe : h(title)
+      content_for?(:page_title) ? "#{h(content_for(:page_title))} | #{h(title)}".html_safe : h(title)
     end
     alias :main_title :page_title # keep old main_title around for now
 

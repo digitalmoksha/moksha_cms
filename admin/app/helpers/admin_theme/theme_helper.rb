@@ -93,8 +93,8 @@ module AdminTheme
     #------------------------------------------------------------------------------
     def stat_block_small(options = { label: 'User Registrations', number: '1,245', url: '#', color_type: :success, icon: 'fa fa-user', percent: 80 })
       info = content_tag :div, class: 'statistics-info' do
-        concat(link_to icons(options[:icon]), options[:url], title: options[:label], class: "badge badge-#{options[:color_type]}")
-        concat(content_tag :strong, options[:number])
+        concat(link_to(icons(options[:icon]), options[:url], title: options[:label], class: "badge badge-#{options[:color_type]}"))
+        concat(content_tag(:strong, options[:number]))
       end
       progress_bar = content_tag(:div, class: 'progress progress-micro') do
         content_tag(:div, class: "progress-bar progress-bar-#{options[:color_type]}", role: 'progressbar',

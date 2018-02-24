@@ -34,7 +34,7 @@ module DmCore
     # (old interface passed in only a true or false to indicate include_blank)
     #------------------------------------------------------------------------------
     def ut_country_select_collection(options = { include_blank: true, as: :id })
-      options = { include_blank: options, as: :id } if !options.is_a?(Hash)
+      options = { include_blank: options, as: :id } unless options.is_a?(Hash)
 
       collection = (options[:include_blank] ? [[" ", ""]] : [])
       collection += case options[:as]
