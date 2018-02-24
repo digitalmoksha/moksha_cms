@@ -181,7 +181,7 @@ class Account < ApplicationRecord
   # check the local is a supported locale. If not, return site default
   #------------------------------------------------------------------------------
   def verify_locale(locale)
-    site_locales.include? locale.to_s ? locale : preferred_default_locale
+    site_locales.include?(locale.to_s) ? locale : preferred_default_locale
   end
 
   # Reutrn an array of locales used for the site.  Split on commas and whitespace
