@@ -14,24 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleAlignWith.
-# SupportedStylesAlignWith: either, start_of_block, start_of_line
-Lint/BlockAlignment:
-  Exclude:
-    - 'event/app/datatables/registration_datatable.rb'
-
-# Offense count: 1
-Lint/DuplicateMethods:
-  Exclude:
-    - 'core/app/models/account.rb'
-
-# Offense count: 1
-Lint/EmptyWhen:
-  Exclude:
-    - 'event/app/models/registration.rb'
-
 # Offense count: 7
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleAlignWith, AutoCorrect.
@@ -47,9 +29,9 @@ Lint/EndAlignment:
     - 'core/app/mailers/dm_core/site_mailer.rb'
 
 # Offense count: 1
-Lint/ParenthesesAsGroupedExpression:
-  Exclude:
-    - 'event/spec/models/workshop_price_spec.rb'
+# Lint/ParenthesesAsGroupedExpression:
+#   Exclude:
+#     - 'event/spec/models/workshop_price_spec.rb'
 
 # Offense count: 18
 # Cop supports --auto-correct.

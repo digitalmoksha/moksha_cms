@@ -137,7 +137,7 @@ describe WorkshopPrice, :type => :model do
     it 'return the last scheduled payment date' do
       workshop_price  = WorkshopPrice.new(price: Money.new(500, 'USD'), recurring_number: 3, recurring_period: 30)
       start_day       = Time.now.to_date
-      expect(workshop_price.last_scheduled_payment_date(start_day)).to eq (start_day + 60.days)
+      expect(workshop_price.last_scheduled_payment_date(start_day)).to eq(start_day + 60.days)
 
       workshop_price = WorkshopPrice.new(price: Money.new(500, 'USD'))
       expect(workshop_price.last_scheduled_payment_date(start_day)).to eq start_day
