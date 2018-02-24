@@ -68,7 +68,7 @@ module DmForum
       if forum
         out     += link_to(forum.name, forum_path(forum))
         page     = session[:forum_page] ? session[:forum_page][forum.id] : nil
-        if page and page != 1
+        if page && (page != 1)
           out   += "<small style='color:#ccc'>(".html_safe
           out   += link_to(I18n.t('fms.page_nr'), forum_path(id: forum, page: page))
           out   += ")</small>".html_safe

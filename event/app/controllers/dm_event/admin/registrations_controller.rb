@@ -93,11 +93,11 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
     @registration.update_attribute(:receipt_requested, params[:payment_history][:receipt_requested]) if @payment_history.errors.empty?
 
     respond_to do |format|
-      format.html {
+      format.html do
         flash[:notice] = "Payment was successfully added"           if @payment_history.errors.empty?
         flash[:alert]  = "There was a problem adding this payment"  unless @payment_history.errors.empty?
         redirect_to edit_admin_registration_path(@registration)
-      }
+      end
       format.js { render action: :ajax_payment }
     end
   end

@@ -54,9 +54,9 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
   def synchronize_lists
     if using_mailchimp?
       MailchimpNewsletter.synchronize
-      redirect_to(admin_newsletters_url, notice: 'Synchronized with Mailchimp') and return
+      redirect_to(admin_newsletters_url, notice: 'Synchronized with Mailchimp') && return
     else
-      redirect_to(admin_newsletters_url) and return
+      redirect_to(admin_newsletters_url) && return
     end
   end
 
@@ -71,7 +71,7 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
   #------------------------------------------------------------------------------
   def mailchimp_guard
     if using_mailchimp?
-      redirect_to(admin_newsletters_url, error: 'Action not supported when using Mailchimp') and return false
+      redirect_to(admin_newsletters_url, error: 'Action not supported when using Mailchimp') && (return false)
     else
       true
     end

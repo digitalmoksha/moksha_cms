@@ -8,7 +8,7 @@ class DmCms::PagesController < DmCms::ApplicationController
   #------------------------------------------------------------------------------
   def show
     respond_to do |format|
-      format.html {
+      format.html do
         #--- make sure we have a valid locale for this site set
         DmCore::Language.locale = current_account.verify_locale(params[:locale])
 
@@ -38,7 +38,7 @@ class DmCms::PagesController < DmCms::ApplicationController
             render action: :show, layout: "cms_templates/#{@current_page.page_template}", status: status, formats: [:html]
           end
         end
-      }
+      end
       format.any { head :not_found }
     end
   end

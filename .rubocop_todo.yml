@@ -113,6 +113,11 @@ Style/EvalWithLocation:
     - 'cms/app/models/cms_contentitem.rb'
     - 'core/lib/dm_core/csv_exporter.rb'
 
+# Offense count: 61
+# Configuration parameters: MinBodyLength.
+Style/GuardClause:
+  Enabled: false
+
 #------------------------------------------------------------------------------
 
 # Offense count: 4
@@ -165,26 +170,6 @@ Style/Alias:
     - 'cms/app/helpers/dm_cms/render_helper.rb'
     - 'core/app/models/dm_core/concerns/user_profile.rb'
 
-# Offense count: 28
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, conditionals
-Style/AndOr:
-  Exclude:
-    - 'cms/app/controllers/dm_cms/blogs_controller.rb'
-    - 'cms/app/controllers/dm_cms/posts_controller.rb'
-    - 'cms/app/helpers/dm_cms/pages_helper.rb'
-    - 'core/app/controllers/dm_core/admin/accounts_controller.rb'
-    - 'core/app/controllers/dm_core/admin/system_controller.rb'
-    - 'core/app/helpers/dm_core/render_helper.rb'
-    - 'core/app/helpers/dm_utilities/date_helper.rb'
-    - 'core/app/uploaders/avatar_uploader.rb'
-    - 'core/config/initializers/carrierwave.rb'
-    - 'event/app/controllers/dm_event/registrations_controller.rb'
-    - 'forum/app/helpers/dm_forum/forum_helper.rb'
-    - 'lms/app/controllers/dm_lms/lesson_pages_controller.rb'
-    - 'newsletter/app/controllers/dm_newsletter/admin/newsletters_controller.rb'
-
 # Offense count: 3
 # Configuration parameters: AllowedChars.
 Style/AsciiComments:
@@ -192,33 +177,6 @@ Style/AsciiComments:
     - 'cms/app/uploaders/media_uploader.rb'
     - 'core/app/uploaders/avatar_uploader.rb'
     - 'core/lib/dm_core/scio_excel.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/BlockComments:
-  Exclude:
-    - 'event/app/controllers/dm_event/registrations_controller.rb'
-    - 'newsletter/app/models/newsletter_subscriber.rb'
-
-# Offense count: 15
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, ProceduralMethods, FunctionalMethods, IgnoredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# IgnoredMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Exclude:
-    - 'cms/app/controllers/dm_cms/pages_controller.rb'
-    - 'cms/spec/controllers/admin/cms_blogs_controller_spec.rb'
-    - 'cms/spec/controllers/admin/cms_posts_controller_spec.rb'
-    - 'cms/spec/mailers/post_notify_mailer_spec.rb'
-    - 'core/spec/services/payment_histories/create_service_spec.rb'
-    - 'event/app/controllers/dm_event/admin/registrations_controller.rb'
-    - 'event/app/controllers/dm_event/admin/workshops_controller.rb'
-    - 'forum/spec/mailers/forum_notification_spec.rb'
-    - 'forum/spec/services/send_comment_notification_service_spec.rb'
-    - 'newsletter/app/models/mailchimp_newsletter.rb'
 
 # Offense count: 4
 Style/ClassVars:
@@ -232,9 +190,4 @@ Style/CommentedKeyword:
     - 'core/app/controllers/dm_core/application_controller.rb'
     - 'core/lib/dm_core/scio_excel.rb'
     - 'newsletter/app/models/newsletter_subscriber.rb'
-
-# Offense count: 61
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Enabled: false
 

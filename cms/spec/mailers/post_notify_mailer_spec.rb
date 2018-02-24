@@ -11,19 +11,19 @@ describe PostNotifyMailer, type: :mailer do
 
   it 'job is created and enqueued' do
     ActiveJob::Base.queue_adapter = :test
-    expect {
+    expect do
       PostNotifyMailer.post_notify(user, post, post.account).deliver_later
-    }.to have_enqueued_job.on_queue('mailers')
+    end.to have_enqueued_job.on_queue('mailers')
   end
 
   # since we have config.action_mailer.delivery_method  set to :test in our :test.rb,
   # all 'sent' emails are gathered into the ActionMailer::Base.deliveries array.
   it 'notification is sent' do
-    expect {
+    expect do
       perform_enqueued_jobs do
         PostNotifyMailer.post_notify(user, post, post.account).deliver_later
       end
-    }.to change { ActionMailer::Base.deliveries.size }.by(1)
+    end.to change { ActionMailer::Base.deliveries.size }.by(1)
   end
 
   it 'notification is sent to the right user' do

@@ -7,8 +7,8 @@ class DmLms::LessonPagesController < DmLms::ApplicationController
   # GET /learn/:course_slug/:lesson_slug/:content_slug.json
   #------------------------------------------------------------------------------
   def show
-    redirect_to dm_cms.showpage_url(slug: 'missing') and return if @lesson_page.nil?
-    redirect_to main_app.index_url and return if !@lesson_page.published? && !current_user.is_admin?
+    redirect_to(dm_cms.showpage_url(slug: 'missing')) && return if @lesson_page.nil?
+    redirect_to(main_app.index_url) && return if !@lesson_page.published? && !current_user.is_admin?
     @comments = @lesson_page.comments.paginate page: page_number
     case @lesson_page.item.class.to_s
     when 'Teaching'

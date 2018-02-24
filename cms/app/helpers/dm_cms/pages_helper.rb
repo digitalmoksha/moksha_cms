@@ -252,6 +252,6 @@ module DmCms::PagesHelper
   # {todo} should be able to go to any depth
   #------------------------------------------------------------------------------
   def page_in_section?(page)
-    @current_page == page or @current_page.parent_id == page.id
+    (@current_page == page) || (@current_page.parent_id == page.id)
   end
 end

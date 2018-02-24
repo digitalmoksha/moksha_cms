@@ -19,14 +19,14 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
     authorize! :list_events, @workshop
     respond_to do |format|
       format.html # show.html.erb
-      format.json {
+      format.json do
         permissions = {
           manage_events: can?(:manage_events, @workshop),
           manage_event_registrations: can?(:manage_event_registrations, @workshop),
           manage_event_finances: can?(:manage_event_finances, @workshop)
         }
         render json: RegistrationDatatable.new(view_context, current_user, permissions)
-      }
+      end
       format.xls  { data_export(Registration.csv_columns(@workshop), @workshop.registrations, filename: @workshop.slug, expressions: true, format: 'xls') if can?(:manage_event_registrations, @workshop) }
       format.csv  { data_export(Registration.csv_columns(@workshop), @workshop.registrations, filename: @workshop.slug, expressions: true, format: 'csv') if can?(:manage_event_registrations, @workshop) }
     end

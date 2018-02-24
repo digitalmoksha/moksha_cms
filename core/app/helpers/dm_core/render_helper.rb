@@ -69,7 +69,7 @@ module DmCore
     # => selected_state: name of the current state selected
     #------------------------------------------------------------------------------
     def ut_state_selection(object_method, country_id = 0, selected_state = nil)
-      if country_id == 0 or country_id.nil?
+      if (country_id == 0) || country_id.nil?
         select_tag(object_method, "<option value=''>Please select a country".html_safe)
       else
         selected_country = ::StateCountryConstants::COUNTRIES_WITH_STATES.find { |x| x[:id] == country_id }
