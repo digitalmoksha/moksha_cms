@@ -57,7 +57,7 @@ module DmCore
       collection = ut_country_select_collection(include_blank: false, as: options[:as])
       state_object_method = "#{object}[#{method_state}]"
       html_options[:id] ||= 'country_select'
-      html_options.merge!({ data: { progressid: "indicator_country", objectname: state_object_method } })
+      html_options[:data] = { progressid: "indicator_country", objectname: state_object_method }
 
       select(object, method, collection, options, html_options)
     end

@@ -185,7 +185,7 @@ module DmCms::PagesHelper
     if options[:include_home]
       menu_str += "<option value='#{dm_cms.showpage_url(root.slug)}'>#{root.menutitle}</option>"
     end
-    pages.each do |page, children|
+    pages.each_key do |page|
       if allow_page_in_menu?(page)
         menu_str += "<option value='#{dm_cms.showpage_url(page.slug)}'>#{page.menutitle}</option>"
       end

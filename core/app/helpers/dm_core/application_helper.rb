@@ -51,7 +51,7 @@ module DmCore
       fields      = f.simple_fields_for(association, new_object, child_index: id) do |builder|
         render('dm_core/admin/custom_fields/' + association.to_s.singularize + "_fields", f: builder)
       end
-      link_to(name, '#', class: 'add_custom_fields btn btn-xs btn-default', data: { id: id, fields: fields.gsub("\n", "") })
+      link_to(name, '#', class: 'add_custom_fields btn btn-xs btn-default', data: { id: id, fields: fields.delete("\n") })
     end
   end
 end
