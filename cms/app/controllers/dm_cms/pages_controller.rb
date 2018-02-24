@@ -19,7 +19,7 @@ class DmCms::PagesController < DmCms::ApplicationController
           render(file: Rails.root.join('public', '404.html'), status: :not_found, layout: false) && return if @current_page.nil? || !@current_page.is_published?
         end
 
-        raise Account::LoginRequired.new(I18n.t('cms.page_login_required')) if @current_page.requires_login && !signed_in?
+        raise Account::LoginRequired, I18n.t('cms.page_login_required') if @current_page.requires_login && !signed_in?
 
         if @current_page.redirect_page?
           redirect_to helpers.redirect_link(@current_page.link)

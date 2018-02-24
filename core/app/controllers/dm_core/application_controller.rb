@@ -265,6 +265,6 @@ class DmCore::ApplicationController < ActionController::Base
   end
   rescue_from I18n::InvalidLocale do |exception|
     #--- an invalid locale was specified - raise error to show 404 page
-    raise ActionController::RoutingError.new('Not Found')
+    raise ActionController::RoutingError, 'Not Found'
   end
 end

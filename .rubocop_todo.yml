@@ -519,15 +519,3 @@ Style/Proc:
     - 'event/app/models/registration.rb'
     - 'event/app/models/workshop_price.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: compact, exploded
-Style/RaiseArgs:
-  Exclude:
-    - 'cms/app/controllers/dm_cms/pages_controller.rb'
-    - 'cms/app/controllers/dm_cms/posts_controller.rb'
-    - 'core/app/controllers/dm_core/application_controller.rb'
-    - 'core/app/models/account.rb'
-    - 'event/app/controllers/dm_event/registrations_controller.rb'
-

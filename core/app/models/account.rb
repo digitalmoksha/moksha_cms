@@ -111,9 +111,9 @@ class Account < ApplicationRecord
     return domain if domain
 
     if Account.count == 0
-      raise Account::NotSetup.new
+      raise Account::NotSetup
     else
-      raise Account::DomainNotFound.new("Invalid domain: #{host}")
+      raise Account::DomainNotFound, "Invalid domain: #{host}"
     end
   end
 

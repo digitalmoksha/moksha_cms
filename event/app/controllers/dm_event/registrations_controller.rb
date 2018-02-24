@@ -67,7 +67,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     redirect_to main_app.root_url and return if @registration.nil? || !@registration.accepted?
 
     if @workshop.require_account
-      raise Account::LoginRequired.new(I18n.t('core.login_required')) if current_user.nil?
+      raise Account::LoginRequired, I18n.t('core.login_required') if current_user.nil?
 
       if @registration.user_profile.user != current_user && !is_admin?
         flash[:alert] = I18n.t('core.resource_invalid')

@@ -69,7 +69,7 @@ class DmCms::PostsController < DmCms::ApplicationController
     @blog = CmsBlog.friendly.find(params[:cms_blog_id])
     redirect_to blog_root_path and return if @blog.nil?
 
-    raise Account::LoginRequired.new(I18n.t('cms.blog_login_required')) if !current_user && !@blog.is_public?
+    raise Account::LoginRequired, I18n.t('cms.blog_login_required') if !current_user && !@blog.is_public?
 
     authorize! :read, @blog
 
