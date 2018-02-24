@@ -34,4 +34,3 @@ END_OF_DESCRIPTION
   end
   Template.register_tag('snippet', Snippet)
 end
-

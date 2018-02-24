@@ -9,4 +9,3 @@ class PresenceDefaultLocaleValidator < ActiveModel::EachValidator
     end
   end
 end
-

@@ -43,4 +43,3 @@ class Course < ApplicationRecord
     send("title_#{Account.current.preferred_default_locale}")
   end
 end
-
