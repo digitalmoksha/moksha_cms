@@ -51,22 +51,6 @@ Naming/PredicateName:
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'core/app/models/dm_core/concerns/user.rb'
 
-# Offense count: 13
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, each, example
-RSpec/HookArgument:
-  Exclude:
-    - 'admin/spec/spec_helper.rb'
-    - 'cms/spec/spec_helper.rb'
-    - 'core/spec/models/user_spec.rb'
-    - 'core/spec/spec_helper.rb'
-    - 'core/spec/support/accounts.rb'
-    - 'core/spec/support/devise.rb'
-    - 'event/spec/spec_helper.rb'
-    - 'forum/spec/spec_helper.rb'
-    - 'lms/spec/spec_helper.rb'
-    - 'newsletter/spec/spec_helper.rb'
-
 # Offense count: 3
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: not_to, to_not

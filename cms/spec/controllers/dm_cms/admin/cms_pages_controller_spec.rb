@@ -107,7 +107,7 @@ describe DmCms::Admin::CmsPagesController do
   # end
   #
   # describe 'PATCH #update' do
-  #   before :each do
+  #   before do
   #     @document = create(:document)
   #   end
   #
@@ -152,7 +152,7 @@ describe DmCms::Admin::CmsPagesController do
   # end
   #
   # describe 'DELETE #destroy' do
-  #   before :each do
+  #   before do
   #     @document = create(:document)
   #   end
   #

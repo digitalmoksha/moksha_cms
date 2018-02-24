@@ -49,7 +49,7 @@ describe User do
   end
 
   describe "passwords" do
-    before :each do
+    before do
       @user = build(:user)
     end
 
@@ -84,7 +84,7 @@ describe User do
   end
 
   describe "password encryption" do
-    before :each do
+    before do
       @user = create(:user)
     end
 

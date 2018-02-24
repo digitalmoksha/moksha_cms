@@ -3,7 +3,7 @@ module AccountMacros
   # the created Account does not get cleared between runs
   #------------------------------------------------------------------------------
   def setup_account
-    before :each do
+    before do
       @request.host = 'test.example.com' if @request # domain must match the account being used
       account = FactoryBot.create(:account)
       Account.current_by_prefix(account.account_prefix)

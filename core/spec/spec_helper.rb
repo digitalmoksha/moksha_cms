@@ -38,7 +38,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  config.before :each do
+  config.before do
     Rails.cache.clear
   end
 
