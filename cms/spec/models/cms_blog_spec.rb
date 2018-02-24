@@ -65,7 +65,7 @@ describe CmsBlog do
       blog2 = create(:blog, slug: nil)
       blog2.update_attribute(:tag_list, 'one, three')
 
-      expect(CmsBlog.tag_list_all).to eq ['one', 'three', 'two']
+      expect(described_class.tag_list_all).to eq ['one', 'three', 'two']
     end
   end
 end

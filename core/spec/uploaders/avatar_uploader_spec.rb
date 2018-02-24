@@ -4,15 +4,15 @@ describe AvatarUploader do
   include CarrierWave::Test::Matchers
 
   let(:user) { double('user') }
-  let(:uploader) { AvatarUploader.new(user, :avatar) }
+  let(:uploader) { described_class.new(user, :avatar) }
 
   before do
-    AvatarUploader.enable_processing = true
+    described_class.enable_processing = true
     File.open("spec/support/test.png") { |f| uploader.store!(f) }
   end
 
   after do
-    AvatarUploader.enable_processing = false
+    described_class.enable_processing = false
     uploader.remove!
   end
 

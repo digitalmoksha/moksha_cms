@@ -51,18 +51,6 @@ Naming/PredicateName:
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'core/app/models/dm_core/concerns/user.rb'
 
-# Offense count: 17
-# Configuration parameters: SkipBlocks, EnforcedStyle.
-# SupportedStyles: described_class, explicit
-RSpec/DescribedClass:
-  Exclude:
-    - 'cms/spec/models/cms_blog_spec.rb'
-    - 'cms/spec/models/cms_page_spec.rb'
-    - 'cms/spec/models/cms_post_spec.rb'
-    - 'core/spec/models/account_spec.rb'
-    - 'core/spec/models/user_spec.rb'
-    - 'core/spec/uploaders/avatar_uploader_spec.rb'
-
 # Offense count: 2
 # Configuration parameters: CustomIncludeMethods.
 RSpec/EmptyExampleGroup:

@@ -66,7 +66,7 @@ describe CmsPost do
       post1.update_attribute(:tag_list, 'one, two')
       post2.update_attribute(:tag_list, 'one, three')
 
-      expect(CmsPost.tag_list_all).to eq ['one', 'three', 'two']
+      expect(described_class.tag_list_all).to eq ['one', 'three', 'two']
     end
   end
 end

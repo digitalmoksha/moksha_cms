@@ -6,13 +6,15 @@ describe User do
   #------------------------------------------------------------------------------
   it "creates a new instance given a valid attribute" do
     user = create(:user)
-    expect(user.class).to eq User
+
+    expect(user.class).to eq described_class
     expect(FactoryBot.build(:user)).to be_valid
   end
 
   #------------------------------------------------------------------------------
   it "requires an email address" do
     no_email_user = build(:user, email: "")
+
     expect(no_email_user).not_to be_valid
   end
 
@@ -35,12 +37,14 @@ describe User do
   #------------------------------------------------------------------------------
   it "rejects duplicate email addresses" do
     create(:user, email: 'dup@test.com')
+
     expect(build(:user, email: 'dup@test.com')).not_to be_valid
   end
 
   #------------------------------------------------------------------------------
   it "rejects email addresses identical up to case" do
     create(:user, email: 'dup@test.com'.upcase)
+
     expect(build(:user, email: 'dup@test.com'.upcase)).not_to be_valid
   end
 
@@ -74,6 +78,7 @@ describe User do
     #------------------------------------------------------------------------------
     it "rejects short passwords" do
       short = "a" * 7
+
       expect(build(:user, password: short, password_confirmation: short)).not_to be_valid
     end
   end
