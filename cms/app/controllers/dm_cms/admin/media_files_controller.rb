@@ -13,7 +13,7 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
                      @media_files.where(folder: '')
                    else
                      @media_files.tagged_with(@tag_filter)
-    end
+                   end
     @media_files = @media_files.paginate :page => params[:page], :per_page => 40
   end
 

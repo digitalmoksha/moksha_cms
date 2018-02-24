@@ -35,7 +35,7 @@ class DmCms::Admin::CmsContentitemsController < DmCms::Admin::AdminController
       redirect_to edit_admin_cms_contentitem_url(@cms_contentitem), notice: 'Content updated'
     else
       render :action => :edit, alert: 'An error of some kind occurred'
-     end
+    end
   end
 
   #------------------------------------------------------------------------------

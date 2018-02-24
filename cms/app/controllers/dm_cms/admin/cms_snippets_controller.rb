@@ -36,7 +36,7 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
       redirect_to admin_cms_snippets_url, notice: 'Content updated'
     else
       render :action => :edit, alert: 'An error of some kind occurred'
-     end
+    end
   end
 
   #------------------------------------------------------------------------------

@@ -14,25 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleAlignWith, AutoCorrect.
-# SupportedStylesAlignWith: keyword, variable, start_of_line
-Lint/EndAlignment:
-  Exclude:
-    - 'cms/app/controllers/dm_cms/admin/cms_contentitems_controller.rb'
-    - 'cms/app/controllers/dm_cms/admin/cms_pages_controller.rb'
-    - 'cms/app/controllers/dm_cms/admin/cms_snippets_controller.rb'
-    - 'cms/app/controllers/dm_cms/admin/media_files_controller.rb'
-    - 'cms/app/helpers/dm_cms/pages_helper.rb'
-    - 'core/app/inputs/code_editor_input.rb'
-    - 'core/app/mailers/dm_core/site_mailer.rb'
-
-# Offense count: 1
-# Lint/ParenthesesAsGroupedExpression:
-#   Exclude:
-#     - 'event/spec/models/workshop_price_spec.rb'
-
 # Offense count: 18
 # Cop supports --auto-correct.
 Lint/StringConversionInInterpolation:

@@ -80,7 +80,7 @@ module DmCms::PagesHelper
                                  menu_from_pages_bs4(children, options)
                                else
                                  menu_from_pages(children, options)
-    end
+                               end
     return menu_str.html_safe
   end
 

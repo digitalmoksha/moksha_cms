@@ -47,7 +47,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     else
       @cms_page = @current_page
       render :action => :edit
-     end
+    end
   end
 
   #------------------------------------------------------------------------------

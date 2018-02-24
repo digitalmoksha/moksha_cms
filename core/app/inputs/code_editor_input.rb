@@ -12,7 +12,7 @@ class CodeEditorInput < SimpleForm::Inputs::TextInput
                     :htmlmixed
                   else
                     :markdown
-    end
+                  end
 
     input_html_options['codemirror-editor']   = ""
     input_html_options['data-mode']           = editor_mode
