@@ -7,7 +7,7 @@ class Address < ApplicationRecord
   biggs :postal_address,
           :recipient => :name,
           :country => :country_code,
-          :street => Proc.new { |address| "#{address.line1} #{address.line2}" }
+          :street => proc { |address| "#{address.line1} #{address.line2}" }
 
   #------------------------------------------------------------------------------
   def to_s(name_to_use = '')

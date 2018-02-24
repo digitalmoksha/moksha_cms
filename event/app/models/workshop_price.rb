@@ -31,11 +31,11 @@ class WorkshopPrice < ApplicationRecord
 
   validates               :price_description, presence_default_locale: true
   validates               :payment_details, liquid: { locales: true }
-  validates_presence_of   :price_currency,      if: Proc.new { |w| w.price_cents }
-  validates_presence_of   :alt1_price_currency, if: Proc.new { |w| w.alt1_price_cents }
-  validates_presence_of   :alt2_price_currency, if: Proc.new { |w| w.alt2_price_cents }
-  validates_presence_of   :recurring_period,    if: Proc.new { |w| w.recurring_number }
-  validates_presence_of   :recurring_number,    if: Proc.new { |w| w.recurring_period }
+  validates_presence_of   :price_currency,      if: proc { |w| w.price_cents }
+  validates_presence_of   :alt1_price_currency, if: proc { |w| w.alt1_price_cents }
+  validates_presence_of   :alt2_price_currency, if: proc { |w| w.alt2_price_cents }
+  validates_presence_of   :recurring_period,    if: proc { |w| w.recurring_number }
+  validates_presence_of   :recurring_number,    if: proc { |w| w.recurring_period }
   I18n.available_locales.each do |locale|
     validates_length_of :"price_description_#{locale}", maximum: 255
   end

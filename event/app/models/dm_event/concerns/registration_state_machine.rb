@@ -14,7 +14,7 @@ module DmEvent
 
         #--- define how the state machine works
         aasm do
-          state :open,                :initial => true, :after_enter => Proc.new { |o| o.start! }
+          state :open,                :initial => true, :after_enter => proc { |o| o.start! }
           state :pending,             :after_enter => :state_pending
           state :reviewing,           :after_enter => :state_reviewing
           state :accepted,            :after_enter => :state_acceptance
@@ -27,8 +27,8 @@ module DmEvent
 
           #------------------------------------------------------------------------------
           event :start do
-            transitions :from => :open,       :to => :waitlisted, :guard => Proc.new { |o| o.workshop.waitlisting? }
-            transitions :from => :open,       :to => :pending,    :guard => Proc.new { |o| o.workshop.require_review? }
+            transitions :from => :open,       :to => :waitlisted, :guard => proc { |o| o.workshop.waitlisting? }
+            transitions :from => :open,       :to => :pending,    :guard => proc { |o| o.workshop.require_review? }
             transitions :from => :open,       :to => :accepted
           end
 

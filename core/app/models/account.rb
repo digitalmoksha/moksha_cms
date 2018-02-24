@@ -19,18 +19,18 @@ class Account < ApplicationRecord
   # stores the current base site url for this request. useful to mailers where request object not available
   attr_accessor           :url_host, :url_protocol
 
-  validates_presence_of   :domain,                                      :if => Proc.new { |p| p.general_validation }
-  validates_presence_of   :account_prefix,                              :if => Proc.new { |p| p.general_validation }
-  validates_presence_of   :preferred_default_locale,                    :if => Proc.new { |p| p.general_validation }
-  validates_presence_of   :preferred_locales,                           :if => Proc.new { |p| p.general_validation }
-  validates_presence_of   :preferred_smtp_address,                      :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_smtp_port,                         :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_smtp_user_name,                    :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_smtp_from_email,                   :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_webmaster_email,                   :if => Proc.new { |p| p.email_validation }
-  validates_presence_of   :preferred_site_title,       :maximum => 255, :if => Proc.new { |p| p.metadata_validation }
-  validates_length_of     :preferred_site_description, :maximum => 255, :if => Proc.new { |p| p.metadata_validation }
-  validates_length_of     :preferred_site_keywords,    :maximum => 255, :if => Proc.new { |p| p.metadata_validation }
+  validates_presence_of   :domain,                                      :if => proc { |p| p.general_validation }
+  validates_presence_of   :account_prefix,                              :if => proc { |p| p.general_validation }
+  validates_presence_of   :preferred_default_locale,                    :if => proc { |p| p.general_validation }
+  validates_presence_of   :preferred_locales,                           :if => proc { |p| p.general_validation }
+  validates_presence_of   :preferred_smtp_address,                      :if => proc { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_port,                         :if => proc { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_user_name,                    :if => proc { |p| p.email_validation }
+  validates_presence_of   :preferred_smtp_from_email,                   :if => proc { |p| p.email_validation }
+  validates_presence_of   :preferred_webmaster_email,                   :if => proc { |p| p.email_validation }
+  validates_presence_of   :preferred_site_title,       :maximum => 255, :if => proc { |p| p.metadata_validation }
+  validates_length_of     :preferred_site_description, :maximum => 255, :if => proc { |p| p.metadata_validation }
+  validates_length_of     :preferred_site_keywords,    :maximum => 255, :if => proc { |p| p.metadata_validation }
 
   after_create            :create_default_roles
 

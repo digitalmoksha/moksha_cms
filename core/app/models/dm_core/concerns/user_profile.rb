@@ -17,17 +17,17 @@ module DmCore
 
         #--- don't validate public_name if we're only updating the address
         #    (like with userless registration)
-        validates_presence_of   :public_name,        :if => Proc.new { |p| !p.userless_registration }
-        validates_uniqueness_of :public_name,        :case_sensitive => false, :if => Proc.new { |p| !p.userless_registration }
+        validates_presence_of   :public_name,        :if => proc { |p| !p.userless_registration }
+        validates_uniqueness_of :public_name,        :case_sensitive => false, :if => proc { |p| !p.userless_registration }
 
         #--- validates used for a registration that is not associated with a student account
         validates_presence_of   :first_name,        :if => :require_name?
         validates_presence_of   :last_name,         :if => :require_name?
         validates_presence_of   :country_id,        :if => :require_country?
-        validates_presence_of   :email,             :if => Proc.new { |p| p.address_required }
-        validates_presence_of   :address,           :if => Proc.new { |p| p.address_required }
-        validates_presence_of   :city,              :if => Proc.new { |p| p.address_required }
-        validates_presence_of   :zipcode,           :if => Proc.new { |p| p.address_required }
+        validates_presence_of   :email,             :if => proc { |p| p.address_required }
+        validates_presence_of   :address,           :if => proc { |p| p.address_required }
+        validates_presence_of   :city,              :if => proc { |p| p.address_required }
+        validates_presence_of   :zipcode,           :if => proc { |p| p.address_required }
 
         validates_length_of     :address,           :maximum => 70
         validates_length_of     :address2,          :maximum => 70
