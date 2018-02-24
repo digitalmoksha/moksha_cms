@@ -16,7 +16,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
   #------------------------------------------------------------------------------
   def new
-    redirect_to main_app.root_url and return if @workshop.nil?
+    redirect_to(main_app.root_url) && return if @workshop.nil?
 
     if !@workshop.registration_closed? || authorize!(:manage_events, @workshop) # is_admin?
       @registration               = @workshop.registrations.build
@@ -37,7 +37,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
   #------------------------------------------------------------------------------
   def create
-    redirect_to(action: :new) and return if @workshop.require_account && current_user.nil?
+    redirect_to(action: :new) && return if @workshop.require_account && current_user.nil?
 
     profile_params = params[:registration].delete("user_profile_attributes") if params[:registration]
     profile_params&.delete(:id)
@@ -64,18 +64,18 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     @registration = Registration.find_by_uuid(params[:uuid])
     @workshop     = @registration.workshop if @registration
     flash[:alert] = I18n.t('core.resource_invalid')
-    redirect_to main_app.root_url and return if @registration.nil? || !@registration.accepted?
+    redirect_to(main_app.root_url) && return if @registration.nil? || !@registration.accepted?
 
     if @workshop.require_account
       raise Account::LoginRequired, I18n.t('core.login_required') if current_user.nil?
 
       if @registration.user_profile.user != current_user && !is_admin?
         flash[:alert] = I18n.t('core.resource_invalid')
-        redirect_to main_app.root_url and return
+        redirect_to(main_app.root_url) && return
       end
     end
 
-    render :payment_complete and return if @registration.balance_owed.zero?
+    render(:payment_complete) && return if @registration.balance_owed.zero?
   end
 
   # Success page for a registration.  Look up the uuid and display success.
@@ -87,7 +87,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
     if @registration.nil? || @registration.user_profile.user != current_user
       #--- not logged in or not the users registration (for )
       flash[:alert] = I18n.t('core.resource_invalid')
-      redirect_to main_app.root_url and return
+      redirect_to(main_app.root_url) && return
     end
     @workshop         = @registration.workshop if @registration
     @receipt_content  = @registration.email_state_notification(@registration.current_state, false) || ""
