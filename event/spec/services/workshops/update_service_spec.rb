@@ -11,7 +11,7 @@ describe DmEvent::Workshops::UpdateService, type: :service do
 
     def update_workshop(opts)
       additional = opts.delete(:additional_configuration)
-      result = DmEvent::Workshops::UpdateService.new(workshop, opts, {additional_configuration: additional}).call
+      result = DmEvent::Workshops::UpdateService.new(workshop, opts, { additional_configuration: additional }).call
       workshop.reload
       return result
     end

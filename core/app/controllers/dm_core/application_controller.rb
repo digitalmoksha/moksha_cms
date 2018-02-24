@@ -99,7 +99,7 @@ class DmCore::ApplicationController < ActionController::Base
     if Rails.env.production? && current_account.ssl_enabled?
       if request.ssl? && !use_ssl? || !request.ssl? && use_ssl?
         protocol = request.ssl? ? "http" : "https"
-        redirect_to({protocol: "#{protocol}://"}.merge(params), :flash => flash)
+        redirect_to({ protocol: "#{protocol}://" }.merge(params), :flash => flash)
       end
     end
   end

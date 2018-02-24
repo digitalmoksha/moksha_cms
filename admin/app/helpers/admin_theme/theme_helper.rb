@@ -91,14 +91,14 @@ module AdminTheme
     #     </ul>
 
     #------------------------------------------------------------------------------
-    def stat_block_small(options = {label: 'User Registrations', number: '1,245', url: '#', color_type: :success, icon: 'fa fa-user', percent: 80})
+    def stat_block_small(options = { label: 'User Registrations', number: '1,245', url: '#', color_type: :success, icon: 'fa fa-user', percent: 80 })
       info = content_tag :div, class: 'statistics-info' do
         concat(link_to icons(options[:icon]), options[:url], title: options[:label], class: "badge badge-#{options[:color_type].to_s}")
         concat(content_tag :strong, options[:number])
       end
       progress_bar = content_tag(:div, class: 'progress progress-micro') do
         content_tag(:div, class: "progress-bar progress-bar-#{options[:color_type].to_s}", role: 'progressbar',
-                          aria: {valuenow: options[:percent], valuemin: '0', valuemax: '100'}, style: "width: #{options[:percent]}%") do
+                          aria: { valuenow: options[:percent], valuemin: '0', valuemax: '100' }, style: "width: #{options[:percent]}%") do
           content_tag(:span, "#{options[:percent]}% Complete", class: 'sr-only')
         end
       end
@@ -116,7 +116,7 @@ module AdminTheme
     #     </li>
     #   </ul>
     #------------------------------------------------------------------------------
-    def stat_with_graph(options = {title: 'Page Visits', number: '21,252', color_type: :success, data_list: '12, 30, 8, 5, 10'})
+    def stat_with_graph(options = { title: 'Page Visits', number: '21,252', color_type: :success, data_list: '12, 30, 8, 5, 10' })
       title_section = content_tag :div, class: 'page-stats-showcase' do
         content_tag(:span, options[:title]) +
           content_tag(:h2, options[:number])
@@ -137,7 +137,7 @@ module AdminTheme
                           value: options[:value].to_s,
                           color: (options[:color] || 'info'),
                           percentage: options[:percentage].to_i,
-                          bottom_label: options[:bottom_label]})
+                          bottom_label: options[:bottom_label] })
     end
   end
 end

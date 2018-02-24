@@ -149,22 +149,22 @@ class Registration < ApplicationRecord
     column_definitions <<     ["State",             "item.state.capitalize"]
     column_definitions <<     ["Zipcode",           "item.zipcode"]
     column_definitions <<     ["Country",           "item.country.code"]
-    column_definitions <<     ['Registered on',     'item.created_at.to_date', 75, {type: 'DateTime', numberformat: 'd mmm, yyyy'}]
-    column_definitions <<     ["Price",             "item.workshop_price.price.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
+    column_definitions <<     ['Registered on',     'item.created_at.to_date', 75, { type: 'DateTime', numberformat: 'd mmm, yyyy' }]
+    column_definitions <<     ["Price",             "item.workshop_price.price.to_f", nil, { type: 'Number', numberformat: '#,##0.00' }]
     column_definitions <<     ["Price Description", "item.workshop_price.price_description"]
     column_definitions <<     ["Price Sub Descr",   "item.workshop_price.sub_description"]
-    column_definitions <<     ["Discount",          "item.discount.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
-    column_definitions <<     ["Paid",              "item.amount_paid.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
-    column_definitions <<     ["Balance",           "item.balance_owed.to_f", nil, {type: 'Number', numberformat: '#,##0.00'}]
+    column_definitions <<     ["Discount",          "item.discount.to_f", nil, { type: 'Number', numberformat: '#,##0.00' }]
+    column_definitions <<     ["Paid",              "item.amount_paid.to_f", nil, { type: 'Number', numberformat: '#,##0.00' }]
+    column_definitions <<     ["Balance",           "item.balance_owed.to_f", nil, { type: 'Number', numberformat: '#,##0.00' }]
 
     # ---- add the extra fields defined in the workshop record
     workshop.custom_field_defs.each_with_index do |x, index|
       case x.field_type
       when 'check_box_collection'
-        column_definitions << ["#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, {type: 'list', custom_field: true}]
+        column_definitions << ["#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, { type: 'list', custom_field: true }]
       when 'divider'
       else
-        column_definitions << ["#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, {custom_field: true}]
+        column_definitions << ["#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, { custom_field: true }]
       end
     end
     return column_definitions

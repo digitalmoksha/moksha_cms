@@ -24,7 +24,7 @@ module DmEvent
         # sample data:
         #  {"workshop_price_id"=>"72", "custom_fields_attributes"=>{"0"=>{"field_data"=>"234", "custom_field_def_id"=>"8"},
         #    "1"=>{"field_data"=>["eee", ""], "custom_field_def_id"=>"16"}}}
-        params.require(:registration).permit(:workshop_price_id, custom_fields_attributes: [:field_data, {:field_data => []}, :custom_field_def_id])
+        params.require(:registration).permit(:workshop_price_id, custom_fields_attributes: [:field_data, { :field_data => [] }, :custom_field_def_id])
       end
     end
 

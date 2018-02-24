@@ -39,7 +39,7 @@ class MediaFile < ApplicationRecord
   # Given a name in the form 'folder/filename.ext', grab the url with the correct version
   # Use 'version: :original' to allow the original version to be pulled
   #------------------------------------------------------------------------------
-  def self.url_by_name(name, options = {version: :original})
+  def self.url_by_name(name, options = { version: :original })
     if name && (asset = MediaFile.find_by_name(name))
       options[:version] == :original ? asset.media.url : asset.media.url(options[:version])
     else
@@ -50,7 +50,7 @@ class MediaFile < ApplicationRecord
   # Given a name in the form 'folder/filename.ext', check if the version exists.
   # Use 'version: :original' to allow the original version to be pulled
   #------------------------------------------------------------------------------
-  def self.version_exists?(name, options = {version: :original})
+  def self.version_exists?(name, options = { version: :original })
     asset = MediaFile.find_by_name(name)
     if asset
       options[:version] == :original ? true : asset.media.version_exists?(options[:version])

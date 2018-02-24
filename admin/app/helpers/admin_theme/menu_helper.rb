@@ -8,7 +8,7 @@ module AdminTheme
           menu << content_tag(:li, link_to(menu_text(item), item[:link], item[:link_options]))
         else
           menu << content_tag(:li, class: 'dropdown') do
-            link    = link_to (menu_text(item) + ' ' + icons(:caret_down)), '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'}
+            link    = link_to (menu_text(item) + ' ' + icons(:caret_down)), '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' }
             sub_ul  = ''.html_safe
             item[:children].each { |child| sub_ul << content_tag(:li, link_to(menu_text(child), child[:link], child[:link_options])) }
             link + content_tag(:ul, sub_ul, class: 'dropdown-menu dropdown-menu-right')

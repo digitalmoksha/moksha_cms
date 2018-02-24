@@ -28,7 +28,7 @@ module DmCms::PagesHelper
   def snippet(slug)
     cms_snippet = CmsSnippet.find_by_slug(slug)
     if cms_snippet
-      render :partial => 'dm_cms/pages/snippet_fragment', locals: {snippet_fragment: cms_snippet}
+      render :partial => 'dm_cms/pages/snippet_fragment', locals: { snippet_fragment: cms_snippet }
     else
       render text: 'Snippet not found'
     end
@@ -127,7 +127,7 @@ module DmCms::PagesHelper
         active_found          ||= !active.nil?
         if !submenu.blank?
           menu_str += content_tag(:li, class: ['dropdown', active].css_join(' ')) do
-            page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'dropdown-toggle', data: {toggle: 'dropdown'}) +
+            page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'dropdown-toggle', data: { toggle: 'dropdown' }) +
               submenu.html_safe
           end
         else
@@ -156,7 +156,7 @@ module DmCms::PagesHelper
         active_found          ||= !active.nil?
         if !submenu.blank?
           menu_str += content_tag(:li, class: ['nav-item', 'dropdown', active].css_join(' ')) do
-            page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'nav-link dropdown-toggle', data: {toggle: 'dropdown'}) +
+            page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' }) +
               submenu.html_safe
           end
         else

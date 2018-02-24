@@ -92,15 +92,15 @@ class WorkshopPrice < ApplicationRecord
     if recurring_payments?
       (0...recurring_number).each do |period|
         xdays = period * recurring_period
-        schedule << {due_on: (from_date ? from_date.to_date + xdays.days : xdays),
-                     period_payment: payment_price,
-                     total_due: (period + 1) * payment_price}
+        schedule << { due_on: (from_date ? from_date.to_date + xdays.days : xdays),
+                      period_payment: payment_price,
+                      total_due: (period + 1) * payment_price }
       end
       # adjust the last entry
       schedule.last[:total_due] = price
       schedule.last[:period_payment] = price - (recurring_number - 1) * payment_price
     else
-      schedule << {due_on: (from_date ? from_date.to_date : 0), period_payment: payment_price, total_due: payment_price}
+      schedule << { due_on: (from_date ? from_date.to_date : 0), period_payment: payment_price, total_due: payment_price }
     end
     schedule
   end

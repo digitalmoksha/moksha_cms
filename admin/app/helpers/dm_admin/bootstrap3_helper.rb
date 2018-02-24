@@ -97,11 +97,11 @@ module DmAdmin::Bootstrap3Helper
   # Format flash messages for admin theme
   #------------------------------------------------------------------------------
   def flash_admin
-    flash_class = {:notice => 'alert-success', :error => 'alert-danger', :alert => 'alert-warning', :warning => 'alert-warning', :info => 'alert-info'}
+    flash_class = { :notice => 'alert-success', :error => 'alert-danger', :alert => 'alert-warning', :warning => 'alert-warning', :info => 'alert-info' }
     msgs = [:notice, :error, :alert, :warning, :info].collect do |type|
       if flash[type]
         content_tag 'div', class: "alert alert-dismissable #{flash_class[type]}" do
-          content_tag(:button, 'x', class: 'close', data: {dismiss: 'alert'}) + flash[type]
+          content_tag(:button, 'x', class: 'close', data: { dismiss: 'alert' }) + flash[type]
         end
       end
     end
@@ -123,7 +123,7 @@ module DmAdmin::Bootstrap3Helper
     content_tag :div, class: 'form-action text-right' do
       #--- check if we want a delete button
       if options[:delete_url]
-        concat(link_to options[:delete], options[:delete_url], method: :delete, class: 'btn btn-sm btn-danger pull-left', data: {confirm: options[:delete_confirm]})
+        concat(link_to options[:delete], options[:delete_url], method: :delete, class: 'btn btn-sm btn-danger pull-left', data: { confirm: options[:delete_confirm] })
       end
       #--- check if we want a cancel button
       if options[:cancel] != false
@@ -133,7 +133,7 @@ module DmAdmin::Bootstrap3Helper
         elsif options[:cancel_url] == 'close-modal'
           concat(link_to options[:cancel], '#', class: 'btn btn-sm btn-default', data: { dismiss: 'modal' } )
         else
-          concat(link_to options[:cancel], options[:cancel_url], {class: 'btn btn-sm btn-default'} )
+          concat(link_to options[:cancel], options[:cancel_url], { class: 'btn btn-sm btn-default' } )
         end
         concat(content_tag :span, '&nbsp;&nbsp;&nbsp;&nbsp;'.html_safe, class: 'submit_or')
       end

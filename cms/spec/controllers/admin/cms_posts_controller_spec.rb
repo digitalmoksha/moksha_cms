@@ -14,12 +14,12 @@ describe DmCms::Admin::CmsPostsController do
 
     #------------------------------------------------------------------------------
     it "assigns a new Post to @post" do
-      get :new, params: {cms_blog_id: blog, locale: :en}
+      get :new, params: { cms_blog_id: blog, locale: :en }
       expect(assigns(:post)).to be_a_new(CmsPost)
     end
     #------------------------------------------------------------------------------
     it "renders the :new template" do
-      get :new, params: {cms_blog_id: blog, locale: :en}
+      get :new, params: { cms_blog_id: blog, locale: :en }
       expect(response).to render_template :new
     end
   end
@@ -30,13 +30,13 @@ describe DmCms::Admin::CmsPostsController do
 
     #------------------------------------------------------------------------------
     it "assigns the requested post to @post" do
-      get :edit, params: {cms_blog_id: blog, id: post, locale: :en}
+      get :edit, params: { cms_blog_id: blog, id: post, locale: :en }
       expect(assigns(:post)).to eq post
     end
 
     #------------------------------------------------------------------------------
     it "renders the :edit template" do
-      get :edit, params: {cms_blog_id: blog, id: post, locale: :en}
+      get :edit, params: { cms_blog_id: blog, id: post, locale: :en }
       expect(response).to render_template :edit
     end
 
@@ -45,9 +45,9 @@ describe DmCms::Admin::CmsPostsController do
       blog2 = create(:news_blog)
       post2 = blog2.posts.create(attributes_for(:post))
 
-      get :edit, params: {cms_blog_id: blog, id: post, locale: :en}
+      get :edit, params: { cms_blog_id: blog, id: post, locale: :en }
       expect(assigns(:post)).to eq post
-      get :edit, params: {cms_blog_id: blog2, id: post2, locale: :en}
+      get :edit, params: { cms_blog_id: blog2, id: post2, locale: :en }
       expect(assigns(:post)).to eq post2
     end
   end
@@ -59,13 +59,13 @@ describe DmCms::Admin::CmsPostsController do
       #------------------------------------------------------------------------------
       it "saves the new post in the database" do
         expect {
-          post :create, params: {cms_blog_id: blog, cms_post: attributes_for(:post), locale: :en}
+          post :create, params: { cms_blog_id: blog, cms_post: attributes_for(:post), locale: :en }
         }.to change(blog.posts, :count).by(1)
       end
 
       #------------------------------------------------------------------------------
       it "redirects to blog#show" do
-        post :create, params: {cms_blog_id: blog, cms_post: attributes_for(:post), locale: :en}
+        post :create, params: { cms_blog_id: blog, cms_post: attributes_for(:post), locale: :en }
         expect(response).to redirect_to admin_cms_blog_url(assigns[:blog])
       end
     end
@@ -74,13 +74,13 @@ describe DmCms::Admin::CmsPostsController do
       #------------------------------------------------------------------------------
       it "does not save the new post in the database" do
         expect {
-          post :create, params: {cms_blog_id: blog, cms_post: attributes_for(:invalid_post), locale: :en}
+          post :create, params: { cms_blog_id: blog, cms_post: attributes_for(:invalid_post), locale: :en }
         }.to_not change(blog.posts, :count)
       end
 
       #------------------------------------------------------------------------------
       it "re-renders the :new template" do
-        post :create, params: {cms_blog_id: blog, cms_post: attributes_for(:invalid_post), locale: :en}
+        post :create, params: { cms_blog_id: blog, cms_post: attributes_for(:invalid_post), locale: :en }
         expect(response).to render_template :new
       end
     end
@@ -96,15 +96,15 @@ describe DmCms::Admin::CmsPostsController do
         blog2 = create(:news_blog)
         post2 = blog2.posts.create(attributes_for(:post))
 
-        patch :update, params: {cms_blog_id: blog, id: post, cms_post: attributes_for(:post), locale: :en}
+        patch :update, params: { cms_blog_id: blog, id: post, cms_post: attributes_for(:post), locale: :en }
         expect(assigns(:post)).to eq post
-        patch :update, params: {cms_blog_id: blog2, id: post2, cms_post: attributes_for(:post), locale: :en}
+        patch :update, params: { cms_blog_id: blog2, id: post2, cms_post: attributes_for(:post), locale: :en }
         expect(assigns(:post)).to eq post2
       end
 
       #------------------------------------------------------------------------------
       it "updates the post in the database" do
-        patch :update, params: {cms_blog_id: blog, id: post, cms_post: attributes_for(:post, title: 'Updated title', content: 'Updated content'), locale: :en}
+        patch :update, params: { cms_blog_id: blog, id: post, cms_post: attributes_for(:post, title: 'Updated title', content: 'Updated content'), locale: :en }
         post.reload
         expect(post.title).to eq('Updated title')
         expect(post.content).to eq('Updated content')
@@ -112,7 +112,7 @@ describe DmCms::Admin::CmsPostsController do
 
       #------------------------------------------------------------------------------
       it "redirects to the blog" do
-        patch :update, params: {cms_blog_id: blog, id: post, cms_post: attributes_for(:post), locale: :en}
+        patch :update, params: { cms_blog_id: blog, id: post, cms_post: attributes_for(:post), locale: :en }
         expect(response).to redirect_to edit_admin_cms_blog_cms_post_url(blog)
       end
     end
@@ -120,7 +120,7 @@ describe DmCms::Admin::CmsPostsController do
     context "with invalid attributes" do
       #------------------------------------------------------------------------------
       it "does not update the post" do
-        patch :update, params: {cms_blog_id: blog, id: post, cms_post: attributes_for(:post, title: 'Updated title', content: nil), locale: :en}
+        patch :update, params: { cms_blog_id: blog, id: post, cms_post: attributes_for(:post, title: 'Updated title', content: nil), locale: :en }
         post.reload
         expect(post.title).to eq(attributes_for(:post)[:title])
         expect(post.content).to eq(attributes_for(:post)[:content])
@@ -128,7 +128,7 @@ describe DmCms::Admin::CmsPostsController do
 
       #------------------------------------------------------------------------------
       it "re-renders the #edit template" do
-        patch :update, params: {cms_blog_id: blog, id: post, cms_post: attributes_for(:post, title: 'Updated title', content: nil), locale: :en}
+        patch :update, params: { cms_blog_id: blog, id: post, cms_post: attributes_for(:post, title: 'Updated title', content: nil), locale: :en }
         expect(response).to render_template :edit
       end
     end
@@ -141,12 +141,12 @@ describe DmCms::Admin::CmsPostsController do
     #------------------------------------------------------------------------------
     it "deletes the post from the blog" do
       post # make sure post is created before the expect
-      expect { delete :destroy, params: {cms_blog_id: blog, id: post, locale: :en} }.to change(blog.posts, :count).by(-1)
+      expect { delete :destroy, params: { cms_blog_id: blog, id: post, locale: :en } }.to change(blog.posts, :count).by(-1)
     end
 
     #------------------------------------------------------------------------------
     it "redirects to cms_blogs#index" do
-      delete :destroy, params: {cms_blog_id: blog, id: post, locale: :en}
+      delete :destroy, params: { cms_blog_id: blog, id: post, locale: :en }
       expect(response).to redirect_to admin_cms_blog_url(blog)
     end
   end

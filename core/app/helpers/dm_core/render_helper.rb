@@ -15,14 +15,14 @@ module DmCore
 
     # Wrapper to pull the list of countries from our table
     #------------------------------------------------------------------------------
-    def ut_country_select(object, method, options = {include_blank: true}, html_options = {})
+    def ut_country_select(object, method, options = { include_blank: true }, html_options = {})
       collection = ut_country_select_collection(include_blank: false, as: options[:as])
       select(object, method, collection, options, html_options)
     end
 
     # Wrapper to pull the list of countries from our table
     #------------------------------------------------------------------------------
-    def ut_country_select_tag(name, selected = nil, options = {include_blank: true}, html_options = {})
+    def ut_country_select_tag(name, selected = nil, options = { include_blank: true }, html_options = {})
       collection = ut_country_select_collection(options)
       select_tag(name, options_for_select(collection, selected), html_options)
     end
@@ -33,8 +33,8 @@ module DmCore
     # as: :name    return the country's english name
     # (old interface passed in only a true or false to indicate include_blank)
     #------------------------------------------------------------------------------
-    def ut_country_select_collection(options = {include_blank: true, as: :id})
-      options = {include_blank: options, as: :id} if !options.is_a?(Hash)
+    def ut_country_select_collection(options = { include_blank: true, as: :id })
+      options = { include_blank: options, as: :id } if !options.is_a?(Hash)
 
       collection = (options[:include_blank] ? [[" ", ""]] : [])
       case options[:as]
@@ -52,11 +52,11 @@ module DmCore
     # an id of 'state_select_container' to a drop down with the proper states
     # for that country.
     #------------------------------------------------------------------------------
-    def ut_country_select_with_states(object, method, method_state, options = {include_blank: true}, html_options = {})
+    def ut_country_select_with_states(object, method, method_state, options = { include_blank: true }, html_options = {})
       collection = ut_country_select_collection(include_blank: false, as: options[:as])
       state_object_method = "#{object.to_s}[#{method_state.to_s}]"
       html_options[:id] ||= 'country_select'
-      html_options.merge!({data: {progressid: "indicator_country", objectname: state_object_method}})
+      html_options.merge!({ data: { progressid: "indicator_country", objectname: state_object_method } })
 
       select(object, method, collection, options, html_options)
     end
@@ -73,7 +73,7 @@ module DmCore
       else
         selected_country = ::StateCountryConstants::COUNTRIES_WITH_STATES.find { |x| x[:id] == country_id }
         if selected_country
-          select_tag(object_method, state_options_for_select(selected_state, selected_country[:code]), {include_blank: true}).html_safe
+          select_tag(object_method, state_options_for_select(selected_state, selected_country[:code]), { include_blank: true }).html_safe
         else
           text_field_tag(object_method, selected_state)
         end
@@ -81,14 +81,14 @@ module DmCore
     end
 
     #------------------------------------------------------------------------------
-    def pagination(collection, options = {version: :original})
+    def pagination(collection, options = { version: :original })
       if collection.total_entries > 1
         if options[:version] == :original
           content_tag(:div, class: 'pagination') do
-            will_paginate(collection, {inner_window: 8, next_label: I18n.t('core.next_page').html_safe, previous_label: I18n.t('core.prev_page').html_safe}.merge(options))
+            will_paginate(collection, { inner_window: 8, next_label: I18n.t('core.next_page').html_safe, previous_label: I18n.t('core.prev_page').html_safe }.merge(options))
           end
         else
-          will_paginate(collection, {inner_window: 8, next_label: I18n.t('core.next_page').html_safe, previous_label: I18n.t('core.prev_page').html_safe}.merge(options))
+          will_paginate(collection, { inner_window: 8, next_label: I18n.t('core.next_page').html_safe, previous_label: I18n.t('core.prev_page').html_safe }.merge(options))
         end
       end
     end

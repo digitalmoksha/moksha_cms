@@ -98,7 +98,7 @@ class RegistrationDatatable
        output << '<li>' +
          link_to(action.to_s.titlecase,
                  url_helpers.action_state_admin_registration_path(I18n.locale, registration, :state_event => action),
-                 {:remote => true, :method => :put}) +
+                 { :remote => true, :method => :put }) +
          '</li>'
      end
     return output.html_safe

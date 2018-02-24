@@ -31,7 +31,7 @@ class ForumTopic < ApplicationRecord
   belongs_to              :forum_site, :counter_cache => true
 
   #--- don't use acts_as_commentable since we're using a specialized ForumComment class
-  has_many                :forum_comments, {:as => :commentable, :dependent => :destroy}
+  has_many                :forum_comments, { :as => :commentable, :dependent => :destroy }
   has_one                 :recent_comment, -> { where(ancestry_depth: 1).order('created_at DESC') }, :as => :commentable, :class_name => "ForumComment"
 
   has_many                :voices, -> { distinct(true) }, :through => :forum_comments, :source => :user

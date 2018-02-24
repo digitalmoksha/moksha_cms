@@ -10,7 +10,7 @@ class Newsletter < ApplicationRecord
   before_create           :generate_token
 
   #------------------------------------------------------------------------------
-  def subscribe(user_or_email, options = {FNAME: '', LNAME: ''})
+  def subscribe(user_or_email, options = { FNAME: '', LNAME: '' })
   end
 
   #------------------------------------------------------------------------------

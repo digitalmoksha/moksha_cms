@@ -6,7 +6,7 @@ class MailchimpNewsletter < Newsletter
                         212 => 'Email_WasRemoved',
                         214 => 'List_AlreadySubscribed',
                         232 => 'Email_NotExists',
-                        234 => 'Email_TooManySignups'}.freeze
+                        234 => 'Email_TooManySignups' }.freeze
 
   validate        :validate_list_id
   after_create    :update_list_stats
@@ -29,7 +29,7 @@ class MailchimpNewsletter < Newsletter
   def validate_list_id
     unless self.mc_id.blank?
       api         = MailchimpNewsletter.api
-      list_info   = api.lists.list(filters: {list_id: self.mc_id, exact: true})
+      list_info   = api.lists.list(filters: { list_id: self.mc_id, exact: true })
       if !list_info['errors'].empty?
         errors[:mc_id] << (list_info['errors'][0]['error'])
       end
@@ -54,11 +54,11 @@ class MailchimpNewsletter < Newsletter
   # Setting the Accept-Language will cause MC to send the confirmation in the users
   # language if the list auto-translate is turned on
   #------------------------------------------------------------------------------
-  def subscribe(user_or_email, options = {FNAME: '', LNAME: ''})
+  def subscribe(user_or_email, options = { FNAME: '', LNAME: '' })
     return { success: false, code: 232 } if user_or_email.blank?
 
     api         = MailchimpNewsletter.api
-    headers     = {'Accept-Language' => I18n.locale.to_s}
+    headers     = { 'Accept-Language' => I18n.locale.to_s }
 
     # update data if user logged in. Don't for an unprotected subscribe. but honor value if passed in
     options.reverse_merge! update_existing: user_or_email.is_a?(User)
@@ -71,12 +71,12 @@ class MailchimpNewsletter < Newsletter
     merge_vars['GROUPINGS'] = [merge_vars['GROUPINGS']] if merge_vars['GROUPINGS'] && !merge_vars['GROUPINGS'].is_a?(Array)
 
     if user_or_email.is_a?(User)
-      email                 = {email: user_or_email.email}
+      email                 = { email: user_or_email.email }
       merge_vars[:FNAME]    = user_or_email.first_name
       merge_vars[:LNAME]    = user_or_email.last_name
       merge_vars[:COUNTRY]  = user_or_email.country.english_name if user_or_email.country
     else
-      email = {email: user_or_email}
+      email = { email: user_or_email }
     end
     merge_vars[:SPAMAPI]      = 1
     merge_vars[:MC_LANGUAGE]  = I18n.locale # set the language to the current locale they are using
@@ -95,7 +95,7 @@ class MailchimpNewsletter < Newsletter
     return false if email.blank?
 
     api = MailchimpNewsletter.api
-    api.lists.unsubscribe(id: self.mc_id, email: {email: email}, delete_member: false, send_goodbye: true, send_notify: true)
+    api.lists.unsubscribe(id: self.mc_id, email: { email: email }, delete_member: false, send_goodbye: true, send_notify: true)
     return true
   rescue Gibbon::MailChimpError => exception
     Rails.logger.info "=== Error Unsubscribing #{email} : #{exception.to_s}"
@@ -105,7 +105,7 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def update_list_stats
     api         = MailchimpNewsletter.api
-    list_info   = api.lists.list(filters: {list_id: self.mc_id, exact: true})
+    list_info   = api.lists.list(filters: { list_id: self.mc_id, exact: true })
 
     # update the newsletter
     if list_info['errors'].empty?
@@ -124,10 +124,10 @@ class MailchimpNewsletter < Newsletter
   # get a list of sent campaigns. Can specify :folder_id to get only those
   # in a specfic folder
   #------------------------------------------------------------------------------
-  def sent_campaign_list(options = {start: 0, limit: 100})
+  def sent_campaign_list(options = { start: 0, limit: 100 })
     api                 = MailchimpNewsletter.api
-    list_params         = {sort_field: 'send_time', sort_dir: 'DESC',
-                           filters: {list_id: self.mc_id}}
+    list_params         = { sort_field: 'send_time', sort_dir: 'DESC',
+                            filters: { list_id: self.mc_id } }
     list_params[:start] = options[:start] ? options[:start] : 0
     list_params[:limit] = options[:limit] ? options[:limit] : 100
     list_params[:filters][:folder_id] = options[:folder_id] if options[:folder_id]
@@ -138,7 +138,7 @@ class MailchimpNewsletter < Newsletter
   # Get simplified list of sent campaigns. Useful for showing archived
   # campaigns on the front end
   #------------------------------------------------------------------------------
-  def sent_campaign_list_simple(options = {start: 0, limit: 100})
+  def sent_campaign_list_simple(options = { start: 0, limit: 100 })
     list      = sent_campaign_list(options)
     campaigns = list['data'].map do |item|
       { subject: item['subject'], sent_on: item['send_time'].to_datetime, archive_url: item['archive_url'] }

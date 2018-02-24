@@ -6,7 +6,7 @@ class Workshop < ApplicationRecord
   belongs_to              :country, class_name: 'DmCore::Country'
   has_many                :registrations, dependent: :destroy
   has_many                :workshop_prices, dependent: :destroy
-  has_many                :system_emails,     {as: :emailable, dependent: :destroy}
+  has_many                :system_emails,     { as: :emailable, dependent: :destroy }
   has_one                 :pending_email,     -> { where("email_type LIKE 'pending'") },    class_name: 'SystemEmail', as: :emailable
   has_one                 :accepted_email,    -> { where("email_type LIKE 'accepted'") },   class_name: 'SystemEmail', as: :emailable
   has_one                 :rejected_email,    -> { where("email_type LIKE 'rejected'") },   class_name: 'SystemEmail', as: :emailable
@@ -124,14 +124,14 @@ class Workshop < ApplicationRecord
   #------------------------------------------------------------------------------
   def financial_details(level = :detail)
     #--- pick currency of first price
-    financials = {summary: { total_possible: Money.new(0, base_currency),          total_possible_worst: Money.new(0, base_currency),
-                             total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency),
-                             total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency),
-                             total_paid_percent: 0},
-                  collected: {},
-                  collected_monthly: {},
-                  payment_type: {},
-                  projected: {}}
+    financials = { summary: { total_possible: Money.new(0, base_currency), total_possible_worst: Money.new(0, base_currency),
+                              total_paid: Money.new(0, base_currency),              total_outstanding: Money.new(0, base_currency),
+                              total_outstanding_worst: Money.new(0, base_currency), total_discounts: Money.new(0, base_currency),
+                              total_paid_percent: 0 },
+                   collected: {},
+                   collected_monthly: {},
+                   payment_type: {},
+                   projected: {} }
 
     registrations.attending.includes(:workshop_price).each do |registration|
       if registration.workshop_price

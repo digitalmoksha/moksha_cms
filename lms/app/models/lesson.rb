@@ -41,12 +41,12 @@ class Lesson < ApplicationRecord
 
   # Find the next/previous objects, based on the row_order
   #------------------------------------------------------------------------------
-  def next(options = {published_only: true})
+  def next(options = { published_only: true })
     lessons = Lesson.next(self.row_order, self.course_id)
     (options[:published_only] ? lessons.published : lessons).first
   end
 
-  def previous(options = {published_only: true})
+  def previous(options = { published_only: true })
     lessons = Lesson.previous(self.row_order, self.course_id)
     (options[:published_only] ? lessons.published : lessons).last
   end

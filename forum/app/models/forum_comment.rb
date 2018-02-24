@@ -40,7 +40,7 @@ class ForumComment < Comment
     options[:joins]      ||= "inner join #{ForumTopic.table_name} on #{ForumComment.table_name}.topic_id = #{ForumTopic.table_name}.id " +
       "inner join #{Forum.table_name} as f on #{ForumTopic.table_name}.forum_id = f.id"
     options[:order]      ||= "#{ForumComment.table_name}.created_at DESC"
-    options[:count]      ||= {:select => "#{ForumComment.table_name}.id"}
+    options[:count]      ||= { :select => "#{ForumComment.table_name}.id" }
     paginate options
   end
 

@@ -14,7 +14,7 @@ class PaymentReminderService
         end
       end
     end
-    return {success: success, failed: failed}
+    return { success: success, failed: failed }
   end
 
   # send a single reminder email, regardless of status

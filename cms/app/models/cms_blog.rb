@@ -77,7 +77,7 @@ class CmsBlog < ApplicationRecord
   # Grab a list of the recent posts.  Can pull from all blogs or a specific
   # one.
   #------------------------------------------------------------------------------
-  def self.recent_posts(options = {user: nil, limit: 5, blog: nil})
+  def self.recent_posts(options = { user: nil, limit: 5, blog: nil })
     if options[:blog].nil? # get all available to user
       query_blogs = CmsBlog.available_to_user(options[:user]).map(&:id)
     else

@@ -101,7 +101,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     expire_fragment(%r{\A#{key_start}})
 
     respond_to do |format|
-      format.html { redirect_to({:action => :index}, :notice => 'Page Cache was cleared') }
+      format.html { redirect_to({ :action => :index }, :notice => 'Page Cache was cleared') }
       format.js { head :ok }
     end
   end
@@ -113,7 +113,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
     expire_fragment(%r{\S})
 
     respond_to do |format|
-      format.html { redirect_to({:action => :index}, :notice => 'Page Cache for all sites cleared') }
+      format.html { redirect_to({ :action => :index }, :notice => 'Page Cache for all sites cleared') }
       format.js { head :ok }
     end
   end

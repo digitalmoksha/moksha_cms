@@ -11,13 +11,13 @@ describe DmCms::PagesController do
   describe 'GET #show' do
     #------------------------------------------------------------------------------
     it 'renders the :show template' do
-      get :show, params: {slug: page.slug, locale: :en}
+      get :show, params: { slug: page.slug, locale: :en }
       expect(response).to render_template :show
     end
 
     #------------------------------------------------------------------------------
     it 'returns 404 is page is missing' do
-      get :show, params: {slug: 'im-missing', locale: :en}
+      get :show, params: { slug: 'im-missing', locale: :en }
       expect(response).to have_http_status(:missing)
     end
 
@@ -32,7 +32,7 @@ describe DmCms::PagesController do
     #------------------------------------------------------------------------------
     it 'redirects to an internal slug (pagelink)' do
       target = create(:page_internal_pagelink)
-      get :show, params: {slug: target.slug, locale: :en}
+      get :show, params: { slug: target.slug, locale: :en }
       # expect(response).to redirect_to showpage_url(slug: 'test-page', locale: :en)
       expect(response).to redirect_to 'http://test.example.com/en/test-page'
     end
@@ -40,14 +40,14 @@ describe DmCms::PagesController do
     #------------------------------------------------------------------------------
     it 'redirects to a relative page (controller/action)' do
       target = create(:page_internal_pagelink, link: 'some/test/path')
-      get :show, params: {slug: target.slug, locale: :en}
+      get :show, params: { slug: target.slug, locale: :en }
       expect(response).to redirect_to 'http://test.example.com/en/some/test/path'
     end
 
     #------------------------------------------------------------------------------
     it 'redirects to an external link (link)' do
       target = create(:page_external_link)
-      get :show, params: {slug: target.slug, locale: :en}
+      get :show, params: { slug: target.slug, locale: :en }
       expect(response).to redirect_to 'http://another.example.com/en/test-page'
     end
 
@@ -55,14 +55,14 @@ describe DmCms::PagesController do
     #------------------------------------------------------------------------------
     it 'redirects to an external link in a new window (link-new-window)' do
       target = create(:page_external_link_new_window)
-      get :show, params: {slug: target.slug, locale: :en}
+      get :show, params: { slug: target.slug, locale: :en }
       expect(response).to redirect_to 'http://another.example.com/en/test-page'
     end
 
     #------------------------------------------------------------------------------
     it 'renders a divider' do
       target = create(:page_divider)
-      get :show, params: {slug: target.slug, locale: :en}
+      get :show, params: { slug: target.slug, locale: :en }
       expect(response.body).to have_text 'Not a real page'
     end
   end
