@@ -14,19 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 18
-# Cop supports --auto-correct.
-Lint/StringConversionInInterpolation:
-  Exclude:
-    - 'admin/app/helpers/admin_theme/theme_helper.rb'
-    - 'admin/app/helpers/dm_admin/bootstrap3_helper.rb'
-    - 'core/app/helpers/dm_core/render_helper.rb'
-    - 'core/app/models/dm_core/language.rb'
-    - 'core/app/models/liquid_validator.rb'
-    - 'core/app/models/presence_default_locale_validator.rb'
-    - 'core/config/initializers/act_as_commentable.rb'
-    - 'newsletter/app/models/mailchimp_newsletter.rb'
-
 # Offense count: 1
 # Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
 Lint/UselessAccessModifier:

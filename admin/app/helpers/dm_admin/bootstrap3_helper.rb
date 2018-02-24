@@ -193,7 +193,7 @@ module DmAdmin::Bootstrap3Helper
     if style == :plain
       content_tag :span, text, class: 'label label-default'
     else
-      content_tag :span, text, class: "label label-#{style.to_s}"
+      content_tag :span, text, class: "label label-#{style}"
     end
   end
 
@@ -204,7 +204,7 @@ module DmAdmin::Bootstrap3Helper
     if style == :plain
       content_tag :span, text, class: 'badge'
     else
-      content_tag :span, text, class: "badge label-#{style.to_s}"
+      content_tag :span, text, class: "badge label-#{style}"
     end
   end
 

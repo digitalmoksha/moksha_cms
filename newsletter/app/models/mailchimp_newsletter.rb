@@ -85,7 +85,7 @@ class MailchimpNewsletter < Newsletter
                         headers: headers)
     return { success: true, code: 0 }
   rescue Gibbon::MailChimpError => exception
-    Rails.logger.info "=== Error Subscribing #{email} : code: #{exception.code} msg: #{exception.to_s}"
+    Rails.logger.info "=== Error Subscribing #{email} : code: #{exception.code} msg: #{exception}"
     return { success: false, code: exception.code }
   end
 
@@ -98,7 +98,7 @@ class MailchimpNewsletter < Newsletter
     api.lists.unsubscribe(id: self.mc_id, email: { email: email }, delete_member: false, send_goodbye: true, send_notify: true)
     return true
   rescue Gibbon::MailChimpError => exception
-    Rails.logger.info "=== Error Unsubscribing #{email} : #{exception.to_s}"
+    Rails.logger.info "=== Error Unsubscribing #{email} : #{exception}"
     return false
   end
 

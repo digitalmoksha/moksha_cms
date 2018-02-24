@@ -50,12 +50,12 @@ class DmCore::Language < ApplicationRecord # :nodoc:
   def self.translate_url(url, locale)
     uri = URI.parse(url)
 
-    if uri.path.start_with?("/#{self.locale.to_s}/")
-      uri.path.sub!("/#{self.locale.to_s}/", "/#{locale.to_s}/")
-    elsif uri.path.blank? || uri.path == "/#{self.locale.to_s}"
-      uri.path = "/#{locale.to_s}/"
+    if uri.path.start_with?("/#{self.locale}/")
+      uri.path.sub!("/#{self.locale}/", "/#{locale}/")
+    elsif uri.path.blank? || uri.path == "/#{self.locale}"
+      uri.path = "/#{locale}/"
     else
-      uri.path = "/#{locale.to_s}#{uri.path}"
+      uri.path = "/#{locale}#{uri.path}"
     end
 
     uri.to_s

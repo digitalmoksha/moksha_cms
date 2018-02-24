@@ -7,7 +7,7 @@ class LiquidValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     if options[:locales]
       Account.current.site_locales.each do |locale|
-        attribute_locale = "#{attribute.to_s}_#{locale}"
+        attribute_locale = "#{attribute}_#{locale}"
         begin
           Liquid::Template.parse(record.send(attribute_locale))
         rescue Liquid::SyntaxError => e
