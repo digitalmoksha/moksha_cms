@@ -84,7 +84,7 @@ module DmCore
         def is_sysadmin?
           if @is_sysadmin.nil?
             sysadmin_role = Role.unscoped.find_by_name('sysadmin')
-            @is_sysadmin = sysadmin_role.nil? ? false : sysadmin_role.users.where('user_id = ?', self.id).size > 0
+            @is_sysadmin = sysadmin_role.nil? ? false : !sysadmin_role.users.where('user_id = ?', self.id).empty?
           else
             @is_sysadmin
           end

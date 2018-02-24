@@ -59,6 +59,6 @@ class DmCore::Admin::SetupController < ActionController::Base
 
   def no_sysadmins?
     sysadmin_role = Role.unscoped.find_by_name('sysadmin')
-    sysadmin_role.nil? || sysadmin_role.users.size == 0
+    sysadmin_role.nil? || sysadmin_role.users.empty?
   end
 end

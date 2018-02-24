@@ -41,8 +41,8 @@ class Registration < ApplicationRecord
   before_save :clear_reminder_sent_on, if: :amount_paid_cents_changed?
 
   validates_uniqueness_of       :uuid
-  validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0 }
-  validates_presence_of         :workshop_price_id, if: Proc.new { |reg| reg.workshop.workshop_prices.size > 0 }
+  validates_presence_of         :workshop_price_id, if: Proc.new { |reg| !reg.workshop.workshop_prices.empty? }
+  validates_presence_of         :workshop_price_id, if: Proc.new { |reg| !reg.workshop.workshop_prices.empty? }
   validates_numericality_of     :discount_value, allow_nil: true
   validates_length_of           :payment_comment, maximum: 255
 

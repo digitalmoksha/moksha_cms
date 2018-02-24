@@ -26,6 +26,12 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 36
 
+# Offense count: 3061
+# Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
+# URISchemes: http, https
+Metrics/LineLength:
+  Max: 890
+
 # Offense count: 3
 Naming/ConstantName:
   Exclude:
@@ -61,6 +67,8 @@ RSpec/PredicateMatcher:
     - 'core/spec/services/payment_histories/create_service_spec.rb'
     - 'core/spec/services/toggle_follower_service_spec.rb'
     - 'event/spec/services/workshops/create_service_spec.rb'
+
+#------------------------------------------------------------------------------
 
 # Offense count: 4
 # Cop supports --auto-correct.
@@ -678,17 +686,3 @@ Style/UnneededInterpolation:
     - 'event/app/models/registration.rb'
     - 'event/app/models/workshop.rb'
     - 'event/app/presenters/registration_presenter.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'core/app/controllers/dm_core/admin/setup_controller.rb'
-    - 'core/app/models/dm_core/concerns/user.rb'
-    - 'event/app/models/registration.rb'
-
-# Offense count: 3061
-# Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
-# URISchemes: http, https
-Metrics/LineLength:
-  Max: 890
