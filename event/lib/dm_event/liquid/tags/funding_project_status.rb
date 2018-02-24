@@ -41,11 +41,11 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def self.description
-      <<-END_OF_DESCRIPTION.strip_heredoc
+      <<-DESCRIPTION.strip_heredoc
         {% funding_project_status  %}
         ...content
         {% endfunding_project_status %}
-      END_OF_DESCRIPTION
+      DESCRIPTION
     end
   end
 

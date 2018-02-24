@@ -18,19 +18,25 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def self.details
-      { name: self.tag_name,
+      {
+        name: self.tag_name,
         summary: 'Display a snippet',
         category: 'structure',
-        description: <<-END_OF_DESCRIPTION
-Output the content of a snippet specified by the slug
-
-~~~
-{% snippet slug: 'some-snippet-slug'}
-~~~
-
-END_OF_DESCRIPTION
+        description: self.description
       }
     end
+
+    #------------------------------------------------------------------------------
+    def self.description
+      <<-DESCRIPTION.strip_heredoc
+      Output the content of a snippet specified by the slug
+
+      ~~~
+      {% snippet slug: 'some-snippet-slug'}
+      ~~~
+      DESCRIPTION
+    end
   end
+
   Template.register_tag('snippet', Snippet)
 end

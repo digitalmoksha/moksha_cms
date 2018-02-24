@@ -26,15 +26,15 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def self.description
-      <<-END_OF_DESCRIPTION.strip_heredoc
-      Outpus an HTML 'blockquote' with optional author.  You can specify id, class, and style.
+      <<-DESCRIPTION.strip_heredoc
+      Outputs an HTML 'blockquote' with optional author.  You can specify id, class, and style.
 
       ~~~
       {% quote author: 'Favorite Person', id: some_id, class: some_class, style: some_style %}
         ...content
       {% endquote %}
       ~~~
-      END_OF_DESCRIPTION
+      DESCRIPTION
     end
   end
 

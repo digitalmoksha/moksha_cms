@@ -32,23 +32,6 @@ Naming/ConstantName:
     - 'admin/app/helpers/admin_theme/theme_helper.rb'
     - 'admin/app/helpers/dm_admin/application_helper.rb'
 
-# Offense count: 12
-# Configuration parameters: Blacklist.
-# Blacklist: END, (?-mix:EO[A-Z]{1})
-Naming/HeredocDelimiterNaming:
-  Exclude:
-    - 'cms/app/liquid/tags/contact_form.rb'
-    - 'cms/app/liquid/tags/div.rb'
-    - 'cms/app/liquid/tags/image.rb'
-    - 'cms/app/liquid/tags/markdown.rb'
-    - 'cms/app/liquid/tags/quote.rb'
-    - 'cms/app/liquid/tags/snippet.rb'
-    - 'cms/app/liquid/tags/url_media.rb'
-    - 'cms/app/liquid/tags/url_protected.rb'
-    - 'cms/spec/liquid/div_tag_spec.rb'
-    - 'cms/spec/liquid/markdown_tag_spec.rb'
-    - 'event/lib/dm_event/liquid/tags/funding_project_status.rb'
-
 # Offense count: 1
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: snake_case, camelCase

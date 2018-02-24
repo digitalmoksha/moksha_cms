@@ -9,25 +9,31 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def self.details
-      { name: self.tag_name,
+      {
+        name: self.tag_name,
         summary: 'Contact form tag',
         category: 'form',
-        description: <<-END_OF_DESCRIPTION
-Includes a system standard contact form.
-
-~~~
-{% contact_form %}
-~~~
-
-If you have a custom form, provide it's name
-
-~~~
-{% contact_form name: tech_support %}
-~~~
-
-END_OF_DESCRIPTION
+        description: self.description
       }
     end
+
+    #------------------------------------------------------------------------------
+    def self.description
+      <<-DESCRIPTION.strip_heredoc
+      Includes a system standard contact form.
+
+      ~~~
+      {% contact_form %}
+      ~~~
+
+      If you have a custom form, provide it's name
+
+      ~~~
+      {% contact_form name: tech_support %}
+      ~~~
+      DESCRIPTION
+    end
   end
+
   Template.register_tag('contact_form', ContactForm)
 end

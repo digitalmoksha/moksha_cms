@@ -20,47 +20,53 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def self.details
-      { name: self.tag_name,
+      {
+        name: self.tag_name,
         summary: 'Displays an image',
         category: 'media',
-        description: <<-END_OF_DESCRIPTION
-Displays an image. Will pull image (with optional version) from the site's media directory unless a full path is given.
-Any normal HTML img attributes can be passed, such `alt`, `title`, `width`, etc
-
-Parameters:
-
-src
-: name of the image.  Can either reference a file in the 'media' directory (`2014/car.jpg`), a full path (`http://example.com/image/car.jpg`)
-or reference an S3 file (`s3://bucket/car.jpg`)
-
-version
-: (optional) Use a specific image version (`thumb`, `lg`, etc)
-
-protected
-: (optional) File is in protected directory.  `version` will have no effect with this option
-
-html img attributes
-: you can specify any valid HTML img attributes, such as `width` or `title`
-
-**Examples**
-
-~~~
-{% image src: '2014/placeholder_190x105.jpg', class: 'right', title: "Some title" %}
-~~~
-Image in the media directory, with a specified class and title
-
-~~~
-{% image src: '2014/placeholder_190x105.jpg', class: right, protected: true %}
-~~~
-Image is in the protected asset folder
-
-~~~
-{% image src: '2014/placeholder_190x105.jpg', version: 'thumb', alt: "Some title" %}
-~~~
-Use the `thumb` version of the image
-
-END_OF_DESCRIPTION
+        description: self.description
       }
+    end
+
+    #------------------------------------------------------------------------------
+    def self.description
+      <<-DESCRIPTION.strip_heredoc
+      Displays an image. Will pull image (with optional version) from the site's media directory unless a full path is given.
+      Any normal HTML img attributes can be passed, such `alt`, `title`, `width`, etc
+
+      Parameters:
+
+      src
+      : name of the image.  Can either reference a file in the 'media' directory (`2014/car.jpg`), a full path (`http://example.com/image/car.jpg`)
+      or reference an S3 file (`s3://bucket/car.jpg`)
+
+      version
+      : (optional) Use a specific image version (`thumb`, `lg`, etc)
+
+      protected
+      : (optional) File is in protected directory.  `version` will have no effect with this option
+
+      html img attributes
+      : you can specify any valid HTML img attributes, such as `width` or `title`
+
+      **Examples**
+
+      ~~~
+      {% image src: '2014/placeholder_190x105.jpg', class: 'right', title: "Some title" %}
+      ~~~
+      Image in the media directory, with a specified class and title
+
+      ~~~
+      {% image src: '2014/placeholder_190x105.jpg', class: right, protected: true %}
+      ~~~
+      Image is in the protected asset folder
+
+      ~~~
+      {% image src: '2014/placeholder_190x105.jpg', version: 'thumb', alt: "Some title" %}
+      ~~~
+      Use the `thumb` version of the image
+
+      DESCRIPTION
     end
   end
 

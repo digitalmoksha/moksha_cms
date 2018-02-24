@@ -13,22 +13,28 @@ module Liquid
     end
 
     def self.details
-      { name: self.tag_name,
+      {
+        name: self.tag_name,
         summary: 'Returns url of a media file',
         category: 'url',
-        description: <<-END_OF_DESCRIPTION
-Give the location/url of a media file. It is relative to the site's media directory unless a full path/url is given.
-
-~~~
-{% url_media src: '2014/something.pdf' %}
-
-{% url_media src: 'course/lesson1.mp3' %}
-
-{% url_media src: 'nature/desert.jpg', version: 'retina_lg' %}
-
-~~~
-END_OF_DESCRIPTION
+        description: self.description
       }
+    end
+
+    #------------------------------------------------------------------------------
+    def self.description
+      <<-DESCRIPTION.strip_heredoc
+      Give the location/url of a media file. It is relative to the site's media directory unless a full path/url is given.
+
+      ~~~
+      {% url_media src: '2014/something.pdf' %}
+
+      {% url_media src: 'course/lesson1.mp3' %}
+
+      {% url_media src: 'nature/desert.jpg', version: 'retina_lg' %}
+
+      ~~~
+      DESCRIPTION
     end
   end
 
