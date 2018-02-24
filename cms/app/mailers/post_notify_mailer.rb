@@ -23,9 +23,9 @@ class PostNotifyMailer < DmCore::SiteMailer
 
       theme(account.account_prefix)
       headers = { "Return-Path" => account.preferred_blog_from_email || account.preferred_smtp_from_email }
-      mail( from: account.preferred_blog_from_email || account.preferred_smtp_from_email,
-            reply_to: account.preferred_blog_from_email || account.preferred_smtp_from_email,
-            to: @recipients, subject: @subject) do |format|
+      mail(from: account.preferred_blog_from_email || account.preferred_smtp_from_email,
+           reply_to: account.preferred_blog_from_email || account.preferred_smtp_from_email,
+           to: @recipients, subject: @subject) do |format|
         format.text { render "layouts/email_templates/dm_cms_post_notify.text.erb" }
         format.html { render "layouts/email_templates/dm_cms_post_notify.html.erb" }
       end

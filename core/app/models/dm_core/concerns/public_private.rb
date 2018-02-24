@@ -109,7 +109,7 @@ module DmCore
         def can_be_read_by?(attempting_user)
           if attempting_user
             self.published? && (self.is_public? || self.is_protected? || self.member?(attempting_user) || attempting_user.is_admin? ||
-                  (self.is_subscription_only? && attempting_user.is_paid_subscriber?) )
+                  (self.is_subscription_only? && attempting_user.is_paid_subscriber?))
           else
             self.published? && self.is_public?
           end
@@ -120,7 +120,7 @@ module DmCore
         def can_be_replied_by?(attempting_user)
           if attempting_user
             self.published? && (self.is_public? || self.is_protected? || self.member?(attempting_user) || attempting_user.is_admin? ||
-                  (self.is_subscription_only? && attempting_user.is_paid_subscriber?) )
+                  (self.is_subscription_only? && attempting_user.is_paid_subscriber?))
           else
             false # must be logged in to make a reply
           end

@@ -129,11 +129,11 @@ module DmAdmin::Bootstrap3Helper
       if options[:cancel] != false
         if options[:cancel_url].blank?
           #--- if no url specified, assume sliding the div closed
-          concat(link_to options[:cancel], '#', class: 'toggle_link btn', data: { toggleid: options[:slide] } )
+          concat(link_to options[:cancel], '#', class: 'toggle_link btn', data: { toggleid: options[:slide] })
         elsif options[:cancel_url] == 'close-modal'
-          concat(link_to options[:cancel], '#', class: 'btn btn-sm btn-default', data: { dismiss: 'modal' } )
+          concat(link_to options[:cancel], '#', class: 'btn btn-sm btn-default', data: { dismiss: 'modal' })
         else
-          concat(link_to options[:cancel], options[:cancel_url], { class: 'btn btn-sm btn-default' } )
+          concat(link_to options[:cancel], options[:cancel_url], { class: 'btn btn-sm btn-default' })
         end
         concat(content_tag :span, '&nbsp;&nbsp;&nbsp;&nbsp;'.html_safe, class: 'submit_or')
       end
@@ -155,7 +155,7 @@ module DmAdmin::Bootstrap3Helper
     options[:style] = "#{options[:style]} font-size:#{options[:size]}px;" if !options[:size].blank?
     options[:style] = "#{options[:style]} color:#{options[:color]}" if !options[:color].blank?
 
-    content_tag(:i, '', options )
+    content_tag(:i, '', options)
   end
 
   # Generate icon followed by label text

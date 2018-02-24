@@ -21,9 +21,9 @@ class ForumNotificationMailer < DmCore::SiteMailer
 
       theme(account.account_prefix)
       headers = { "Return-Path" => account.preferred_smtp_from_email }
-      mail( from: account.preferred_smtp_from_email,
-            reply_to: account.preferred_smtp_from_email,
-            to: @recipients, subject: @subject) do |format|
+      mail(from: account.preferred_smtp_from_email,
+           reply_to: account.preferred_smtp_from_email,
+           to: @recipients, subject: @subject) do |format|
         format.text { render "layouts/email_templates/forum_notification.text.erb" }
         format.html { render "layouts/email_templates/forum_notification.html.erb" }
       end

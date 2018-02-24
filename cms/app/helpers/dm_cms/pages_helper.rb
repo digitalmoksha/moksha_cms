@@ -11,7 +11,7 @@ module DmCms::PagesHelper
   # Given the name of a container, queries for all content items for that
   # container within the given page.
   #------------------------------------------------------------------------------
-  def content_by_name( name )
+  def content_by_name(name)
     unless @current_page.nil?
       items = @current_page.cms_contentitems.where(container: name)
       render :partial => (items.nil? ? 'not_found' : 'content_fragment'), :collection => items

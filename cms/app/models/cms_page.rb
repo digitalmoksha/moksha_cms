@@ -223,17 +223,17 @@ class CmsPage < ApplicationRecord
     end
 
     unless CmsPage.find_by_slug('missing')
-      standard.children.create( slug: 'missing', template: '404', published: true, title: 'Page Missing')
+      standard.children.create(slug: 'missing', template: '404', published: true, title: 'Page Missing')
     end
 
     unless CmsPage.find_by_slug('coming_soon')
-      standard.children.create( slug: 'coming_soon', template: 'coming_soon', published: true, title: 'Coming Soon')
+      standard.children.create(slug: 'coming_soon', template: 'coming_soon', published: true, title: 'Coming Soon')
     end
     unless CmsPage.find_by_slug('signup_success')
-      standard.children.create( slug: 'signup_success', link: 'index', published: true, title: 'Signup Success')
+      standard.children.create(slug: 'signup_success', link: 'index', published: true, title: 'Signup Success')
     end
     unless CmsPage.find_by_slug('confirmation_success')
-      standard.children.create( slug: 'confirmation_success', link: 'index', published: true, title: 'Confirmaton Success')
+      standard.children.create(slug: 'confirmation_success', link: 'index', published: true, title: 'Confirmaton Success')
     end
   end
 

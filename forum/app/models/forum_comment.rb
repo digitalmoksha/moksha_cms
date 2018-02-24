@@ -82,10 +82,10 @@ class ForumComment < Comment
   # counter cache by hand
   #------------------------------------------------------------------------------
   def increment_forum_counter_cache
-    Forum.increment_counter( 'comments_count', self.forum_topic.forum.id )
+    Forum.increment_counter('comments_count', self.forum_topic.forum.id)
   end
 
   def decrement_forum_counter_cache
-    Forum.decrement_counter( 'comments_count', self.forum_topic.forum.id ) unless self.forum_topic.nil?
+    Forum.decrement_counter('comments_count', self.forum_topic.forum.id) unless self.forum_topic.nil?
   end
 end

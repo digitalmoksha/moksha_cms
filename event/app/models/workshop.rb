@@ -196,7 +196,7 @@ class Workshop < ApplicationRecord
   # Return list of Users that are attending (does not include userless registrations)
   #------------------------------------------------------------------------------
   def member_list
-    User.includes(:user_profile).references(:user_profile).where(user_profiles: { id: self.registrations.attending.map(&:user_profile_id) } )
+    User.includes(:user_profile).references(:user_profile).where(user_profiles: { id: self.registrations.attending.map(&:user_profile_id) })
   end
 
   #------------------------------------------------------------------------------

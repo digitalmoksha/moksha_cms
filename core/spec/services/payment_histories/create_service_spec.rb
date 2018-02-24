@@ -16,7 +16,7 @@ describe DmCore::PaymentHistories::CreateService, type: :service do
     it 'creates a new PaymentHistory' do
       history = service.call
       expect(history.is_a?(PaymentHistory)).to be_truthy
-      expect(history).to have_attributes(anchor_id: anchor_id, )
+      expect(history).to have_attributes(anchor_id: anchor_id,)
       expect(history).to have_attributes(total_cents: amount.cents, total_currency: amount.currency.iso_code)
       expect(history).to have_attributes(item_ref: options[:item_ref])
       expect(history).to have_attributes(cost: "#{amount.to_f}", quantity: 1, discount: "0")
