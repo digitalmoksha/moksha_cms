@@ -51,11 +51,6 @@ Naming/PredicateName:
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'core/app/models/dm_core/concerns/user.rb'
 
-# Offense count: 4
-Performance/UnfreezeString:
-  Exclude:
-    - 'core/lib/dm_core/scio_excel.rb'
-
 # Offense count: 8
 # Configuration parameters: Prefixes.
 # Prefixes: when, with, without

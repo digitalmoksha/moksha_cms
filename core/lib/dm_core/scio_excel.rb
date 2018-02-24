@@ -211,7 +211,7 @@ module Scio
           end
           rgb = hstyle.font[:color].to_rgb rescue nil
           pdf.SetTextColor(rgb[:red], rgb[:green], rgb[:blue]) unless rgb.nil?
-          fstyle = String.new
+          fstyle = ''
           fstyle << "B" if hstyle.font[:bold]
           fstyle << "I" if hstyle.font[:italic]
           pdf.SetFont('', fstyle)
@@ -220,7 +220,7 @@ module Scio
             if hstyle.borders == BORDER_ALL
               border = 1
             else
-              border = String.new
+              border = ''
               border << "T" if hstyle.borders & BORDER_TOP > 0
               border << "B" if hstyle.borders & BORDER_BOTTOM > 0
               border << "L" if hstyle.borders & BORDER_LEFT > 0
@@ -254,7 +254,7 @@ module Scio
             end
             rgb = cstyle.font[:color].to_rgb rescue nil
             pdf.SetTextColor(rgb[:red], rgb[:green], rgb[:blue]) unless rgb.nil?
-            fstyle = String.new
+            fstyle = ''
             fstyle << "B" if cstyle.font[:bold]
             fstyle << "I" if cstyle.font[:italic]
             pdf.SetFont('', fstyle)
@@ -263,7 +263,7 @@ module Scio
               if cstyle.borders == BORDER_ALL
                 border = 1
               else
-                border = String.new
+                border = ''
                 border << "T" if cstyle.borders & BORDER_TOP > 0
                 border << "B" if cstyle.borders & BORDER_BOTTOM > 0
                 border << "L" if cstyle.borders & BORDER_LEFT > 0
