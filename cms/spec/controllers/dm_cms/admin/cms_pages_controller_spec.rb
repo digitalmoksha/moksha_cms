@@ -95,7 +95,7 @@ describe DmCms::Admin::CmsPagesController do
   #     it "does not save the new document in the database" do
   #       expect {
   #         post :create, document: attributes_for(:invalid_document)
-  #       }.to_not change(DmKnowledge::Document, :count)
+  #       }.not_to change(DmKnowledge::Document, :count)
   #     end
   #
   #     #------------------------------------------------------------------------------

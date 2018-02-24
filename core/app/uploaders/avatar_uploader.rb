@@ -6,7 +6,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   #------------------------------------------------------------------------------
   def store_dir
-    "#{Rails.root}/public/site_assets/_shared/avatars"
+    Rails.root.join('public', 'site_assets', '_shared', 'avatars').to_s
   end
 
   #------------------------------------------------------------------------------

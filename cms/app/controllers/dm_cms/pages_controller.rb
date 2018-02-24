@@ -16,7 +16,7 @@ class DmCms::PagesController < DmCms::ApplicationController
         @current_page = CmsPage.friendly.find_by_slug(params[:slug])
         if @current_page.nil? || !can?(:read, @current_page)
           @current_page = CmsPage.friendly.find_by_slug('missing')
-          render(file: "#{Rails.root}/public/404.html", status: :not_found, layout: false) && return if @current_page.nil? || !@current_page.is_published?
+          render(file: Rails.root.join('public', '404.html'), status: :not_found, layout: false) && return if @current_page.nil? || !@current_page.is_published?
         end
 
         raise Account::LoginRequired.new(I18n.t('cms.page_login_required')) if @current_page.requires_login && !signed_in?

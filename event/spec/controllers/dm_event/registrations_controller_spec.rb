@@ -73,7 +73,7 @@ describe DmEvent::RegistrationsController do
   #     it "does not save the new post in the database" do
   #       expect {
   #         post :create, cms_blog_id: blog, cms_post: attributes_for(:invalid_post)
-  #       }.to_not change(blog.posts, :count)
+  #       }.not_to change(blog.posts, :count)
   #     end
   #
   #     #------------------------------------------------------------------------------

@@ -95,7 +95,7 @@ module DmCore
     # eg: [Rails.root]/protected_assets
     #------------------------------------------------------------------------------
     def account_protected_assets_folder
-      "#{Rails.root}/#{PROTECTED_ASSETS_FOLDER}"
+      Rails.root.join(PROTECTED_ASSETS_FOLDER).to_s
     end
 
     # the actual folder on the webserver where the protected media files are stored

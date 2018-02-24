@@ -51,15 +51,6 @@ Naming/PredicateName:
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'core/app/models/dm_core/concerns/user.rb'
 
-# Offense count: 3
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: not_to, to_not
-RSpec/NotToNot:
-  Exclude:
-    - 'cms/spec/controllers/admin/cms_blogs_controller_spec.rb'
-    - 'cms/spec/controllers/admin/cms_posts_controller_spec.rb'
-    - 'cms/spec/controllers/application_controller_spec.rb'
-
 # Offense count: 43
 # Configuration parameters: Strict, EnforcedStyle.
 # SupportedStyles: inflected, explicit
@@ -70,21 +61,6 @@ RSpec/PredicateMatcher:
     - 'core/spec/services/payment_histories/create_service_spec.rb'
     - 'core/spec/services/toggle_follower_service_spec.rb'
     - 'event/spec/services/workshops/create_service_spec.rb'
-
-# Offense count: 11
-Rails/FilePath:
-  Exclude:
-    - 'admin/spec/dummy/config/environments/development.rb'
-    - 'cms/app/controllers/dm_cms/pages_controller.rb'
-    - 'cms/spec/models/cms_blog_spec.rb'
-    - 'core/app/helpers/dm_core/account_helper.rb'
-    - 'core/app/helpers/dm_core/url_helper.rb'
-    - 'core/app/uploaders/avatar_uploader.rb'
-    - 'core/config/initializers/carrierwave.rb'
-    - 'core/spec/dummy/config/environments/development.rb'
-    - 'core/spec/helpers/account_helper_spec.rb'
-    - 'forum/spec/models/forum_spec.rb'
-    - 'lms/spec/models/course_spec.rb'
 
 # Offense count: 4
 # Cop supports --auto-correct.

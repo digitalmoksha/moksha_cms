@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative Rails.root.join '../../../core/spec/concerns/public_private_shared'
+require_relative Rails.root.join('..', '..', '..', 'core', 'spec', 'concerns', 'public_private_shared')
 
 describe CmsBlog do
   setup_account

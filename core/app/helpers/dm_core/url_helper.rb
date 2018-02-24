@@ -97,7 +97,7 @@ module DmCore
         if @@cache_asset_timestamps && (asset_id = @@asset_timestamps_cache[source])
           asset_id
         else
-          path = File.join(Rails.root, 'public', source)
+          path = Rails.root.join('public', source).to_s
           asset_id = File.exist?(path) ? File.mtime(path).to_i.to_s : ''
 
           if @@cache_asset_timestamps
