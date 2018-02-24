@@ -162,7 +162,7 @@ class DmCore::ApplicationController < ActionController::Base
   # Set the locale of this request.
   #------------------------------------------------------------------------------
   def set_locale
-    DmCore::Language.locale = (!params[:locale].blank? ? params[:locale] : current_account.preferred_default_locale)
+    DmCore::Language.locale = (params[:locale].presence || current_account.preferred_default_locale)
   rescue I18n::InvalidLocale
     # if it's an invalid locale, append the default locale and try again
     # this also fixes the case of using simple link names on a home page.

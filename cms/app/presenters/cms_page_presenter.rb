@@ -9,7 +9,7 @@ class CmsPagePresenter < BasePresenter
   # Prepare a title for admin Page views.  page/menu title with slug in <small>
   #------------------------------------------------------------------------------
   def admin_edit_title
-    main_title  = (cms_page.title.present? ? cms_page.title : (cms_page.menutitle.present? ? cms_page.menutitle : '(no title)'))
+    main_title  = (cms_page.title.present? ? cms_page.title : (cms_page.menutitle.presence || '(no title)'))
     sub_title   = 'Permalink: '.html_safe +
       link_to(dm_cms.showpage_url(cms_page.slug), dm_cms.showpage_url(cms_page.slug), title: 'Permalink for this page', target: '_blank')
 

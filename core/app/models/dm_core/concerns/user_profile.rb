@@ -69,7 +69,7 @@ module DmCore
         def full_name
           I18n.t('core.profile_full_name', firstname: first_name.to_s, lastname: last_name.to_s)
         end
-        alias :name :full_name
+        alias_method :name, :full_name
 
         # for displaying their displayable profile name
         #------------------------------------------------------------------------------

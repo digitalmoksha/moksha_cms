@@ -47,7 +47,7 @@ class CustomFieldDef < ApplicationRecord
   # be used if the 'name' attribute is blank
   #------------------------------------------------------------------------------
   def column_name
-    name.blank? ? label.to_s_default : name
+    name.presence || label.to_s_default
   end
 
   #   # custom field is visible if it's not disabled and it's still valid

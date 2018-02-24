@@ -10,7 +10,7 @@ describe PaymentReminderService, type: :service do
       #------------------------------------------------------------------------------
       it 'reminder due after 14 days' do
         workshop      = create :workshop_with_price
-        registration  = create :registration, workshop: workshop, created_at: 1.days.ago
+        registration  = create :registration, workshop: workshop, created_at: 1.day.ago
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
         registration = create :registration, workshop: workshop, created_at: 14.days.ago
@@ -46,7 +46,7 @@ describe PaymentReminderService, type: :service do
       #------------------------------------------------------------------------------
       it 'reminder due 14 days after a payment is due' do
         workshop      = create :workshop_with_recurring_price
-        registration  = create :registration, workshop: workshop, created_at: 1.days.ago
+        registration  = create :registration, workshop: workshop, created_at: 1.day.ago
         expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
         registration = create :registration, workshop: workshop, created_at: 14.days.ago
@@ -103,11 +103,11 @@ describe PaymentReminderService, type: :service do
 
     #------------------------------------------------------------------------------
     it 'payment reminder respects workshop.initial_payment_required_on' do
-      workshop      = create :workshop_with_price, created_at: 30.days.ago, initial_payment_required_on: 1.days.from_now
+      workshop      = create :workshop_with_price, created_at: 30.days.ago, initial_payment_required_on: 1.day.from_now
       registration  = create :registration, workshop: workshop
       expect(PaymentReminderService.payment_reminder_due?(registration)).to eq false
 
-      workshop.initial_payment_required_on = 1.days.ago
+      workshop.initial_payment_required_on = 1.day.ago
       expect(PaymentReminderService.payment_reminder_due?(registration)).to eq true
     end
 

@@ -120,20 +120,6 @@ Style/GuardClause:
 
 #------------------------------------------------------------------------------
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Rails/PluralizationGrammar:
-  Exclude:
-    - 'event/spec/services/payment_reminder_service_spec.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Rails/Presence:
-  Exclude:
-    - 'cms/app/presenters/cms_page_presenter.rb'
-    - 'core/app/controllers/dm_core/application_controller.rb'
-    - 'core/app/models/custom_field_def.rb'
-
 # Offense count: 51
 # Configuration parameters: Blacklist.
 # Blacklist: decrement!, decrement_counter, increment!, increment_counter, toggle!, touch, update_all, update_attribute, update_column, update_columns, update_counters
@@ -160,15 +146,6 @@ Security/Eval:
     - 'forum/Gemfile'
     - 'lms/Gemfile'
     - 'newsletter/Gemfile'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: prefer_alias, prefer_alias_method
-Style/Alias:
-  Exclude:
-    - 'cms/app/helpers/dm_cms/render_helper.rb'
-    - 'core/app/models/dm_core/concerns/user_profile.rb'
 
 # Offense count: 3
 # Configuration parameters: AllowedChars.
