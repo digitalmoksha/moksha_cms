@@ -39,11 +39,11 @@ module DmCore
       collection = (options[:include_blank] ? [[" ", ""]] : [])
       case options[:as]
       when :code
-        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_CODE + DmCore::Country.order('english_name').collect {|p| [ p.english_name, p.code ] }
+        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_CODE + DmCore::Country.order('english_name').collect {|p| [p.english_name, p.code] }
       when :name
-        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_NAME + DmCore::Country.order('english_name').collect {|p| [ p.english_name, p.english_name ] }
+        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_NAME + DmCore::Country.order('english_name').collect {|p| [p.english_name, p.english_name] }
       else
-        collection += ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.order('english_name').collect {|p| [ p.english_name, p.id ] }
+        collection += ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.order('english_name').collect {|p| [p.english_name, p.id] }
       end
     end
 

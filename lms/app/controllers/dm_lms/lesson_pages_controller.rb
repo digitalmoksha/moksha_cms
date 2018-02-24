@@ -1,7 +1,7 @@
 class DmLms::LessonPagesController < DmLms::ApplicationController
   include DmCore::RenderHelper
 
-  before_action :content_lookup, :except => [:ajax_add_comment, :ajax_delete_comment, ]
+  before_action :content_lookup, :except => [:ajax_add_comment, :ajax_delete_comment,]
 
   # GET /learn/:course_slug/:lesson_slug/:content_slug
   # GET /learn/:course_slug/:lesson_slug/:content_slug.json

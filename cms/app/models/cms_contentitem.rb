@@ -32,7 +32,7 @@ class CmsContentitem < ApplicationRecord
   validates             :content,           liquid: { locales: true }, presence_default_locale: true
 
   # --- content types supported
-  CONTENT_TYPES = [ 'Markdown', 'Textile', 'HTML' ].freeze
+  CONTENT_TYPES = ['Markdown', 'Textile', 'HTML'].freeze
 
   #------------------------------------------------------------------------------
   def original_updated_on

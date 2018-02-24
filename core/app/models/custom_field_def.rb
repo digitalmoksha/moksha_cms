@@ -22,13 +22,13 @@ class CustomFieldDef < ApplicationRecord
   validates_presence_of   :field_type
   validates_length_of     :field_type, maximum: 20
 
-  FIELD_TYPES = [ ['Text Field',      'text_field'],
-                  ['Text Area',       'text_area'],
-                  ['Number Field',    'number_field'],
-                  ['Checkboxes',      'check_box_collection'],
-                  ['Radio Buttons',   'radio_buttons'],
-                  ['Drop Down Menu',  'select'],
-                  ['Divider',         'divider']].freeze
+  FIELD_TYPES = [['Text Field', 'text_field'],
+                 ['Text Area',       'text_area'],
+                 ['Number Field',    'number_field'],
+                 ['Checkboxes',      'check_box_collection'],
+                 ['Radio Buttons',   'radio_buttons'],
+                 ['Drop Down Menu',  'select'],
+                 ['Divider',         'divider']].freeze
   # ['Date/Time Selection', 'date_time']
   # ['Date Selection', 'date']
   # ['Country Selection', 'country']

@@ -14,27 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 30
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBrackets.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBrackets: space, no_space
-Layout/SpaceInsideArrayLiteralBrackets:
-  Exclude:
-    - 'admin/spec/dummy/config/environments/production.rb'
-    - 'cms/app/datatables/blog_user_datatable.rb'
-    - 'cms/app/models/cms_contentitem.rb'
-    - 'cms/app/models/cms_snippet.rb'
-    - 'core/app/datatables/user_datatable.rb'
-    - 'core/app/helpers/dm_core/render_helper.rb'
-    - 'core/app/models/custom_field_def.rb'
-    - 'core/config/initializers/devise.rb'
-    - 'core/spec/dummy/config/environments/production.rb'
-    - 'event/app/helpers/dm_event/workshops_helper.rb'
-    - 'event/app/models/registration.rb'
-    - 'forum/app/datatables/forum_user_datatable.rb'
-    - 'lms/app/controllers/dm_lms/lesson_pages_controller.rb'
-
 # Offense count: 110
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.

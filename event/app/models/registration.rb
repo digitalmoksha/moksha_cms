@@ -161,10 +161,10 @@ class Registration < ApplicationRecord
     workshop.custom_field_defs.each_with_index do |x, index|
       case x.field_type
       when 'check_box_collection'
-        column_definitions << [ "#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, {type: 'list', custom_field: true}]
+        column_definitions << ["#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, {type: 'list', custom_field: true}]
       when 'divider'
       else
-        column_definitions << [ "#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, {custom_field: true}]
+        column_definitions << ["#{x.column_name}", "(z = item.custom_fields.detect { |y| y.custom_field_def_id == #{x.id} }) ? z.value : ''", nil, {custom_field: true}]
       end
     end
     return column_definitions
