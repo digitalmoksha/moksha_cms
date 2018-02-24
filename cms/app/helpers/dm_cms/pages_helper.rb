@@ -94,15 +94,15 @@ module DmCms::PagesHelper
       menu_str       += content_tag :li, page_link(root), class: active
     end
     pages.each do |page, children|
-      if allow_page_in_menu?(page)
-        ul_class = options[:sub_menu_1] ? "class=\"#{options[:sub_menu_1]}\"" : ''
-        submenu, submenu_active = (children.empty? ? '' : menu_from_pages(children, active_class: options[:active_class], ul: ul_class))
-        active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
-        active_found          ||= !active.nil?
-        menu_str += content_tag(:li, class: active) do
-          page_link(page) +
-            submenu.html_safe
-        end
+      next unless allow_page_in_menu?(page)
+
+      ul_class = options[:sub_menu_1] ? "class=\"#{options[:sub_menu_1]}\"" : ''
+      submenu, submenu_active = (children.empty? ? '' : menu_from_pages(children, active_class: options[:active_class], ul: ul_class))
+      active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
+      active_found          ||= !active.nil?
+      menu_str += content_tag(:li, class: active) do
+        page_link(page) +
+          submenu.html_safe
       end
     end
     [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
@@ -120,18 +120,18 @@ module DmCms::PagesHelper
       menu_str       += content_tag :li, page_link(root), class: active
     end
     pages.each do |page, children|
-      if allow_page_in_menu?(page)
-        submenu, submenu_active = (children.empty? ? '' : menu_from_pages_bs3(children, ul: 'class="dropdown-menu"', active_class: options[:active_class]))
-        active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
-        active_found          ||= !active.nil?
-        if !submenu.blank?
-          menu_str += content_tag(:li, class: ['dropdown', active].css_join(' ')) do
-            page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'dropdown-toggle', data: { toggle: 'dropdown' }) +
-              submenu.html_safe
-          end
-        else
-          menu_str += content_tag :li, page_link(page), class: active
+      next unless allow_page_in_menu?(page)
+
+      submenu, submenu_active = (children.empty? ? '' : menu_from_pages_bs3(children, ul: 'class="dropdown-menu"', active_class: options[:active_class]))
+      active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
+      active_found          ||= !active.nil?
+      if !submenu.blank?
+        menu_str += content_tag(:li, class: ['dropdown', active].css_join(' ')) do
+          page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'dropdown-toggle', data: { toggle: 'dropdown' }) +
+            submenu.html_safe
         end
+      else
+        menu_str += content_tag :li, page_link(page), class: active
       end
     end
     [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
@@ -149,18 +149,18 @@ module DmCms::PagesHelper
       menu_str       += content_tag :li, page_link(root, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
     end
     pages.each do |page, children|
-      if allow_page_in_menu?(page)
-        submenu, submenu_active = (children.empty? ? '' : menu_from_pages_bs4(children, ul: 'class="dropdown-menu"', active_class: options[:active_class]))
-        active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
-        active_found          ||= !active.nil?
-        if !submenu.blank?
-          menu_str += content_tag(:li, class: ['nav-item', 'dropdown', active].css_join(' ')) do
-            page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' }) +
-              submenu.html_safe
-          end
-        else
-          menu_str += content_tag :li, page_link(page, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
+      next unless allow_page_in_menu?(page)
+
+      submenu, submenu_active = (children.empty? ? '' : menu_from_pages_bs4(children, ul: 'class="dropdown-menu"', active_class: options[:active_class]))
+      active                  = (submenu_active || on_current_page?(page) ? options[:active_class] : nil)
+      active_found          ||= !active.nil?
+      if !submenu.blank?
+        menu_str += content_tag(:li, class: ['nav-item', 'dropdown', active].css_join(' ')) do
+          page_link(page, ''.html_safe + page.menutitle + ' <b class="caret"></b>'.html_safe, class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' }) +
+            submenu.html_safe
         end
+      else
+        menu_str += content_tag :li, page_link(page, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
       end
     end
     [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]

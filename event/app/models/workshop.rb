@@ -134,28 +134,28 @@ class Workshop < ApplicationRecord
                    projected: {} }
 
     registrations.attending.includes(:workshop_price).each do |registration|
-      if registration.workshop_price
-        #--- Calculate the summary values
-        financials[:summary][:total_possible]     += registration.discounted_price
-        financials[:summary][:total_paid]         += registration.amount_paid.nil? ? Money.new(0, base_currency) : registration.amount_paid
-        financials[:summary][:total_outstanding]  += registration.balance_owed
-        financials[:summary][:total_discoutns]    += registration.discount
-      end
+      next unless registration.workshop_price
+
+      #--- Calculate the summary values
+      financials[:summary][:total_possible]     += registration.discounted_price
+      financials[:summary][:total_paid]         += registration.amount_paid.nil? ? Money.new(0, base_currency) : registration.amount_paid
+      financials[:summary][:total_outstanding]  += registration.balance_owed
+      financials[:summary][:total_discoutns]    += registration.discount
     end
 
     if level == :detail
       registrations.attending.includes(:workshop_price, :payment_histories).each do |registration|
-        if registration.workshop_price
-          #--- Calculate what has been collected, by payment method
-          registration.payment_histories.each do |payment_history|
-            payment_method = payment_history.payment_method.titlecase
-            financials[:collected][payment_method.to_s] = Money.new(0, base_currency) if financials[:collected][payment_method.to_s].nil?
-            financials[:collected][payment_method.to_s] += payment_history.total
+        next unless registration.workshop_price
 
-            month = payment_history.payment_date.beginning_of_month
-            financials[:collected_monthly][month] = Money.new(0, base_currency) if financials[:collected_monthly][month].nil?
-            financials[:collected_monthly][month] += payment_history.total
-          end
+        #--- Calculate what has been collected, by payment method
+        registration.payment_histories.each do |payment_history|
+          payment_method = payment_history.payment_method.titlecase
+          financials[:collected][payment_method.to_s] = Money.new(0, base_currency) if financials[:collected][payment_method.to_s].nil?
+          financials[:collected][payment_method.to_s] += payment_history.total
+
+          month = payment_history.payment_date.beginning_of_month
+          financials[:collected_monthly][month] = Money.new(0, base_currency) if financials[:collected_monthly][month].nil?
+          financials[:collected_monthly][month] += payment_history.total
         end
       end
     end
@@ -219,10 +219,10 @@ class Workshop < ApplicationRecord
     lost = []
     new_users = User.where(created_at: (starting_on - days_ago.day)..ending_on, account_id: Account.current.id)
     new_users.each do |user|
-      if user.user_site_profiles.where(account_id: Account.current.id)
-        if user.user_profile.registrations.count == 0
-          lost << user
-        end
+      next unless user.user_site_profiles.where(account_id: Account.current.id)
+
+      if user.user_profile.registrations.count == 0
+        lost << user
       end
     end
     lost

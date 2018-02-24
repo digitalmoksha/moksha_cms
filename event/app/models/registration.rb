@@ -130,7 +130,7 @@ class Registration < ApplicationRecord
   # check if the regsitration is unpaid
   #------------------------------------------------------------------------------
   def unpaid?
-    accepted? && archived_on == nil
+    accepted? && archived_on.nil?
   end
 
   # Setup the columns for exporting data as csv.

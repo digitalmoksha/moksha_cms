@@ -9,9 +9,7 @@ class DmForum::Admin::ForumSitesController < DmForum::Admin::AdminController
   # GET /admin/fms/forum_site
   #------------------------------------------------------------------------------
   def show
-    unless @forum_site
-      @forum_site = ForumSite.create(enabled: true)
-    end
+    @forum_site ||= ForumSite.create(enabled: true)
   end
 
   # GET /admin/fms/forum_site/edit

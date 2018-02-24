@@ -77,6 +77,13 @@ Style/RegexpLiteral:
     - 'cms/app/controllers/dm_cms/admin/cms_pages_controller.rb'
     - 'core/app/services/dm_core/s3_signed_url_service.rb'
 
+# Offense count: 45
+# Cop supports --auto-correct.
+# Configuration parameters: AutoCorrect, EnforcedStyle.
+# SupportedStyles: predicate, comparison
+Style/NumericPredicate:
+  Enabled: false
+
 #------------------------------------------------------------------------------
 
 # Offense count: 4
@@ -433,35 +440,3 @@ Style/NestedTernaryOperator:
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'forum/app/controllers/dm_forum/forum_comments_controller.rb'
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, MinBodyLength.
-# SupportedStyles: skip_modifier_ifs, always
-Style/Next:
-  Exclude:
-    - 'admin/app/helpers/dm_admin/bootstrap3_helper.rb'
-    - 'cms/app/helpers/dm_cms/pages_helper.rb'
-    - 'core/app/controllers/dm_core/admin/admin_controller.rb'
-    - 'event/app/models/workshop.rb'
-    - 'event/app/services/dm_event/admin_menu_inject.rb'
-    - 'event/app/services/payment_reminder_service.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/NilComparison:
-  Exclude:
-    - 'event/app/models/registration.rb'
-
-# Offense count: 45
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, EnforcedStyle.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/OrAssignment:
-  Exclude:
-    - 'forum/app/controllers/dm_forum/admin/forum_sites_controller.rb'
-    - 'forum/app/models/forum_comment.rb'

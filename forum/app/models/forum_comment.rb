@@ -21,10 +21,8 @@ class ForumComment < Comment
   # All other comments are either children or siblings
   #------------------------------------------------------------------------------
   def self.create_comment(forum_topic, body, user, parent_comment = nil)
-    unless parent_comment
-      #--- if it's the first comment, make it the root, otherwise it's a child
-      parent_comment    = (forum_topic.forum_comments.empty? ? nil : forum_topic.forum_comments[0].root)
-    end
+    # if it's the first comment, make it the root, otherwise it's a child
+    parent_comment ||= (forum_topic.forum_comments.empty? ? nil : forum_topic.forum_comments[0].root)
     forum_topic.forum_comments.build(:body => body).tap do |comment|
       comment.user      = user
       comment.parent    = parent_comment

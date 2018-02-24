@@ -6,12 +6,11 @@ class PaymentReminderService
   def self.send_payment_reminder_emails(registration = nil)
     success = failed = 0
     Registration.unpaid.notwrittenoff.each do |registration|
-      unless registration.check_if_writeoff!
-        if registration.payment_owed.positive?
-          if payment_reminder_due?(registration)
-            send_reminder(registration) ? (success += 1) : (failed += 1)
-          end
-        end
+      next if registration.check_if_writeoff!
+      next unless registration.payment_owed.positive?
+
+      if payment_reminder_due?(registration)
+        send_reminder(registration) ? (success += 1) : (failed += 1)
       end
     end
     { success: success, failed: failed }

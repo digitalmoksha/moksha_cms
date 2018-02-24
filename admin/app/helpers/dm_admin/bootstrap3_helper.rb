@@ -98,10 +98,10 @@ module DmAdmin::Bootstrap3Helper
   def flash_admin
     flash_class = { :notice => 'alert-success', :error => 'alert-danger', :alert => 'alert-warning', :warning => 'alert-warning', :info => 'alert-info' }
     msgs = [:notice, :error, :alert, :warning, :info].collect do |type|
-      if flash[type]
-        content_tag 'div', class: "alert alert-dismissable #{flash_class[type]}" do
-          content_tag(:button, 'x', class: 'close', data: { dismiss: 'alert' }) + flash[type]
-        end
+      next unless flash[type]
+
+      content_tag 'div', class: "alert alert-dismissable #{flash_class[type]}" do
+        content_tag(:button, 'x', class: 'close', data: { dismiss: 'alert' }) + flash[type]
       end
     end
     raw(msgs.join)
