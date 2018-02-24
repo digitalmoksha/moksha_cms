@@ -8,7 +8,7 @@ class DmLms::Admin::DashboardController < DmLms::Admin::AdminController
     @url_prev     = dm_lms.admin_widget_lesson_comments_path(comment_day: @comment_day + 1)
     @url_next     = dm_lms.admin_widget_lesson_comments_path(comment_day: @comment_day - 1)
     respond_to do |format|
-      format.html {render layout: false}
+      format.html { render layout: false }
       format.js
     end
   end

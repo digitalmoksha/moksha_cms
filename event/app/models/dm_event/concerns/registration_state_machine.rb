@@ -27,8 +27,8 @@ module DmEvent
 
           #------------------------------------------------------------------------------
           event :start do
-            transitions :from => :open,       :to => :waitlisted, :guard => Proc.new {|o| o.workshop.waitlisting?}
-            transitions :from => :open,       :to => :pending,    :guard => Proc.new {|o| o.workshop.require_review?}
+            transitions :from => :open,       :to => :waitlisted, :guard => Proc.new { |o| o.workshop.waitlisting? }
+            transitions :from => :open,       :to => :pending,    :guard => Proc.new { |o| o.workshop.require_review? }
             transitions :from => :open,       :to => :accepted
           end
 

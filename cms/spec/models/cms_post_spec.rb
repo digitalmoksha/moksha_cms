@@ -9,7 +9,7 @@ describe CmsPost do
 
   describe 'slug handling' do
     let(:blog1) { create(:blog) }
-    let(:blog2) { create(:news_blog)}
+    let(:blog2) { create(:news_blog) }
 
     #------------------------------------------------------------------------------
     it 'allows the same specified slug between two blogs (scoped to blog)' do

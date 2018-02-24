@@ -10,8 +10,8 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   #------------------------------------------------------------------------------
   def index
     authorize! :access_event_section, :all
-    @workshops      = Workshop.upcoming.includes(:taggings).select {|w| can?(:list_events, w)}
-    @workshops_past = Workshop.past.select {|w| can?(:list_events, w)}
+    @workshops      = Workshop.upcoming.includes(:taggings).select { |w| can?(:list_events, w) }
+    @workshops_past = Workshop.past.select { |w| can?(:list_events, w) }
   end
 
   #------------------------------------------------------------------------------
@@ -27,8 +27,8 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
         }
         render json: RegistrationDatatable.new(view_context, current_user, permissions)
       }
-      format.xls  { data_export(Registration.csv_columns(@workshop), @workshop.registrations, filename: @workshop.slug, expressions: true, format: 'xls') if can?(:manage_event_registrations, @workshop)}
-      format.csv  { data_export(Registration.csv_columns(@workshop), @workshop.registrations, filename: @workshop.slug, expressions: true, format: 'csv') if can?(:manage_event_registrations, @workshop)}
+      format.xls  { data_export(Registration.csv_columns(@workshop), @workshop.registrations, filename: @workshop.slug, expressions: true, format: 'xls') if can?(:manage_event_registrations, @workshop) }
+      format.csv  { data_export(Registration.csv_columns(@workshop), @workshop.registrations, filename: @workshop.slug, expressions: true, format: 'csv') if can?(:manage_event_registrations, @workshop) }
     end
   end
 
@@ -108,7 +108,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
     @financials = @workshop.financial_details
     @payments   = PaymentHistory.where(owner_type: 'Registration', owner_id: @workshop.registrations.pluck(:id)).includes(:user_profile, owner: [:user_profile])
     @unpaid     = @workshop.registrations.unpaid.includes(:user_profile, :workshop_price)
-    @unpaid     = @unpaid.to_a.delete_if {|i| i.payment_owed.zero?}.sort_by {|i| i.full_name.downcase}
+    @unpaid     = @unpaid.to_a.delete_if { |i| i.payment_owed.zero? }.sort_by { |i| i.full_name.downcase }
   end
 
   # Generate a list of all outstanding balances across all workshops
@@ -116,7 +116,7 @@ class DmEvent::Admin::WorkshopsController < DmEvent::Admin::AdminController
   def user_outstanding_balances
     authorize! :manage_events, :all
     @unpaid = Registration.unpaid.notwrittenoff.includes(:user_profile, :workshop_price)
-    @unpaid = @unpaid.to_a.delete_if {|i| i.balance_owed.zero?}
+    @unpaid = @unpaid.to_a.delete_if { |i| i.balance_owed.zero? }
 
     @writeoffs = Registration.attending.writtenoff.includes(:user_profile, :workshop_price)
   end

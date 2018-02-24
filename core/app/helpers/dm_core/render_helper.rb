@@ -39,11 +39,11 @@ module DmCore
       collection = (options[:include_blank] ? [[" ", ""]] : [])
       case options[:as]
       when :code
-        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_CODE + DmCore::Country.order('english_name').collect {|p| [p.english_name, p.code] }
+        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_CODE + DmCore::Country.order('english_name').collect { |p| [p.english_name, p.code] }
       when :name
-        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_NAME + DmCore::Country.order('english_name').collect {|p| [p.english_name, p.english_name] }
+        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_NAME + DmCore::Country.order('english_name').collect { |p| [p.english_name, p.english_name] }
       else
-        collection += ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.order('english_name').collect {|p| [p.english_name, p.id] }
+        collection += ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.order('english_name').collect { |p| [p.english_name, p.id] }
       end
     end
 
@@ -71,7 +71,7 @@ module DmCore
       if country_id == 0 or country_id.nil?
         select_tag(object_method, "<option value=''>Please select a country".html_safe)
       else
-        selected_country = ::StateCountryConstants::COUNTRIES_WITH_STATES.find {|x| x[:id] == country_id}
+        selected_country = ::StateCountryConstants::COUNTRIES_WITH_STATES.find { |x| x[:id] == country_id }
         if selected_country
           select_tag(object_method, state_options_for_select(selected_state, selected_country[:code]), {include_blank: true}).html_safe
         else

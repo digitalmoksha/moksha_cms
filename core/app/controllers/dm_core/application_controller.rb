@@ -217,7 +217,7 @@ class DmCore::ApplicationController < ActionController::Base
   #------------------------------------------------------------------------------
   def self.filters(kind = nil)
     all_filters = _process_action_callbacks
-    all_filters = all_filters.select {|f| f.kind == kind} if kind
+    all_filters = all_filters.select { |f| f.kind == kind } if kind
     all_filters.map(&:filter)
   end
 

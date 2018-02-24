@@ -29,16 +29,16 @@ module DmEvent
 
             # can edit a workshop, including workshop prices and email templates
             # (does not include access to registrations or finances)
-            manage_event_ids = @user_roles.select {|r| r.name == 'manage_event' && r.resource_type == 'Workshop'}.map(&:resource_id)
+            manage_event_ids = @user_roles.select { |r| r.name == 'manage_event' && r.resource_type == 'Workshop' }.map(&:resource_id)
             can :manage_events, Workshop, id: manage_event_ids
             # can(:access_media_library, :all) unless manage_event_ids.empty?
 
             # can see and manage a workshops registrations
-            manage_event_registration_ids = @user_roles.select {|r| r.name == 'manage_event_registration' && r.resource_type == 'Workshop'}.map(&:resource_id)
+            manage_event_registration_ids = @user_roles.select { |r| r.name == 'manage_event_registration' && r.resource_type == 'Workshop' }.map(&:resource_id)
             can :manage_event_registrations, Workshop, id: manage_event_registration_ids
 
             # can see and manage a workshops finances
-            manage_event_finance_ids = @user_roles.select {|r| r.name == 'manage_event_finance' && r.resource_type == 'Workshop'}.map(&:resource_id)
+            manage_event_finance_ids = @user_roles.select { |r| r.name == 'manage_event_finance' && r.resource_type == 'Workshop' }.map(&:resource_id)
             can :manage_event_finances, Workshop, id: manage_event_finance_ids
 
             can :list_events, Workshop, id: (manage_event_ids + manage_event_registration_ids + manage_event_finance_ids).uniq

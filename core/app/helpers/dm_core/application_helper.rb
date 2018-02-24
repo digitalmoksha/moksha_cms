@@ -13,7 +13,7 @@ module DmCore
     def flash_notices
       #--- use Bootstrap class values
       flash_class = {:notice => 'alert-success', :error => 'alert-error', :alert => 'alert-info'}
-      raw([:notice, :error, :alert].collect {|type| content_tag('div', flash[type], :id => type, :class => "alert #{flash_class[type]}") if flash[type] }.join)
+      raw([:notice, :error, :alert].collect { |type| content_tag('div', flash[type], :id => type, :class => "alert #{flash_class[type]}") if flash[type] }.join)
     end
 
     #------------------------------------------------------------------------------

@@ -103,7 +103,7 @@ shared_examples :public_private_protected do |factory|
   end
 
   context "membership and access to #{described_class}" do
-    let(:created) { create factory}
+    let(:created) { create factory }
     let(:user)    { create :user }
 
     it '#add_member' do

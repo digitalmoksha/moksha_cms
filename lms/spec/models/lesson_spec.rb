@@ -9,7 +9,7 @@ describe Lesson do
 
   describe 'slug handling' do
     let(:course1) { create(:course) }
-    let(:course2) { create(:training_course)}
+    let(:course2) { create(:training_course) }
 
     #------------------------------------------------------------------------------
     it 'allows the same specified slug between two courses (scoped to course)' do

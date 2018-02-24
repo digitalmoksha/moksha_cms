@@ -5,7 +5,7 @@ class DmCms::ContactFormController < DmCms::ApplicationController
   # 'theme_bogus_tech_contact_form' => ThemeBogus::TechContactForm
   #------------------------------------------------------------------------------
   def create
-    form_key = params.select {|key, v| key.end_with?('contact_form') }.first[0]
+    form_key = params.select { |key, v| key.end_with?('contact_form') }.first[0]
     if form_key.present?
       if form_key.start_with?('theme_')
         parts       = form_key.split('_')

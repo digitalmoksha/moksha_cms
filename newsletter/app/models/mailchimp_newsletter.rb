@@ -149,7 +149,7 @@ class MailchimpNewsletter < Newsletter
   def folder_list(type = 'campaign')
     api         = MailchimpNewsletter.api
     folder_list = api.folders.list(type: type)
-    folder_list.sort! {|x, y| x['name'] <=> y['name']}
+    folder_list.sort! { |x, y| x['name'] <=> y['name'] }
   end
 
   #------------------------------------------------------------------------------

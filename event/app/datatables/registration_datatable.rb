@@ -67,7 +67,7 @@ class RegistrationDatatable
     if params[:duplicates].present?
       #--- grab only registrations that have duplicates (based on the user_profile_id)
       grouped       = registrations.group(:user_profile_id)
-      dups          = grouped.count.reject {|x, y| y == 1}.collect {|x, y| x}
+      dups          = grouped.count.reject { |x, y| y == 1 }.collect { |x, y| x }
       registrations = registrations.where(user_profile_id: dups)
     end
     registrations = registrations.page(page).per_page(per_page)
@@ -91,7 +91,7 @@ class RegistrationDatatable
   #------------------------------------------------------------------------------
   def action_list(registration)
     actions = registration.aasm.permissible_events
-    actions.sort! {|x, y| x.to_s <=> y.to_s}
+    actions.sort! { |x, y| x.to_s <=> y.to_s }
 
     output = ''
     actions.each do |action|

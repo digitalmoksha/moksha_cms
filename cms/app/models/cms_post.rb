@@ -61,7 +61,7 @@ class CmsPost < ApplicationRecord
       return (email ? 1 : 0)
     else
       user_list = cms_blog.member_list(:all).to_set
-      cms_blog.user_site_profile_followers.each {|follower| user_list << follower.user}
+      cms_blog.user_site_profile_followers.each { |follower| user_list << follower.user }
       async_send_notification_emails(user_list)
       return user_list.size
     end

@@ -21,8 +21,8 @@ class Lesson < ApplicationRecord
   default_scope           { where(account_id: Account.current.id).order(:row_order) }
 
   scope :published,       -> { where(published: true) }
-  scope :next,            lambda {|row_order, course_id| where("row_order > ? AND course_id = ?", row_order, course_id) }
-  scope :previous,        lambda {|row_order, course_id| where("row_order < ? AND course_id = ?", row_order, course_id) }
+  scope :next,            lambda { |row_order, course_id| where("row_order > ? AND course_id = ?", row_order, course_id) }
+  scope :previous,        lambda { |row_order, course_id| where("row_order < ? AND course_id = ?", row_order, course_id) }
 
   # --- allow menutitle to be blank - it won't appear in navigation
   validates               :title, presence_default_locale: true

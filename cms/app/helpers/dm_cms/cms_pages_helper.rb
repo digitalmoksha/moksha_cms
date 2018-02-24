@@ -20,7 +20,7 @@ module DmCms::CmsPagesHelper
     theme = current_account.theme_data
     unless theme.empty?
       templates = (current_account.theme_data(parent: true)['templates'] || {}).merge(theme['templates'] || {})
-      [['Inherit from parent', '']] + templates.collect {|key, value| [value['name'], key] }
+      [['Inherit from parent', '']] + templates.collect { |key, value| [value['name'], key] }
     else
       nil
     end
@@ -28,7 +28,7 @@ module DmCms::CmsPagesHelper
 
   #------------------------------------------------------------------------------
   def template_name(search_for)
-    template_item = template_menu_list.detect {|x| x[1] == search_for}
+    template_item = template_menu_list.detect { |x| x[1] == search_for }
     template_item ? template_item[0] : ''
   end
 end

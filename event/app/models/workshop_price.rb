@@ -108,7 +108,7 @@ class WorkshopPrice < ApplicationRecord
   # return the payment schedule entry that is before the specified date
   #------------------------------------------------------------------------------
   def specific_payment_schedule(from_date, on_date = Date.today)
-    payment_schedule(from_date).reverse.detect {|item| item[:due_on] <= on_date}
+    payment_schedule(from_date).reverse.detect { |item| item[:due_on] <= on_date }
   end
 
   # date of last scheduled payment, or the onlye

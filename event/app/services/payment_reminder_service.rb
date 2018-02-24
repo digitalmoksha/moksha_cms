@@ -57,7 +57,7 @@ class PaymentReminderService
     result      = false
     start_date  = registration.last_payment_due_on
     if start_date < now
-      index = REMINDER_SCHEDULE.rindex {|x| start_date + x.days <= now}
+      index = REMINDER_SCHEDULE.rindex { |x| start_date + x.days <= now }
       if index
         time_period   = start_date + REMINDER_SCHEDULE[index].days
         needs_sending = registration.payment_reminder_sent_on.nil? || registration.payment_reminder_sent_on < time_period
