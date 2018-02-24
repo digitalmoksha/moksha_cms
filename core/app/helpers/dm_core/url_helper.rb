@@ -91,24 +91,20 @@ module DmCore
     # modification time as its cache-busting asset id.
     #------------------------------------------------------------------------------
     def rails_asset_id(source)
-      if asset_id = ENV["RAILS_ASSET_ID"]
-        asset_id
-      else
-        if @@cache_asset_timestamps && (asset_id = @@asset_timestamps_cache[source])
-          asset_id
-        else
-          path = Rails.root.join('public', source).to_s
-          asset_id = File.exist?(path) ? File.mtime(path).to_i.to_s : ''
+      asset_id = ENV["RAILS_ASSET_ID"]
+      return asset_id if asset_id
+      return asset_id if @@cache_asset_timestamps && (asset_id = @@asset_timestamps_cache[source])
 
-          if @@cache_asset_timestamps
-            @@asset_timestamps_cache_guard.synchronize do
-              @@asset_timestamps_cache[source] = asset_id
-            end
-          end
+      path      = Rails.root.join('public', source).to_s
+      asset_id  = File.exist?(path) ? File.mtime(path).to_i.to_s : ''
 
-          asset_id
+      if @@cache_asset_timestamps
+        @@asset_timestamps_cache_guard.synchronize do
+          @@asset_timestamps_cache[source] = asset_id
         end
       end
+
+      asset_id
     end
 
     # Break out the asset path rewrite in case plugins wish to put the asset id
@@ -118,7 +114,7 @@ module DmCore
       if path && path.respond_to?(:call)
         return path.call(source)
       elsif path && path.is_a?(String)
-        return path % [source]
+        return format(path, source)
       end
 
       asset_id = rails_asset_id(source)

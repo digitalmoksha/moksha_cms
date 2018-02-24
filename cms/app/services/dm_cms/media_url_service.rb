@@ -26,12 +26,10 @@ module DmCms
         else
           @src
         end
+      elsif @protect
+        @src.expand_url("#{account_protected_assets_base}/")
       else
-        if @protect
-          @src.expand_url("#{account_protected_assets_base}/")
-        else
-          MediaFile.url_by_name(@src, version: @version) || IMAGE_MISSING
-        end
+        MediaFile.url_by_name(@src, version: @version) || IMAGE_MISSING
       end
     end
   end

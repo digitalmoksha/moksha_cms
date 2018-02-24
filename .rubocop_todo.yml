@@ -325,15 +325,6 @@ Style/EvalWithLocation:
     - 'cms/app/models/cms_contentitem.rb'
     - 'core/lib/dm_core/csv_exporter.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: format, sprintf, percent
-Style/FormatString:
-  Exclude:
-    - 'core/app/helpers/dm_core/url_helper.rb'
-    - 'event/app/models/registration.rb'
-
 # Offense count: 61
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
@@ -346,15 +337,3 @@ Style/GuardClause:
 Style/HashSyntax:
   Enabled: false
 
-# Offense count: 3
-Style/IdenticalConditionalBranches:
-  Exclude:
-    - 'core/app/helpers/dm_core/url_helper.rb'
-
-# Offense count: 4
-Style/IfInsideElse:
-  Exclude:
-    - 'cms/app/helpers/dm_cms/pages_helper.rb'
-    - 'cms/app/services/dm_cms/media_url_service.rb'
-    - 'core/app/helpers/dm_core/url_helper.rb'
-    - 'event/app/services/payment_reminder_service.rb'

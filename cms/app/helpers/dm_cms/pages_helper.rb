@@ -210,14 +210,13 @@ module DmCms::PagesHelper
       uri = URI.parse(link)
     rescue URI::InvalidURIError
     end
+
     if uri&.host
       link # fully qualified url
+    elsif link.start_with?('/')
+      dm_cms.showpage_url(slug: link[1..-1]) # absolute link to this site, with no host/scheme
     else
-      if link.start_with?('/')
-        dm_cms.showpage_url(slug: link[1..-1]) # absolute link to this site, with no host/scheme
-      else
-        dm_cms.showpage_url(slug: link) # relative link/slug
-      end
+      dm_cms.showpage_url(slug: link) # relative link/slug
     end
   end
 
