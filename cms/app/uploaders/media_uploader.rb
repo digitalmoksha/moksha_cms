@@ -33,7 +33,7 @@ class MediaUploader < CarrierWave::Uploader::Base
     end
   end
 
-  # Modern cameras often produce JPEGs that have a "I should be rotated 90° to the left" flag.
+  # Modern cameras often produce JPEGs that have a "I should be rotated 90deg to the left" flag.
   # Carrierwave ignores this setting, so fix it here
   # https://makandracards.com/makandra/12323-carrierwave-auto-rotate-tagged-jpegs
   #------------------------------------------------------------------------------

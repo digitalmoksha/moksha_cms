@@ -4,7 +4,7 @@ require 'builder'
 #
 #    v.0.2.1
 #
-#    Copyright (c) Rolando Abarca Millán 2005-2006
+#    Copyright (c) Rolando Abarca Millan 2005-2006
 #
 #    rabarca@scio.cl
 #
@@ -175,7 +175,7 @@ module Scio
           xml << create_worksheet(@name)
           # reset the styles-id
           @style_id = 0
-        end # Workbook
+        end
       end
 
       # attempt to create a pdf for the table.
@@ -242,7 +242,7 @@ module Scio
           end
           # draw the cells
           pdf.Cell(c.width, 7, c.name, border, 0, align, fill)
-        end # headers
+        end
         pdf.Ln
 
         # reset the styles
@@ -292,9 +292,9 @@ module Scio
               align = "R" if cstyle.text[:halign] == "Right"
             end
             pdf.Cell(c.width, 7, r[c.name], border, 0, align, fill)
-          end # columns
+          end
           pdf.Ln
-        end # rows
+        end
 
         # salida
         pdf.Output
@@ -390,12 +390,12 @@ module Scio
                   end
                 end
               end
-            end # rows
-          end # Table
-        end # Worksheet
+            end
+          end
+        end
         xml.target!
       end
-    end # SimpleWorkbook
+    end
 
     # Defines a Column for the data. You can set different styles for the
     # header and the cells.
@@ -505,7 +505,7 @@ module Scio
         end
         xml.target!
       end
-    end # SimpleStyle
+    end
   end
 end
 

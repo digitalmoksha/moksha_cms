@@ -118,20 +118,11 @@ Style/EvalWithLocation:
 Style/GuardClause:
   Enabled: false
 
-#------------------------------------------------------------------------------
-
-# Offense count: 51
-# Configuration parameters: Blacklist.
-# Blacklist: decrement!, decrement_counter, increment!, increment_counter, toggle!, touch, update_all, update_attribute, update_column, update_columns, update_counters
-Rails/SkipsModelValidations:
-  Enabled: false
-
-# Offense count: 1
-# Configuration parameters: Environments.
-# Environments: development, test, production
-Rails/UnknownEnv:
+# Offense count: 4
+Style/ClassVars:
   Exclude:
-    - 'core/config/initializers/carrierwave.rb'
+    - 'core/app/helpers/dm_core/url_helper.rb'
+    - 'core/app/models/ability.rb'
 
 # Offense count: 14
 Security/Eval:
@@ -147,24 +138,10 @@ Security/Eval:
     - 'lms/Gemfile'
     - 'newsletter/Gemfile'
 
-# Offense count: 3
-# Configuration parameters: AllowedChars.
-Style/AsciiComments:
-  Exclude:
-    - 'cms/app/uploaders/media_uploader.rb'
-    - 'core/app/uploaders/avatar_uploader.rb'
-    - 'core/lib/dm_core/scio_excel.rb'
+#------------------------------------------------------------------------------
 
-# Offense count: 4
-Style/ClassVars:
-  Exclude:
-    - 'core/app/helpers/dm_core/url_helper.rb'
-    - 'core/app/models/ability.rb'
-
-# Offense count: 11
-Style/CommentedKeyword:
-  Exclude:
-    - 'core/app/controllers/dm_core/application_controller.rb'
-    - 'core/lib/dm_core/scio_excel.rb'
-    - 'newsletter/app/models/newsletter_subscriber.rb'
-
+# Offense count: 51
+# Configuration parameters: Blacklist.
+# Blacklist: decrement!, decrement_counter, increment!, increment_counter, toggle!, touch, update_all, update_attribute, update_column, update_columns, update_counters
+Rails/SkipsModelValidations:
+  Enabled: false

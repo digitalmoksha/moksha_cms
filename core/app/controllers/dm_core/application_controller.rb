@@ -196,7 +196,7 @@ class DmCore::ApplicationController < ActionController::Base
     end
   end
 
-  def content_for(name, content) # no blocks allowed yet
+  def content_for(name, content)
     @_content_for ||= {}
     if @_content_for[name].respond_to?(:<<)
       @_content_for[name] << content
