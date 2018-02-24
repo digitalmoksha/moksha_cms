@@ -66,21 +66,20 @@ module DmCms::PagesHelper
   def main_menu(options = {})
     return '' if (root = CmsPage.roots.first).nil?
 
-    menu_str                 = ''
-    options[:ul]             = ''
-    options[:ul]            += "class=\"#{options[:class]}\" "  unless options[:class].blank?
-    options[:ul]            += "id=\"#{options[:id]}\" "        unless options[:id].blank?
-    options[:include_root]   = root if options[:include_home]
-    options[:active_class] ||= 'current'
-    children                 = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
-    menu_str, submenu_active = case options[:type]
-                               when :bs3
-                                 menu_from_pages_bs3(children, options)
-                               when :bs4
-                                 menu_from_pages_bs4(children, options)
-                               else
-                                 menu_from_pages(children, options)
-                               end
+    options[:ul]              = ''
+    options[:ul]             += "class=\"#{options[:class]}\" "  unless options[:class].blank?
+    options[:ul]             += "id=\"#{options[:id]}\" "        unless options[:id].blank?
+    options[:include_root]    = root if options[:include_home]
+    options[:active_class]  ||= 'current'
+    children                  = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
+    menu_str, _submenu_active = case options[:type]
+                                when :bs3
+                                  menu_from_pages_bs3(children, options)
+                                when :bs4
+                                  menu_from_pages_bs4(children, options)
+                                else
+                                  menu_from_pages(children, options)
+                                end
     return menu_str.html_safe
   end
 

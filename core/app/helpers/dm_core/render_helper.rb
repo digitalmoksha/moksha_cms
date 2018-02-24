@@ -37,14 +37,15 @@ module DmCore
       options = { include_blank: options, as: :id } if !options.is_a?(Hash)
 
       collection = (options[:include_blank] ? [[" ", ""]] : [])
-      case options[:as]
-      when :code
-        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_CODE + DmCore::Country.order('english_name').collect { |p| [p.english_name, p.code] }
-      when :name
-        collection += ::StateCountryConstants::PRIMARY_COUNTRIES_NAME + DmCore::Country.order('english_name').collect { |p| [p.english_name, p.english_name] }
-      else
-        collection += ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.order('english_name').collect { |p| [p.english_name, p.id] }
-      end
+      collection += case options[:as]
+                    when :code
+                      ::StateCountryConstants::PRIMARY_COUNTRIES_CODE + DmCore::Country.order('english_name').collect { |p| [p.english_name, p.code] }
+                    when :name
+                      ::StateCountryConstants::PRIMARY_COUNTRIES_NAME + DmCore::Country.order('english_name').collect { |p| [p.english_name, p.english_name] }
+                    else
+                      ::StateCountryConstants::PRIMARY_COUNTRIES + DmCore::Country.order('english_name').collect { |p| [p.english_name, p.id] }
+                    end
+      collection
     end
 
     # Wrapper to pull a list of countries from our table

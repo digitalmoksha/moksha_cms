@@ -14,16 +14,6 @@ Cop/RedirectWithStatus:
 GitlabSecurity/PublicSend:
   Enabled: false
 
-# Offense count: 1
-# Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
-Lint/UselessAccessModifier:
-  Exclude:
-    - 'core/app/controllers/dm_core/concerns/confirmations_controller.rb'
-
-# Offense count: 41
-Lint/UselessAssignment:
-  Enabled: false
-
 # Offense count: 6
 Metrics/AbcSize:
   Max: 143

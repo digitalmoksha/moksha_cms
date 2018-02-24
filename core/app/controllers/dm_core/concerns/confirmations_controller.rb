@@ -7,8 +7,6 @@ module DmCore
       included do
       end
 
-      protected
-
       # Example
       # The path used after confirmation.
       #------------------------------------------------------------------------------

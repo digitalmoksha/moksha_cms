@@ -14,7 +14,8 @@ class PaymentReminderMailer < DmCore::SiteMailer
     @values                     = registration.to_liquid
 
     theme(account.account_prefix)
-    headers = { "Reply-To" => account.preferred_smtp_from_email, "Return-Path" => account.preferred_smtp_from_email }
+    headers({ "Reply-To" => account.preferred_smtp_from_email, "Return-Path" => account.preferred_smtp_from_email })
+
     mail(to: @recipients, subject: @subject,
          bcc: account.preferred_archive_email,
          template_path: 'layouts/email_templates',

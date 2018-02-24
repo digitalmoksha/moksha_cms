@@ -27,7 +27,7 @@ describe Lesson do
 
     #------------------------------------------------------------------------------
     it 'raises an error when same slug is specified for lessons in the same course' do
-      lesson1 = create(:lesson, course: course1, slug: 'test-slug')
+      create(:lesson, course: course1, slug: 'test-slug')
       lesson2 = build(:lesson, course: course1, slug: 'test-slug')
       expect(lesson2).not_to be_valid
       expect(lesson2.errors[:slug]).to include("has already been taken")
@@ -48,7 +48,7 @@ describe Lesson do
     it '#next published lesson' do
       lesson1 = create(:lesson,   course: course1, published: true)
       lesson2 = create(:lesson_2, course: course1, published: true)
-      lesson3 = create(:lesson_3, course: course1, published: false)
+      create(:lesson_3, course: course1, published: false)
       expect(lesson1.next).to eq lesson2
       expect(lesson2.next).to eq nil
     end

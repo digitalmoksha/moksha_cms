@@ -12,23 +12,29 @@ module Liquid
       out  = "<blockquote #{[id, dclass, style].join(' ')}>"
       out += output
       out += "\r\n<footer markdown='0'><cite>#{@attributes['author']}</cite></footer>" unless @attributes['author'].blank?
-      out += "</blockquote>"
+      out +  "</blockquote>"
     end
 
     def self.details
-      { name: self.tag_name,
+      {
+        name: self.tag_name,
         summary: 'HTML blockquote',
         category: 'structure',
-        description: <<-END_OF_DESCRIPTION
-Outpus an HTML 'blockquote' with optional author.  You can specify id, class, and style.
-
-~~~
-{% quote author: 'Favorite Person', id: some_id, class: some_class, style: some_style %}
-  ...content
-{% endquote %}
-~~~
-END_OF_DESCRIPTION
+        description: self.description
       }
+    end
+
+    #------------------------------------------------------------------------------
+    def self.description
+      <<-END_OF_DESCRIPTION.strip_heredoc
+      Outpus an HTML 'blockquote' with optional author.  You can specify id, class, and style.
+
+      ~~~
+      {% quote author: 'Favorite Person', id: some_id, class: some_class, style: some_style %}
+        ...content
+      {% endquote %}
+      ~~~
+      END_OF_DESCRIPTION
     end
   end
 

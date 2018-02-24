@@ -86,7 +86,7 @@ module DmForum
         style       = "style='color:green'"
         recent_txt  = I18n.t('fms.views_forums.recent_activity')
       else
-        stlye       = ''
+        style       = ''
         recent_txt  = I18n.t('fms.views_forums.no_recent_activity')
       end
       if forum_topic.locked?

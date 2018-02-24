@@ -15,6 +15,7 @@ describe Course do
       course1 = create(:course)
       Account.current = create(:second_account)
       course2 = create(:course)
+
       expect(course1.account_id).not_to eq course2.account_id
       expect(course1.slug).to eq course2.slug
     end
@@ -23,14 +24,16 @@ describe Course do
     it 'creates a unique auto-generated slug for courses in the same account' do
       course1 = create(:course)
       course2 = create(:course, slug: nil)
+
       expect(course1.account_id).to eq course2.account_id
       expect(course1.slug).not_to eq course2.slug
     end
 
     #------------------------------------------------------------------------------
     it 'raises an error when same slug is specified for courses in the same account' do
-      course1 = create(:course, slug: 'test')
+      create(:course, slug: 'test')
       course2 = build(:course, slug: 'test')
+
       expect(course2).not_to be_valid
       expect(course2.errors[:slug]).to include("has already been taken")
     end
@@ -38,6 +41,7 @@ describe Course do
     #------------------------------------------------------------------------------
     it 'creates an auto-generated slug based on the title' do
       course = create(:course, slug: nil)
+
       expect(course.slug).to eq 'test-course'
     end
   end

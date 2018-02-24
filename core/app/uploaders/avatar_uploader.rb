@@ -29,9 +29,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # https://makandracards.com/makandra/12323-carrierwave-auto-rotate-tagged-jpegs
   #------------------------------------------------------------------------------
   def auto_orient
-    manipulate! do |img|
-      img = img.auto_orient
-    end
+    manipulate!(&:auto_orient)
   end
 
   # Create different versions of your uploaded files:

@@ -42,9 +42,9 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def groupings
     begin
-      api       = MailchimpNewsletter.api
-      groupings = api.lists.interest_groupings(id: self.mc_id)
-    rescue Gibbon::MailChimpError => exception
+      api = MailchimpNewsletter.api
+      api.lists.interest_groupings(id: self.mc_id)
+    rescue Gibbon::MailChimpError
       # groupings are not enabled for this list
       return []
     end
@@ -132,15 +132,15 @@ class MailchimpNewsletter < Newsletter
     list_params[:limit] = options[:limit] ? options[:limit] : 100
     list_params[:filters][:folder_id] = options[:folder_id] if options[:folder_id]
 
-    campaigns = api.campaigns.list(list_params)
+    api.campaigns.list(list_params)
   end
 
   # Get simplified list of sent campaigns. Useful for showing archived
   # campaigns on the front end
   #------------------------------------------------------------------------------
   def sent_campaign_list_simple(options = { start: 0, limit: 100 })
-    list      = sent_campaign_list(options)
-    campaigns = list['data'].map do |item|
+    list = sent_campaign_list(options)
+    list['data'].map do |item|
       { subject: item['subject'], sent_on: item['send_time'].to_datetime, archive_url: item['archive_url'] }
     end
   end

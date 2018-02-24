@@ -36,11 +36,11 @@ module DmLms
         #------------------------------------------------------------------------------
         def calculate_interval(answer_quality, prev_interval, prev_ef)
           if prev_interval == 0
-            calculated_interval = (answer_quality == 3 ? 6 : 1)
+            (answer_quality == 3 ? 6 : 1)
           elsif prev_interval == 1
-            calculated_interval = 6
+            6
           else
-            calculated_interval = (prev_interval * prev_ef).to_i
+            (prev_interval * prev_ef).to_i
           end
         end
 

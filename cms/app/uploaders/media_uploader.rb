@@ -39,9 +39,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   #------------------------------------------------------------------------------
   def auto_orient
     unless svg?(self)
-      manipulate! do |img|
-        img = img.auto_orient
-      end
+      manipulate!(&:auto_orient)
     end
   end
 

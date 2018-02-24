@@ -85,7 +85,7 @@ class RegistrationDatatable
     actions += '<ul class="dropdown-menu">'
     actions += action_list(registration)
     actions += '</ul>'
-    actions += '</div>'
+    actions +  '</div>'
   end
 
   #------------------------------------------------------------------------------

@@ -8,9 +8,6 @@ describe DmCms::PagesHelper, type: :helper do
     def user_signed_in?
       user.present?
     end
-    # def current_page?(page)
-    #   true
-    # end
   end
 
   setup_account
@@ -24,24 +21,28 @@ describe DmCms::PagesHelper, type: :helper do
     #------------------------------------------------------------------------------
     it 'redirects to an internal slug (pagelink)' do
       link = 'test-page'
+
       expect(redirect_link(link)).to eq 'http://test.example.com/en/test-page'
     end
 
     #------------------------------------------------------------------------------
     it 'redirects to a relative page' do
       link = 'some/test/path'
+
       expect(redirect_link(link)).to eq 'http://test.example.com/en/some/test/path'
     end
 
     #------------------------------------------------------------------------------
     it 'redirects to an absolute page on the site' do
       link = '/some/other/path'
+
       expect(redirect_link(link)).to eq 'http://test.example.com/en/some/other/path'
     end
 
     #------------------------------------------------------------------------------
     it 'redirects to an external link' do
       link = 'https://another.example.com/test-page-2'
+
       expect(redirect_link(link)).to eq 'https://another.example.com/test-page-2'
     end
   end
@@ -50,6 +51,7 @@ describe DmCms::PagesHelper, type: :helper do
     #------------------------------------------------------------------------------
     it 'redirects to an internal slug' do
       page = create(:page, menutitle: 'Go Here')
+
       expect(page_link(page)).to eq '<a href="http://test.example.com/en/test-page">Go Here</a>'
       expect(page_link(page, 'No Go Here')).to eq '<a href="http://test.example.com/en/test-page">No Go Here</a>'
     end
@@ -57,6 +59,7 @@ describe DmCms::PagesHelper, type: :helper do
     #------------------------------------------------------------------------------
     it 'redirects to a relative page' do
       page = create(:page_internal_pagelink, link: 'some/test/path', menutitle: 'Go Here')
+
       expect(page_link(page)).to eq '<a href="http://test.example.com/en/some/test/path">Go Here</a>'
       expect(page_link(page, 'No Go Here')).to eq '<a href="http://test.example.com/en/some/test/path">No Go Here</a>'
     end
@@ -64,6 +67,7 @@ describe DmCms::PagesHelper, type: :helper do
     #------------------------------------------------------------------------------
     it 'redirects to an external page and opens in another window' do
       page = create(:page_external_link_new_window, menutitle: 'Go Here')
+
       expect(page_link(page)).to eq '<a target="_blank" href="http://another.example.com/en/test-page">Go Here</a>'
     end
   end
@@ -79,7 +83,8 @@ describe DmCms::PagesHelper, type: :helper do
 
     it 'returns nothing if nothing published' do
       root.update_attribute(:published, false)
-      toplevel = root.children.create(slug: 'top1', published: false, title: 'Top Level 1')
+      root.children.create(slug: 'top1', published: false, title: 'Top Level 1')
+
       expect(main_menu).to eq ''
     end
 
@@ -89,24 +94,27 @@ describe DmCms::PagesHelper, type: :helper do
 
     it 'does not return root page if menutitle is empty' do
       root.update_attribute(:menutitle, nil)
-      # root = CmsPage.create(slug: 'index', template: 'index', published: true, title: 'Front Page')
+
       expect(main_menu(include_home: true)).to eq ''
     end
 
     it 'returns top level page' do
-      toplevel = root.children.create(slug: 'top1', published: true, title: 'Top Level 1', menutitle: 'Top')
+      root.children.create(slug: 'top1', published: true, title: 'Top Level 1', menutitle: 'Top')
+
       expect(main_menu).to eq "<ul ><li><a href=\"http://test.example.com/en/top1\">Top</a></li></ul>"
     end
 
     it 'returns second level page' do
       toplevel = root.children.create(slug: 'top1', published: true, title: 'Top Level 1', menutitle: 'Top')
-      secondlevel = toplevel.children.create(slug: 'second1', published: true, title: 'Second Level 1', menutitle: 'Second')
+      toplevel.children.create(slug: 'second1', published: true, title: 'Second Level 1', menutitle: 'Second')
+
       expect(main_menu).to eq "<ul ><li><a href=\"http://test.example.com/en/top1\">Top</a><ul ><li><a href=\"http://test.example.com/en/second1\">Second</a></li></ul></li></ul>"
     end
 
     it 'returns second level page with a class on submenu' do
       toplevel = root.children.create(slug: 'top1', published: true, title: 'Top Level 1', menutitle: 'Top')
-      secondlevel = toplevel.children.create(slug: 'second1', published: true, title: 'Second Level 1', menutitle: 'Second')
+      toplevel.children.create(slug: 'second1', published: true, title: 'Second Level 1', menutitle: 'Second')
+
       expect(main_menu(sub_menu_1: 'sub-menu')).to eq "<ul ><li><a href=\"http://test.example.com/en/top1\">Top</a><ul class=\"sub-menu\"><li><a href=\"http://test.example.com/en/second1\">Second</a></li></ul></li></ul>"
     end
 
@@ -120,13 +128,15 @@ describe DmCms::PagesHelper, type: :helper do
       end
 
       it 'returns two pages' do
-        toplevel = root.children.create(slug: 'top1', published: true, title: 'Top Level 1', menutitle: 'Top')
+        root.children.create(slug: 'top1', published: true, title: 'Top Level 1', menutitle: 'Top')
+
         expect(main_menu(include_home: true, type: :bs4)).to eq '<ul ><li class="nav-item"><a class="nav-link" href="http://test.example.com/en/index">Home</a></li><li class="nav-item"><a class="nav-link" href="http://test.example.com/en/top1">Top</a></li></ul>'
       end
 
       it 'returns second level page' do
         toplevel = root.children.create(slug: 'top1', published: true, title: 'Top Level 1', menutitle: 'Top')
-        secondlevel = toplevel.children.create(slug: 'second1', published: true, title: 'Second Level 1', menutitle: 'Second')
+        toplevel.children.create(slug: 'second1', published: true, title: 'Second Level 1', menutitle: 'Second')
+
         expect(main_menu(class: 'nav', type: :bs4)).to eq '<ul class="nav" ><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="http://test.example.com/en/top1">Top <b class="caret"></b></a><ul class="dropdown-menu"><li class="nav-item"><a class="nav-link" href="http://test.example.com/en/second1">Second</a></li></ul></li></ul>'
       end
     end

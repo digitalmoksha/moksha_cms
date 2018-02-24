@@ -65,7 +65,8 @@ class MediaFile < ApplicationRecord
     components  = name.split('/')
     filename    = components[-1]
     folder      = components[-2] || ''
-    asset       = MediaFile.where(folder: folder, media: filename).first
+
+    MediaFile.where(folder: folder, media: filename).first
   end
 
   private

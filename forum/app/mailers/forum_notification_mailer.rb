@@ -20,7 +20,8 @@ class ForumNotificationMailer < DmCore::SiteMailer
       @forum_link     = url_helpers.forum_show_url(topic.forum.slug, locale: I18n.locale, host: account.url_host)
 
       theme(account.account_prefix)
-      headers = { "Return-Path" => account.preferred_smtp_from_email }
+      headers({ "Return-Path" => account.preferred_smtp_from_email })
+
       mail(from: account.preferred_smtp_from_email,
            reply_to: account.preferred_smtp_from_email,
            to: @recipients, subject: @subject) do |format|

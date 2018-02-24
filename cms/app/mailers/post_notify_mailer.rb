@@ -22,7 +22,8 @@ class PostNotifyMailer < DmCore::SiteMailer
       @header_image               = post.cms_blog.image_email_header || post.cms_blog.header_image
 
       theme(account.account_prefix)
-      headers = { "Return-Path" => account.preferred_blog_from_email || account.preferred_smtp_from_email }
+      headers({ "Return-Path" => account.preferred_blog_from_email || account.preferred_smtp_from_email })
+
       mail(from: account.preferred_blog_from_email || account.preferred_smtp_from_email,
            reply_to: account.preferred_blog_from_email || account.preferred_smtp_from_email,
            to: @recipients, subject: @subject) do |format|

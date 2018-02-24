@@ -16,6 +16,7 @@ describe LessonPage do
       teaching2 = create(:teaching)
       page1 = create(:lesson_page, lesson: lesson1, item: teaching1)
       page2 = create(:lesson_page, lesson: lesson2, item: teaching2)
+
       expect(page1.slug).to eq page2.slug
     end
 
@@ -25,6 +26,7 @@ describe LessonPage do
       teaching2 = create(:teaching)
       page1 = create(:lesson_page, lesson: lesson1, item: teaching1, slug: nil)
       page2 = create(:lesson_page, lesson: lesson2, item: teaching2, slug: nil)
+
       expect(page1.slug).to eq page2.slug
     end
 
@@ -32,8 +34,9 @@ describe LessonPage do
     it 'raises an error when same slug is specified for lessons in the same course' do
       teaching1 = create(:teaching)
       teaching2 = create(:teaching)
-      page1 = create(:lesson_page, lesson: lesson1, item: teaching1, slug: 'test')
+      create(:lesson_page, lesson: lesson1, item: teaching1, slug: 'test')
       page2 = build(:lesson_page, lesson: lesson1, item: teaching2, slug: 'test')
+
       expect(page2).not_to be_valid
       expect(page2.errors[:slug]).to include("has already been taken")
     end
@@ -42,8 +45,9 @@ describe LessonPage do
     it 'creates a unique auto-generated slug for lessons in the same course' do
       teaching1 = create(:teaching)
       teaching2 = create(:teaching)
-      page1 = create(:lesson_page, lesson: lesson1, item: teaching1, slug: nil)
-      page2 = create(:lesson_page, lesson: lesson1, item: teaching2, slug: nil)
+      create(:lesson_page, lesson: lesson1, item: teaching1, slug: nil)
+      create(:lesson_page, lesson: lesson1, item: teaching2, slug: nil)
+
       expect(lesson1.slug).not_to eq lesson2.slug
     end
   end
@@ -58,7 +62,8 @@ describe LessonPage do
     it '#next published lesson_page' do
       page1 = create(:lesson_page,   lesson: lesson, published: true, item: create(:teaching))
       page2 = create(:lesson_page_2, lesson: lesson, published: true, item: create(:teaching_2))
-      page3 = create(:lesson_page_3, lesson: lesson, published: false, item: create(:teaching_3))
+      create(:lesson_page_3, lesson: lesson, published: false, item: create(:teaching_3))
+
       expect(page1.next).to eq page2
       expect(page2.next).to eq nil
     end
@@ -67,6 +72,7 @@ describe LessonPage do
     it '#next unpublished lesson_page' do
       page1 = create(:lesson_page,   lesson: lesson, published: true, item: create(:teaching))
       page2 = create(:lesson_page_2, lesson: lesson, published: false, item: create(:teaching_2))
+
       expect(page1.next(published_only: false)).to eq page2
     end
 
@@ -75,6 +81,7 @@ describe LessonPage do
       page1 = create(:lesson_page,   lesson: lesson, published: false, item: create(:teaching))
       page2 = create(:lesson_page_2, lesson: lesson, published: true, item: create(:teaching_2))
       page3 = create(:lesson_page_3, lesson: lesson, published: true, item: create(:teaching_3))
+
       expect(page1.previous).to eq nil
       expect(page2.previous).to eq nil
       expect(page3.previous).to eq page2
@@ -84,6 +91,7 @@ describe LessonPage do
     it '#previous unpublished lesson_page' do
       page1 = create(:lesson_page,   lesson: lesson, published: true, item: create(:teaching))
       page2 = create(:lesson_page_2, lesson: lesson, published: false, item: create(:teaching_2))
+
       expect(page2.previous(published_only: false)).to eq page1
     end
 
@@ -92,6 +100,7 @@ describe LessonPage do
       page1 = create(:lesson_page,   lesson: lesson,  published: true,  item: create(:teaching))
       page2 = create(:lesson_page_2, lesson: lesson2, published: true,  item: create(:teaching_2))
       page3 = create(:lesson_page_3, lesson: lesson3, published: false, item: create(:teaching_3))
+
       expect(page1.next).to eq page2
       expect(page2.next).to eq nil
       expect(page2.next(published_only: false)).to eq page3
@@ -104,6 +113,7 @@ describe LessonPage do
       page1 = create(:lesson_page,   lesson: lesson,  published: false, item: create(:teaching))
       page2 = create(:lesson_page_2, lesson: lesson2, published: true, item: create(:teaching_2))
       page3 = create(:lesson_page_3, lesson: lesson3, published: true, item: create(:teaching_3))
+
       expect(page3.previous).to eq page2
       expect(page2.previous).to eq nil
       expect(page2.previous(published_only: false)).to eq page1

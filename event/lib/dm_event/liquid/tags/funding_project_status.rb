@@ -5,7 +5,6 @@ module Liquid
   class FundingProjectStatus < DmCore::LiquidBlock
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::AssetTagHelper
-    # include Sprockets::Rails::Helper
     include DmCore::UrlHelper
     include DmCore::ParamsHelper
 
@@ -32,19 +31,21 @@ module Liquid
 
     #------------------------------------------------------------------------------
     def self.details
-      { name: self.tag_name,
+      {
+        name: self.tag_name,
         summary: 'Funding Project Status',
-        description: "",
-        example: self.example,
-        category: 'structure' }
+        category: 'structure',
+        description: self.description
+      }
     end
 
-    def self.example
-      example = <<-END_OF_STRING
-{% funding_project_status  %}
-...content
-{% endfunding_project_status %}
-END_OF_STRING
+    #------------------------------------------------------------------------------
+    def self.description
+      <<-END_OF_DESCRIPTION.strip_heredoc
+        {% funding_project_status  %}
+        ...content
+        {% endfunding_project_status %}
+      END_OF_DESCRIPTION
     end
   end
 

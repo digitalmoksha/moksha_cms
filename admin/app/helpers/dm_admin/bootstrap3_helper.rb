@@ -77,7 +77,6 @@ module DmAdmin::Bootstrap3Helper
     options[:class]         ||= ''
     options[:explanation]   ||= ''
     class_options             = "well " + options[:class]
-    heading                   = ''
 
     content = with_output_buffer(&block)
     content_tag :div do
