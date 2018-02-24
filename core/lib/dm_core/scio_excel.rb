@@ -480,18 +480,26 @@ module Scio
           end
           if @borders > 0
             xml.Borders do
-              xml.Border "ss:Position" => "Bottom",
-                         "ss:LineStyle" => "Continuous",
-                         "ss:Weight" => "1" if @borders & BORDER_BOTTOM > 0
-              xml.Border "ss:Position" => "Left",
-                         "ss:LineStyle" => "Continuous",
-                         "ss:Weight" => "1" if @borders & BORDER_LEFT > 0
-              xml.Border "ss:Position" => "Right",
-                         "ss:LineStyle" => "Continuous",
-                         "ss:Weight" => "1" if @borders & BORDER_RIGHT > 0
-              xml.Border "ss:Position" => "Top",
-                         "ss:LineStyle" => "Continuous",
-                         "ss:Weight" => "1" if @borders & BORDER_TOP > 0
+              if @borders & BORDER_BOTTOM > 0
+                xml.Border "ss:Position" => "Bottom",
+                           "ss:LineStyle" => "Continuous",
+                           "ss:Weight" => "1"
+              end
+              if @borders & BORDER_LEFT > 0
+                xml.Border "ss:Position" => "Left",
+                           "ss:LineStyle" => "Continuous",
+                           "ss:Weight" => "1"
+              end
+              if @borders & BORDER_RIGHT > 0
+                xml.Border "ss:Position" => "Right",
+                           "ss:LineStyle" => "Continuous",
+                           "ss:Weight" => "1"
+              end
+              if @borders & BORDER_TOP > 0
+                xml.Border "ss:Position" => "Top",
+                           "ss:LineStyle" => "Continuous",
+                           "ss:Weight" => "1"
+              end
             end
           end
           xml.Interior "ss:Color" => @bgcolor, "ss:Pattern" => "Solid" unless @bgcolor.nil?

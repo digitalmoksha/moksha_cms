@@ -94,6 +94,19 @@ Style/NestedTernaryOperator:
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'forum/app/controllers/dm_forum/forum_comments_controller.rb'
 
+# Offense count: 7
+Style/MixinUsage:
+  Exclude:
+    - 'admin/app/helpers/dm_admin/application_helper.rb'
+    - 'cms/spec/helpers/pages_helper_spec.rb'
+    - 'core/lib/dm_core.rb'
+    - 'core/spec/helpers/account_helper_spec.rb'
+
+# Offense count: 1
+Style/MethodMissing:
+  Exclude:
+    - 'core/app/presenters/base_presenter.rb'
+
 #------------------------------------------------------------------------------
 
 # Offense count: 4
@@ -360,35 +373,3 @@ Style/Lambda:
     - 'event/app/models/workshop.rb'
     - 'lms/app/models/lesson.rb'
     - 'lms/app/models/lesson_page.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/LineEndConcatenation:
-  Exclude:
-    - 'forum/app/models/forum_comment.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/MethodCallWithoutArgsParentheses:
-  Exclude:
-    - 'core/app/models/dm_core/concerns/user.rb'
-
-# Offense count: 1
-Style/MethodMissing:
-  Exclude:
-    - 'core/app/presenters/base_presenter.rb'
-
-# Offense count: 7
-Style/MixinUsage:
-  Exclude:
-    - 'admin/app/helpers/dm_admin/application_helper.rb'
-    - 'cms/spec/helpers/pages_helper_spec.rb'
-    - 'core/lib/dm_core.rb'
-    - 'core/spec/helpers/account_helper_spec.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/MultilineIfModifier:
-  Exclude:
-    - 'core/lib/dm_core/scio_excel.rb'
-

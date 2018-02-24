@@ -67,7 +67,7 @@ module DmCore
         #------------------------------------------------------------------------------
         def ensure_site_profile_exists
           if current_site_profile.nil?
-            user_site_profiles.create().update_attribute(:account_id, Account.current.id)
+            user_site_profiles.create.update_attribute(:account_id, Account.current.id)
             reload
           end
         end

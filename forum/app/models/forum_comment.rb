@@ -35,7 +35,7 @@ class ForumComment < Comment
     #--- (Beast) had to change the other join string since it conflicts when we bring parents in
     options[:conditions] ||= ["LOWER(#{ForumComment.table_name}.body) LIKE ?", "%#{query}%"] unless query.blank?
     options[:select]     ||= "#{ForumComment.table_name}.*, #{ForumTopic.table_name}.title as topic_title, f.name as forum_name"
-    options[:joins]      ||= "inner join #{ForumTopic.table_name} on #{ForumComment.table_name}.topic_id = #{ForumTopic.table_name}.id " +
+    options[:joins]      ||= "inner join #{ForumTopic.table_name} on #{ForumComment.table_name}.topic_id = #{ForumTopic.table_name}.id " \
       "inner join #{Forum.table_name} as f on #{ForumTopic.table_name}.forum_id = f.id"
     options[:order]      ||= "#{ForumComment.table_name}.created_at DESC"
     options[:count]      ||= { :select => "#{ForumComment.table_name}.id" }
