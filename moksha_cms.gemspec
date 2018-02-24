@@ -1,4 +1,3 @@
-# encoding: UTF-8
 require_relative 'core/lib/dm_core/version.rb'
 
 Gem::Specification.new do |s|

@@ -514,7 +514,7 @@ class String
   def to_rgb
     raise "Invalid Hex Color" if size != 7 || self[0] != 35
 
-    rgb = Hash.new
+    rgb = {}
     rgb[:red]   = self[1, 2].to_i(16)
     rgb[:green] = self[3, 2].to_i(16)
     rgb[:blue]  = self[5, 2].to_i(16)

@@ -107,6 +107,12 @@ Style/MethodMissing:
   Exclude:
     - 'core/app/presenters/base_presenter.rb'
 
+# Offense count: 2
+Style/EvalWithLocation:
+  Exclude:
+    - 'cms/app/models/cms_contentitem.rb'
+    - 'core/lib/dm_core/csv_exporter.rb'
+
 #------------------------------------------------------------------------------
 
 # Offense count: 4
@@ -287,12 +293,6 @@ Style/EmptyElse:
     - 'cms/app/models/media_file.rb'
     - 'newsletter/app/models/mailchimp_newsletter.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/EmptyLiteral:
-  Exclude:
-    - 'core/lib/dm_core/scio_excel.rb'
-
 # Offense count: 18
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
@@ -312,18 +312,6 @@ Style/EmptyMethod:
     - 'lms/app/controllers/dm_lms/admin/teachings_controller.rb'
     - 'newsletter/app/controllers/dm_newsletter/admin/newsletters_controller.rb'
     - 'newsletter/app/models/newsletter.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/Encoding:
-  Exclude:
-    - 'moksha_cms.gemspec'
-
-# Offense count: 2
-Style/EvalWithLocation:
-  Exclude:
-    - 'cms/app/models/cms_contentitem.rb'
-    - 'core/lib/dm_core/csv_exporter.rb'
 
 # Offense count: 61
 # Configuration parameters: MinBodyLength.
