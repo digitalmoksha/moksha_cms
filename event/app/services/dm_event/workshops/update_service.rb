@@ -4,7 +4,9 @@ module DmEvent::Workshops
 
     #------------------------------------------------------------------------------
     def initialize(workshop, params, options = {})
-      @workshop, @params, @options = workshop, params.dup, options
+      @workshop = workshop
+      @params   = params.dup
+      @options  = options
     end
 
     #------------------------------------------------------------------------------

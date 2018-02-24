@@ -4,7 +4,10 @@ module DmCore
       include DmCore::ServiceSupport
 
       def initialize(payment_history, amount, user_profile, options)
-        @payment_history, @amount, @user_profile, @options = payment_history, amount, user_profile, options
+        @payment_history  = payment_history
+        @amount           = amount
+        @user_profile     = user_profile
+        @options          = options
       end
 
       #------------------------------------------------------------------------------

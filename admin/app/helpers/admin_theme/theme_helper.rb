@@ -130,7 +130,7 @@ module AdminTheme
     #------------------------------------------------------------------------------
     def slim_progress_bar(options = {})
       #--- if no label specified, value will not get displayed properly
-      options[:label] = '&nbsp;'.html_safe if (options[:label].blank? && options[:value])
+      options[:label] = '&nbsp;'.html_safe if options[:label].blank? && options[:value]
 
       render(:partial => 'admin_theme/shared/slim_progress_bar',
              :locals => { label: options[:label],

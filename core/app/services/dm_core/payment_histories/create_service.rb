@@ -4,7 +4,10 @@ module DmCore
       include DmCore::ServiceSupport
 
       def initialize(anchor_id, amount, user_profile, options)
-        @anchor_id, @amount, @user_profile, @options = anchor_id, amount, user_profile, options
+        @anchor_id    = anchor_id
+        @amount       = amount
+        @user_profile = user_profile
+        @options      = options
       end
 
       #------------------------------------------------------------------------------

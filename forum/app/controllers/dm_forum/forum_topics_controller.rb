@@ -55,7 +55,11 @@ class DmForum::ForumTopicsController < DmForum::ApplicationController
     # current_user.revise @topic, params[:topic]
     attributes = forum_topic_params
     @forum_topic.title = attributes[:title] if attributes.key?(:title)
-    @forum_topic.sticky, @forum_topic.locked, @forum_topic.forum_id = attributes[:sticky], attributes[:locked], attributes[:forum_id] if can?(:moderate, @forum_topic.forum)
+    if can?(:moderate, @forum_topic.forum)
+      @forum_topic.sticky   = attributes[:sticky]
+      @forum_topic.locked   = attributes[:locked]
+      @forum_topic.forum_id = attributes[:forum_id]
+    end
     @forum_topic.save
     if @forum_topic.errors.empty?
       flash[:notice] = 'Topic was successfully updated.'

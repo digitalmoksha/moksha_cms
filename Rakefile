@@ -1,7 +1,7 @@
 require 'rake'
 require 'rubygems/package_task'
 
-MOKSHA_GEMS = %w(admin core cms event forum newsletter lms).freeze
+MOKSHA_GEMS = %w[admin core cms event forum newsletter lms].freeze
 
 task default: :test
 

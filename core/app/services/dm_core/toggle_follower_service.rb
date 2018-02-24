@@ -6,7 +6,8 @@ module DmCore
 
     #------------------------------------------------------------------------------
     def initialize(user, object_to_follow)
-      @user, @object_to_follow = user, object_to_follow
+      @user = user
+      @object_to_follow = object_to_follow
     end
 
     # returns true if the item is now being followed, else false

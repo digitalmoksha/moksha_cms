@@ -159,7 +159,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   #------------------------------------------------------------------------------
   def extension_whitelist
-    %w(jpg jpeg gif png svg mp3 mp4 m4v ogg webm pdf css js)
+    %w[jpg jpeg gif png svg mp3 mp4 m4v ogg webm pdf css js]
   end
 
   protected
