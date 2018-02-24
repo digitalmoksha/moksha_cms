@@ -190,7 +190,7 @@ module DmCore
           column_definitions <<     ['Country',           'item.user_profile.country.code']
           column_definitions <<     ['Confirmed on',      'item.confirmed_at.to_date', 75, { type: 'DateTime', numberformat: 'd mmm, yyyy' }]
 
-          return column_definitions
+          column_definitions
         end
       end
     end

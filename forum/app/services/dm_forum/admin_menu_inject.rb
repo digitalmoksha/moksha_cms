@@ -8,7 +8,7 @@ module DmForum
                   active_links: [DmForum::Engine.routes.url_helpers.admin_forum_categories_path(locale: I18n.locale),
                                  DmForum::Engine.routes.url_helpers.admin_forums_path(locale: I18n.locale)] }
       end
-      return menu
+      menu
     end
   end
 end

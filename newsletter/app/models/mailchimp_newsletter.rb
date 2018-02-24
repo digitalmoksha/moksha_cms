@@ -21,7 +21,7 @@ class MailchimpNewsletter < Newsletter
         information[:subscriber] = (subscriber&.subscribed? ? subscriber : nil)
       end
     end
-    return information
+    information
   end
 
   # Make sure list id is specified, and it's valid with MailChimp
@@ -154,7 +154,7 @@ class MailchimpNewsletter < Newsletter
 
   #------------------------------------------------------------------------------
   def map_error_to_msg(code)
-    return MAILCHIMP_ERRORS[code] ? "nms.#{MAILCHIMP_ERRORS[code]}" : 'nms.mc_unknown_error'
+    MAILCHIMP_ERRORS[code] ? "nms.#{MAILCHIMP_ERRORS[code]}" : 'nms.mc_unknown_error'
   end
 
   # Grab an API object to work with
@@ -171,7 +171,7 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def email_subscribed?(email)
     subscriber = MailchimpNewsletterSubscriber.subscriber_info(self, email)
-    return subscriber.present? && subscriber.subscribed?
+    subscriber.present? && subscriber.subscribed?
   end
 
   # Query the lists in MailChimp, and create / update what we have in the database.

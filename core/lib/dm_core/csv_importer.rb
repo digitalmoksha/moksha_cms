@@ -10,6 +10,6 @@ module CsvImporter
     CSV.foreach(the_file, headers: true) do |row|
       import_list << row.to_hash
     end
-    return import_list
+    import_list
   end
 end

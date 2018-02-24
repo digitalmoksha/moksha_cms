@@ -53,7 +53,7 @@ class WorkshopPrice < ApplicationRecord
     attributes['price']       = attributes['price'].to_money(attributes['price_currency'])           if attributes['price'].present? && attributes['price_currency'].present?
     attributes['alt1_price']  = attributes['alt1_price'].to_money(attributes['alt1_price_currency']) if attributes['alt1_price'].present? && attributes['alt1_price_currency'].present?
     attributes['alt2_price']  = attributes['alt2_price'].to_money(attributes['alt2_price_currency']) if attributes['alt2_price'].present? && attributes['alt2_price_currency'].present?
-    return attributes
+    attributes
   end
 
   #------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ class WorkshopPrice < ApplicationRecord
     list = [[price_currency, price_currency]]
     list << [alt1_price_currency, alt1_price_currency] unless alt1_price_currency.blank?
     list << [alt2_price_currency, alt2_price_currency] unless alt2_price_currency.blank?
-    return list
+    list
   end
 
   # Convert an amount in an alternate currency into the base currency
@@ -157,6 +157,6 @@ class WorkshopPrice < ApplicationRecord
         @bank.add_rate(alt2_price_currency, alt1_price_currency, alt1_cents / alt2_cents)
       end
     end
-    return @bank
+    @bank
   end
 end

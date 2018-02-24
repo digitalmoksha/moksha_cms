@@ -95,7 +95,7 @@ module DmCore
         def address_valid?
           not_valid = email.blank? || first_name.blank? || last_name.blank? || address.blank? || city.blank? ||
             zipcode.blank? || country.blank?
-          return !not_valid
+          !not_valid
         end
 
         # Returns the users preferred locale, which could be different from what the site

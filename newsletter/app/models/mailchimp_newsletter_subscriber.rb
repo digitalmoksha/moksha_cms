@@ -5,7 +5,7 @@ class MailchimpNewsletterSubscriber < NewsletterSubscriber
   #------------------------------------------------------------------------------
   def interest_group?(name)
     group = groups.detect { |group| group['name'] == name } if groups
-    return (group ? group['interested'] : false)
+    (group ? group['interested'] : false)
   end
 
   #------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ class MailchimpNewsletterSubscriber < NewsletterSubscriber
     obj.euid              = attributes['euid']
     obj.grouping_id       = attributes['merges']['GROUPINGS'] ? attributes['merges']['GROUPINGS'][0]['id'] : nil
     obj.groups            = attributes['merges']['GROUPINGS'] ? attributes['merges']['GROUPINGS'][0]['groups'] : nil
-    return obj
+    obj
   end
 
   # Query for the subscriber info.

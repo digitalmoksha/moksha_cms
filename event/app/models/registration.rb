@@ -83,7 +83,7 @@ class Registration < ApplicationRecord
   # receipt code is simply the record id + 1100
   #------------------------------------------------------------------------------
   def self.receiptcode_to_id(receiptcode)
-    return receipt_code.split('-')[1].to_i
+    receipt_code.split('-')[1].to_i
   end
 
   # Return the number of items specified, in particular the number of items in

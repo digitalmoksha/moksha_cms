@@ -12,6 +12,6 @@ class MediaInput < SimpleForm::Inputs::FileInput
       # append preview image to output
       out << template.image_tag(object.send(attribute_name).tap { |o| break o.send(version) if version }.send('url'))
     end
-    return out
+    out
   end
 end

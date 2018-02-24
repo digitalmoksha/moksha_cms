@@ -101,7 +101,7 @@ class RegistrationDatatable
                 { :remote => true, :method => :put }) +
         '</li>'
     end
-    return output.html_safe
+    output.html_safe
   end
 
   #------------------------------------------------------------------------------

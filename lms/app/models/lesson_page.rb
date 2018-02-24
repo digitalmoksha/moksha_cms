@@ -55,7 +55,7 @@ class LessonPage < ApplicationRecord
         page = (options[:published_only] ? lesson.lesson_pages.published : lesson.lesson_pages).try(:first)
       end
     end
-    return page
+    page
   end
 
   def previous(options = {})
@@ -68,6 +68,6 @@ class LessonPage < ApplicationRecord
         page = (options[:published_only] ? lesson.lesson_pages.published : lesson.lesson_pages).try(:last)
       end
     end
-    return page
+    page
   end
 end

@@ -27,7 +27,7 @@ module DmEvent
             'date_range'          => format_date_range(workshop.starting_on, workshop.ending_on)
           }
 
-          return result
+          result
         end
 
         # Send an email for state notification.  if send_email is false, just return
@@ -59,7 +59,7 @@ module DmEvent
 
           template  = Liquid::Template.parse(system_email.body)
           content   = template.render(substitutions)
-          return { :content => content, :substitutions => substitutions }
+          { :content => content, :substitutions => substitutions }
         end
       end
 

@@ -13,7 +13,7 @@ module Liquid
           output = context.registers[:view].render_content_item(cms_snippet)
         end
       end
-      return output
+      output
     end
 
     #------------------------------------------------------------------------------

@@ -14,7 +14,7 @@ class PaymentReminderService
         end
       end
     end
-    return { success: success, failed: failed }
+    { success: success, failed: failed }
   end
 
   # send a single reminder email, regardless of status
@@ -72,7 +72,7 @@ class PaymentReminderService
         end
       end
     end
-    return result
+    result
   end
 
   # past due means they haven't paid what they should have paid by now

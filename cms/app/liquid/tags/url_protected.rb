@@ -8,7 +8,7 @@ module Liquid
     #------------------------------------------------------------------------------
     def render(context)
       url = DmCms::MediaUrlService.call(@attributes['src'], protected: true)
-      return url.nil? ? '' : url
+      url.nil? ? '' : url
     end
 
     def self.details

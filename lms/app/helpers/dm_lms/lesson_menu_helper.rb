@@ -12,7 +12,7 @@ module DmLms
           item[:allowed] = true
         end
       end
-      return item
+      item
     end
 
     # return the information needed to create a menu link for a lesson page
@@ -28,7 +28,7 @@ module DmLms
           item[:allowed] = true
         end
       end
-      return item
+      item
     end
   end
 end

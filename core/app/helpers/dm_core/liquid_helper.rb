@@ -13,7 +13,7 @@ module DmCore::LiquidHelper
                                                                                       account_site_assets: account_site_assets_url,
                                                                                       account_site_assets_media: account_site_assets_media_url }))
     # doc.hard_breaks = false
-    return doc.to_html.html_safe
+    doc.to_html.html_safe
   end
 
   # use the kramdown library
@@ -25,7 +25,7 @@ module DmCore::LiquidHelper
                                                                                                   account_site_assets: account_site_assets_url,
                                                                                                   account_site_assets_media: account_site_assets_media_url }),
                               parse_block_html: true)
-    return doc.to_html.html_safe
+    doc.to_html.html_safe
   end
 
   # This assumes that the content is from a trusted source
@@ -35,7 +35,7 @@ module DmCore::LiquidHelper
                                                             registers: { controller: controller, view: self,
                                                                          account_site_assets: account_site_assets_url,
                                                                          account_site_assets_media: account_site_assets_media_url })
-    return doc.html_safe
+    doc.html_safe
   end
 
   # Use Kramdown for parsing, then sanitize output.
@@ -50,7 +50,7 @@ module DmCore::LiquidHelper
       html = ::Kramdown::Document.new(content).to_html.html_safe
     end
     # for safety, use :basic or lower
-    return options[:safe] ? sanitize_text(html, level: :basic).html_safe : html
+    options[:safe] ? sanitize_text(html, level: :basic).html_safe : html
   end
 
   # Uses Sanitize gem to fully sanitize any text.

@@ -131,7 +131,7 @@ module DmEvent
           else
             logger.error("===> Error: Registration.manual_payment: #{payment_history.errors.inspect}")
           end
-          return payment_history
+          payment_history
         end
 
         # delete a payment and update the registrations total amount paid
@@ -145,7 +145,7 @@ module DmEvent
             send('accept!') if balance_owed.positive? && paid?
             return true
           end
-          return false
+          false
         end
 
         # Return the payment page url, so that it can be used in emails

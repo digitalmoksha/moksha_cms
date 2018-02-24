@@ -13,7 +13,7 @@ module DmCms
       if user.can?(:access_media_library, :all)
         menu << { text: 'Media Library', icon_class: :media_library, link: DmCms::Engine.routes.url_helpers.admin_media_files_path(locale: I18n.locale) }
       end
-      return menu
+      menu
     end
   end
 end

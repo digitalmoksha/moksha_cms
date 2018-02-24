@@ -164,7 +164,7 @@ class Workshop < ApplicationRecord
     financials[:summary][:total_possible_worst]               = financials[:summary][:total_possible] * 0.80
     financials[:summary][:total_outstanding_worst]            = financials[:summary][:total_outstanding] * 0.80
     financials[:summary][:total_paid_percent]                 = (100 * financials[:summary][:total_paid] / financials[:summary][:total_possible]).round if financials[:summary][:total_possible].positive?
-    return financials
+    financials
   end
 
   #------------------------------------------------------------------------------
@@ -175,7 +175,7 @@ class Workshop < ApplicationRecord
         total_paid += registration.amount_paid.nil? ? Money.new(0, base_currency) : registration.amount_paid
       end
     end
-    return total_paid
+    total_paid
   end
 
   # is the passed in user attending?  Used in some deep level authorization checks,

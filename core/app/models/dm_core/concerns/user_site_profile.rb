@@ -41,7 +41,7 @@ module DmCore
           items = 28.step(0, -2).map do |date|
             where('created_at <= ? AND created_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 2).days.ago.to_datetime, Account.current.id).count
           end
-          return { total: items.inject(:+), list: items.join(',') }
+          { total: items.inject(:+), list: items.join(',') }
         end
 
         # Count the number of accessing users in the last 30 days.  returns a hash
@@ -53,7 +53,7 @@ module DmCore
           items = 28.step(0, -2).map do |date|
             where('last_access_at <= ? AND last_access_at > ? AND account_id = ?', date.days.ago.to_datetime, (date + 2).days.ago.to_datetime, Account.current.id).count
           end
-          return { total: items.inject(:+), list: items.join(',') }
+          { total: items.inject(:+), list: items.join(',') }
         end
       end
     end

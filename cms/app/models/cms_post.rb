@@ -58,12 +58,12 @@ class CmsPost < ApplicationRecord
   def send_notification_emails(test_user = nil)
     if test_user
       email = PostNotifyMailer.post_notify(test_user, self, account).deliver_now
-      return (email ? 1 : 0)
+      (email ? 1 : 0)
     else
       user_list = cms_blog.member_list(:all).to_set
       cms_blog.user_site_profile_followers.each { |follower| user_list << follower.user }
       async_send_notification_emails(user_list)
-      return user_list.size
+      user_list.size
     end
   end
 

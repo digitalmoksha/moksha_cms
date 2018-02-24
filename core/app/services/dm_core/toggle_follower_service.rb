@@ -14,7 +14,7 @@ module DmCore
     def call
       following = @user.following.follows?(@object_to_follow)
       following ? @user.following.unfollow(@object_to_follow) : @user.following.follow(@object_to_follow)
-      return !following
+      !following
     end
   end
 end

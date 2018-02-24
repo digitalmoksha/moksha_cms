@@ -156,7 +156,7 @@ module DmCore
             end
             objects += subscribed_objs if user.is_paid_subscriber?
           end
-          return objects
+          objects
         end
       end
     end

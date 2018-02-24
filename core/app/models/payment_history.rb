@@ -53,7 +53,7 @@ class PaymentHistory < ApplicationRecord
     #--- pull off first two pieces, and put rest back together if there were any
     #    embedded dashes
     values = anchor_id.split('-')
-    return values.slice(2, 10).join('-')
+    values.slice(2, 10).join('-')
   end
 
   # return the country that the payment came from, if it exists

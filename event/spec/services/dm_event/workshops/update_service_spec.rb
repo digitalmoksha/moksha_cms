@@ -13,7 +13,7 @@ describe DmEvent::Workshops::UpdateService, type: :service do
       additional = opts.delete(:additional_configuration)
       result = DmEvent::Workshops::UpdateService.new(workshop, opts, { additional_configuration: additional }).call
       workshop.reload
-      return result
+      result
     end
 
     context 'when main panel' do

@@ -17,7 +17,7 @@ module DmEvent
         menu << item
       end
 
-      return menu
+      menu
     end
   end
 end

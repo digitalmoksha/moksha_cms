@@ -4,6 +4,6 @@ class ToggleCheckedInput < SimpleForm::Inputs::BooleanInput
     out = '<div class="on_off">'
     out << @builder.check_box(attribute_name, input_html_options)
     out << '</div>'
-    return out
+    out
   end
 end

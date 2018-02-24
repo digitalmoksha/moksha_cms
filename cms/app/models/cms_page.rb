@@ -107,7 +107,7 @@ class CmsPage < ApplicationRecord
     page = page.parent while page.template.blank? && !page.is_root?
     raise "No template available for page #{slug}" if page.template.blank?
 
-    return page.template
+    page.template
   end
 
   # Return a list of published children pages
@@ -124,7 +124,7 @@ class CmsPage < ApplicationRecord
         end
       end
     end
-    return pages
+    pages
   end
 
   # Return the header image, or a default if not specified
@@ -190,7 +190,7 @@ class CmsPage < ApplicationRecord
   # simply return true
   #------------------------------------------------------------------------------
   def visited?(cookie_hash)
-    return (cookie_hash.empty? || cookie_hash[slug] == "1" ? true : false)
+    (cookie_hash.empty? || cookie_hash[slug] == "1" ? true : false)
   end
 
   #------------------------------------------------------------------------------
@@ -266,6 +266,6 @@ class CmsPage < ApplicationRecord
       CmsContentitem::Translation.paper_trail_on!
     end
 
-    return new_page
+    new_page
   end
 end

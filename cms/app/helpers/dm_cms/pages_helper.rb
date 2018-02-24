@@ -58,7 +58,7 @@ module DmCms::PagesHelper
         content = ''
       end
     end
-    return content
+    content
   end
 
   # Generates a simple multi-level page menu including children
@@ -80,7 +80,7 @@ module DmCms::PagesHelper
                                 else
                                   menu_from_pages(children, options)
                                 end
-    return menu_str.html_safe
+    menu_str.html_safe
   end
 
   #------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ module DmCms::PagesHelper
         end
       end
     end
-    return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found
+    [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
   end
 
   # Creates a standard Bootstrap 3 version of a main menu
@@ -134,7 +134,7 @@ module DmCms::PagesHelper
         end
       end
     end
-    return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found
+    [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
   end
 
   # Creates a standard Bootstrap 3 version of a main menu
@@ -163,7 +163,7 @@ module DmCms::PagesHelper
         end
       end
     end
-    return (menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found
+    [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
   end
 
   # return true if the page should be allowed to be dislpayed in a menu
@@ -192,7 +192,7 @@ module DmCms::PagesHelper
     end
     menu_str += "</select>"
 
-    return menu_str.html_safe
+    menu_str.html_safe
   end
 
   # return a link to the page's slug, with the passed in link text
@@ -232,7 +232,7 @@ module DmCms::PagesHelper
   #------------------------------------------------------------------------------
   def page_authorized?(page)
     if page.requires_login?
-      return user_signed_in?
+      user_signed_in?
     else
       true
     end
@@ -250,7 +250,7 @@ module DmCms::PagesHelper
   def current_page_path?(*paths)
     active = false
     paths.each { |path| active ||= request.url.include?(path) }
-    return active
+    active
   end
 
   # Determine if the page is in this section
