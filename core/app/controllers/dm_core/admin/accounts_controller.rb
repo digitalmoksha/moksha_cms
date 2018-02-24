@@ -116,7 +116,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
     if is_sysadmin? && params[:id]
       @account = Account.find(params[:id])
     end
-    @account = @account || current_account
+    @account ||= current_account
   end
 
   # Set some values for the template based on the controller

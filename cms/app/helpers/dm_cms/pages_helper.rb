@@ -214,7 +214,7 @@ module DmCms::PagesHelper
       uri = URI.parse(link)
     rescue URI::InvalidURIError
     end
-    if uri && uri.host
+    if uri&.host
       link # fully qualified url
     else
       if link.start_with?('/')

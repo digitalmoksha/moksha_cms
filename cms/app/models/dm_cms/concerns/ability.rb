@@ -49,8 +49,8 @@ module DmCms
         else
           #--- can only read/see public blogs when not logged in
           can(:read, CmsBlog)   { |blog| blog.can_be_read_by?(user) }
-          can(:read, CmsPost)   { |post| post.is_published? }
-          can(:read, CmsPage)   { |page| page.is_published? }
+          can(:read, CmsPost, &:is_published?)
+          can(:read, CmsPage, &:is_published?)
         end
       end
 

@@ -14,7 +14,7 @@ module DmNewsletter
     module Ability
       def dm_newsletter_abilities(user)
         #--- Admin
-        if user && user.has_role?(:newsletter_manager)
+        if user&.has_role?(:newsletter_manager)
           can :manage_newsletters, :all
           can :access_admin, :all
         end

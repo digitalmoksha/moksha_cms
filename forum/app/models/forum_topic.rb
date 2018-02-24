@@ -134,7 +134,7 @@ class ForumTopic < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def count_user_comments_for_counter_cache
-    @user_comments = forum_comments.group_by { |p| p.user_id }
+    @user_comments = forum_comments.group_by(&:user_id)
   end
 
   #------------------------------------------------------------------------------

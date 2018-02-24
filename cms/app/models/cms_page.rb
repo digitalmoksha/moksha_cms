@@ -119,7 +119,7 @@ class CmsPage < ApplicationRecord
     pages = []
     if self.has_children?
       self.children.each do |child|
-        if child.is_published? || (user && user.is_admin?)
+        if child.is_published? || (user&.is_admin?)
           pages << child unless child[:menutitle].blank? && !options[:include_blank_titles]
         end
       end
@@ -199,7 +199,7 @@ class CmsPage < ApplicationRecord
       update_attribute(:welcome_page, false)
     else
       prev_page = CmsPage.welcome_page
-      prev_page.update_attribute(:welcome_page, false) if prev_page
+      prev_page&.update_attribute(:welcome_page, false)
       update_attribute(:welcome_page, true)
     end
   end

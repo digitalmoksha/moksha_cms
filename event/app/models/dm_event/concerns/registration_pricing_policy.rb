@@ -15,7 +15,7 @@ module DmEvent
         # Price of this registration (without discount)
         #------------------------------------------------------------------------------
         def price
-          workshop_price && workshop_price.price ? workshop_price.price : Money.new(0, workshop.base_currency)
+          workshop_price&.price ? workshop_price.price : Money.new(0, workshop.base_currency)
         end
 
         # Price with discount
@@ -49,7 +49,7 @@ module DmEvent
         # payment plan up to date
         #------------------------------------------------------------------------------
         def payment_owed
-          if workshop_price && workshop_price.recurring_payments?
+          if workshop_price&.recurring_payments?
             to_pay = recurring_what_should_be_paid_by_now - amount_paid
             to_pay.negative? ? Money.new(0, workshop_price.price.currency) : to_pay
           else

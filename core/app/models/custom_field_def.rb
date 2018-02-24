@@ -40,7 +40,7 @@ class CustomFieldDef < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def choice_list_array
-    choice_list.split(',').collect { |item| item.strip }
+    choice_list.split(',').collect(&:strip)
   end
 
   # Text to use for the column during export or in reports.  The label will

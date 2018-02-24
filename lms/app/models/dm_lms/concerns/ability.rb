@@ -14,12 +14,12 @@ module DmLms
     module Ability
       def dm_lms_abilities(user)
         # Admin
-        if user && user.has_role?(:course_manager)
+        if user&.has_role?(:course_manager)
           can :manage_courses, :all
           can :access_admin, :all
         end
 
-        if user && user.try('subscribed_content_allowed?') # from the dm_subscription gem
+        if user&.try('subscribed_content_allowed?') # from the dm_subscription gem
           # a subscriber can view any published course
           can :read, Course, published: true
         else

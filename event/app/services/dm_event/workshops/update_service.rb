@@ -43,9 +43,7 @@ module DmEvent::Workshops
       end
 
       # remove any extra "custom_field" attributes left during the field definition
-      if @params[:custom_field_defs_attributes]
-        @params[:custom_field_defs_attributes].each_pair { |key, value| @params[:custom_field_defs_attributes][key].delete(:custom_field) }
-      end
+      @params[:custom_field_defs_attributes]&.each_pair { |key, value| @params[:custom_field_defs_attributes][key].delete(:custom_field) }
     end
   end
 end

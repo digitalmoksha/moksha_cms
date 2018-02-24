@@ -5,9 +5,9 @@ module Liquid
       @attributes.reverse_merge! 'class' => '', 'id' => '', 'style' => '', 'author' => ''
 
       output  = super
-      style   = "style='#{@attributes["style"]}'" unless @attributes['style'].blank?
-      dclass  = "class='#{@attributes["class"]}'" unless @attributes['class'].blank?
-      id      = "id='#{@attributes["id"]}'" unless @attributes['id'].blank?
+      style   = "style='#{@attributes['style']}'" unless @attributes['style'].blank?
+      dclass  = "class='#{@attributes['class']}'" unless @attributes['class'].blank?
+      id      = "id='#{@attributes['id']}'" unless @attributes['id'].blank?
 
       out  = "<blockquote #{[id, dclass, style].join(' ')}>"
       out += output

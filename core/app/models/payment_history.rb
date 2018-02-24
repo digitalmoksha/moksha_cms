@@ -61,9 +61,9 @@ class PaymentHistory < ApplicationRecord
   def country_of_payment
     case payment_method.downcase
     when 'paypal'
-      notify_data && notify_data.params ? notify_data.params['residence_country'] : ''
+      notify_data&.params ? notify_data.params['residence_country'] : ''
     when 'sofort'
-      notify_data && notify_data.params ? notify_data.params['sender_country_id'] : ''
+      notify_data&.params ? notify_data.params['sender_country_id'] : ''
     when 'cash'
       ''
     when 'wire transfer'

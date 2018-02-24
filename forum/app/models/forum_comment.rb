@@ -68,12 +68,12 @@ class ForumComment < Comment
 
   #------------------------------------------------------------------------------
   def update_cached_fields
-    forum_topic.update_cached_comment_fields(self) unless forum_topic.nil?
+    forum_topic&.update_cached_comment_fields(self)
   end
 
   #------------------------------------------------------------------------------
   def topic_is_not_locked
-    errors.add(:base, "Topic is locked") if forum_topic && forum_topic.locked? && forum_topic.comments_count > 0
+    errors.add(:base, "Topic is locked") if forum_topic&.locked? && forum_topic.comments_count > 0
   end
 
   private

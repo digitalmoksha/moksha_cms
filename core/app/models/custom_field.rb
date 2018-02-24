@@ -55,7 +55,7 @@ class CustomField < ApplicationRecord
       Country.find(self.field_data.to_i).english_name
     elsif self.field_data.is_a? Array
       # make into a comma delimited string.  remove any blank/nil entries
-      self.field_data.reject { |x| x.blank? }.join(', ')
+      self.field_data.reject(&:blank?).join(', ')
     else
       self.field_data
     end

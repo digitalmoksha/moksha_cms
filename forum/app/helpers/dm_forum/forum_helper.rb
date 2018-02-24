@@ -53,7 +53,7 @@ module DmForum
     # Ripe for optimization
     #------------------------------------------------------------------------------
     def voice_count
-      pluralize ForumSite.site.forum_topics.to_a.sum { |t| t.voice_count }, 'voice'
+      pluralize ForumSite.site.forum_topics.to_a.sum(&:voice_count), 'voice'
     end
 
     #------------------------------------------------------------------------------

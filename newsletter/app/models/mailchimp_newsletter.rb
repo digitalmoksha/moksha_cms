@@ -18,7 +18,7 @@ class MailchimpNewsletter < Newsletter
       information[:grouping] = information[:newsletter].groupings[0]
       if options[:current_user]
         subscriber = MailchimpNewsletterSubscriber.subscriber_info(information[:newsletter], options[:current_user].email)
-        information[:subscriber] = (subscriber && subscriber.subscribed? ? subscriber : nil)
+        information[:subscriber] = (subscriber&.subscribed? ? subscriber : nil)
       end
     end
     return information
