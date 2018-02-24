@@ -27,7 +27,7 @@ class BlogUserDatatable
     users.map do |user|
       [
         action(user),
-        user.country.nil? ? 'n/a' : user.country.english_name,
+        user.country.nil? ? 'n/a' : user.country.english_name
       ]
     end
   end

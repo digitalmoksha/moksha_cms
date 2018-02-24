@@ -151,8 +151,8 @@ module Scio
           styles = []
           @columns.each do |c|
             # use the default style if none set
-            hstyle = (c.header_style.nil?) ? default_header_style : c.header_style
-            cstyle = (c.cell_style.nil?) ? default_cell_style : c.cell_style
+            hstyle = c.header_style.nil? ? default_header_style : c.header_style
+            cstyle = c.cell_style.nil? ? default_cell_style : c.cell_style
             # set the style, in case it's the default one
             c.header_style = hstyle
             c.cell_style = cstyle
@@ -202,7 +202,7 @@ module Scio
         # first, create the headers
         @columns.each do |c|
           # set the style
-          hstyle = (c.header_style.nil?) ? default_header_style : c.header_style
+          hstyle = c.header_style.nil? ? default_header_style : c.header_style
           rgb = hstyle.bgcolor.to_rgb rescue nil
           fill = 0
           unless rgb.nil?
@@ -245,7 +245,7 @@ module Scio
         @rows.each do |r|
           # set the style
           @columns.each do |c|
-            cstyle = (c.cell_style.nil?) ? default_cell_style : c.cell_style
+            cstyle = c.cell_style.nil? ? default_cell_style : c.cell_style
             rgb = cstyle.bgcolor.to_rgb rescue nil
             fill = 0
             unless rgb.nil?

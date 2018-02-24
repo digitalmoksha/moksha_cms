@@ -18,7 +18,7 @@ class RegistrationNotifyMailer < DmCore::SiteMailer
     @content                    = content
     @state                      = substitutions['state']
 
-    headers({ "Reply-To" => (contact_email != "") ? contact_email : account.preferred_smtp_from_email,
+    headers({ "Reply-To" => contact_email != "" ? contact_email : account.preferred_smtp_from_email,
               "Return-Path" => account.preferred_smtp_from_email })
 
     theme(account.account_prefix)

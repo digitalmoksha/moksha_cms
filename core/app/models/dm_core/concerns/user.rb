@@ -141,7 +141,7 @@ module DmCore
               summary: "User's email address",
               category: 'variables',
               example: '{{ user.email }}',
-              description: "Display the user's email address" },
+              description: "Display the user's email address" }
           ]
         end
 

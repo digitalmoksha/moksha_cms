@@ -190,7 +190,7 @@ class CmsPage < ApplicationRecord
   # simply return true
   #------------------------------------------------------------------------------
   def visited?(cookie_hash)
-    return ((cookie_hash.empty? || cookie_hash[slug] == "1") ? true : false)
+    return (cookie_hash.empty? || cookie_hash[slug] == "1" ? true : false)
   end
 
   #------------------------------------------------------------------------------

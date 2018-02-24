@@ -114,7 +114,7 @@ class Registration < ApplicationRecord
       attending.discounted.count
     when :discounted_total
       total = attending.discounted.to_a.sum(&:discount)
-      (total == 0) ? Money.new(0) : total
+      total == 0 ? Money.new(0) : total
     when :user_updated
       #--- how many users updated their record
       query.where(archived_on: nil).where("(aasm_state = 'paid' OR aasm_state = 'accepted')").where.not(user_updated_at: nil).count

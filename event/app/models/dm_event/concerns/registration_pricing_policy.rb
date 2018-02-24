@@ -15,7 +15,7 @@ module DmEvent
         # Price of this registration (without discount)
         #------------------------------------------------------------------------------
         def price
-          (workshop_price && workshop_price.price) ? workshop_price.price : Money.new(0, workshop.base_currency)
+          workshop_price && workshop_price.price ? workshop_price.price : Money.new(0, workshop.base_currency)
         end
 
         # Price with discount

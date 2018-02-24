@@ -12,7 +12,7 @@ module DmUtilities::DateHelper
   #------------------------------------------------------------------------------
   def format_date(start_date, full_date = false, options = {})
     format = options[:format].nil? ? ((full_date ? :wwmmddyy : (options[:ignore_year] ? :mmdd : :mmddyy))) : options[:format]
-    date  = (start_date.nil? or start_date.year < 1900) ? 'n/a' : start_date.localize(:count => start_date.day, :format => format)
+    date  = start_date.nil? or start_date.year < 1900 ? 'n/a' : start_date.localize(:count => start_date.day, :format => format)
     date += " &mdash; #{options[:end_date].localize(:count => options[:end_date].day, :format => format)}".html_safe unless options[:end_date].blank?
     return date.html_safe
   end
