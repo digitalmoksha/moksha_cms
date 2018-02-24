@@ -51,11 +51,6 @@ Naming/PredicateName:
     - 'core/app/models/dm_core/concerns/public_private.rb'
     - 'core/app/models/dm_core/concerns/user.rb'
 
-# Offense count: 20
-# Configuration parameters: CustomTransform, IgnoreMethods.
-RSpec/FilePath:
-  Enabled: false
-
 # Offense count: 13
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: implicit, each, example
@@ -86,6 +81,7 @@ RSpec/NotToNot:
 # SupportedStyles: inflected, explicit
 RSpec/PredicateMatcher:
   Exclude:
+    - 'core/spec/services/dm_core/toggle_follower_service_spec.rb'
     - 'core/spec/concerns/public_private_shared.rb'
     - 'core/spec/services/payment_histories/create_service_spec.rb'
     - 'core/spec/services/toggle_follower_service_spec.rb'

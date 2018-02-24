@@ -7,7 +7,8 @@ describe DmEvent::Workshops::CreateService, type: :service do
   describe '#call' do
     it 'creates a new workshop' do
       workshop = create_workshop(attributes_for(:workshop))
-      expect(workshop.persisted?).to be_truthy
+
+      expect(workshop).to be_persisted
     end
   end
 

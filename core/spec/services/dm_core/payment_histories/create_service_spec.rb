@@ -15,11 +15,12 @@ describe DmCore::PaymentHistories::CreateService, type: :service do
 
     it 'creates a new PaymentHistory' do
       history = service.call
-      expect(history.is_a?(PaymentHistory)).to be_truthy
-      expect(history).to have_attributes(anchor_id: anchor_id,)
+
+      expect(history).to be_a PaymentHistory
+      expect(history).to have_attributes(anchor_id: anchor_id)
       expect(history).to have_attributes(total_cents: amount.cents, total_currency: amount.currency.iso_code)
       expect(history).to have_attributes(item_ref: options[:item_ref])
-      expect(history).to have_attributes(cost: "#{amount.to_f}", quantity: 1, discount: "0")
+      expect(history).to have_attributes(cost: amount.to_f.to_s, quantity: 1, discount: "0")
       expect(history).to have_attributes(payment_method: options[:payment_method], payment_date: options[:payment_date])
       expect(history).to have_attributes(bill_to_name: nil, notify_data: options[:notify_data], transaction_id: options[:transaction_id])
       expect(history).to have_attributes(user_profile_id: user_profile.id, status: 'Completed')

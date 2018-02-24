@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-include DmCore::AccountHelper
-
 describe DmCore::AccountHelper do
   setup_account
 
@@ -29,7 +27,7 @@ describe DmCore::AccountHelper do
 
   #------------------------------------------------------------------------------
   it "returns path to the site's protected assets media folder" do
-    expect(account_protected_assets_media_folder).to eq "#{Rails.root}/protected_assets/uploads/test/media"
+    expect(account_protected_assets_media_folder).to eq Rails.root.join('protected_assets', 'uploads', 'test', 'media').to_s
   end
 
   #------------------------------------------------------------------------------

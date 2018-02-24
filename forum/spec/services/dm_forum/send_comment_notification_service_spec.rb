@@ -22,17 +22,18 @@ describe DmForum::SendCommentNotificationService, type: :service do
     describe 'notifies followers' do
       # assumes ActiveJob::Base.queue_adapter = :test is set
       it 'sends nothing if there are no followers' do
-        expect {
+        expect do
           perform_enqueued_jobs { service.call }
-        }.to change(ActionMailer::Base.deliveries, :count).by(0)
+        end.to change(ActionMailer::Base.deliveries, :count).by(0)
       end
 
       it 'sends notifications to followers' do
         user.following.follow(topic)
         user.reload
-        expect {
+
+        expect do
           perform_enqueued_jobs { service.call }
-        }.to change(ActionMailer::Base.deliveries, :count).by(1)
+        end.to change(ActionMailer::Base.deliveries, :count).by(1)
       end
     end
   end

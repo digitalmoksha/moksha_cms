@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-include DmCore::ApplicationHelper
-include DmCms::PagesHelper
-
 describe DmCms::PagesHelper, type: :helper do
+  include DmCore::ApplicationHelper
+  include DmCms::PagesHelper
+
   helper do
     def user_signed_in?
       user.present?

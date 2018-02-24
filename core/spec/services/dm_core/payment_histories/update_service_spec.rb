@@ -14,7 +14,7 @@ describe DmCore::PaymentHistories::UpdateService, type: :service do
       described_class.new(history, amount, user_profile, options).call
 
       expect(history).to have_attributes(total_cents: amount.cents, total_currency: amount.currency.iso_code)
-      expect(history).to have_attributes(cost: "#{amount.to_f}")
+      expect(history).to have_attributes(cost: amount.to_f.to_s)
       expect(history).to have_attributes(item_ref: options[:item_ref])
       expect(history).to have_attributes(payment_method: options[:payment_method], payment_date: options[:payment_date])
       expect(history).to have_attributes(bill_to_name: 'test')
