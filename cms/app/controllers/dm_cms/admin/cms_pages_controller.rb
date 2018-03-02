@@ -1,6 +1,7 @@
 class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   include DmCms::PermittedParams
-  helper "dm_cms/cms_pages"
+  helper  DmCms::PagesHelper
+  helper  DmCms::CmsPagesHelper
 
   before_action :current_page, except: [:index, :file_tree, :expire_cache, :expire_cache_total]
 
