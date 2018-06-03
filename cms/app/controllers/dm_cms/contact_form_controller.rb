@@ -1,11 +1,13 @@
 class DmCms::ContactFormController < DmCms::ApplicationController
+  protect_from_forgery with: :exception
+
   # Type of contact form object is specified by any param name that
   # ends with '_contact_form'.  Also takes into account themes.
   # 'tech_contact_form' => TechContactForm
   # 'theme_bogus_tech_contact_form' => ThemeBogus::TechContactForm
   #------------------------------------------------------------------------------
   def create
-    form_key = params.select { |key, v| key.end_with?('contact_form') }.first[0]
+    form_key = params.select { |key, v| key.end_with?('contact_form') }.try(:first).try(:[], 0)
     if form_key.present?
       if form_key.start_with?('theme_')
         parts       = form_key.split('_')
