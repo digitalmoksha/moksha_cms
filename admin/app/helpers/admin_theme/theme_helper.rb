@@ -1,6 +1,6 @@
 #--- mapping for common icons - (keep at top level, do not place inside a module)
 #------------------------------------------------------------------------------
-CommonIcons = {
+COMMON_ICONS = {
   add:              'fa fa-plus fa-fw',
   blogs:            'fa fa-paragraph fa-fw',
   calendar:         'fa fa-calendar fa-fw',
