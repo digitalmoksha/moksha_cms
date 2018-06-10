@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'aasm', '~> 3.3.1' # [todo] v4.x requires changes
   # TODO s.add_dependency 'aasm', '~> 4.12'          # [todo] v4.x requires changes
   s.add_dependency 'actionview-encoded_mail_to', '~> 1.0'
-  s.add_dependency 'activemerchant', '~> 1.63.0' #--| here (instead of dm_event) because
+  s.add_dependency 'activemerchant', '~> 1.79' #--| here (instead of dm_event) because
   s.add_dependency 'acts-as-taggable-on', '~> 5.0'
   s.add_dependency 'acts_as_commentable', '~> 4.0.2' # we customize our usage, so can't use the 'with_threading' version
   s.add_dependency 'acts_as_votable', '~> 0.10.0'
