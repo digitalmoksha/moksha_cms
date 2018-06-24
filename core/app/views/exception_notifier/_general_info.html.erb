@@ -1,0 +1,18 @@
+<ul style="list-style: none">
+  <li>
+    <strong>User: </strong>
+    <span><%= @user.nil? ? "Anonymous" : "#{h(@user.email)} -- #{h(@user.display_name)} -- (id: #{h(@user.id)})" %></span>
+  </li>
+  <li>
+    <strong>Account ID: </strong>
+    <span><%= @account.nil? ? 'n/a' : @account.id %></span>
+  </li>
+  <li>
+    <strong>Account Domain: </strong>
+    <span><%= @account.nil? ? 'n/a' : @account.domain %></span>
+  </li>
+  <li>
+    <strong>Account Prefix: </strong>
+    <span><%= @account.nil? ? 'n/a' : @account.account_prefix %></span>
+  </li>
+</ul>

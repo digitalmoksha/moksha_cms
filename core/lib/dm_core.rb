@@ -10,6 +10,8 @@ require 'dm_core/csv_importer'
 include Nls
 
 module DmCore
+  APP_DIRS_PATTERN = %r{\/?(app|config|lib|spec|themes|\(\w*\))}
+
   # DmCore configuration values are hung off of the Rails.application.config
   # object and can be accessed as either `DmCore.config.valuename` or
   # `Rails.application.config.dm_core.valuename`
