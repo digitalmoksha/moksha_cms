@@ -1,5 +1,8 @@
 # MokshaCMS
 
+[![Gem Version](https://badge.fury.io/rb/moksha_cms.svg)](http://badge.fury.io/rb/moksha_cms)
+[![Build Status](https://travis-ci.com/digitalmoksha/moksha_cms.svg?branch=master)](https://travis-ci.com/digitalmoksha/moksha_cms)
+
 _The MokshaCMS collection of gems provides an integrated system of services for content, event, forum, learning, and newsletter management.  It supports sites with multiple languages and multiple distinct sites per installation.  Administration is built in.  Additional services/engines can be written to provide additional functionality._
 
 - core foundation (core)
