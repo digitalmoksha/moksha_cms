@@ -1,8 +1,9 @@
-<%= I18n.t('email.salutation', :value => h(@values['fullname'])) %>
+<%= I18n.t('email.salutation', :value => h(@values['first_name'])) %>
 
 <%= I18n.t('ems.ticket_registered_following_event') %>:
 
-  <%=h @values['title'] %>
+  <%= I18n.t('ems.ticket_receipt_ticket_number') %>: <%=h @values['receipt_code'] %>
+  <%=h @values['title'].strip %>
 
 <%= I18n.t('ems.ticket_outstanding_balance') %>:
 
