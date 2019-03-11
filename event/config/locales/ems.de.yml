@@ -13,12 +13,12 @@ de:
     ticket_receipt_price: Preis
     ticket_information: Ticket-Informationen
     ticket_contact: Kontakt-Informationen
-    ticket_registered_following_event: laut unserem Registrierungssystem bist bzw. warst Du Teilnehmer an der folgenden Veranstaltung
-    ticket_outstanding_balance: "Gemäß unserer Buchhaltung ist noch folgender Betrag offen"
-    ticket_payment_link_leadin: Du kannst über folgenden Link eine der Zahlungsmethoden auswählen
+    ticket_registered_following_event: "laut unserem Registrierungssystem bist bzw. warst du Teilnehmer an der folgenden Veranstaltung:"
+    ticket_outstanding_balance: "Wir senden diese Erinnerung, weil du entweder einen Ratenzahlungsplan gewählt hattest und die nächste Rate fällig ist oder aber eventuell übersehen hast, den offenen Betrag zu bezahlen. Folgender Betrag ist fällig:"
+    ticket_payment_link_leadin: Du kannst über den folgenden Link eine unserer Zahlungsmethoden wählen. Bitte gib unbedingt deine o. g. Ticket-Nr. an, damit wir die Zahlung zuordnen können.
     ticket_payment_link_text: Jetzt bezahlen
     ticket_payment_reminder_subject: "Zahlungserinnerung: %{value}"
-    ticket_if_already_paid: "Diese Email wird automatisch von unserem Buchungssystem generiert und versendet. Falls Du den Betrag bereits überwiesen hast, oder der Meinung bist, dass die Zahlungserinnerung unbegründet ist, setze Dich bitte per Email an %{value} mit uns in Verbindung. Sollte sich diese Erinnerung mit einer Zahlung in den letzten drei Tagen überschnitten haben, ignoriere sie bitte."
+    ticket_if_already_paid: "Diese Email wird automatisch von unserem Buchungssystem generiert und versendet. Falls du den Betrag bereits überwiesen hast, oder der Meinung bist, dass die Zahlungserinnerung unbegründet ist, schreibe uns bitte per Email an %{value}."
     ticket_payment_complete: Ihre Zahlung ist komplett!
     registration_receipt_title: Anmeldebestätigung
     registration_email: E-Mail

@@ -13,12 +13,12 @@ fi:
     ticket_receipt_price: Hinta
     ticket_information: Lipun tiedot
     ticket_contact: Yhteystiedot
-    ticket_registered_following_event: Olet juuri rekistöitynyt seuraavaan tapahtumaan
-    ticket_outstanding_balance: "Laskujemme mukaan, seuraava summa tulee yhä maksaa"
-    ticket_payment_link_leadin: Voit maksaa seuraavan linkin kautta
-    ticket_payment_link_text: Maksa
+    ticket_registered_following_event: "According to our registration system, you are or have participated of the following event:"
+    ticket_outstanding_balance: "We are sending this reminder because you either chose an installment plan with the next payment being due or you might have forgotten to pay the course fee in total. The following amount is due:"
+    ticket_payment_link_leadin: You can choose one of our payment methods by clicking on the link below. Please mention your Ticket No. so we can relate your payment to your registration.
+    ticket_payment_link_text: Pay Now
     ticket_payment_reminder_subject: "Maksumuistutus: %{value}"
-    ticket_if_already_paid: "Tämä sähköpostiosoite on automaattisesti luotu ja lähetetty järjestelmämme. Jos olet jo maksanut määrän eli uskovat, että muistutus on virheellinen, lähetä sähköpostia osoitteeseen %{value}. Jos olet tehnyt maksun viimeisen kolmen päivän, jätä tämä muistutus."
+    ticket_if_already_paid: "This email is being created and sent automatically by our registration system. If you have already paid or think this reminder is without cause please write us via %{value}."
     ticket_payment_complete: Maksu on suoritettu!
     registration_receipt_title: Varauksen vastaanottaminen
     registration_email: Sähköposti

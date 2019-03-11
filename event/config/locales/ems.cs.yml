@@ -13,12 +13,12 @@ cs:
     ticket_receipt_price: Cena
     ticket_information: Informace o lístku
     ticket_contact: Kontaktní informace
-    ticket_registered_following_event: "byl/a jste přihlášen/a na program:"
-    ticket_outstanding_balance: "Podle naší evidence Vám z kurzovného zbývá uhradit:"
-    ticket_payment_link_leadin: "Tuto částku můžete zaplatit některým ze způsobů uvedených na následujícím linku"
-    ticket_payment_link_text: Způsoby platby
+    ticket_registered_following_event: "podle našeho registračního systému jste se zúčastnil/a nebo se účastníte následující události:"
+    ticket_outstanding_balance: "Tuto upomínku Vám zasíláme proto, že jste si zvolil/a splátkový kalendář a nastalo datum splatnosti další splátky nebo jste pravděpodobně zapomněl/a zaplatit celé kurzovné. Částka k úhradě je:"
+    ticket_payment_link_leadin: "Kliknutím na níže uvedený odkaz si můžete zvolit jednu z možných platebních metod. Uveďte prosím číslo svého lístku. Pomůže nám to přiřadit Vaši platbu k Vaší registraci."
+    ticket_payment_link_text: Pay Now
     ticket_payment_reminder_subject: "Připomínka úhrady kurzovného: %{value}"
-    ticket_if_already_paid: "Tento e-mail je automaticky generovaný a odeslaný naším systémem. Pokud jste výše uvedenou částku již dříve zaplatil/a, nebo se domníváte, že tato připomínka není oprávněná, zašlete prosím e-mail na %{value}. Pokud jste platbu provedli v posledních třech dnech, můžete tuto připomínku ignorovat."
+    ticket_if_already_paid: "Tento e-mail byl vytvořen a odeslán automaticky naším registračním systémem. Pokud jste již platbu provedl/a nebo si myslíte, že je tato upomínka bezdůvodná, napište nám prosím na %{value}."
     ticket_payment_complete: Vaše platba byla dokončena!
     registration_receipt_title: Potvrzení o rezervaci
     registration_email: E-mail
