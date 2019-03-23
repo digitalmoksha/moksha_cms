@@ -1,8 +1,8 @@
 eval(File.read(File.dirname(__FILE__) + '/../common_gemfile_dependencies.rb'))
 
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+
 gem 'dm_core', path: '../core', require: 'dm_core'
 
 gemspec
-
-gem 'jquery-rails'
-gem 'jquery-ui-rails'

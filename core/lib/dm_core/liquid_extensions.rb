@@ -67,8 +67,8 @@ module DmCore
   class LiquidTag < Liquid::Tag
     include LiquidExtensions::Helpers
 
-    SimpleSyntax = /#{Liquid::QuotedFragment}/ # rubocop:disable Naming/ConstantName
-    NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/ # rubocop:disable Naming/ConstantName
+    SimpleSyntax = /#{Liquid::QuotedFragment}/.freeze # rubocop:disable Naming/ConstantName
+    NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/.freeze # rubocop:disable Naming/ConstantName
 
     #------------------------------------------------------------------------------
     def initialize(tag_name, markup, tokens)
@@ -96,8 +96,8 @@ module DmCore
   class LiquidBlock < Liquid::Block
     include LiquidExtensions::Helpers
 
-    SimpleSyntax = /#{Liquid::QuotedFragment}/ # rubocop:disable Naming/ConstantName
-    NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/ # rubocop:disable Naming/ConstantName
+    SimpleSyntax = /#{Liquid::QuotedFragment}/.freeze # rubocop:disable Naming/ConstantName
+    NamedSyntax = /(#{Liquid::QuotedFragment})\s*\:\s*(#{Liquid::QuotedFragment})/.freeze # rubocop:disable Naming/ConstantName
 
     #------------------------------------------------------------------------------
     def initialize(tag_name, markup, tokens)

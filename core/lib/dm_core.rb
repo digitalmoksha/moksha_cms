@@ -11,7 +11,7 @@ require 'dm_core/theme_initialization'
 include Nls
 
 module DmCore
-  APP_DIRS_PATTERN = %r{\/?(app|config|lib|spec|themes|\(\w*\))}
+  APP_DIRS_PATTERN = %r{\/?(app|config|lib|spec|themes|\(\w*\))}.freeze
 
   # DmCore configuration values are hung off of the Rails.application.config
   # object and can be accessed as either `DmCore.config.valuename` or
