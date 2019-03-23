@@ -6,6 +6,7 @@ require 'dm_core/state_select'
 require 'dm_core/liquid_extensions'
 require 'dm_core/csv_exporter'
 require 'dm_core/csv_importer'
+require 'dm_core/theme_initialization'
 
 include Nls
 
