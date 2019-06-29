@@ -27,13 +27,15 @@ class Registration < ApplicationRecord
   monetize                      :amount_paid_cents, with_model_currency: :amount_paid_currency, allow_nil: true
 
   default_scope                 { where(account_id: Account.current.id) }
-  scope                         :attending, -> { where("(aasm_state = 'accepted' OR aasm_state = 'paid') AND archived_on IS NULL") }
-  scope                         :accepted,  -> { where("aasm_state = 'accepted' AND archived_on IS NULL") }
-  scope                         :paid,      -> { where("aasm_state = 'paid' AND archived_on IS NULL") }
-  scope                         :unpaid,    -> { where("aasm_state = 'accepted' AND archived_on IS NULL") } # same as accepted
+  scope                         :archived,      -> { where('archived_on IS NOT NULL') }
+  scope                         :not_archived,  -> { where('archived_on IS NULL') }
+  scope                         :attending,     -> { where("(aasm_state = 'accepted' OR aasm_state = 'paid')").not_archived }
+  scope                         :accepted,      -> { where("aasm_state = 'accepted'").not_archived }
+  scope                         :paid,          -> { where("aasm_state = 'paid'").not_archived }
+  scope                         :unpaid,        -> { accepted }
   scope                         :writtenoff,    -> { where("writtenoff_on IS NOT NULL") }
   scope                         :notwrittenoff, -> { where("writtenoff_on IS NULL") }
-  scope                         :discounted, -> { where("discount_value > 0") } # use like registrations.attending.discounted
+  scope                         :discounted,    -> { where("discount_value > 0") } # use like registrations.attending.discounted
 
   after_initialize              :create_uuid
   before_create                 :set_currency

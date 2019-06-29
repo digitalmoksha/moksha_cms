@@ -54,18 +54,21 @@ class Workshop < ApplicationRecord
 
   # validates_presence_of   :deadline_on
 
-  default_scope           { where(account_id: Account.current.id) }
+  default_scope { where(account_id: Account.current.id) }
 
-  #--- upcoming and past are used in the admin, so should be published and non-published
-  scope                   :upcoming,  -> { where('ending_on > ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC').includes(:translations) }
-  scope                   :past,      -> { where('ending_on <= ? AND archived_on IS NULL', (Date.today - 1).to_s).order('starting_on DESC').includes(:translations) }
+  scope :archived,     -> { where('archived_on IS NOT NULL') }
+  scope :not_archived, -> { where('archived_on IS NULL') }
 
-  #--- available is list of published and registration open and not ended
-  scope                   :available, -> { where(published: true).where('ending_on > ? AND deadline_on > ? AND archived_on IS NULL', (Date.today - 1).to_s, (Date.today - 1).to_s).order('starting_on ASC') }
-  scope                   :published, -> { where(published: true).where('archived_on IS NULL') }
+  # upcoming and past are used in the admin, so should be published and non-published
+  scope :upcoming,     -> { where('ending_on > ?', Date.today.beginning_of_day.to_s).not_archived.order('starting_on DESC').includes(:translations) }
+  scope :past,         -> { where('ending_on <= ?', Date.today.beginning_of_day.to_s).not_archived.order('starting_on DESC').includes(:translations) }
 
-  #--- don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
-  monetize                :funding_goal_cents, with_model_currency: :base_currency
+  # available is list of published and registration open and not ended
+  scope :available,    -> { where(published: true).where('ending_on > ? AND deadline_on > ?', (Date.today - 1).to_s, (Date.today - 1).to_s).not_archived.order('starting_on ASC') }
+  scope :published,    -> { where(published: true).not_archived }
+
+  # don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
+  monetize             :funding_goal_cents, with_model_currency: :base_currency
 
   EVENT_STYLES = [['Workshop', 'workshop'], ['Crowdfunding', 'crowdfunding']].freeze
 
