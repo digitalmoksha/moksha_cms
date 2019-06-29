@@ -31,6 +31,7 @@ describe Workshop, type: :model do
   describe '#upcoming' do
     it 'finds the proper records' do
       create(:workshop, starting_on: Date.tomorrow, ending_on: Date.today.days_since(5))
+
       create(:workshop, starting_on: Date.yesterday, ending_on: Date.today.noon)
       create(:workshop, starting_on: Date.yesterday, ending_on: Date.tomorrow, archived_on: Date.today.days_since(2))
 
@@ -41,11 +42,35 @@ describe Workshop, type: :model do
   describe '#past' do
     it 'finds the proper records' do
       create(:workshop, starting_on: Date.today.days_ago(5), ending_on: Date.yesterday.noon)
+
       create(:workshop, starting_on: Date.today.days_ago(5), ending_on: Date.today.noon)
       create(:workshop, starting_on: Date.tomorrow, ending_on: Date.today.days_since(5))
       create(:workshop, starting_on: Date.today.days_ago(5), ending_on: Date.today.days_ago(3), archived_on: Date.today.days_ago(2))
 
       expect(described_class.past.count).to eq 1
+    end
+  end
+
+  describe '#published' do
+    it 'finds the proper records' do
+      create(:workshop, published: true)
+
+      create(:workshop, published: true, archived_on: Date.yesterday)
+      create(:workshop, published: false)
+
+      expect(described_class.published.count).to eq 1
+    end
+  end
+
+  describe '#available' do
+    it 'finds the proper records' do
+      create(:workshop, ending_on: 2.days.from_now, published: true)
+      create(:workshop, ending_on: 2.days.from_now, deadline_on: 2.days.from_now, published: true)
+
+      create(:workshop, ending_on: 2.days.from_now, published: false)
+      create(:workshop, ending_on: 2.days.from_now, deadline_on: 1.day.ago, published: true)
+
+      expect(described_class.available.count).to eq 2
     end
   end
 end

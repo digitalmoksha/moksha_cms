@@ -56,6 +56,7 @@ class Workshop < ApplicationRecord
 
   default_scope { where(account_id: Account.current.id) }
 
+  scope :published,    -> { where(published: true).not_archived }
   scope :archived,     -> { where('archived_on IS NOT NULL') }
   scope :not_archived, -> { where('archived_on IS NULL') }
 
@@ -64,8 +65,7 @@ class Workshop < ApplicationRecord
   scope :past,         -> { where('ending_on <= ?', Date.today.beginning_of_day.to_s).not_archived.order('starting_on DESC').includes(:translations) }
 
   # available is list of published and registration open and not ended
-  scope :available,    -> { where(published: true).where('ending_on > ? AND deadline_on > ?', (Date.today - 1).to_s, (Date.today - 1).to_s).not_archived.order('starting_on ASC') }
-  scope :published,    -> { where(published: true).not_archived }
+  scope :available,    -> { where('ending_on > ? AND (deadline_on > ? OR deadline_on IS NULL)', Time.now.to_s, Time.now.to_s).published.order('starting_on ASC') }
 
   # don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
   monetize             :funding_goal_cents, with_model_currency: :base_currency
