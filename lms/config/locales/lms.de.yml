@@ -12,3 +12,9 @@ de:
     quiz_progress_status: "%{num} von %{total} durchgeführt"
 
     subscription_required: Abonnement erforderlich
+
+    course:
+      next_button: Zur nächsten Lektion
+      next_button_complete: Kurs abgeschlossen!
+      previous_button: Vorherige Lektion
+      previous_button_welcome: Willkommen zum Kurs!
