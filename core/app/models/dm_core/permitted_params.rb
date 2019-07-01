@@ -19,8 +19,9 @@ module DmCore
       if can? :manage, :all
         params.require(:user_profile).permit!
       else
-        params.require(:user_profile).permit(:public_name, :first_name, :last_name, :public_avatar,
-                       :address, :address2, :city, :state, :zipcode, :country_id)
+        params.require(:user_profile)
+              .permit(:public_name, :first_name, :last_name, :public_avatar,
+                      :address, :address2, :city, :state, :zipcode, :country_id)
       end
     end
 
@@ -31,8 +32,8 @@ module DmCore
         the_params.permit!
       else
         the_params.permit(:public_name, :first_name, :last_name, :public_avatar,
-                           :address, :address2, :city, :state, :zipcode, :country_id,
-                           :userless_registration, :address_required, :email)
+                          :address, :address2, :city, :state, :zipcode, :country_id,
+                          :userless_registration, :address_required, :email)
       end
     end
 

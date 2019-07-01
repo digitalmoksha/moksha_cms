@@ -5,9 +5,9 @@ class Address < ApplicationRecord
   attr_accessor     :name
 
   biggs :postal_address,
-          recipient: :name,
-          country: :country_code,
-          street: proc { |address| "#{address.line1} #{address.line2}" }
+        recipient: :name,
+        country: :country_code,
+        street: proc { |address| "#{address.line1} #{address.line2}" }
 
   #------------------------------------------------------------------------------
   def to_s(name_to_use = '')
