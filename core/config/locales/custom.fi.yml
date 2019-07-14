@@ -6,6 +6,7 @@ fi:
     cs: tsekki
     ja: japani
     fi: suomi
+    ru: Russian
 
   date:
     formats:
