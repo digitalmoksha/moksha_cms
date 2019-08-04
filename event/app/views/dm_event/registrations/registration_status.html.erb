@@ -1,0 +1,15 @@
+<div class="receipt_section">
+  <% if @registration.pending? %>
+    <p><%= I18n.t('ems.registration_is_pending') %></p>
+  <% elsif  @registration.reviewing? %>
+    <p><%= I18n.t('ems.registration_is_reviewing') %></p>
+  <% elsif  @registration.rejected? %>
+    <p><%= I18n.t('ems.registration_is_rejected') %></p>
+  <% elsif  @registration.waitlisted? %>
+    <p><%= I18n.t('ems.registration_is_waitlisted') %></p>
+  <% elsif  @registration.canceled? %>
+    <p><%= I18n.t('ems.registration_is_canceled') %></p>
+  <% elsif  @registration.refunded? %>
+    <p><%= I18n.t('ems.registration_is_refunded') %></p>
+  <% end %>
+</div>

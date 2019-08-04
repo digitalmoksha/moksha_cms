@@ -43,6 +43,13 @@ ja:
     login: ログイン
     create_account: アカウントを作成
 
+    registration_is_pending: Your registration is still pending.
+    registration_is_reviewing: Your registration is being reviewed.
+    registration_is_rejected: Your registration has been rejected.
+    registration_is_waitlisted: You have been placed on a waitlist.
+    registration_is_canceled: Your registration can been canceled.
+    registration_is_refunded: Your registration has been refunded.
+
   activerecord:
     errors:
       models:
