@@ -94,7 +94,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
       redirect_to(main_app.root_url) && return
     end
 
-    @receipt_content  = @registration.email_state_notification(@registration.current_state, false) || ""
+    @receipt_content = @registration.email_state_notification(@registration.current_state, false) || ""
   end
 
   private
@@ -114,7 +114,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
   #------------------------------------------------------------------------------
   def user_needs_to_be_logged_in?
-    @workshop && @workshop.require_account && current_user.nil?
+    @workshop&.require_account && current_user.nil?
   end
 end
 
