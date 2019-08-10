@@ -12,6 +12,8 @@
 
     <%= f.input :nickname, label: false, input_html: { style: 'display: none;' } %>
 
+    <%= add_recaptcha %>
+
     <%= f.submit I18n.t('cms.contact_form.send_button'), class: 'btn btn-primary' %>
   <% end %>
 </div>
