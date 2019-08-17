@@ -1,4 +1,6 @@
 class DmCms::ContactFormController < DmCms::ApplicationController
+  rescue_from ActionController::InvalidAuthenticityToken, with: :form_spam
+
   protect_from_forgery with: :exception
 
   # Type of contact form object is specified by any param name that
@@ -54,5 +56,11 @@ class DmCms::ContactFormController < DmCms::ApplicationController
     theme_class = parts[2..-3].join('_')
 
     "theme_#{theme_name}/#{theme_class}_contact_form".camelize.constantize
+  end
+
+  #------------------------------------------------------------------------------
+  def form_spam(e)
+    Rails.logger.error "=====> Spam attempt ContactForm: #{e.message}  URL: #{request.url}  REMOTE_ADDR: #{request.remote_addr}"
+    head :bad_request
   end
 end
