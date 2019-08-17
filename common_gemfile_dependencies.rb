@@ -3,7 +3,7 @@
 # the one component of MokshaCms.
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.6'
+gem 'rails', '5.0.7.2'
 
 gem 'dm_preferences',         '~> 1.5'
 gem 'themes_for_rails',       git: 'https://github.com/digitalmoksha/themes_for_rails.git'
@@ -25,6 +25,8 @@ group :development, :test do
 
   gem 'rubocop', '~> 0.52'
   gem 'rubocop-rspec', '~> 1.22'
+
+  gem 'bundler-audit',  git: 'https://github.com/rubysec/bundler-audit'
 end
 
 group :test do
