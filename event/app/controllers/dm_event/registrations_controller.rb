@@ -67,7 +67,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
     if @workshop.require_account
       if @registration.user_profile.user != current_user && !is_admin?
-        Rails.logger.error("Error: Attempt to view payment page by user: <#{current_user.email}>  for uuid: <#{params[:uuid]}>")
+        Rails.logger.error("=====> Error: Attempt to view payment page by user: <#{current_user&.email}>  for uuid: <#{params[:uuid]}>")
 
         redirect_to(main_app.root_url) && return
       end
@@ -89,7 +89,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   #------------------------------------------------------------------------------
   def success
     if @registration.nil? || @registration.user_profile.user != current_user
-      Rails.logger.error("Error: Attempt to view payment success page by user: <#{current_user.email}>  for uuid: <#{params[:uuid]}>")
+      Rails.logger.error("=====> Error: Attempt to view payment success page by user: <#{current_user&.email}>  for uuid: <#{params[:uuid]}>")
 
       redirect_to(main_app.root_url) && return
     end
