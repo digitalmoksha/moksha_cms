@@ -12,7 +12,8 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   helper          DmEvent::RegistrationsHelper
   layout          'layouts/event_templates/register'
 
-  before_action   :workshop_lookup, except: [:success]
+  before_action   :workshop_lookup,          only: [:new, :create]
+  before_action   :registration_uuid_lookup, only: [:choose_payment, :success]
 
   #------------------------------------------------------------------------------
   def new
@@ -37,7 +38,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
 
   #------------------------------------------------------------------------------
   def create
-    redirect_to(action: :new) && return if @workshop.require_account && current_user.nil?
+    redirect_to(action: :new) && return if user_needs_to_be_logged_in?
 
     profile_params = params[:registration].delete("user_profile_attributes") if params[:registration]
     profile_params&.delete(:id)
@@ -61,21 +62,25 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   # Only allow to proceed with payment if the registration is still in pending
   #------------------------------------------------------------------------------
   def choose_payment
-    @registration = Registration.find_by_uuid(params[:uuid])
-    @workshop     = @registration.workshop if @registration
-    flash[:alert] = I18n.t('core.resource_invalid')
-    redirect_to(main_app.root_url) && return if @registration.nil? || !@registration.accepted?
+    redirect_to(main_app.root_url) && return if @registration.nil?
+    raise Account::LoginRequired, I18n.t('core.login_required') if user_needs_to_be_logged_in?
 
     if @workshop.require_account
-      raise Account::LoginRequired, I18n.t('core.login_required') if current_user.nil?
-
       if @registration.user_profile.user != current_user && !is_admin?
-        flash[:alert] = I18n.t('core.resource_invalid')
+        Rails.logger.error("=====> Error: Attempt to view payment page by user: <#{current_user&.email}>  for uuid: <#{params[:uuid]}>")
+
         redirect_to(main_app.root_url) && return
       end
     end
 
-    render(:payment_complete) && return if @registration.balance_owed.zero?
+    render(:payment_complete)      && return if @registration.balance_owed.zero?
+    render(:registration_status)   && return if @registration.pending?
+    render(:registration_status)   && return if @registration.reviewing?
+    render(:registration_status)   && return if @registration.rejected?
+    render(:registration_status)   && return if @registration.waitlisted?
+    render(:registration_status)   && return if @registration.canceled?
+    render(:registration_status)   && return if @registration.refunded?
+    redirect_to(main_app.root_url) && return unless @registration.accepted?
   end
 
   # Success page for a registration.  Look up the uuid and display success.
@@ -83,14 +88,13 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   # them out.
   #------------------------------------------------------------------------------
   def success
-    @registration = Registration.find_by_uuid(params[:uuid])
     if @registration.nil? || @registration.user_profile.user != current_user
-      #--- not logged in or not the users registration (for )
-      flash[:alert] = I18n.t('core.resource_invalid')
+      Rails.logger.error("=====> Error: Attempt to view payment success page by user: <#{current_user&.email}>  for uuid: <#{params[:uuid]}>")
+
       redirect_to(main_app.root_url) && return
     end
-    @workshop         = @registration.workshop if @registration
-    @receipt_content  = @registration.email_state_notification(@registration.current_state, false) || ""
+
+    @receipt_content = @registration.email_state_notification(@registration.current_state, false) || ""
   end
 
   private
@@ -98,6 +102,19 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   #------------------------------------------------------------------------------
   def workshop_lookup
     @workshop = Workshop.find_by_slug(params[:id])
+  end
+
+  #------------------------------------------------------------------------------
+  def registration_uuid_lookup
+    @registration = Registration.find_by_uuid(params[:uuid])
+    return unless @registration
+
+    @workshop = @registration.workshop
+  end
+
+  #------------------------------------------------------------------------------
+  def user_needs_to_be_logged_in?
+    @workshop&.require_account && current_user.nil?
   end
 end
 

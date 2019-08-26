@@ -6,6 +6,7 @@ pl:
     cs: Czech
     ja: Japanese
     fi: Finnish
+    ru: Russian
 
   date:
     formats:

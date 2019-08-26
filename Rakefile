@@ -1,6 +1,9 @@
 require 'rake'
 require 'rubygems/package_task'
 
+require 'bundler/audit/task'
+Bundler::Audit::Task.new
+
 MOKSHA_GEMS = %w[admin core cms event forum newsletter lms].freeze
 
 task default: :test

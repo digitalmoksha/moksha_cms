@@ -17,6 +17,8 @@ module DmEvent
             'discounted_price'    => discounted_price.format(no_cents_if_whole: true, symbol: true),
             'title'               => workshop.title,
             'fullname'            => user_profile.full_name,
+            'first_name'          => user_profile.first_name,
+            'last_name'           => user_profile.last_name,
             'payment_url'         => payment_url,
             'balance'             => balance_owed.format,
             'payment_owed'        => payment_owed.format,

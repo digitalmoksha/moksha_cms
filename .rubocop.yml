@@ -1,9 +1,5 @@
 inherit_from: .rubocop_todo.yml
 
-inherit_gem:
-  gitlab-styles:
-    - rubocop-default.yml
-
 # require: ./rubocop/rubocop
 
 AllCops:

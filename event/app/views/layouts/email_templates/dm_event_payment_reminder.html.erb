@@ -1,8 +1,9 @@
 <%= markdown do %>
-<%= I18n.t('email.salutation', :value => h(@values['fullname'])) %>
+<%= I18n.t('email.salutation', :value => h(@values['first_name'])) %>
 
 <%= I18n.t('ems.ticket_registered_following_event') %>:
 
+_<%= I18n.t('ems.ticket_receipt_ticket_number') %>: <%=h @values['receipt_code'] %>_<br>
 **<%=h @values['title'].strip %>**
 
 <%= I18n.t('ems.ticket_outstanding_balance') %>:

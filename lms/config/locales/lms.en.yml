@@ -12,3 +12,9 @@ en:
     quiz_progress_status: "Completed %{num} out of %{total}"
 
     subscription_required: Subscription Required
+
+    course:
+      next_button: Complete and Continue
+      next_button_complete: Course Completed!
+      previous_button: Previous Lecture
+      previous_button_welcome: Welcome to the Course!

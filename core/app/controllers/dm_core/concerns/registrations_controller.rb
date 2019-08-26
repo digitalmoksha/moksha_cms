@@ -17,6 +17,9 @@ module DmCore
 
         unless verify_recaptcha(secret_key: Rails.application.secrets[:recaptcha_secret_key])
           self.resource = resource_class.new sign_up_params
+          flash[:error] = 'There was an error with the reCAPTCHA. Please solve the reCAPTCHA again.'
+          flash.delete :recaptcha_error
+
           respond_with_navigational(resource) { render :new }
         end
       end

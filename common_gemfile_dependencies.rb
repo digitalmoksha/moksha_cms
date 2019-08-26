@@ -3,7 +3,7 @@
 # the one component of MokshaCms.
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.6'
+gem 'rails', '5.0.7.2'
 
 gem 'dm_preferences',         '~> 1.5'
 gem 'themes_for_rails',       git: 'https://github.com/digitalmoksha/themes_for_rails.git'
@@ -15,7 +15,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'therubyracer', platforms: :ruby
 
 group :development, :test do
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.6' # until an ActiveRecrod dependecy is removed
   gem 'pry-byebug'
   gem 'thin' # use the Thin webserver during development
 
@@ -23,10 +23,10 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_bot_rails', '~> 4.8'
 
-  gem 'rubocop', '~> 0.52.1'
-  gem 'rubocop-rspec', '~> 1.22.1'
+  gem 'rubocop', '~> 0.52'
+  gem 'rubocop-rspec', '~> 1.22'
 
-  gem 'gitlab-styles', require: false # use the GitLab rubocop styles
+  gem 'bundler-audit',  git: 'https://github.com/rubysec/bundler-audit'
 end
 
 group :test do

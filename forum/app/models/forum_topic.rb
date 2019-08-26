@@ -76,7 +76,7 @@ class ForumTopic < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def last_page
-    [(comments_count.to_f / ForumComment.per_page.to_f).ceil.to_i, 1].max
+    [(comments_count.to_f / ForumComment.per_page).ceil.to_i, 1].max
   end
 
   #------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ class ForumTopic < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def comment_page(forum_comment)
-    [(comment_number(forum_comment).to_f / ForumComment.per_page.to_f).ceil.to_i, 1].max
+    [(comment_number(forum_comment).to_f / ForumComment.per_page).ceil.to_i, 1].max
   end
 
   #------------------------------------------------------------------------------

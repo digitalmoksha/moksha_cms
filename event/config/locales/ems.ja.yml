@@ -13,12 +13,12 @@ ja:
     ticket_receipt_price: 料金
     ticket_information: チケット情報
     ticket_contact: 連絡先情報
-    ticket_registered_following_event: "According to our registration system, you are or were a participant in the following event"
-    ticket_outstanding_balance: "According to our accounting, the following amount still needs to be paid"
-    ticket_payment_link_leadin: You can make a payment with the following link
-    ticket_payment_link_text: Make Payment
+    ticket_registered_following_event: "こちらの登録システム上では、現在もしくは過去に下記のイベントに参加されていることになっております："
+    ticket_outstanding_balance: "ご連絡を差し上げたのは、分割払いを選択された場合は次回のお支払い期日が到来しており、一括払いを選択された場合は全額をまだお支払いされていない可能性があるからです。支払期日が到来している金額は次のとおりです:"
+    ticket_payment_link_leadin: "下記のリンクをクリックしていただくと、こちらの提供する支払方法のうちからひとつを選択していただくことができます。あなたのお支払いをこちらの登録システムに反映させるために、ご自分のチケット番号をご記入願います。"
+    ticket_payment_link_text: "今すぐ支払う"
     ticket_payment_reminder_subject: "Payment Reminder: %{value}"
-    ticket_if_already_paid: "This email is automatically generated and sent by our system. If you have already paid the amount, or believe that the reminder is incorrect, please send an email to %{value}. If you have made a payment in the last three days, please ignore this reminder."
+    ticket_if_already_paid: "このeメールはこちらの登録システムによって自動的に作成および送信されています。すでにお支払いをされた場合や、このメールにお心当たりがない場合はメールでお知らせ願います。 %{value}."
     ticket_payment_complete: お支払いが完了しました!
     registration_receipt_title: 予約受理
     registration_email: Eメール
@@ -42,6 +42,13 @@ ja:
 
     login: ログイン
     create_account: アカウントを作成
+
+    registration_is_pending: Your registration is still pending.
+    registration_is_reviewing: Your registration is being reviewed.
+    registration_is_rejected: Your registration has been rejected.
+    registration_is_waitlisted: You have been placed on a waitlist.
+    registration_is_canceled: Your registration has been canceled.
+    registration_is_refunded: Your registration has been refunded.
 
   activerecord:
     errors:

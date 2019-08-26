@@ -10,6 +10,8 @@ class ContactForm < ::MailForm::Base
   attribute :reason,      validate: true
   attribute :nickname,    captcha: true
 
+  PARTIAL_NAME = 'liquid_tags/contact_form'.freeze
+
   # append    :remote_ip, :user_agent, :session   # append these values to the end of all emails
 
   # for a contact form, the "from" address should be a valid email address

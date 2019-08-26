@@ -1,0 +1,59 @@
+ru:
+  ems:
+    registration_subtitle: Registration
+    register_btn: Register
+    cancel_btn: Cancel
+    ticket_receipt_arrival: Arrival
+    ticket_receipt_attendee: Attendee
+    ticket_receipt_departure: Departure
+    ticket_receipt_event: Event
+    ticket_receipt_questions: "If you have any questions, please email us at %{value}"
+    ticket_receipt_questions_telephone: "or telephone %{value}"
+    ticket_receipt_ticket_number: Ticket Number
+    ticket_receipt_price: Price
+    ticket_information: Ticket Information
+    ticket_contact: Contact Information
+    ticket_registered_following_event: "According to our registration system, you are or have participated of the following event:"
+    ticket_outstanding_balance: "We are sending this reminder because you either chose an installment plan with the next payment being due or you might have forgotten to pay the course fee in total. The following amount is due:"
+    ticket_payment_link_leadin: You can choose one of our payment methods by clicking on the link below. Please mention your Ticket No. so we can relate your payment to your registration.
+    ticket_payment_link_text: Pay Now
+    ticket_payment_reminder_subject: "Payment Reminder: %{value}"
+    ticket_if_already_paid: "This email is being created and sent automatically by our registration system. If you have already paid or think this reminder is without cause please write us via %{value}."
+    ticket_payment_complete: Your payment is complete!
+    registration_receipt_title: Reservation Receipt
+    registration_email: Email
+    registration_first_name: First Name
+    registration_last_name: Last Name
+    registration_address: Address
+    registration_address2: Address
+    registration_city: City
+    registration_state: State
+    registration_country: Country
+    registration_zipcode: Zipcode
+    registration_account_required: 'In order to register for this event, you must be logged into your user account.'
+    registration_closed_heading: Registration Closed
+    registration_closed_text: "We are no longer accepting registrations for the course '%{title}'"
+    registration_closed_email: "For any questions you may contact %{email}."
+    registration_closed_list: The following courses are currently open for registration
+    choose_payment_method: Choose Your Payment Method
+    donate_button: Donate
+    project_goal: Project Goal
+    amount_raised: Amount Raised
+
+    login: Login
+    create_account: Create Account
+
+    registration_is_pending: Your registration is still pending.
+    registration_is_reviewing: Your registration is being reviewed.
+    registration_is_rejected: Your registration has been rejected.
+    registration_is_waitlisted: You have been placed on a waitlist.
+    registration_is_canceled: Your registration has been canceled.
+    registration_is_refunded: Your registration has been refunded.
+
+  activerecord:
+    errors:
+      models:
+        registration:
+          attributes:
+            workshop_price_id:
+              blank: Please select a payment method

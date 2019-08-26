@@ -1,0 +1,20 @@
+cs:
+  lms:
+    quiz_feedback_instructions_incorrect: Choose how difficult this question was to advance to the next card
+    quiz_feedback_instructions_correct: Choose how difficult this question was to advance to the next card
+    quiz_feedback_button_incorrect_almost: Almost Got It
+    quiz_feedback_button_incorrect_no_idea: I Had No Idea
+    quiz_feedback_button_correct_easy: That Was Easy
+    quiz_feedback_button_correct_not_easy: I Had to Think About It
+    quiz_congratulations_1: Congratulations!  You are ready for the next lesson
+    quiz_congratulations_2: "(or you can %{link})"
+    quiz_congratulations_take_quiz_again: take the quiz again
+    quiz_progress_status: "Completed %{num} out of %{total}"
+
+    subscription_required: Subscription Required
+
+    course:
+      next_button: Complete and Continue
+      next_button_complete: Course Completed!
+      previous_button: Previous Lecture
+      previous_button_welcome: Welcome to the Course!
