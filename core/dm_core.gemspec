@@ -51,8 +51,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'offsite_payments', '~> 2.2' #--| of PaymentHistory model
   s.add_dependency 'paper_trail', '~> 7.0' # table versioning
   s.add_dependency 'partisan', '~> 0.5' # acts_as_follower clone
-  s.add_dependency 'rails', '>= 4.2', '< 5.1'
-  s.add_dependency 'rails-i18n', '>= 4.2', '< 5.1'
+  s.add_dependency 'rails', '>= 4.2', '< 5.2'
+  s.add_dependency 'rails-i18n', '>= 4.2', '< 5.2'
   s.add_dependency 'ranked-model', '~> 0.4.0' # sort order for a list
   s.add_dependency 'recaptcha', '~> 4.1'
   s.add_dependency 'RedCloth', '~> 4.3'

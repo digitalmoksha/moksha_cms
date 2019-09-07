@@ -3,7 +3,7 @@
 # the one component of MokshaCms.
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.7.2'
+gem 'rails', '5.1.7'
 
 gem 'dm_preferences',         '~> 1.5'
 gem 'themes_for_rails',       git: 'https://github.com/digitalmoksha/themes_for_rails.git'
