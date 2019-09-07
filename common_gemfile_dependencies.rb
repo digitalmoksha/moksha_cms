@@ -39,4 +39,5 @@ group :test do
   gem 'rails-controller-testing'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'syntax'
+  gem 'webmock', '~> 3.7'
 end

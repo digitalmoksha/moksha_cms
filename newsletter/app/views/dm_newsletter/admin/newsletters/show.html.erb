@@ -36,9 +36,9 @@
     <tbody>
       <% @folder_list.each do |folder| %>
         <tr class="item">
-          <td><%= folder['name'] %></td>
-          <td><%= folder['cnt'] %></td>
-          <td><%= folder['folder_id'] %></td>
+          <td><%= folder[:name] %></td>
+          <td><%= folder[:count] %></td>
+          <td><%= folder[:id] %></td>
         </tr>
       <% end %>
     </tbody>

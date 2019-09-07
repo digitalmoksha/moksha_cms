@@ -17,6 +17,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'dm_core', s.version
 
   #--- dont' forget to add 'require' statement in engine.rb
-  s.add_dependency 'gibbon', '~> 1.2.0'
-  # TODO s.add_dependency 'gibbon', '~> 3.0'
+  s.add_dependency 'gibbon', '~> 3.2'
 end
