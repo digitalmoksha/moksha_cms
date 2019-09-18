@@ -12,21 +12,22 @@ module WillPaginate
         options = collection
         collection = nil
       end
-      collection                ||= infer_collection_from_controller
 
-      options[:version]         ||= :original
+      collection        ||= infer_collection_from_controller
+      options[:version] ||= :original
+
       case options.delete(:version)
       when :bootstrap2
-        options[:renderer]      ||= Bootstrap2LinkRenderer
+        options[:renderer] ||= Bootstrap2LinkRenderer
       when :bootstrap3
-        options[:renderer]      ||= Bootstrap3LinkRenderer
+        options[:renderer] ||= Bootstrap3LinkRenderer
       else
-        options[:renderer]      ||= OriginalLinkRenderer
-        options[:class]         ||= 'tPages'
+        options[:renderer] ||= OriginalLinkRenderer
+        options[:class]    ||= 'tPages'
       end
 
-      options[:previous_label]  ||= '<i class="fa fa-arrow-left"></i>'
-      options[:next_label]      ||= '<i class="fa fa-arrow-right"></i>'
+      options[:previous_label] ||= '<i class="fa fa-arrow-left"></i>'
+      options[:next_label]     ||= '<i class="fa fa-arrow-right"></i>'
       super.try :html_safe
     end
 
