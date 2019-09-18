@@ -1,0 +1,21 @@
+image: "ruby:2.5"
+
+# Cache gems and rubocop in between builds
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - $BUNDLE_PATH
+    - tmp/rubocop_cache
+
+before_script:
+  - ruby -v  # Print out ruby version for debugging
+  - bundle check || bundle install --jobs $(nproc)
+
+rubocop:
+  script:
+    - bundle exec rubocop
+
+rspec:
+  script:
+    - bundle exec rake test_app
+    - bundle exec rake test
