@@ -59,8 +59,8 @@ class DmCms::ContactFormController < DmCms::ApplicationController
   end
 
   #------------------------------------------------------------------------------
-  def form_spam(e)
-    Rails.logger.error "=====> Spam attempt ContactForm: #{e.message}  URL: #{request.url}  REMOTE_ADDR: #{request.remote_addr}"
+  def form_spam(exception)
+    Rails.logger.error "=====> Spam attempt ContactForm: #{exception.message}  URL: #{request.url}  REMOTE_ADDR: #{request.remote_addr}"
     head :bad_request
   end
 end

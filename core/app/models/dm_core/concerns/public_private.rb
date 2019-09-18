@@ -144,11 +144,13 @@ module DmCore
             public_objs     = all_public.published
             private_objs    = by_private.published
             subscribed_objs = by_subscription.published if user.is_paid_subscriber?
+
             if include_translations
               public_objs     = public_objs.includes(:translations)
               private_objs    = private_objs.includes(:translations)
               subscribed_objs = subscribed_objs.includes(:translations) if user.is_paid_subscriber?
             end
+
             objects  = public_objs
             objects += private_objs.with_role(:member, user)
             private_objs.where('owner_id IS NOT NULL').each do |item|

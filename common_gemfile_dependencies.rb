@@ -26,7 +26,7 @@ group :development, :test do
   gem 'rubocop', '~> 0.52'
   gem 'rubocop-rspec', '~> 1.22'
 
-  gem 'bundler-audit',  git: 'https://github.com/rubysec/bundler-audit'
+  gem 'bundler-audit', git: 'https://github.com/rubysec/bundler-audit'
 end
 
 group :test do
