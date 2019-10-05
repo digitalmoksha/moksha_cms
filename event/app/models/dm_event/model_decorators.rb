@@ -3,5 +3,5 @@
 # eager-loading it.  Prefer to keep the logic in the model folder.
 #------------------------------------------------------------------------------
 
-UserProfile.send(:include, DmEvent::Concerns::UserProfile)
-Ability.send(:include, DmEvent::Concerns::Ability)
+UserProfile.send(:include, DmEvent::Concerns::UserProfile) # rubocop:disable Lint/SendWithMixinArgument
+Ability.send(:include, DmEvent::Concerns::Ability) # rubocop:disable Lint/SendWithMixinArgument
