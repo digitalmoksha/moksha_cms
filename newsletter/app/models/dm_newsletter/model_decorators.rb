@@ -3,4 +3,4 @@
 # eager-loading it.  Prefer to keep the logic in the model folder.
 #------------------------------------------------------------------------------
 
-Ability.send(:include, DmNewsletter::Concerns::Ability)
+Ability.send(:include, DmNewsletter::Concerns::Ability) # rubocop:disable Lint/SendWithMixinArgument

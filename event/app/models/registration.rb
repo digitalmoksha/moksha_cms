@@ -76,7 +76,7 @@ class Registration < ApplicationRecord
   # Receipt code: (workshop.id)-(registration.id).  eg.  003-101
   #------------------------------------------------------------------------------
   def set_receipt_code
-    receipt_code = format("%03d", workshop.id) + '-' + format("%03d", self[:id])
+    receipt_code = format("%03d", workshop.id) + '-' + format("%03d", self[:id]) # rubocop:disable Style/FormatStringToken
     update_attribute(:receipt_code, receipt_code)
   end
 

@@ -17,7 +17,11 @@ end
 
 require 'rspec/rails'
 require 'database_cleaner'
-require "validates_email_format_of/rspec_matcher"
+require 'validates_email_format_of/rspec_matcher'
+require 'webmock/rspec'
+
+# disallow external requests
+WebMock.disable_net_connect!(allow_localhost: true)
 
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
 Dir[File.join(ENGINE_RAILS_ROOT, "../core/spec/support/**/*.rb")].each { |f| require f }
