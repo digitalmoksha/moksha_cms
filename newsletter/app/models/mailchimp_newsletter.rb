@@ -89,9 +89,9 @@ class MailchimpNewsletter < Newsletter
 
     { success: true, code: 0 }
   rescue Gibbon::MailChimpError => e
-    Rails.logger.info "=== Error Subscribing #{email} : code: #{e.code} msg: #{e}"
+    Rails.logger.info "=== Error Subscribing #{email} : code: #{e&.code} msg: #{e}"
 
-    { success: false, code: e.code }
+    { success: false, code: e&.code }
   end
 
   # unsubscribe email from the newsletter
