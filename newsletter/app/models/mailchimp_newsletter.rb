@@ -73,25 +73,31 @@ class MailchimpNewsletter < Newsletter
 
     # update data if user logged in. Don't for an unprotected subscribe. but honor value if passed in
     options[:update_existing] ||= user_or_email.is_a?(User) && !new_subscription
-
     headers    = { 'Accept-Language' => I18n.locale.to_s }
     email      = user_or_email.is_a?(User) ? user_or_email.email : user_or_email
     merge_vars = build_merge_vars(user_or_email, options)
     body       = build_body(email, merge_vars)
 
-    if options[:update_existing]
-      md5_email_address = hash_email(email)
-      api.lists(mc_id).members(md5_email_address).upsert(headers: headers, body: body)
-    else
+    unless options[:update_existing]
+      if subscriber_info(email)
+        # if it already exists, but we think it's new, then remove merge_vars.
+        # we don't want someone changing the name on an email address from a
+        # normal subscribe form.
+        merge_vars = { SPAMAPI: 1 }
+        body       = build_body(email, merge_vars)
+      end
+
       body[:status] = 'pending' # make an opt-in email to be sent
-      api.lists(mc_id).members.create(headers: headers, body: body)
     end
+
+    md5_email_address = hash_email(email)
+    api.lists(mc_id).members(md5_email_address).upsert(headers: headers, body: body)
 
     { success: true, code: 0 }
   rescue Gibbon::MailChimpError => e
-    Rails.logger.info "=== Error Subscribing #{email} : code: #{e&.code} msg: #{e}"
+    Rails.logger.info "=== Error Subscribing #{email} : code: #{e.status_code} msg: #{e.message}"
 
-    { success: false, code: e&.code }
+    { success: false, code: e.status_code }
   end
 
   # unsubscribe email from the newsletter
@@ -103,7 +109,7 @@ class MailchimpNewsletter < Newsletter
 
     true
   rescue Gibbon::MailChimpError => e
-    Rails.logger.info "=== Error Unsubscribing #{email} : #{e}"
+    Rails.logger.info "=== Error Unsubscribing #{email} : #{e.message}"
 
     false
   end
@@ -114,7 +120,9 @@ class MailchimpNewsletter < Newsletter
 
     results.body
   rescue Gibbon::MailChimpError => e
-    Rails.logger.info "=== Error in subscriber_info for #{email} : #{e}"
+    if e.status_code != 404
+      Rails.logger.info "=== Error in subscriber_info for #{email} : #{e.message}"
+    end
 
     nil
   end
@@ -147,7 +155,7 @@ class MailchimpNewsletter < Newsletter
     results = api.campaigns.retrieve(params: list_params)
     results.body[:campaigns]
   rescue Gibbon::MailChimpError => e
-    Rails.logger.info "=== Error sent_campaign_list for list #{mc_id} : #{e}"
+    Rails.logger.info "=== Error sent_campaign_list for list #{mc_id} : #{e.message}"
 
     []
   end
