@@ -78,6 +78,8 @@ class MailchimpNewsletter < Newsletter
     merge_vars = build_merge_vars(user_or_email, options)
     body       = build_body(email, merge_vars)
 
+    return { success: false, code: 232 } if ValidatesEmailFormatOf::validate_email_format(email)
+
     unless options[:update_existing]
       if subscriber_info(email)
         # if it already exists, but we think it's new, then remove merge_vars.
@@ -104,6 +106,7 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def unsubscribe(email)
     return false if email.blank?
+    return false if ValidatesEmailFormatOf::validate_email_format(email)
 
     api.lists(mc_id).members(hash_email(email)).update(body: { status: "unsubscribed" })
 
