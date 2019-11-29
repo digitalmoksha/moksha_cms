@@ -73,12 +73,13 @@ class MailchimpNewsletter < Newsletter
 
     # update data if user logged in. Don't for an unprotected subscribe. but honor value if passed in
     options[:update_existing] ||= user_or_email.is_a?(User) && !new_subscription
+
     headers    = { 'Accept-Language' => I18n.locale.to_s }
     email      = user_or_email.is_a?(User) ? user_or_email.email : user_or_email
     merge_vars = build_merge_vars(user_or_email, options)
     body       = build_body(email, merge_vars)
 
-    return { success: false, code: 232 } if ValidatesEmailFormatOf::validate_email_format(email)
+    return { success: false, code: 232 } if ValidatesEmailFormatOf.validate_email_format(email)
 
     unless options[:update_existing]
       if subscriber_info(email)
@@ -106,7 +107,7 @@ class MailchimpNewsletter < Newsletter
   #------------------------------------------------------------------------------
   def unsubscribe(email)
     return false if email.blank?
-    return false if ValidatesEmailFormatOf::validate_email_format(email)
+    return false if ValidatesEmailFormatOf.validate_email_format(email)
 
     api.lists(mc_id).members(hash_email(email)).update(body: { status: "unsubscribed" })
 
@@ -123,9 +124,7 @@ class MailchimpNewsletter < Newsletter
 
     results.body
   rescue Gibbon::MailChimpError => e
-    if e.status_code != 404
-      Rails.logger.info "=== Error in subscriber_info for #{email} : #{e.message}"
-    end
+    Rails.logger.info "=== Error in subscriber_info for #{email} : #{e.message}" if e.status_code != 404
 
     nil
   end

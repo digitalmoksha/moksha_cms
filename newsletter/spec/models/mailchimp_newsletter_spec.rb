@@ -121,7 +121,9 @@ describe MailchimpNewsletter do
     end
 
     it 'subscribes a new email address' do
-      stub_request(:post, "#{api_endpoint}/lists/#{newsletter.mc_id}/members")
+      stub_request(:get, "#{api_endpoint}/lists/#{newsletter.mc_id}/members/#{hash_email(email)}")
+        .to_return(status: 404)
+      stub_request(:put, "#{api_endpoint}/lists/#{newsletter.mc_id}/members/#{hash_email(email)}")
         .with(body: { email_address: email, language: 'en', status: 'pending', merge_fields: { 'FNAME': '', 'LNAME': '', 'SPAMAPI': 1 } })
         .to_return(status: 200)
 
@@ -129,7 +131,9 @@ describe MailchimpNewsletter do
     end
 
     it 'subscribes a new email address with merge fields' do
-      stub_request(:post, "#{api_endpoint}/lists/#{newsletter.mc_id}/members")
+      stub_request(:get, "#{api_endpoint}/lists/#{newsletter.mc_id}/members/#{hash_email(email)}")
+        .to_return(status: 404)
+      stub_request(:put, "#{api_endpoint}/lists/#{newsletter.mc_id}/members/#{hash_email(email)}")
         .with(body: { email_address: email, language: 'en', status: 'pending', merge_fields: { 'FNAME': 'Bob', 'LNAME': 'Tree', 'SPAMAPI': 1 } })
         .to_return(status: 200)
 
@@ -139,7 +143,9 @@ describe MailchimpNewsletter do
     it 'subscribes a new user' do
       user = create(:user)
 
-      stub_request(:post, "#{api_endpoint}/lists/#{newsletter.mc_id}/members")
+      stub_request(:get, "#{api_endpoint}/lists/#{newsletter.mc_id}/members/#{hash_email(user.email)}")
+        .to_return(status: 404)
+      stub_request(:put, "#{api_endpoint}/lists/#{newsletter.mc_id}/members/#{hash_email(user.email)}")
         .with(body: { email_address: user.email, language: 'en', status: 'pending', merge_fields: { 'FNAME': user.first_name, 'LNAME': user.last_name, 'SPAMAPI': 1 } })
         .to_return(status: 200)
 
