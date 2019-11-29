@@ -41,7 +41,7 @@
                   <% end %>
                 <% end %>
 
-                <% if defined?(DmSubscriptions) %>
+                <% if defined?(DmSubscriptions) || defined?(DmSubscriptionsStripe) %>
                   <%= panel title: "Subscriptions" do %>
                     <%= subsection title: 'Subscriptions' do %>
                       <table class="table table-bordered table-condensed table-striped">
@@ -187,7 +187,7 @@
                     <%= f.input('roles[event_manager_alacarte]',  as: :boolean, inline_label: 'Individual Event Management', input_html: {checked: @user.has_role?(:event_manager_alacarte)}, hint: 'grant access to specific events only.  Use the "Permissions" page in an event to grant access') if defined?(DmEvent) %>
                     <%= f.input('roles[forum_manager]',           as: :boolean, inline_label: 'Forum Manager', input_html: {checked: @user.has_role?(:forum_manager)}, hint: 'can manage forums') if defined?(DmForum) %>
                     <%= f.input('roles[course_manager]',          as: :boolean, inline_label: 'Course Manager', input_html: {checked: @user.has_role?(:course_manager)}, hint: 'can manage courses and lessons') if defined?(DmLms) %>
-                    <%= f.input('roles[subscription_manager]',    as: :boolean, inline_label: 'Subscription Manager', input_html: {checked: @user.has_role?(:course_manager)}, hint: 'can manage site subscriptions') if defined?(DmSubscriptions) %>
+                    <%= f.input('roles[subscription_manager]',    as: :boolean, inline_label: 'Subscription Manager', input_html: {checked: @user.has_role?(:course_manager)}, hint: 'can manage site subscriptions') if defined?(DmSubscriptions) || defined?(DmSubscriptionsStripe) %>
                     <%#= f.input 'roles[newsletter_manager]',     as: :boolean, inline_label:: 'Newsletter Manager', input_html: {checked: @user.has_role?(:newsletter_manager)}, hint: 'can manage newsletters' %>
                     <hr>
                     <%= f.input 'roles[manager]',         as: :boolean, inline_label: 'Manager', input_html: {checked: @user.has_role?(:manager)}, hint: 'can manage all areas except for global account settings and deleting users' %>

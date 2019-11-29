@@ -27,7 +27,7 @@
         <% end %>
 
         <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
-        <% if defined? DmSubscriptions %>
+        <% if defined?(DmSubscriptions) || defined?(DmSubscriptionsStripe) %>
           <%= f.input :require_subscription, inline_label: 'Require Subscription', hint: 'Require a valid subscription' %>
         <% end %>
         <%= f.input :teaser_only, inline_label: 'Show as Teaser', hint: 'Use to display as a teaser, even if not published' %>

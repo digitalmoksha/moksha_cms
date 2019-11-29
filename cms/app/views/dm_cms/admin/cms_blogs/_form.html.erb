@@ -26,7 +26,7 @@
           <%= f.input "title_#{locale}", label: 'Blog Title', id: 'name_error', required: true %>
         <% end %>
         <%= f.input :slug, label: 'Slug', hint: 'Leave blank to have auto-generated based on title.' %>
-        <% if defined? DmSubscriptions %>
+        <% if defined?(DmSubscriptions) || defined?(DmSubscriptionsStripe) %>
           <%= f.input :requires_subscription, inline_label: 'Subscription Required?', hint: 'User must have a paid subscription to access' %>
         <% end %>
         <%= f.input :comments_allowed, inline_label: 'Allow Comments', hint: 'Controls whether commenting is allowed for this blog.  If on, then each post can decided whether to allow comments' %>
