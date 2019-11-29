@@ -1,17 +1,18 @@
 ru:
   nms:
-    subscribe_button: Subscribe
-    unsubscribe_button: Unsubscribe
-    update_subscription_button: Update Subscription
-    subscription_successful: "You have successfully subscribed to the newsletter. In order to activate your subscription, we have sent you a confirmation e-mail.  You must click the confirmation link in order to receive the newsletter."
-    subscription_updated: Your subscription was successfully updated
-    unsubscribe_successful: Your email has been unsubscribed
-    already_subscribed: Already Subscribed
+    subscribe_button: Подписывайся
+    unsubscribe_button: Отказаться от подписки
+    update_subscription_button: Обновить подписку
+    subscription_successful: "Вы успешно подписались на рассылку. Чтобы активировать вашу подписку, мы отправили вам подтверждение по электронной почте. Вы должны нажать на ссылку подтверждения, чтобы получать рассылку."
+    subscription_updated: Ваша подписка была успешно обновлена
+    unsubscribe_successful: Ваш адрес электронной почты был отписан
+    already_subscribed: Уже подписан
+
 
     #--- Mailchimp specific errors
-    List_DoesNotExist: The specified list does not exist
-    List_AlreadySubscribed: This email is already subscribed
-    Email_WasRemoved: The specified email was previously removed, and cannot be resubscribed by the system. To prevent false spam complaints, you'll need to resubscribe of your own free will.
-    Email_NotExists: The specified email does not exist
-    Email_TooManySignups: This email has too many recent signup requests
-    mc_unknown_error: Unknown Mailchimp error occurred
+    List_DoesNotExist: Указанный список не существует
+    List_AlreadySubscribed: На это письмо уже подписано
+    Email_WasRemoved: Указанный адрес электронной почты был ранее удален и не может быть повторно подписан системой. Чтобы предотвратить ложные жалобы на спам, вы должны повторно подписаться по собственной воле.
+    Email_NotExists: Указанный адрес электронной почты не существует
+    Email_TooManySignups: В этом письме слишком много недавних запросов на регистрацию
+    mc_unknown_error: Произошла неизвестная ошибка Mailchimp
