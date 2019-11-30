@@ -119,7 +119,7 @@ class CmsPage < ApplicationRecord
     pages = []
     if has_children?
       children.each do |child|
-        if child.is_published? || (user&.is_admin?)
+        if child.is_published? || user&.is_admin?
           pages << child unless child[:menutitle].blank? && !options[:include_blank_titles]
         end
       end

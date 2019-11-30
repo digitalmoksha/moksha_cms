@@ -80,6 +80,7 @@ class DmCore::ApplicationController < ActionController::Base
     unless current_account.site_enabled? || request.params['slug'] == 'coming_soon'
       unless user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta))
         redirect_to "/#{current_account.preferred_default_locale}/coming_soon"
+
         return false
       end
     end
@@ -87,7 +88,8 @@ class DmCore::ApplicationController < ActionController::Base
     if current_account.site_maintenance?
       unless user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta))
         render text: '', layout: 'dm_core/maintenance'
-        return false
+
+        false
       end
     end
   end

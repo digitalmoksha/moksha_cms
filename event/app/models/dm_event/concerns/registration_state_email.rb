@@ -12,7 +12,7 @@ module DmEvent
           result = {
             'price'               => (workshop_price.nil? ? '' : workshop_price.price_formatted),
             'receipt_code'        => receipt_code.to_s,
-            'price_description'   => (workshop_price&.price_description).to_s,
+            'price_description'   => workshop_price&.price_description.to_s,
             'discount'            => discount.format(no_cents_if_whole: true, symbol: true),
             'discounted_price'    => discounted_price.format(no_cents_if_whole: true, symbol: true),
             'title'               => workshop.title,

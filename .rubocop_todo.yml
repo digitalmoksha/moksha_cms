@@ -32,7 +32,7 @@ Layout/AccessModifierIndentation:
 # SupportedHashRocketStyles: key, separator, table
 # SupportedColonStyles: key, separator, table
 # SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/AlignHash:
+Layout/HashAlignment:
   Exclude:
     - 'admin/app/helpers/admin_theme/theme_helper.rb'
     - 'admin/app/helpers/dm_admin/application_helper.rb'
@@ -48,7 +48,7 @@ Layout/AlignHash:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, IndentationWidth.
 # SupportedStyles: with_first_parameter, with_fixed_indentation
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Exclude:
     - 'admin/config/initializers/will_paginate.rb'
     - 'core/app/helpers/dm_core/liquid_helper.rb'
@@ -86,7 +86,7 @@ Layout/EmptyLinesAroundExceptionHandlingKeywords:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: auto_detection, squiggly, active_support, powerpack, unindent
-Layout/IndentHeredoc:
+Layout/HeredocIndentation:
   Exclude:
     - 'core/lib/generators/moksha_cms/install/install_generator.rb'
 
@@ -115,7 +115,7 @@ Layout/MultilineOperationIndentation:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: final_newline, final_blank_line
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Exclude:
     - 'core/lib/dm_core/theme_initialization.rb'
 
@@ -131,7 +131,7 @@ Lint/AssignmentInCondition:
     - 'forum/app/models/forum_topic.rb'
 
 # Offense count: 2
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Exclude:
     - 'cms/app/helpers/dm_cms/pages_helper.rb'
     - 'event/app/controllers/dm_event/admin/registrations_controller.rb'
@@ -156,7 +156,7 @@ Lint/ShadowingOuterLocalVariable:
 
 # Offense count: 4
 # Cop supports --auto-correct.
-Lint/UnneededCopDisableDirective:
+Lint/RedundantCopDisableDirective:
   Exclude:
     - 'core/lib/dm_core/engine.rb'
     - 'core/lib/dm_core/liquid_extensions.rb'
@@ -256,7 +256,7 @@ Naming/PredicateName:
 # Offense count: 1
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: io, id, to, by, on, in, at, ip, db
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Exclude:
     - 'core/app/helpers/dm_core/application_helper.rb'
 
@@ -476,7 +476,7 @@ Style/StringLiterals:
 
 # Offense count: 6
 # Cop supports --auto-correct.
-Style/UnneededCondition:
+Style/RedundantCondition:
   Exclude:
     - 'core/app/presenters/user_presenter.rb'
     - 'core/lib/dm_core/csv_exporter.rb'
