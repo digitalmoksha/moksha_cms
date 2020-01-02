@@ -1,5 +1,6 @@
 # Handles building the different content streams for a page
 #------------------------------------------------------------------------------
+# rubocop:disable Metrics/ModuleLength
 module DmCms::PagesHelper
   # Easy way to get a page url
   # slug can either be a string, or a CmsPage object
@@ -66,12 +67,40 @@ module DmCms::PagesHelper
   def main_menu(options = {})
     return '' if (root = CmsPage.roots.first).nil?
 
+    build_menu(root, nil, options)
+  end
+
+  # given the slug of a section, builds a list of links of all children of
+  # the specific section.
+  #------------------------------------------------------------------------------
+  def build_menu_for_section(slug, options = {})
+    page = CmsPage.friendly.find_by_slug(slug)
+
+    return unless page
+
+    build_menu(page, 1, options)
+  end
+
+  #------------------------------------------------------------------------------
+  def build_menu_for_page(options = {})
+    return '' unless @current_page
+
+    root = @current_page.parent || @current_page
+
+    build_menu(root, 1, options)
+  end
+
+  #------------------------------------------------------------------------------
+  def build_menu(root, depth, options = {})
     options[:ul]              = ''
     options[:ul]             += "class=\"#{options[:class]}\" "  unless options[:class].blank?
     options[:ul]             += "id=\"#{options[:id]}\" "        unless options[:id].blank?
     options[:include_root]    = root if options[:include_home]
     options[:active_class]  ||= 'current'
-    children                  = root.subtree.includes(:translations).arrange(order: :row_order).to_a[0][1]
+
+    children = depth ? root.subtree(to_depth: depth) : root.subtree
+    children = children.includes(:translations).arrange(order: :row_order).to_a[0][1]
+
     menu_str, _submenu_active = case options[:type]
                                 when :bs3
                                   menu_from_pages_bs3(children, options)
@@ -88,11 +117,13 @@ module DmCms::PagesHelper
     options[:ul]  ||= ''
     menu_str        = ''
     active_found    = false
+
     if (root = options[:include_root]) && allow_page_in_menu?(root)
       active          = (on_current_page?(root) ? options[:active_class] : nil)
       active_found  ||= !active.nil?
       menu_str       += content_tag :li, page_link(root), class: active
     end
+
     pages.each do |page, children|
       next unless allow_page_in_menu?(page)
 
@@ -105,6 +136,7 @@ module DmCms::PagesHelper
           submenu.html_safe
       end
     end
+
     [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
   end
 
@@ -114,11 +146,13 @@ module DmCms::PagesHelper
     options[:ul]  ||= ''
     menu_str        = ''
     active_found    = false
+
     if (root = options[:include_root])
       active          = (on_current_page?(root) ? options[:active_class] : nil)
       active_found  ||= !active.nil?
       menu_str       += content_tag :li, page_link(root), class: active
     end
+
     pages.each do |page, children|
       next unless allow_page_in_menu?(page)
 
@@ -134,6 +168,7 @@ module DmCms::PagesHelper
                     content_tag :li, page_link(page), class: active
                   end
     end
+
     [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
   end
 
@@ -143,11 +178,13 @@ module DmCms::PagesHelper
     options[:ul]  ||= ''
     menu_str        = ''
     active_found    = false
+
     if (root = options[:include_root])
       active          = (on_current_page?(root) ? options[:active_class] : nil)
       active_found  ||= !active.nil?
       menu_str       += content_tag :li, page_link(root, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
     end
+
     pages.each do |page, children|
       next unless allow_page_in_menu?(page)
 
@@ -163,6 +200,7 @@ module DmCms::PagesHelper
                     content_tag :li, page_link(page, nil, class: 'nav-link'), class: ['nav-item', active].css_join(' ')
                   end
     end
+
     [(menu_str.blank? ? '' : "<ul #{options[:ul]}>#{menu_str}</ul>"), active_found]
   end
 
@@ -255,3 +293,4 @@ module DmCms::PagesHelper
     (@current_page == page) || (@current_page.parent_id == page.id)
   end
 end
+# rubocop:enable Metrics/ModuleLength
