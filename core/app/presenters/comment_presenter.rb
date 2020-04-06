@@ -7,8 +7,8 @@ class CommentPresenter < BasePresenter
   end
 
   #------------------------------------------------------------------------------
-  def date_posted
-    format_datetime comment.created_at
+  def date_posted(options = {})
+    format_datetime(comment.created_at, options)
   end
 
   #------------------------------------------------------------------------------
