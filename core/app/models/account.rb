@@ -110,11 +110,10 @@ class Account < ApplicationRecord
     domain      = find_by_domain(separated.join('.'))
     return domain if domain
 
-    if Account.count == 0
-      raise Account::NotSetup
-    else
-      raise Account::DomainNotFound, "Invalid domain: #{host}"
-    end
+    raise Account::NotSetup if Account.count == 0
+    return Account.first if Rails.env.development?
+
+    raise Account::DomainNotFound, "Invalid domain: #{host}"
   end
 
   # Since we need the current account for the default scope in models, we need
