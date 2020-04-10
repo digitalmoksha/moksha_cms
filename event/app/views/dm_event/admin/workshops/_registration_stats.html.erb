@@ -4,29 +4,29 @@
     <div class="progress-statistics">
       <% num = workshop.registrations.number_of(:attending) %>
       <%= slim_progress_bar(label: 'Attending', value: "#{num} / #{num.percent_of(num_registrations).to_s}%", color: 'success', percentage: num.percent_of(num_registrations)) %>
-      <% if (num = workshop.registrations.number_of(:pending)) > 0 %>
+      <% if (num = workshop.registrations.number_of(:pending)).positive? %>
         <%= slim_progress_bar(label: 'Pending', value: "#{num}", color: 'pending', percentage: num.percent_of(num_registrations)) %>
       <% end %>
       <% num = workshop.registrations.number_of(:accepted) %>
       <%= slim_progress_bar(label: 'Accepted', value: "#{num}", color: 'accepted', percentage: num.percent_of(num_registrations)) %>
       <% num = workshop.registrations.number_of(:paid) %>
       <%= slim_progress_bar(label: 'Paid', value: "#{num}", color: 'paid', percentage: num.percent_of(num_registrations)) %>
-      <% if (num = workshop.registrations.number_of(:waitlisted)) > 0 %>
+      <% if (num = workshop.registrations.number_of(:waitlisted)).positive? %>
         <%= slim_progress_bar(label: 'Waitlisted', value: "#{num}", color: 'waitlisted', percentage: num.percent_of(num_registrations)) %>
       <% end %>
-      <% if (num = workshop.registrations.number_of(:reviewing)) > 0 %>
+      <% if (num = workshop.registrations.number_of(:reviewing)).positive? %>
         <%= slim_progress_bar(label: 'Reviewing', value: "#{num}", color: 'reviewing', percentage: num.percent_of(num_registrations)) %>
       <% end %>
-      <% if (num = workshop.registrations.number_of(:rejected)) > 0 %>
+      <% if (num = workshop.registrations.number_of(:rejected)).positive? %>
         <%= slim_progress_bar(label: 'Rejected', value: "#{num}", color: 'rejected', percentage: num.percent_of(num_registrations)) %>
       <% end %>
-      <% if (num = workshop.registrations.number_of(:canceled)) > 0 %>
+      <% if (num = workshop.registrations.number_of(:canceled)).positive? %>
         <%= slim_progress_bar(label: 'Canceled', value: "#{num}", color: 'canceled', percentage: num.percent_of(num_registrations)) %>
       <% end %>
-      <% if (num = workshop.registrations.number_of(:refunded)) > 0 %>
+      <% if (num = workshop.registrations.number_of(:refunded)).positive? %>
         <%= slim_progress_bar(label: 'Refunded', value: "#{num}", color: 'refunded', percentage: num.percent_of(num_registrations)) %>
       <% end %>
-      <% if (num = workshop.registrations.number_of(:noshow)) > 0 %>
+      <% if (num = workshop.registrations.number_of(:noshow)).positive? %>
         <%= slim_progress_bar(label: 'No Show', value: "#{num}", color: 'noshow', percentage: num.percent_of(num_registrations)) %>
       <% end %>
     </div>
@@ -47,7 +47,7 @@
       <div class="block progress-statistics">
         <% num_attending = workshop.registrations.number_of(:attending) %>
         <% workshop.registrations.number_of(:for_all_prices).each do |price_id, registration_count| %>
-          <% if price_id %>
+          <% if price_id&.positive? %>
             <% price = WorkshopPrice.find_by_id(price_id ) %>
             <%= slim_progress_bar(label: price.price_formatted, value: registration_count, color: 'success',
                     percentage: registration_count.percent_of(num_attending), bottom_label: price.price_description) %>
