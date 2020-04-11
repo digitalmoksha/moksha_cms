@@ -65,7 +65,7 @@ class Workshop < ApplicationRecord
   scope :past,         -> { where('ending_on <= ?', Date.today.beginning_of_day.to_s).not_archived.order('starting_on DESC').includes(:translations) }
 
   # available is list of published and registration open and not ended
-  scope :available,    -> { where('ending_on > ? AND (deadline_on > ? OR deadline_on IS NULL)', Time.now.to_s, Time.now.to_s).published.order('starting_on ASC') }
+  scope :available,    -> { where('(deadline_on > ? OR deadline_on IS NULL)', Time.now.to_s).published.upcoming.order('starting_on ASC') }
 
   # don't use allow_nil, as this will erase the base_currency field if no funding_goal is set
   monetize             :funding_goal_cents, with_model_currency: :base_currency
@@ -83,6 +83,12 @@ class Workshop < ApplicationRecord
   def price_sold_out?(workshop_price)
     # p.sold_out?(@workshop.event_registration.number_of(:registrations_by_paymenttype, payment_id: p.id)
     false # TODO
+  end
+
+  # Is the workshop visible?
+  #------------------------------------------------------------------------------
+  def visible?
+    published? && !(past? || archived? || registration_closed?)
   end
 
   # Is this workshop in the past?

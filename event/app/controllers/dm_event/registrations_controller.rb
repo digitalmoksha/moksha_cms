@@ -19,7 +19,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   def new
     redirect_to(main_app.root_url) && return if @workshop.nil?
 
-    if !@workshop.registration_closed? || authorize!(:manage_events, @workshop) # is_admin?
+    if @workshop.visible? || can?(:manage_events, @workshop)
       @registration               = @workshop.registrations.build
       @registration.user_profile  = current_user ? current_user.user_profile : UserProfile.new
 

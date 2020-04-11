@@ -14,6 +14,7 @@ class DmCms::BlogsController < DmCms::ApplicationController
   #------------------------------------------------------------------------------
   def index
     redirect_to(index_url) && return if CmsBlog.count == 0
+
     @blogs        = CmsBlog.available_to_user(current_user)
     @posts        = CmsPost.where(cms_blog_id: @blogs.map(&:id)).includes(:cms_blog, :translations).published.order('published_on DESC').paginate page: page_number
     @recent_posts = CmsPost.where(cms_blog_id: @blogs.map(&:id)).includes(:cms_blog, :translations).published.order('published_on DESC').limit(5)
@@ -43,6 +44,7 @@ class DmCms::BlogsController < DmCms::ApplicationController
   def blog_lookup
     @blog = CmsBlog.friendly.find(params[:id])
     redirect_to(blog_root_path) && return if @blog.nil?
+
     authorize! :read, @blog
   end
 end
