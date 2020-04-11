@@ -260,12 +260,6 @@ Naming/MethodParameterName:
   Exclude:
     - 'core/app/helpers/dm_core/application_helper.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Performance/RegexpMatch:
-  Exclude:
-    - 'core/lib/generators/moksha_cms/install/install_generator.rb'
-
 # Offense count: 14
 Security/Eval:
   Exclude:
@@ -295,13 +289,6 @@ Style/Alias:
 Style/AndOr:
   Exclude:
     - 'core/lib/dm_core/theme_initialization.rb'
-
-# Offense count: 26
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Enabled: false
 
 # Offense count: 76
 # Cop supports --auto-correct.
