@@ -19,6 +19,10 @@
 
       <%= render partial: 'section_address', locals: {f: f} %>
 
+      <% unless current_user %>
+        <%= add_recaptcha %>
+      <% end %>
+
       <% save_label = @workshop.crowdfunding? ? I18n.t('ems.donate_button') : I18n.t('ems.register_btn') %>
       <%= submit_tag save_label, class: 'btn btn-primary' %>
       <%= link_to I18n.t('ems.cancel_btn'), main_app.index_url, class: 'btn' %>
