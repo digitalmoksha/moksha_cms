@@ -5,6 +5,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   include OffsitePayments::Integrations
   include DmCore::UrlHelper
   include DmCore::LiquidHelper
+  include DmCore::RecaptchaHelper
 
   protect_from_forgery except: [:paypal_ipn, :sofort_ipn], prepend: true
 
@@ -39,6 +40,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   #------------------------------------------------------------------------------
   def create
     redirect_to(action: :new) && return if user_needs_to_be_logged_in?
+    redirect_to(action: :new) && return if current_user.nil? && !captcha_solved?
 
     profile_params = params[:registration].delete("user_profile_attributes") if params[:registration]
     profile_params&.delete(:id)
