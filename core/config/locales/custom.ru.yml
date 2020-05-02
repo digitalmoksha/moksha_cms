@@ -31,7 +31,7 @@ ru:
   core:
     next_page: "следующий <i class='fa fa-angle-right'></i>"
     prev_page: "<i class='fa fa-angle-left'></i> предыдущий"
-    login: Авторизоваться
+    login: Регистрация
     logout: Выйти
     account: Мой аккаунт
     errors_below: Пожалуйста, рассмотрите проблемы ниже

@@ -40,7 +40,7 @@ ru:
     project_goal: Цель проекта
     amount_raised: Поднятая сумма
 
-    login: Авторизоваться
+    login: Регистрация
     create_account: Создать учетную запись
 
   activerecord:
