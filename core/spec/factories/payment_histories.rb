@@ -6,9 +6,9 @@ FactoryBot.define do
     total_cents     { 5000 }
     total_currency  { 'EUR' }
     item_ref        { 'ref' }
-    cost            { "50.0" }
+    cost            { '50.0' }
     quantity        { 1 }
-    discount        { "0" }
+    discount        { '0' }
     payment_method  { 'paypal' }
     payment_date    { Time.now }
   end
