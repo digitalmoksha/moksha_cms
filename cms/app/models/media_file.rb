@@ -83,7 +83,7 @@ class MediaFile < ApplicationRecord
   # Save the media metadata, and add the 'folder' as a tag
   #------------------------------------------------------------------------------
   def prepare_attributes
-    if media.present? && media_changed?
+    if media.present? && saved_change_to_media?
       self.media_content_type = media.file.content_type
       self.media_file_size    = media.file.size
     end

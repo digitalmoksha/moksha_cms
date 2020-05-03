@@ -53,7 +53,7 @@ module DmCore
         # Keep the profile email in sync with the user's email
         #------------------------------------------------------------------------------
         def update_profile_email
-          user_profile.update_attribute(:email, email) if email_changed?
+          user_profile.update_attribute(:email, email) if saved_change_to_email?
         end
 
         # When a user is created, attach it to the current account

@@ -40,7 +40,7 @@ class Registration < ApplicationRecord
   after_initialize              :create_uuid
   before_create                 :set_currency
   after_create                  :set_receipt_code
-  before_save :clear_reminder_sent_on, if: :amount_paid_cents_changed?
+  before_save :clear_reminder_sent_on, if: :saved_change_to_amount_paid_cents?
 
   validates_uniqueness_of       :uuid
   validates_presence_of         :workshop_price_id, if: proc { |reg| !reg.workshop.workshop_prices.empty? }
