@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'acts_as_votable', '~> 0.10.0'
   s.add_dependency 'amoeba', '~> 3.0'             # [todo] (see if still needed) for handling model duplicating
   s.add_dependency 'ancestry', '~> 2.2'
-  s.add_dependency 'aws-sdk', '~> 2.0'
+  s.add_dependency 'aws-sdk-s3', '~> 1'
   s.add_dependency 'babosa', '~> 1.0'             # for better unicode slug handling with friendly_id
   s.add_dependency 'biggs', '~> 0.3.3'            # address formatting
   s.add_dependency 'cancancan', '~> 2.0' # Authorization
