@@ -3,9 +3,12 @@ require 'faker'
 FactoryBot.define do
   factory :user do
     email           { Faker::Internet.email }
-    password        { "something" }
+    password        { 'something' }
     confirmed_at    { Time.now }
-    user_profile
+
+    after(:build) do |user|
+      build(:user_profile, user: user)
+    end
 
     factory :admin_user do
       email           { 'admin@example.com' }
