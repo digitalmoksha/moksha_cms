@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'acts_as_commentable', '~> 4.0.2' # we customize our usage, so can't use the 'with_threading' version
   s.add_dependency 'acts_as_votable', '~> 0.10.0'
   s.add_dependency 'amoeba', '~> 3.0'             # [todo] (see if still needed) for handling model duplicating
-  s.add_dependency 'ancestry', '~> 2.2'
+  s.add_dependency 'ancestry', '~> 3.0'
   s.add_dependency 'aws-sdk-s3', '~> 1'
   s.add_dependency 'babosa', '~> 1.0'             # for better unicode slug handling with friendly_id
   s.add_dependency 'biggs', '~> 0.3.3'            # address formatting
@@ -41,7 +41,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'dm_ruby_extensions', '~> 1.0'
   s.add_dependency 'exception_notification'
   s.add_dependency 'friendly_id', '~> 5.2.0'
-  s.add_dependency 'globalize', '~> 5.1.0.beta1' # translations in database
+  s.add_dependency 'globalize', '~> 5.3'
   s.add_dependency 'highline', '~> 1.7' # Necessary for the install generator
   s.add_dependency 'kramdown', '~> 1.9'
   s.add_dependency 'liquid', '~> 2.6'
