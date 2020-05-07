@@ -9,6 +9,7 @@ FactoryBot.define do
     starting_on     { '2014-12-01' }
     ending_on       { '2014-12-02' }
     contact_email   { 'email@example.com' }
+    country         { create(:country) }
 
     factory :workshop_with_price do
       after(:create) do |workshop, evaluator|

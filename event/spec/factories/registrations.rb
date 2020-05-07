@@ -8,5 +8,7 @@ FactoryBot.define do
 
     workshop
     workshop_price { workshop.workshop_prices.first }
+
+    association :user_profile
   end
 end

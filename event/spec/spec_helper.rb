@@ -24,6 +24,8 @@ Dir[File.join(ENGINE_RAILS_ROOT, "../core/spec/support/**/*.rb")].sort.each { |f
 Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].sort.each { |f| require f }
 
 FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.definition_file_paths << File.expand_path('../../../core/spec/factories', __FILE__)
+FactoryBot.definition_file_paths << File.expand_path('../../../cms/spec/factories', __FILE__)
 FactoryBot.find_definitions
 
 RSpec.configure do |config|
