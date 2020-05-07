@@ -3,13 +3,10 @@ require 'devise'
 # from https://github.com/plataformatec/devise/wiki/How-To:-Test-controllers-with-Rails-3-and-4-(and-RSpec)
 #------------------------------------------------------------------------------
 module LoginMacros
-  TEST_DOMAIN = 'test.example.com'.freeze
-
-  #------------------------------------------------------------------------------
   def login_admin
     before do
       @request.env["devise.mapping"] = Devise.mappings[:user]
-      @request.host   = TEST_DOMAIN # domain must match the account being used
+      @request.host   = AccountMacros::TEST_DOMAIN # domain must match the account being used
       Account.current = FactoryBot.create(:account)
       @current_user   = FactoryBot.create(:admin_user)
       sign_in @current_user
@@ -20,9 +17,10 @@ module LoginMacros
   def login_user
     before do
       @request.env["devise.mapping"] = Devise.mappings[:user]
-      @request.host   = TEST_DOMAIN # domain must match the account being used
+      @request.host   = AccountMacros::TEST_DOMAIN # domain must match the account being used
       Account.current = FactoryBot.create(:account)
       @current_user   = FactoryBot.create(:user)
+
       sign_in @current_user
     end
   end
@@ -30,7 +28,7 @@ module LoginMacros
   #------------------------------------------------------------------------------
   def no_user
     before do
-      @request.host   = TEST_DOMAIN # domain must match the account being used
+      @request.host   = AccountMacros::TEST_DOMAIN # domain must match the account being used
       Account.current = FactoryBot.create(:account)
     end
   end

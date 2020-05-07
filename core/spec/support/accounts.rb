@@ -2,9 +2,11 @@ module AccountMacros
   # Setup the current account.  Used for model specs.  Need to use :each, otherwise
   # the created Account does not get cleared between runs
   #------------------------------------------------------------------------------
+  TEST_DOMAIN = 'test.example.com'.freeze
+
   def setup_account
     before do
-      @request.host = 'test.example.com' if @request # domain must match the account being used
+      @request.host = TEST_DOMAIN if @request # domain must match the account being used
       account = FactoryBot.create(:account)
       Account.current_by_prefix(account.account_prefix)
     end

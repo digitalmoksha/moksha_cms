@@ -14,7 +14,7 @@ FactoryBot.define do
       email           { 'admin@example.com' }
       password        { 'something_admin' }
 
-      after(:build) do |user|
+      after(:create) do |user|
         user.add_role :admin
       end
     end
