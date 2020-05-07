@@ -14,10 +14,10 @@ class Forum < ApplicationRecord
   include RankedModel
   ranks                       :row_order, with_same: :forum_category_id
 
-  belongs_to                  :forum_site
-  belongs_to                  :forum_category, class_name: 'ForumCategory'
+  belongs_to                  :forum_site, optional: true
+  belongs_to                  :forum_category, class_name: 'ForumCategory', optional: true
   has_many                    :forum_topics, -> { order('sticky desc, last_updated_at desc') }, dependent: :destroy
-  belongs_to                  :owner, polymorphic: true
+  belongs_to                  :owner, polymorphic: true, optional: true
 
   # this is used to see if a forum is "fresh"... we can't use topics because it puts
   # stickies first even if they are not the most recently modified

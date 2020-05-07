@@ -23,7 +23,7 @@ class ForumTopic < ApplicationRecord
   belongs_to              :account
 
   #--- creator of recent comment
-  belongs_to              :last_user, class_name: "User"
+  belongs_to              :last_user, class_name: 'User', optional: true
 
   belongs_to              :forum, counter_cache: true
 
