@@ -6,111 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: TreatCommentsAsGroupSeparators, Include.
-# Include: **/*.gemfile, **/Gemfile, **/gems.rb
-Bundler/OrderedGems:
-  Exclude:
-    - 'cms/Gemfile'
-    - 'event/Gemfile'
-    - 'forum/Gemfile'
-    - 'lms/Gemfile'
-    - 'newsletter/Gemfile'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: outdent, indent
-Layout/AccessModifierIndentation:
-  Exclude:
-    - 'lms/app/models/dm_lms/concerns/spaced_repetition_sm2.rb'
-
-# Offense count: 106
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
-# SupportedHashRocketStyles: key, separator, table
-# SupportedColonStyles: key, separator, table
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/HashAlignment:
-  Exclude:
-    - 'admin/app/helpers/admin_theme/theme_helper.rb'
-    - 'admin/app/helpers/dm_admin/application_helper.rb'
-    - 'cms/app/models/cms_page.rb'
-    - 'cms/app/models/contact_form.rb'
-    - 'core/app/models/dm_core/concerns/user.rb'
-    - 'core/lib/dm_core/scio_excel.rb'
-    - 'event/app/models/dm_event/concerns/registration_state_email.rb'
-    - 'lms/app/helpers/dm_lms/lesson_menu_helper.rb'
-    - 'newsletter/app/models/mailchimp_newsletter.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_parameter, with_fixed_indentation
-Layout/ParameterAlignment:
-  Exclude:
-    - 'admin/config/initializers/will_paginate.rb'
-    - 'core/app/helpers/dm_core/liquid_helper.rb'
-    - 'core/app/models/address.rb'
-    - 'core/app/models/dm_core/permitted_params.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-Layout/ClosingHeredocIndentation:
-  Exclude:
-    - 'cms/spec/liquid/div_tag_spec.rb'
-    - 'cms/spec/liquid/markdown_tag_spec.rb'
-    - 'core/lib/generators/moksha_cms/install/install_generator.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterGuardClause:
-  Exclude:
-    - 'core/app/helpers/dm_utilities/date_helper.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterMagicComment:
-  Exclude:
-    - 'event/spec/factories/registration_factory.rb'
-    - 'event/spec/factories/workshop_price_factory.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/EmptyLinesAroundExceptionHandlingKeywords:
-  Exclude:
-    - 'event/app/controllers/dm_event/admin/registrations_controller.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: auto_detection, squiggly, active_support, powerpack, unindent
-Layout/HeredocIndentation:
-  Exclude:
-    - 'core/lib/generators/moksha_cms/install/install_generator.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'event/app/controllers/dm_event/admin/registrations_controller.rb'
-    - 'event/app/models/payment.rb'
-    - 'newsletter/app/models/mailchimp_newsletter.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented
-Layout/MultilineOperationIndentation:
-  Exclude:
-    - 'cms/app/presenters/cms_page_presenter.rb'
-    - 'core/app/models/dm_core/concerns/user_profile.rb'
-    - 'event/app/datatables/registration_datatable.rb'
-    - 'event/app/models/payment.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
@@ -474,5 +369,5 @@ Style/RedundantCondition:
 # Offense count: 3016
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
-Metrics/LineLength:
+Layout/LineLength:
   Max: 890

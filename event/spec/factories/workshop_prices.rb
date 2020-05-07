@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryBot.define do
   factory :workshop_price do
     price_description { "Sample Price" }

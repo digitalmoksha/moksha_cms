@@ -112,11 +112,11 @@ module DmCore
 
         #------------------------------------------------------------------------------
         def to_liquid
-          { 'user' => { 'first_name'          => h(first_name),
-                        'last_name'           => h(last_name),
-                        'full_name'           => h(full_name),
-                        'email'               => h(email),
-                        'paid_subscription?'  => is_paid_subscriber? } }
+          { 'user' => { 'first_name'         => h(first_name),
+                        'last_name'          => h(last_name),
+                        'full_name'          => h(full_name),
+                        'email'              => h(email),
+                        'paid_subscription?' => is_paid_subscriber? } }
         end
 
         #------------------------------------------------------------------------------

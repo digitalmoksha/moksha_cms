@@ -21,6 +21,7 @@ module DmUtilities::DateHelper
   #------------------------------------------------------------------------------
   def format_date_range(start_date, end_date, full_date = false, options = {})
     return '' if start_date.nil? || (start_date.year < 1900)
+
     end_date ||= start_date
     options[:separator] ||= " &mdash; "
 

@@ -155,8 +155,8 @@ class CmsPage < ApplicationRecord
       },
       'subscription' =>
       {
-        'trial?'    => false,
-        'active?'   => true
+        'trial?'  => false,
+        'active?' => true
       } }
   end
 

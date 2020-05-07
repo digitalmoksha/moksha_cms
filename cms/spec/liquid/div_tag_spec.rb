@@ -33,7 +33,7 @@ describe Liquid::Div do
         {% div %}
         # Test
         {% enddiv %}
-        CONTENT
+      CONTENT
       arguments = nil
       doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters]), parse_block_html: true)
 
@@ -41,7 +41,7 @@ describe Liquid::Div do
         <div>
           <h1 id="test">Test</h1>
         </div>
-        CONTENT
+      CONTENT
     end
 
     it 'with markdown turned off' do

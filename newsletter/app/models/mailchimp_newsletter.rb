@@ -139,7 +139,8 @@ class MailchimpNewsletter < Newsletter
       subscribed_count:   list_info.body[:stats][:member_count],
       unsubscribed_count: list_info.body[:stats][:unsubscribe_count],
       cleaned_count:      list_info.body[:stats][:cleaned_count],
-      created_at:         list_info.body[:date_created])
+      created_at:         list_info.body[:date_created]
+    )
   rescue Gibbon::MailChimpError
     # looks like the list was deleted at MailChimp, mark as deleted
     update_attribute(:deleted, true)
@@ -242,10 +243,10 @@ class MailchimpNewsletter < Newsletter
     interests = merge_vars.delete('GROUPINGS')
 
     body = {
-      email_address:  email,
-      status:         'subscribed',
-      merge_fields:   merge_vars,
-      language:       I18n.locale # set the language to the current locale they are using
+      email_address: email,
+      status:        'subscribed',
+      merge_fields:  merge_vars,
+      language:      I18n.locale # set the language to the current locale they are using
     }
 
     if interests

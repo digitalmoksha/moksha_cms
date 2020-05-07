@@ -12,13 +12,13 @@ FactoryBot.define do
     country         { create(:country) }
 
     factory :workshop_with_price do
-      after(:create) do |workshop, evaluator|
+      after(:create) do |workshop|
         create_list(:workshop_price, 1, workshop: workshop)
       end
     end
 
     factory :workshop_with_recurring_price do
-      after(:create) do |workshop, evaluator|
+      after(:create) do |workshop|
         create_list(:workshop_price, 1, :with_recurring, workshop: workshop)
       end
     end
