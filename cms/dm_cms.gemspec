@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'dm_admin', s.version
   s.add_dependency 'dm_core', s.version
   s.add_dependency 'mail_form', '~> 1.8.0'
-  s.add_dependency 'meta-tags-helpers', '~> 0.2.0'
+  s.add_dependency 'meta-tags-helpers', '~> 0.2.0' # TODO: unmaintained, look for alternative
 end

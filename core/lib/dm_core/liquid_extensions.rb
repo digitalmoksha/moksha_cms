@@ -11,7 +11,7 @@ module Liquid
       end
 
       # Store tags in a namespace, usually a theme name.  This is so we can register
-      # many different tags for each theme and keep them seperate.
+      # many different tags for each theme and keep them separate.
       #------------------------------------------------------------------------------
       def register_tag_namespace(name, klass, namespace = 'system_tags')
         tags_namespaced(namespace)[name.to_s] = klass
@@ -22,18 +22,27 @@ module Liquid
       # theme tags will override global tags
       #------------------------------------------------------------------------------
       def tags
-        t = @tags.merge(tags_namespaced('system_tags'))
+        tag_registry = @tags.dup
+
+        add_namespaced_tags(tag_registry, 'system_tags')
+
         unless Account.current.nil?
-          t.merge!(tags_namespaced(Account.current.parent_theme)) if Account.current.parent_theme
-          t.merge!(tags_namespaced(Account.current.current_theme))
+          add_namespaced_tags(tag_registry, Account.current.current_theme) if Account.current.parent_theme
+          add_namespaced_tags(tag_registry, Account.current.current_theme)
         end
-        t
+
+        tag_registry
       end
 
       #------------------------------------------------------------------------------
       def tags_namespaced(namespace)
         @tags_namespaced            ||= {}
         @tags_namespaced[namespace] ||= {}
+      end
+
+      #------------------------------------------------------------------------------
+      def add_namespaced_tags(tag_registry, namespace)
+        tags_namespaced(namespace).each_pair { |tag_name, klass| tag_registry[tag_name] = klass }
       end
     end
   end
