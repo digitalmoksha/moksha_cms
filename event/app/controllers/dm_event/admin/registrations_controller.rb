@@ -20,7 +20,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
       flash[:error] = "Please select an action to take"
     else
       #--- send to state machine if it's an allowed event
-      @registration.send("#{@state_event}!") if @registration.aasm.events.include? @state_event.to_sym
+      @registration.send("#{@state_event}!") if @registration.aasm.events.map(&:name).include? @state_event.to_sym
     end
 
     respond_to do |format|

@@ -12,28 +12,30 @@ module DmEvent
       included do
         include AASM
 
-        #--- define how the state machine works
+        after_create :start!
+
+        # define how the state machine works
         aasm do
-          state :open,                initial: true, after_enter: proc { |o| o.start! }
-          state :pending,             after_enter: :state_pending
-          state :reviewing,           after_enter: :state_reviewing
-          state :accepted,            after_enter: :state_acceptance
-          state :rejected,            after_enter: :state_rejection
-          state :paid,                after_enter: :state_paid
-          state :waitlisted,          after_enter: :state_waitlisted
-          state :canceled,            after_enter: :state_canceled
-          state :refunded,            after_enter: :state_refunded
-          state :noshow,              after_enter: :state_noshow
+          state :open, initial: true
+          state :pending
+          state :reviewing
+          state :accepted
+          state :rejected
+          state :paid
+          state :waitlisted
+          state :canceled
+          state :refunded
+          state :noshow
 
           #------------------------------------------------------------------------------
           event :start do
-            transitions from: :open,       to: :waitlisted, guard: proc { |o| o.workshop.waitlisting? }
-            transitions from: :open,       to: :pending,    guard: proc { |o| o.workshop.require_review? }
+            transitions from: :open,       to: :waitlisted, guard: :guard_waitlisting?
+            transitions from: :open,       to: :pending,    guard: :guard_require_review?
             transitions from: :open,       to: :accepted
           end
 
           #------------------------------------------------------------------------------
-          event :review do
+          event :review, after_commit: :state_reviewing do
             transitions from: :pending,    to: :reviewing
             transitions from: :accepted,   to: :reviewing
             transitions from: :rejected,   to: :reviewing
@@ -44,7 +46,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :accept do
+          event :accept, after_commit: :state_acceptance do
             transitions from: :pending,    to: :accepted
             transitions from: :paid,       to: :accepted
             transitions from: :reviewing,  to: :accepted
@@ -56,7 +58,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :paid do
+          event :paid, after_commit: :state_paid do
             transitions from: :pending,    to: :paid
             transitions from: :reviewing,  to: :paid
             transitions from: :accepted,   to: :paid
@@ -68,7 +70,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :refund do
+          event :refund, after_commit: :state_refunded do
             transitions from: :paid,       to: :refunded
             transitions from: :canceled,   to: :refunded
             transitions from: :accepted,   to: :refunded
@@ -78,7 +80,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :reject do
+          event :reject, after_commit: :state_rejection do
             transitions from: :pending,    to: :rejected
             transitions from: :reviewing,  to: :rejected
             transitions from: :waitlisted, to: :rejected
@@ -86,7 +88,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :cancellation do
+          event :cancellation, after_commit: :state_canceled do
             transitions from: :accepted,   to: :canceled
             transitions from: :pending,    to: :canceled
             transitions from: :reviewing,  to: :canceled
@@ -97,7 +99,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :waitlist do
+          event :waitlist, after_commit: :state_waitlisted do
             transitions from: :pending,    to: :waitlisted
             transitions from: :reviewing,  to: :waitlisted
             transitions from: :rejected,   to: :waitlisted
@@ -107,7 +109,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :noshow do
+          event :noshow, after_commit: :state_noshow do
             transitions from: :pending,    to: :noshow
             transitions from: :reviewing,  to: :noshow
             transitions from: :accepted,   to: :noshow
@@ -119,7 +121,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :pending do
+          event :pending, after_commit: :state_pending do
             transitions from: :reviewing,  to: :pending
             transitions from: :waitlisted, to: :pending
           end
@@ -205,6 +207,16 @@ module DmEvent
         #------------------------------------------------------------------------------
         def suppress_transition_email
           @suppress_transition_email = true
+        end
+
+        #------------------------------------------------------------------------------
+        def guard_waitlisting?
+          workshop&.waitlisting?
+        end
+
+        #------------------------------------------------------------------------------
+        def guard_require_review?
+          workshop&.require_review?
         end
       end
 
