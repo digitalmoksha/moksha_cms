@@ -52,6 +52,10 @@ module DmCore
       end
     end
 
+    initializer 'engine.assets.precompile' do |app|
+      app.config.assets.precompile += %w[dm_core/manifest.js]
+    end
+
     config.before_initialize do
       # make sure the ability.rb file is loaded initially - this was a problem when running specs
       require File.expand_path("../../../app/models/ability.rb", __FILE__)
