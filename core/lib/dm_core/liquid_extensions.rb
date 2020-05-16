@@ -23,6 +23,7 @@ module Liquid
       #------------------------------------------------------------------------------
       def tags
         @theme_tags ||= {}
+        return @tags if Account.current.nil?
         return @theme_tags[Account.current.current_theme] if @theme_tags[Account.current.current_theme]
 
         @theme_tags[Account.current.current_theme] = @tags.dup
