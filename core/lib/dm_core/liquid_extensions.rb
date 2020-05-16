@@ -22,19 +22,19 @@ module Liquid
       # theme tags will override global tags
       #------------------------------------------------------------------------------
       def tags
-        @tags ||= TagRegistry.new
+        @theme_tags ||= {}
+        return @theme_tags[Account.current.current_theme] if @theme_tags[Account.current.current_theme]
 
-        unless @theme_tags_added
-          @theme_tags_added = true
-          add_namespaced_tags(@tags, 'system_tags')
+        @theme_tags[Account.current.current_theme] = @tags.dup
 
-          unless Account.current.nil?
-            add_namespaced_tags(@tags, Account.current.parent_theme) if Account.current.parent_theme
-            add_namespaced_tags(@tags, Account.current.current_theme)
-          end
+        add_namespaced_tags(@theme_tags[Account.current.current_theme], 'system_tags')
+
+        unless Account.current.nil?
+          add_namespaced_tags(@theme_tags[Account.current.current_theme], Account.current.parent_theme) if Account.current.parent_theme
+          add_namespaced_tags(@theme_tags[Account.current.current_theme], Account.current.current_theme)
         end
 
-        @tags
+        @theme_tags[Account.current.current_theme]
       end
 
       #------------------------------------------------------------------------------
