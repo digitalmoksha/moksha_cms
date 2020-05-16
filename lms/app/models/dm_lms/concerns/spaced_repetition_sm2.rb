@@ -31,7 +31,7 @@ module DmLms
           @due_on = calculate_date(@interval)
         end
 
-      private
+        private
 
         #------------------------------------------------------------------------------
         def calculate_interval(answer_quality, prev_interval, prev_ef)

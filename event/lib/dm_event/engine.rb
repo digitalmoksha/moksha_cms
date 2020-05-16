@@ -14,5 +14,9 @@ module DmEvent
       g.assets false
       g.helper false
     end
+
+    initializer 'engine.assets.precompile' do |app|
+      app.config.assets.precompile += %w[dm_event/manifest.js]
+    end
   end
 end

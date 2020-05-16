@@ -158,8 +158,8 @@ class Account < ApplicationRecord
 
   #------------------------------------------------------------------------------
   def create_default_roles
-    Role.unscoped.create!(name: 'admin',   account_id: id)
-    Role.unscoped.create!(name: 'beta',    account_id: id)
+    Role.unscoped.new(name: 'admin', account_id: id).save(validate: false)
+    Role.unscoped.new(name: 'beta', account_id: id).save(validate: false)
   end
 
   #------------------------------------------------------------------------------

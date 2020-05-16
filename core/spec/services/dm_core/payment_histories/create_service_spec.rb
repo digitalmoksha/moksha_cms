@@ -3,7 +3,8 @@ require 'spec_helper'
 describe DmCore::PaymentHistories::CreateService, type: :service do
   setup_account
 
-  let(:user_profile) { create :user_profile }
+  let(:user) { create(:user) }
+  let(:user_profile) { user.user_profile }
 
   describe '#call' do
     let(:anchor_id) { 'test-1234' }

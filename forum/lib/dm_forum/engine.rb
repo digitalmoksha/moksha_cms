@@ -9,5 +9,9 @@ module DmForum
     config.to_prepare do
       require_dependency 'dm_forum/model_decorators'
     end
+
+    initializer 'engine.assets.precompile' do |app|
+      app.config.assets.precompile += %w[dm_forum/manifest.js]
+    end
   end
 end

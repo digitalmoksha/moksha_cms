@@ -12,6 +12,7 @@ describe DmCms::PagesController do
     #------------------------------------------------------------------------------
     it 'renders the :show template' do
       get :show, params: { slug: page.slug, locale: :en }
+
       expect(response).to render_template :show
     end
 

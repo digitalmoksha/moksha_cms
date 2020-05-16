@@ -41,6 +41,6 @@ describe MediaUploader, type: :uploader do
   end
 
   it 'has correct storage directory' do
-    expect(uploader.store_dir).to eq('site_assets/uploads/local/media/')
+    expect(uploader.store_dir).to eq('site_assets/uploads/test/media/')
   end
 end

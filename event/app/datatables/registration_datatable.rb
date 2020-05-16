@@ -88,12 +88,13 @@ class RegistrationDatatable
 
   #------------------------------------------------------------------------------
   def action_list(registration)
-    actions = registration.aasm.permissible_events
+    actions = registration.aasm.events(permitted: true).map(&:name)
     actions.sort! { |x, y| x.to_s <=> y.to_s }
 
     output = ''
     actions.each do |action|
-      output << '<li>' +
+      output <<
+        '<li>' +
         link_to(action.to_s.titlecase,
                 url_helpers.action_state_admin_registration_path(I18n.locale, registration, state_event: action),
                 { remote: true, method: :put }) +

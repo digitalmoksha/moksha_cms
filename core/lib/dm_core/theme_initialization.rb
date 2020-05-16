@@ -70,9 +70,9 @@ module DmCore
         end
 
         # add items listed in theme.yml to be pre-compiled in asset pipeline
-        if Rails.env.production? || Rails.env.staging? || Rails.env.development?
-          if theme_data and theme_data['precompile']
-            Rails.application.config.assets.precompile += theme_data['precompile']
+        if Rails.env.development? || Rails.env.production? || Rails.env.staging?
+          if theme_data && theme_data['precompile']
+            Rails.application.config.assets.precompile << theme_data['precompile']
           end
         end
       end

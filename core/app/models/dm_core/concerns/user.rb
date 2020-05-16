@@ -53,7 +53,7 @@ module DmCore
         # Keep the profile email in sync with the user's email
         #------------------------------------------------------------------------------
         def update_profile_email
-          user_profile.update_attribute(:email, email) if email_changed?
+          user_profile.update_attribute(:email, email) if saved_change_to_email?
         end
 
         # When a user is created, attach it to the current account
@@ -112,11 +112,11 @@ module DmCore
 
         #------------------------------------------------------------------------------
         def to_liquid
-          { 'user' => { 'first_name'          => h(first_name),
-                        'last_name'           => h(last_name),
-                        'full_name'           => h(full_name),
-                        'email'               => h(email),
-                        'paid_subscription?'  => is_paid_subscriber? } }
+          { 'user' => { 'first_name'         => h(first_name),
+                        'last_name'          => h(last_name),
+                        'full_name'          => h(full_name),
+                        'email'              => h(email),
+                        'paid_subscription?' => is_paid_subscriber? } }
         end
 
         #------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ describe Liquid::Markdown do
         {% markdown %}
         # Test
         {% endmarkdown %}
-        CONTENT
+      CONTENT
       doc = Liquid::Template.parse(content).render
 
       expect(doc).to eq "\n<h1 id=\"test\">Test</h1>\n\n"

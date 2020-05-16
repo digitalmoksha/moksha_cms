@@ -41,15 +41,15 @@ module MokshaCms
     def additional_tweaks
       return unless File.exist? 'public/robots.txt'
 
-      append_file "public/robots.txt", <<-ROBOTS
-User-agent: *
-Disallow: /checkout
-Disallow: /cart
-Disallow: /orders
-Disallow: /user
-Disallow: /account
-Disallow: /api
-Disallow: /password
+      append_file "public/robots.txt", <<-ROBOTS.strip_heredoc
+        User-agent: *
+        Disallow: /checkout
+        Disallow: /cart
+        Disallow: /orders
+        Disallow: /user
+        Disallow: /account
+        Disallow: /api
+        Disallow: /password
       ROBOTS
     end
 
@@ -183,25 +183,25 @@ Disallow: /password
     end
 
     def dm_core_routes
-      <<-ROUTES
-  scope ":locale" do
-    devise_for :users, controllers: { registrations: "registrations", confirmations: 'confirmations' }
-  end
-  themes_for_rails
-  mount DmCore::Engine, :at => '/'
-ROUTES
+      <<-ROUTES.strip_heredoc
+        scope ":locale" do
+          devise_for :users, controllers: { registrations: "registrations", confirmations: 'confirmations' }
+        end
+        themes_for_rails
+        mount DmCore::Engine, :at => '/'
+      ROUTES
     end
 
     def dm_cms_routes
-      <<-ROUTES
-  mount DmCms::Engine => '/'
-  scope ":locale" do
-    get   '/index',                 controller: 'dm_cms/pages', action: :show, slug: 'index', as: :index
-  end
+      <<-ROUTES.strip_heredoc
+        mount DmCms::Engine => '/'
+        scope ":locale" do
+          get   '/index',                 controller: 'dm_cms/pages', action: :show, slug: 'index', as: :index
+        end
 
-  #--- use match instead of root to fix issue where sometimes '?locale=de' is appeneded
-  get   '/(:locale)',            :controller => 'dm_cms/pages', :action => :show, :slug => 'index', :as => :root
-ROUTES
+        #--- use match instead of root to fix issue where sometimes '?locale=de' is appeneded
+        get   '/(:locale)',            :controller => 'dm_cms/pages', :action => :show, :slug => 'index', :as => :root
+      ROUTES
     end
 
     private

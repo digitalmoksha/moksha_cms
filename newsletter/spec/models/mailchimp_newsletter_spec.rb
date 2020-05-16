@@ -146,7 +146,7 @@ describe MailchimpNewsletter do
       stub_request(:get, "#{api_endpoint}/lists/#{newsletter.mc_id}/members/#{hash_email(user.email)}")
         .to_return(status: 404)
       stub_request(:put, "#{api_endpoint}/lists/#{newsletter.mc_id}/members/#{hash_email(user.email)}")
-        .with(body: { email_address: user.email, language: 'en', status: 'pending', merge_fields: { 'FNAME': user.first_name, 'LNAME': user.last_name, 'SPAMAPI': 1 } })
+        .with(body: { email_address: user.email, language: 'en', status: 'pending', merge_fields: { 'FNAME': user.first_name, 'LNAME': user.last_name, 'COUNTRY': 'United States of America', 'SPAMAPI': 1 } })
         .to_return(status: 200)
 
       expect(newsletter.subscribe(user, new_subscription: true)).to include({ success: true, code: 0 })

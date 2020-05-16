@@ -30,11 +30,6 @@ Style/SymbolArray:
 Style/WordArray:
   Enabled: false
 
-# Lint/Syntax:
-#   Exclude:
-#     - '**/dummy/templates/rails/application.rb'
-
-
 Lint/RaiseException:
   Enabled: true
 
@@ -49,3 +44,17 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Style/ExponentialNotation:
+  Enabled: true
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle:
+    - key
+    - table
+  EnforcedColonStyle:
+    - key
+    - table

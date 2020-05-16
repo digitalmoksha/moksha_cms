@@ -13,11 +13,11 @@ class Registration < ApplicationRecord
   self.table_name = 'ems_registrations'
 
   belongs_to                    :workshop, counter_cache: true
-  belongs_to                    :workshop_price
+  belongs_to                    :workshop_price, optional: true
   belongs_to                    :user_profile
   belongs_to                    :account
   has_many                      :payment_histories, -> { order(payment_date: :asc) }, as: :owner, dependent: :destroy
-  belongs_to                    :payment_comment, class_name: 'Comment'
+  belongs_to                    :payment_comment, class_name: 'Comment', optional: true
   serialize                     :payment_reminder_history, Array
   attr_accessor                 :payment_comment_text
   acts_as_commentable           :private
@@ -40,7 +40,7 @@ class Registration < ApplicationRecord
   after_initialize              :create_uuid
   before_create                 :set_currency
   after_create                  :set_receipt_code
-  before_save :clear_reminder_sent_on, if: :amount_paid_cents_changed?
+  before_save                   :clear_reminder_sent_on, if: :will_save_change_to_amount_paid_cents?
 
   validates_uniqueness_of       :uuid
   validates_presence_of         :workshop_price_id, if: proc { |reg| !reg.workshop.workshop_prices.empty? }

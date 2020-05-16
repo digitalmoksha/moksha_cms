@@ -20,14 +20,13 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
       flash[:error] = "Please select an action to take"
     else
       #--- send to state machine if it's an allowed event
-      @registration.send("#{@state_event}!") if @registration.aasm.events.include? @state_event.to_sym
+      @registration.send("#{@state_event}!") if @registration.aasm.events.map(&:name).include? @state_event.to_sym
     end
 
     respond_to do |format|
       format.html { redirect_to admin_workshop(@workshop) }
       format.js   { render action: :action_state }
     end
-
   rescue ActiveRecord::StaleObjectError
   end
 
@@ -87,8 +86,7 @@ class DmEvent::Admin::RegistrationsController < DmEvent::Admin::AdminController
                                                      item_ref: params[:payment_history][:item_ref],
                                                      payment_method: params[:payment_history][:payment_method],
                                                      bill_to_name: params[:payment_history][:bill_to_name],
-                                                     payment_date: params[:payment_history][:payment_date]
-                                                    )
+                                                     payment_date: params[:payment_history][:payment_date])
 
     @registration.update_attribute(:receipt_requested, params[:payment_history][:receipt_requested]) if @payment_history.errors.empty?
 
