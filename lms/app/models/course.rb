@@ -26,7 +26,7 @@ class Course < ApplicationRecord
   scope                   :published, -> { where(published: true) }
 
   has_many                :lessons, dependent: :destroy
-  belongs_to              :account
+  belongs_to              :account, optional: true
   belongs_to              :owner, polymorphic: true, optional: true
 
   # --- allow menutitle to be blank - it won't appear in navigation

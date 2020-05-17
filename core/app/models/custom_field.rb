@@ -15,8 +15,8 @@ class CustomField < ApplicationRecord
 
   # acts_as_reportable
 
-  belongs_to                    :custom_field_def
-  belongs_to                    :owner, polymorphic: true
+  belongs_to                    :custom_field_def, optional: true
+  belongs_to                    :owner, polymorphic: true, optional: true
 
   default_scope                 { where(account_id: Account.current.id) }
 

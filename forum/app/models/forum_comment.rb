@@ -1,6 +1,6 @@
 class ForumComment < Comment
   #--- counter cache is set in the Comment model
-  belongs_to              :forum_topic, polymorphic: true, foreign_key: :commentable_id, foreign_type: :commentable_type
+  belongs_to              :forum_topic, polymorphic: true, optional: true, foreign_key: :commentable_id, foreign_type: :commentable_type
 
   #--- update counter cache in forum
   after_create            :increment_forum_counter_cache

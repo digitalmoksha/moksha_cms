@@ -13,7 +13,7 @@ class Lesson < ApplicationRecord
   include DmCore::Concerns::FriendlyId
   friendly_id             :model_slug, use: :scoped, scope: [:account_id, :course] # re-define so is scoped to the course as well
 
-  belongs_to              :course
+  belongs_to              :course, optional: true
   has_many                :lesson_pages, dependent: :destroy
 
   include RankedModel

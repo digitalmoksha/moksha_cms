@@ -11,8 +11,8 @@ class CmsPost < ApplicationRecord
   acts_as_commentable
   acts_as_taggable
 
-  belongs_to              :cms_blog
-  belongs_to              :account
+  belongs_to              :cms_blog, optional: true
+  belongs_to              :account, optional: true
 
   default_scope           { where(account_id: Account.current.id) }
   scope                   :published, -> { where("published_on IS NOT NULL AND published_on <= ?", Time.now) }

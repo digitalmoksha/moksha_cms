@@ -12,8 +12,8 @@ module DmCore
         attr_accessor           :address_required
         attr_accessor           :userless_registration
 
-        belongs_to              :user
-        belongs_to              :country, class_name: 'DmCore::Country'
+        belongs_to              :user, optional: true
+        belongs_to              :country, class_name: 'DmCore::Country', optional: true
 
         #--- don't validate public_name if we're only updating the address
         #    (like with userless registration)

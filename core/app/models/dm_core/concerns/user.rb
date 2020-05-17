@@ -14,7 +14,7 @@ module DmCore
         devise :database_authenticatable, :registerable, :confirmable,
                :recoverable, :rememberable, :trackable, :validatable
 
-        belongs_to              :country, class_name: 'DmCore::Country'
+        belongs_to              :country, class_name: 'DmCore::Country', optional: true
         has_one                 :user_profile, dependent: :destroy
         has_many                :user_site_profiles, dependent: :destroy
         has_one                 :current_site_profile, -> { where(account_id: Account.current.id) }, class_name: 'UserSiteProfile'

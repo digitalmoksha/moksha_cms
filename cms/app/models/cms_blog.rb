@@ -21,7 +21,7 @@ class CmsBlog < ApplicationRecord
   scope                     :published, -> { where(published: true) }
 
   has_many                  :posts, -> { order('published_on DESC') }, class_name: 'CmsPost', dependent: :destroy
-  belongs_to                :account
+  belongs_to                :account, optional: true
   belongs_to                :owner, polymorphic: true, optional: true
 
   preference                :show_social_buttons,  :boolean, default: false

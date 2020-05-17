@@ -12,10 +12,10 @@ class Registration < ApplicationRecord
 
   self.table_name = 'ems_registrations'
 
-  belongs_to                    :workshop, counter_cache: true
+  belongs_to                    :workshop, counter_cache: true, optional: true
   belongs_to                    :workshop_price, optional: true
-  belongs_to                    :user_profile
-  belongs_to                    :account
+  belongs_to                    :user_profile, optional: true
+  belongs_to                    :account, optional: true
   has_many                      :payment_histories, -> { order(payment_date: :asc) }, as: :owner, dependent: :destroy
   belongs_to                    :payment_comment, class_name: 'Comment', optional: true
   serialize                     :payment_reminder_history, Array

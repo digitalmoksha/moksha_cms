@@ -10,7 +10,7 @@
 class WorkshopPrice < ApplicationRecord
   self.table_name = 'ems_workshop_prices'
 
-  belongs_to              :workshop
+  belongs_to              :workshop, optional: true
   has_many                :registrations
 
   default_scope           { where(account_id: Account.current.id).order('row_order ASC') }
