@@ -9,8 +9,8 @@ class LessonPage < ApplicationRecord
   include DmCore::Concerns::FriendlyId
   friendly_id             :model_slug, use: :scoped, scope: [:account_id, :lesson]
 
-  belongs_to              :lesson
-  belongs_to              :item, polymorphic: true, dependent: :destroy
+  belongs_to              :lesson, optional: true
+  belongs_to              :item, polymorphic: true, dependent: :destroy, optional: true
 
   acts_as_commentable
 

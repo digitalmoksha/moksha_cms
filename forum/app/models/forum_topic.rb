@@ -19,16 +19,16 @@ class ForumTopic < ApplicationRecord
   after_destroy           :update_cached_forum_and_user_counts
 
   #--- creator of forum topic
-  belongs_to              :user
-  belongs_to              :account
+  belongs_to              :user, optional: true
+  belongs_to              :account, optional: true
 
   #--- creator of recent comment
   belongs_to              :last_user, class_name: 'User', optional: true
 
-  belongs_to              :forum, counter_cache: true
+  belongs_to              :forum, counter_cache: true, optional: true
 
   #--- forum's site, set by callback
-  belongs_to              :forum_site, counter_cache: true
+  belongs_to              :forum_site, counter_cache: true, optional: true
 
   #--- don't use acts_as_commentable since we're using a specialized ForumComment class
   has_many                :forum_comments, { as: :commentable, dependent: :destroy }

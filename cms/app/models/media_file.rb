@@ -6,7 +6,7 @@ class MediaFile < ApplicationRecord
   globalize_accessors     locales: I18n.available_locales
   acts_as_taggable
 
-  belongs_to              :user
+  belongs_to              :user, optional: true
   default_scope           { where(account_id: Account.current.id) }
   validate                :validate_name_is_unique
 

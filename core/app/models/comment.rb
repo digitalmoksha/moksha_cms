@@ -15,8 +15,8 @@ class Comment < ApplicationRecord
   # acts_as_voteable
 
   #--- don't use a counter cache until you can seperate users per account
-  belongs_to        :user # , :counter_cache => true
-  belongs_to        :account
+  belongs_to        :user, optional: true # , :counter_cache => true
+  belongs_to        :account, optional: true
 
   validates_presence_of   :body
   validates_length_of     :body, maximum: 60000

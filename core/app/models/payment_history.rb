@@ -21,8 +21,8 @@ class PaymentHistory < ApplicationRecord
 
   self.table_name = 'core_payment_histories'
 
-  belongs_to                :owner, polymorphic: true
-  belongs_to                :user_profile
+  belongs_to                :owner, polymorphic: true, optional: true
+  belongs_to                :user_profile, optional: true
   serialize                 :order_details
   serialize                 :item_details
   serialize                 :notify_data

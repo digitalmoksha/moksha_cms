@@ -3,7 +3,7 @@
 class SystemEmail < ApplicationRecord
   self.table_name = 'core_system_emails'
 
-  belongs_to            :emailable, polymorphic: true
+  belongs_to            :emailable, polymorphic: true, optional: true
 
   default_scope         { where(account_id: Account.current.id) }
 

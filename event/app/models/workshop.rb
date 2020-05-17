@@ -3,7 +3,7 @@ class Workshop < ApplicationRecord
 
   self.table_name = 'ems_workshops'
 
-  belongs_to              :country, class_name: 'DmCore::Country'
+  belongs_to              :country, class_name: 'DmCore::Country', optional: true
   has_many                :registrations, dependent: :destroy
   has_many                :workshop_prices, dependent: :destroy
   has_many                :system_emails,     { as: :emailable, dependent: :destroy }
