@@ -407,6 +407,7 @@ module Scio
                     :cell_style,
                     :width,
                     :type
+
       def initialize(name, opts = {})
         @name = name
         @header_style = opts[:header_style]

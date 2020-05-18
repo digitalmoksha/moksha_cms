@@ -2,6 +2,7 @@ class ForumTopic < ApplicationRecord
   self.table_name = 'fms_forum_topics'
 
   attr_accessor           :body
+
   attr_readonly           :comments_count, :hits, :forum_posts_count
 
   # --- FriendlyId

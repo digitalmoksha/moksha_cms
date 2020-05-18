@@ -58,3 +58,9 @@ Layout/HashAlignment:
   EnforcedColonStyle:
     - key
     - table
+
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+
+Style/SlicingWithRange:
+  Enabled: false
