@@ -29,13 +29,13 @@ module DmEvent
 
           #------------------------------------------------------------------------------
           event :start do
-            transitions from: :open,       to: :waitlisted, guard: :guard_waitlisting?
-            transitions from: :open,       to: :pending,    guard: :guard_require_review?
-            transitions from: :open,       to: :accepted
+            transitions from: :open,       to: :waitlisted, after: :state_waitlisted, guard: :guard_waitlisting?
+            transitions from: :open,       to: :pending,    after: :state_pending,    guard: :guard_require_review?
+            transitions from: :open,       to: :accepted,   after: :state_acceptance
           end
 
           #------------------------------------------------------------------------------
-          event :review, after_commit: :state_reviewing do
+          event :review, after: :state_reviewing do
             transitions from: :pending,    to: :reviewing
             transitions from: :accepted,   to: :reviewing
             transitions from: :rejected,   to: :reviewing
@@ -46,7 +46,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :accept, after_commit: :state_acceptance do
+          event :accept, after: :state_acceptance do
             transitions from: :pending,    to: :accepted
             transitions from: :paid,       to: :accepted
             transitions from: :reviewing,  to: :accepted
@@ -58,7 +58,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :paid, after_commit: :state_paid do
+          event :paid, after: :state_paid do
             transitions from: :pending,    to: :paid
             transitions from: :reviewing,  to: :paid
             transitions from: :accepted,   to: :paid
@@ -70,7 +70,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :refund, after_commit: :state_refunded do
+          event :refund, after: :state_refunded do
             transitions from: :paid,       to: :refunded
             transitions from: :canceled,   to: :refunded
             transitions from: :accepted,   to: :refunded
@@ -80,7 +80,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :reject, after_commit: :state_rejection do
+          event :reject, after: :state_rejection do
             transitions from: :pending,    to: :rejected
             transitions from: :reviewing,  to: :rejected
             transitions from: :waitlisted, to: :rejected
@@ -88,7 +88,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :cancellation, after_commit: :state_canceled do
+          event :cancellation, after: :state_canceled do
             transitions from: :accepted,   to: :canceled
             transitions from: :pending,    to: :canceled
             transitions from: :reviewing,  to: :canceled
@@ -99,7 +99,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :waitlist, after_commit: :state_waitlisted do
+          event :waitlist, after: :state_waitlisted do
             transitions from: :pending,    to: :waitlisted
             transitions from: :reviewing,  to: :waitlisted
             transitions from: :rejected,   to: :waitlisted
@@ -109,7 +109,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :noshow, after_commit: :state_noshow do
+          event :noshow, after: :state_noshow do
             transitions from: :pending,    to: :noshow
             transitions from: :reviewing,  to: :noshow
             transitions from: :accepted,   to: :noshow
@@ -121,7 +121,7 @@ module DmEvent
           end
 
           #------------------------------------------------------------------------------
-          event :pending, after_commit: :state_pending do
+          event :pending, after: :state_pending do
             transitions from: :reviewing,  to: :pending
             transitions from: :waitlisted, to: :pending
           end
