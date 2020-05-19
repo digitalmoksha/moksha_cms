@@ -74,7 +74,7 @@ class MediaFile < ApplicationRecord
     if new_record?
       if media.file.nil?
         errors.add :media, "please select a file to upload"
-      elsif MediaFile.where(media: media.file.original_filename, folder: folder, account_id: account_id).count > 0
+      elsif MediaFile.where(media: media.full_original_filename, folder: folder, account_id: account_id).count > 0
         errors.add :media, "'#{short_location}' already exists"
       end
     end
