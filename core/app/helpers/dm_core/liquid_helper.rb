@@ -8,7 +8,7 @@ module DmCore::LiquidHelper
   # This assumes that the content is from a trusted source
   #------------------------------------------------------------------------------
   def liquidize_textile(content, arguments = {})
-    doc = RedCloth.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters],
+    doc = RedCloth.new(Liquid::Template.parse(content).render!(arguments, filters: [LiquidFilters],
                                                                          registers: { controller: controller, view: self,
                                                                                       account_site_assets: account_site_assets_url,
                                                                                       account_site_assets_media: account_site_assets_media_url }))
@@ -22,7 +22,7 @@ module DmCore::LiquidHelper
   def liquidize_markdown(content, arguments = {})
     doc = ::Kramdown::Document.new(Liquid::Template
                                      .parse(content)
-                                     .render(arguments, filters: [LiquidFilters],
+                                     .render!(arguments, filters: [LiquidFilters],
                                                         registers: { controller: controller, view: self,
                                                                      account_site_assets: account_site_assets_url,
                                                                      account_site_assets_media: account_site_assets_media_url }),
@@ -33,7 +33,7 @@ module DmCore::LiquidHelper
   # This assumes that the content is from a trusted source
   #------------------------------------------------------------------------------
   def liquidize_html(content, arguments = {})
-    doc = Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters],
+    doc = Liquid::Template.parse(content).render!(arguments, filters: [LiquidFilters],
                                                             registers: { controller: controller, view: self,
                                                                          account_site_assets: account_site_assets_url,
                                                                          account_site_assets_media: account_site_assets_media_url })
