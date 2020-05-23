@@ -40,6 +40,7 @@ require 'active_merchant/billing/rails'
 require 'offsite_payments'
 require 'delayed_job_active_record'
 require 'delayed_job'
+require 'sentry-raven'
 
 module DmCore
   class Engine < ::Rails::Engine

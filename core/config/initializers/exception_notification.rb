@@ -10,7 +10,7 @@
 # end
 #------------------------------------------------------------------------------
 
-if Rails.env.production? || Rails.env.staging?
+if (Rails.env.production? || Rails.env.staging?) && !Rails.application.secrets[:sentry_dsn].present?
   require 'exception_notification/rails'
   # for Sidekiq
   # require 'exception_notification/sidekiq'

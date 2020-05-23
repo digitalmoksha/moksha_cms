@@ -55,6 +55,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'RedCloth', '~> 4.3'
   s.add_dependency 'rolify', '~> 5.2'             # User Roles
   s.add_dependency 'sanitize', '~> 5.1'
+  s.add_dependency 'sentry-raven', '~> 3.0'
   s.add_dependency 'simple_form', '~> 5.0'        # Form handling
   s.add_dependency 'unicode'                      # needed for babosa
   s.add_dependency 'validates_email_format_of', '~> 1.6'
