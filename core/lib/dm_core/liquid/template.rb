@@ -22,19 +22,18 @@ module Liquid
       # theme tags will override global tags
       #------------------------------------------------------------------------------
       def tags
-        binding.pry
         @theme_tags ||= {}
+
         return @tags if Account.current.nil?
         return @theme_tags[Account.current.current_theme] if @theme_tags[Account.current.current_theme]
 
-        @theme_tags[Account.current.current_theme] = @tags.dup
+        @theme_tags[Account.current.current_theme] = ::Liquid::Template::TagRegistry.new
 
+        ensure_default_liquid_tags
+        add_namespaced_tags(@theme_tags[Account.current.current_theme], 'liquid')
         add_namespaced_tags(@theme_tags[Account.current.current_theme], 'system_tags')
-
-        unless Account.current.nil?
-          add_namespaced_tags(@theme_tags[Account.current.current_theme], Account.current.parent_theme) if Account.current.parent_theme
-          add_namespaced_tags(@theme_tags[Account.current.current_theme], Account.current.current_theme)
-        end
+        add_namespaced_tags(@theme_tags[Account.current.current_theme], Account.current.parent_theme) if Account.current.parent_theme
+        add_namespaced_tags(@theme_tags[Account.current.current_theme], Account.current.current_theme)
 
         @theme_tags[Account.current.current_theme]
       end
@@ -48,6 +47,13 @@ module Liquid
       #------------------------------------------------------------------------------
       def add_namespaced_tags(tag_registry, namespace)
         tags_namespaced(namespace).each_pair { |tag_name, klass| tag_registry[tag_name] = klass }
+      end
+
+      #------------------------------------------------------------------------------
+      def ensure_default_liquid_tags
+        return if tags_namespaced('liquid').present?
+
+        @tags.to_h.each_key { |name| register_tag_namespace(name, @tags[name], 'liquid') }
       end
     end
   end
