@@ -39,9 +39,17 @@ class BlogUserDatatable
 
   #------------------------------------------------------------------------------
   def fetch_users
-    users = User.includes(user_profile: [:country]).references(:user_profile).order("#{sort_column} #{sort_direction}")
+    users = User.includes(user_profile: [:country]).references(:user_profile)
+    users = users.order(Arel.sql("#{sort_column} #{sort_direction}"))
     users = users.page(page).per_page(per_page)
-    users = users.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(users.email) like :search", search: "%#{params[:sSearch]}%".downcase) if params[:sSearch].present?
+
+    if params[:sSearch].present?
+      users = users.where(
+        "LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(users.email) like :search",
+        search: "%#{params[:sSearch]}%".downcase
+      )
+    end
+
     users
   end
 
@@ -57,7 +65,9 @@ class BlogUserDatatable
 
   #------------------------------------------------------------------------------
   def sort_column
-    columns = ["LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)", 'globalize_countries.english_name']
+    sql     = "LOWER(user_profiles.first_name) #{sort_direction}, LOWER(user_profiles.last_name)"
+    columns = [sql, 'globalize_countries.english_name']
+
     columns[params[:iSortCol_0].to_i]
   end
 

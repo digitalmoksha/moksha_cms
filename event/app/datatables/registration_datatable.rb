@@ -58,7 +58,9 @@ class RegistrationDatatable
   #------------------------------------------------------------------------------
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
-    registrations = @workshop.registrations.includes(:workshop_price, user_profile: [user: :current_site_profile]).references(:user_profiles).order("#{sort_column} #{sort_direction}")
+    registrations = @workshop.registrations.includes(:workshop_price, user_profile: [user: :current_site_profile])
+    registrations = registrations.references(:user_profiles)
+    registrations = registrations.order(Arel.sql("#{sort_column} #{sort_direction}"))
 
     if !@permissions[:manage_event_registrations] && !@permissions[:manage_event_finances]
       # limit to your own registration if can only edit the workshop
