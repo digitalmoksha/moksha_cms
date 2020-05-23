@@ -65,7 +65,7 @@ module DmCore
           Dir.glob(File.join(theme_root, "/theme_support/tags/*.rb")).sort.each do |path|
             require path
             file = path.split('/').last.split('.').first
-            Liquid::Template.register_tag_namespace(file, "Liquid::Theme#{theme_name.camelize}::#{file.camelize}".constantize, theme_name)
+            ::Liquid::Template.register_tag_namespace(file, "Liquid::Theme#{theme_name.camelize}::#{file.camelize}".constantize, theme_name)
           end
         end
 
