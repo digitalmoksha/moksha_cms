@@ -231,10 +231,28 @@ class DmCore::ApplicationController < ActionController::Base
     filters(:around)
   end
 
-  # Store any additional data to be used by the ExceptionNotification gem
+  # Store any additional data to be used by the ExceptionNotification gem or Sentry
   #------------------------------------------------------------------------------
   def log_additional_data
-    request.env["exception_notifier.exception_data"] = { user: current_user, account: current_account }
+    if Rails.application.secrets[:sentry_dsn].present?
+      Raven.user_context(
+        id: current_user&.id,
+        email: current_user&.email,
+        username: current_user&.username,
+        ip_address: request.ip
+      )
+
+      Raven.tags_context(
+        domain: current_account&.domain,
+        account_prefix: current_account&.account_prefix,
+        moksha_cms: DmCore::VERSION
+      )
+
+      # You can also set extra context using `Raven.extra_context`
+      # Raven.extra_context app: url, environment: Rails.env, time: Time.now
+    else
+      request.env["exception_notifier.exception_data"] = { user: current_user, account: current_account }
+    end
   end
 
   # Note: rescue_from should be listed from generic exception to most specific
