@@ -1,7 +1,7 @@
 # test against both regular Ruby and RubyMotion
 language: ruby
 rvm:
-  - 2.4.4
+  - 2.6.3
 script:
   - bundle install --jobs=3 --retry=3
   - bundle exec rake test_app
