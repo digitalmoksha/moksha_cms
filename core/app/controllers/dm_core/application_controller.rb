@@ -243,8 +243,7 @@ class DmCore::ApplicationController < ActionController::Base
 
       Raven.tags_context(
         domain: current_account&.domain,
-        account_prefix: current_account&.account_prefix,
-        moksha_cms: DmCore::VERSION
+        account_prefix: current_account&.account_prefix
       )
 
       # You can also set extra context using `Raven.extra_context`
