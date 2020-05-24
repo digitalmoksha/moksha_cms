@@ -238,7 +238,6 @@ class DmCore::ApplicationController < ActionController::Base
       Raven.user_context(
         id: current_user&.id,
         email: current_user&.email,
-        username: current_user&.username,
         ip_address: request.ip
       )
 
