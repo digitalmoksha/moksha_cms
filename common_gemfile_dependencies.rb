@@ -37,5 +37,6 @@ group :test do
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem 'syntax'
+  gem 'webdrivers', '~> 4.0'
   gem 'webmock', '~> 3.8'
 end
