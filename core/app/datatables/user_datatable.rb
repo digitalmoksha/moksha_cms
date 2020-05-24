@@ -43,7 +43,8 @@ class UserDatatable
 
   #------------------------------------------------------------------------------
   def fetch_users
-    users = User.current_account_users.includes({ user_profile: [:country] }).order("#{sort_column} #{sort_direction}")
+    users = User.current_account_users.includes({ user_profile: [:country] })
+    users = users.order(Arel.sql("#{sort_column} #{sort_direction}"))
     users = users.page(page).per_page(per_page)
     users = users.where("LOWER(user_profiles.first_name) like :search OR LOWER(user_profiles.last_name) like :search OR LOWER(users.email) like :search", search: "%#{params[:sSearch]}%".downcase) if params[:sSearch].present?
     users

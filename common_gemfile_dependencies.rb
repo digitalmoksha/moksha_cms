@@ -3,7 +3,7 @@
 # the one component of MokshaCms.
 source 'https://rubygems.org'
 
-gem 'rails', '5.1.7'
+gem 'rails', '5.2.4.2'
 
 gem 'dm_preferences',         '~> 1.5'
 gem 'themes_for_rails',       git: 'https://github.com/digitalmoksha/themes_for_rails.git'
@@ -37,5 +37,6 @@ group :test do
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem 'syntax'
+  gem 'webdrivers', '~> 4.0'
   gem 'webmock', '~> 3.8'
 end

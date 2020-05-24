@@ -12,6 +12,8 @@ class Registration < ApplicationRecord
 
   self.table_name = 'ems_registrations'
 
+  attr_accessor                 :payment_comment_text
+
   belongs_to                    :workshop, counter_cache: true, optional: true
   belongs_to                    :workshop_price, optional: true
   belongs_to                    :user_profile, optional: true
@@ -19,7 +21,6 @@ class Registration < ApplicationRecord
   has_many                      :payment_histories, -> { order(payment_date: :asc) }, as: :owner, dependent: :destroy
   belongs_to                    :payment_comment, class_name: 'Comment', optional: true
   serialize                     :payment_reminder_history, Array
-  attr_accessor                 :payment_comment_text
   acts_as_commentable           :private
 
   accepts_nested_attributes_for :user_profile
