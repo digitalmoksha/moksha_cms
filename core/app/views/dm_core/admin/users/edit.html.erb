@@ -24,17 +24,25 @@
                     <table class="table table-bordered table-condensed table-striped">
                       <thead>
                         <tr>
+                          <th width=20></th>
                           <th class="name">Workshop Title</th>
+                          <th class="name">Paid</th>
                           <th class="name">Domain</th>
                         </tr>
                       </thead>
                       <tbody>
                         <% reg = (is_sysadmin? ? Registration.unscoped : Registration.all) %>
                         <% reg.where(user_profile_id: @user.user_profile).includes(:workshop => [:translations]).includes(:account).each do |registration| %>
-                          <tr>
-                            <td class="name"><%= registration.workshop ? registration.workshop.title : 'oops' %></td>
-                            <td class="name"><%= registration.account.domain %></td>
-                          </tr>
+                          <% if registration.workshop %>
+                            <tr>
+                              <td>
+                                <button class='btn btn-sm btn-<%= registration.current_state %> hovertip' data-placement='right' title='<%= "#{registration.current_state.capitalize} on #{format_date(registration.process_changed_on)}" %>'></button>
+                              </td>
+                              <td class="name"><%= link_to registration.workshop.title, dm_event.edit_admin_registration_path(registration) %></td>
+                              <td class="name"><%= present(registration).balance_or_paid %></td>
+                              <td class="name"><%= registration.account.domain %></td>
+                            </tr>
+                          <% end  %>
                         <% end %>
                       </tbody>
                     </table>
