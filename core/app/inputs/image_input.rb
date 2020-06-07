@@ -11,7 +11,7 @@ class ImageInput < SimpleForm::Inputs::FileInput
 
     # check if there's an uploaded file (eg: edit mode or form not saved)
     if object.send("#{attribute_name}?")
-      out << template.image_tag(object.send(attribute_name).tap {|o| break o.send(version) if version}.send('url'))
+      out << template.image_tag(object.send(attribute_name).tap { |o| break o.send(version) if version }.send('url'))
     end
 
     out
