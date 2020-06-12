@@ -31,6 +31,7 @@ module DmCore
         validates_presence_of     :email
         validates_email_format_of :email, message: 'does seem to be valid'
 
+        after_create            :update_profile_email
         after_create            :add_account
         after_update            :update_profile_email
 
@@ -59,7 +60,12 @@ module DmCore
         # When a user is created, attach it to the current account
         #------------------------------------------------------------------------------
         def add_account
-          skip_reconfirmation! # make sure a second confirmation email is not sent
+          # make sure a second confirmation email is not sent
+          skip_reconfirmation!
+
+          # update before setting the account_id
+          update_profile_email
+
           update_attribute(:account_id, Account.current.id)
           ensure_site_profile_exists
         end
