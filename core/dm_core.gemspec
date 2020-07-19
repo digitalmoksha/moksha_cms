@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'cancancan', '~> 3.1'          # Authorization
   s.add_dependency 'carrierwave', '~> 2.1'
   s.add_dependency 'carrierwave-aws', '~> 1.5'
-  # s.add_dependency 'codemirror-rails', '~> 5.16'  # TODO: configure yarn and install codemirror from that
   s.add_dependency 'country_select', '~> 4.0'     # TODO: don't think needed any more.  Look into `countries` gem
   s.add_dependency 'daemons', '~> 1.3'
   s.add_dependency 'delayed_job', '~> 4.1'

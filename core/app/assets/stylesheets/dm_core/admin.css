@@ -9,10 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require codemirror
- *= require codemirror/addons/display/fullscreen
- *= require codemirror/themes/elegant
- *= require codemirror/themes/neat
- *= require codemirror/themes/midnight
+ *= require codemirror/addon/display/fullscreen
+ *= require codemirror/theme/elegant
+ *= require codemirror/theme/neat
+ *= require codemirror/theme/midnight
  *= require_self
  */
 
