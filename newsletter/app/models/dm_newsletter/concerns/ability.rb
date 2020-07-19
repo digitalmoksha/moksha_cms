@@ -12,11 +12,15 @@
 module DmNewsletter
   module Concerns
     module Ability
-      def dm_newsletter_abilities(user)
-        #--- Admin
-        if user&.has_role?(:newsletter_manager)
-          can :manage_newsletters, :all
-          can :access_admin, :all
+      extend ActiveSupport::Concern
+
+      included do
+        def dm_newsletter_abilities(user)
+          #--- Admin
+          if user&.has_role?(:newsletter_manager)
+            can :manage_newsletters, :all
+            can :access_admin, :all
+          end
         end
       end
 

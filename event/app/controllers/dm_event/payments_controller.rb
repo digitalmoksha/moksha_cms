@@ -1,4 +1,4 @@
-ActionView::Base.send(:include, OffsitePayments::ActionViewHelper) # rubocop:disable Lint/SendWithMixinArgument
+ActionView::Base.include OffsitePayments::ActionViewHelper
 
 class DmEvent::PaymentsController < DmEvent::ApplicationController
   include OffsitePayments::Integrations
