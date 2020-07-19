@@ -27,7 +27,7 @@ module DmCore
     include LiquidExtensions::Helpers
 
     SimpleSyntax = /#{::Liquid::QuotedFragment}/.freeze # rubocop:disable Naming/ConstantName
-    NamedSyntax = /(#{::Liquid::QuotedFragment})\s*\:\s*(#{::Liquid::QuotedFragment})/.freeze # rubocop:disable Naming/ConstantName
+    NamedSyntax = /(#{::Liquid::QuotedFragment})\s*:\s*(#{::Liquid::QuotedFragment})/.freeze # rubocop:disable Naming/ConstantName
 
     #------------------------------------------------------------------------------
     def initialize(tag_name, markup, tokens)
@@ -56,7 +56,7 @@ module DmCore
     include LiquidExtensions::Helpers
 
     SimpleSyntax = /#{::Liquid::QuotedFragment}/.freeze # rubocop:disable Naming/ConstantName
-    NamedSyntax = /(#{::Liquid::QuotedFragment})\s*\:\s*(#{::Liquid::QuotedFragment})/.freeze # rubocop:disable Naming/ConstantName
+    NamedSyntax = /(#{::Liquid::QuotedFragment})\s*:\s*(#{::Liquid::QuotedFragment})/.freeze # rubocop:disable Naming/ConstantName
 
     #------------------------------------------------------------------------------
     def initialize(tag_name, markup, tokens)

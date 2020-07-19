@@ -1,4 +1,4 @@
-require_relative '../core/lib/dm_core/version.rb'
+require_relative '../core/lib/dm_core/version'
 
 Gem::Specification.new do |s|
   s.name        = "dm_newsletter"

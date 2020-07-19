@@ -186,7 +186,7 @@ module CsvExporter
   def to_csv_filename(title)
     the_time    = Time.now
     file_prefix = "#{the_time.year}_#{the_time.mon}_#{the_time.day}_"
-    filename    = (file_prefix + title.gsub(/[^\w\.\-]/, '_')).squeeze('_')
+    filename    = (file_prefix + title.gsub(/[^\w.\-]/, '_')).squeeze('_')
     filename + '.csv'
   end
 
@@ -196,7 +196,7 @@ module CsvExporter
   def to_excel_filename(title)
     the_time    = Time.now
     file_prefix = "#{the_time.year}_#{the_time.mon}_#{the_time.day}_"
-    filename    = (file_prefix + title.gsub(/[^\w\.\-]/, '_')).squeeze('_')
+    filename    = (file_prefix + title.gsub(/[^\w.\-]/, '_')).squeeze('_')
     # --- removed filename length limit - put back if problems occur : (filename.length > 27 ? filename[0...27] : filename) + '.xls'
     filename + '.xls'
   end
