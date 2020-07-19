@@ -28,7 +28,7 @@ class AddUserProfile < ActiveRecord::Migration[4.2]
     User.all.find_each do |user|
       Account.current = Account.find(user.account_id)
       p = user.create_user_profile
-      p.update_attributes(first_name: user.attributes['first_name'], last_name: user.attributes['last_name'],
+      p.update(first_name: user.attributes['first_name'], last_name: user.attributes['last_name'],
                           country_id: user.attributes['country_id'],
                           public_name: "#{user.attributes['first_name']}")
       p.update_attribute(:last_access_at, user.attributes['last_access_at'])

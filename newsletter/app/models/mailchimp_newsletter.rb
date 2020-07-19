@@ -134,7 +134,7 @@ class MailchimpNewsletter < Newsletter
     list_info = api.lists(mc_id).retrieve
 
     # update the newsletter
-    update_attributes(
+    update(
       name:               list_info.body[:name],
       subscribed_count:   list_info.body[:stats][:member_count],
       unsubscribed_count: list_info.body[:stats][:unsubscribe_count],
@@ -272,7 +272,7 @@ class MailchimpNewsletter < Newsletter
   #       index = newsletters.find_index { |item| item.mc_id == list['id'] }
   #       if index
   #         # update the newsletter
-  #         newsletters[index].update_attributes(
+  #         newsletters[index].update(
   #           name:               list['name'],
   #           subscribed_count:   list['stats']['member_count'],
   #           unsubscribed_count: list['stats']['unsubscribe_count'],

@@ -14,7 +14,7 @@ class DmCore::Admin::SystemController < DmCore::Admin::AdminController
   def general
     if put_or_post?
       @account.general_validation = true
-      if @account.update_attributes(account_params)
+      if @account.update(account_params)
         redirect_to(dm_core.admin_account_general_path, notice: "Account was successfully updated.") && return
       else
         render action: "general"

@@ -30,7 +30,7 @@ class DmNewsletter::Admin::NewslettersController < DmNewsletter::Admin::AdminCon
 
   #------------------------------------------------------------------------------
   def update
-    if @newsletter.update_attributes(newsletter_params)
+    if @newsletter.update(newsletter_params)
       redirect_to admin_newsletters_url, notice: 'Newsletter was successfully updated.'
     else
       render action: :edit

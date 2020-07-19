@@ -36,7 +36,7 @@ class DmCms::Admin::CmsBlogsController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def update
     authorize! :manage_content, @blog
-    if @blog.update_attributes(cms_blog_params)
+    if @blog.update(cms_blog_params)
       redirect_to admin_cms_blog_url(@blog), notice: 'Blog was successfully updated.'
     else
       render action: :edit

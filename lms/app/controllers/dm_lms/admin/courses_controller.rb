@@ -60,7 +60,7 @@ class DmLms::Admin::CoursesController < DmLms::Admin::AdminController
   #------------------------------------------------------------------------------
   def update
     respond_to do |format|
-      if @course.update_attributes(course_params)
+      if @course.update(course_params)
         format.html { redirect_to admin_course_url(@course), notice: 'Course was successfully updated.' }
         format.json { head :no_content }
       else

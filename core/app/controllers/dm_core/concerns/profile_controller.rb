@@ -28,7 +28,7 @@ module DmCore
       def details
         @user_profile = current_user.user_profile
         if put_or_post?
-          flash.now[:notice] = I18n.t('core.profile_profile_updated') if @user_profile.update_attributes(user_profile_params)
+          flash.now[:notice] = I18n.t('core.profile_profile_updated') if @user_profile.update(user_profile_params)
         end
       end
 

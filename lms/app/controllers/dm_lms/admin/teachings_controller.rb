@@ -47,7 +47,7 @@ class DmLms::Admin::TeachingsController < DmLms::Admin::AdminController
     params[:lesson_page] = teaching_params.delete(:lesson_page)
     Teaching.transaction do
       respond_to do |format|
-        if @lesson_page.update_attributes(params[:lesson_page]) && @teaching.update_attributes(params[:teaching])
+        if @lesson_page.update(params[:lesson_page]) && @teaching.update(params[:teaching])
           format.html { redirect_to edit_admin_teaching_url(@teaching), notice: 'Teaching was successfully updated.' }
           format.json { head :no_content }
         else

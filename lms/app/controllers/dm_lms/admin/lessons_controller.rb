@@ -48,7 +48,7 @@ class DmLms::Admin::LessonsController < DmLms::Admin::AdminController
   #------------------------------------------------------------------------------
   def update
     respond_to do |format|
-      if @lesson.update_attributes(lesson_params)
+      if @lesson.update(lesson_params)
         format.html { redirect_to admin_lesson_url(@lesson), notice: 'Lesson was successfully updated.' }
         format.json { head :no_content }
       else

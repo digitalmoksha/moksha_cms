@@ -47,7 +47,7 @@ class WorkshopPrice < ApplicationRecord
   # value depends on it.  For example,
   #  "15000".to_money('JPY').cents == 15000
   #  "15000".to_money('EUR').cents == 1500000
-  # Call this method on the attributes before passing into new() or update_attributes()
+  # Call this method on the attributes before passing into new() or update()
   #------------------------------------------------------------------------------
   def self.prepare_prices(attributes = {})
     attributes['price']       = attributes['price'].to_money(attributes['price_currency'])           if attributes['price'].present? && attributes['price_currency'].present?

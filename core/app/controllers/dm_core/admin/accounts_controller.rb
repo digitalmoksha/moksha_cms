@@ -39,7 +39,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   def general
     if put_or_post?
       @account.general_validation = true
-      if @account.update_attributes(account_params)
+      if @account.update(account_params)
         redirect_to(dm_core.admin_account_general_path, notice: "Account was successfully updated.") && return
       else
         render action: "general"
@@ -53,7 +53,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
     if put_or_post?
       @account.email_validation = true
       params[:account].delete(:preferred_smtp_password) if params[:account][:preferred_smtp_password].blank?
-      if @account.update_attributes(account_params)
+      if @account.update(account_params)
         redirect_to(dm_core.admin_account_email_path, notice: "Account was successfully updated.") && return
       else
         render action: "email"
@@ -67,7 +67,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
       @account.analytics_validation = true
       params[:account].delete(:preferred_sofort_project_password) if params[:account][:preferred_sofort_project_password].blank?
       params[:account].delete(:preferred_sofort_notification_password) if params[:account][:preferred_sofort_notification_password].blank?
-      if @account.update_attributes(account_params)
+      if @account.update(account_params)
         redirect_to(dm_core.admin_account_analytics_path, notice: "Account was successfully updated.") && return
       else
         render action: "analytics"
@@ -79,7 +79,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   def metadata
     if put_or_post?
       @account.metadata_validation = true
-      if @account.update_attributes(account_params)
+      if @account.update(account_params)
         redirect_to(dm_core.admin_account_metadata_path, notice: "Account was successfully updated.") && return
       else
         render action: "metadata"
@@ -91,7 +91,7 @@ class DmCore::Admin::AccountsController < DmCore::Admin::AdminController
   def media
     if put_or_post?
       @account.media_validation = true
-      if @account.update_attributes(account_params)
+      if @account.update(account_params)
         redirect_to(dm_core.admin_account_media_path, notice: "Account was successfully updated.") && return
       else
         render action: "media"
