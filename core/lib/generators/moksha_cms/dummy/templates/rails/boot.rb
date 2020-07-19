@@ -1,6 +1,4 @@
-require 'rubygems'
-gemfile = File.expand_path("<%= gemfile_path %>", __FILE__)
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path("<%= gemfile_path %>", __dir__)
 
-ENV['BUNDLE_GEMFILE'] = gemfile
-require 'bundler'
-Bundler.setup
+require 'bundler/setup' # Set up gems listed in the Gemfile.
+require 'bootsnap/setup' # Speed up boot time by caching expensive operations.

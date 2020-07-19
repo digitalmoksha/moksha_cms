@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'aasm', '~> 5.0'
   s.add_dependency 'actionview-encoded_mail_to', '~> 1.0'
   s.add_dependency 'activemerchant', '~> 1.107'
-  s.add_dependency 'acts-as-taggable-on', '~> 6.5'
   s.add_dependency 'acts_as_commentable', '~> 4.0.2' # we customize our usage, so can't use the 'with_threading' version
+  s.add_dependency 'acts-as-taggable-on', '~> 6.5'
   s.add_dependency 'acts_as_votable', '~> 0.12.1'
   s.add_dependency 'amoeba', '~> 3.1'             # TODO: (see if still needed) for handling model duplicating
   s.add_dependency 'ancestry', '~> 3.0'

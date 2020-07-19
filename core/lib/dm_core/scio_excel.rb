@@ -191,6 +191,7 @@ module Scio
       # for excel (i.e: specify smaller numbers).
       #
       # This requires fpdf (http://zeropluszero.com/software/fpdf/)
+      # rubocop:disable Metrics/CyclomaticComplexity
       def create_pdf(orientation = "L")
         require 'fpdf'
         raise "Invalid orientation" unless ["L", "P"].include?(orientation)
@@ -299,6 +300,7 @@ module Scio
         # salida
         pdf.Output
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       # creates a default style for the header. This is used in case you don't
       # set a style for the column. If you really want a "plain" style, create
