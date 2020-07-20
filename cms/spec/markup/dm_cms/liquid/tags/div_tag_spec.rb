@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Liquid::Div do
+describe DmCms::Liquid::Tags::Div do
   describe 'html rendering' do
     it 'with no options' do
       content = "{% div %}<h1>Test</h1>{% enddiv %}"
       arguments = nil
-      doc = Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters])
+      doc = Liquid::Template.parse(content).render(arguments, filters: [DmCms::Liquid::Filters::LiquidFilters])
 
       expect(doc).to eq '<div><h1>Test</h1></div>'
     end
@@ -13,7 +13,7 @@ describe Liquid::Div do
     it 'with class, style, and id' do
       content = "{% div class: 'wide shadow', style: 'text: align-left', id: 'my_id' %}<h1>Test</h1>{% enddiv %}"
       arguments = nil
-      doc = Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters])
+      doc = Liquid::Template.parse(content).render(arguments, filters: [DmCms::Liquid::Filters::LiquidFilters])
 
       expect(doc).to eq '<div class="wide shadow" style="text: align-left" id="my_id"><h1>Test</h1></div>'
     end
@@ -23,7 +23,7 @@ describe Liquid::Div do
     it 'with no options' do
       content = "{% div %}<h1>Test</h1>{% enddiv %}"
       arguments = nil
-      doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters]))
+      doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [DmCms::Liquid::Filters::LiquidFilters]))
 
       expect(doc.to_html.html_safe).to eq "<div><h1>Test</h1></div>\n"
     end
@@ -35,7 +35,7 @@ describe Liquid::Div do
         {% enddiv %}
       CONTENT
       arguments = nil
-      doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters]), parse_block_html: true)
+      doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [DmCms::Liquid::Filters::LiquidFilters]), parse_block_html: true)
 
       expect(doc.to_html.html_safe).to eq <<-CONTENT.strip_heredoc
         <div>
@@ -47,7 +47,7 @@ describe Liquid::Div do
     it 'with markdown turned off' do
       content = "{% div markdown: false %}# Test{% enddiv %}"
       arguments = nil
-      doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [LiquidFilters]), parse_block_html: true)
+      doc = ::Kramdown::Document.new(Liquid::Template.parse(content).render(arguments, filters: [DmCms::Liquid::Filters::LiquidFilters]), parse_block_html: true)
 
       expect(doc.to_html.html_safe).to eq "<div># Test</div>\n"
     end

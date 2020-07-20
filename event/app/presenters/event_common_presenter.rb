@@ -21,7 +21,7 @@ class EventCommonPresenter < BasePresenter
   # # Run content through a standard Textile/Liquid renderer
   # #------------------------------------------------------------------------------
   # def render_content(arguments = {})
-  #   doc = RedCloth.new(Liquid::Template.parse(model.content).render(arguments, :filters => [LiquidFilters],
+  #   doc = RedCloth.new(Liquid::Template.parse(model.content).render(arguments, :filters => [DmCms::Liquid::Filters::LiquidFilters],
   #                       :registers => {:controller => controller, :view => self, :account_site_assets => '/site_assets', :current_user => current_user}))
   #   #doc.hard_breaks = false
   #

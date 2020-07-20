@@ -2,9 +2,9 @@
 # multiple sites to have tags named the same, but the correct one will get used
 # during rendering
 #------------------------------------------------------------------------------
-module Liquid
-  class Template
-    class << self
+module DmCore
+  module Liquid
+    module Template
       #------------------------------------------------------------------------------
       def register_tag(name, klass)
         register_tag_namespace(name, klass)
@@ -58,3 +58,6 @@ module Liquid
     end
   end
 end
+
+# https://sikac.hu/how-to-use-module-prepend-to-override-class-method-in-ruby-4197c6159cd3
+::Liquid::Template.singleton_class.send :prepend, DmCore::Liquid::Template
