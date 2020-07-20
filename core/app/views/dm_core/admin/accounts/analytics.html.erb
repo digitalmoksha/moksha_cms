@@ -24,7 +24,7 @@
     <% end %>
 
     <%= subsection title: 'Subscription Processor', icon: 'fa fa-gear' do %>
-      <%= f.input :preferred_subscription_processor, label: 'Use', collection: ['paymill', 'stripe'], include_blank: true,
+      <%= f.input :preferred_subscription_processor, label: 'Use', collection: ['paymill', 'stripe', 'stripe_subscription'], include_blank: true,
                   hint: 'Used only for subscriber content. DO NOT set or change this unless you know what you are doing' %>
       <%= f.input :preferred_subscription_bcc_email, label: 'Email bcc', include_blank: true,
                   hint: 'Copies of subscription emails will be sent to this address' %>

@@ -1,54 +1,47 @@
 ru:
   ems:
-    registration_subtitle: Registration
-    register_btn: Register
-    cancel_btn: Cancel
-    ticket_receipt_arrival: Arrival
-    ticket_receipt_attendee: Attendee
-    ticket_receipt_departure: Departure
-    ticket_receipt_event: Event
-    ticket_receipt_questions: "If you have any questions, please email us at %{value}"
-    ticket_receipt_questions_telephone: "or telephone %{value}"
-    ticket_receipt_ticket_number: Ticket Number
-    ticket_receipt_price: Price
-    ticket_information: Ticket Information
-    ticket_contact: Contact Information
-    ticket_registered_following_event: "According to our registration system, you are or have participated of the following event:"
-    ticket_outstanding_balance: "We are sending this reminder because you either chose an installment plan with the next payment being due or you might have forgotten to pay the course fee in total. The following amount is due:"
-    ticket_payment_link_leadin: You can choose one of our payment methods by clicking on the link below. Please mention your Ticket No. so we can relate your payment to your registration.
-    ticket_payment_link_text: Pay Now
-    ticket_payment_reminder_subject: "Payment Reminder: %{value}"
+    registration_subtitle: Постановка на учет
+    register_btn: регистр
+    cancel_btn: отменить
+    ticket_receipt_arrival: прибытие
+    ticket_receipt_attendee: Слушатель
+    ticket_receipt_departure: Вылет из
+    ticket_receipt_event: Событие
+    ticket_receipt_questions: "Если у вас есть какие-либо вопросы, пожалуйста, напишите нам по адресу %{value}"
+    ticket_receipt_questions_telephone: "или телефон %{value}"
+    ticket_receipt_ticket_number: Номер билета
+    ticket_receipt_price: Цена
+    ticket_information: Информация о билетах
+    ticket_contact: Контакты
+    ticket_registered_following_event: "Согласно нашей системе регистрации, вы участвуете или участвовали в следующем мероприятии:"
+    ticket_outstanding_balance: "Мы отправляем это напоминание, потому что вы либо выбрали рассрочку со следующим платежом, либо, возможно, забыли оплатить стоимость курса в целом. Причитается следующая сумма:"
+    ticket_payment_link_leadin: Вы можете выбрать один из наших способов оплаты, нажав на ссылку ниже. Пожалуйста, укажите номер вашего билета, чтобы мы могли связать ваш платеж с вашей регистрацией.
+    ticket_payment_link_text: Заплатить сейчас
+    ticket_payment_reminder_subject: "Напоминание о платеже: %{value}"
     ticket_if_already_paid: "This email is being created and sent automatically by our registration system. If you have already paid or think this reminder is without cause please write us via %{value}."
-    ticket_payment_complete: Your payment is complete!
-    registration_receipt_title: Reservation Receipt
-    registration_email: Email
-    registration_first_name: First Name
-    registration_last_name: Last Name
-    registration_address: Address
-    registration_address2: Address
-    registration_city: City
-    registration_state: State
-    registration_country: Country
-    registration_zipcode: Zipcode
-    registration_account_required: 'In order to register for this event, you must be logged into your user account.'
-    registration_closed_heading: Registration Closed
-    registration_closed_text: "We are no longer accepting registrations for the course '%{title}'"
-    registration_closed_email: "For any questions you may contact %{email}."
-    registration_closed_list: The following courses are currently open for registration
-    choose_payment_method: Choose Your Payment Method
-    donate_button: Donate
-    project_goal: Project Goal
-    amount_raised: Amount Raised
+    ticket_payment_complete: Ваш платеж завершен!
+    registration_receipt_title: Резервирование квитанции
+    registration_email: Эл. адрес
+    registration_first_name: Имя
+    registration_last_name: Фамилия
+    registration_address: Адрес
+    registration_address2: Адрес
+    registration_city: город
+    registration_state: государственный
+    registration_country: Страна
+    registration_zipcode: Почтовый индекс
+    registration_account_required: "Чтобы зарегистрироваться для этого события, вы должны войти в свою учетную запись пользователя."
+    registration_closed_heading: Регистрация закрыта
+    registration_closed_text: "Мы больше не принимаем регистрацию на курс '%{title}'"
+    registration_closed_email: "По любым вопросам вы можете обратиться %{email}."
+    registration_closed_list: Следующие курсы в настоящее время открыты для регистрации
+    choose_payment_method: Выберите метод оплаты
+    donate_button: жертвовать
+    project_goal: Цель проекта
+    amount_raised: Поднятая сумма
 
-    login: Login
-    create_account: Create Account
-
-    registration_is_pending: Your registration is still pending.
-    registration_is_reviewing: Your registration is being reviewed.
-    registration_is_rejected: Your registration has been rejected.
-    registration_is_waitlisted: You have been placed on a waitlist.
-    registration_is_canceled: Your registration has been canceled.
-    registration_is_refunded: Your registration has been refunded.
+    login: Регистрация
+    create_account: Создать учетную запись
 
   activerecord:
     errors:
@@ -56,4 +49,4 @@ ru:
         registration:
           attributes:
             workshop_price_id:
-              blank: Please select a payment method
+              blank: Пожалуйста, выберите способ оплаты

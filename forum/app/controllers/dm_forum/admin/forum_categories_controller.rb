@@ -39,7 +39,7 @@ class DmForum::Admin::ForumCategoriesController < DmForum::Admin::AdminControlle
   # PUT /admin/forum_categories/1
   #------------------------------------------------------------------------------
   def update
-    if @forum_category.update_attributes(forum_category_params)
+    if @forum_category.update(forum_category_params)
       redirect_to admin_forum_category_url(@forum_category), notice: 'Forum Category was successfully updated.'
     else
       render action: :edit

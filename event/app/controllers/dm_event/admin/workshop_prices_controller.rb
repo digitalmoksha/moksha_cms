@@ -37,7 +37,7 @@ class DmEvent::Admin::WorkshopPricesController < DmEvent::Admin::AdminController
   def update
     authorize! :manage_events, @workshop
     attributes = WorkshopPrice.prepare_prices(workshop_price_params.merge(price_currency: @workshop.base_currency))
-    if @workshop_price.update_attributes(attributes)
+    if @workshop_price.update(attributes)
       redirect_to admin_workshop_workshop_prices_url(@workshop), notice: 'Price was successfully updated.'
     else
       render action: :edit

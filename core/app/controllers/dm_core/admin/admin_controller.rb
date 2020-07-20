@@ -72,6 +72,7 @@ class DmCore::Admin::AdminController < ApplicationController
       @admin_theme[:main_menu] |= DmForum::AdminMenuInject.menu_items(current_user)         if defined?(DmForum)
       @admin_theme[:main_menu] |= DmNewsletter::AdminMenuInject.menu_items(current_user)    if defined?(DmNewsletter)
       @admin_theme[:main_menu] |= DmSubscriptions::AdminMenuInject.menu_items(current_user) if defined?(DmSubscriptions)
+      @admin_theme[:main_menu] |= DmSubscriptionsStripe::AdminMenuInject.menu_items(current_user) if defined?(DmSubscriptionsStripe)
 
       # give main application a chance to add anything it wants
       admin_specific_menus @admin_theme if respond_to? :admin_specific_menus

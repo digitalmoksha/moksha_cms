@@ -128,7 +128,7 @@ class NewsletterSubscriber
   # #------------------------------------------------------------------------------
   # def update_subscription(subscriber)
   #   unless subscriber.nil?
-  #     update_attributes(:firstname => subscriber.firstname, :lastname => subscriber.lastname,
+  #     update(:firstname => subscriber.firstname, :lastname => subscriber.lastname,
   #                       :email => subscriber.email, :country => subscriber.country)
   #   end
   # end

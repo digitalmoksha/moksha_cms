@@ -9,7 +9,7 @@ class AddPagesRankedModel < ActiveRecord::Migration[4.2]
     CmsPage.unscoped.order(:ancestry, :position).each do |page|
       total = total + page.position
       Account.current = Account.find(page.account_id)
-      page.update_attributes :row_order => total
+      page.update :row_order => total
     end
     remove_column :cms_pages,        :position
   end

@@ -44,7 +44,7 @@ class DmForum::ForumCommentsController < DmForum::ApplicationController
 
   #------------------------------------------------------------------------------
   def update
-    if @forum_comment.update_attributes(forum_comment_params)
+    if @forum_comment.update(forum_comment_params)
       flash[:notice] = 'Post was successfully updated.'
       redirect_to(forum_forum_topic_path(@forum, @forum_topic, { anchor: dom_id(@forum_comment), page: @forum_topic.comment_page(@forum_comment) }))
     else

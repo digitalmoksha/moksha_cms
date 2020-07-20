@@ -18,6 +18,10 @@ module DmLms
     config.before_initialize do
       DmLms.initialize_configuration
     end
+
+    initializer 'engine.assets.precompile' do |app|
+      app.config.assets.precompile += %w[dm_lms/manifest.js]
+    end
   end
 
   # Add any specific files that need to be precompiled seperately for the asset pipeline

@@ -19,7 +19,7 @@ class DmForum::Admin::ForumSitesController < DmForum::Admin::AdminController
   # PUT /admin/fms/forum_site
   #------------------------------------------------------------------------------
   def update
-    if @forum_site.update_attributes(forum_site_params)
+    if @forum_site.update(forum_site_params)
       redirect_to dm_forum.admin_forum_site_url, notice: "Forum settings were successfully updated."
     else
       render action: :edit

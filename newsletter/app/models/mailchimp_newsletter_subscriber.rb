@@ -3,9 +3,10 @@ class MailchimpNewsletterSubscriber < NewsletterSubscriber
 
   # is subscriber interested in the named group?
   #------------------------------------------------------------------------------
-  def interest_group?(name)
-    group = groups.detect { |group| group['name'] == name } if groups
-    (group ? group['interested'] : false)
+  def interest_group?(id)
+    return false unless groups
+
+    groups[id.to_sym] || false
   end
 
   #------------------------------------------------------------------------------
@@ -19,23 +20,19 @@ class MailchimpNewsletterSubscriber < NewsletterSubscriber
   def self.new_from_mailchimp(attributes = {})
     obj = MailchimpNewsletterSubscriber.new
     obj.member_info_data  = attributes
-    obj.subscribed        = attributes['status'] == 'subscribed'
-    obj.email             = attributes['email']
-    obj.euid              = attributes['euid']
-    obj.grouping_id       = attributes['merges']['GROUPINGS'] ? attributes['merges']['GROUPINGS'][0]['id'] : nil
-    obj.groups            = attributes['merges']['GROUPINGS'] ? attributes['merges']['GROUPINGS'][0]['groups'] : nil
+    obj.subscribed        = attributes[:status] == 'subscribed'
+    obj.email             = attributes[:email_address]
+    obj.euid              = attributes[:unique_email_id]
+    obj.groups            = attributes[:interests] || nil
+
     obj
   end
 
   # Query for the subscriber info.
   #------------------------------------------------------------------------------
   def self.subscriber_info(newsletter, email)
-    api         = MailchimpNewsletter.api
-    subscriber  = api.lists.member_info(id: newsletter.mc_id, emails: [email: email])
-    if subscriber['success_count'] == 1
-      return MailchimpNewsletterSubscriber.new_from_mailchimp(subscriber['data'][0])
-    else
-      return nil
-    end
+    subscriber = newsletter.subscriber_info(email)
+
+    subscriber ? MailchimpNewsletterSubscriber.new_from_mailchimp(subscriber) : nil
   end
 end

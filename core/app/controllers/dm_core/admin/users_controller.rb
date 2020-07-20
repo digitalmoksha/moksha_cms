@@ -40,7 +40,7 @@ class DmCore::Admin::UsersController < DmCore::Admin::AdminController
     @user = User.find(params[:id])
     respond_to do |format|
       roles = params[:user].delete(:roles)
-      if params[:user].empty? || @user.update_attributes(user_params)
+      if params[:user].empty? || @user.update(user_params)
         @user.update_roles(roles, is_admin?) if roles
         format.html { redirect_to dm_core.admin_users_url, notice: "'#{@user.display_name}' was successfully updated." }
         format.json { head :no_content }

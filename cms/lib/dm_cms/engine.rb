@@ -10,14 +10,8 @@ module DmCms
       require_dependency 'dm_cms/model_decorators'
     end
 
-    initializer "dm_cms.init_liquid_tags" do |app|
-      #--- require each tag -- registration is done in the tag file itself, so they can't be autoloaded
-      Dir.glob(File.expand_path("../../../app/liquid/tags/*.rb", __FILE__)).each do |path|
-        require path
-      end
-      Dir.glob(File.expand_path("../../../app/liquid/filters/*.rb", __FILE__)).each do |path|
-        require path
-      end
+    initializer 'engine.assets.precompile' do |app|
+      app.config.assets.precompile += %w[dm_cms/manifest.js]
     end
   end
 end

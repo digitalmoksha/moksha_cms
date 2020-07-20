@@ -58,7 +58,9 @@ class RegistrationDatatable
   #------------------------------------------------------------------------------
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
-    registrations = @workshop.registrations.includes(:workshop_price, user_profile: [user: :current_site_profile]).references(:user_profiles).order("#{sort_column} #{sort_direction}")
+    registrations = @workshop.registrations.includes(:workshop_price, user_profile: [{ user: :current_site_profile }])
+    registrations = registrations.references(:user_profiles)
+    registrations = registrations.order(Arel.sql("#{sort_column} #{sort_direction}"))
 
     if !@permissions[:manage_event_registrations] && !@permissions[:manage_event_finances]
       # limit to your own registration if can only edit the workshop
@@ -88,12 +90,13 @@ class RegistrationDatatable
 
   #------------------------------------------------------------------------------
   def action_list(registration)
-    actions = registration.aasm.permissible_events
+    actions = registration.aasm.events(permitted: true).map(&:name)
     actions.sort! { |x, y| x.to_s <=> y.to_s }
 
     output = ''
     actions.each do |action|
-      output << '<li>' +
+      output <<
+        '<li>' +
         link_to(action.to_s.titlecase,
                 url_helpers.action_state_admin_registration_path(I18n.locale, registration, state_event: action),
                 { remote: true, method: :put }) +

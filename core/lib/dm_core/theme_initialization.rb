@@ -52,27 +52,27 @@ module DmCore
 
         unless ENV['RAILS_GROUPS'] == 'assets'
           # Load models from themes
-          Dir.glob(File.join(theme_root, "/theme_support/models/*.rb")).each do |path|
+          Dir.glob(File.join(theme_root, "/theme_support/models/*.rb")).sort.each do |path|
             require path
           end
 
           # Load helpers from themes
-          Dir.glob(File.join(theme_root, "/theme_support/helpers/*.rb")).each do |path|
+          Dir.glob(File.join(theme_root, "/theme_support/helpers/*.rb")).sort.each do |path|
             require path
           end
 
           # Register tags from themes
-          Dir.glob(File.join(theme_root, "/theme_support/tags/*.rb")).each do |path|
+          Dir.glob(File.join(theme_root, "/theme_support/tags/*.rb")).sort.each do |path|
             require path
             file = path.split('/').last.split('.').first
-            Liquid::Template.register_tag_namespace(file, "Liquid::Theme#{theme_name.camelize}::#{file.camelize}".constantize, theme_name)
+            ::Liquid::Template.register_tag_namespace(file, "Liquid::Theme#{theme_name.camelize}::#{file.camelize}".constantize, theme_name)
           end
         end
 
         # add items listed in theme.yml to be pre-compiled in asset pipeline
-        if Rails.env.production? || Rails.env.staging? || Rails.env.development?
-          if theme_data and theme_data['precompile']
-            Rails.application.config.assets.precompile += theme_data['precompile']
+        if Rails.env.development? || Rails.env.production? || Rails.env.staging?
+          if theme_data && theme_data['precompile']
+            Rails.application.config.assets.precompile << theme_data['precompile']
           end
         end
       end

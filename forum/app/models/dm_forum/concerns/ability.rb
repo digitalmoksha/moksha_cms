@@ -12,24 +12,28 @@
 module DmForum
   module Concerns
     module Ability
-      def dm_forum_abilities(user)
-        if user
-          #--- Admin
-          if user.has_role?(:forum_manager)
-            can :manage_forums, :all
-            can :access_admin, :all
+      extend ActiveSupport::Concern
+
+      included do
+        def dm_forum_abilities(user)
+          if user
+            #--- Admin
+            if user.has_role?(:forum_manager)
+              can :manage_forums, :all
+              can :access_admin, :all
+            end
+
+            #--- Forum
+            can(:read, Forum)   { |forum| forum.can_be_read_by?(user) }
+            can(:reply, Forum)  { |forum| forum.can_be_replied_by?(user) }
+            can :moderate, Forum, id: Forum.published.with_role(:moderator, user).map(&:id)
+
+            #--- Comment
+            can :edit, ForumComment, user_id: user.id
+          else
+            #--- can only read/see public forums when not logged in
+            can(:read, Forum) { |forum| forum.can_be_read_by?(user) }
           end
-
-          #--- Forum
-          can(:read, Forum)   { |forum| forum.can_be_read_by?(user) }
-          can(:reply, Forum)  { |forum| forum.can_be_replied_by?(user) }
-          can :moderate, Forum, id: Forum.published.with_role(:moderator, user).map(&:id)
-
-          #--- Comment
-          can :edit, ForumComment, user_id: user.id
-        else
-          #--- can only read/see public forums when not logged in
-          can(:read, Forum) { |forum| forum.can_be_read_by?(user) }
         end
       end
 

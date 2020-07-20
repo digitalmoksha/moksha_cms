@@ -3,14 +3,15 @@ require 'spec_helper'
 describe DmCore::PaymentHistories::UpdateService, type: :service do
   setup_account
 
-  let(:user_profile) { create :user_profile }
+  let(:user) { create(:user) }
+  let(:user_profile) { user.user_profile }
 
   describe '#call' do
     let(:amount)    { Money.new(6000, 'USD') }
     let(:options)   { { item_ref: 'item two', payment_method: 'cash', payment_date: Time.now, bill_to_name: 'test' } }
 
     it 'udpate a PaymentHistory' do
-      history = create(:payment_history)
+      history = create(:payment_history, owner: user, user_profile: user_profile)
       described_class.new(history, amount, user_profile, options).call
 
       expect(history).to have_attributes(total_cents: amount.cents, total_currency: amount.currency.iso_code)

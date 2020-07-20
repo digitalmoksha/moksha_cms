@@ -31,7 +31,7 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
 
   #------------------------------------------------------------------------------
   def update
-    if @cms_snippet.update_attributes(cms_snippet_params)
+    if @cms_snippet.update(cms_snippet_params)
       redirect_to admin_cms_snippets_url, notice: 'Content updated'
     else
       render action: :edit, alert: 'An error of some kind occurred'
@@ -47,7 +47,7 @@ class DmCms::Admin::CmsSnippetsController < DmCms::Admin::AdminController
   # [todo]
   #------------------------------------------------------------------------------
   def update_fragment
-    if @cms_snippet.update_attributes(cms_snippet_params)
+    if @cms_snippet.update(cms_snippet_params)
       # @cms_page.merge!(@item.cms_page.get_page_render_values)
       # respond_to do |format|
       #  format.js { render :action => :update_fragment }

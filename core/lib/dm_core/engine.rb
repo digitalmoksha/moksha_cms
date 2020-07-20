@@ -28,9 +28,8 @@ require 'aasm'
 require 'monetize/core_extensions'
 require 'money-rails'
 require 'exception_notification'
-require 'aws-sdk'
+require 'aws-sdk-s3'
 require 'biggs'
-require 'codemirror-rails'
 require 'mini_magick'
 require 'carrierwave'
 require 'carrierwave-aws'
@@ -40,16 +39,21 @@ require 'active_merchant/billing/rails'
 require 'offsite_payments'
 require 'delayed_job_active_record'
 require 'delayed_job'
+require 'sentry-raven'
 
 module DmCore
   class Engine < ::Rails::Engine
     isolate_namespace DmCore
 
     initializer 'engine.helper' do |app|
-      ActionView::Base.send :include, RenderHelper # rubocop:disable GitlabSecurity/PublicSend
+      ActionView::Base.include RenderHelper
       ActiveSupport.on_load(:action_controller) do
         include DmCore::ApplicationHelper
       end
+    end
+
+    initializer 'engine.assets.precompile' do |app|
+      app.config.assets.precompile += %w[dm_core/manifest.js]
     end
 
     config.before_initialize do

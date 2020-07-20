@@ -1,10 +1,11 @@
-ActionView::Base.send(:include, OffsitePayments::ActionViewHelper)
+ActionView::Base.include OffsitePayments::ActionViewHelper
 
 class DmEvent::RegistrationsController < DmEvent::ApplicationController
   include DmEvent::PermittedParams
   include OffsitePayments::Integrations
   include DmCore::UrlHelper
   include DmCore::LiquidHelper
+  include DmCore::RecaptchaHelper
 
   protect_from_forgery except: [:paypal_ipn, :sofort_ipn], prepend: true
 
@@ -19,7 +20,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   def new
     redirect_to(main_app.root_url) && return if @workshop.nil?
 
-    if !@workshop.registration_closed? || authorize!(:manage_events, @workshop) # is_admin?
+    if @workshop.visible? || can?(:manage_events, @workshop)
       @registration               = @workshop.registrations.build
       @registration.user_profile  = current_user ? current_user.user_profile : UserProfile.new
 
@@ -39,6 +40,7 @@ class DmEvent::RegistrationsController < DmEvent::ApplicationController
   #------------------------------------------------------------------------------
   def create
     redirect_to(action: :new) && return if user_needs_to_be_logged_in?
+    redirect_to(action: :new) && return if current_user.nil? && !captcha_solved?
 
     profile_params = params[:registration].delete("user_profile_attributes") if params[:registration]
     profile_params&.delete(:id)

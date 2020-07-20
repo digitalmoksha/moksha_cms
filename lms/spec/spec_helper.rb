@@ -20,10 +20,11 @@ require 'database_cleaner'
 require "validates_email_format_of/rspec_matcher"
 
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
-Dir[File.join(ENGINE_RAILS_ROOT, "../core/spec/support/**/*.rb")].each { |f| require f }
-Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each { |f| require f }
+Dir[File.join(ENGINE_RAILS_ROOT, "../core/spec/support/**/*.rb")].sort.each { |f| require f }
+Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].sort.each { |f| require f }
 
 FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.definition_file_paths << File.expand_path('../../../core/spec/factories', __FILE__)
 FactoryBot.find_definitions
 
 RSpec.configure do |config|

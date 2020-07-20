@@ -9,27 +9,25 @@ module DmEvent
       included do
         #------------------------------------------------------------------------------
         def to_liquid
-          result = {
-            'price'               => (workshop_price.nil? ? '' : workshop_price.price_formatted),
-            'receipt_code'        => receipt_code.to_s,
-            'price_description'   => (workshop_price&.price_description).to_s,
-            'discount'            => discount.format(no_cents_if_whole: true, symbol: true),
-            'discounted_price'    => discounted_price.format(no_cents_if_whole: true, symbol: true),
-            'title'               => workshop.title,
-            'fullname'            => user_profile.full_name,
-            'first_name'          => user_profile.first_name,
-            'last_name'           => user_profile.last_name,
-            'payment_url'         => payment_url,
-            'balance'             => balance_owed.format,
-            'payment_owed'        => payment_owed.format,
-            'start_date'          => format_date(workshop.starting_on, true),
-            'end_date'            => format_date(workshop.ending_on, true),
-            'start_time'          => format_time(workshop.starting_on),
-            'end_time'            => format_time(workshop.ending_on),
-            'date_range'          => format_date_range(workshop.starting_on, workshop.ending_on)
+          {
+            'price'             => (workshop_price.nil? ? '' : workshop_price.price_formatted),
+            'receipt_code'      => receipt_code.to_s,
+            'price_description' => workshop_price&.price_description.to_s,
+            'discount'          => discount.format(no_cents_if_whole: true, symbol: true),
+            'discounted_price'  => discounted_price.format(no_cents_if_whole: true, symbol: true),
+            'title'             => workshop.title,
+            'fullname'          => user_profile.full_name,
+            'first_name'        => user_profile.first_name,
+            'last_name'         => user_profile.last_name,
+            'payment_url'       => payment_url,
+            'balance'           => balance_owed.format,
+            'payment_owed'      => payment_owed.format,
+            'start_date'        => format_date(workshop.starting_on, true),
+            'end_date'          => format_date(workshop.ending_on, true),
+            'start_time'        => format_time(workshop.starting_on),
+            'end_time'          => format_time(workshop.ending_on),
+            'date_range'        => format_date_range(workshop.starting_on, workshop.ending_on)
           }
-
-          result
         end
 
         # Send an email for state notification.  if send_email is false, just return
@@ -53,8 +51,8 @@ module DmEvent
         #------------------------------------------------------------------------------
         def compile_email(state, system_email)
           substitutions = {
-            'state'   => state.to_s,
-            'event'   => to_liquid
+            'state' => state.to_s,
+            'event' => to_liquid
           }
           substitutions['payment_details'] = Liquid::Template.parse(workshop_price.payment_details).render(substitutions) unless workshop_price.try(:payment_details).blank?
           substitutions['subject']         = Liquid::Template.parse(system_email.subject).render(substitutions)

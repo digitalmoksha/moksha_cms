@@ -4,5 +4,5 @@ class Activity < ApplicationRecord
 
   default_scope     { where(account_id: Account.current.id).order("created_at ASC") }
 
-  belongs_to :user
+  belongs_to :user, optional: true
 end

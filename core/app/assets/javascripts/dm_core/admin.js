@@ -5,16 +5,16 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require codemirror
-//= require codemirror/addons/mode/overlay
-//= require codemirror/addons/edit/continuelist
-//= require codemirror/addons/display/fullscreen
-//= require codemirror/modes/xml
-//= require codemirror/modes/css
-//= require codemirror/modes/javascript
-//= require codemirror/modes/htmlmixed
-//- require codemirror/modes/htmlembedded
-//= require codemirror/modes/markdown
-//= require codemirror/modes/gfm
+//= require codemirror/addon/mode/overlay
+//= require codemirror/addon/edit/continuelist
+//= require codemirror/addon/display/fullscreen
+//= require codemirror/mode/xml/xml
+//= require codemirror/mode/css/css
+//= require codemirror/mode/javascript/javascript
+//= require codemirror/mode/htmlmixed/htmlmixed
+//- require codemirror/mode/htmlembedded/htmlembedded
+//= require codemirror/mode/markdown/markdown
+//= require codemirror/mode/gfm/gfm
 //= require dm_core/admin_extra.js
 
 // Function for toggling the revealing of an item, through slide and fading

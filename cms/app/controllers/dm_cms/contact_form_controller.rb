@@ -1,4 +1,6 @@
 class DmCms::ContactFormController < DmCms::ApplicationController
+  include DmCore::RecaptchaHelper
+
   rescue_from ActionController::InvalidAuthenticityToken, with: :form_spam
 
   protect_from_forgery with: :exception
@@ -23,18 +25,6 @@ class DmCms::ContactFormController < DmCms::ApplicationController
     Rails.logger.error "=====> Error in creating ContactForm: #{e.message}  URL: #{request.url}  REMOTE_ADDR: #{request.remote_addr}"
     @contact = nil
     @partial_name = ContactForm.PARTIAL_NAME
-  end
-
-  private
-
-  #------------------------------------------------------------------------------
-  def captcha_solved?
-    return true unless Rails.application.secrets[:recaptcha_secret_key]
-    return true if verify_recaptcha(secret_key: Rails.application.secrets[:recaptcha_secret_key])
-
-    flash[:error] = 'There was an error with the reCAPTCHA. Please solve the reCAPTCHA again.'
-    flash.delete :recaptcha_error
-    false
   end
 
   # Determines the name of the form class.

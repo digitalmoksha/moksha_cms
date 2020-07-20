@@ -1,6 +1,5 @@
-require_relative '../core/lib/dm_core/version.rb'
+require_relative '../core/lib/dm_core/version'
 
-#--- Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "dm_newsletter"
   s.version     = DmCore::VERSION
@@ -16,7 +15,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'dm_core', s.version
 
-  #--- dont' forget to add 'require' statement in engine.rb
-  s.add_dependency 'gibbon', '~> 1.2.0'
-  # TODO s.add_dependency 'gibbon', '~> 3.0'
+  # dont' forget to add 'require' statement in engine.rb
+  s.add_dependency 'gibbon', '~> 3.3'
 end

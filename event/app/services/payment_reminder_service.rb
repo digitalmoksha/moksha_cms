@@ -24,12 +24,13 @@ class PaymentReminderService
             else
               PaymentReminderMailer.payment_reminder(registration).deliver_now
             end
+
     if email
       registration.update_attribute(:payment_reminder_sent_on, Time.now)
       registration.update_attribute(:payment_reminder_history, [Time.now] + registration.payment_reminder_history)
-      return true
+      true
     else
-      return false
+      false
     end
   end
 
@@ -76,10 +77,11 @@ class PaymentReminderService
   #------------------------------------------------------------------------------
   def self.past_due?(registration)
     return false unless registration.balance_owed.positive?
+
     if registration.workshop_price.recurring_payments?
-      return registration.amount_paid < registration.recurring_what_should_be_paid_by_now
+      registration.amount_paid < registration.recurring_what_should_be_paid_by_now
     else
-      return Date.today > registration.initial_payments_should_start_on
+      Date.today > registration.initial_payments_should_start_on
     end
   end
 end

@@ -112,7 +112,7 @@ end
     end
 
     def gemfile_path
-      core_gems = ["dm_core", "dm_cms", "dm_event", "dm_forum", "dm_newsletter", "dm_admin"]
+      core_gems = ["dm_core", "dm_cms", "dm_event", "dm_forum", "dm_newsletter", "dm_lms", "dm_admin"]
 
       if core_gems.include?(lib_name)
         '../../../../../Gemfile'

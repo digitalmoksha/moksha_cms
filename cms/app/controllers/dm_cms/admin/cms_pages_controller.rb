@@ -43,7 +43,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def update
     authorize! :manage_content, @current_page
-    if @current_page.update_attributes(cms_page_params)
+    if @current_page.update(cms_page_params)
       redirect_to action: :show, id: @current_page
     else
       @cms_page = @current_page
@@ -78,7 +78,7 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   # Note that position comes in as 0-based, increment to make 1-based
   #------------------------------------------------------------------------------
   def ajax_sort
-    @current_page.update_attributes(row_order_position: params[:item][:position], parent_id: params[:item][:parent_id]) if can? :manage_content, :all
+    @current_page.update(row_order_position: params[:item][:position], parent_id: params[:item][:parent_id]) if can? :manage_content, :all
 
     #--- this action will be called via ajax
     head :ok

@@ -80,6 +80,7 @@ class DmCore::ApplicationController < ActionController::Base
     unless current_account.site_enabled? || request.params['slug'] == 'coming_soon'
       unless user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta))
         redirect_to "/#{current_account.preferred_default_locale}/coming_soon"
+
         return false
       end
     end
@@ -87,7 +88,8 @@ class DmCore::ApplicationController < ActionController::Base
     if current_account.site_maintenance?
       unless user_signed_in? && (current_user.is_admin? || current_user.has_role?(:beta))
         render text: '', layout: 'dm_core/maintenance'
-        return false
+
+        false
       end
     end
   end
@@ -229,10 +231,26 @@ class DmCore::ApplicationController < ActionController::Base
     filters(:around)
   end
 
-  # Store any additional data to be used by the ExceptionNotification gem
+  # Store any additional data to be used by the ExceptionNotification gem or Sentry
   #------------------------------------------------------------------------------
   def log_additional_data
-    request.env["exception_notifier.exception_data"] = { user: current_user, account: current_account }
+    if Rails.application.secrets[:sentry_dsn].present?
+      Raven.user_context(
+        id: current_user&.id,
+        email: current_user&.email,
+        ip_address: request.ip
+      )
+
+      Raven.tags_context(
+        domain: current_account&.domain,
+        account_prefix: current_account&.account_prefix
+      )
+
+      # You can also set extra context using `Raven.extra_context`
+      # Raven.extra_context app: url, environment: Rails.env, time: Time.now
+    else
+      request.env["exception_notifier.exception_data"] = { user: current_user, account: current_account }
+    end
   end
 
   # Note: rescue_from should be listed from generic exception to most specific

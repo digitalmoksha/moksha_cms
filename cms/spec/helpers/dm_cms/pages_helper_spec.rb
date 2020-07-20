@@ -148,6 +148,8 @@ describe DmCms::PagesHelper, type: :helper do
   it '#snippet'
   it '#snippet?'
   it '#render_content_item'
+  it '#build_menu_for_section'
+  it '#build_menu_for_page'
   it '#menu_from_pages'
   it '#menu_from_pages_bs3'
   it '#allow_page_in_menu?'

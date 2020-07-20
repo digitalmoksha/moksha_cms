@@ -10,7 +10,7 @@
 # end
 #------------------------------------------------------------------------------
 
-if Rails.env.production? || Rails.env.staging?
+if (Rails.env.production? || Rails.env.staging?) && !Rails.application.secrets[:sentry_dsn].present?
   require 'exception_notification/rails'
   # for Sidekiq
   # require 'exception_notification/sidekiq'
@@ -43,24 +43,9 @@ if Rails.env.production? || Rails.env.staging?
       normalize_subject: true,
       email_format: :html
     }
-
-    # Campfire notifier sends notifications to your Campfire room. Requires 'tinder' gem.
-    # config.add_notifier :campfire, {
-    #   :subdomain => 'my_subdomain',
-    #   :token => 'my_token',
-    #   :room_name => 'my_room'
-    # }
-
-    # HipChat notifier sends notifications to your HipChat room. Requires 'hipchat' gem.
-    # config.add_notifier :hipchat, {
-    #   :api_token => 'my_token',
-    #   :room_name => 'my_room'
-    # }
-
-    # Webhook notifier sends notifications over HTTP protocol. Requires 'httparty' gem.
-    # config.add_notifier :webhook, {
-    #   :url => 'http://example.com:5555/hubot/path',
-    #   :http_method => :post
-    # }
   end
+
+  notifier = ExceptionNotifier.registered_exception_notifier(:email)
+  notifier.base_options[:sender_address] = %{"#{Rails.application.config.app_name}" <exception.notifier@#{Rails.application.config.base_domain}>}
+  notifier.base_options[:exception_recipients] = [Rails.application.config.exception_emails_to]
 end

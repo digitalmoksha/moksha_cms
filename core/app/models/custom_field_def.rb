@@ -8,7 +8,7 @@
 class CustomFieldDef < ApplicationRecord
   self.table_name = 'core_custom_field_defs'
 
-  belongs_to              :owner, polymorphic: true
+  belongs_to              :owner, polymorphic: true, optional: true
   has_many                :custom_fields, dependent: :destroy
   store                   :properties, accessors: [:choice_list, :valid_until]
 

@@ -9,7 +9,7 @@ class DmNewsletter::NewslettersController < DmNewsletter::ApplicationController
     @newsletter         = Newsletter.find_newsletter(params['token'])
 
     if @newsletter
-      result = @newsletter.subscribe(user_or_email, subscription_params)
+      result = @newsletter.subscribe(user_or_email, subscription_params, new_subscription: !current_user.present?)
 
       respond_to do |format|
         if result[:success]

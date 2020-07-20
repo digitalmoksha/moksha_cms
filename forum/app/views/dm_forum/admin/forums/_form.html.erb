@@ -13,7 +13,7 @@
     <%= f.input :published, as: :toggle, label: 'Publish It?' %>
     <%= f.input :is_public, as: :toggle, label: 'Make Forum Public?', hint: 'This will allow anyone to see the forum.  Use option below to restrict to registered users' %>
     <%= f.input :requires_login, as: :toggle, label: 'Public Requires Login?', hint: 'If this is a public forum, user must be logged in to see it.  (All private forums automatically require login)' %>
-    <% if defined? DmSubscriptions %>
+    <% if defined?(DmSubscriptions) || defined?(DmSubscriptionsStripe) %>
       <%= f.input :requires_subscription, as: :toggle, label: 'Subscription Required?', hint: 'User must have a paid subscription to access' %>
     <% end %>
 

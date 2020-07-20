@@ -6,7 +6,7 @@ class MediaFile < ApplicationRecord
   globalize_accessors     locales: I18n.available_locales
   acts_as_taggable
 
-  belongs_to              :user
+  belongs_to              :user, optional: true
   default_scope           { where(account_id: Account.current.id) }
   validate                :validate_name_is_unique
 
@@ -74,7 +74,7 @@ class MediaFile < ApplicationRecord
     if new_record?
       if media.file.nil?
         errors.add :media, "please select a file to upload"
-      elsif MediaFile.where(media: media.file.original_filename, folder: folder, account_id: account_id).count > 0
+      elsif MediaFile.where(media: media.full_original_filename, folder: folder, account_id: account_id).count > 0
         errors.add :media, "'#{short_location}' already exists"
       end
     end
@@ -83,7 +83,7 @@ class MediaFile < ApplicationRecord
   # Save the media metadata, and add the 'folder' as a tag
   #------------------------------------------------------------------------------
   def prepare_attributes
-    if media.present? && media_changed?
+    if media.present? && will_save_change_to_media?
       self.media_content_type = media.file.content_type
       self.media_file_size    = media.file.size
     end

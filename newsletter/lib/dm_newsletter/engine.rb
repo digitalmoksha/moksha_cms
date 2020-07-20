@@ -8,5 +8,9 @@ module DmNewsletter
     config.to_prepare do
       require_dependency 'dm_newsletter/model_decorators'
     end
+
+    initializer 'engine.assets.precompile' do |app|
+      app.config.assets.precompile += %w[dm_newsletter/manifest.js]
+    end
   end
 end
