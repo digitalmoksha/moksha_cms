@@ -13,7 +13,7 @@ module DmEvent::Workshops
     def call
       if @workshop.valid?
         prepare_additional_parameters if @options[:additional_configuration]
-        @workshop.update_attributes(@params)
+        @workshop.update(@params)
       else
         false
       end

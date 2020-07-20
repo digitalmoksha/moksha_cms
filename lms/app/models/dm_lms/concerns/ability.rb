@@ -8,24 +8,27 @@
 # In this case, if you need to check the class level, then use specific
 #    current_user.has_role? :moderator, Forum
 #------------------------------------------------------------------------------
-
 module DmLms
   module Concerns
     module Ability
-      def dm_lms_abilities(user)
-        # Admin
-        if user&.has_role?(:course_manager)
-          can :manage_courses, :all
-          can :access_admin, :all
-        end
+      extend ActiveSupport::Concern
 
-        if user&.try('subscribed_content_allowed?') # from the dm_subscription gem
-          # a subscriber can view any published course
-          can :read, Course, published: true
-        else
-          # can only read published course that doesn't require a subscription
-          # can :read, Course, published: true, require_subscription: false
-          can(:read, Course) { |course| course.can_be_read_by?(user) }
+      included do
+        def dm_lms_abilities(user)
+          # Admin
+          if user&.has_role?(:course_manager)
+            can :manage_courses, :all
+            can :access_admin, :all
+          end
+
+          if user&.try('subscribed_content_allowed?') # from the dm_subscription gem
+            # a subscriber can view any published course
+            can :read, Course, published: true
+          else
+            # can only read published course that doesn't require a subscription
+            # can :read, Course, published: true, require_subscription: false
+            can(:read, Course) { |course| course.can_be_read_by?(user) }
+          end
         end
       end
 

@@ -1,4 +1,4 @@
-require_relative '../core/lib/dm_core/version.rb'
+require_relative '../core/lib/dm_core/version'
 
 #--- Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|

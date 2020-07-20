@@ -58,7 +58,7 @@ class RegistrationDatatable
   #------------------------------------------------------------------------------
   def fetch_registrations
     @workshop     = Workshop.find_by_slug(params[:id])
-    registrations = @workshop.registrations.includes(:workshop_price, user_profile: [user: :current_site_profile])
+    registrations = @workshop.registrations.includes(:workshop_price, user_profile: [{ user: :current_site_profile }])
     registrations = registrations.references(:user_profiles)
     registrations = registrations.order(Arel.sql("#{sort_column} #{sort_direction}"))
 

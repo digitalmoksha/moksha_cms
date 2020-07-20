@@ -12,7 +12,7 @@ module DmCore
 
       #------------------------------------------------------------------------------
       def call
-        @payment_history.update_attributes(
+        @payment_history.update(
           total_cents: @amount.cents,
           total_currency: @amount.currency.iso_code,
           cost: @amount.to_f,

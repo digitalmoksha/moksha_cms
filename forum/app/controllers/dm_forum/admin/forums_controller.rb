@@ -44,7 +44,7 @@ class DmForum::Admin::ForumsController < DmForum::Admin::AdminController
   # PUT /admin/fms/forums/1
   #------------------------------------------------------------------------------
   def update
-    if @forum.update_attributes(forum_params)
+    if @forum.update(forum_params)
       redirect_to admin_forum_url(@forum), notice: 'Forum was successfully updated.'
     else
       render action: :edit

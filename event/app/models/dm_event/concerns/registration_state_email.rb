@@ -9,7 +9,7 @@ module DmEvent
       included do
         #------------------------------------------------------------------------------
         def to_liquid
-          result = {
+          {
             'price'             => (workshop_price.nil? ? '' : workshop_price.price_formatted),
             'receipt_code'      => receipt_code.to_s,
             'price_description' => workshop_price&.price_description.to_s,
@@ -28,8 +28,6 @@ module DmEvent
             'end_time'          => format_time(workshop.ending_on),
             'date_range'        => format_date_range(workshop.starting_on, workshop.ending_on)
           }
-
-          result
         end
 
         # Send an email for state notification.  if send_email is false, just return

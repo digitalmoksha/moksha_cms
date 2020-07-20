@@ -58,14 +58,13 @@ module DmAdmin::Bootstrap3Helper
   def page_header_buttons(options = {}, &block)
     content = capture(&block)
 
-    buttons = content_tag(:div, class: 'header-buttons pull-right') do
+    content_tag(:div, class: 'header-buttons pull-right') do
       content_tag(:div, id: 'header-buttons') do
         content_tag(:div) do
           content
         end
       end
     end
-    buttons
   end
 
   # Displays a "well" with content, flush to the edges.  Optional title and explanation

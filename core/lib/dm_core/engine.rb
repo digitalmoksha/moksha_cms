@@ -30,7 +30,6 @@ require 'money-rails'
 require 'exception_notification'
 require 'aws-sdk-s3'
 require 'biggs'
-require 'codemirror-rails'
 require 'mini_magick'
 require 'carrierwave'
 require 'carrierwave-aws'
@@ -47,7 +46,7 @@ module DmCore
     isolate_namespace DmCore
 
     initializer 'engine.helper' do |app|
-      ActionView::Base.send :include, RenderHelper # rubocop:disable Lint/SendWithMixinArgument
+      ActionView::Base.include RenderHelper
       ActiveSupport.on_load(:action_controller) do
         include DmCore::ApplicationHelper
       end

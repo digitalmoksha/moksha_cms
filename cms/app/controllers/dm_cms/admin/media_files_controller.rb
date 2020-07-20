@@ -56,7 +56,7 @@ class DmCms::Admin::MediaFilesController < DmCms::Admin::AdminController
 
     #--- must be set before attributes saved, otherwise retina versions not generated
     @media_file.generate_retina = params[:media_file][:generate_retina] unless params[:media_file][:generate_retina].nil?
-    if @media_file.update_attributes(media_file_params)
+    if @media_file.update(media_file_params)
       redirect_to admin_media_files_url, notice: 'Media successfully updated'
     else
       render action: :edit

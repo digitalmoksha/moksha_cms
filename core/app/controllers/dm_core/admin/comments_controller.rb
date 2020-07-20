@@ -40,7 +40,7 @@ class DmCore::Admin::CommentsController < DmCore::Admin::AdminController
   #------------------------------------------------------------------------------
   def update
     respond_to do |format|
-      if @comment.update_attributes(comment_params)
+      if @comment.update(comment_params)
         format.html { redirect_back fallback_location: main_app.index_url }
         format.js
       end
