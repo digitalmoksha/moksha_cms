@@ -255,11 +255,6 @@ Style/InverseMethods:
     - 'cms/app/helpers/dm_cms/pages_helper.rb'
 
 # Offense count: 1
-Style/MethodMissingSuper:
-  Exclude:
-    - 'core/app/presenters/base_presenter.rb'
-
-# Offense count: 1
 Style/MissingRespondToMissing:
   Exclude:
     - 'core/app/presenters/base_presenter.rb'
@@ -371,3 +366,14 @@ Style/RedundantCondition:
 # URISchemes: http, https
 Layout/LineLength:
   Max: 890
+
+Gemspec/RequiredRubyVersion:
+  Exclude:
+    - 'admin/dm_admin.gemspec'
+    - 'cms/dm_cms.gemspec'
+    - 'core/dm_core.gemspec'
+    - 'event/dm_event.gemspec'
+    - 'forum/dm_forum.gemspec'
+    - 'lms/dm_lms.gemspec'
+    - 'moksha_cms.gemspec'
+    - 'newsletter/dm_newsletter.gemspec'
