@@ -192,6 +192,8 @@ module Scio
       #
       # This requires fpdf (http://zeropluszero.com/software/fpdf/)
       # rubocop:disable Metrics/CyclomaticComplexity
+      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/PerceivedComplexity
       def create_pdf(orientation = "L")
         require 'fpdf'
         raise "Invalid orientation" unless ["L", "P"].include?(orientation)
@@ -301,6 +303,8 @@ module Scio
         pdf.Output
       end
       # rubocop:enable Metrics/CyclomaticComplexity
+      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/PerceivedComplexity
 
       # creates a default style for the header. This is used in case you don't
       # set a style for the column. If you really want a "plain" style, create

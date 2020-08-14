@@ -12,7 +12,7 @@ module DmEvent
       included do
         include AASM
 
-        after_create :start!
+        after_create_commit :start!
 
         # define how the state machine works
         aasm do
