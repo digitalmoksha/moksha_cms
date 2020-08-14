@@ -4,6 +4,7 @@ class Account < ApplicationRecord
   NotSetup        = Class.new(StandardError)
   LoginRequired   = Class.new(StandardError)
 
+  SPECIAL_SUBDOMAINS = %w[dev www beta staging].freeze
   CURRENCY_TYPES    = { 'British Pound (&pound;)'.html_safe => 'GBP',
                         'Czech Koruna (&#x4B;&#x10D;)'.html_safe => 'CZK',
                         'Euro (&euro;)'.html_safe => 'EUR',
@@ -97,7 +98,7 @@ class Account < ApplicationRecord
 
   # Find the account using the specified host (usually from the request url).
   # Check for certain special subdomains before lookup:
-  #   dev, www, backoffice, staging, stg-
+  #   dev, www, beta, staging
   # Supports xip.io format for testing on local network
   #   dev.testapp.net.192.168.1.5.xip.io
   # is a valid address.  See http://xip.io for more info
@@ -106,7 +107,7 @@ class Account < ApplicationRecord
     host      ||= ""
     separated   = host.downcase.split('.')
     separated   = separated[0..-7] if host.end_with?('xip.io') # strip off xip.io and ip address
-    separated   = separated.delete_if { |x| x == 'dev' || x == 'www' || x == 'backoffice' || x =~ /stg-/ || x == 'staging' }
+    separated   = separated.delete_if { |x| SPECIAL_SUBDOMAINS.include?(x) }
     domain      = find_by_domain(separated.join('.'))
     return domain if domain
 
