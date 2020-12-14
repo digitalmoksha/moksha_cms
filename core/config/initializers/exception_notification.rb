@@ -44,8 +44,4 @@ if (Rails.env.production? || Rails.env.staging?) && !Rails.application.secrets[:
       email_format: :html
     }
   end
-
-  notifier = ExceptionNotifier.registered_exception_notifier(:email)
-  notifier.base_options[:sender_address] = %{"#{Rails.application.config.app_name}" <exception.notifier@#{Rails.application.config.base_domain}>}
-  notifier.base_options[:exception_recipients] = [Rails.application.config.exception_emails_to]
 end
