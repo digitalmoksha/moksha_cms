@@ -96,8 +96,8 @@ class DmCms::Admin::CmsPagesController < DmCms::Admin::AdminController
   #------------------------------------------------------------------------------
   def expire_cache
     #--- expire only items for this account
-    key_start = fragment_cache_key(Account.current.id)
-    expire_fragment(%r{\A#{key_start}})
+    key_start = combined_fragment_cache_key(Account.current.id)
+    expire_fragment(%r{\A#{key_start.join('/')}})
 
     respond_to do |format|
       format.html { redirect_to({ action: :index }, notice: 'Page Cache was cleared') }
