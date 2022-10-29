@@ -1,3 +1,5 @@
+_This repository is now exclusiverly hosted on GitLab at [moksha_cms](https://gitlab.com/moksha_cms/moksha_cms)_
+
 # MokshaCMS
 
 [![Gem Version](https://badge.fury.io/rb/moksha_cms.svg)](http://badge.fury.io/rb/moksha_cms)
